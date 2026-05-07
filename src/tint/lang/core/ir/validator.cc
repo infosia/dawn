@@ -35,6 +35,7 @@
 #include <string_view>
 #include <utility>
 
+#include "src/tint/lang/core/binary_op.h"
 #include "src/tint/lang/core/intrinsic/table.h"
 #include "src/tint/lang/core/ir/access.h"
 #include "src/tint/lang/core/ir/binary.h"
@@ -46,6 +47,7 @@
 #include "src/tint/lang/core/ir/continue.h"
 #include "src/tint/lang/core/ir/control_instruction.h"
 #include "src/tint/lang/core/ir/convert.h"
+#include "src/tint/lang/core/ir/core_binary.h"
 #include "src/tint/lang/core/ir/core_builtin_call.h"
 #include "src/tint/lang/core/ir/disassembler.h"
 #include "src/tint/lang/core/ir/discard.h"
@@ -3396,9 +3398,22 @@ void Validator::CheckInstruction(const Instruction* inst) {
     }
 
     Capabilities allowed_types{};
+
     if (auto* call = inst->As<core::ir::CoreBuiltinCall>();
         call && call->Func() == core::BuiltinFn::kBitcast) {
         allowed_types.Add(Capability::kAllow64BitIntegers);
+    }
+
+    if (auto* call = inst->As<core::ir::CoreBinary>()) {
+        if (call->Op() == core::BinaryOp::kOr || call->Op() == core::BinaryOp::kShiftLeft) {
+            allowed_types.Add(Capability::kAllow64BitIntegers);
+        }
+    }
+
+    if (auto* call = inst->As<core::ir::Convert>()) {
+        if (call->Result(0) && call->Result()->Type()->Is<core::type::U64>()) {
+            allowed_types.Add(Capability::kAllow64BitIntegers);
+        }
     }
 
     auto results = inst->Results();
@@ -4384,6 +4399,7 @@ void Validator::CheckConvert(const Convert* convert) {
         result_type,                                                             //
         [&](const core::type::I32*) { conv_ty = intrinsic::CtorConv::kI32; },    //
         [&](const core::type::U32*) { conv_ty = intrinsic::CtorConv::kU32; },    //
+        [&](const core::type::U64*) { conv_ty = intrinsic::CtorConv::kU64; },    //
         [&](const core::type::F32*) { conv_ty = intrinsic::CtorConv::kF32; },    //
         [&](const core::type::F16*) { conv_ty = intrinsic::CtorConv::kF16; },    //
         [&](const core::type::Bool*) { conv_ty = intrinsic::CtorConv::kBool; },  //

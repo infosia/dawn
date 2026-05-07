@@ -170,6 +170,10 @@ const char* str(BuiltinFn i) {
             return "GatherRed";
         case BuiltinFn::kGetDimensions:
             return "GetDimensions";
+        case BuiltinFn::kInterlockedMax64:
+            return "InterlockedMax64";
+        case BuiltinFn::kInterlockedMin64:
+            return "InterlockedMin64";
         case BuiltinFn::kSample:
             return "Sample";
         case BuiltinFn::kSampleBias:
@@ -197,6 +201,8 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kInterlockedOr:
         case BuiltinFn::kInterlockedXor:
         case BuiltinFn::kWaveReadLaneAt:
+        case BuiltinFn::kInterlockedMax64:
+        case BuiltinFn::kInterlockedMin64:
             return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kLoad, core::ir::Instruction::Access::kStore};
 
         case BuiltinFn::kTextureStore:

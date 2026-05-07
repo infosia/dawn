@@ -44,6 +44,7 @@
 #include "src/tint/lang/core/type/texture.h"
 #include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u32.h"
+#include "src/tint/lang/core/type/u64.h"
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/hlsl/builtin_fn.h"
 #include "src/tint/lang/hlsl/ir/builtin_call.h"
@@ -297,6 +298,9 @@ struct State {
             } else if (dst_deepest->Size() == 2 && dst_type->Is<core::type::Vector>()) {
                 // 32-bit to 16-bit vector bitcast (e.g., u32 -> vec2<f16> or u32 -> vec2<u16>)
                 ReplaceBitcastWithTo16BitPolyfill(bitcast);
+            } else if (src_deepest->Size() == 4 && dst_deepest->Size() == 8) {
+                // 32-bit vec2 to 64-bit bitcast (e.g. vec2<u32> -> u64)
+                ReplaceBitcastWithTo64BitPolyfill(bitcast);
             } else {
                 ReplaceBitcastWithAs(bitcast);
             }
@@ -767,6 +771,26 @@ struct State {
         auto* f = CreateBitcastTo16Bit(src_type, dst_type);
         b.InsertBefore(bitcast,
                        [&] { b.CallWithResult(bitcast->DetachResult(), f, bitcast->Args()[0]); });
+        bitcast->Destroy();
+    }
+
+    void ReplaceBitcastWithTo64BitPolyfill(core::ir::CoreBuiltinCall* bitcast) {
+        auto* src = bitcast->Args()[0];
+        auto* dst_type = bitcast->Result()->Type();
+        TINT_IR_ASSERT(ir, dst_type->Is<core::type::U64>());
+        TINT_IR_ASSERT(ir, src->Type()->Is<core::type::Vector>());
+
+        b.InsertBefore(bitcast, [&] {
+            // Bitcast the source to vec2<u32> to ensure we can swizzle it correctly.
+            auto* low = b.Swizzle(ty.u32(), src, {0u});
+            auto* high = b.Swizzle(ty.u32(), src, {1u});
+            auto* low64 = b.Convert(ty.u64(), low);
+            auto* high64 = b.Convert(ty.u64(), high);
+            auto* shifted_high = b.ShiftLeft(high64, b.Convert(ty.u64(), b.Constant(u32(32))));
+            auto* result = b.Or(shifted_high, low64);
+
+            bitcast->Result()->ReplaceAllUsesWith(result->Result());
+        });
         bitcast->Destroy();
     }
 

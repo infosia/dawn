@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // [msl] flags: --msl-version 2.4
+// [hlsl-dxc] flags: --hlsl-shader-model 6.6
 
 enable atomic_vec2u_min_max;
 
