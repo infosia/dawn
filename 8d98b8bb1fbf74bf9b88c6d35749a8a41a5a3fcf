@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dc25c04_9d9794ee",
+        "filename": "src/tint/cmd/fuzz/common/init.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-07T17:22:10Z",
+      "side": 1,
+      "message": "I know this is gross, this is what the existing code did. It is related to how libFuzzer processes the command line flags.",
+      "revId": "8d98b8bb1fbf74bf9b88c6d35749a8a41a5a3fcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
