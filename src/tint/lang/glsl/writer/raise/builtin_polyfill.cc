@@ -28,16 +28,12 @@
 #include "src/tint/lang/glsl/writer/raise/builtin_polyfill.h"
 
 #include <utility>
+#include <vector>
 
 #include "src/tint/lang/core/fluent_types.h"  // IWYU pragma: export
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
-#include "src/tint/lang/core/type/depth_multisampled_texture.h"
-#include "src/tint/lang/core/type/depth_texture.h"
-#include "src/tint/lang/core/type/multisampled_texture.h"
-#include "src/tint/lang/core/type/sampled_texture.h"
-#include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/glsl/builtin_fn.h"
 #include "src/tint/lang/glsl/ir/builtin_call.h"
 #include "src/tint/lang/glsl/ir/member_builtin_call.h"
@@ -66,30 +62,64 @@ struct State {
 
     /// Process the module.
     void Process() {
-        Vector<core::ir::CoreBuiltinCall*, 4> call_worklist;
+        std::vector<std::function<void()>> call_worklist;
+        call_worklist.reserve(128);
+
         for (auto* inst : ir.Instructions()) {
             if (auto* call = inst->As<core::ir::CoreBuiltinCall>()) {
                 switch (call->Func()) {
                     case core::BuiltinFn::kAbs:
+                        call_worklist.push_back([this, call] { Abs(call); });
+                        break;
                     case core::BuiltinFn::kAll:
+                        call_worklist.push_back([this, call] { All(call); });
+                        break;
                     case core::BuiltinFn::kAny:
+                        call_worklist.push_back([this, call] { Any(call); });
+                        break;
                     case core::BuiltinFn::kArrayLength:
+                        call_worklist.push_back([this, call] { ArrayLength(call); });
+                        break;
                     case core::BuiltinFn::kAtomicCompareExchangeWeak:
+                        call_worklist.push_back([this, call] { AtomicCompareExchangeWeak(call); });
+                        break;
                     case core::BuiltinFn::kAtomicSub:
+                        call_worklist.push_back([this, call] { AtomicSub(call); });
+                        break;
                     case core::BuiltinFn::kAtomicLoad:
+                        call_worklist.push_back([this, call] { AtomicLoad(call); });
+                        break;
                     case core::BuiltinFn::kCountOneBits:
+                        call_worklist.push_back([this, call] { CountOneBits(call); });
+                        break;
                     case core::BuiltinFn::kDot:
+                        call_worklist.push_back([this, call] { Dot(call); });
+                        break;
                     case core::BuiltinFn::kExtractBits:
+                        call_worklist.push_back([this, call] { ExtractBits(call); });
+                        break;
                     case core::BuiltinFn::kFma:
+                        call_worklist.push_back([this, call] { FMA(call); });
+                        break;
                     case core::BuiltinFn::kFrexp:
+                        call_worklist.push_back([this, call] { Frexp(call); });
+                        break;
                     case core::BuiltinFn::kInsertBits:
+                        call_worklist.push_back([this, call] { InsertBits(call); });
+                        break;
                     case core::BuiltinFn::kModf:
+                        call_worklist.push_back([this, call] { Modf(call); });
+                        break;
                     case core::BuiltinFn::kQuantizeToF16:
+                        call_worklist.push_back([this, call] { QuantizeToF16(call); });
+                        break;
                     case core::BuiltinFn::kSelect:
+                        call_worklist.push_back([this, call] { Select(call); });
+                        break;
                     case core::BuiltinFn::kStorageBarrier:
                     case core::BuiltinFn::kTextureBarrier:
                     case core::BuiltinFn::kWorkgroupBarrier:
-                        call_worklist.Push(call);
+                        call_worklist.push_back([this, call] { Barrier(call); });
                         break;
                     default:
                         break;
@@ -99,64 +129,8 @@ struct State {
         }
 
         // Replace the builtin calls that we found
-        for (auto* call : call_worklist) {
-            switch (call->Func()) {
-                case core::BuiltinFn::kAbs:
-                    Abs(call);
-                    break;
-                case core::BuiltinFn::kAll:
-                    All(call);
-                    break;
-                case core::BuiltinFn::kAny:
-                    Any(call);
-                    break;
-                case core::BuiltinFn::kArrayLength:
-                    ArrayLength(call);
-                    break;
-                case core::BuiltinFn::kAtomicCompareExchangeWeak:
-                    AtomicCompareExchangeWeak(call);
-                    break;
-                case core::BuiltinFn::kAtomicSub:
-                    AtomicSub(call);
-                    break;
-                case core::BuiltinFn::kAtomicLoad:
-                    AtomicLoad(call);
-                    break;
-                case core::BuiltinFn::kCountOneBits:
-                    CountOneBits(call);
-                    break;
-                case core::BuiltinFn::kDot:
-                    Dot(call);
-                    break;
-                case core::BuiltinFn::kExtractBits:
-                    ExtractBits(call);
-                    break;
-                case core::BuiltinFn::kFma:
-                    FMA(call);
-                    break;
-                case core::BuiltinFn::kFrexp:
-                    Frexp(call);
-                    break;
-                case core::BuiltinFn::kInsertBits:
-                    InsertBits(call);
-                    break;
-                case core::BuiltinFn::kModf:
-                    Modf(call);
-                    break;
-                case core::BuiltinFn::kQuantizeToF16:
-                    QuantizeToF16(call);
-                    break;
-                case core::BuiltinFn::kSelect:
-                    Select(call);
-                    break;
-                case core::BuiltinFn::kStorageBarrier:
-                case core::BuiltinFn::kTextureBarrier:
-                case core::BuiltinFn::kWorkgroupBarrier:
-                    Barrier(call);
-                    break;
-                default:
-                    TINT_IR_UNREACHABLE(ir);
-            }
+        for (auto& cb : call_worklist) {
+            cb();
         }
     }
 

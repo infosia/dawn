@@ -68,6 +68,7 @@ struct State {
     /// Process the module.
     void Process() {
         std::vector<std::function<void()>> worklist;
+        worklist.reserve(128);
 
         // Find the builtin call instructions that may need to be polyfilled.
         for (auto* inst : ir.Instructions()) {

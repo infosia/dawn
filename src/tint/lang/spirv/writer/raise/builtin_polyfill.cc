@@ -28,6 +28,7 @@
 #include "src/tint/lang/spirv/writer/raise/builtin_polyfill.h"
 
 #include <utility>
+#include <vector>
 
 #include "spirv/unified1/spirv.h"
 #include "src/tint/lang/core/enums.h"
@@ -186,7 +187,6 @@ struct State {
     /// Process the module.
     void Process() {
         // Find the builtins that need replacing.
-        Vector<core::ir::CoreBuiltinCall*, 4> worklist;
         Vector<core::ir::Construct*, 4> subgroup_matrix_constructors;
 
         // Replace types for function parameters if necessary
@@ -197,6 +197,9 @@ struct State {
                 }
             }
         }
+
+        std::vector<std::function<void()>> worklist;
+        worklist.reserve(128);
 
         for (auto* inst : ir.Instructions()) {
             // Replace types for instruction results if necessary
@@ -209,11 +212,11 @@ struct State {
             if (auto* builtin = inst->As<core::ir::CoreBuiltinCall>()) {
                 switch (builtin->Func()) {
                     case core::BuiltinFn::kArrayLength:
+                        worklist.push_back([this, builtin] { ArrayLength(builtin); });
+                        break;
                     case core::BuiltinFn::kAtomicAdd:
                     case core::BuiltinFn::kAtomicAnd:
                     case core::BuiltinFn::kAtomicCompareExchangeWeak:
-                    case core::BuiltinFn::kAtomicStoreMax:
-                    case core::BuiltinFn::kAtomicStoreMin:
                     case core::BuiltinFn::kAtomicExchange:
                     case core::BuiltinFn::kAtomicLoad:
                     case core::BuiltinFn::kAtomicMax:
@@ -222,44 +225,100 @@ struct State {
                     case core::BuiltinFn::kAtomicStore:
                     case core::BuiltinFn::kAtomicSub:
                     case core::BuiltinFn::kAtomicXor:
+                    case core::BuiltinFn::kAtomicStoreMax:
+                    case core::BuiltinFn::kAtomicStoreMin:
+                        worklist.push_back([this, builtin] { Atomic(builtin); });
+                        break;
                     case core::BuiltinFn::kDot:
+                        worklist.push_back([this, builtin] { Dot(builtin); });
+                        break;
                     case core::BuiltinFn::kDot4I8Packed:
                     case core::BuiltinFn::kDot4U8Packed:
+                        worklist.push_back([this, builtin] { DotPacked4x8(builtin); });
+                        break;
                     case core::BuiltinFn::kQuadBroadcast:
+                        worklist.push_back([this, builtin] { QuadBroadcast(builtin); });
+                        break;
                     case core::BuiltinFn::kSelect:
+                        worklist.push_back([this, builtin] { Select(builtin); });
+                        break;
                     case core::BuiltinFn::kSubgroupBroadcast:
+                        worklist.push_back([this, builtin] { SubgroupBroadcast(builtin); });
+                        break;
                     case core::BuiltinFn::kSubgroupShuffle:
                     case core::BuiltinFn::kSubgroupShuffleDown:
                     case core::BuiltinFn::kSubgroupShuffleUp:
-                    case core::BuiltinFn::kSubgroupShuffleXor:
+                    case core::BuiltinFn::kSubgroupShuffleXor: {
+                        bool clamped = config.subgroup_shuffle_clamped;
+                        worklist.push_back(
+                            [this, builtin, clamped] { SubgroupShuffle(builtin, clamped); });
+                        break;
+                    }
                     case core::BuiltinFn::kTextureDimensions:
+                        worklist.push_back([this, builtin] { TextureDimensions(builtin); });
+                        break;
                     case core::BuiltinFn::kTextureGather:
                     case core::BuiltinFn::kTextureGatherCompare:
+                        worklist.push_back([this, builtin] { TextureGather(builtin); });
+                        break;
                     case core::BuiltinFn::kTextureLoad:
+                        worklist.push_back([this, builtin] { TextureLoad(builtin); });
+                        break;
                     case core::BuiltinFn::kTextureNumLayers:
+                        worklist.push_back([this, builtin] { TextureNumLayers(builtin); });
+                        break;
                     case core::BuiltinFn::kTextureNumLevels:
+                        worklist.push_back([this, builtin] { TextureNumLevels(builtin); });
+                        break;
                     case core::BuiltinFn::kTextureNumSamples:
+                        worklist.push_back([this, builtin] { TextureNumSamples(builtin); });
+                        break;
                     case core::BuiltinFn::kTextureSample:
                     case core::BuiltinFn::kTextureSampleBias:
                     case core::BuiltinFn::kTextureSampleCompare:
                     case core::BuiltinFn::kTextureSampleCompareLevel:
                     case core::BuiltinFn::kTextureSampleGrad:
                     case core::BuiltinFn::kTextureSampleLevel:
+                        worklist.push_back([this, builtin] { TextureSample(builtin); });
+                        break;
                     case core::BuiltinFn::kTextureStore:
-                    case core::BuiltinFn::kInputAttachmentLoad:
-                    case core::BuiltinFn::kSubgroupMatrixLoad:
-                    case core::BuiltinFn::kSubgroupMatrixStore:
-                    case core::BuiltinFn::kSubgroupMatrixMultiply:
-                    case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
-                    case core::BuiltinFn::kSubgroupMatrixScalarAdd:
-                    case core::BuiltinFn::kSubgroupMatrixScalarSubtract:
-                    case core::BuiltinFn::kSubgroupMatrixScalarMultiply:
-                        worklist.Push(builtin);
+                        worklist.push_back([this, builtin] { TextureStore(builtin); });
                         break;
                     case core::BuiltinFn::kQuantizeToF16:
                         if (builtin->Result()->Type()->Is<core::type::Vector>()) {
-                            worklist.Push(builtin);
+                            worklist.push_back([this, builtin] { QuantizeToF16Vec(builtin); });
                         }
+                        break;
+                    case core::BuiltinFn::kInputAttachmentLoad:
+                        worklist.push_back([this, builtin] { InputAttachmentLoad(builtin); });
+                        break;
+                    case core::BuiltinFn::kSubgroupMatrixLoad:
+                        worklist.push_back([this, builtin] { SubgroupMatrixLoad(builtin); });
+                        break;
+                    case core::BuiltinFn::kSubgroupMatrixStore:
+                        worklist.push_back([this, builtin] { SubgroupMatrixStore(builtin); });
+                        break;
+                    case core::BuiltinFn::kSubgroupMatrixMultiply:
+                        worklist.push_back([this, builtin] { SubgroupMatrixMultiply(builtin); });
+                        break;
+                    case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
+                        worklist.push_back(
+                            [this, builtin] { SubgroupMatrixMultiplyAccumulate(builtin); });
+                        break;
+                    case core::BuiltinFn::kSubgroupMatrixScalarAdd:
+                        worklist.push_back([this, builtin] {
+                            SubgroupMatrixScalar(builtin, core::BinaryOp::kAdd);
+                        });
+                        break;
+                    case core::BuiltinFn::kSubgroupMatrixScalarSubtract:
+                        worklist.push_back([this, builtin] {
+                            SubgroupMatrixScalar(builtin, core::BinaryOp::kSubtract);
+                        });
+                        break;
+                    case core::BuiltinFn::kSubgroupMatrixScalarMultiply:
+                        worklist.push_back([this, builtin] {
+                            SubgroupMatrixScalar(builtin, core::BinaryOp::kMultiply);
+                        });
                         break;
                     default:
                         break;
@@ -276,108 +335,8 @@ struct State {
         }
 
         // Replace the builtins that we found.
-        for (auto* builtin : worklist) {
-            switch (builtin->Func()) {
-                case core::BuiltinFn::kArrayLength:
-                    ArrayLength(builtin);
-                    break;
-                case core::BuiltinFn::kAtomicAdd:
-                case core::BuiltinFn::kAtomicAnd:
-                case core::BuiltinFn::kAtomicCompareExchangeWeak:
-                case core::BuiltinFn::kAtomicExchange:
-                case core::BuiltinFn::kAtomicLoad:
-                case core::BuiltinFn::kAtomicMax:
-                case core::BuiltinFn::kAtomicMin:
-                case core::BuiltinFn::kAtomicOr:
-                case core::BuiltinFn::kAtomicStore:
-                case core::BuiltinFn::kAtomicSub:
-                case core::BuiltinFn::kAtomicXor:
-                case core::BuiltinFn::kAtomicStoreMax:
-                case core::BuiltinFn::kAtomicStoreMin:
-                    Atomic(builtin);
-                    break;
-                case core::BuiltinFn::kDot:
-                    Dot(builtin);
-                    break;
-                case core::BuiltinFn::kDot4I8Packed:
-                case core::BuiltinFn::kDot4U8Packed:
-                    DotPacked4x8(builtin);
-                    break;
-                case core::BuiltinFn::kQuadBroadcast:
-                    QuadBroadcast(builtin);
-                    break;
-                case core::BuiltinFn::kSelect:
-                    Select(builtin);
-                    break;
-                case core::BuiltinFn::kSubgroupBroadcast:
-                    SubgroupBroadcast(builtin);
-                    break;
-                case core::BuiltinFn::kSubgroupShuffle:
-                case core::BuiltinFn::kSubgroupShuffleDown:
-                case core::BuiltinFn::kSubgroupShuffleUp:
-                case core::BuiltinFn::kSubgroupShuffleXor:
-                    SubgroupShuffle(builtin, config.subgroup_shuffle_clamped);
-                    break;
-                case core::BuiltinFn::kTextureDimensions:
-                    TextureDimensions(builtin);
-                    break;
-                case core::BuiltinFn::kTextureGather:
-                case core::BuiltinFn::kTextureGatherCompare:
-                    TextureGather(builtin);
-                    break;
-                case core::BuiltinFn::kTextureLoad:
-                    TextureLoad(builtin);
-                    break;
-                case core::BuiltinFn::kTextureNumLayers:
-                    TextureNumLayers(builtin);
-                    break;
-                case core::BuiltinFn::kTextureNumLevels:
-                    TextureNumLevels(builtin);
-                    break;
-                case core::BuiltinFn::kTextureNumSamples:
-                    TextureNumSamples(builtin);
-                    break;
-                case core::BuiltinFn::kTextureSample:
-                case core::BuiltinFn::kTextureSampleBias:
-                case core::BuiltinFn::kTextureSampleCompare:
-                case core::BuiltinFn::kTextureSampleCompareLevel:
-                case core::BuiltinFn::kTextureSampleGrad:
-                case core::BuiltinFn::kTextureSampleLevel:
-                    TextureSample(builtin);
-                    break;
-                case core::BuiltinFn::kTextureStore:
-                    TextureStore(builtin);
-                    break;
-                case core::BuiltinFn::kQuantizeToF16:
-                    QuantizeToF16Vec(builtin);
-                    break;
-                case core::BuiltinFn::kInputAttachmentLoad:
-                    InputAttachmentLoad(builtin);
-                    break;
-                case core::BuiltinFn::kSubgroupMatrixLoad:
-                    SubgroupMatrixLoad(builtin);
-                    break;
-                case core::BuiltinFn::kSubgroupMatrixStore:
-                    SubgroupMatrixStore(builtin);
-                    break;
-                case core::BuiltinFn::kSubgroupMatrixMultiply:
-                    SubgroupMatrixMultiply(builtin);
-                    break;
-                case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
-                    SubgroupMatrixMultiplyAccumulate(builtin);
-                    break;
-                case core::BuiltinFn::kSubgroupMatrixScalarAdd:
-                    SubgroupMatrixScalar(builtin, core::BinaryOp::kAdd);
-                    break;
-                case core::BuiltinFn::kSubgroupMatrixScalarSubtract:
-                    SubgroupMatrixScalar(builtin, core::BinaryOp::kSubtract);
-                    break;
-                case core::BuiltinFn::kSubgroupMatrixScalarMultiply:
-                    SubgroupMatrixScalar(builtin, core::BinaryOp::kMultiply);
-                    break;
-                default:
-                    break;
-            }
+        for (auto& cb : worklist) {
+            cb();
         }
 
         // Replace non-zero subgroup matrix constructors that use 8-bit component types.

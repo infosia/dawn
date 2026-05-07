@@ -27,8 +27,8 @@
 
 #include "src/tint/lang/hlsl/writer/raise/builtin_polyfill.h"
 
-#include <string>
 #include <tuple>
+#include <vector>
 
 #include "src/tint/lang/core/fluent_types.h"  // IWYU pragma: export
 #include "src/tint/lang/core/ir/builder.h"
@@ -84,7 +84,9 @@ struct State {
     void Process() {
         // Find the bitcasts that need replacing.
         Vector<core::ir::CoreBuiltinCall*, 4> bitcast_worklist;
-        Vector<core::ir::CoreBuiltinCall*, 4> call_worklist;
+        std::vector<std::function<void()>> call_worklist;
+        call_worklist.reserve(128);
+
         for (auto* inst : ir.Instructions()) {
             if (auto* call = inst->As<core::ir::CoreBuiltinCall>()) {
                 if (call->Func() == core::BuiltinFn::kBitcast) {
@@ -93,71 +95,181 @@ struct State {
                 }
                 switch (call->Func()) {
                     case core::BuiltinFn::kAcosh:
+                        call_worklist.push_back([this, call] { Acosh(call); });
+                        break;
                     case core::BuiltinFn::kAsinh:
+                        call_worklist.push_back([this, call] { Asinh(call); });
+                        break;
                     case core::BuiltinFn::kAtanh:
+                        call_worklist.push_back([this, call] { Atanh(call); });
+                        break;
                     case core::BuiltinFn::kAtomicAdd:
+                        call_worklist.push_back([this, call] { AtomicAdd(call); });
+                        break;
                     case core::BuiltinFn::kAtomicSub:
+                        call_worklist.push_back([this, call] { AtomicSub(call); });
+                        break;
                     case core::BuiltinFn::kAtomicMin:
+                        call_worklist.push_back([this, call] { AtomicMin(call); });
+                        break;
                     case core::BuiltinFn::kAtomicMax:
+                        call_worklist.push_back([this, call] { AtomicMax(call); });
+                        break;
                     case core::BuiltinFn::kAtomicAnd:
+                        call_worklist.push_back([this, call] { AtomicAnd(call); });
+                        break;
                     case core::BuiltinFn::kAtomicOr:
+                        call_worklist.push_back([this, call] { AtomicOr(call); });
+                        break;
                     case core::BuiltinFn::kAtomicXor:
+                        call_worklist.push_back([this, call] { AtomicXor(call); });
+                        break;
                     case core::BuiltinFn::kAtomicLoad:
+                        call_worklist.push_back([this, call] { AtomicLoad(call); });
+                        break;
                     case core::BuiltinFn::kAtomicStore:
+                        call_worklist.push_back([this, call] { AtomicStore(call); });
+                        break;
                     case core::BuiltinFn::kAtomicExchange:
+                        call_worklist.push_back([this, call] { AtomicExchange(call); });
+                        break;
                     case core::BuiltinFn::kAtomicCompareExchangeWeak:
+                        call_worklist.push_back([this, call] { AtomicCompareExchangeWeak(call); });
+                        break;
                     case core::BuiltinFn::kCountOneBits:
+                        call_worklist.push_back([this, call] {
+                            BitcastToIntOverloadCall(call);  // See crbug.com/tint/1550.
+                        });
+                        break;
                     case core::BuiltinFn::kDot4I8Packed:
+                        call_worklist.push_back([this, call] { Dot4I8Packed(call); });
+                        break;
                     case core::BuiltinFn::kDot4U8Packed:
+                        call_worklist.push_back([this, call] { Dot4U8Packed(call); });
+                        break;
                     case core::BuiltinFn::kFrexp:
+                        call_worklist.push_back([this, call] { Frexp(call); });
+                        break;
                     case core::BuiltinFn::kModf:
+                        call_worklist.push_back([this, call] { Modf(call); });
+                        break;
                     case core::BuiltinFn::kPack2X16Float:
+                        call_worklist.push_back([this, call] { Pack2x16Float(call); });
+                        break;
                     case core::BuiltinFn::kPack2X16Snorm:
+                        call_worklist.push_back([this, call] { Pack2x16Snorm(call); });
+                        break;
                     case core::BuiltinFn::kPack2X16Unorm:
+                        call_worklist.push_back([this, call] { Pack2x16Unorm(call); });
+                        break;
                     case core::BuiltinFn::kPack4X8Snorm:
+                        call_worklist.push_back([this, call] { Pack4x8Snorm(call); });
+                        break;
                     case core::BuiltinFn::kPack4X8Unorm:
+                        call_worklist.push_back([this, call] { Pack4x8Unorm(call); });
+                        break;
                     case core::BuiltinFn::kPack4XI8:
+                        call_worklist.push_back([this, call] { Pack4xI8(call); });
+                        break;
                     case core::BuiltinFn::kPack4XU8:
+                        call_worklist.push_back([this, call] { Pack4xU8(call); });
+                        break;
                     case core::BuiltinFn::kPack4XI8Clamp:
+                        call_worklist.push_back([this, call] { Pack4xI8Clamp(call); });
+                        break;
                     case core::BuiltinFn::kQuantizeToF16:
+                        call_worklist.push_back([this, call] { QuantizeToF16(call); });
+                        break;
                     case core::BuiltinFn::kReverseBits:
+                        call_worklist.push_back([this, call] {
+                            BitcastToIntOverloadCall(call);  // See crbug.com/tint/1550.
+                        });
+                        break;
                     case core::BuiltinFn::kSelect:
+                        call_worklist.push_back([this, call] { Select(call); });
+                        break;
                     case core::BuiltinFn::kSign:
+                        call_worklist.push_back([this, call] { Sign(call); });
+                        break;
                     case core::BuiltinFn::kSubgroupAnd:
                     case core::BuiltinFn::kSubgroupOr:
                     case core::BuiltinFn::kSubgroupXor:
+                        call_worklist.push_back([this, call] { BitcastToIntOverloadCall(call); });
+                        break;
                     case core::BuiltinFn::kSubgroupShuffleXor:
                     case core::BuiltinFn::kSubgroupShuffleUp:
                     case core::BuiltinFn::kSubgroupShuffleDown:
+                        call_worklist.push_back([this, call] { SubgroupShuffle(call); });
+                        break;
                     case core::BuiltinFn::kSubgroupInclusiveAdd:
                     case core::BuiltinFn::kSubgroupInclusiveMul:
+                        call_worklist.push_back([this, call] { SubgroupInclusive(call); });
+                        break;
                     case core::BuiltinFn::kTextureDimensions:
+                        call_worklist.push_back([this, call] { TextureDimensions(call); });
+                        break;
                     case core::BuiltinFn::kTextureGather:
+                        call_worklist.push_back([this, call] { TextureGather(call); });
+                        break;
                     case core::BuiltinFn::kTextureGatherCompare:
+                        call_worklist.push_back([this, call] { TextureGatherCompare(call); });
+                        break;
                     case core::BuiltinFn::kTextureLoad:
+                        call_worklist.push_back([this, call] { TextureLoad(call); });
+                        break;
                     case core::BuiltinFn::kTextureNumLayers:
+                        call_worklist.push_back([this, call] { TextureNumLayers(call); });
+                        break;
                     case core::BuiltinFn::kTextureNumLevels:
+                        call_worklist.push_back([this, call] { TextureNumLevels(call); });
+                        break;
                     case core::BuiltinFn::kTextureNumSamples:
+                        call_worklist.push_back([this, call] { TextureNumSamples(call); });
+                        break;
                     case core::BuiltinFn::kTextureSample:
+                        call_worklist.push_back([this, call] { TextureSample(call); });
+                        break;
                     case core::BuiltinFn::kTextureSampleBias:
+                        call_worklist.push_back([this, call] { TextureSampleBias(call); });
+                        break;
                     case core::BuiltinFn::kTextureSampleCompare:
                     case core::BuiltinFn::kTextureSampleCompareLevel:
+                        call_worklist.push_back([this, call] { TextureSampleCompare(call); });
+                        break;
                     case core::BuiltinFn::kTextureSampleGrad:
+                        call_worklist.push_back([this, call] { TextureSampleGrad(call); });
+                        break;
                     case core::BuiltinFn::kTextureSampleLevel:
+                        call_worklist.push_back([this, call] { TextureSampleLevel(call); });
+                        break;
                     case core::BuiltinFn::kTextureStore:
-                    case core::BuiltinFn::kUnpack2X16Float:
-                    case core::BuiltinFn::kUnpack2X16Snorm:
-                    case core::BuiltinFn::kUnpack2X16Unorm:
-                    case core::BuiltinFn::kUnpack4X8Snorm:
-                    case core::BuiltinFn::kUnpack4X8Unorm:
-                    case core::BuiltinFn::kUnpack4XI8:
-                    case core::BuiltinFn::kUnpack4XU8:
-                        call_worklist.Push(call);
+                        call_worklist.push_back([this, call] { TextureStore(call); });
                         break;
                     case core::BuiltinFn::kTrunc:
                         if (config.polyfill_trunc) {
-                            call_worklist.Push(call);
+                            call_worklist.push_back([this, call] { Trunc(call); });
                         }
+                        break;
+                    case core::BuiltinFn::kUnpack2X16Float:
+                        call_worklist.push_back([this, call] { Unpack2x16Float(call); });
+                        break;
+                    case core::BuiltinFn::kUnpack2X16Snorm:
+                        call_worklist.push_back([this, call] { Unpack2x16Snorm(call); });
+                        break;
+                    case core::BuiltinFn::kUnpack2X16Unorm:
+                        call_worklist.push_back([this, call] { Unpack2x16Unorm(call); });
+                        break;
+                    case core::BuiltinFn::kUnpack4X8Snorm:
+                        call_worklist.push_back([this, call] { Unpack4x8Snorm(call); });
+                        break;
+                    case core::BuiltinFn::kUnpack4X8Unorm:
+                        call_worklist.push_back([this, call] { Unpack4x8Unorm(call); });
+                        break;
+                    case core::BuiltinFn::kUnpack4XI8:
+                        call_worklist.push_back([this, call] { Unpack4xI8(call); });
+                        break;
+                    case core::BuiltinFn::kUnpack4XU8:
+                        call_worklist.push_back([this, call] { Unpack4xU8(call); });
                         break;
                     default:
                         break;
@@ -191,182 +303,8 @@ struct State {
         }
 
         // Replace the builtin calls that we found
-        for (auto* call : call_worklist) {
-            switch (call->Func()) {
-                case core::BuiltinFn::kAcosh:
-                    Acosh(call);
-                    break;
-                case core::BuiltinFn::kAsinh:
-                    Asinh(call);
-                    break;
-                case core::BuiltinFn::kAtanh:
-                    Atanh(call);
-                    break;
-                case core::BuiltinFn::kAtomicAdd:
-                    AtomicAdd(call);
-                    break;
-                case core::BuiltinFn::kAtomicSub:
-                    AtomicSub(call);
-                    break;
-                case core::BuiltinFn::kAtomicMin:
-                    AtomicMin(call);
-                    break;
-                case core::BuiltinFn::kAtomicMax:
-                    AtomicMax(call);
-                    break;
-                case core::BuiltinFn::kAtomicAnd:
-                    AtomicAnd(call);
-                    break;
-                case core::BuiltinFn::kAtomicOr:
-                    AtomicOr(call);
-                    break;
-                case core::BuiltinFn::kAtomicXor:
-                    AtomicXor(call);
-                    break;
-                case core::BuiltinFn::kAtomicLoad:
-                    AtomicLoad(call);
-                    break;
-                case core::BuiltinFn::kAtomicStore:
-                    AtomicStore(call);
-                    break;
-                case core::BuiltinFn::kAtomicExchange:
-                    AtomicExchange(call);
-                    break;
-                case core::BuiltinFn::kAtomicCompareExchangeWeak:
-                    AtomicCompareExchangeWeak(call);
-                    break;
-                case core::BuiltinFn::kCountOneBits:
-                    BitcastToIntOverloadCall(call);  // See crbug.com/tint/1550.
-                    break;
-                case core::BuiltinFn::kDot4I8Packed:
-                    Dot4I8Packed(call);
-                    break;
-                case core::BuiltinFn::kDot4U8Packed:
-                    Dot4U8Packed(call);
-                    break;
-                case core::BuiltinFn::kFrexp:
-                    Frexp(call);
-                    break;
-                case core::BuiltinFn::kModf:
-                    Modf(call);
-                    break;
-                case core::BuiltinFn::kPack2X16Float:
-                    Pack2x16Float(call);
-                    break;
-                case core::BuiltinFn::kPack2X16Snorm:
-                    Pack2x16Snorm(call);
-                    break;
-                case core::BuiltinFn::kPack2X16Unorm:
-                    Pack2x16Unorm(call);
-                    break;
-                case core::BuiltinFn::kPack4X8Snorm:
-                    Pack4x8Snorm(call);
-                    break;
-                case core::BuiltinFn::kPack4X8Unorm:
-                    Pack4x8Unorm(call);
-                    break;
-                case core::BuiltinFn::kPack4XI8:
-                    Pack4xI8(call);
-                    break;
-                case core::BuiltinFn::kPack4XU8:
-                    Pack4xU8(call);
-                    break;
-                case core::BuiltinFn::kPack4XI8Clamp:
-                    Pack4xI8Clamp(call);
-                    break;
-                case core::BuiltinFn::kQuantizeToF16:
-                    QuantizeToF16(call);
-                    break;
-                case core::BuiltinFn::kReverseBits:
-                    BitcastToIntOverloadCall(call);  // See crbug.com/tint/1550.
-                    break;
-                case core::BuiltinFn::kSelect:
-                    Select(call);
-                    break;
-                case core::BuiltinFn::kSign:
-                    Sign(call);
-                    break;
-                case core::BuiltinFn::kSubgroupAnd:
-                case core::BuiltinFn::kSubgroupOr:
-                case core::BuiltinFn::kSubgroupXor:
-                    BitcastToIntOverloadCall(call);
-                    break;
-                case core::BuiltinFn::kSubgroupShuffleXor:
-                case core::BuiltinFn::kSubgroupShuffleUp:
-                case core::BuiltinFn::kSubgroupShuffleDown:
-                    SubgroupShuffle(call);
-                    break;
-                case core::BuiltinFn::kSubgroupInclusiveAdd:
-                case core::BuiltinFn::kSubgroupInclusiveMul:
-                    SubgroupInclusive(call);
-                    break;
-                case core::BuiltinFn::kTextureDimensions:
-                    TextureDimensions(call);
-                    break;
-                case core::BuiltinFn::kTextureGather:
-                    TextureGather(call);
-                    break;
-                case core::BuiltinFn::kTextureGatherCompare:
-                    TextureGatherCompare(call);
-                    break;
-                case core::BuiltinFn::kTextureLoad:
-                    TextureLoad(call);
-                    break;
-                case core::BuiltinFn::kTextureNumLayers:
-                    TextureNumLayers(call);
-                    break;
-                case core::BuiltinFn::kTextureNumLevels:
-                    TextureNumLevels(call);
-                    break;
-                case core::BuiltinFn::kTextureNumSamples:
-                    TextureNumSamples(call);
-                    break;
-                case core::BuiltinFn::kTextureSample:
-                    TextureSample(call);
-                    break;
-                case core::BuiltinFn::kTextureSampleBias:
-                    TextureSampleBias(call);
-                    break;
-                case core::BuiltinFn::kTextureSampleCompare:
-                case core::BuiltinFn::kTextureSampleCompareLevel:
-                    TextureSampleCompare(call);
-                    break;
-                case core::BuiltinFn::kTextureSampleGrad:
-                    TextureSampleGrad(call);
-                    break;
-                case core::BuiltinFn::kTextureSampleLevel:
-                    TextureSampleLevel(call);
-                    break;
-                case core::BuiltinFn::kTextureStore:
-                    TextureStore(call);
-                    break;
-                case core::BuiltinFn::kTrunc:
-                    Trunc(call);
-                    break;
-                case core::BuiltinFn::kUnpack2X16Float:
-                    Unpack2x16Float(call);
-                    break;
-                case core::BuiltinFn::kUnpack2X16Snorm:
-                    Unpack2x16Snorm(call);
-                    break;
-                case core::BuiltinFn::kUnpack2X16Unorm:
-                    Unpack2x16Unorm(call);
-                    break;
-                case core::BuiltinFn::kUnpack4X8Snorm:
-                    Unpack4x8Snorm(call);
-                    break;
-                case core::BuiltinFn::kUnpack4X8Unorm:
-                    Unpack4x8Unorm(call);
-                    break;
-                case core::BuiltinFn::kUnpack4XI8:
-                    Unpack4xI8(call);
-                    break;
-                case core::BuiltinFn::kUnpack4XU8:
-                    Unpack4xU8(call);
-                    break;
-                default:
-                    TINT_IR_UNREACHABLE(ir);
-            }
+        for (auto& cb : call_worklist) {
+            cb();
         }
     }
 
