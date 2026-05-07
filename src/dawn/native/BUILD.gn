@@ -768,7 +768,7 @@ source_set("sources") {
       "webgpu/ToWGPU.h",
       "webgpu/WebGPUError.h",
     ]
-    deps += [ "${dawn_root}/src/dawn:serialization" ]
+    public_deps += [ "${dawn_root}/src/dawn:serialization" ]
   }
 
   if ((dawn_enable_opengl || dawn_enable_vulkan) &&

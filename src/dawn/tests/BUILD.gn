@@ -395,7 +395,6 @@ dawn_test("dawn_unittests") {
     "unittests/native/ObjectContentHasherTests.cpp",
     "unittests/native/SkipValidationTests.cpp",
     "unittests/native/StreamTests.cpp",
-    "unittests/replay/CaptureWalkerTests.cpp",
     "unittests/validation/BindGroupValidationTests.cpp",
     "unittests/validation/BufferValidationTests.cpp",
     "unittests/validation/CommandBufferValidationTests.cpp",
@@ -489,6 +488,10 @@ dawn_test("dawn_unittests") {
 
   if (dawn_enable_d3d12) {
     sources += [ "unittests/d3d12/CopySplitTests.cpp" ]
+  }
+
+  if (dawn_enable_webgpu_on_webgpu) {
+    sources += [ "unittests/replay/CaptureWalkerTests.cpp" ]
   }
 
   sources += [
