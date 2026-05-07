@@ -1,44 +1,100 @@
 SKIP: FAILED
+
+//
+// DXC compilation bug around i26 type created during clang passes
+// https://github.com/microsoft/DirectXShaderCompiler/issues/8421
+//
+
 struct fs_outputs {
   float4 tint_symbol : SV_Target0;
 };
 
 
 Texture2D<float4> tint_resource_table_array[] : register(t51, space43);
-SamplerState tint_resource_table_array_1[] : register(s51, space44);
+Texture2D tint_resource_table_array_1[] : register(t51, space45);
+SamplerState tint_resource_table_array_2[] : register(s51, space46);
 ByteAddressBuffer tint_resource_table_metadata : register(t52, space42);
 float4 fs_inner() {
   bool v = false;
   if ((2u < tint_resource_table_metadata.Load(0u))) {
-    v = (tint_resource_table_metadata.Load(12u) == 5u);
+    uint3 v_1 = uint3((tint_resource_table_metadata.Load(12u)).xxx);
+    v = any((v_1 == uint3(6u, 7u, 34u)));
   } else {
     v = false;
   }
-  uint v_1 = 0u;
-  if (v) {
-    v_1 = 2u;
+  bool v_2 = v;
+  uint v_3 = 0u;
+  if (v_2) {
+    v_3 = tint_resource_table_metadata.Load(12u);
   } else {
-    v_1 = (0u + tint_resource_table_metadata.Load(0u));
+    v_3 = 6u;
   }
-  uint v_2 = v_1;
-  bool v_3 = false;
-  if ((3u < tint_resource_table_metadata.Load(0u))) {
-    v_3 = (tint_resource_table_metadata.Load(16u) == 33u);
-  } else {
-    v_3 = false;
-  }
+  uint texture_kind = v_3;
   uint v_4 = 0u;
-  if (v_3) {
-    v_4 = 3u;
+  if (v_2) {
+    v_4 = 2u;
   } else {
-    v_4 = (1u + tint_resource_table_metadata.Load(0u));
+    v_4 = (0u + tint_resource_table_metadata.Load(0u));
   }
   uint v_5 = v_4;
-  return tint_resource_table_array[v_2].Sample(tint_resource_table_array_1[v_5], (0.0f).xx);
+  bool v_6 = false;
+  if ((3u < tint_resource_table_metadata.Load(0u))) {
+    uint2 v_7 = uint2((tint_resource_table_metadata.Load(16u)).xx);
+    v_6 = any((v_7 == uint2(40u, 41u)));
+  } else {
+    v_6 = false;
+  }
+  bool v_8 = v_6;
+  uint v_9 = 0u;
+  if (v_8) {
+    v_9 = tint_resource_table_metadata.Load(16u);
+  } else {
+    v_9 = 41u;
+  }
+  uint sampler_kind = v_9;
+  uint v_10 = 0u;
+  if (v_8) {
+    v_10 = 3u;
+  } else {
+    v_10 = (4u + tint_resource_table_metadata.Load(0u));
+  }
+  uint v_11 = v_10;
+  bool v_12 = false;
+  if ((sampler_kind == 40u)) {
+    bool v_13 = false;
+    switch(texture_kind) {
+      default:
+      {
+        v_13 = false;
+        break;
+      }
+      case 1u:
+      case 6u:
+      case 11u:
+      case 16u:
+      case 21u:
+      case 26u:
+      {
+        v_13 = true;
+        break;
+      }
+    }
+    v_12 = v_13;
+  } else {
+    v_12 = true;
+  }
+  float4 v_14 = (0.0f).xxxx;
+  if (v_12) {
+    v_14 = tint_resource_table_array[v_5].Sample(tint_resource_table_array_2[v_11], (0.0f).xx);
+  } else {
+    uint v_15 = (4u + tint_resource_table_metadata.Load(0u));
+    v_14 = tint_resource_table_array[v_5].Sample(tint_resource_table_array_2[v_15], (0.0f).xx);
+  }
+  return v_14;
 }
 
 fs_outputs fs() {
-  fs_outputs v_6 = {fs_inner()};
-  return v_6;
+  fs_outputs v_16 = {fs_inner()};
+  return v_16;
 }
 
