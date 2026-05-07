@@ -1978,3 +1978,10 @@ implicit(N: num, T: scalar) fn select(vec<N, bool>, vec<N, T>, vec<N, T>) -> vec
   fn Splat<SM: subgroup_matrix<K, S, C, R> >(value: i32) -> SM
 @stage("compute") implicit(K: subgroup_matrix_kind, S: u8, C: num, R: num)
   fn Splat<SM: subgroup_matrix<K, S, C, R> >(value: u32) -> SM
+
+@member_function @stage("compute") implicit(K: subgroup_matrix_kind, S: subgroup_matrix_component_types, C: num, R: num)
+  fn Store(subgroup_matrix<K, S, C, R>,
+           byte_address_buffer<writable>,
+           offset: u32,
+           stride: u32,
+           matrix_layout)
