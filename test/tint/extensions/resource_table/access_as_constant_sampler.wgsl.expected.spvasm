@@ -1,8 +1,7 @@
-SKIP: FAILED
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 83
+; Bound: 163
 ; Schema: 0
                OpCapability Shader
                OpCapability RuntimeDescriptorArray
@@ -16,11 +15,18 @@ SKIP: FAILED
                OpName %tint_resource_table_metadata "tint_resource_table_metadata"
                OpName %fs_loc0_Output "fs_loc0_Output"
                OpName %fs_inner "fs_inner"
+               OpName %tint_storage_metadata_length "tint_storage_metadata_length"
+               OpName %texture_kind "texture_kind"
+               OpName %tint_storage_metadata_length_0 "tint_storage_metadata_length"
+               OpName %sampler_kind "sampler_kind"
+               OpName %use_sampler "use_sampler"
                OpName %fs "fs"
                OpDecorate %1 DescriptorSet 43
                OpDecorate %1 Binding 51
                OpDecorate %6 DescriptorSet 43
                OpDecorate %6 Binding 51
+               OpDecorate %9 DescriptorSet 43
+               OpDecorate %9 Binding 51
                OpMemberDecorate %tint_resource_table_metadata_struct_tint_explicit_layout 0 Offset 0
                OpDecorate %_runtimearr_uint ArrayStride 4
                OpMemberDecorate %tint_resource_table_metadata_struct_tint_explicit_layout 1 Offset 4
@@ -34,10 +40,13 @@ SKIP: FAILED
 %_runtimearr_4 = OpTypeRuntimeArray %4
 %_ptr_UniformConstant__runtimearr_4 = OpTypePointer UniformConstant %_runtimearr_4
           %1 = OpVariable %_ptr_UniformConstant__runtimearr_4 UniformConstant
-          %9 = OpTypeSampler
-%_runtimearr_9 = OpTypeRuntimeArray %9
-%_ptr_UniformConstant__runtimearr_9 = OpTypePointer UniformConstant %_runtimearr_9
-          %6 = OpVariable %_ptr_UniformConstant__runtimearr_9 UniformConstant
+%_runtimearr_4_0 = OpTypeRuntimeArray %4
+%_ptr_UniformConstant__runtimearr_4_0 = OpTypePointer UniformConstant %_runtimearr_4_0
+          %6 = OpVariable %_ptr_UniformConstant__runtimearr_4_0 UniformConstant
+         %12 = OpTypeSampler
+%_runtimearr_12 = OpTypeRuntimeArray %12
+%_ptr_UniformConstant__runtimearr_12 = OpTypePointer UniformConstant %_runtimearr_12
+          %9 = OpVariable %_ptr_UniformConstant__runtimearr_12 UniformConstant
        %uint = OpTypeInt 32 0
 %_runtimearr_uint = OpTypeRuntimeArray %uint
 %tint_resource_table_metadata_struct_tint_explicit_layout = OpTypeStruct %uint %_runtimearr_uint
@@ -46,89 +55,206 @@ SKIP: FAILED
     %v4float = OpTypeVector %float 4
 %_ptr_Output_v4float = OpTypePointer Output %v4float
 %fs_loc0_Output = OpVariable %_ptr_Output_v4float Output
-         %19 = OpTypeFunction %v4float
+         %22 = OpTypeFunction %v4float
         %int = OpTypeInt 32 1
       %int_0 = OpConstant %int 0
+      %int_1 = OpConstant %int 1
 %_ptr_StorageBuffer_uint = OpTypePointer StorageBuffer %uint
      %uint_0 = OpConstant %uint 0
        %bool = OpTypeBool
       %false = OpConstantFalse %bool
+     %uint_6 = OpConstant %uint 6
 %_ptr_UniformConstant_4 = OpTypePointer UniformConstant %4
-      %int_1 = OpConstant %int 1
-%_ptr_UniformConstant_9 = OpTypePointer UniformConstant %9
-         %63 = OpTypeSampledImage %4
-    %v2float = OpTypeVector %float 2
-         %65 = OpConstantNull %v2float
+    %uint_41 = OpConstant %uint 41
+%_ptr_UniformConstant_12 = OpTypePointer UniformConstant %12
+    %uint_40 = OpConstant %uint 40
+       %true = OpConstantTrue %bool
      %uint_1 = OpConstant %uint 1
-     %uint_5 = OpConstant %uint 5
-    %uint_33 = OpConstant %uint 33
+     %v3uint = OpTypeVector %uint 3
+     %uint_7 = OpConstant %uint 7
+    %uint_34 = OpConstant %uint 34
+     %v3bool = OpTypeVector %bool 3
+     %v2uint = OpTypeVector %uint 2
+     %v2bool = OpTypeVector %bool 2
+     %uint_4 = OpConstant %uint 4
+        %122 = OpTypeSampledImage %4
+    %v2float = OpTypeVector %float 2
+        %123 = OpConstantNull %v2float
+    %uint_11 = OpConstant %uint 11
+    %uint_16 = OpConstant %uint 16
+    %uint_21 = OpConstant %uint 21
+    %uint_26 = OpConstant %uint 26
        %void = OpTypeVoid
-         %80 = OpTypeFunction %void
-   %fs_inner = OpFunction %v4float None %19
-         %20 = OpLabel
-         %21 = OpBitcast %uint %int_0
-         %24 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
-         %27 = OpLoad %uint %24 None
-         %28 = OpULessThan %bool %21 %27
-               OpSelectionMerge %30 None
-               OpBranchConditional %28 %31 %32
-         %31 = OpLabel
-         %67 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %21
-         %69 = OpLoad %uint %67 None
-         %34 = OpIEqual %bool %69 %uint_5
-               OpBranch %30
-         %32 = OpLabel
-               OpBranch %30
-         %30 = OpLabel
-         %33 = OpPhi %bool %34 %31 %false %32
-               OpSelectionMerge %36 None
-               OpBranchConditional %33 %37 %38
-         %37 = OpLabel
-               OpBranch %36
-         %38 = OpLabel
-         %71 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
-         %72 = OpLoad %uint %71 None
-         %40 = OpIAdd %uint %uint_0 %72
-               OpBranch %36
+        %160 = OpTypeFunction %void
+   %fs_inner = OpFunction %v4float None %22
+         %23 = OpLabel
+         %24 = OpBitcast %uint %int_0
+         %27 = OpBitcast %uint %int_1
+%tint_storage_metadata_length = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
+         %32 = OpLoad %uint %tint_storage_metadata_length None
+         %33 = OpULessThan %bool %24 %32
+               OpSelectionMerge %35 None
+               OpBranchConditional %33 %36 %37
          %36 = OpLabel
-         %39 = OpPhi %uint %21 %37 %40 %38
-         %41 = OpAccessChain %_ptr_UniformConstant_4 %1 %39
-         %43 = OpLoad %4 %41 None
-         %44 = OpBitcast %uint %int_1
-         %46 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
-         %47 = OpLoad %uint %46 None
-         %48 = OpULessThan %bool %44 %47
-               OpSelectionMerge %49 None
-               OpBranchConditional %48 %50 %51
-         %50 = OpLabel
-         %73 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %44
-         %74 = OpLoad %uint %73 None
-         %53 = OpIEqual %bool %74 %uint_33
-               OpBranch %49
-         %51 = OpLabel
-               OpBranch %49
+         %92 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %24
+         %94 = OpLoad %uint %92 None
+         %96 = OpCompositeConstruct %v3uint %94 %94 %94
+         %97 = OpCompositeConstruct %v3uint %uint_6 %uint_7 %uint_34
+        %100 = OpIEqual %v3bool %96 %97
+         %39 = OpAny %bool %100
+               OpBranch %35
+         %37 = OpLabel
+               OpBranch %35
+         %35 = OpLabel
+         %38 = OpPhi %bool %39 %36 %false %37
+               OpSelectionMerge %41 None
+               OpBranchConditional %38 %42 %43
+         %42 = OpLabel
+        %102 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %24
+         %45 = OpLoad %uint %102 None
+               OpBranch %41
+         %43 = OpLabel
+               OpBranch %41
+         %41 = OpLabel
+%texture_kind = OpPhi %uint %45 %42 %uint_6 %43
+               OpSelectionMerge %47 None
+               OpBranchConditional %38 %48 %49
+         %48 = OpLabel
+               OpBranch %47
          %49 = OpLabel
-         %52 = OpPhi %bool %53 %50 %false %51
-               OpSelectionMerge %54 None
-               OpBranchConditional %52 %55 %56
-         %55 = OpLabel
-               OpBranch %54
-         %56 = OpLabel
-         %76 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
-         %77 = OpLoad %uint %76 None
-         %58 = OpIAdd %uint %uint_1 %77
-               OpBranch %54
-         %54 = OpLabel
-         %57 = OpPhi %uint %44 %55 %58 %56
-         %59 = OpAccessChain %_ptr_UniformConstant_9 %6 %57
-         %61 = OpLoad %9 %59 None
-         %62 = OpSampledImage %63 %43 %61
-         %64 = OpImageSampleImplicitLod %v4float %62 %65 None
-               OpReturnValue %64
-               OpFunctionEnd
-         %fs = OpFunction %void None %80
+        %103 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
+        %104 = OpLoad %uint %103 None
+         %51 = OpIAdd %uint %uint_0 %104
+               OpBranch %47
+         %47 = OpLabel
+         %50 = OpPhi %uint %24 %48 %51 %49
+         %52 = OpAccessChain %_ptr_UniformConstant_4 %1 %50
+         %54 = OpLoad %4 %52 None
+%tint_storage_metadata_length_0 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
+         %56 = OpLoad %uint %tint_storage_metadata_length_0 None
+         %57 = OpULessThan %bool %27 %56
+               OpSelectionMerge %58 None
+               OpBranchConditional %57 %59 %60
+         %59 = OpLabel
+        %105 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %27
+        %106 = OpLoad %uint %105 None
+        %108 = OpCompositeConstruct %v2uint %106 %106
+        %109 = OpCompositeConstruct %v2uint %uint_40 %uint_41
+        %110 = OpIEqual %v2bool %108 %109
+         %62 = OpAny %bool %110
+               OpBranch %58
+         %60 = OpLabel
+               OpBranch %58
+         %58 = OpLabel
+         %61 = OpPhi %bool %62 %59 %false %60
+               OpSelectionMerge %63 None
+               OpBranchConditional %61 %64 %65
+         %64 = OpLabel
+        %112 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %27
+         %67 = OpLoad %uint %112 None
+               OpBranch %63
+         %65 = OpLabel
+               OpBranch %63
+         %63 = OpLabel
+%sampler_kind = OpPhi %uint %67 %64 %uint_41 %65
+               OpSelectionMerge %69 None
+               OpBranchConditional %61 %70 %71
+         %70 = OpLabel
+               OpBranch %69
+         %71 = OpLabel
+        %113 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
+        %114 = OpLoad %uint %113 None
+         %73 = OpIAdd %uint %uint_4 %114
+               OpBranch %69
+         %69 = OpLabel
+         %72 = OpPhi %uint %27 %70 %73 %71
+         %74 = OpAccessChain %_ptr_UniformConstant_12 %9 %72
+         %76 = OpLoad %12 %74 None
+         %77 = OpIEqual %bool %sampler_kind %uint_40
+               OpSelectionMerge %79 None
+               OpBranchConditional %77 %80 %81
+         %80 = OpLabel
+        %116 = OpIEqual %bool %texture_kind %uint_1
+               OpSelectionMerge %82 None
+               OpBranchConditional %116 %117 %118
+        %117 = OpLabel
+               OpBranch %82
+        %118 = OpLabel
+        %131 = OpIEqual %bool %texture_kind %uint_6
+               OpSelectionMerge %119 None
+               OpBranchConditional %131 %132 %133
+        %132 = OpLabel
+               OpBranch %119
+        %133 = OpLabel
+        %136 = OpIEqual %bool %texture_kind %uint_11
+               OpSelectionMerge %134 None
+               OpBranchConditional %136 %138 %139
+        %138 = OpLabel
+               OpBranch %134
+        %139 = OpLabel
+        %142 = OpIEqual %bool %texture_kind %uint_16
+               OpSelectionMerge %140 None
+               OpBranchConditional %142 %144 %145
+        %144 = OpLabel
+               OpBranch %140
+        %145 = OpLabel
+        %148 = OpIEqual %bool %texture_kind %uint_21
+               OpSelectionMerge %146 None
+               OpBranchConditional %148 %150 %151
+        %150 = OpLabel
+               OpBranch %146
+        %151 = OpLabel
+        %154 = OpIEqual %bool %texture_kind %uint_26
+               OpSelectionMerge %152 None
+               OpBranchConditional %154 %156 %157
+        %156 = OpLabel
+               OpBranch %152
+        %157 = OpLabel
+               OpBranch %152
+        %152 = OpLabel
+        %153 = OpPhi %bool %true %156 %false %157
+               OpBranch %146
+        %146 = OpLabel
+        %147 = OpPhi %bool %true %150 %153 %152
+               OpBranch %140
+        %140 = OpLabel
+        %141 = OpPhi %bool %true %144 %147 %146
+               OpBranch %134
+        %134 = OpLabel
+        %135 = OpPhi %bool %true %138 %141 %140
+               OpBranch %119
+        %119 = OpLabel
+        %120 = OpPhi %bool %true %132 %135 %134
+               OpBranch %82
+         %82 = OpLabel
+         %85 = OpPhi %bool %true %117 %120 %119
+               OpBranch %79
          %81 = OpLabel
-         %82 = OpFunctionCall %v4float %fs_inner
-               OpStore %fs_loc0_Output %82 None
+               OpBranch %79
+         %79 = OpLabel
+%use_sampler = OpPhi %bool %true %81 %85 %82
+               OpSelectionMerge %86 None
+               OpBranchConditional %use_sampler %87 %88
+         %87 = OpLabel
+        %121 = OpSampledImage %122 %54 %76
+         %90 = OpImageSampleImplicitLod %v4float %121 %123 None
+               OpBranch %86
+         %88 = OpLabel
+        %125 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
+        %126 = OpLoad %uint %125 None
+        %127 = OpIAdd %uint %uint_4 %126
+        %128 = OpAccessChain %_ptr_UniformConstant_12 %9 %127
+        %129 = OpLoad %12 %128 None
+        %130 = OpSampledImage %122 %54 %129
+         %91 = OpImageSampleImplicitLod %v4float %130 %123 None
+               OpBranch %86
+         %86 = OpLabel
+         %89 = OpPhi %v4float %90 %87 %91 %88
+               OpReturnValue %89
+               OpFunctionEnd
+         %fs = OpFunction %void None %160
+        %161 = OpLabel
+        %162 = OpFunctionCall %v4float %fs_inner
+               OpStore %fs_loc0_Output %162 None
                OpReturn
                OpFunctionEnd
