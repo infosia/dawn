@@ -45,6 +45,7 @@
 #include "dawn/native/Instance.h"
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/RenderPipeline.h"
+#include "dawn/native/ResourceTable.h"
 #include "dawn/native/ResourceTableDefaultResources.h"
 #include "dawn/native/Serializable.h"
 #include "dawn/native/TintUtils.h"
@@ -135,17 +136,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     // The first VkDescriptorSetLayout is the one for the resource table if needed and pushes the
     // bindings for all other bindgroups by 1.
     BindGroupIndex startOfBindGroups{0};
-    std::optional<tint::ResourceTableConfig> resourceTableConfig = std::nullopt;
     if (in.layout->UsesResourceTable()) {
         startOfBindGroups = BindGroupIndex(1);
-
-        auto bindingTypeOrder = ResourceTableDefaultResources::GetOrder();
-        resourceTableConfig = tint::ResourceTableConfig{
-            .resource_table_binding = tint::BindingPoint(0, 1),
-            .storage_buffer_binding = tint::BindingPoint(0, 0),
-            .default_binding_type_order = {bindingTypeOrder.begin(), bindingTypeOrder.end()},
-            .binding_to_resource_type = {},
-        };
     }
 
     auto ToWGSLBindPoint = [](BindGroupIndex group, BindingNumber binding) -> tint::BindingPoint {
@@ -160,6 +152,32 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             .binding = uint32_t{index},
         };
     };
+
+    std::optional<tint::ResourceTableConfig> resourceTableConfig = std::nullopt;
+    if (in.layout->UsesResourceTable()) {
+        std::unordered_map<tint::BindingPoint, tint::ResourceType> binding_to_resource_type;
+
+        for (BindGroupIndex group : in.layout->GetBindGroupLayoutsMask()) {
+            const BindGroupLayoutInternalBase* bgl = in.layout->GetBindGroupLayout(group);
+
+            for (const auto& [bindingNumber, apiBindingIndex] : bgl->GetBindingMap()) {
+                tint::BindingPoint dstBindingPoint =
+                    ToSPIRVBindPoint(group, bgl->AsBindingIndex(apiBindingIndex));
+                tint::ResourceType type =
+                    BindingLayoutToResourceType(bgl->GetAPIBindingInfo(apiBindingIndex));
+                binding_to_resource_type.emplace(dstBindingPoint, type);
+            }
+        }
+
+        auto bindingTypeOrder = ResourceTableDefaultResources::GetOrder();
+        resourceTableConfig = tint::ResourceTableConfig{
+            .resource_table_binding = tint::BindingPoint(0, 1),
+            .storage_buffer_binding = tint::BindingPoint(0, 0),
+            .default_binding_type_order = {bindingTypeOrder.begin(), bindingTypeOrder.end()},
+            .binding_to_resource_type = binding_to_resource_type,
+        };
+    }
+
     tint::Bindings bindings =
         GenerateBindingRemapping(in.layout, in.stage->metadata->stage, ToSPIRVBindPoint);
 
