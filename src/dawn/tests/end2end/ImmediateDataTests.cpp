@@ -957,8 +957,7 @@ class ImmediateDataWithResourceTableTests : public DawnTest {
 // between pipelines, even if the resource table itself doesn't change.
 // The VVL will complain if the resource table is not correctly rebound (with
 // --enable-backend-validation).
-// TODO(507087794): Re-enable with new filterability rules
-TEST_P(ImmediateDataWithResourceTableTests, DISABLED_ResourceTableReboundOnDifferentImmediateSize) {
+TEST_P(ImmediateDataWithResourceTableTests, ResourceTableReboundOnDifferentImmediateSize) {
     wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
         device, {{0, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage}});
 
