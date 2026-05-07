@@ -34,6 +34,7 @@
 #include "src/tint/lang/hlsl/builtin_fn.h"
 #include "src/tint/lang/hlsl/ir/member_builtin_call.h"
 #include "src/tint/lang/hlsl/type/byte_address_buffer.h"
+#include "src/tint/lang/hlsl/type/matrix_layout.h"
 
 namespace tint::hlsl::writer::raise {
 namespace {
@@ -266,6 +267,45 @@ struct State {
             b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), BuiltinFn::kInterlockedExchange,
                                                       var, OffsetToValue(offset), args[1],
                                                       original_value);
+        });
+        call->Destroy();
+    }
+
+    core::ir::Value* MatrixLayout(type::MatrixLayoutEnum value) {
+        return b.Constant(ir.constant_values.Get<core::constant::Scalar<u32>>(
+            ty.Get<type::MatrixLayout>(), u32(value)));
+    }
+
+    void SubgroupMatrixStore(core::ir::Var* var,
+                             core::ir::CoreBuiltinCall* call,
+                             OffsetData offset) {
+        auto args = call->Args();
+        auto* call_offset = args[1];
+        auto* value = args[2];
+        auto* col_major = args[3];
+        auto* stride = args[4];
+
+        auto* sm = value->Type()->As<core::type::SubgroupMatrix>();
+        TINT_IR_ASSERT(ir, sm);
+
+        b.InsertBefore(call, [&] {
+            UpdateOffsetData(call_offset, sm->Type()->Size(), &offset);
+
+            auto* const_col_major = col_major->As<core::ir::Constant>();
+            TINT_IR_ASSERT(ir, const_col_major);
+            auto* layout = MatrixLayout(const_col_major->Value()->ValueAs<bool>()
+                                            ? type::MatrixLayoutEnum::kColMajor
+                                            : type::MatrixLayoutEnum::kRowMajor);
+
+            // TODO(crbug.com/490062439): This will need to be updated if we change stride.
+            uint32_t bytes_per_element = sm->Type()->Size();
+            if (auto* cnst = stride->As<core::ir::Constant>()) {
+                stride = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() * bytes_per_element));
+            } else {
+                stride = b.Multiply(stride, u32(bytes_per_element))->Result();
+            }
+            b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), BuiltinFn::kStore, value, var,
+                                                      OffsetToValue(offset), stride, layout);
         });
         call->Destroy();
     }
@@ -748,6 +788,9 @@ struct State {
                         case core::BuiltinFn::kAtomicLoad:
                             AtomicLoad(var, call, offset);
                             break;
+                        case core::BuiltinFn::kSubgroupMatrixStore:
+                            SubgroupMatrixStore(var, call, offset);
+                            break;
                         default:
                             TINT_IR_UNREACHABLE(ir) << call->Func();
                     }
@@ -814,6 +857,7 @@ struct State {
 Result<SuccessType> DecomposeStorageAccess(core::ir::Module& ir) {
     core::ir::AssertValid(ir,
                           core::ir::Capabilities{
+                              core::ir::Capability::kAllow8BitIntegers,
                               core::ir::Capability::kAllow16BitIntegers,
                               core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
                               core::ir::Capability::kAllowDuplicateBindings,
