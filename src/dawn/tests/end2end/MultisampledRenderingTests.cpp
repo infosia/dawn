@@ -279,6 +279,14 @@ class MultisampledRenderingTest : public DawnTest {
                           /* tolerance */ utils::RGBA8(1, 1, 1, 1));
     }
 
+    template <typename Callback>
+    void ExpectLazyClears(size_t expectedLazyClearCount, Callback callback) {
+        size_t lazyClearsBefore = native::GetLazyClearCountForTesting(device.Get());
+        callback();
+        size_t lazyClearsAfter = native::GetLazyClearCountForTesting(device.Get());
+        EXPECT_EQ(expectedLazyClearCount, lazyClearsAfter - lazyClearsBefore);
+    }
+
     constexpr static uint32_t kWidth = 3;
     constexpr static uint32_t kHeight = 3;
     constexpr static uint32_t kSampleCount = 4;
@@ -1741,7 +1749,8 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
         const std::vector<Point>& points,
         wgpu::LoadOp loadOp,
         const wgpu::Color& initialColor,
-        const std::optional<wgpu::Color>& userDrawColor = std::nullopt) {
+        const std::optional<wgpu::Color>& userDrawColor = std::nullopt,
+        const std::optional<size_t>& expectedLazyClearCount = std::nullopt) {
         DAWN_TEST_UNSUPPORTED_IF(
             !SupportsFeatures({wgpu::FeatureName::DawnPartialLoadResolveTexture}));
 
@@ -1806,7 +1815,11 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
         }
 
         wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
-        queue.Submit(1, &commandBuffer);
+        if (expectedLazyClearCount.has_value()) {
+            ExpectLazyClears(*expectedLazyClearCount, [&] { queue.Submit(1, &commandBuffer); });
+        } else {
+            queue.Submit(1, &commandBuffer);
+        }
 
         VerifyPoints(points);
         // When no user drawing is performed (userDrawColor is not set) verify the entire MSAA
@@ -2903,6 +2916,52 @@ TEST_P(DawnLoadResolveTextureTest, ExpandResolveDifferentNonZeroOffsetsWithSmall
 TEST_P(DawnLoadResolveTextureTest, ClearThenPartialResolve) {
     TestLoadOrClearThenPartialResolve(wgpu::LoadOp::Clear, /*initialColor*/ kRed,
                                       /*userDrawColor*/ kGreen);
+}
+
+// Test that RenderPassDescriptorResolveRect works when only one dimension is smaller than the
+// render pass. This exercises the D3D12 path that must still initialize the untouched regions of
+// the resolve target before issuing ResolveSubresourceRegion.
+TEST_P(DawnLoadResolveTextureTest, ClearThenPartialResolveWithWidthOnlySubRect) {
+    DAWN_TEST_UNSUPPORTED_IF(!IsD3D12() || IsWebGPUOnWebGPU());
+
+    constexpr wgpu::Color kBlack = {0.0f, 0.0f, 0.0f, 0.0f};
+
+    wgpu::RenderPassDescriptorResolveRect rect{};
+    rect.colorOffsetX = 1;
+    rect.colorOffsetY = 0;
+    rect.resolveOffsetX = 2;
+    rect.resolveOffsetY = 1;
+    rect.width = 1;
+    rect.height = 3;
+
+    std::vector<Point> points = {
+        {1, 1, kBlack}, {2, 0, kBlack}, {2, 1, kRed}, {2, 2, kRed}, {2, 3, kRed}, {3, 2, kBlack},
+    };
+
+    TestLoadOrClearThenPartialResolve(rect, points, wgpu::LoadOp::Clear, kRed, std::nullopt, 1u);
+}
+
+// Test that RenderPassDescriptorResolveRect works when only one dimension is smaller than the
+// render pass. This exercises the D3D12 path that must still initialize the untouched regions of
+// the resolve target before issuing ResolveSubresourceRegion.
+TEST_P(DawnLoadResolveTextureTest, ClearThenPartialResolveWithHeightOnlySubRect) {
+    DAWN_TEST_UNSUPPORTED_IF(!IsD3D12() || IsWebGPUOnWebGPU());
+
+    constexpr wgpu::Color kBlack = {0.0f, 0.0f, 0.0f, 0.0f};
+
+    wgpu::RenderPassDescriptorResolveRect rect{};
+    rect.colorOffsetX = 0;
+    rect.colorOffsetY = 1;
+    rect.resolveOffsetX = 1;
+    rect.resolveOffsetY = 2;
+    rect.width = 3;
+    rect.height = 1;
+
+    std::vector<Point> points = {
+        {1, 1, kBlack}, {0, 2, kBlack}, {1, 2, kRed}, {2, 2, kRed}, {3, 2, kRed}, {2, 3, kBlack},
+    };
+
+    TestLoadOrClearThenPartialResolve(rect, points, wgpu::LoadOp::Clear, kRed, std::nullopt, 1u);
 }
 
 // Test that RenderPassDescriptorResolveRect works with wgpu::LoadOp::Load.
