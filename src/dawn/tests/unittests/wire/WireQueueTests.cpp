@@ -46,7 +46,6 @@ namespace {
 using testing::_;
 using testing::EmptySizedString;
 using testing::InvokeWithoutArgs;
-using testing::Ne;
 using testing::NonEmptySizedString;
 using testing::Return;
 using testing::Sequence;
@@ -220,7 +219,7 @@ TEST_P(WireQueueTests, OnSubmittedWorkDoneInsideCallbackBeforeDisconnect) {
 }
 
 // Test releasing the default queue, then its device. Both should be released when the device is
-// released since the device holds a reference to the queue. Regresssion test for crbug.com/1332926.
+// released since the device holds a reference to the queue. Regression test for crbug.com/1332926.
 TEST_F(WireQueueTests, DefaultQueueThenDeviceReleased) {
     // Note: The test fixture gets the default queue.
 
@@ -239,7 +238,7 @@ TEST_F(WireQueueTests, DefaultQueueThenDeviceReleased) {
 }
 
 // Test the device, then its default queue. The default queue should be released when its external
-// reference is dropped since releasing the device drops the internal reference. Regresssion test
+// reference is dropped since releasing the device drops the internal reference. Regression test
 // for crbug.com/1332926.
 TEST_F(WireQueueTests, DeviceThenDefaultQueueReleased) {
     // Note: The test fixture gets the default queue.

@@ -467,10 +467,8 @@ class Vector {
     /// Copy constructor with covariance / const conversion
     /// @param other the vector to copy
     /// @see CanReinterpretSlice for rules about conversion
-    template <typename U,
-              size_t N2,
-              ReinterpretMode MODE,
-              typename = std::enable_if_t<CanReinterpretSlice<MODE, T, U>>>
+    template <typename U, size_t N2, ReinterpretMode MODE>
+        requires(CanReinterpretSlice<MODE, T, U>)
     Vector(const Vector<U, N2>& other) {  // NOLINT(runtime/explicit)
         Copy(other.impl_.slice);
     }
@@ -478,10 +476,8 @@ class Vector {
     /// Move constructor with covariance / const conversion
     /// @param other the vector to move
     /// @see CanReinterpretSlice for rules about conversion
-    template <typename U,
-              size_t N2,
-              ReinterpretMode MODE,
-              typename = std::enable_if_t<CanReinterpretSlice<MODE, T, U>>>
+    template <typename U, size_t N2, ReinterpretMode MODE>
+        requires(CanReinterpretSlice<MODE, T, U>)
     Vector(Vector<U, N2>&& other) {  // NOLINT(runtime/explicit)
         Move(std::move(other));
     }
@@ -1252,8 +1248,8 @@ class VectorRef {
     TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// Copy constructor with covariance / const conversion
     /// @param other the other vector reference
-    template <typename U,
-              typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
+    template <typename U>
+        requires(CanReinterpretSlice<ReinterpretMode::kSafe, T, U>)
     VectorRef(const VectorRef<U>& other)  // NOLINT(runtime/explicit)
         : local_slice_{std::span<T>{Bitcast<T*>(other.begin()), other.Capacity()}, other.Length()},
           slice_(other.slice_ == &other.local_slice_ ? &local_slice_
@@ -1265,8 +1261,8 @@ class VectorRef {
     TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// Move constructor with covariance / const conversion
     /// @param other the vector reference
-    template <typename U,
-              typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
+    template <typename U>
+        requires(CanReinterpretSlice<ReinterpretMode::kSafe, T, U>)
     VectorRef(VectorRef<U>&& other)  // NOLINT(runtime/explicit)
         : local_slice_{std::span<T>{Bitcast<T*>(other.begin()), other.Capacity()}, other.Length()},
           slice_(other.slice_ == &other.local_slice_ ? &local_slice_
@@ -1279,9 +1275,8 @@ class VectorRef {
     /// Constructor from a Vector with covariance / const conversion
     /// @param vector the vector to create a reference of
     /// @see CanReinterpretSlice for rules about conversion
-    template <typename U,
-              size_t N,
-              typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
+    template <typename U, size_t N>
+        requires(CanReinterpretSlice<ReinterpretMode::kSafe, T, U>)
     VectorRef(const Vector<U, N>& vector)  // NOLINT(runtime/explicit)
         : slice_(reinterpret_cast<internal::Slice<T>*>(
               const_cast<internal::Slice<U>*>(&vector.impl_.slice))) {}
@@ -1289,9 +1284,8 @@ class VectorRef {
     /// Constructor from a moved Vector with covariance / const conversion
     /// @param vector the vector to create a reference of
     /// @see CanReinterpretSlice for rules about conversion
-    template <typename U,
-              size_t N,
-              typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
+    template <typename U, size_t N>
+        requires(CanReinterpretSlice<ReinterpretMode::kSafe, T, U>)
     VectorRef(Vector<U, N>&& vector)  // NOLINT(runtime/explicit)
         : slice_(reinterpret_cast<internal::Slice<T>*>(&vector.impl_.slice)),
           can_move_(vector.impl_.CanMove()) {}

@@ -41,7 +41,6 @@
 
 using testing::_;
 using testing::AnyOf;
-using testing::ByMove;
 using testing::Eq;
 using testing::HasSubstr;
 using testing::Return;

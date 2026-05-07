@@ -79,20 +79,16 @@ void Serialize(CaptureContext& context, const std::array<T, N>& a) {
 
 // Serialize for enum types with uint32_t or uint64_t underlying type.
 template <typename T>
-void Serialize(CaptureContext& s,
-               T value,
-               typename std::enable_if<
-                   std::is_enum<T>::value &&
-                       (std::is_same<typename std::underlying_type<T>::type, uint32_t>::value ||
-                        std::is_same<typename std::underlying_type<T>::type, uint64_t>::value),
-                   void>::type* = nullptr) {
+    requires(std::is_enum_v<T> && (std::is_same_v<typename std::underlying_type_t<T>, uint32_t> ||
+                                   std::is_same_v<typename std::underlying_type_t<T>, uint64_t>))
+void Serialize(CaptureContext& s, T value) {
     return WriteBytes(s, &value, sizeof(T));
 }
 
 // Helper to call Serialize on a parameter pack.
 template <typename T, typename... Ts>
-constexpr auto Serialize(CaptureContext& s, const T& v, const Ts&... vs)
-    -> std::enable_if_t<(sizeof...(Ts) > 0) || !std::is_enum_v<T>, void> {
+    requires((sizeof...(Ts) > 0) || !std::is_enum_v<T>)
+void Serialize(CaptureContext& s, const T& v, const Ts&... vs) {
     Serialize(s, v);
     Serialize(s, vs...);
 }

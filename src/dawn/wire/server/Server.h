@@ -199,8 +199,8 @@ class Server : public ServerBase {
     // Flushes the command serialized from server->client if spontaneous callbacks are enabled.
     void Flush();
 
-    template <typename T,
-              typename Enable = std::enable_if<std::is_base_of<CallbackUserdata, T>::value>>
+    template <typename T>
+        requires(std::is_base_of_v<CallbackUserdata, T>)
     std::unique_ptr<T> MakeUserdata() {
         return std::unique_ptr<T>(new T(mSelf, mProcs));
     }

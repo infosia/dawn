@@ -76,8 +76,8 @@ class StringStream {
     /// Emit `value` to the stream
     /// @param value the value to emit
     /// @returns a reference to this
-    template <typename T,
-              typename std::enable_if_t<std::is_integral_v<std::decay_t<T>>, bool> = true>
+    template <typename T>
+        requires(std::is_integral_v<std::decay_t<T>>)
     StringStream& operator<<(T&& value) {
         return EmitValue(std::forward<T>(value));
     }
@@ -103,8 +103,8 @@ class StringStream {
     /// Emit `value` to the stream
     /// @param value the value to emit
     /// @returns a reference to this
-    template <typename T,
-              typename std::enable_if_t<std::is_floating_point_v<std::decay_t<T>>, bool> = true>
+    template <typename T>
+        requires(std::is_floating_point_v<std::decay_t<T>>)
     StringStream& operator<<(T&& value) {
         return EmitFloat(std::forward<T>(value));
     }
@@ -171,27 +171,28 @@ class StringStream {
     /// The callback to emit a `endl` to the stream
     using StdEndl = std::ostream& (*)(std::ostream&);
 
-    /// @param manipulator the callback to emit too
+    /// @param manipulator the callback to emit to
     /// @returns a reference to this
     StringStream& operator<<(StdEndl manipulator) {
-        // call the function, and return it's value
+        // call the function, and return its value
         manipulator(sstream_);
         return *this;
     }
 
-    /// @param manipulator the callback to emit too
+    /// @param manipulator the callback to emit to
     /// @returns a reference to this
     StringStream& operator<<(decltype(std::hex) manipulator) {
-        // call the function, and return it's value
+        // call the function, and return its value
         manipulator(sstream_);
         return *this;
     }
 
     /// @param value the value to emit
     /// @returns a reference to this
-    template <typename T, typename std::enable_if_t<IsSetType<T>, int> = 0>
+    template <typename T>
+        requires(IsSetType<T>)
     StringStream& operator<<(T&& value) {
-        // call the function, and return it's value
+        // call the function, and return its value
         sstream_ << std::forward<T>(value);
         return *this;
     }

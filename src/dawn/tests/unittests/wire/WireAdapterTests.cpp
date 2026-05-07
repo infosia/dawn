@@ -52,7 +52,6 @@ using testing::InvokeWithoutArgs;
 using testing::IsNull;
 using testing::NonEmptySizedString;
 using testing::NotNull;
-using testing::Return;
 using testing::SizedString;
 using testing::WithArg;
 
