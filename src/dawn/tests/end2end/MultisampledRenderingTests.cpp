@@ -30,7 +30,6 @@
 #include <vector>
 
 #include "dawn/common/Assert.h"
-#include "dawn/native/DawnNative.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
@@ -1636,6 +1635,11 @@ struct Point {
 
 class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
   protected:
+    static constexpr uint32_t kPartialResolveMSAAWidth = 3;
+    static constexpr uint32_t kPartialResolveMSAAHeight = 3;
+    static constexpr uint32_t kPartialResolveWidth = 4;
+    static constexpr uint32_t kPartialResolveHeight = 4;
+
     void SetUp() override {
         MultisampledRenderingTest::SetUp();
 
@@ -1745,26 +1749,21 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
         DAWN_TEST_UNSUPPORTED_IF(
             !SupportsFeatures({wgpu::FeatureName::DawnPartialLoadResolveTexture}));
 
-        constexpr uint32_t msaaWidth = 3;
-        constexpr uint32_t msaaHeight = 3;
-        constexpr uint32_t resolveWidth = 4;
-        constexpr uint32_t resolveHeight = 4;
-
         auto multiSampledTexture =
             CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
                                              /*transientAttachment=*/false,
                                              /*supportsTextureBinding=*/false,
                                              /*supportsCopyDst=*/false,
-                                             /*width*/ msaaWidth,
-                                             /*height*/ msaaHeight);
+                                             /*width*/ kPartialResolveMSAAWidth,
+                                             /*height*/ kPartialResolveMSAAHeight);
         auto multiSampledTextureView = multiSampledTexture.CreateView();
 
         mResolveTexture =
             CreateTextureForRenderAttachment(kColorFormat, 1, 1, 1, /*transientAttachment=*/false,
                                              /*supportsTextureBinding=*/true,
                                              /*supportsCopyDst=*/false,
-                                             /*width*/ resolveWidth,
-                                             /*height*/ resolveHeight);
+                                             /*width*/ kPartialResolveWidth,
+                                             /*height*/ kPartialResolveHeight);
         auto singleSampledTextureView = mResolveTexture.CreateView();
 
         wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
@@ -1823,6 +1822,25 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
             VerifyResolveTarget(point.color, texture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
                                 /*msaaCoverage=*/point.msaaCoverage, /*x=*/point.x, /*y=*/point.y);
         }
+    }
+
+    std::vector<Point> MakeExpectedResolvePointsForRect(
+        const wgpu::RenderPassDescriptorResolveRect& rect,
+        const wgpu::Color& resolvedColor,
+        const wgpu::Color& untouchedColor) {
+        std::vector<Point> points;
+        points.reserve(kPartialResolveWidth * kPartialResolveHeight);
+
+        for (uint32_t y = 0; y < kPartialResolveHeight; ++y) {
+            for (uint32_t x = 0; x < kPartialResolveWidth; ++x) {
+                const bool inResolveRect =
+                    x >= rect.resolveOffsetX && x < rect.resolveOffsetX + rect.width &&
+                    y >= rect.resolveOffsetY && y < rect.resolveOffsetY + rect.height;
+                points.push_back({x, y, inResolveRect ? resolvedColor : untouchedColor});
+            }
+        }
+
+        return points;
     }
 
     // Verify the points of an MSAA teture.
@@ -2903,6 +2921,42 @@ TEST_P(DawnLoadResolveTextureTest, ExpandResolveDifferentNonZeroOffsetsWithSmall
 TEST_P(DawnLoadResolveTextureTest, ClearThenPartialResolve) {
     TestLoadOrClearThenPartialResolve(wgpu::LoadOp::Clear, /*initialColor*/ kRed,
                                       /*userDrawColor*/ kGreen);
+}
+
+// Test that RenderPassDescriptorResolveRect works when only one dimension is smaller than the
+// render pass and that pixels outside the resolve rect remain zeroed.
+TEST_P(DawnLoadResolveTextureTest, ClearThenPartialResolveWithWidthOnlySubRect) {
+    constexpr wgpu::Color kBlack = {0.0f, 0.0f, 0.0f, 0.0f};
+
+    wgpu::RenderPassDescriptorResolveRect rect{};
+    rect.colorOffsetX = 1;
+    rect.colorOffsetY = 0;
+    rect.resolveOffsetX = 2;
+    rect.resolveOffsetY = 1;
+    rect.width = 1;
+    rect.height = 3;
+
+    std::vector<Point> points = MakeExpectedResolvePointsForRect(rect, kRed, kBlack);
+
+    TestLoadOrClearThenPartialResolve(rect, points, wgpu::LoadOp::Clear, kRed);
+}
+
+// Test that RenderPassDescriptorResolveRect works when only one dimension is smaller than the
+// render pass and that pixels outside the resolve rect remain zeroed.
+TEST_P(DawnLoadResolveTextureTest, ClearThenPartialResolveWithHeightOnlySubRect) {
+    constexpr wgpu::Color kBlack = {0.0f, 0.0f, 0.0f, 0.0f};
+
+    wgpu::RenderPassDescriptorResolveRect rect{};
+    rect.colorOffsetX = 0;
+    rect.colorOffsetY = 1;
+    rect.resolveOffsetX = 1;
+    rect.resolveOffsetY = 2;
+    rect.width = 3;
+    rect.height = 1;
+
+    std::vector<Point> points = MakeExpectedResolvePointsForRect(rect, kRed, kBlack);
+
+    TestLoadOrClearThenPartialResolve(rect, points, wgpu::LoadOp::Clear, kRed);
 }
 
 // Test that RenderPassDescriptorResolveRect works with wgpu::LoadOp::Load.
