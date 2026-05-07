@@ -1,4 +1,3 @@
-SKIP: FAILED
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
@@ -59,11 +58,11 @@ SKIP: FAILED
       %int_1 = OpConstant %int 1
      %uint_1 = OpConstant %uint 1
      %v2uint = OpTypeVector %uint 2
-    %uint_34 = OpConstant %uint 34
-    %uint_33 = OpConstant %uint 33
+    %uint_40 = OpConstant %uint 40
+    %uint_41 = OpConstant %uint 41
      %v2bool = OpTypeVector %bool 2
 %_ptr_StorageBuffer_uint_0 = OpTypePointer StorageBuffer %uint
-    %uint_35 = OpConstant %uint 35
+    %uint_42 = OpConstant %uint 42
          %fs = OpFunction %void None %18
          %19 = OpLabel
          %20 = OpBitcast %uint %int_0
@@ -76,7 +75,7 @@ SKIP: FAILED
          %49 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %20
          %51 = OpLoad %uint %49 None
          %53 = OpCompositeConstruct %v2uint %51 %51
-         %54 = OpCompositeConstruct %v2uint %uint_34 %uint_33
+         %54 = OpCompositeConstruct %v2uint %uint_40 %uint_41
          %57 = OpIEqual %v2bool %53 %54
          %33 = OpAny %bool %57
                OpBranch %29
@@ -103,7 +102,7 @@ SKIP: FAILED
          %43 = OpLabel
          %64 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %37
          %65 = OpLoad %uint %64 None
-         %46 = OpIEqual %bool %65 %uint_35
+         %46 = OpIEqual %bool %65 %uint_42
                OpBranch %42
          %44 = OpLabel
                OpBranch %42
