@@ -33,8 +33,8 @@
 #include <string_view>
 #include <vector>
 
+#include "dawn/replay/CaptureWalker.h"
 #include "dawn/replay/Replay.h"
-#include "src/dawn/replay/CaptureWalker.h"
 
 namespace dawn::replay {
 

@@ -32,9 +32,9 @@
 #include <memory>
 #include <vector>
 
+#include "dawn/replay/CaptureWalker.h"
 #include "dawn/replay/ReadHead.h"
 #include "dawn/replay/Replay.h"
-#include "src/dawn/replay/CaptureWalker.h"
 
 namespace dawn::replay {
 

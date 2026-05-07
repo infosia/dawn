@@ -54,9 +54,11 @@ static_library("replay") {
   deps = [
     "${dawn_root}/include/dawn:cpp_headers",
     "${dawn_root}/src/dawn:proc",
-    "${dawn_root}/src/dawn:serialization",
     "${dawn_root}/src/dawn/common",
   ]
 
-  public_deps = [ "${dawn_root}:abseil" ]
+  public_deps = [
+    "${dawn_root}:abseil",
+    "${dawn_root}/src/dawn:serialization",
+  ]
 }
