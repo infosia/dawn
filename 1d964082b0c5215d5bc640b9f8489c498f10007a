@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93d9fea9_bb8ee367",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-07T19:23:10Z",
+      "side": 1,
+      "message": "FYI, gofmt is intionally non-configurable/opionated, https://github.com/golang/go/issues/40028",
+      "revId": "1d964082b0c5215d5bc640b9f8489c498f10007a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
