@@ -1883,9 +1883,9 @@
         "tags": ["dawn", "art"],
         "members": [
             {"name": "primaries", "type": "color space primaries dawn"},
-            {"name": "transfer", "type": "color space transfer dawn"},
-            {"name": "y cb cr range", "type": "color space y cb cr range dawn"},
-            {"name": "y cb cr matrix", "type": "color space y cb cr matrix dawn"}
+            {"name": "transfer", "type": "color space transfer dawn", "default": "identity"},
+            {"name": "y cb cr range", "type": "color space y cb cr range dawn", "default": "identity"},
+            {"name": "y cb cr matrix", "type": "color space y cb cr matrix dawn", "default": "identity"}
         ]
     },
     "status": {

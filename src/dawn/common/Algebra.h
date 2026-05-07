@@ -276,6 +276,18 @@ class Matrix {
 
     constexpr bool operator==(const Self& other) const = default;
 
+    constexpr Self operator*(const Scalar& s) const {
+        Self result;
+        for (size_t i = 0; i < Cols; i++) {
+            result[i] = data[i] * s;
+        }
+        return result;
+    }
+    constexpr Self& operator*=(const Scalar& other) {
+        *this = *this * other;
+        return *this;
+    }
+
     constexpr Self operator/(const Scalar& s) const {
         Self result;
         for (size_t i = 0; i < Cols; i++) {

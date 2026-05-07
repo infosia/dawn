@@ -25,9 +25,11 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <algorithm>
 #include <string>
 #include <vector>
 
+#include "dawn/common/Enumerator.h"
 #include "dawn/common/ExternalTextureParams.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
@@ -244,6 +246,74 @@ class ExternalTextureTestsBase : public Parent {
         this->queue.Submit(1, &commands);
 
         return texture;
+    }
+
+    void CheckColorSpaceConversion(wgpu::ColorSpaceDawn srcColorSpace,
+                                   wgpu::PredefinedColorSpace dstColorSpace,
+                                   wgpu::Color srcColor,
+                                   std::array<float, 3> expectedColor) {
+        // Create the external texture from the color spaces and srcColor.
+        wgpu::Texture srcTexture =
+            MakeTestTexture(wgpu::TextureFormat::RGBA16Float, 1, 1, srcColor);
+
+        ExternalTextureColorSpaceParams colorSpaceParams;
+        wgpu::Status status =
+            ComputeExternalTextureParams(srcColorSpace, dstColorSpace, &colorSpaceParams);
+        DAWN_ASSERT(status == wgpu::Status::Success);
+
+        wgpu::ExternalTextureDescriptor etDesc;
+        etDesc.plane0 = srcTexture.CreateView();
+        etDesc.yuvToRgbConversionMatrix = colorSpaceParams.yuvToRgbConversionMatrix.data();
+        etDesc.gamutConversionMatrix = colorSpaceParams.gamutConversionMatrix.data();
+        etDesc.srcTransferFunctionParameters = colorSpaceParams.srcTransferFunction.data();
+        etDesc.dstTransferFunctionParameters = colorSpaceParams.dstTransferFunction.data();
+        etDesc.cropOrigin = {0, 0};
+        etDesc.cropSize = {srcTexture.GetWidth(), srcTexture.GetHeight()};
+        etDesc.apparentSize = {srcTexture.GetWidth(), srcTexture.GetHeight()};
+        wgpu::ExternalTexture externalTexture = this->device.CreateExternalTexture(&etDesc);
+
+        // Create the test pipeline that will just load the single texel of the ExternalTexture.
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = utils::CreateShaderModule(this->device, R"(
+            @group(0) @binding(0) var t : texture_external;
+            @group(0) @binding(1) var<storage, read_write> results : vec4f;
+
+            @compute @workgroup_size(1) fn main() {
+                results = textureLoad(t, vec2(0));
+            }
+        )");
+        wgpu::ComputePipeline pipeline = this->device.CreateComputePipeline(&csDesc);
+
+        // Run the pipeline and store results in a buffer.
+        wgpu::BufferDescriptor resultDesc = {
+            .usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc,
+            .size = sizeof(uint32_t) + 256,
+        };
+        wgpu::Buffer resultBuffer = this->device.CreateBuffer(&resultDesc);
+
+        wgpu::BindGroup bindGroup =
+            utils::MakeBindGroup(this->device, pipeline.GetBindGroupLayout(0),
+                                 {{0, externalTexture}, {1, resultBuffer}});
+
+        wgpu::CommandEncoder encoder = this->device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetBindGroup(0, bindGroup);
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        this->queue.Submit(1, &commands);
+
+        // Check that we got the expected values. Make the tolerance 1% of the maximum expected
+        // value as some of them can get somewhat large. (so a hardcoded .01 is too small).
+        float tolerance = 0;
+        for (auto [_, value] : Enumerate(expectedColor)) {
+            tolerance = std::max(tolerance, std::abs(value) * 0.01f);
+        }
+
+        EXPECT_BUFFER_FLOAT_RANGE_TOLERANCE_EQ(expectedColor.data(), resultBuffer, 0, 3, tolerance);
+        EXPECT_BUFFER_FLOAT_EQ(1.0, resultBuffer, 12);
     }
 
     static constexpr uint32_t kWidth = 4;
@@ -1927,6 +1997,53 @@ TEST_P(ExternalTextureTests, UseExternalTextureWithDynamicOffset) {
         EXPECT_BUFFER_RGBA8_EQ(utils::RGBA8(1, 2, 3, 4), resultBuffer, offset);
         EXPECT_BUFFER_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), resultBuffer, 256 - offset);
     }
+}
+
+// Test that the color conversion from PQ to sRGBLinear works as expected.
+TEST_P(ExternalTextureTests, ColorSpaceConversion_PQ_sRGBLinear) {
+    // https://apps.colorjs.io/convert/?color=color(rec2100-pq%200.4%200.2%200.1)&precision=5
+    CheckColorSpaceConversion(
+        {
+            .primaries = wgpu::ColorSpacePrimariesDawn::Rec2020,
+            .transfer = wgpu::ColorSpaceTransferDawn::PQ,
+        },
+        wgpu::PredefinedColorSpace::SRGBLinear, {0.4, 0.2, 0.1, 1},
+        {0.25826747, -0.00636454, -0.00231619});
+
+    // https://apps.colorjs.io/convert/?color=color(rec2100-pq%200.5%200.6%200.9)&precision=5
+    CheckColorSpaceConversion(
+        {
+            .primaries = wgpu::ColorSpacePrimariesDawn::Rec2020,
+            .transfer = wgpu::ColorSpaceTransferDawn::PQ,
+        },
+        wgpu::PredefinedColorSpace::SRGBLinear, {0.5, 0.6, 0.9, 1}, {-1.3534, 1.1445, 21.395});
+}
+
+// Test that the color conversion from HLG to sRGBLinear works as expected.
+TEST_P(ExternalTextureTests, ColorSpaceConversion_HLG_sRGBLinear) {
+    // https://apps.colorjs.io/convert/?color=color(rec2100-hlg%200.4%200.2%200.1)&precision=5
+    CheckColorSpaceConversion(
+        {
+            .primaries = wgpu::ColorSpacePrimariesDawn::Rec2020,
+            .transfer = wgpu::ColorSpaceTransferDawn::HLG,
+        },
+        wgpu::PredefinedColorSpace::SRGBLinear, {0.4, 0.2, 0.1, 1}, {0.30376, 0.03184, 0.00536});
+
+    // https://apps.colorjs.io/convert/?color=color(rec2100-hlg%200.5%200.6%200.9)&precision=5
+    CheckColorSpaceConversion(
+        {
+            .primaries = wgpu::ColorSpacePrimariesDawn::Rec2020,
+            .transfer = wgpu::ColorSpaceTransferDawn::HLG,
+        },
+        wgpu::PredefinedColorSpace::SRGBLinear, {0.5, 0.6, 0.9, 1}, {0.0784, 0.48979, 2.4025});
+
+    // Check that media white (1) is at HLG 0.75
+    CheckColorSpaceConversion(
+        {
+            .primaries = wgpu::ColorSpacePrimariesDawn::Rec2020,
+            .transfer = wgpu::ColorSpaceTransferDawn::HLG,
+        },
+        wgpu::PredefinedColorSpace::SRGBLinear, {0.75, 0.75, 0.75, 1}, {1, 1, 1});
 }
 
 // TODO(https://crbug.com/468988322): Add tests of ExternalTextures being used with a resource table
