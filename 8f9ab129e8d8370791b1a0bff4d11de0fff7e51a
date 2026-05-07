@@ -33,6 +33,29 @@
       "message": "To avoid confusion: I originally marked resolved comments as Acknowledge, but they should have been marked Done instead.",
       "revId": "8f9ab129e8d8370791b1a0bff4d11de0fff7e51a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d517335_6f33135a",
+        "filename": "DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-07T14:24:41Z",
+      "side": 1,
+      "message": "Am pretty sure this will break our Linux/Mac builds. Launched CQ to show this.",
+      "range": {
+        "startLine": 388,
+        "startChar": 73,
+        "endLine": 388,
+        "endChar": 113
+      },
+      "revId": "8f9ab129e8d8370791b1a0bff4d11de0fff7e51a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
