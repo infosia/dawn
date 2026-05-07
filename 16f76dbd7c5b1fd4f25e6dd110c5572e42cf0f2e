@@ -405,6 +405,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "215418ce_ea7c4f86",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-07T10:23:41Z",
+      "side": 1,
+      "message": "Thanks for your helpful advice! I\u0027ve updated the code as suggested.\nHowever, I found that loading Agility SDK DLLs from the local D3D12 directory still requires Developer Mode, even with CreateDeviceFactory.",
+      "parentUuid": "6c4b47ad_879a9657",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 78,
+        "endChar": 44
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "158155e6_7415cdb0",
         "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
         "patchSetId": 8
