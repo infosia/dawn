@@ -16,6 +16,8 @@
                OpName %tint_resource_table_metadata_struct_tint_explicit_layout "tint_resource_table_metadata_struct_tint_explicit_layout"
                OpName %tint_resource_table_metadata "tint_resource_table_metadata"
                OpName %fs "fs"
+               OpName %tint_storage_metadata_length "tint_storage_metadata_length"
+               OpName %tint_storage_metadata_length_0 "tint_storage_metadata_length"
                OpMemberDecorate %o_block 0 Offset 0
                OpDecorate %o_block Block
                OpDecorate %1 DescriptorSet 0
@@ -66,8 +68,8 @@
          %fs = OpFunction %void None %18
          %19 = OpLabel
          %20 = OpBitcast %uint %int_0
-         %23 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
-         %26 = OpLoad %uint %23 None
+%tint_storage_metadata_length = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
+         %26 = OpLoad %uint %tint_storage_metadata_length None
          %27 = OpULessThan %bool %20 %26
                OpSelectionMerge %29 None
                OpBranchConditional %27 %30 %31
@@ -94,8 +96,8 @@
                OpBranch %35
          %35 = OpLabel
          %37 = OpBitcast %uint %int_1
-         %39 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
-         %40 = OpLoad %uint %39 None
+%tint_storage_metadata_length_0 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
+         %40 = OpLoad %uint %tint_storage_metadata_length_0 None
          %41 = OpULessThan %bool %37 %40
                OpSelectionMerge %42 None
                OpBranchConditional %41 %43 %44
