@@ -16,6 +16,57 @@
       "message": "PTAL!",
       "revId": "62ca27e0b680f05439a947460f4286d21df2ae2c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c17e5fe3_bbc1daef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-07T16:01:09Z",
+      "side": 1,
+      "message": "LGTM! Two comments.",
+      "revId": "62ca27e0b680f05439a947460f4286d21df2ae2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be2a6723_fe32ddbf",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-07T16:01:09Z",
+      "side": 1,
+      "message": "Looks like the comment got cut off mid-",
+      "revId": "62ca27e0b680f05439a947460f4286d21df2ae2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd9d3cd1_a3beb2b7",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-07T16:01:09Z",
+      "side": 1,
+      "message": "What\u0027s the reason for not just putting 0.5 here?",
+      "revId": "62ca27e0b680f05439a947460f4286d21df2ae2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
