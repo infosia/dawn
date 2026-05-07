@@ -48,6 +48,7 @@ type bool
 type u16
 type i32
 type u32
+type u64
 type f32
 type f16
 type ptr<S: address_space, T, A: access>
@@ -1080,6 +1081,14 @@ implicit(N: num, T: scalar) fn select(vec<N, bool>, vec<N, T>, vec<N, T>) -> vec
                                     offset: u32,
                                      value: iu32,
                             original_value: ptr<function, iu32, read_write>)
+
+@member_function fn InterlockedMax64(byte_address_buffer<read_write>,
+                                    offset: iu32,
+                                     value: u64)
+
+@member_function fn InterlockedMin64(byte_address_buffer<read_write>,
+                                    offset: iu32,
+                                     value: u64)
 
 @member_function fn Sample(texture: texture_1d<f32>,
                            sampler: sampler,

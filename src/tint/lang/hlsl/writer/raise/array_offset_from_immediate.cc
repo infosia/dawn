@@ -133,6 +133,8 @@ struct State {
                         case hlsl::BuiltinFn::kInterlockedAdd:
                         case hlsl::BuiltinFn::kInterlockedMax:
                         case hlsl::BuiltinFn::kInterlockedMin:
+                        case hlsl::BuiltinFn::kInterlockedMax64:
+                        case hlsl::BuiltinFn::kInterlockedMin64:
                         case hlsl::BuiltinFn::kInterlockedAnd:
                         case hlsl::BuiltinFn::kInterlockedOr:
                         case hlsl::BuiltinFn::kInterlockedXor:
