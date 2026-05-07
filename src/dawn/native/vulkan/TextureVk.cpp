@@ -2159,7 +2159,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
             DAWN_ASSERT(device->HasFeature(Feature::OpaqueYCbCrAndroidForExternalTexture));
 
             yCbCr = StaticSamplerSpecialization::GetYCbCrForTextureView(
-                static_cast<VkFormat>(stmContents->GetYCbCrVkDesc().vkFormat),
+                device, static_cast<VkFormat>(stmContents->GetYCbCrVkDesc().vkFormat),
                 stmContents->GetYCbCrVkDesc().externalFormat);
         }
 

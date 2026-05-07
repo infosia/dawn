@@ -166,7 +166,8 @@ MaybeError ValidateExternalTextureDescriptor(const DeviceBase* device,
 }
 
 namespace {
-ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescriptor* descriptor) {
+ExternalTextureParams ComputeExternalTextureParams(const DeviceBase* device,
+                                                   const ExternalTextureDescriptor* descriptor) {
     using math::Mat3x2f;
     using math::Mat3x3f;
     using math::Vec2f;
@@ -198,8 +199,24 @@ ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescript
 
     // Vulkan's YCbCr sampling returns components in Cb, Y, Cr, 1 order while yMat expect Y, Cb,
     // Cr, 1. Reorder them by appending a "swizzling" matrix first.
+    // TODO(https://crbug.com/497675620): Replace this specialization in the frontend with a way to
+    // ask the backend how to modify the matrix for this specific texture. This will be useful both
+    // to undo the swizzle, remove the
     if (descriptor->plane0->GetTexture()->GetFormat().format ==
         wgpu::TextureFormat::OpaqueYCbCrAndroid) {
+        if (device->IsToggleEnabled(Toggle::VulkanReplaceRGBModelConversionWithYCbCrIdentity)) {
+            // The difference between RGB_IDENTITY and YCBCR_IDENTITY are that the UV planes have
+            // values between [-0.5, 0.5], see kYCbCrRange_Full. Do the inverse transform to keep
+            // the total transform equal to yuvToRgbConversionMatrix.
+            constexpr math::Mat4x4f kYCbCrToRGB = {
+                {1, 0, 0, 0},
+                {0, 1, 0, 128.0 / 255.0},
+                {0, 0, 1, 128.0 / 255.0},
+                {0, 0, 0, 1},
+            };
+            yMat = math::Mul(kYCbCrToRGB, yMat);
+        }
+
         constexpr math::Mat4x4f kUndoVulkanSwizzle = {
             {0, 1, 0, 0},
             {0, 0, 1, 0},
@@ -371,7 +388,7 @@ ResultOrError<Ref<BufferBase>> MakeParamsBufferForSimpleView(DeviceBase* device,
     desc.dstTransferFunctionParameters = placeholderConstantArray.data();
     desc.gamutConversionMatrix = placeholderConstantArray.data();
 
-    ExternalTextureParams params = ComputeExternalTextureParams(&desc);
+    ExternalTextureParams params = ComputeExternalTextureParams(device, &desc);
     return utils::CreateBufferFromData(device, "Dawn_Simple_Texture_View_Params_Buffer",
                                        wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst,
                                        {params});
@@ -417,7 +434,7 @@ MaybeError ExternalTextureBase::Initialize(DeviceBase* device,
 
     // We must create a buffer to store parameters needed by a shader that operates on this
     // external texture.
-    ExternalTextureParams params = ComputeExternalTextureParams(descriptor);
+    ExternalTextureParams params = ComputeExternalTextureParams(device, descriptor);
     DAWN_TRY_ASSIGN(mParamsBuffer,
                     utils::CreateBufferFromData(
                         device, "Dawn_External_Texture_Params_Buffer",

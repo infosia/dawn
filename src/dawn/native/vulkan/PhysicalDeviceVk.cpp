@@ -1036,6 +1036,13 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::VulkanIncompletePipelineCacheWorkaround, true);
     }
 
+    if (IsAndroidSamsung()) {
+        // Samsung Xclipse GPU driver appear to sample chroma channels as 0 when using
+        // VkSamplerYCbCrConversion of RGB_IDENTITY so we need to use YCBCR_IDENTITY instead.
+        // TODO(https://crbug.com/505806584): Gate on the driver version once it is fixed.
+        deviceToggles->Default(Toggle::VulkanReplaceRGBModelConversionWithYCbCrIdentity, true);
+    }
+
     if (gpu_info::IsImgTec(GetVendorId())) {
         // crbug.com/443906252: Polyfill for case switch with large ranges.
         deviceToggles->Default(Toggle::VulkanPolyfillSwitchWithIf, true);
