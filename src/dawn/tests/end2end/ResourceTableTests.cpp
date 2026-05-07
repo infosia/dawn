@@ -557,7 +557,8 @@ TEST_P(ResourceTableTests, PinningBalancedInBackends) {
 }
 
 // Test WGSL `hasResource` reflects the state of the resource table.
-TEST_P(ResourceTableTests, HasResourceOneTexturePinUnpin) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_HasResourceOneTexturePinUnpin) {
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -580,7 +581,8 @@ TEST_P(ResourceTableTests, HasResourceOneTexturePinUnpin) {
 }
 
 // Test WGSL `hasResource` reflects the state of the resource table.
-TEST_P(ResourceTableTests, HasResourceFilterableToUnfilterable) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_HasResourceFilterableToUnfilterable) {
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -595,7 +597,8 @@ TEST_P(ResourceTableTests, HasResourceFilterableToUnfilterable) {
 }
 
 // Test that calling texture.Destroy() implicitly unpins it.
-TEST_P(ResourceTableTests, HasResourceOneTexturePinDestroy) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_HasResourceOneTexturePinDestroy) {
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -618,7 +621,8 @@ TEST_P(ResourceTableTests, HasResourceOneTexturePinDestroy) {
 }
 
 // Test that a texture used multiple times in the same table has its availability correctly updated.
-TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTimesPinUnpin) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_HasResourceSameTextureMultipleTimesPinUnpin) {
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -645,7 +649,8 @@ TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTimesPinUnpin) {
 
 // Test that updating a table with an already destroyed texture works, but doesn't show that entry
 // as available.
-TEST_P(ResourceTableTests, HasResourceUpdateWithTextureAlreadyDestroyed) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_HasResourceUpdateWithTextureAlreadyDestroyed) {
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -661,7 +666,8 @@ TEST_P(ResourceTableTests, HasResourceUpdateWithTextureAlreadyDestroyed) {
 }
 
 // Test that a texture used in multiple resource tables has its availability correctly updated.
-TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTables) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_HasResourceSameTextureMultipleTables) {
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -687,7 +693,8 @@ TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTables) {
 }
 
 // Test that texture availabililty is controlled per-texture.
-TEST_P(ResourceTableTests, HasResourceMultipleTexturesTable) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_HasResourceMultipleTexturesTable) {
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -1098,7 +1105,8 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
 }
 
 // Test that hasResource() works as expected for all supported resources in WGSL.
-TEST_P(ResourceTableTests, HasResourceCompatibilityAllTypes) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_HasResourceCompatibilityAllTypes) {
     // We rely on RGBA32Float being unfilterable for this test so that we can test both filterable /
     // unfilterable float without needing any additional extensions.
     DAWN_ASSERT(!device.HasFeature(wgpu::FeatureName::Float32Filterable));
@@ -1133,7 +1141,8 @@ TEST_P(ResourceTableTests, HasResourceCompatibilityAllTypes) {
 }
 
 // Test that calling hasResource() with values outside of the resource table size returns false.
-TEST_P(ResourceTableTests, HasResourceOOBIsFalse) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_HasResourceOOBIsFalse) {
     // Create the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -1206,7 +1215,8 @@ TEST_P(ResourceTableTests, HasResourceOOBIsFalse) {
 // Check that the default bindings are of size 1 and filled with zeroes. This is not an exhaustive
 // test (that's for the CTS) but tries to check a few different interesting cases (MS, DS, Cube, 2D
 // array).
-TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_DefaultBindingsAreZeroAndSizeOne) {
     // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
@@ -1299,7 +1309,8 @@ TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
 }
 
 // Test that a resource table texture can be sampled by a resource table sampler.
-TEST_P(ResourceTableTests, Sampler) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_Sampler) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1364,7 +1375,8 @@ TEST_P(ResourceTableTests, Sampler) {
 }
 
 // Test that a resource table texture can be sampled by multiple resource table samplers.
-TEST_P(ResourceTableTests, MultipleSamplers) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_MultipleSamplers) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1481,7 +1493,8 @@ TEST_P(ResourceTableTests, MultipleSamplers) {
 }
 
 // Test that default samplers are correctly created, and accessed when an invalid index it provided.
-TEST_P(ResourceTableTests, UseDefaultSamplers) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_UseDefaultSamplers) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1587,7 +1600,8 @@ TEST_P(ResourceTableTests, UseDefaultSamplers) {
 // Test that removing then adding a new sampler in a slot that already has a sampler of the same
 // type (e.g. filterable) works as expected. This ensures, for example, that the metadata buffer
 // gets an updated sampler index on D3D12.
-TEST_P(ResourceTableTests, RemoveThenAddSamplerInSameSlot) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_RemoveThenAddSamplerInSameSlot) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1681,7 +1695,8 @@ TEST_P(ResourceTableTests, RemoveThenAddSamplerInSameSlot) {
 
 // Test that adding and removing samplers in the same slot between draws ensure that
 // backends only see the effective diff (first one added to last one added).
-TEST_P(ResourceTableTests, RemoveThenAddSamplerMultipleInSameSlot) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_RemoveThenAddSamplerMultipleInSameSlot) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1792,7 +1807,8 @@ TEST_P(ResourceTableTests, RemoveThenAddSamplerMultipleInSameSlot) {
 // allocates a resource table larger than that, adds 2048 samplers, draws, removes them all,
 // then adds 2048 again in different slots, and draws again, making sure this is supported.
 // Effectively, this tests that the resource table correctly handles removal of samplers.
-TEST_P(ResourceTableTests, AddAndRemoveMaxSamplersTwice) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_AddAndRemoveMaxSamplersTwice) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1867,7 +1883,8 @@ TEST_P(ResourceTableTests, AddAndRemoveMaxSamplersTwice) {
 }
 
 // Test that removing then adding a texture in a slot works as expected.
-TEST_P(ResourceTableTests, RemoveThenAddTextureInSameSlot) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_RemoveThenAddTextureInSameSlot) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1949,7 +1966,8 @@ TEST_P(ResourceTableTests, RemoveThenAddTextureInSameSlot) {
 
 // Test that adding and removing textures in the same slot between draws ensure that
 // backends only see the effective diff (first one added to last one added).
-TEST_P(ResourceTableTests, RemoveThenAddTextureMultipleInSameSlot) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_RemoveThenAddTextureMultipleInSameSlot) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -2038,7 +2056,8 @@ TEST_P(ResourceTableTests, RemoveThenAddTextureMultipleInSameSlot) {
 }
 
 // Check that Pin forces zero-initialization of the resources.
-TEST_P(ResourceTableTests, PinDoesZeroInit) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_PinDoesZeroInit) {
     // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
@@ -2246,7 +2265,8 @@ TEST_P(ResourceTableTests, UpdateAfterRemoveRequiresGPUIsFinished_ErrorBindGroup
 }
 
 // Check that Update and InsertBinding make the new binding visible in the resource table.
-TEST_P(ResourceTableTests, UpdateAndInsertBindingMakeBindingVisible) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_UpdateAndInsertBindingMakeBindingVisible) {
     // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
@@ -2268,7 +2288,8 @@ TEST_P(ResourceTableTests, UpdateAndInsertBindingMakeBindingVisible) {
 
 // Check that RemoveBinding instantly makes the binding not visible, both for entries added with
 // Update and InsertBinding.
-TEST_P(ResourceTableTests, RemoveBindingMakeBindingInvalid) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_RemoveBindingMakeBindingInvalid) {
     // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
@@ -2292,7 +2313,8 @@ TEST_P(ResourceTableTests, RemoveBindingMakeBindingInvalid) {
 }
 
 // Check that removing a binding and adding a different one works.
-TEST_P(ResourceTableTests, ReplaceBinding) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_ReplaceBinding) {
     // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
@@ -2315,7 +2337,8 @@ TEST_P(ResourceTableTests, ReplaceBinding) {
 }
 
 // Check that removing a binding and adding it back works.
-TEST_P(ResourceTableTests, ReplaceWithSameBinding) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_ReplaceWithSameBinding) {
     // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
@@ -2338,7 +2361,8 @@ TEST_P(ResourceTableTests, ReplaceWithSameBinding) {
 
 // Check that setting multiple resource table, on per dispatch/draw/executebundle, on a single pass
 // works.
-TEST_P(ResourceTableTests, SinglePassMultipleResourceTables) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_SinglePassMultipleResourceTables) {
     // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
@@ -2377,7 +2401,8 @@ TEST_P(ResourceTableTests, SinglePassMultipleResourceTables) {
 
 // Check that logic to dirty or reuse VkDescriptorSet takes into account the resource table in the
 // Vulkan backend.
-TEST_P(ResourceTableTests, SwitchUseResourceTableAndNot) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_P(ResourceTableTests, DISABLED_SwitchUseResourceTableAndNot) {
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
 

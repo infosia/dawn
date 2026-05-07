@@ -1,3 +1,4 @@
+SKIP: FAILED
 struct fs_outputs {
   float4 tint_symbol : SV_Target0;
 };

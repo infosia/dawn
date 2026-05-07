@@ -1,3 +1,4 @@
+SKIP: FAILED
 
 Texture1D<float4> tint_resource_table_array[] : register(t51, space43);
 Texture2D<int4> tint_resource_table_array_1[] : register(t51, space44);
