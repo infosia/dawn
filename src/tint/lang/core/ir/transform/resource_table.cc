@@ -439,110 +439,117 @@ struct State {
         }
         ir.SetName(sampler_kind, "sampler_kind");
 
-        // Validate that the sampler/texture pair work together
-        b.InsertBefore(call, [&] {
-            // We only care if we're using a filtering sampler with a non_filterable texture, so
-            // check if the sampler is filtering
-            core::ir::Instruction* sampler_compare =
-                b.Equal(sampler_kind, u32(ResourceType::kSampler_filtering));
-            ir.SetName(sampler_compare->Result(), "sampler_is_filtering");
+        // Only need to validate the texture/sampler if we aren't don't a
+        // comparison sampler.
+        if (call->Func() != core::BuiltinFn::kTextureSampleCompare &&
+            call->Func() != core::BuiltinFn::kTextureSampleCompareLevel &&
+            call->Func() != core::BuiltinFn::kTextureGatherCompare) {
+            // Validate that the sampler/texture pair work together
+            b.InsertBefore(call, [&] {
+                // We only care if we're using a filtering sampler with a non_filterable texture, so
+                // check if the sampler is filtering
+                core::ir::Instruction* sampler_compare =
+                    b.Equal(sampler_kind, u32(ResourceType::kSampler_filtering));
+                ir.SetName(sampler_compare->Result(), "sampler_is_filtering");
 
-            // Returns `true` if we need to replace the sampler with a default non_filtering sampler
-            core::ir::If* samp_if = b.If(sampler_compare);
-            core::ir::InstructionResult* samp_res = b.InstructionResult(ty.bool_());
-            ir.SetName(samp_res, "use_sampler");
-            samp_if->SetResult(samp_res);
+                // Returns `true` if we need to replace the sampler with a default non_filtering
+                // sampler
+                core::ir::If* samp_if = b.If(sampler_compare);
+                core::ir::InstructionResult* samp_res = b.InstructionResult(ty.bool_());
+                ir.SetName(samp_res, "use_sampler");
+                samp_if->SetResult(samp_res);
 
-            // If the sampler is filtering
-            b.Append(samp_if->True(), [&] {
-                // Switch returns `true` if the texture is `unfilterable`
-                core::ir::Switch* s = b.Switch(texture_kind);
-                core::ir::InstructionResult* tex_res = b.InstructionResult(ty.bool_());
-                ir.SetName(tex_res, "texture_is_unfilterable");
-                s->SetResult(tex_res);
+                // If the sampler is filtering
+                b.Append(samp_if->True(), [&] {
+                    // Switch returns `true` if the texture is `unfilterable`
+                    core::ir::Switch* s = b.Switch(texture_kind);
+                    core::ir::InstructionResult* tex_res = b.InstructionResult(ty.bool_());
+                    ir.SetName(tex_res, "texture_is_unfilterable");
+                    s->SetResult(tex_res);
 
-                // Default block, `true` as the texture is unfilterable
-                core::ir::Block* default_ = b.Block();
-                b.Append(default_, [&] { b.ExitSwitch(s, false); });
-                s->Cases().Push(core::ir::Switch::Case{
-                    .selectors = {core::ir::Switch::CaseSelector{
-                        .val = nullptr,
-                    }},
-                    .block = default_,
+                    // Default block, `true` as the texture is unfilterable
+                    core::ir::Block* default_ = b.Block();
+                    b.Append(default_, [&] { b.ExitSwitch(s, false); });
+                    s->Cases().Push(core::ir::Switch::Case{
+                        .selectors = {core::ir::Switch::CaseSelector{
+                            .val = nullptr,
+                        }},
+                        .block = default_,
+                    });
+
+                    // Add a switch case entry listing all of the `filterable` textures (the list of
+                    // filterable is smaller then the list of unfilterable)
+                    Vector<core::ir::Switch::CaseSelector, 4> selectors;
+                    for (const ResourceType k : core::type::FilterableResources()) {
+                        selectors.Push(core::ir::Switch::CaseSelector{.val = b.Constant(u32(k))});
+                    }
+                    core::ir::Block* filtered = b.Block();
+                    b.Append(filtered, [&] { b.ExitSwitch(s, true); });
+                    s->Cases().Push(core::ir::Switch::Case{
+                        .selectors = selectors,
+                        .block = filtered,
+                    });
+                    b.ExitIf(samp_if, tex_res);
+                });
+                b.Append(samp_if->False(), [&] { b.ExitIf(samp_if, true); });
+
+                const core::type::Type* result_ty = call->Result()->Type();
+
+                // Branch over if we can use the sampler or not, the `if` returns the result of the
+                // `call` we're attempting to make
+                core::ir::If* check = b.If(samp_res);
+                check->SetResult(call->DetachResult());
+
+                // Sampler and texture matched, just call
+                b.Append(check->True(), [&] {
+                    core::ir::Call* c = b.Call(result_ty, call->Func());
+                    for (ir::Value* arg : call->Args()) {
+                        c->AppendArg(arg);
+                    }
+                    b.ExitIf(check, c);
                 });
 
-                // Add a switch case entry listing all of the `filterable` textures (the list of
-                // filterable is smaller then the list of unfilterable)
-                Vector<core::ir::Switch::CaseSelector, 4> selectors;
-                for (const ResourceType k : core::type::FilterableResources()) {
-                    selectors.Push(core::ir::Switch::CaseSelector{.val = b.Constant(u32(k))});
-                }
-                core::ir::Block* filtered = b.Block();
-                b.Append(filtered, [&] { b.ExitSwitch(s, true); });
-                s->Cases().Push(core::ir::Switch::Case{
-                    .selectors = selectors,
-                    .block = filtered,
+                // Sampler and texture mis-match, pull a default sampler and use that
+                b.Append(check->False(), [&] {
+                    auto idx_iter =
+                        resource_type_to_default_idx.find(ResourceType::kSampler_non_filtering);
+                    TINT_IR_ASSERT(ir, idx_iter != resource_type_to_default_idx.end());
+
+                    // Get the table's API size, which is stored at index 0 in the metadata buffer
+                    auto* len_access = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 0_u);
+                    auto* num_elements = b.Load(len_access);
+
+                    ir::Value* final_index = b.Add(u32(idx_iter->second), num_elements)->Result();
+
+                    if (config->get_sampler_index_from_metadata) {
+                        // Get the sampler index from the metadata entry (high 16 bits)
+                        // TODO(crbug.com/503755700): Optimize to avoid loading twice from
+                        // storage_buffer[idx].
+                        auto* metadata_val = GetTypeId(final_index);
+                        auto* sampler_index = b.ShiftRight(metadata_val, u32(16));
+                        final_index = sampler_index->Result();
+                    }
+
+                    const core::type::Sampler* binding_type = ty.sampler();
+                    auto var = var_for_type.Get(binding_type);
+                    TINT_IR_ASSERT(ir, var);
+
+                    const core::type::Pointer* ptr_ty = ty.ptr(handle, binding_type, read);
+                    auto* access = b.Access(ptr_ty, (*var)->Result(), final_index);
+                    ir::Instruction* sampler = b.Load(access);
+
+                    // Create the call and swap in the new sampler
+                    core::ir::Call* c = b.Call(result_ty, call->Func());
+                    for (ir::Value* arg : call->Args()) {
+                        c->AppendArg(arg);
+                    }
+                    c->SetOperand(texture_operand_index + 1, sampler->Result());
+
+                    b.ExitIf(check, c);
                 });
-                b.ExitIf(samp_if, tex_res);
             });
-            b.Append(samp_if->False(), [&] { b.ExitIf(samp_if, true); });
-
-            const core::type::Type* result_ty = call->Result()->Type();
-
-            // Branch over if we can use the sampler or not, the `if` returns the result of the
-            // `call` we're attempting to make
-            core::ir::If* check = b.If(samp_res);
-            check->SetResult(call->DetachResult());
-
-            // Sampler and texture matched, just call
-            b.Append(check->True(), [&] {
-                core::ir::Call* c = b.Call(result_ty, call->Func());
-                for (ir::Value* arg : call->Args()) {
-                    c->AppendArg(arg);
-                }
-                b.ExitIf(check, c);
-            });
-
-            // Sampler and texture mis-match, pull a default sampler and use that
-            b.Append(check->False(), [&] {
-                auto idx_iter =
-                    resource_type_to_default_idx.find(ResourceType::kSampler_non_filtering);
-                TINT_IR_ASSERT(ir, idx_iter != resource_type_to_default_idx.end());
-
-                // Get the table's API size, which is stored at index 0 in the metadata buffer
-                auto* len_access = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 0_u);
-                auto* num_elements = b.Load(len_access);
-
-                ir::Value* final_index = b.Add(u32(idx_iter->second), num_elements)->Result();
-
-                if (config->get_sampler_index_from_metadata) {
-                    // Get the sampler index from the metadata entry (high 16 bits)
-                    // TODO(crbug.com/503755700): Optimize to avoid loading twice from
-                    // storage_buffer[idx].
-                    auto* metadata_val = GetTypeId(final_index);
-                    auto* sampler_index = b.ShiftRight(metadata_val, u32(16));
-                    final_index = sampler_index->Result();
-                }
-
-                const core::type::Sampler* binding_type = ty.sampler();
-                auto var = var_for_type.Get(binding_type);
-                TINT_IR_ASSERT(ir, var);
-
-                const core::type::Pointer* ptr_ty = ty.ptr(handle, binding_type, read);
-                auto* access = b.Access(ptr_ty, (*var)->Result(), final_index);
-                ir::Instruction* sampler = b.Load(access);
-
-                // Create the call and swap in the new sampler
-                core::ir::Call* c = b.Call(result_ty, call->Func());
-                for (ir::Value* arg : call->Args()) {
-                    c->AppendArg(arg);
-                }
-                c->SetOperand(texture_operand_index + 1, sampler->Result());
-
-                b.ExitIf(check, c);
-            });
-        });
-        call->Destroy();
+            call->Destroy();
+        }
     }
 
     // Returns the root Var for `value` by walking up the chain of instructions,
