@@ -33,6 +33,24 @@
       "message": "```suggestion\n            srcLuminanceOf1 \u003d kHLGLuminanceOf1;\n```",
       "revId": "39cc9cf0f59bb5084f65fec18ba2404dd22272c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c0a02e6_d920c2ae",
+        "filename": "src/dawn/common/ExternalTextureParams.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T15:31:46Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "aea15f06_e26068c5",
+      "revId": "39cc9cf0f59bb5084f65fec18ba2404dd22272c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
