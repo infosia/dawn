@@ -56,6 +56,30 @@
       },
       "revId": "8f9ab129e8d8370791b1a0bff4d11de0fff7e51a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "916f9cac_72fdda77",
+        "filename": "DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-07T14:33:15Z",
+      "side": 1,
+      "message": "Yep: https://logs.chromium.org/logs/dawn/buildbucket/cr-buildbucket/8682453612135953441/+/u/compile__with_patch_/stdout\n\nI have some ideas of how to resolve this issue. Stay tuned.",
+      "parentUuid": "1d517335_6f33135a",
+      "range": {
+        "startLine": 388,
+        "startChar": 73,
+        "endLine": 388,
+        "endChar": 113
+      },
+      "revId": "8f9ab129e8d8370791b1a0bff4d11de0fff7e51a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
