@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c40e994b_c72b9b49",
+        "filename": "src/tint/lang/hlsl/hlsl.def",
+        "patchSetId": 50
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-07T18:49:19Z",
+      "side": 1,
+      "message": "I dont know why this is this way let me investigate.",
+      "parentUuid": "9f3a5426_0777c8f6",
+      "revId": "13f2567b9916dc06213a61925fc9b5d626d3f8ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5f9baafc_06c3e677",
         "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
         "patchSetId": 50
@@ -31,6 +49,30 @@
       "writtenOn": "2026-05-07T14:58:05Z",
       "side": 1,
       "message": "Are these polyfills still used? Aren\u0027t you now just doing the replacement in `DecomposeStorageAccess`?",
+      "range": {
+        "startLine": 486,
+        "startChar": 0,
+        "endLine": 492,
+        "endChar": 5
+      },
+      "revId": "13f2567b9916dc06213a61925fc9b5d626d3f8ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3f85e68_b286ccba",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-07T18:49:19Z",
+      "side": 1,
+      "message": "This is a real issue. I will look at this.\nFIXED",
+      "parentUuid": "5f9baafc_06c3e677",
       "range": {
         "startLine": 486,
         "startChar": 0,
