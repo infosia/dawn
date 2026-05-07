@@ -64,7 +64,7 @@ CaptureImpl::CaptureImpl(std::vector<uint8_t> commands, std::vector<uint8_t> con
 
 CaptureImpl::~CaptureImpl() {}
 
-bool CaptureImpl::Walk(RootCommandVisitor& visitor) {
+bool CaptureImpl::Walk(RootCommandVisitor& visitor) const {
     auto result = CaptureWalker::Walk(visitor);
     if (result.IsError()) {
         result.AcquireError();
@@ -75,8 +75,14 @@ bool CaptureImpl::Walk(RootCommandVisitor& visitor) {
 
 std::vector<SurfaceInfo> CaptureImpl::GetSurfaceInfos() const {
     SurfaceDiscoveryVisitor discovery;
-    const_cast<CaptureImpl*>(this)->Walk(discovery);
+    Walk(discovery);
     return discovery.GetSurfaceInfos();
+}
+
+uint32_t CaptureImpl::GetFrameCount() const {
+    SurfaceDiscoveryVisitor discovery;
+    Walk(discovery);
+    return discovery.GetFrameCount();
 }
 
 ReadHead CaptureImpl::GetCommandReadHead() const {

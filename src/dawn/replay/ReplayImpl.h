@@ -58,6 +58,8 @@ class ReplayImpl : public Replay {
 
     Capture* GetCapture() const override;
 
+    void Reset() override;
+
     // Gets the first object of type T with the given label, or nullptr if not
     // found. Note: We don't too much care this is slow as mostly used for
     // testing and debugging.
@@ -80,6 +82,8 @@ class ReplayImpl : public Replay {
 
     ReadHead mCommandReadHead;
     ReadHead mContentReadHead;
+
+    std::vector<wgpu::Surface> mSurfaces;
 };
 
 }  // namespace dawn::replay
