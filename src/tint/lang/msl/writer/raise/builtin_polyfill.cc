@@ -30,7 +30,6 @@
 #include <atomic>
 #include <cstdint>
 #include <utility>
-#include <vector>
 
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/builder.h"
@@ -58,6 +57,7 @@
 #include "src/tint/lang/msl/type/gradient.h"
 #include "src/tint/lang/msl/type/level.h"
 #include "src/tint/utils/containers/hashmap.h"
+#include "src/tint/utils/containers/vector.h"
 #include "src/tint/utils/ice/ice.h"
 
 namespace tint::msl::writer::raise {
@@ -85,11 +85,16 @@ struct State {
     /// A map from an integer vector type to a dot polyfill.
     Hashmap<const core::type::Vector*, core::ir::Function*, 4> integer_dot_polyfills{};
 
+    /// A struct to hold a queued call to a polyfill function.
+    struct QueuedCall {
+        void (State::*method)(core::ir::CoreBuiltinCall*);
+        core::ir::CoreBuiltinCall* builtin;
+    };
+
     /// Process the module.
     void Process() {
         // Find the builtins that need replacing.
-        std::vector<std::function<void()>> call_worklist;
-        call_worklist.reserve(128);
+        Vector<QueuedCall, 128> call_worklist;
 
         // Find the construct calls to replace with make_filled_subgroup_matrix
         Vector<core::ir::Construct*, 4> construct_worklist;
@@ -98,216 +103,180 @@ struct State {
                 switch (builtin->Func()) {
                     // Atomics.
                     case core::BuiltinFn::kAtomicAdd:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchAddExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicAdd, builtin});
                         break;
                     case core::BuiltinFn::kAtomicAnd:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchAndExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicAnd, builtin});
                         break;
                     case core::BuiltinFn::kAtomicCompareExchangeWeak:
-                        call_worklist.push_back(
-                            [this, builtin] { AtomicCompareExchangeWeak(builtin); });
+                        call_worklist.Push({&State::AtomicCompareExchangeWeak, builtin});
                         break;
                     case core::BuiltinFn::kAtomicExchange:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicExchangeExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicExchange, builtin});
                         break;
                     case core::BuiltinFn::kAtomicLoad:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicLoadExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicLoad, builtin});
                         break;
                     case core::BuiltinFn::kAtomicMax:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchMaxExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicMax, builtin});
                         break;
                     case core::BuiltinFn::kAtomicMin:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchMinExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicMin, builtin});
                         break;
                     case core::BuiltinFn::kAtomicStoreMin:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicMinExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicStoreMin, builtin});
                         break;
                     case core::BuiltinFn::kAtomicStoreMax:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicMaxExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicStoreMax, builtin});
                         break;
                     case core::BuiltinFn::kAtomicOr:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchOrExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicOr, builtin});
                         break;
                     case core::BuiltinFn::kAtomicStore:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicStoreExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicStore, builtin});
                         break;
                     case core::BuiltinFn::kAtomicSub:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchSubExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicSub, builtin});
                         break;
                     case core::BuiltinFn::kAtomicXor:
-                        call_worklist.push_back([this, builtin] {
-                            AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchXorExplicit);
-                        });
+                        call_worklist.Push({&State::AtomicXor, builtin});
                         break;
 
                     // Arithmetic builtins.
                     case core::BuiltinFn::kDistance:
-                        call_worklist.push_back([this, builtin] { Distance(builtin); });
+                        call_worklist.Push({&State::Distance, builtin});
                         break;
                     case core::BuiltinFn::kDot:
-                        call_worklist.push_back([this, builtin] { Dot(builtin); });
+                        call_worklist.Push({&State::Dot, builtin});
                         break;
                     case core::BuiltinFn::kFrexp:
-                        call_worklist.push_back([this, builtin] { Frexp(builtin); });
+                        call_worklist.Push({&State::Frexp, builtin});
                         break;
                     case core::BuiltinFn::kLength:
-                        call_worklist.push_back([this, builtin] { Length(builtin); });
+                        call_worklist.Push({&State::Length, builtin});
                         break;
                     case core::BuiltinFn::kModf:
-                        call_worklist.push_back([this, builtin] { Modf(builtin); });
+                        call_worklist.Push({&State::Modf, builtin});
                         break;
                     case core::BuiltinFn::kQuantizeToF16:
-                        call_worklist.push_back([this, builtin] { QuantizeToF16(builtin); });
+                        call_worklist.Push({&State::QuantizeToF16, builtin});
                         break;
                     case core::BuiltinFn::kSign:
-                        call_worklist.push_back([this, builtin] { Sign(builtin); });
+                        call_worklist.Push({&State::Sign, builtin});
                         break;
 
                     // Texture builtins.
                     case core::BuiltinFn::kTextureDimensions:
-                        call_worklist.push_back([this, builtin] { TextureDimensions(builtin); });
+                        call_worklist.Push({&State::TextureDimensions, builtin});
                         break;
                     case core::BuiltinFn::kTextureGather:
-                        call_worklist.push_back([this, builtin] { TextureGather(builtin); });
+                        call_worklist.Push({&State::TextureGather, builtin});
                         break;
                     case core::BuiltinFn::kTextureGatherCompare:
-                        call_worklist.push_back([this, builtin] { TextureGatherCompare(builtin); });
+                        call_worklist.Push({&State::TextureGatherCompare, builtin});
                         break;
                     case core::BuiltinFn::kTextureLoad:
-                        call_worklist.push_back([this, builtin] { TextureLoad(builtin); });
+                        call_worklist.Push({&State::TextureLoad, builtin});
                         break;
                     case core::BuiltinFn::kTextureNumLayers:
-                        call_worklist.push_back([this, builtin] { TextureNumLayers(builtin); });
+                        call_worklist.Push({&State::TextureNumLayers, builtin});
                         break;
                     case core::BuiltinFn::kTextureNumLevels:
-                        call_worklist.push_back([this, builtin] { TextureNumLevels(builtin); });
+                        call_worklist.Push({&State::TextureNumLevels, builtin});
                         break;
                     case core::BuiltinFn::kTextureNumSamples:
-                        call_worklist.push_back([this, builtin] { TextureNumSamples(builtin); });
+                        call_worklist.Push({&State::TextureNumSamples, builtin});
                         break;
                     case core::BuiltinFn::kTextureSample:
-                        call_worklist.push_back([this, builtin] { TextureSample(builtin); });
+                        call_worklist.Push({&State::TextureSample, builtin});
                         break;
                     case core::BuiltinFn::kTextureSampleBias:
-                        call_worklist.push_back([this, builtin] { TextureSampleBias(builtin); });
+                        call_worklist.Push({&State::TextureSampleBias, builtin});
                         break;
                     case core::BuiltinFn::kTextureSampleCompare:
-                        call_worklist.push_back([this, builtin] { TextureSampleCompare(builtin); });
+                        call_worklist.Push({&State::TextureSampleCompare, builtin});
                         break;
                     case core::BuiltinFn::kTextureSampleCompareLevel:
-                        call_worklist.push_back(
-                            [this, builtin] { TextureSampleCompareLevel(builtin); });
+                        call_worklist.Push({&State::TextureSampleCompareLevel, builtin});
                         break;
                     case core::BuiltinFn::kTextureSampleGrad:
-                        call_worklist.push_back([this, builtin] { TextureSampleGrad(builtin); });
+                        call_worklist.Push({&State::TextureSampleGrad, builtin});
                         break;
                     case core::BuiltinFn::kTextureSampleLevel:
-                        call_worklist.push_back([this, builtin] { TextureSampleLevel(builtin); });
+                        call_worklist.Push({&State::TextureSampleLevel, builtin});
                         break;
                     case core::BuiltinFn::kTextureStore:
-                        call_worklist.push_back([this, builtin] { TextureStore(builtin); });
+                        call_worklist.Push({&State::TextureStore, builtin});
                         break;
 
                     // Barriers.
                     case core::BuiltinFn::kStorageBarrier:
-                        call_worklist.push_back(
-                            [this, builtin] { ThreadgroupBarrier(builtin, BarrierType::kDevice); });
+                        call_worklist.Push({&State::StorageBarrier, builtin});
                         break;
                     case core::BuiltinFn::kWorkgroupBarrier:
-                        call_worklist.push_back([this, builtin] {
-                            ThreadgroupBarrier(builtin, BarrierType::kThreadGroup);
-                        });
+                        call_worklist.Push({&State::WorkgroupBarrier, builtin});
                         break;
                     case core::BuiltinFn::kTextureBarrier:
-                        call_worklist.push_back([this, builtin] {
-                            ThreadgroupBarrier(builtin, BarrierType::kTexture);
-                        });
+                        call_worklist.Push({&State::TextureBarrier, builtin});
                         break;
 
                     // QuadSwap builtins.
                     case core::BuiltinFn::kQuadSwapDiagonal:
-                        call_worklist.push_back([this, builtin] { QuadSwap(builtin, 0b11); });
+                        call_worklist.Push({&State::QuadSwapDiagonal, builtin});
                         break;
                     case core::BuiltinFn::kQuadSwapX:
-                        call_worklist.push_back([this, builtin] { QuadSwap(builtin, 0b01); });
+                        call_worklist.Push({&State::QuadSwapX, builtin});
                         break;
                     case core::BuiltinFn::kQuadSwapY:
-                        call_worklist.push_back([this, builtin] { QuadSwap(builtin, 0b10); });
+                        call_worklist.Push({&State::QuadSwapY, builtin});
                         break;
 
                     // Pack/unpack builtins.
                     case core::BuiltinFn::kPack2X16Float:
-                        call_worklist.push_back([this, builtin] { Pack2x16Float(builtin); });
+                        call_worklist.Push({&State::Pack2x16Float, builtin});
                         break;
                     case core::BuiltinFn::kUnpack2X16Float:
-                        call_worklist.push_back([this, builtin] { Unpack2x16Float(builtin); });
+                        call_worklist.Push({&State::Unpack2x16Float, builtin});
                         break;
                     case core::BuiltinFn::kUnpack2X16Snorm:
                         if (config.polyfill_unpack_2x16_snorm) {
-                            call_worklist.push_back([this, builtin] { Unpack2x16Snorm(builtin); });
+                            call_worklist.Push({&State::Unpack2x16Snorm, builtin});
                         }
                         break;
                     case core::BuiltinFn::kUnpack2X16Unorm:
                         if (config.polyfill_unpack_2x16_unorm) {
-                            call_worklist.push_back([this, builtin] { Unpack2x16Unorm(builtin); });
+                            call_worklist.Push({&State::Unpack2x16Unorm, builtin});
                         }
                         break;
 
                     // Subgroup matrix builtins.
                     case core::BuiltinFn::kSubgroupMatrixLoad:
-                        call_worklist.push_back([this, builtin] { SubgroupMatrixLoad(builtin); });
+                        call_worklist.Push({&State::SubgroupMatrixLoad, builtin});
                         break;
                     case core::BuiltinFn::kSubgroupMatrixStore:
-                        call_worklist.push_back([this, builtin] { SubgroupMatrixStore(builtin); });
+                        call_worklist.Push({&State::SubgroupMatrixStore, builtin});
                         break;
                     case core::BuiltinFn::kSubgroupMatrixMultiply:
-                        call_worklist.push_back(
-                            [this, builtin] { SubgroupMatrixMultiply(builtin); });
+                        call_worklist.Push({&State::SubgroupMatrixMultiply, builtin});
                         break;
                     case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
-                        call_worklist.push_back(
-                            [this, builtin] { SubgroupMatrixMultiplyAccumulate(builtin); });
+                        call_worklist.Push({&State::SubgroupMatrixMultiplyAccumulate, builtin});
                         break;
                     case core::BuiltinFn::kSubgroupMatrixScalarAdd:
-                        call_worklist.push_back(
-                            [this, builtin] { SubgroupMatrixScalarAdd(builtin); });
+                        call_worklist.Push({&State::SubgroupMatrixScalarAdd, builtin});
                         break;
                     case core::BuiltinFn::kSubgroupMatrixScalarSubtract:
-                        call_worklist.push_back(
-                            [this, builtin] { SubgroupMatrixScalarSubtract(builtin); });
+                        call_worklist.Push({&State::SubgroupMatrixScalarSubtract, builtin});
                         break;
                     case core::BuiltinFn::kSubgroupMatrixScalarMultiply:
-                        call_worklist.push_back(
-                            [this, builtin] { SubgroupMatrixScalarMultiply(builtin); });
+                        call_worklist.Push({&State::SubgroupMatrixScalarMultiply, builtin});
                         break;
 
                     // Workarounds
                     case core::BuiltinFn::kTanh:
                         if (builtin->Args()[0]->Type()->DeepestElement()->Is<core::type::F16>() &&
                             config.polyfill_tanh_f16) {
-                            call_worklist.push_back([this, builtin] { Tanh(builtin); });
+                            call_worklist.Push({&State::Tanh, builtin});
                         }
                         break;
 
@@ -323,8 +292,8 @@ struct State {
         }
 
         // Replace the builtins that we found.
-        for (auto& cb : call_worklist) {
-            cb();
+        for (auto& call : call_worklist) {
+            (this->*call.method)(call.builtin);
         }
 
         // Replace the construct calls
@@ -332,6 +301,60 @@ struct State {
             Construct(construct);
         }
     }
+
+    /// Wrapper methods for AtomicCall with specific intrinsics.
+    void AtomicAdd(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchAddExplicit);
+    }
+    void AtomicAnd(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchAndExplicit);
+    }
+    void AtomicExchange(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicExchangeExplicit);
+    }
+    void AtomicLoad(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicLoadExplicit);
+    }
+    void AtomicMax(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchMaxExplicit);
+    }
+    void AtomicMin(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchMinExplicit);
+    }
+    void AtomicStoreMin(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicMinExplicit);
+    }
+    void AtomicStoreMax(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicMaxExplicit);
+    }
+    void AtomicOr(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchOrExplicit);
+    }
+    void AtomicStore(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicStoreExplicit);
+    }
+    void AtomicSub(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchSubExplicit);
+    }
+    void AtomicXor(core::ir::CoreBuiltinCall* builtin) {
+        AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchXorExplicit);
+    }
+
+    /// Wrapper methods for ThreadgroupBarrier with specific types.
+    void StorageBarrier(core::ir::CoreBuiltinCall* builtin) {
+        ThreadgroupBarrier(builtin, BarrierType::kDevice);
+    }
+    void WorkgroupBarrier(core::ir::CoreBuiltinCall* builtin) {
+        ThreadgroupBarrier(builtin, BarrierType::kThreadGroup);
+    }
+    void TextureBarrier(core::ir::CoreBuiltinCall* builtin) {
+        ThreadgroupBarrier(builtin, BarrierType::kTexture);
+    }
+
+    /// Wrapper methods for QuadSwap with specific masks.
+    void QuadSwapDiagonal(core::ir::CoreBuiltinCall* builtin) { QuadSwap(builtin, 0b11); }
+    void QuadSwapX(core::ir::CoreBuiltinCall* builtin) { QuadSwap(builtin, 0b01); }
+    void QuadSwapY(core::ir::CoreBuiltinCall* builtin) { QuadSwap(builtin, 0b10); }
 
     /// Replace construct calls with the intrinsic to make a filled matrix
     /// @param construct the construct call instruction
