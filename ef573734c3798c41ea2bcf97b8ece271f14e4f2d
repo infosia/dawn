@@ -45,6 +45,30 @@
       },
       "revId": "ef573734c3798c41ea2bcf97b8ece271f14e4f2d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30feb371_a2efb319",
+        "filename": "src/tint/lang/hlsl/hlsl.def",
+        "patchSetId": 45
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-07T19:59:46Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "51f3d45f_35a5cabc",
+      "range": {
+        "startLine": 1089,
+        "startChar": 20,
+        "endLine": 1089,
+        "endChar": 36
+      },
+      "revId": "ef573734c3798c41ea2bcf97b8ece271f14e4f2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
