@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "42688190_48137fb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-05-07T08:46:24Z",
+      "side": 1,
+      "message": "With this patch I can still reproduce the error mentioned in https://issues.chromium.org/issues/505729473. Can you double-check?",
+      "revId": "8b0c3ace0e102930cc4e08474bbf8ee3cd5b8193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "49f82cbf_4d12cd90",
         "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
         "patchSetId": 2
