@@ -79,6 +79,12 @@ std::vector<SurfaceInfo> CaptureImpl::GetSurfaceInfos() const {
     return discovery.GetSurfaceInfos();
 }
 
+uint32_t CaptureImpl::GetFrameCount() const {
+    SurfaceDiscoveryVisitor discovery;
+    const_cast<CaptureImpl*>(this)->Walk(discovery);
+    return discovery.GetFrameCount();
+}
+
 ReadHead CaptureImpl::GetCommandReadHead() const {
     return ReadHead(mCommands);
 }
