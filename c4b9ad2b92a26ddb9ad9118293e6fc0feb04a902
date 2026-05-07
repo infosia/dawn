@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f13cdeaa_1fa91b67",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-07T05:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14ccbf4b_33e4ebfe",
+      "range": {
+        "startLine": 753,
+        "startChar": 34,
+        "endLine": 753,
+        "endChar": 85
+      },
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "832f6204_d3f19b5a",
@@ -93,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fef0e27_cac462f1",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-07T05:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "832f6204_d3f19b5a",
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14a9e8fa_a26d2dca",
@@ -112,6 +154,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94ac3146_a329fe11",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-07T05:06:56Z",
+      "side": 1,
+      "message": "We’ve already reported this issue to the driver team, but there is no update or feedback from them for the time being. We’ll keep following up.",
+      "parentUuid": "14a9e8fa_a26d2dca",
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f1a4d5ea_b4a3475f",
         "filename": "src/tint/lang/hlsl/writer/common/options.h",
         "patchSetId": 2
@@ -123,6 +183,24 @@
       "writtenOn": "2026-04-30T13:51:29Z",
       "side": 1,
       "message": "An option that is a workaround for a driver bug should be kept in the `Workarounds` struct instead.\n\nPlease also then add it to the set of fuzzed options in `writer_fuzz.cc` so that we get fuzzing coverage for this.",
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e28bd19f_61329651",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-07T05:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1a4d5ea_b4a3475f",
       "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
