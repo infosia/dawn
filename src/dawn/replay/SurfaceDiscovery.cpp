@@ -49,6 +49,7 @@ VisitResult SurfaceDiscoveryVisitor::operator()(
 VisitResult SurfaceDiscoveryVisitor::operator()(
     const schema::RootCommandSurfacePresentCmdData& data) {
     mSurfaceInfos.try_emplace(data.surfaceId);
+    mFrameCount++;
     return VisitStatus::Continue;
 }
 
@@ -109,6 +110,10 @@ std::vector<SurfaceInfo> SurfaceDiscoveryVisitor::GetSurfaceInfos() const {
         infos.push_back(info);
     }
     return infos;
+}
+
+uint32_t SurfaceDiscoveryVisitor::GetFrameCount() const {
+    return mFrameCount;
 }
 
 }  // namespace dawn::replay

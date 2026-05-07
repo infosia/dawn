@@ -373,7 +373,7 @@ VisitResult RootCommandVisitor::operator()(const std::monostate&) {
     return DAWN_INTERNAL_ERROR("Invalid command (monostate)");
 }
 
-MaybeError CaptureWalker::Walk(RootCommandVisitor& visitor) {
+MaybeError CaptureWalker::Walk(RootCommandVisitor& visitor) const {
     auto readHead = GetCommandReadHead();
     auto contentReadHead = GetContentReadHead();
     return Walk(visitor, &readHead, &contentReadHead);
@@ -381,7 +381,7 @@ MaybeError CaptureWalker::Walk(RootCommandVisitor& visitor) {
 
 MaybeError CaptureWalker::Walk(RootCommandVisitor& visitor,
                                ReadHead* readHead,
-                               ReadHead* contentReadHead) {
+                               ReadHead* contentReadHead) const {
     visitor.SetContentReadHead(contentReadHead);
 
     while (!readHead->IsDone()) {
