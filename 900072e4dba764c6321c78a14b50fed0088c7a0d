@@ -33,6 +33,24 @@
       "message": "Any chance that this can use the same helpers that are in `Replay.h`? It would avoid doing the same format by hand.",
       "revId": "900072e4dba764c6321c78a14b50fed0088c7a0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f78d85a_a3f0424e",
+        "filename": "src/dawn/tests/unittests/replay/CaptureWalkerTests.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-07T18:04:44Z",
+      "side": 1,
+      "message": "Will do in a new CL",
+      "parentUuid": "76531d70_327ebeed",
+      "revId": "900072e4dba764c6321c78a14b50fed0088c7a0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

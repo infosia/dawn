@@ -298,6 +298,24 @@
       "parentUuid": "c611e6c3_820d4e7f",
       "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ba50cea_4997bd4c",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-07T18:04:44Z",
+      "side": 1,
+      "message": "Yes. There\u0027s no direct reason for moving it from before to after. This is likely some attempt I did when fixing other dangling error. I didn\u0027t revert it as it seems trivial to put before or after.",
+      "parentUuid": "b6281aab_038f85fe",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
