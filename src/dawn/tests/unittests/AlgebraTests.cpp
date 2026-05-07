@@ -306,6 +306,15 @@ TEST(Algebra, MatrixScalarDiv) {
     EXPECT_EQ(m, Mat2x2f({1, 2}, {3, 4}));
 }
 
+// Test the vector-scalar division.
+TEST(Algebra, MatrixScalarMul) {
+    EXPECT_EQ(Mat2x2f({1, 2}, {3, 4}) * 3.0f, Mat2x2f({3, 6}, {9, 12}));
+
+    Mat2x2f m = Mat2x2f({1, 2}, {3, 4});
+    m *= 3.0f;
+    EXPECT_EQ(m, Mat2x2f({3, 6}, {9, 12}));
+}
+
 // Test matrix / vector multiplication.
 TEST(Algebra, MatrixVectorMul) {
     auto m = Mat3x4f({1, 2, 3, 4}, {-1, -2, -3, -4}, {10, 11, 12, 13});
