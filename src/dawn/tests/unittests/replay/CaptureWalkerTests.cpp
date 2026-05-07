@@ -32,11 +32,11 @@
 #include <utility>
 #include <vector>
 
+#include "dawn/replay/CaptureWalker.h"
+#include "dawn/replay/ReadHead.h"
+#include "dawn/replay/SurfaceDiscovery.h"
+#include "dawn/serialization/Serializer.h"
 #include "partition_alloc/pointers/raw_ref.h"
-#include "src/dawn/replay/CaptureWalker.h"
-#include "src/dawn/replay/ReadHead.h"
-#include "src/dawn/replay/SurfaceDiscovery.h"
-#include "src/dawn/serialization/Serializer.h"
 
 namespace dawn::replay {
 namespace {

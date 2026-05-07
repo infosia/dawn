@@ -46,8 +46,8 @@
 #include "dawn/replay/BlitBufferToDepthTexture.h"
 #include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
-#include "src/dawn/replay/ReplayImpl.h"
-#include "src/dawn/replay/SurfaceDiscovery.h"
+#include "dawn/replay/ReplayImpl.h"
+#include "dawn/replay/SurfaceDiscovery.h"
 
 namespace dawn::replay {
 

@@ -31,7 +31,7 @@
 #include <sstream>
 #include <utility>
 
-#include "src/dawn/replay/SurfaceDiscovery.h"
+#include "dawn/replay/SurfaceDiscovery.h"
 
 namespace dawn::replay {
 
