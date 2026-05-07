@@ -27,51 +27,12 @@
 
 #include "dawn/native/webgpu/Serialization.h"
 
-#include <string>
-
 #include "dawn/native/webgpu/CaptureContext.h"
 
 namespace dawn::native::webgpu {
 
 void WriteBytes(CaptureContext& context, const void* data, size_t size) {
     context.WriteCommandBytes(data, size);
-}
-
-void Serialize(CaptureContext& context, int32_t v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-void Serialize(CaptureContext& context, uint8_t v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-void Serialize(CaptureContext& context, uint16_t v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-void Serialize(CaptureContext& context, uint32_t v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-void Serialize(CaptureContext& context, uint64_t v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-void Serialize(CaptureContext& context, float v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-void Serialize(CaptureContext& context, double v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-void Serialize(CaptureContext& context, bool v) {
-    WriteBytes(context, reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-void Serialize(CaptureContext& context, const std::string& v) {
-    Serialize(context, v.size());
-    WriteBytes(context, v.data(), v.size());
 }
 
 }  // namespace dawn::native::webgpu

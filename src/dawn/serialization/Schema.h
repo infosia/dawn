@@ -33,14 +33,132 @@
 #include <string>
 #include <vector>
 
-namespace schema {
-// NOTE: This file must be included after files that define
-// DAWN_REPLAY_SERIALIZABLE and DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA.
-// Those macro are different for serialization and deserialization.
+#include "dawn/webgpu_cpp.h"
 
 // TODO(crbug.com/413053623): Switch to protobufs or json. This is just to get
 // stuff working. We'll switch to something else once we're sure of the data we
 // want to capture.
+
+#ifndef DAWN_REPLAY_SERIALIZABLE
+
+// Helper for X macro to declare a visitable member.
+#define DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(type, name, ...) \
+    type name{__VA_OPT__(__VA_ARGS__)};
+
+// Helper for X macro for visiting a visitable member.
+#define DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_ARG(type, name, ...) , name
+
+constexpr int kInternalVisitableUnusedForComma = 0;
+
+// Helper X macro to declare members of a class or struct, along with VisitAll
+// methods to call a functor on all members.
+#define DAWN_REPLAY_VISITABLE_MEMBERS(MEMBERS)                                                  \
+    MEMBERS(DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL)                                         \
+                                                                                                \
+    template <typename V>                                                                       \
+    constexpr auto VisitAll(V&& visit) const {                                                  \
+        return [&](int, const auto&... ms) {                                                    \
+            return visit(ms...);                                                                \
+        }(kInternalVisitableUnusedForComma MEMBERS(DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_ARG)); \
+    }                                                                                           \
+                                                                                                \
+    template <typename V>                                                                       \
+    constexpr auto VisitAll(V&& visit) {                                                        \
+        return [&](int, auto&... ms) {                                                          \
+            return visit(ms...);                                                                \
+        }(kInternalVisitableUnusedForComma MEMBERS(DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_ARG)); \
+    }
+
+// Helper macro to define a struct or class along with VisitAll methods to call
+// a functor on all members.
+#define DAWN_REPLAY_SERIALIZABLE(qualifier, Name, MEMBERS) \
+    struct Name##__Contents {                              \
+        DAWN_REPLAY_VISITABLE_MEMBERS(MEMBERS)             \
+    };                                                     \
+    qualifier Name : Name##__Contents
+
+// Makes a struct for a given bindgrouplayout entry type.
+#define DAWN_REPLAY_MAKE_BINDGROUP_LAYOUT_VARIANT(VariantName, VARIANT_MEMBERS)                 \
+    DAWN_REPLAY_SERIALIZABLE(struct, BindGroupLayoutEntryType##VariantName##Data,               \
+                             VARIANT_MEMBERS){};                                                \
+                                                                                                \
+    struct BindGroupLayoutEntryType##VariantName##__Contents {                                  \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(BindGroupLayoutEntryType,                    \
+                                                   variantType,                                 \
+                                                   BindGroupLayoutEntryType::VariantName)       \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(BindGroupLayoutBinding, binding)             \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(BindGroupLayoutEntryType##VariantName##Data, \
+                                                   data)                                        \
+                                                                                                \
+        template <typename V>                                                                   \
+        constexpr auto VisitAll(V&& visit) const {                                              \
+            return [&](int, const auto&... ms) { return visit(ms...); }(                        \
+                       kInternalVisitableUnusedForComma, variantType, binding, data);           \
+        }                                                                                       \
+        template <typename V>                                                                   \
+        constexpr auto VisitAll(V&& visit) {                                                    \
+            return [&](int, auto&... ms) { return visit(ms...); }(                              \
+                       kInternalVisitableUnusedForComma, variantType, binding, data);           \
+        }                                                                                       \
+    };                                                                                          \
+    struct BindGroupLayoutEntryType##VariantName : BindGroupLayoutEntryType##VariantName##__Contents
+
+// Makes a struct for a given bindgroup entry type.
+#define DAWN_REPLAY_MAKE_BINDGROUP_VARIANT(VariantName, VARIANT_MEMBERS)                        \
+    DAWN_REPLAY_SERIALIZABLE(struct, BindGroupEntryType##VariantName##Data, VARIANT_MEMBERS){}; \
+                                                                                                \
+    struct BindGroupEntryType##VariantName##__Contents {                                        \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(BindGroupLayoutEntryType,                    \
+                                                   variantType,                                 \
+                                                   BindGroupLayoutEntryType::VariantName)       \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(uint32_t, binding)                           \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(BindGroupEntryType##VariantName##Data, data) \
+                                                                                                \
+        template <typename V>                                                                   \
+        constexpr auto VisitAll(V&& visit) const {                                              \
+            return [&](int, const auto&... ms) { return visit(ms...); }(                        \
+                       kInternalVisitableUnusedForComma, variantType, binding, data);           \
+        }                                                                                       \
+        template <typename V>                                                                   \
+        constexpr auto VisitAll(V&& visit) {                                                    \
+            return [&](int, auto&... ms) { return visit(ms...); }(                              \
+                       kInternalVisitableUnusedForComma, variantType, binding, data);           \
+        }                                                                                       \
+    };                                                                                          \
+    struct BindGroupEntryType##VariantName : BindGroupEntryType##VariantName##__Contents
+
+// Makes both a CmdData and a Cmd struct for a given command name.
+#define DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(CmdType, CmdName, CMD_MEMBERS)               \
+    DAWN_REPLAY_SERIALIZABLE(struct, CmdType##CmdName##CmdData, CMD_MEMBERS){};        \
+                                                                                       \
+    struct CmdType##CmdName##Cmd##__Contents {                                         \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(CmdType, command, CmdType::CmdName) \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(CmdType##CmdName##CmdData, data)    \
+                                                                                       \
+        template <typename V>                                                          \
+        constexpr auto VisitAll(V&& visit) const {                                     \
+            return [&](int, const auto&... ms) { return visit(ms...); }(               \
+                       kInternalVisitableUnusedForComma, command, data);               \
+        }                                                                              \
+        template <typename V>                                                          \
+        constexpr auto VisitAll(V&& visit) {                                           \
+            return [&](int, auto&... ms) { return visit(ms...); }(                     \
+                       kInternalVisitableUnusedForComma, command, data);               \
+        }                                                                              \
+    };                                                                                 \
+    struct CmdType##CmdName##Cmd : CmdType##CmdName##Cmd##__Contents
+
+// Makes both a CmdData and a Cmd struct for a given command buffer command name.
+#define DAWN_REPLAY_MAKE_COMMAND_BUFFER_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS) \
+    DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(CommandBufferCommand, CmdName, CMD_MEMBERS)
+
+// Makes both a CmdData and a Cmd struct for a given root command name.
+#define DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(CmdName, CMD_MEMBERS) \
+    DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(RootCommand, CmdName, CMD_MEMBERS)
+
+#endif  // DAWN_REPLAY_SERIALIZABLE
+
+namespace schema {
 
 using ObjectId = uint64_t;
 // device is always 1
@@ -640,6 +758,13 @@ DAWN_REPLAY_SERIALIZABLE(struct, TexelCopyBufferLayout, TEXEL_COPY_BUFFER_LAYOUT
     X(TexelCopyBufferLayout, layout)
 
 DAWN_REPLAY_SERIALIZABLE(struct, TexelCopyBufferInfo, TEXEL_COPY_BUFFER_INFO_MEMBER){};
+
+#define TEXTURE_BLOCK_INFO_MEMBER(X) \
+    X(uint32_t, width)               \
+    X(uint32_t, height)              \
+    X(uint32_t, byteSize)
+
+DAWN_REPLAY_SERIALIZABLE(struct, TextureBlockInfo, TEXTURE_BLOCK_INFO_MEMBER){};
 
 #define TEXEL_COPY_TEXTURE_INFO_MEMBER(X) \
     X(ObjectId, textureId)                \

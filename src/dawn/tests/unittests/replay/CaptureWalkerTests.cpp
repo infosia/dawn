@@ -32,9 +32,11 @@
 #include <utility>
 #include <vector>
 
+#include "partition_alloc/pointers/raw_ref.h"
 #include "src/dawn/replay/CaptureWalker.h"
 #include "src/dawn/replay/ReadHead.h"
 #include "src/dawn/replay/SurfaceDiscovery.h"
+#include "src/dawn/serialization/Serializer.h"
 
 namespace dawn::replay {
 namespace {
@@ -172,48 +174,51 @@ class TestCaptureWalker : public CaptureWalker {
 TEST(CaptureWalkerTests, SurfaceDiscoverySkipsCommandBuffer) {
     std::vector<uint8_t> commands;
 
-    auto Emit = [&](auto v) {
-        const uint8_t* p = reinterpret_cast<const uint8_t*>(&v);
-        commands.insert(commands.end(), p, p + sizeof(v));
+    struct TestSerializer {
+        raw_ref<std::vector<uint8_t>> buffer;
+        void WriteCommandBytes(const void* data, size_t size) {
+            const uint8_t* p = static_cast<const uint8_t*>(data);
+            buffer->insert(buffer->end(), p, p + size);
+        }
     };
-
-    auto EmitString = [&](std::string s) {
-        Emit(static_cast<size_t>(s.size()));
-        commands.insert(commands.end(), s.begin(), s.end());
-    };
+    TestSerializer serializer{raw_ref(commands)};
 
     // 1. CreateResource (CommandBuffer)
-    Emit(schema::RootCommand::CreateResource);
-    // LabeledResource
-    Emit(schema::ObjectType::CommandBuffer);  // type
-    Emit(static_cast<schema::ObjectId>(10));  // id
-    EmitString("MyCommandBuffer");            // label
-    // CommandBufferData (empty, but nested commands follow)
+    schema::RootCommandCreateResourceCmd createResource;
+    createResource.data.resource.type = schema::ObjectType::CommandBuffer;
+    createResource.data.resource.id = 10;
+    createResource.data.resource.label = "MyCommandBuffer";
+    ::dawn::serialization::Serialize(serializer, createResource);
+
     // Nested Command: CopyBufferToBuffer
-    Emit(schema::CommandBufferCommand::CopyBufferToBuffer);
-    Emit(static_cast<schema::ObjectId>(1));  // src
-    Emit(static_cast<uint64_t>(0));          // srcOffset
-    Emit(static_cast<schema::ObjectId>(2));  // dst
-    Emit(static_cast<uint64_t>(0));          // dstOffset
-    Emit(static_cast<uint64_t>(1024));       // size
+    schema::CommandBufferCommandCopyBufferToBufferCmd copyBuffer;
+    copyBuffer.data.srcBufferId = 1;
+    copyBuffer.data.srcOffset = 0;
+    copyBuffer.data.dstBufferId = 2;
+    copyBuffer.data.dstOffset = 0;
+    copyBuffer.data.size = 1024;
+    ::dawn::serialization::Serialize(serializer, copyBuffer);
+
     // Nested Command: End
-    Emit(schema::CommandBufferCommand::End);
+    schema::CommandBufferCommandEndCmd endCmd;
+    ::dawn::serialization::Serialize(serializer, endCmd);
 
     // 2. SurfaceConfigure (Surface) - This is what we want to discover
-    Emit(schema::RootCommand::SurfaceConfigure);
-    Emit(static_cast<schema::ObjectId>(20));  // surfaceId
-    // SurfaceConfiguration
-    Emit(static_cast<schema::ObjectId>(1));      // deviceId
-    Emit(wgpu::TextureFormat::RGBA8Unorm);       // format
-    Emit(wgpu::TextureUsage::RenderAttachment);  // usage
-    Emit(static_cast<size_t>(0));                // viewFormats count
-    Emit(wgpu::CompositeAlphaMode::Opaque);      // alphaMode
-    Emit(static_cast<uint32_t>(100));            // width
-    Emit(static_cast<uint32_t>(200));            // height
-    Emit(wgpu::PresentMode::Fifo);               // presentMode
+    schema::RootCommandSurfaceConfigureCmd surfaceConfigure;
+    surfaceConfigure.data.surfaceId = 20;
+    surfaceConfigure.data.config.deviceId = 1;
+    surfaceConfigure.data.config.format = wgpu::TextureFormat::RGBA8Unorm;
+    surfaceConfigure.data.config.usage = wgpu::TextureUsage::RenderAttachment;
+    surfaceConfigure.data.config.viewFormats = {};
+    surfaceConfigure.data.config.alphaMode = wgpu::CompositeAlphaMode::Opaque;
+    surfaceConfigure.data.config.width = 100;
+    surfaceConfigure.data.config.height = 200;
+    surfaceConfigure.data.config.presentMode = wgpu::PresentMode::Fifo;
+    ::dawn::serialization::Serialize(serializer, surfaceConfigure);
 
     // 3. End
-    Emit(schema::RootCommand::End);
+    schema::RootCommandEndCmd rootEnd;
+    ::dawn::serialization::Serialize(serializer, rootEnd);
 
     TestCaptureWalker walker(commands);
     SurfaceDiscoveryVisitor visitor;

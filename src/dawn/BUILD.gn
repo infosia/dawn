@@ -85,5 +85,8 @@ group("proxy_for_jni") {
 # Dawn capture and replay serialization
 ###############################################################################
 source_set("serialization") {
-  sources = [ "serialization/Schema.h" ]
+  sources = [
+    "serialization/Schema.h",
+    "serialization/Serializer.h",
+  ]
 }
