@@ -167,10 +167,33 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     arrayOffsetFromUniform.ubo_binding = {layout->GetDynamicStorageBufferOffsetsRegisterSpace(),
                                           layout->GetDynamicStorageBufferOffsetsShaderRegister()};
 
+    auto ToHLSLBindPoint = [&](BindGroupIndex group, BindingIndex index) {
+        const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
+        return tint::BindingPoint{
+            .group = uint32_t(group),
+            .binding = bgl->GetShaderRegister(index),
+        };
+    };
+
     std::optional<tint::ResourceTableConfig> resourceTableConfig = std::nullopt;
     if (layout->UsesResourceTable()) {
         auto bindingTypeOrder = ResourceTableDefaultResources::GetOrder();
         uint32_t baseGroup = layout->GetBaseResourceTableRegisterSpace();
+
+        std::unordered_map<tint::BindingPoint, tint::ResourceType> binding_to_resource_type;
+
+        for (BindGroupIndex group : layout->GetBindGroupLayoutsMask()) {
+            const BindGroupLayoutInternalBase* bgl = layout->GetBindGroupLayout(group);
+
+            for (const auto& [bindingNumber, apiBindingIndex] : bgl->GetBindingMap()) {
+                tint::BindingPoint dstBindingPoint =
+                    ToHLSLBindPoint(group, bgl->AsBindingIndex(apiBindingIndex));
+                tint::ResourceType type =
+                    BindingLayoutToResourceType(bgl->GetAPIBindingInfo(apiBindingIndex));
+                binding_to_resource_type.emplace(dstBindingPoint, type);
+            }
+        }
+
         resourceTableConfig = tint::ResourceTableConfig{
             // For HLSL, Tint emits multiple unbounded arrays per type, each in its own group
             // (stage)
@@ -181,17 +204,9 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
             .storage_buffer_binding = tint::BindingPoint(baseGroup, 0),
             .default_binding_type_order = {bindingTypeOrder.begin(), bindingTypeOrder.end()},
             .get_sampler_index_from_metadata = true,
-            .binding_to_resource_type = {},
+            .binding_to_resource_type = binding_to_resource_type,
         };
     }
-
-    auto ToHLSLBindPoint = [&](BindGroupIndex group, BindingIndex index) {
-        const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
-        return tint::BindingPoint{
-            .group = uint32_t(group),
-            .binding = bgl->GetShaderRegister(index),
-        };
-    };
     tint::Bindings bindings = GenerateBindingRemapping(layout, stage, ToHLSLBindPoint);
 
     std::vector<tint::BindingPoint> ignored_by_robustness;
