@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "073fe8c6_3c67e8bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-05-07T17:14:45Z",
+      "side": 1,
+      "message": "if the resolveRect is the same size as the render pass and the debug layer complained, seems like it should be the debug layer\u0027s bug?\n\nAlternatively, if resolveRect matches the renderPass, I think we should not use the partial resolve feature. Front-end should remove the rect before passing to the back-end. Or backend should handle it differently.",
+      "parentUuid": "0301560b_6daab5ce",
+      "revId": "8b0c3ace0e102930cc4e08474bbf8ee3cd5b8193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "49f82cbf_4d12cd90",
         "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
         "patchSetId": 2
