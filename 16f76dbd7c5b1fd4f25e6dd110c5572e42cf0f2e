@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "12d57d58_d67603e0",
+        "filename": "DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-07T10:12:52Z",
+      "side": 1,
+      "message": "Currently, we can only enable the Agility SDK on x64 platforms.",
+      "parentUuid": "2eec6cea_a5016470",
+      "range": {
+        "startLine": 845,
+        "startChar": 55,
+        "endLine": 845,
+        "endChar": 77
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c4fc6087_5b087e65",
         "filename": "src/dawn/native/BUILD.gn",
         "patchSetId": 8
