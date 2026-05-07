@@ -57,6 +57,7 @@ class SurfaceDiscoveryVisitor : public RootCommandVisitor {
 
     std::vector<schema::ObjectId> GetSurfaceIds() const;
     std::vector<SurfaceInfo> GetSurfaceInfos() const;
+    uint32_t GetFrameCount() const;
 
   private:
     struct NoopResourceVisitor : ResourceVisitor {
@@ -82,6 +83,7 @@ class SurfaceDiscoveryVisitor : public RootCommandVisitor {
 
     NoopResourceVisitor mResourceVisitor;
     std::map<schema::ObjectId, SurfaceInfo> mSurfaceInfos;
+    uint32_t mFrameCount = 0;
 };
 
 }  // namespace dawn::replay

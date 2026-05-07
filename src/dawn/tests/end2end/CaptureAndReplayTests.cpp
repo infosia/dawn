@@ -2866,6 +2866,8 @@ TEST_P(CaptureAndReplaySurfaceTests, MultiFrame) {
     // --- replay ---
     auto replay = recorder->CreateReplay(device);
 
+    EXPECT_EQ(replay->GetCapture()->GetFrameCount(), 2u);
+
     // Replay Frame 1
     EXPECT_EQ(replay->PlayFrame(), dawn::replay::ReplayStatus::Continuing);
     EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Texture>("backbuffer1") != nullptr);
@@ -2877,6 +2879,14 @@ TEST_P(CaptureAndReplaySurfaceTests, MultiFrame) {
 
     // No more frames
     EXPECT_EQ(replay->PlayFrame(), dawn::replay::ReplayStatus::Finished);
+
+    // Test Reset
+    replay->Reset();
+    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Texture>("backbuffer1") == nullptr);
+
+    // Replay Frame 1 again
+    EXPECT_EQ(replay->PlayFrame(), dawn::replay::ReplayStatus::Continuing);
+    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Texture>("backbuffer1") != nullptr);
 
     // Explicitly reset the recorder object to release all replayed resources (like Surface)
     // before the test ends and the device count check is performed.

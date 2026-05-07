@@ -1553,13 +1553,27 @@ ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture
 ReplayImpl::~ReplayImpl() = default;
 
 void ReplayImpl::SetSurfaces(std::vector<wgpu::Surface> surfaces) {
+    mSurfaces = std::move(surfaces);
     SurfaceDiscoveryVisitor discovery;
     mCapture->Walk(discovery);
-    mVisitor->SetSurfaces(surfaces, discovery.GetSurfaceIds());
+    mVisitor->SetSurfaces(mSurfaces, discovery.GetSurfaceIds());
 }
 
 Capture* ReplayImpl::GetCapture() const {
     return mCapture.get();
+}
+
+void ReplayImpl::Reset() {
+    mCommandReadHead.Reset();
+    mContentReadHead.Reset();
+    wgpu::Device device = mVisitor->GetDevice();
+    mVisitor = std::make_unique<DawnRootCommandVisitor>(device);
+    mVisitor->AddResource(schema::kDeviceId, "", device);
+    if (!mSurfaces.empty()) {
+        SurfaceDiscoveryVisitor discovery;
+        mCapture->Walk(discovery);
+        mVisitor->SetSurfaces(mSurfaces, discovery.GetSurfaceIds());
+    }
 }
 
 MaybeError ReplayImpl::Play() {

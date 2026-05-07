@@ -44,6 +44,8 @@ class ReadHead {
 
     MaybeError ReadBytes(std::span<uint8_t> dest);
 
+    void Reset();
+
     ResultOrError<const uint32_t*> GetData(size_t size);
     bool IsBad() const;
     bool IsDone() const;

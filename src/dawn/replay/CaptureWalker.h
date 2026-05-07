@@ -239,8 +239,10 @@ VisitResult SkipRenderBundleCommands(ReadHead* readHead);
 class CaptureWalker {
   public:
     virtual ~CaptureWalker() = default;
-    MaybeError Walk(RootCommandVisitor& visitor);
-    MaybeError Walk(RootCommandVisitor& visitor, ReadHead* readHead, ReadHead* contentReadHead);
+    MaybeError Walk(RootCommandVisitor& visitor) const;
+    MaybeError Walk(RootCommandVisitor& visitor,
+                    ReadHead* readHead,
+                    ReadHead* contentReadHead) const;
 
     virtual ReadHead GetCommandReadHead() const = 0;
     virtual ReadHead GetContentReadHead() const = 0;

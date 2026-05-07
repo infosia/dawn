@@ -44,6 +44,11 @@ MaybeError ReadHead::ReadBytes(std::span<uint8_t> dest) {
     return DAWN_INTERNAL_ERROR("Read past end of data");
 }
 
+void ReadHead::Reset() {
+    mReadHead = mData.begin();
+    mBad = false;
+}
+
 ResultOrError<const uint32_t*> ReadHead::GetData(size_t size) {
     if (size % 4 != 0) {
         mBad = true;

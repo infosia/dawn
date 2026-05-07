@@ -50,9 +50,10 @@ class CaptureImpl : public Capture, public CaptureWalker {
                                                size_t contentSize);
     ~CaptureImpl() override;
 
-    bool Walk(RootCommandVisitor& visitor) override;
+    bool Walk(RootCommandVisitor& visitor) const override;
 
     std::vector<SurfaceInfo> GetSurfaceInfos() const override;
+    uint32_t GetFrameCount() const override;
 
     ReadHead GetCommandReadHead() const override;
     ReadHead GetContentReadHead() const override;
