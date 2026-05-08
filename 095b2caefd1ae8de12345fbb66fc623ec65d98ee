@@ -16,6 +16,24 @@
       "message": "As per the comment above, please add the option to the end of the list instead, otherwise it changes the meaning of any previously generated fuzzing cases.",
       "revId": "095b2caefd1ae8de12345fbb66fc623ec65d98ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40354762_f74d13c5",
+        "filename": "src/tint/lang/hlsl/writer/writer_fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-08T03:27:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "779f2fb6_c4dc1e51",
+      "revId": "095b2caefd1ae8de12345fbb66fc623ec65d98ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
