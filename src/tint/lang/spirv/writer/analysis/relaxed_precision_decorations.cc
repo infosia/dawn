@@ -31,6 +31,7 @@
 #include "src/tint/lang/core/ir/let.h"
 #include "src/tint/lang/core/ir/load.h"
 #include "src/tint/lang/core/ir/module.h"
+#include "src/tint/lang/core/ir/swizzle.h"
 #include "src/tint/lang/core/ir/user_call.h"
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/f16.h"
@@ -252,8 +253,8 @@ struct State {
                     if (!IsF16(inst->Result()->Type())) {
                         return false;
                     }
-                } else if (inst->Is<core::ir::Let>()) {
-                    // Walk through let instructions.
+                } else if (inst->IsAnyOf<core::ir::Let, core::ir::Swizzle>()) {
+                    // Walk through let and swizzle instructions.
                     worklist.Push(inst->Result());
                 } else {
                     // Any other instruction halts the analysis.
@@ -280,6 +281,10 @@ struct State {
             } else if (auto* let = inst->As<core::ir::Let>()) {
                 // Walk through let instructions.
                 value = let->Value();
+                continue;
+            } else if (auto* swizzle = inst->As<core::ir::Swizzle>()) {
+                // Walk through swizzle instructions.
+                value = swizzle->Object();
                 continue;
             } else {
                 // Any other instructions halts the analysis.
