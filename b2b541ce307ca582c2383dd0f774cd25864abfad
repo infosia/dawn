@@ -33,6 +33,24 @@
       "message": "Call out from dneto@ in standup, can we guarantee that this path is the only use of the intermediate lets? Seems like no, so we should validate that before decorating.",
       "revId": "b2b541ce307ca582c2383dd0f774cd25864abfad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2a27328_a0fabcba",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-08T15:54:00Z",
+      "side": 1,
+      "message": "Isn\u0027t that handled below? If we hit any other usage of these instructions then we immediately `return`, which in turn means none of these decorations will get applied.",
+      "parentUuid": "709b2606_3198c238",
+      "revId": "b2b541ce307ca582c2383dd0f774cd25864abfad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
