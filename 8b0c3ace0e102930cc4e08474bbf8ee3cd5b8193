@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6396ca3b_8e6a0067",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-05-08T05:57:29Z",
+      "side": 1,
+      "message": "I also think https://issues.chromium.org/issues/505729473 is another bug, need to be fixed in another pr.",
+      "parentUuid": "e4d6b3ff_16080d02",
+      "revId": "8b0c3ace0e102930cc4e08474bbf8ee3cd5b8193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "49f82cbf_4d12cd90",
         "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
         "patchSetId": 2
@@ -102,6 +120,30 @@
       "writtenOn": "2026-05-07T07:25:27Z",
       "side": 1,
       "message": "Why do we need to verify the clear count?\nCan we just verify that the region outside the resolve rect are zeros? If we verify the pixels then the optional `expectedLazyClearCount` won\u0027t be needed.",
+      "range": {
+        "startLine": 1823,
+        "startChar": 12,
+        "endLine": 1823,
+        "endChar": 34
+      },
+      "revId": "8b0c3ace0e102930cc4e08474bbf8ee3cd5b8193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c832aafb_2ed24790",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-05-08T05:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49f82cbf_4d12cd90",
       "range": {
         "startLine": 1823,
         "startChar": 12,
@@ -125,6 +167,30 @@
       "writtenOn": "2026-05-07T07:25:27Z",
       "side": 1,
       "message": "I don\u0027t see any reason we should only test this on D3D12.\nThe test is useful for other backends as well.",
+      "range": {
+        "startLine": 2930,
+        "startChar": 30,
+        "endLine": 2930,
+        "endChar": 37
+      },
+      "revId": "8b0c3ace0e102930cc4e08474bbf8ee3cd5b8193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b195b50_035c9aa7",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-05-08T05:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0c3b7bb_fb89188c",
       "range": {
         "startLine": 2930,
         "startChar": 30,
