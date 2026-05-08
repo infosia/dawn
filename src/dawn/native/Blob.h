@@ -43,6 +43,22 @@ namespace dawn::native {
 // ownership of the container and release its memory on destruction.
 class Blob {
   public:
+    // Creates a blob of the given size.
+    static Blob Create(size_t size);
+
+    template <typename T>
+    static Blob Create(std::vector<T> vec)
+        requires(std::is_fundamental_v<T> || std::is_same_v<T, std::byte>)
+    {
+        // Move the vector into a new allocation so we can destruct it in the deleter.
+        auto* wrapped_vec = new std::vector<T>(std::move(vec));
+
+        uint8_t* data = reinterpret_cast<uint8_t*>(wrapped_vec->data());
+        size_t size = wrapped_vec->size() * sizeof(T);
+
+        return Blob::UnsafeCreateWithDeleter(data, size, [wrapped_vec] { delete wrapped_vec; });
+    }
+
     // This function is used to create Blob with actual data.
     // Make sure the creation and deleter handles the data ownership and lifetime correctly.
     static Blob UnsafeCreateWithDeleter(uint8_t* data, size_t size, std::function<void()> deleter);
@@ -72,21 +88,6 @@ class Blob {
     size_t mSize;
     std::function<void()> mDeleter;
 };
-
-Blob CreateBlob(size_t size);
-
-template <typename T>
-Blob CreateBlob(std::vector<T> vec)
-    requires std::is_fundamental_v<T>
-{
-    // Move the vector into a new allocation so we can destruct it in the deleter.
-    auto* wrapped_vec = new std::vector<T>(std::move(vec));
-
-    uint8_t* data = reinterpret_cast<uint8_t*>(wrapped_vec->data());
-    size_t size = wrapped_vec->size() * sizeof(T);
-
-    return Blob::UnsafeCreateWithDeleter(data, size, [wrapped_vec] { delete wrapped_vec; });
-}
 
 }  // namespace dawn::native
 

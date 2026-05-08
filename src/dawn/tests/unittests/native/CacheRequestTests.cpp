@@ -507,7 +507,7 @@ TEST_P(CacheRequestTests, CacheHitHashValidationFailed) {
 
     // Hash validation failure case 2: loaded blob hash mismatched.
     {
-        Blob modifiedStoredData = CreateBlob(sizeWithHash);
+        Blob modifiedStoredData = Blob::Create(sizeWithHash);
         memcpy(modifiedStoredData.Data(), actualStoredData.Data(), sizeWithHash);
         // Modify the last byte to make the hash mismatch.
         modifiedStoredData.Data()[sizeWithHash - 1] = ~modifiedStoredData.Data()[sizeWithHash - 1];

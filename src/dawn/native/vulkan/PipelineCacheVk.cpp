@@ -92,7 +92,7 @@ MaybeError PipelineCache::SerializeToBlobImpl(Blob* blob) {
         // changed vs what is stored in the BlobCache.
         return {};
     }
-    *blob = CreateBlob(bufferSize);
+    *blob = Blob::Create(bufferSize);
     auto result = mDevice->fn.GetPipelineCacheData(mDevice->GetVkDevice(), mHandle, &bufferSize,
                                                    blob->Data());
 
