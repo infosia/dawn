@@ -1367,10 +1367,11 @@ TEST_P(ResourceTableTests, Sampler) {
 }
 
 // Test that a resource table texture can be sampled by multiple resource table samplers.
-// TODO(507087794): Re-enable with new filterability rules
-TEST_P(ResourceTableTests, DISABLED_MultipleSamplers) {
+TEST_P(ResourceTableTests, MultipleSamplers) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
+    // TODO(https://crbug.com/510904606): Fails on LLVMPipe
+    DAWN_SUPPRESS_TEST_IF(IsMesaSoftware());
 
     struct Case {
         size_t tableSize;
@@ -1485,7 +1486,6 @@ TEST_P(ResourceTableTests, DISABLED_MultipleSamplers) {
 }
 
 // Test that default samplers are correctly created, and accessed when an invalid index it provided.
-// TODO(507087794): Re-enable with new filterability rules
 TEST_P(ResourceTableTests, UseDefaultSamplers) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
@@ -1592,10 +1592,11 @@ TEST_P(ResourceTableTests, UseDefaultSamplers) {
 // Test that removing then adding a new sampler in a slot that already has a sampler of the same
 // type (e.g. filterable) works as expected. This ensures, for example, that the metadata buffer
 // gets an updated sampler index on D3D12.
-// TODO(507087794): Re-enable with new filterability rules
-TEST_P(ResourceTableTests, DISABLED_RemoveThenAddSamplerInSameSlot) {
+TEST_P(ResourceTableTests, RemoveThenAddSamplerInSameSlot) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
+    // TODO(https://crbug.com/510904606): Fails on LLVMPipe
+    DAWN_SUPPRESS_TEST_IF(IsMesaSoftware());
 
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
