@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d1e74b3_e014b167",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-08T02:35:16Z",
+      "side": 1,
+      "message": "Would be good to add a unit test that covers swizzle in a chain.",
+      "revId": "fc0d86bab2b5b58e70f03074ec366dba7c3f2a54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
