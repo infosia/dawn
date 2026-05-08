@@ -16,6 +16,47 @@
       "message": "Apologize in advance for a pretty large CL, but a lot of the changes just made sense to happen in this same logical change (and was a bit easier to lump together than split up). Please feel free to ping me if you have any questions about specific changes that are more complicated. I added Kyle because he recently worked with the cache stuff so he will be more familiar with some of this code.",
       "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa3323b3_7cf0dfd3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T14:08:59Z",
+      "side": 1,
+      "message": "Yeah I\u0027m quite familiar with the caching code. I\u0027ll review it today.",
+      "parentUuid": "28652719_e5e82b6a",
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6f1ddae_dc9737d7",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T14:08:59Z",
+      "side": 1,
+      "message": "I know the chromium style guide doesn\u0027t apply to dawn but there was a [detailed discussion](https://groups.google.com/a/chromium.org/g/cxx/c/bBY0gZa1Otk) about using std::byte for it. I think the TLDR is std::byte is badly named and not appropriate for use with binary data. That lead to it being banned in chromium in favour of using uint8_t for byte data.\n\nI need to reread the discuss but I think it applies here.",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
