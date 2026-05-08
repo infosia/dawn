@@ -259,7 +259,7 @@ TEST_P(CacheRequestTests, CacheHit) {
     EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(actualStoredData.Size()));
     EXPECT_CALL(mMockCache, LoadData(_, _, _, actualStoredData.Size()))
         .WillOnce(WithArg<2>([&actualStoredData](void* dataOut) {
-            memcpy(dataOut, actualStoredData.Data(), actualStoredData.Size());
+            memcpy(dataOut, actualStoredData.DataPtr(), actualStoredData.Size());
             return actualStoredData.Size();
         }));
 
@@ -268,7 +268,7 @@ TEST_P(CacheRequestTests, CacheHit) {
     EXPECT_CALL(cacheHitFn, Call(_)).WillOnce(WithArg<0>([=](Blob blob) {
         // Expect the cached blob contents to match the cached data.
         EXPECT_EQ(blob.Size(), sizeof(kCachedData));
-        EXPECT_EQ(memcmp(blob.Data(), kCachedData, sizeof(kCachedData)), 0);
+        EXPECT_EQ(memcmp(blob.DataPtr(), kCachedData, sizeof(kCachedData)), 0);
 
         return rv;
     }));
@@ -309,7 +309,7 @@ TEST_P(CacheRequestTests, CacheHitError) {
     EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(actualStoredData.Size()));
     EXPECT_CALL(mMockCache, LoadData(_, _, _, actualStoredData.Size()))
         .WillOnce(WithArg<2>([&actualStoredData](void* dataOut) {
-            memcpy(dataOut, actualStoredData.Data(), actualStoredData.Size());
+            memcpy(dataOut, actualStoredData.DataPtr(), actualStoredData.Size());
             return actualStoredData.Size();
         }));
 
@@ -317,7 +317,7 @@ TEST_P(CacheRequestTests, CacheHitError) {
     EXPECT_CALL(cacheHitFn, Call(_)).WillOnce(WithArg<0>([=](Blob blob) {
         // Expect the cached blob contents to match the cached data.
         EXPECT_EQ(blob.Size(), sizeof(kCachedData));
-        EXPECT_EQ(memcmp(blob.Data(), kCachedData, sizeof(kCachedData)), 0);
+        EXPECT_EQ(memcmp(blob.DataPtr(), kCachedData, sizeof(kCachedData)), 0);
 
         // Return an error.
         return DAWN_VALIDATION_ERROR("fake test error");
@@ -450,7 +450,7 @@ TEST_P(CacheRequestTests, CacheHitHashValidationFailed) {
             EXPECT_CALL(*cacheHitFn, Call(_)).WillOnce(WithArg<0>([=](Blob blob) {
                 // Expect the loaded blob contents to match the cached data.
                 EXPECT_EQ(blob.Size(), sizeof(kCachedData));
-                EXPECT_EQ(memcmp(blob.Data(), kCachedData, sizeof(kCachedData)), 0);
+                EXPECT_EQ(memcmp(blob.DataPtr(), kCachedData, sizeof(kCachedData)), 0);
 
                 return rvCacheHit;
             }));
@@ -493,7 +493,7 @@ TEST_P(CacheRequestTests, CacheHitHashValidationFailed) {
 
     // Control case: hash validation success.
     {
-        DoTest(actualStoredData.Data(), sizeWithHash, true);
+        DoTest(actualStoredData.DataPtr(), sizeWithHash, true);
     }
 
     // Hash validation failure case 1: loaded blob size too small.
@@ -508,11 +508,12 @@ TEST_P(CacheRequestTests, CacheHitHashValidationFailed) {
     // Hash validation failure case 2: loaded blob hash mismatched.
     {
         Blob modifiedStoredData = Blob::Create(sizeWithHash);
-        memcpy(modifiedStoredData.Data(), actualStoredData.Data(), sizeWithHash);
+        memcpy(modifiedStoredData.DataPtr(), actualStoredData.DataPtr(), sizeWithHash);
         // Modify the last byte to make the hash mismatch.
-        modifiedStoredData.Data()[sizeWithHash - 1] = ~modifiedStoredData.Data()[sizeWithHash - 1];
+        modifiedStoredData.DataPtr()[sizeWithHash - 1] =
+            ~modifiedStoredData.DataPtr()[sizeWithHash - 1];
 
-        DoTest(modifiedStoredData.Data(), sizeWithHash, false);
+        DoTest(modifiedStoredData.DataPtr(), sizeWithHash, false);
     }
 }
 

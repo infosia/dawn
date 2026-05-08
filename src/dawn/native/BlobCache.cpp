@@ -52,8 +52,8 @@ Blob GenerateHashPrefixedPayload(size_t valueSize, const void* value) {
     // Create a Blob for holding hash+payload.
     const size_t byteSizeWithHash = valueSize + mHashByteSize;
     Blob result = Blob::Create(byteSizeWithHash);
-    Hash* hashHeader = reinterpret_cast<Hash*>(result.Data());
-    uint8_t* payload = result.Data() + mHashByteSize;
+    Hash* hashHeader = reinterpret_cast<Hash*>(result.DataPtr());
+    uint8_t* payload = result.DataPtr() + mHashByteSize;
     // Copy the payload into buffer and compute the hash as prefix.
     memcpy(payload, value, valueSize);
     *hashHeader = Hasher::Hash(payload, valueSize);
@@ -111,13 +111,13 @@ void BlobCache::Store(const CacheKey& key, size_t valueSize, const void* value) 
 }
 
 void BlobCache::Store(const CacheKey& key, const Blob& value) {
-    Store(key, value.Size(), value.Data());
+    Store(key, value.Size(), value.DataPtr());
 }
 
 Blob BlobCache::GenerateActualStoredBlobForTesting(size_t valueSize, const void* value) {
     if (!mHashValidation) {
         Blob blob = Blob::Create(valueSize);
-        memcpy(blob.Data(), value, valueSize);
+        memcpy(blob.DataPtr(), value, valueSize);
         return blob;
     }
     return details::GenerateHashPrefixedPayload(valueSize, value);
@@ -136,7 +136,7 @@ void BlobCache::StoreInternal(const CacheKey& key, size_t valueSize, const void*
         mStoreFunction(key.data(), key.size(), value, valueSize, mFunctionUserdata);
     } else {
         Blob actualStoredBlob = details::GenerateHashPrefixedPayload(valueSize, value);
-        mStoreFunction(key.data(), key.size(), actualStoredBlob.Data(), actualStoredBlob.Size(),
+        mStoreFunction(key.data(), key.size(), actualStoredBlob.DataPtr(), actualStoredBlob.Size(),
                        mFunctionUserdata);
     }
 }

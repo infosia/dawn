@@ -535,7 +535,7 @@ TEST(StreamTests, SerializeDeserializeBlobs) {
         auto err = StreamOut(&src, &out);
         EXPECT_FALSE(err.IsError());
         EXPECT_EQ(blob.Size(), out.Size());
-        EXPECT_EQ(memcmp(blob.Data(), out.Data(), blob.Size()), 0);
+        EXPECT_EQ(memcmp(blob.DataPtr(), out.DataPtr(), blob.Size()), 0);
     }
 
     // Test a blob with some data
@@ -550,7 +550,7 @@ TEST(StreamTests, SerializeDeserializeBlobs) {
         auto err = StreamOut(&src, &out);
         EXPECT_FALSE(err.IsError());
         EXPECT_EQ(blob.Size(), out.Size());
-        EXPECT_EQ(memcmp(blob.Data(), out.Data(), blob.Size()), 0);
+        EXPECT_EQ(memcmp(blob.DataPtr(), out.DataPtr(), blob.Size()), 0);
     }
 }
 

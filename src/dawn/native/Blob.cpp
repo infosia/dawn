@@ -92,11 +92,11 @@ bool Blob::Empty() const {
     return mSize == 0;
 }
 
-const uint8_t* Blob::Data() const {
+const uint8_t* Blob::DataPtr() const {
     return mData;
 }
 
-uint8_t* Blob::Data() {
+uint8_t* Blob::DataPtr() {
     return mData;
 }
 
@@ -108,7 +108,7 @@ bool Blob::operator==(const Blob& other) const {
     if (other.Size() != Size()) {
         return false;
     }
-    return 0 == memcmp(Data(), other.Data(), Size());
+    return 0 == memcmp(DataPtr(), other.DataPtr(), Size());
 }
 
 template <>
@@ -117,7 +117,7 @@ void stream::Stream<Blob>::Write(stream::Sink* s, const Blob& b) {
     StreamIn(s, size);
     if (size > 0) {
         void* ptr = s->GetSpace(size);
-        memcpy(ptr, b.Data(), size);
+        memcpy(ptr, b.DataPtr(), size);
     }
 }
 
@@ -129,7 +129,7 @@ MaybeError stream::Stream<Blob>::Read(stream::Source* s, Blob* b) {
         const void* ptr;
         DAWN_TRY(s->Read(&ptr, size));
         *b = Blob::Create(size);
-        memcpy(b->Data(), ptr, size);
+        memcpy(b->DataPtr(), ptr, size);
     } else {
         *b = Blob();
     }

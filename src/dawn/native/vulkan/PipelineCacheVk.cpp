@@ -94,7 +94,7 @@ MaybeError PipelineCache::SerializeToBlobImpl(Blob* blob) {
     }
     *blob = Blob::Create(bufferSize);
     auto result = mDevice->fn.GetPipelineCacheData(mDevice->GetVkDevice(), mHandle, &bufferSize,
-                                                   blob->Data());
+                                                   blob->DataPtr());
 
     if (result == VK_INCOMPLETE && mInvalidResultWorkaround) {
         // Most of the time VK_INCOMPLETE is returned on Pixel 10 is due to a driver bug. The
@@ -119,7 +119,7 @@ void PipelineCache::Initialize() {
     createInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.initialDataSize = blob.Size();
-    createInfo.pInitialData = blob.Data();
+    createInfo.pInitialData = blob.DataPtr();
 
     mHandle = VK_NULL_HANDLE;
 
