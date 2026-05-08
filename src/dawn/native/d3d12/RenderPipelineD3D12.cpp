@@ -376,7 +376,7 @@ MaybeError RenderPipeline::InitializeImpl() {
             ToBackend(programmableStage.module)
                 ->Compile(programmableStage, stage, ToBackend(GetLayout()),
                           compileFlags | additionalCompileFlags, usedInterstageVariables));
-        *shaders[stage] = {compiledShader[stage].shaderBlob.Data(),
+        *shaders[stage] = {compiledShader[stage].shaderBlob.DataPtr(),
                            compiledShader[stage].shaderBlob.Size()};
     }
 
@@ -451,7 +451,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     bool cacheHit = !blob.Empty();
     if (cacheHit) {
         // Cache hits, attach cached blob to descriptor.
-        descriptorD3D12.CachedPSO.pCachedBlob = blob.Data();
+        descriptorD3D12.CachedPSO.pCachedBlob = blob.DataPtr();
         descriptorD3D12.CachedPSO.CachedBlobSizeInBytes = blob.Size();
     }
 

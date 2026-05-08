@@ -693,9 +693,10 @@ ResultOrError<ComPtr<ID3D11VertexShader>> Device::GetOrCreateVertexShader(
     return mVertexShaderCache.GetOrCreate(
         args.sha3, [&](const Sha3_256::Output&) -> ResultOrError<ComPtr<ID3D11VertexShader>> {
             ComPtr<ID3D11VertexShader> vs;
-            DAWN_TRY(CheckHRESULT(mD3d11Device->CreateVertexShader(
-                                      args.shaderBlob.Data(), args.shaderBlob.Size(), nullptr, &vs),
-                                  "D3D11 create vertex shader"));
+            DAWN_TRY(
+                CheckHRESULT(mD3d11Device->CreateVertexShader(args.shaderBlob.DataPtr(),
+                                                              args.shaderBlob.Size(), nullptr, &vs),
+                             "D3D11 create vertex shader"));
             return vs;
         });
 }
@@ -705,9 +706,10 @@ ResultOrError<ComPtr<ID3D11PixelShader>> Device::GetOrCreatePixelShader(
     return mPixelShaderCache.GetOrCreate(
         args.sha3, [&](const Sha3_256::Output&) -> ResultOrError<ComPtr<ID3D11PixelShader>> {
             ComPtr<ID3D11PixelShader> ps;
-            DAWN_TRY(CheckHRESULT(mD3d11Device->CreatePixelShader(
-                                      args.shaderBlob.Data(), args.shaderBlob.Size(), nullptr, &ps),
-                                  "D3D11 create pixel shader"));
+            DAWN_TRY(
+                CheckHRESULT(mD3d11Device->CreatePixelShader(args.shaderBlob.DataPtr(),
+                                                             args.shaderBlob.Size(), nullptr, &ps),
+                             "D3D11 create pixel shader"));
             return ps;
         });
 }
@@ -717,9 +719,10 @@ ResultOrError<ComPtr<ID3D11ComputeShader>> Device::GetOrCreateComputeShader(
     return mComputeShaderCache.GetOrCreate(
         args.sha3, [&](const Sha3_256::Output&) -> ResultOrError<ComPtr<ID3D11ComputeShader>> {
             ComPtr<ID3D11ComputeShader> cs;
-            DAWN_TRY(CheckHRESULT(mD3d11Device->CreateComputeShader(
-                                      args.shaderBlob.Data(), args.shaderBlob.Size(), nullptr, &cs),
-                                  "D3D11 create compute shader"));
+            DAWN_TRY(
+                CheckHRESULT(mD3d11Device->CreateComputeShader(
+                                 args.shaderBlob.DataPtr(), args.shaderBlob.Size(), nullptr, &cs),
+                             "D3D11 create compute shader"));
             return cs;
         });
 }

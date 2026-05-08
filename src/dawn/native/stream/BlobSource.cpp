@@ -40,7 +40,7 @@ BlobSource::BlobSource(Blob&& blob) : mBlob(std::move(blob)) {}
 
 MaybeError BlobSource::Read(const void** ptr, size_t bytes) {
     DAWN_INVALID_IF(bytes > mBlob.Size() - mOffset, "Out of bounds.");
-    *ptr = mBlob.Data() + mOffset;
+    *ptr = mBlob.DataPtr() + mOffset;
     mOffset += bytes;
     return {};
 }

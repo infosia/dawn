@@ -73,8 +73,8 @@ class Blob {
     Blob& operator=(Blob&&);
 
     bool Empty() const;
-    const uint8_t* Data() const;
-    uint8_t* Data();
+    const uint8_t* DataPtr() const;
+    uint8_t* DataPtr();
     size_t Size() const;
 
     bool operator==(const Blob& other) const;
