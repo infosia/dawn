@@ -135,6 +135,7 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
                                                         module, immediate_data_config));
     TINT_CHECK_RESULT(core::ir::transform::BindingRemapper(module, remapper_data));
 
+    // Must come before robustness.
     TINT_CHECK_RESULT(core::ir::transform::PropagateBufferSizes(module));
 
     if (!options.disable_robustness) {

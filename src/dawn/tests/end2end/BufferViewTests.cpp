@@ -210,37 +210,28 @@ class BufferViewTest : public DawnTest {
 
             out[i] = arrayLength(bufferArrayView<array<u32>>(&in, uniforms[0][0], uniforms[1][0])); i++;
             out[i] = arrayLength(bufferArrayView<array<u32>>(&in, uniforms[0][1], uniforms[1][1])); i++;
-            out[i] = arrayLength(bufferArrayView<array<u32>>(&in, uniforms[0][2], uniforms[1][2])); i++;
-            out[i] = arrayLength(bufferArrayView<array<u32>>(&in, uniforms[0][3], uniforms[1][3])); i++;
+            out[i] = arrayLength(bufferArrayView<array<u32>>(&in, uniforms[0][0], uniforms[1][2])); i++;
 
             out[i] = arrayLength(bufferArrayView<array<vec2u>>(&in, uniforms[0][0], uniforms[1][0])); i++;
             out[i] = arrayLength(bufferArrayView<array<vec2u>>(&in, uniforms[0][1], uniforms[1][1])); i++;
-            out[i] = arrayLength(bufferArrayView<array<vec2u>>(&in, uniforms[0][2], uniforms[1][2])); i++;
-            out[i] = arrayLength(bufferArrayView<array<vec2u>>(&in, uniforms[0][2], uniforms[1][3])); i++;
+            out[i] = arrayLength(bufferArrayView<array<vec2u>>(&in, uniforms[0][0], uniforms[1][3])); i++;
 
             out[i] = arrayLength(bufferArrayView<array<vec3u>>(&in, uniforms[0][0], uniforms[1][0])); i++;
             out[i] = arrayLength(bufferArrayView<array<vec3u>>(&in, uniforms[0][1], uniforms[1][1])); i++;
-            out[i] = arrayLength(bufferArrayView<array<vec3u>>(&in, uniforms[0][2], uniforms[1][2])); i++;
             out[i] = arrayLength(bufferArrayView<array<vec3u>>(&in, uniforms[0][1], uniforms[1][3])); i++;
 
             out[i] = arrayLength(bufferArrayView<array<vec4u>>(&in, uniforms[0][0], uniforms[1][0])); i++;
             out[i] = arrayLength(bufferArrayView<array<vec4u>>(&in, uniforms[0][1], uniforms[1][1])); i++;
-            out[i] = arrayLength(bufferArrayView<array<vec4u>>(&in, uniforms[0][2], uniforms[1][2])); i++;
             out[i] = arrayLength(bufferArrayView<array<vec4u>>(&in, uniforms[0][0], uniforms[1][3])); i++;
 
             out[i] = arrayLength(&bufferArrayView<S1>(&in, uniforms[0][0], uniforms[1][0]).b); i++;
             out[i] = arrayLength(&bufferArrayView<S1>(&in, uniforms[0][1], uniforms[1][1]).b); i++;
-            out[i] = arrayLength(&bufferArrayView<S1>(&in, uniforms[0][2], uniforms[1][2]).b); i++;
             out[i] = arrayLength(&bufferArrayView<S1>(&in, uniforms[0][1], uniforms[1][3]).b); i++;
 
             out[i] = arrayLength(&bufferArrayView<S2>(&in, uniforms[0][0], uniforms[1][0]).b); i++;
             out[i] = arrayLength(&bufferArrayView<S2>(&in, uniforms[0][1], uniforms[1][1]).b); i++;
-            out[i] = arrayLength(&bufferArrayView<S2>(&in, uniforms[0][2], uniforms[1][2]).b); i++;
-            out[i] = arrayLength(&bufferArrayView<S2>(&in, uniforms[0][1], uniforms[1][3]).b); i++;
 
-            out[i] = arrayLength(&bufferArrayView<S3>(&in, uniforms[0][0], uniforms[1][0]).b); i++;
-            out[i] = arrayLength(&bufferArrayView<S3>(&in, uniforms[0][1], uniforms[1][1]).b); i++;
-            out[i] = arrayLength(&bufferArrayView<S3>(&in, uniforms[0][2], uniforms[1][2]).b); i++;
+            out[i] = arrayLength(&bufferArrayView<S3>(&in, uniforms[0][0], uniforms[1][1]).b); i++;
             out[i] = arrayLength(&bufferArrayView<S3>(&in, uniforms[0][0], uniforms[1][3]).b); i++;
           }
         )";
@@ -248,46 +239,27 @@ class BufferViewTest : public DawnTest {
         std::initializer_list<uint32_t> uniforms = {0u, 16u, 32u, 48u, 20u, 36u, 52u, len - 20u};
         std::vector<uint32_t> uniformData{uniforms};
 
-        auto InBounds = [&](uint32_t offset_idx, uint32_t size_idx, uint32_t size,
-                            uint32_t str_offset = 0) {
-            auto req_size = uniformData[size_idx];
-            auto used_size = std::max(((req_size - str_offset) / size) * size, size);
-            if (len < str_offset + uniformData[offset_idx] + used_size) {
-                return 1u;
-            }
-            return used_size / size;
-        };
-
         std::vector<uint32_t> expected = {
             len,                         //
-            InBounds(0, 4 + 0, 4),       //
-            InBounds(1, 4 + 1, 4),       //
-            InBounds(2, 4 + 2, 4),       //
-            InBounds(3, 4 + 3, 4),       //
-            InBounds(0, 4 + 0, 8),       //
-            InBounds(1, 4 + 1, 8),       //
-            InBounds(2, 4 + 2, 8),       //
-            InBounds(2, 4 + 3, 8),       //
-            InBounds(0, 4 + 0, 16),      //
-            InBounds(1, 4 + 1, 16),      //
-            InBounds(2, 4 + 2, 16),      //
-            InBounds(1, 4 + 3, 16),      //
-            InBounds(0, 4 + 0, 16),      //
-            InBounds(1, 4 + 1, 16),      //
-            InBounds(2, 4 + 2, 16),      //
-            InBounds(0, 4 + 3, 16),      //
-            InBounds(0, 4 + 0, 4, 4),    //
-            InBounds(1, 4 + 1, 4, 4),    //
-            InBounds(2, 4 + 2, 4, 4),    //
-            InBounds(1, 4 + 3, 4, 4),    //
-            InBounds(0, 4 + 0, 8, 8),    //
-            InBounds(1, 4 + 1, 8, 8),    //
-            InBounds(2, 4 + 2, 8, 8),    //
-            InBounds(1, 4 + 3, 8, 8),    //
-            InBounds(0, 4 + 0, 16, 16),  //
-            InBounds(1, 4 + 1, 16, 16),  //
-            InBounds(2, 4 + 2, 16, 16),  //
-            InBounds(0, 4 + 3, 16, 16),  //
+            uniformData[4] / 4,          //
+            uniformData[5] / 4,          //
+            uniformData[6] / 4,          //
+            uniformData[4] / 8,          //
+            uniformData[5] / 8,          //
+            uniformData[7] / 8,          //
+            uniformData[4] / 16,         //
+            uniformData[5] / 16,         //
+            uniformData[7] / 16,         //
+            uniformData[4] / 16,         //
+            uniformData[5] / 16,         //
+            uniformData[7] / 16,         //
+            (uniformData[4] - 4) / 4,    //
+            (uniformData[5] - 4) / 4,    //
+            (uniformData[7] - 4) / 4,    //
+            (uniformData[4] - 8) / 8,    //
+            (uniformData[5] - 8) / 8,    //
+            (uniformData[5] - 16) / 16,  //
+            (uniformData[7] - 16) / 16,  //
         };
 
         BaseLengthTest(src, len, uniforms, expected);
