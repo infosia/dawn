@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27e1ffaf_b4fed291",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-05-08T14:03:08Z",
+      "side": 1,
+      "message": "Thanks, done!",
+      "parentUuid": "a7c9b4df_812c1d56",
+      "revId": "f4081ed3275e20fac93a35f88710564ac9eaef68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22cbd60f_356e951e",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-08T02:28:16Z",
       "side": 1,
       "message": "Nit: Likewise, I don\u0027t think we need `UniqueVector` here either.",
+      "revId": "f4081ed3275e20fac93a35f88710564ac9eaef68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb7394a5_ee48cb02",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-05-08T14:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22cbd60f_356e951e",
       "revId": "f4081ed3275e20fac93a35f88710564ac9eaef68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
