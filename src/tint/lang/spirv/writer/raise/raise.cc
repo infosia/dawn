@@ -76,6 +76,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     TINT_CHECK_RESULT(
         core::ir::transform::SubstituteOverrides(module, options.substitute_overrides_config));
 
+    // Must come before robustness.
     TINT_CHECK_RESULT(core::ir::transform::PropagateBufferSizes(module));
 
     tint::transform::multiplanar::BindingsMap multiplanar_map{};

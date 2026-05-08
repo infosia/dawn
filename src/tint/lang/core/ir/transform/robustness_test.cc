@@ -5686,11 +5686,10 @@ S = struct @align(16) {
   $B1: {
     %4:u32 = bufferLength %p
     %5:u32 = bitcast<u32> %o
-    %6:u32 = and %5, 4294967280u
-    %7:u32 = add 20u, %6
-    %8:bool = lt %4, %7
-    %9:u32 = select %6, 0u, %8
-    %10:ptr<workgroup, S, read_write> = bufferView<S> %p, %9
+    %6:u32 = add 20u, %5
+    %7:bool = lt %4, %6
+    %8:u32 = select %5, 0u, %7
+    %9:ptr<workgroup, S, read_write> = bufferView<S> %p, %8
     ret
   }
 }
@@ -5796,11 +5795,10 @@ S = struct @align(16) {
 %foo = func(%p:ptr<storage, buffer, read_write>, %o:i32):void {
   $B1: {
     %4:u32 = bitcast<u32> %o
-    %5:u32 = and %4, 4294967280u
-    %6:u32 = add 20u, %5
-    %7:bool = lt 64u, %6
-    %8:u32 = select %5, 0u, %7
-    %9:ptr<storage, S, read_write> = bufferView<S> %p, %8, 64u
+    %5:u32 = add 20u, %4
+    %6:bool = lt 64u, %5
+    %7:u32 = select %4, 0u, %6
+    %8:ptr<storage, S, read_write> = bufferView<S> %p, %7, 64u
     ret
   }
 }
@@ -6010,18 +6008,13 @@ S = struct @align(8) {
   $B1: {
     %5:u32 = bufferLength %p
     %6:u32 = bitcast<u32> %o
-    %7:u32 = and %6, 4294967288u
-    %8:u32 = bitcast<u32> %s
-    %9:u32 = sub %8, 24u
-    %10:u32 = div %9, 8u
-    %11:u32 = mul %10, 8u
-    %12:u32 = add %11, 24u
-    %13:u32 = max %12, 32u
-    %14:u32 = add %7, %13
-    %15:bool = lt %5, %14
-    %16:u32 = select %7, 0u, %15
-    %17:u32 = select %13, 32u, %15
-    %18:ptr<storage, S, read_write> = bufferArrayView<S> %p, %16, %17
+    %7:u32 = bitcast<u32> %s
+    %8:u32 = max %7, 32u
+    %9:u32 = add %6, %8
+    %10:bool = lt %5, %9
+    %11:u32 = select %6, 0u, %10
+    %12:u32 = select %8, 32u, %10
+    %13:ptr<storage, S, read_write> = bufferArrayView<S> %p, %11, %12
     ret
   }
 }
@@ -6075,16 +6068,12 @@ S = struct @align(8) {
   $B1: {
     %4:u32 = bufferLength %p
     %5:u32 = bitcast<u32> %s
-    %6:u32 = sub %5, 24u
-    %7:u32 = div %6, 8u
-    %8:u32 = mul %7, 8u
-    %9:u32 = add %8, 24u
-    %10:u32 = max %9, 32u
-    %11:u32 = add 8u, %10
-    %12:bool = lt %4, %11
-    %13:u32 = select 8u, 0u, %12
-    %14:u32 = select %10, 32u, %12
-    %15:ptr<storage, S, read_write> = bufferArrayView<S> %p, %13, %14
+    %6:u32 = max %5, 32u
+    %7:u32 = add 8u, %6
+    %8:bool = lt %4, %7
+    %9:u32 = select 8u, 0u, %8
+    %10:u32 = select %6, 32u, %8
+    %11:ptr<storage, S, read_write> = bufferArrayView<S> %p, %9, %10
     ret
   }
 }
@@ -6138,12 +6127,11 @@ S = struct @align(8) {
   $B1: {
     %4:u32 = bufferLength %p
     %5:u32 = bitcast<u32> %o
-    %6:u32 = and %5, 4294967288u
-    %7:u32 = add 64u, %6
-    %8:bool = lt %4, %7
-    %9:u32 = select %6, 0u, %8
-    %10:u32 = select 64u, 32u, %8
-    %11:ptr<storage, S, read_write> = bufferArrayView<S> %p, %9, %10
+    %6:u32 = add 64u, %5
+    %7:bool = lt %4, %6
+    %8:u32 = select %5, 0u, %7
+    %9:u32 = select 64u, 32u, %7
+    %10:ptr<storage, S, read_write> = bufferArrayView<S> %p, %8, %9
     ret
   }
 }
