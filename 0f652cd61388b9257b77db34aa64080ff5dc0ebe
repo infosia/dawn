@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44c2b735_c0bb07b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-08T20:53:36Z",
+      "side": 1,
+      "message": "Thanks Kyle for the suggestions around std::span! I haven\u0027t used it much before so I wasn\u0027t aware of all the best style choices.",
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

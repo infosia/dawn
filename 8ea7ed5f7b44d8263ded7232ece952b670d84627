@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff17f7ab_88186c29",
+        "filename": "src/dawn/native/Blob.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-08T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1b4a83f_030ab8ad",
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4cd4b92b_6150a9a1",
@@ -70,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bb2a5b2_8735b83d",
+        "filename": "src/dawn/native/Blob.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-08T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cd4b92b_6150a9a1",
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e39a4434_2b60f48b",
@@ -83,6 +119,24 @@
       "writtenOn": "2026-05-08T18:14:50Z",
       "side": 1,
       "message": "std::ranges::copy(src, b-\u003eBegin())",
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b03a8a8c_f6202c2e",
+        "filename": "src/dawn/native/Blob.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-08T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e39a4434_2b60f48b",
       "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -160,6 +214,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1bf4da2c_76f80c1f",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-08T20:53:36Z",
+      "side": 1,
+      "message": "I\u0027ve addressed other comments minus the byte vs uint8_t, and factored some code into preceding CLs. The reason I chose to use byte in this change was because in Kai\u0027s doc: https://docs.google.com/document/d/1-4tHoIIIdefvRxw0wT5PVSV9_Sec2eOURIYSXi0DGFU/edit?resourcekey\u003d0-Lm-fWYMRv-oscgEzHnvpEw\u0026tab\u003dt.0 using std::byte was something he called out. Honestly, I don\u0027t really feel particular to either directions, so I added Kai to this change as a reviewer also to see if he has any preferences on top of Brandon\u0027s.",
+      "parentUuid": "d1b09887_edac662d",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7f07e974_a1dd57e4",
         "filename": "src/dawn/native/Blob.h",
         "patchSetId": 5
@@ -171,6 +249,30 @@
       "writtenOn": "2026-05-08T18:14:50Z",
       "side": 1,
       "message": "nit: Moving these functions they could easily be pull forward into a separate CL.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eab042a_5d8240f7",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-08T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f07e974_a1dd57e4",
       "range": {
         "startLine": 57,
         "startChar": 0,
@@ -204,6 +306,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fadcd433_55bc948f",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-08T20:53:36Z",
+      "side": 1,
+      "message": "Done! I wasn\u0027t too familiar with std::span, so thanks for the pointers! Updated.",
+      "parentUuid": "00803cd9_b5c03c6f",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 5
+      },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a025bf27_232067ab",
@@ -217,6 +343,24 @@
       "writtenOn": "2026-05-08T18:14:50Z",
       "side": 1,
       "message": "I believe this default initializes vector storage.",
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06723340_f5ec3673",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-08T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a025bf27_232067ab",
       "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
