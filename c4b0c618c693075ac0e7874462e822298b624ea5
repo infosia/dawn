@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4b926b7_6a6e20e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T20:41:17Z",
+      "side": 1,
+      "message": "FWIW this is an straight revert of the revert. PTAL.",
+      "revId": "c4b0c618c693075ac0e7874462e822298b624ea5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
