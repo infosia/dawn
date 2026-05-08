@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4061a849_fbc09523",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-08T19:23:38Z",
+      "side": 1,
+      "message": "You probably won\u0027t be able to run CQ on 144, so I would highly recommend to at least do a local build to make sure it builds before landing. You will almost also certainly need to put No-Try: true in the description.",
+      "revId": "b69f9a594206ae32562f10acf3fe1497722672fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
