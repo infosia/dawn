@@ -258,7 +258,7 @@ TEST(SerializeTests, SerializeDeserializeVectorSizeOutOfBounds) {
     ByteVectorSink sink;
     StreamIn(&sink, value);
 
-    BlobSource source(CreateBlob(std::move(sink)));
+    BlobSource source(Blob::Create(std::move(sink)));
     std::vector<uint8_t> deserialized;
     auto err = StreamOut(&source, &deserialized);
     EXPECT_TRUE(err.IsError());
@@ -271,7 +271,7 @@ TEST(SerializeTests, SerializeDeserializeNoElementsInVector) {
     ByteVectorSink sink;
     StreamIn(&sink, value);
 
-    BlobSource source(CreateBlob(std::move(sink)));
+    BlobSource source(Blob::Create(std::move(sink)));
     std::vector<uint8_t> deserialized;
     auto err = StreamOut(&source, &deserialized);
     EXPECT_TRUE(err.IsError());
@@ -461,7 +461,7 @@ TEST(StreamTests, SerializeDeserializeParamPack) {
     ByteVectorSink sink;
     StreamIn(&sink, a, b, c);
 
-    BlobSource source(CreateBlob(std::move(sink)));
+    BlobSource source(Blob::Create(std::move(sink)));
     int aOut;
     float bOut;
     std::pair<std::string, double> cOut;
@@ -509,7 +509,7 @@ TEST(StreamTests, SerializeDeserializeVisitable) {
 
     // Test that deserialization works for StructMembers, passed inline.
     {
-        BlobSource src(CreateBlob(sink));
+        BlobSource src(Blob::Create(sink));
         Foo out;
         auto err = StreamOut(&src, &out);
         EXPECT_FALSE(err.IsError());
@@ -530,7 +530,7 @@ TEST(StreamTests, SerializeDeserializeBlobs) {
         ByteVectorSink sink;
         StreamIn(&sink, blob);
 
-        BlobSource src(CreateBlob(sink));
+        BlobSource src(Blob::Create(sink));
         Blob out;
         auto err = StreamOut(&src, &out);
         EXPECT_FALSE(err.IsError());
@@ -540,12 +540,12 @@ TEST(StreamTests, SerializeDeserializeBlobs) {
 
     // Test a blob with some data
     {
-        Blob blob = CreateBlob(std::vector<double>{6.24, 3.12222});
+        Blob blob = Blob::Create(std::vector<double>{6.24, 3.12222});
 
         ByteVectorSink sink;
         StreamIn(&sink, blob);
 
-        BlobSource src(CreateBlob(sink));
+        BlobSource src(Blob::Create(sink));
         Blob out;
         auto err = StreamOut(&src, &out);
         EXPECT_FALSE(err.IsError());
@@ -564,7 +564,7 @@ TEST(StreamTests, SerializeDeserializeUniquePtr) {
         ByteVectorSink sink;
         StreamIn(&sink, in);
 
-        BlobSource src(CreateBlob(sink));
+        BlobSource src(Blob::Create(sink));
         // Initialize the unique_ptr to a non-null value to check if it gets set to nullptr.
         std::unique_ptr<int> out = std::make_unique<int>(123);
         auto err = StreamOut(&src, &out);
@@ -579,7 +579,7 @@ TEST(StreamTests, SerializeDeserializeUniquePtr) {
         ByteVectorSink sink;
         StreamIn(&sink, in);
 
-        BlobSource src(CreateBlob(sink));
+        BlobSource src(Blob::Create(sink));
         // Initialize the unique_ptr to a nullptr. When deserializing, it should be pointed to a new
         // allocated memory holding the expected data.
         std::unique_ptr<int> out = nullptr;
@@ -601,7 +601,7 @@ TEST(StreamTests, SerializeDeserializeItypArray) {
     ByteVectorSink sink;
     StreamIn(&sink, in);
 
-    BlobSource src(CreateBlob(sink));
+    BlobSource src(Blob::Create(sink));
     // Initialize the unique_ptr to a nullptr. When deserializing, it should be pointed to a new
     // allocated memory holding the expected data.
     Array out;
@@ -627,7 +627,7 @@ TEST(StreamTests, UnsafeUnserializedValue) {
     ByteVectorSink sink;
     StreamIn(&sink, in);
 
-    BlobSource src(CreateBlob(sink));
+    BlobSource src(Blob::Create(sink));
     // Initialize the UnsafeUnserializedValue to a value different from default constructed. When
     // deserializing, it should be assigned to default constructed value.
     Type out = Type(ValueType(init2));
@@ -737,7 +737,7 @@ TYPED_TEST_P(StreamParameterizedTests, SerializeDeserialize) {
         ByteVectorSink sink;
         StreamIn(&sink, value);
 
-        BlobSource source(CreateBlob(std::move(sink)));
+        BlobSource source(Blob::Create(std::move(sink)));
         TypeParam deserialized;
         auto err = StreamOut(&source, &deserialized);
         if (err.IsError()) {
@@ -757,7 +757,7 @@ TYPED_TEST_P(StreamParameterizedTests, SerializeDeserializeOutOfBounds) {
         std::vector<uint8_t> src = sink;
         src.pop_back();
 
-        BlobSource source(CreateBlob(std::move(src)));
+        BlobSource source(Blob::Create(std::move(src)));
         TypeParam deserialized;
         auto err = StreamOut(&source, &deserialized);
         EXPECT_TRUE(err.IsError());
@@ -767,7 +767,7 @@ TYPED_TEST_P(StreamParameterizedTests, SerializeDeserializeOutOfBounds) {
 
 // Test that deserializing from an empty source raises an error.
 TYPED_TEST_P(StreamParameterizedTests, DeserializeEmpty) {
-    BlobSource source(CreateBlob(0));
+    BlobSource source(Blob::Create(0));
     TypeParam deserialized;
     auto err = StreamOut(&source, &deserialized);
     EXPECT_TRUE(err.IsError());

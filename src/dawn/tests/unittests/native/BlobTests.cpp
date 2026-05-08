@@ -50,7 +50,7 @@ TEST(BlobTests, DefaultEmpty) {
 
 // Test that you can create a blob with a size in bytes and write/read its contents.
 TEST(BlobTests, SizedCreation) {
-    Blob b = CreateBlob(10);
+    Blob b = Blob::Create(10);
     EXPECT_FALSE(b.Empty());
     EXPECT_EQ(b.Size(), 10u);
     ASSERT_NE(b.Data(), nullptr);
@@ -63,7 +63,7 @@ TEST(BlobTests, SizedCreation) {
 
 // Test that you can create a zero-sized blob.
 TEST(BlobTests, EmptySizedCreation) {
-    Blob b = CreateBlob(0);
+    Blob b = Blob::Create(0);
     EXPECT_TRUE(b.Empty());
     EXPECT_EQ(b.Data(), nullptr);
     EXPECT_EQ(b.Size(), 0u);
@@ -127,7 +127,7 @@ TEST(BlobTests, UnsafeCreateWithDeleterEmpty) {
 // Test that move construction moves the data from one blob into the new one.
 TEST(BlobTests, MoveConstruct) {
     // Create the blob.
-    Blob b1 = CreateBlob(10);
+    Blob b1 = Blob::Create(10);
     char data[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
     memcpy(b1.Data(), data, sizeof(data));
 
@@ -144,7 +144,7 @@ TEST(BlobTests, MoveConstruct) {
 // Test that move assignment moves the data from one blob into another.
 TEST(BlobTests, MoveAssign) {
     // Create the blob.
-    Blob b1 = CreateBlob(10);
+    Blob b1 = Blob::Create(10);
     char data[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
     memcpy(b1.Data(), data, sizeof(data));
 
@@ -162,7 +162,7 @@ TEST(BlobTests, MoveAssign) {
 // Test that move assignment can replace the contents of the moved-to blob.
 TEST(BlobTests, MoveAssignOver) {
     // Create the blob.
-    Blob b1 = CreateBlob(10);
+    Blob b1 = Blob::Create(10);
     char data[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
     memcpy(b1.Data(), data, sizeof(data));
 

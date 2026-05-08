@@ -51,7 +51,7 @@ static constexpr const size_t mHashByteSize = sizeof(Hash);
 Blob GenerateHashPrefixedPayload(size_t valueSize, const void* value) {
     // Create a Blob for holding hash+payload.
     const size_t byteSizeWithHash = valueSize + mHashByteSize;
-    Blob result = CreateBlob(byteSizeWithHash);
+    Blob result = Blob::Create(byteSizeWithHash);
     Hash* hashHeader = reinterpret_cast<Hash*>(result.Data());
     uint8_t* payload = result.Data() + mHashByteSize;
     // Copy the payload into buffer and compute the hash as prefix.
@@ -116,7 +116,7 @@ void BlobCache::Store(const CacheKey& key, const Blob& value) {
 
 Blob BlobCache::GenerateActualStoredBlobForTesting(size_t valueSize, const void* value) {
     if (!mHashValidation) {
-        Blob blob = CreateBlob(valueSize);
+        Blob blob = Blob::Create(valueSize);
         memcpy(blob.Data(), value, valueSize);
         return blob;
     }

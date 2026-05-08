@@ -40,7 +40,8 @@
 
 namespace dawn::native {
 
-Blob CreateBlob(size_t size) {
+// static
+Blob Blob::Create(size_t size) {
     if (size > 0) {
         uint8_t* ptr = new uint8_t[size];
         return Blob::UnsafeCreateWithDeleter(ptr, size, [=] { delete[] ptr; });
@@ -127,7 +128,7 @@ MaybeError stream::Stream<Blob>::Read(stream::Source* s, Blob* b) {
     if (size > 0) {
         const void* ptr;
         DAWN_TRY(s->Read(&ptr, size));
-        *b = CreateBlob(size);
+        *b = Blob::Create(size);
         memcpy(b->Data(), ptr, size);
     } else {
         *b = Blob();
