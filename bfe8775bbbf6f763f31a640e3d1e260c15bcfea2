@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24bf794d_2fa55665",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-05-08T20:59:10Z",
+      "side": 1,
+      "message": "This is a Clang-only #pragma\n\nI can\u0027t remember if Dawn is meant to support building with Visual Studio / MSVC.",
+      "revId": "bfe8775bbbf6f763f31a640e3d1e260c15bcfea2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
