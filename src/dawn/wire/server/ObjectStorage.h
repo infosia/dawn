@@ -62,7 +62,22 @@ struct ObjectDataBase {
 template <typename T>
 struct ObjectData : public ObjectDataBase<T> {};
 
+<<<<<<< HEAD   (6d276fbe64b18dbe95c33f80ac0a4cecef288fdf [M144-LTS][dawn][native] Remove incorrect buffer->SetInitial)
 enum class BufferMapWriteState { Unmapped, Mapped, MapError };
+||||||| BASE   (6651e2d67a874c4b50dbf89c110c72f3e50fe8ad Move GLFW to the standard 3p layout)
+enum class BufferMapWriteState { Unmapped, Mapped, MapError };
+
+struct BufferMapState {
+    std::unique_ptr<MemoryTransferService::ReadHandle> readHandle = nullptr;
+    std::unique_ptr<MemoryTransferService::WriteHandle> writeHandle = nullptr;
+    BufferMapWriteState writeState = BufferMapWriteState::Unmapped;
+};
+=======
+struct BufferMapState {
+    std::unique_ptr<MemoryTransferService::ReadHandle> readHandle = nullptr;
+    std::unique_ptr<MemoryTransferService::WriteHandle> writeHandle = nullptr;
+};
+>>>>>>> CHANGE (4ba836a41006884c55731c72a1ba730d76cfb993 Reland "[dawn][wire] Check that buffer is mapped in Deserial)
 
 template <>
 struct ObjectData<WGPUBuffer> : public ObjectDataBase<WGPUBuffer> {

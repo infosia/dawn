@@ -32,6 +32,7 @@
 
 #include <limits>
 #include <memory>
+#include <span>
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/StringViewUtils.h"
@@ -56,6 +57,7 @@ WireResult Server::PreHandleBufferUnmap(const BufferUnmapCmd& cmd) {
     Known<WGPUBuffer> buffer;
     WIRE_TRY(Get(cmd.selfId, &buffer));
 
+<<<<<<< HEAD   (6d276fbe64b18dbe95c33f80ac0a4cecef288fdf [M144-LTS][dawn][native] Remove incorrect buffer->SetInitial)
     if (buffer->mappedAtCreation && !(buffer->usage & WGPUBufferUsage_MapWrite)) {
         // This indicates the writeHandle is for mappedAtCreation only. Destroy on unmap
         // writeHandle could have possibly been deleted if buffer is already destroyed so we
@@ -64,6 +66,26 @@ WireResult Server::PreHandleBufferUnmap(const BufferUnmapCmd& cmd) {
     }
 
     buffer->mapWriteState = BufferMapWriteState::Unmapped;
+||||||| BASE   (6651e2d67a874c4b50dbf89c110c72f3e50fe8ad Move GLFW to the standard 3p layout)
+    buffer->mapState.Use([&](auto mapState) {
+        if (buffer->mappedAtCreation && !(buffer->usage & WGPUBufferUsage_MapWrite)) {
+            // This indicates the writeHandle is for mappedAtCreation only. Destroy on unmap
+            // writeHandle could have possibly been deleted if buffer is already destroyed so we
+            // don't assert it's non-null
+            mapState->writeHandle = nullptr;
+        }
+        mapState->writeState = BufferMapWriteState::Unmapped;
+    });
+=======
+    buffer->mapState.Use([&](auto mapState) {
+        if (buffer->mappedAtCreation && !(buffer->usage & WGPUBufferUsage_MapWrite)) {
+            // This indicates the writeHandle is for mappedAtCreation only. Destroy on unmap
+            // writeHandle could have possibly been deleted if buffer is already destroyed so we
+            // don't assert it's non-null
+            mapState->writeHandle = nullptr;
+        }
+    });
+>>>>>>> CHANGE (4ba836a41006884c55731c72a1ba730d76cfb993 Reland "[dawn][wire] Check that buffer is mapped in Deserial)
 
     return WireResult::Success;
 }
@@ -74,9 +96,22 @@ WireResult Server::PreHandleBufferDestroy(const BufferDestroyCmd& cmd) {
     WIRE_TRY(Get(cmd.selfId, &buffer));
 
     // The buffer was destroyed. Clear the Read/WriteHandle.
+<<<<<<< HEAD   (6d276fbe64b18dbe95c33f80ac0a4cecef288fdf [M144-LTS][dawn][native] Remove incorrect buffer->SetInitial)
     buffer->readHandle = nullptr;
     buffer->writeHandle = nullptr;
     buffer->mapWriteState = BufferMapWriteState::Unmapped;
+||||||| BASE   (6651e2d67a874c4b50dbf89c110c72f3e50fe8ad Move GLFW to the standard 3p layout)
+    buffer->mapState.Use([](auto mapState) {
+        mapState->readHandle = nullptr;
+        mapState->writeHandle = nullptr;
+        mapState->writeState = BufferMapWriteState::Unmapped;
+    });
+=======
+    buffer->mapState.Use([](auto mapState) {
+        mapState->readHandle = nullptr;
+        mapState->writeHandle = nullptr;
+    });
+>>>>>>> CHANGE (4ba836a41006884c55731c72a1ba730d76cfb993 Reland "[dawn][wire] Check that buffer is mapped in Deserial)
 
     return WireResult::Success;
 }
@@ -155,6 +190,7 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
         return WireResult::FatalError;
     }
 
+<<<<<<< HEAD   (6d276fbe64b18dbe95c33f80ac0a4cecef288fdf [M144-LTS][dawn][native] Remove incorrect buffer->SetInitial)
     if (isWriteMode) {
         if (buffer->handle == nullptr) {
             DAWN_ASSERT(descriptor->mappedAtCreation);
@@ -184,15 +220,74 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
                 // GetMappedRange can still fail if the buffer's size isn't aligned.
                 // - Remember the buffer is an error so we will skip subsequent mapping operations.
                 buffer->mapWriteState = BufferMapWriteState::MapError;
+||||||| BASE   (6651e2d67a874c4b50dbf89c110c72f3e50fe8ad Move GLFW to the standard 3p layout)
+    return buffer->mapState.Use([&](auto mapState) {
+        if (isWriteMode) {
+            if (buffer->handle == nullptr) {
+                DAWN_ASSERT(descriptor->mappedAtCreation);
+                // A null buffer indicates that mapping-at-creation failed inside createBuffer.
+                // - Unmark the buffer as allocated so we will skip freeing it.
+                buffer->state = AllocationState::Reserved;
+                // - Remember the buffer is an error so we will skip subsequent mapping operations.
+                mapState->writeState = BufferMapWriteState::MapError;
+=======
+    return buffer->mapState.Use([&](auto mapState) {
+        if (isWriteMode) {
+            if (buffer->handle == nullptr) {
+                DAWN_ASSERT(descriptor->mappedAtCreation);
+                // A null buffer indicates that mapping-at-creation failed inside createBuffer.
+                // Unmark the buffer as allocated so we will skip freeing it.
+                buffer->state = AllocationState::Reserved;
+>>>>>>> CHANGE (4ba836a41006884c55731c72a1ba730d76cfb993 Reland "[dawn][wire] Check that buffer is mapped in Deserial)
                 return WireResult::Success;
             }
             DAWN_ASSERT(mapping != nullptr);
             writeHandle->SetTarget(mapping);
 
+<<<<<<< HEAD   (6d276fbe64b18dbe95c33f80ac0a4cecef288fdf [M144-LTS][dawn][native] Remove incorrect buffer->SetInitial)
             buffer->mapWriteState = BufferMapWriteState::Mapped;
+||||||| BASE   (6651e2d67a874c4b50dbf89c110c72f3e50fe8ad Move GLFW to the standard 3p layout)
+            MemoryTransferService::WriteHandle* writeHandle = nullptr;
+            // Deserialize metadata produced from the client to create a companion server handle.
+            if (!mMemoryTransferService->DeserializeWriteHandle(
+                    writeHandleCreateInfo, static_cast<size_t>(writeHandleCreateInfoLength),
+                    &writeHandle)) {
+                return WireResult::FatalError;
+            }
+            DAWN_ASSERT(writeHandle != nullptr);
+            mapState->writeHandle.reset(writeHandle);
+            writeHandle->SetDataLength(descriptor->size);
+
+            if (descriptor->mappedAtCreation) {
+                void* mapping = mProcs->bufferGetMappedRange(buffer->handle, 0, descriptor->size);
+                if (mapping == nullptr) {
+                    DAWN_ASSERT(descriptor->size % 4 != 0);
+                    // GetMappedRange can still fail if the buffer's size isn't aligned.
+                    // - Remember the buffer is an error so we will skip subsequent mapping
+                    // operations.
+                    mapState->writeState = BufferMapWriteState::MapError;
+                    return WireResult::Success;
+                }
+                DAWN_ASSERT(mapping != nullptr);
+                writeHandle->SetTarget(mapping);
+
+                mapState->writeState = BufferMapWriteState::Mapped;
+            }
+=======
+            MemoryTransferService::WriteHandle* writeHandle = nullptr;
+            // Deserialize metadata produced from the client to create a companion server handle.
+            if (!mMemoryTransferService->DeserializeWriteHandle(
+                    writeHandleCreateInfo, static_cast<size_t>(writeHandleCreateInfoLength),
+                    &writeHandle)) {
+                return WireResult::FatalError;
+            }
+            DAWN_ASSERT(writeHandle != nullptr);
+            mapState->writeHandle.reset(writeHandle);
+>>>>>>> CHANGE (4ba836a41006884c55731c72a1ba730d76cfb993 Reland "[dawn][wire] Check that buffer is mapped in Deserial)
         }
     }
 
+<<<<<<< HEAD   (6d276fbe64b18dbe95c33f80ac0a4cecef288fdf [M144-LTS][dawn][native] Remove incorrect buffer->SetInitial)
     if (isReadMode) {
         MemoryTransferService::ReadHandle* readHandle = nullptr;
         // Deserialize metadata produced from the client to create a companion server handle.
@@ -200,6 +295,30 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
                 readHandleCreateInfo, static_cast<size_t>(readHandleCreateInfoLength),
                 &readHandle)) {
             return WireResult::FatalError;
+||||||| BASE   (6651e2d67a874c4b50dbf89c110c72f3e50fe8ad Move GLFW to the standard 3p layout)
+        if (isReadMode) {
+            MemoryTransferService::ReadHandle* readHandle = nullptr;
+            // Deserialize metadata produced from the client to create a companion server handle.
+            if (!mMemoryTransferService->DeserializeReadHandle(
+                    readHandleCreateInfo, static_cast<size_t>(readHandleCreateInfoLength),
+                    &readHandle)) {
+                return WireResult::FatalError;
+            }
+            DAWN_ASSERT(readHandle != nullptr);
+
+            mapState->readHandle.reset(readHandle);
+=======
+        if (isReadMode) {
+            MemoryTransferService::ReadHandle* readHandle = nullptr;
+            // Deserialize metadata produced from the client to create a companion server handle.
+            if (!mMemoryTransferService->DeserializeReadHandle(
+                    readHandleCreateInfo, static_cast<size_t>(readHandleCreateInfoLength),
+                    &readHandle)) {
+                return WireResult::FatalError;
+            }
+            DAWN_ASSERT(readHandle != nullptr);
+            mapState->readHandle.reset(readHandle);
+>>>>>>> CHANGE (4ba836a41006884c55731c72a1ba730d76cfb993 Reland "[dawn][wire] Check that buffer is mapped in Deserial)
         }
         DAWN_ASSERT(readHandle != nullptr);
 
@@ -219,8 +338,54 @@ WireResult Server::DoBufferUpdateMappedData(Known<WGPUBuffer> buffer,
         return WireResult::FatalError;
     }
 
+<<<<<<< HEAD   (6d276fbe64b18dbe95c33f80ac0a4cecef288fdf [M144-LTS][dawn][native] Remove incorrect buffer->SetInitial)
     switch (buffer->mapWriteState) {
         case BufferMapWriteState::Unmapped:
+||||||| BASE   (6651e2d67a874c4b50dbf89c110c72f3e50fe8ad Move GLFW to the standard 3p layout)
+    return buffer->mapState.Use([&](auto mapState) {
+        switch (mapState->writeState) {
+            case BufferMapWriteState::Unmapped:
+                return WireResult::FatalError;
+            case BufferMapWriteState::MapError:
+                // The buffer is mapped but there was an error allocating mapped data.
+                // Do not perform the memcpy.
+                return WireResult::Success;
+            case BufferMapWriteState::Mapped:
+                break;
+        }
+
+        if (!mapState->writeHandle) {
+            // This check is performed after the check for the MapError state. It is permissible
+            // to Unmap and attempt to update mapped data of an error buffer.
+=======
+    return buffer->mapState.Use([&](auto mapState) {
+        uint8_t* mappedData =
+            static_cast<uint8_t*>(mProcs->bufferGetMappedRange(buffer->handle, offset, size));
+
+        // There are a few valid reasons why getting the mapped range would fail here:
+        //  - The buffer was implicitly unmapped because of a device.Destroy() call.
+        //  - The buffer was an error buffer created just to replace an OOM mappedAtCreation buffer.
+        // Unfortunately validating exactly that the failure is due to a valid reason and not
+        // another is difficult, so we return WireResult::Success even for misuses of the wire
+        // protocol (like a size being larger than the buffer's size, etc).
+        if (mappedData == nullptr) {
+            return WireResult::Success;
+        }
+
+        // TODO(https://issues.chromium.org/492456046): We would like to map only the `offset` and
+        // `size` here but the Chromium implementation of DeserializeDataUpdate uses `offset` to
+        // offset both the target data and it's shmem pointer. So the pointer passed in SetTarget
+        // must be for the start of the buffer. Fix this somehow when spanifying the interfaces but
+        // for now we need to duplicate the overflow check that's done in GetMappedRange.
+        mappedData -= offset;
+
+        // Note that offset + size was checked to not overflow in GetMappedRange above.
+        std::span<uint8_t> mappedRange = {mappedData, static_cast<size_t>(offset + size)};
+
+        // However it is easy to check for misuses of the wire protocol to UpdateMappedData without
+        // a WriteHandle.
+        if (!mapState->writeHandle) {
+>>>>>>> CHANGE (4ba836a41006884c55731c72a1ba730d76cfb993 Reland "[dawn][wire] Check that buffer is mapped in Deserial)
             return WireResult::FatalError;
         case BufferMapWriteState::MapError:
             // The buffer is mapped but there was an error allocating mapped data.
@@ -235,6 +400,7 @@ WireResult Server::DoBufferUpdateMappedData(Known<WGPUBuffer> buffer,
         return WireResult::FatalError;
     }
 
+<<<<<<< HEAD   (6d276fbe64b18dbe95c33f80ac0a4cecef288fdf [M144-LTS][dawn][native] Remove incorrect buffer->SetInitial)
     // Deserialize the flush info and flush updated data from the handle into the target
     // of the handle. The target is set via WriteHandle::SetTarget.
     if (!buffer->writeHandle->DeserializeDataUpdate(
@@ -243,6 +409,30 @@ WireResult Server::DoBufferUpdateMappedData(Known<WGPUBuffer> buffer,
         return WireResult::FatalError;
     }
     return WireResult::Success;
+||||||| BASE   (6651e2d67a874c4b50dbf89c110c72f3e50fe8ad Move GLFW to the standard 3p layout)
+        // Deserialize the flush info and flush updated data from the handle into the target
+        // of the handle. The target is set via WriteHandle::SetTarget.
+        if (!mapState->writeHandle->DeserializeDataUpdate(
+                writeDataUpdateInfo, static_cast<size_t>(writeDataUpdateInfoLength),
+                static_cast<size_t>(offset), static_cast<size_t>(size))) {
+            return WireResult::FatalError;
+        }
+        return WireResult::Success;
+    });
+=======
+        // Deserialize the flush info and flush updated data from the handle into the target
+        // of the handle. The target is set via WriteHandle::SetTarget/SetDataLength.
+        mapState->writeHandle->SetDataLength(mappedRange.size());
+        mapState->writeHandle->SetTarget(mappedRange.data());
+
+        if (!mapState->writeHandle->DeserializeDataUpdate(
+                writeDataUpdateInfo, static_cast<size_t>(writeDataUpdateInfoLength),
+                static_cast<size_t>(offset), static_cast<size_t>(size))) {
+            return WireResult::FatalError;
+        }
+        return WireResult::Success;
+    });
+>>>>>>> CHANGE (4ba836a41006884c55731c72a1ba730d76cfb993 Reland "[dawn][wire] Check that buffer is mapped in Deserial)
 }
 
 void Server::OnBufferMapAsyncCallback(MapUserdata* data,
@@ -293,6 +483,7 @@ void Server::OnBufferMapAsyncCallback(MapUserdata* data,
         }
     }
 
+<<<<<<< HEAD   (6d276fbe64b18dbe95c33f80ac0a4cecef288fdf [M144-LTS][dawn][native] Remove incorrect buffer->SetInitial)
     SerializeCommand(cmd,
                      // Extensions to replace fields skipped by skip_serialize.
                      CommandExtension{readDataUpdateInfoLength, [&](char* readHandleBuffer) {
@@ -304,6 +495,77 @@ void Server::OnBufferMapAsyncCallback(MapUserdata* data,
                                                   readHandleBuffer);
                                           }
                                       }});
+||||||| BASE   (6651e2d67a874c4b50dbf89c110c72f3e50fe8ad Move GLFW to the standard 3p layout)
+    switch (data->mode) {
+        case WGPUMapMode_Read: {
+            buffer->mapState.Use([&](auto mapState) {
+                const void* readData =
+                    mProcs->bufferGetConstMappedRange(data->bufferObj, data->offset, data->size);
+                size_t readDataUpdateInfoLength =
+                    mapState->readHandle->SizeOfSerializeDataUpdate(data->offset, data->size);
+                cmd.readDataUpdateInfoLength = readDataUpdateInfoLength;
+                SerializeCommand(
+                    cmd,
+                    // Extensions to replace fields skipped by skip_serialize.
+                    CommandExtension{readDataUpdateInfoLength, [&](char* readHandleBuffer) {
+                                         // The in-flight map request returned successfully.
+                                         mapState->readHandle->SerializeDataUpdate(
+                                             readData, data->offset, data->size, readHandleBuffer);
+                                     }});
+            });
+            break;
+        }
+        case WGPUMapMode_Write: {
+            buffer->mapState.Use([&](auto mapState) {
+                // The in-flight map request returned successfully.
+                mapState->writeState = BufferMapWriteState::Mapped;
+                // Set the target of the WriteHandle to the mapped buffer data.
+                // Note that writeHandle's target always refers to the buffer base address, but we
+                // call getMappedRange exactly with the range of data that is potentially modified
+                // (i.e. we don't want getMappedRange(0, wholeBufferSize) if only a subset of the
+                // buffer is actually mapped) in case the implementation does some range tracking.
+                mapState->writeHandle->SetTarget(static_cast<uint8_t*>(mProcs->bufferGetMappedRange(
+                                                     data->bufferObj, data->offset, data->size)) -
+                                                 data->offset);
+            });
+            SerializeCommand(cmd);
+            break;
+        }
+        default:
+            // If we are not one of the two possible modes, we should never succeed.
+            DAWN_UNREACHABLE();
+            break;
+    }
+=======
+    switch (data->mode) {
+        case WGPUMapMode_Read: {
+            buffer->mapState.Use([&](auto mapState) {
+                const void* readData =
+                    mProcs->bufferGetConstMappedRange(data->bufferObj, data->offset, data->size);
+                size_t readDataUpdateInfoLength =
+                    mapState->readHandle->SizeOfSerializeDataUpdate(data->offset, data->size);
+                cmd.readDataUpdateInfoLength = readDataUpdateInfoLength;
+                SerializeCommand(
+                    cmd,
+                    // Extensions to replace fields skipped by skip_serialize.
+                    CommandExtension{readDataUpdateInfoLength, [&](char* readHandleBuffer) {
+                                         // The in-flight map request returned successfully.
+                                         mapState->readHandle->SerializeDataUpdate(
+                                             readData, data->offset, data->size, readHandleBuffer);
+                                     }});
+            });
+            break;
+        }
+        case WGPUMapMode_Write: {
+            SerializeCommand(cmd);
+            break;
+        }
+        default:
+            // If we are not one of the two possible modes, we should never succeed.
+            DAWN_UNREACHABLE();
+            break;
+    }
+>>>>>>> CHANGE (4ba836a41006884c55731c72a1ba730d76cfb993 Reland "[dawn][wire] Check that buffer is mapped in Deserial)
 }
 
 }  // namespace dawn::wire::server
