@@ -51,6 +51,24 @@
       "parentUuid": "709b2606_3198c238",
       "revId": "b2b541ce307ca582c2383dd0f774cd25864abfad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "564378f9_82eff875",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-08T18:34:14Z",
+      "side": 1,
+      "message": "Ah, but this would potentially be a problem for the other direction (`DecorateIfConvertedFromF16`).",
+      "parentUuid": "b2a27328_a0fabcba",
+      "revId": "b2b541ce307ca582c2383dd0f774cd25864abfad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
