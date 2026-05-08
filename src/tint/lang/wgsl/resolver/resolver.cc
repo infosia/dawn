@@ -2848,26 +2848,14 @@ const core::type::Pointer* Resolver::Ptr(const ast::Identifier* ident) {
 }
 
 const core::type::Sampler* Resolver::Sampler(const ast::Identifier* ident) {
-    // TODO(507087175): Remove the `if` wrapper when the filterabilities have all been removed from
-    // the tests.
-    if (!allowed_features_.features.contains(wgsl::LanguageFeature::kFilteringParameters)) {
-        return DAWN_LIKELY(CheckNotTemplated("type", ident))
-                   ? b.create<core::type::Sampler>(core::type::SamplerKind::kSampler)
-                   : nullptr;
-    }
-    return b.create<core::type::Sampler>(core::type::SamplerKind::kSampler);
+    return DAWN_LIKELY(CheckNotTemplated("type", ident))
+               ? b.create<core::type::Sampler>(core::type::SamplerKind::kSampler)
+               : nullptr;
 }
 
 const core::type::SampledTexture* Resolver::SampledTexture(const ast::Identifier* ident,
                                                            core::type::TextureDimension dim) {
-    // TODO(507087175): Remove the variable `allowed_args` when the filterabilities have all been
-    // removed from the tests.
-    uint32_t allowed_args = 1;
-    if (allowed_features_.features.contains(wgsl::LanguageFeature::kFilteringParameters)) {
-        allowed_args = 2;
-    }
-
-    auto* tmpl_ident = TemplatedIdentifier(ident, 1, allowed_args);
+    auto* tmpl_ident = TemplatedIdentifier(ident, 1);
     TINT_RET_IF(DAWN_UNLIKELY(!tmpl_ident));
 
     auto* ty_expr = sem_.GetType(tmpl_ident->arguments[0]);
