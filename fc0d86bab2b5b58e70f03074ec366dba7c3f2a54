@@ -16,6 +16,24 @@
       "message": "Would be good to add a unit test that covers swizzle in a chain.",
       "revId": "fc0d86bab2b5b58e70f03074ec366dba7c3f2a54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1fb2a08_2e81d516",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-05-08T13:40:32Z",
+      "side": 1,
+      "message": "Done, and also added handling swizzles in the other direction for symmetry of the analysis.",
+      "parentUuid": "6d1e74b3_e014b167",
+      "revId": "fc0d86bab2b5b58e70f03074ec366dba7c3f2a54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
