@@ -217,7 +217,10 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
             // Color becomes an InputAttachment in the handle space
             if (io.attributes.color) {
-                auto sample_ty = store_type->DeepestElement();
+                auto* sample_ty = store_type->DeepestElement();
+                if (sample_ty->Is<core::type::F16>()) {
+                    sample_ty = ty.f32();
+                }
                 store_type = ty.Get<spirv::type::Image>(
                     sample_ty, type::Dim::kSubpassData, type::Depth::kNotDepth,
                     type::Arrayed::kNonArrayed,
@@ -326,31 +329,30 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             }
 
             // Call the builtin.
-            value = builder
-                        .Call<spirv::ir::BuiltinCall>(ty.vec4(inputs[idx].type->DeepestElement()),
-                                                      spirv::BuiltinFn::kImageRead,
-                                                      std::move(builtin_args))
-                        ->Result();
+            auto* sampled_ty = builtin_args[0]->Type()->As<spirv::type::Image>()->GetSampledType();
+            value =
+                builder
+                    .Call<spirv::ir::BuiltinCall>(ty.vec4(sampled_ty), spirv::BuiltinFn::kImageRead,
+                                                  std::move(builtin_args))
+                    ->Result();
 
             auto* orig_ty = inputs[idx].type;
-            if (orig_ty->IsAnyOf<core::type::I32, core::type::U32, core::type::F32>()) {
-                value = builder.Swizzle(orig_ty, value, {0})->Result();
-            } else {
-                auto* vec = orig_ty->As<core::type::Vector>();
-                TINT_IR_ASSERT(ir, vec);
-
-                if (vec->Width() != 4) {
-                    Vector<uint32_t, 3> indices;
-                    for (uint32_t i = 0; i < vec->Width(); ++i) {
-                        indices.Push(i);
-                    }
-                    value = builder.Swizzle(orig_ty, value, indices)->Result();
+            uint32_t width =
+                orig_ty->Is<core::type::Vector>() ? orig_ty->As<core::type::Vector>()->Width() : 1;
+            if (width != 4) {
+                Vector<uint32_t, 3> indices;
+                for (uint32_t i = 0; i < width; ++i) {
+                    indices.Push(i);
                 }
+                value =
+                    builder.Swizzle(ty.MatchWidth(sampled_ty, orig_ty), value, indices)->Result();
             }
         }
 
         // Convert f32 values to f16 values if needed.
-        if (config.polyfill_f16_io && inputs[idx].type->DeepestElement()->Is<core::type::F16>()) {
+        bool should_convert_f16 =
+            config.polyfill_f16_io || inputs[idx].attributes.color.has_value();
+        if (should_convert_f16 && inputs[idx].type->DeepestElement()->Is<core::type::F16>()) {
             value = builder.Convert(inputs[idx].type, value)->Result();
         }
 
