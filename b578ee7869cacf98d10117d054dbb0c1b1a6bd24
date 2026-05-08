@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eea95e06_c389e6be",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-05-08T07:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5d0f94e_d40be355",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e555142_a564fa3e",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-30T12:17:19Z",
       "side": 1,
       "message": "nit: both should be uint32_t? At least the revision is a DWORD which is a u32 AFAIK.",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfbda10d_7233dc56",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-05-08T07:31:37Z",
+      "side": 1,
+      "message": "This is to match the return values of `ReadFromSZRegistryKey` and `ReadFromDWORDRegistryKey`. Checked that both return values also can be `uint32_t`, updated them.",
+      "parentUuid": "1e555142_a564fa3e",
       "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e0fa7bb_c606aaf7",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-05-08T07:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "657df587_a8ee0a61",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "664c8baf_bbfecf9b",
@@ -65,6 +119,24 @@
       "writtenOn": "2026-04-30T12:17:19Z",
       "side": 1,
       "message": "u-nit: use a designated initializer to make it clear that each value goes in the corresponding field.",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9978e20a_48cbe4e2",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-05-08T07:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "664c8baf_bbfecf9b",
       "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f00f8ea_6e9fe408",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-05-08T07:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cd043d1_2d789e92",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d538fd8_29379c07",
@@ -99,6 +189,24 @@
       "writtenOn": "2026-04-30T12:17:19Z",
       "side": 1,
       "message": "```suggestion\nbool DawnTestBase::IsWindowsVersionAtLeast(uint64_t buildNumber,\n```",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08d16cd2_e05f568e",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-05-08T07:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d538fd8_29379c07",
       "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +228,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed86e6ca_2a588dd8",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-05-08T07:31:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35f14b71_9f1a4383",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4d0fb6d_135f6e58",
@@ -133,6 +259,24 @@
       "writtenOn": "2026-04-30T12:17:19Z",
       "side": 1,
       "message": "Why `static`? this makes the variable be evaluated only the first time the function is called, which is not really necessary and overall confusing.",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "395a0b66_da9b549f",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-05-08T07:31:37Z",
+      "side": 1,
+      "message": "We have many tests suppressed by `IsWindows11()` which called `GetCurrentWindowsVersion()` every time, but the windows version will not be changed during the test running, so use `static` to avoid the repeated calls.",
+      "parentUuid": "a4d0fb6d_135f6e58",
       "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
