@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eb4e301_a87247cd",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T18:14:50Z",
+      "side": 0,
+      "message": "nit: The rename of Data() to DataPtr() could be pulled out into a separate CL pretty easily to reduce diff here.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 20
+      },
+      "revId": "e2f0828f7c6919dba0521a47c19fc44df88dbadc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

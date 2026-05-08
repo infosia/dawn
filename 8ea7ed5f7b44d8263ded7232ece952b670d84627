@@ -38,6 +38,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d1b4a83f_030ab8ad",
+        "filename": "src/dawn/native/Blob.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T18:14:50Z",
+      "side": 1,
+      "message": "Something like `std::ranges::equal(Data(), other.Data())` would be more idiomatic for spans.",
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cd4b92b_6150a9a1",
+        "filename": "src/dawn/native/Blob.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T18:14:50Z",
+      "side": 1,
+      "message": "std::ranges::copy(b.Data(), s-\u003eGetSpace(size).begin());",
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e39a4434_2b60f48b",
+        "filename": "src/dawn/native/Blob.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T18:14:50Z",
+      "side": 1,
+      "message": "std::ranges::copy(src, b-\u003eBegin())",
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f6f1ddae_dc9737d7",
         "filename": "src/dawn/native/Blob.h",
         "patchSetId": 5
@@ -79,6 +130,93 @@
         "endLine": 46,
         "endChar": 42
       },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1b09887_edac662d",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T18:14:50Z",
+      "side": 1,
+      "message": "I reread the thread and I guess BlobCache is kind of the place where std::byte is sort of reasonable. BlobCache treats it as opaque bytes and does do much of anything with the data other than copying it. Using span\u003cuint8_t\u003e feels more easier to me but that also what I\u0027m used to so I\u0027ll leave that up to Dawn folks to decide.\n\nI left a couple suggestions on the first part of the CL but I\u0027ll hold off looking at the rest until byte vs uint8_t is settled.",
+      "parentUuid": "a09a1491_46bdf069",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f07e974_a1dd57e4",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T18:14:50Z",
+      "side": 1,
+      "message": "nit: Moving these functions they could easily be pull forward into a separate CL.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00803cd9_b5c03c6f",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T18:14:50Z",
+      "side": 1,
+      "message": "I\u0027m pretty skeptical these functions are a good idea. At least for the real span  using `blob.Data().begin()` seems better. Really with std::ranges you\u0027ll be passing the whole span instead of begin/end iterators most of the time like `std::ranges::copy(blob.Data(), ...)`\n\nFor the conversion to an arbitrary T span it seems like it\u0027s just used for copying. We can convert the other span to `std::span\u003cbyte\u003e` or `std::span\u003cuint8_T\u003e` for the same effect eg. `std::ranges::copy(std::as_bytes(data), blob.Data().begin())`",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 5
+      },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a025bf27_232067ab",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-08T18:14:50Z",
+      "side": 1,
+      "message": "I believe this default initializes vector storage.",
       "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
