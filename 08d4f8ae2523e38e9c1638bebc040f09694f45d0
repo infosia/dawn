@@ -16,6 +16,24 @@
       "message": "nit: keep maybe?",
       "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4da4948e_bab58a1d",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-08T20:07:12Z",
+      "side": 0,
+      "message": "Accident.",
+      "parentUuid": "eb8fad9f_655c2319",
+      "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
