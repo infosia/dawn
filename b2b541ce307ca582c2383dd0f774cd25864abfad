@@ -69,6 +69,24 @@
       "parentUuid": "b2a27328_a0fabcba",
       "revId": "b2b541ce307ca582c2383dd0f774cd25864abfad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "511e1d3a_5de0d836",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-05-08T19:32:30Z",
+      "side": 1,
+      "message": "Reiterating chat discussion, it does affect the other direction in that there could be other uses that are not f16, but that shouldn\u0027t make decorating the ones that are in the path between the convert and ImageWrite incorrect to decorate either way. And the read direction is already handled by the early exit.",
+      "parentUuid": "564378f9_82eff875",
+      "revId": "b2b541ce307ca582c2383dd0f774cd25864abfad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
