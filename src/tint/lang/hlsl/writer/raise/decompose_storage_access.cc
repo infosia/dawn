@@ -32,6 +32,7 @@
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/hlsl/builtin_fn.h"
+#include "src/tint/lang/hlsl/ir/builtin_call.h"
 #include "src/tint/lang/hlsl/ir/member_builtin_call.h"
 #include "src/tint/lang/hlsl/type/byte_address_buffer.h"
 #include "src/tint/lang/hlsl/type/matrix_layout.h"
@@ -274,6 +275,40 @@ struct State {
     core::ir::Value* MatrixLayout(type::MatrixLayoutEnum value) {
         return b.Constant(ir.constant_values.Get<core::constant::Scalar<u32>>(
             ty.Get<type::MatrixLayout>(), u32(value)));
+    }
+
+    void SubgroupMatrixLoad(core::ir::Var* var,
+                            core::ir::CoreBuiltinCall* call,
+                            OffsetData offset) {
+        auto args = call->Args();
+        auto* call_offset = args[1];
+        auto* col_major = args[2];
+        auto* stride = args[3];
+
+        auto* sm = call->Result()->Type()->As<core::type::SubgroupMatrix>();
+        TINT_IR_ASSERT(ir, sm);
+
+        b.InsertBefore(call, [&] {
+            UpdateOffsetData(call_offset, sm->Type()->Size(), &offset);
+
+            auto* const_col_major = col_major->As<core::ir::Constant>();
+            TINT_IR_ASSERT(ir, const_col_major);
+            auto* layout = MatrixLayout(const_col_major->Value()->ValueAs<bool>()
+                                            ? type::MatrixLayoutEnum::kColMajor
+                                            : type::MatrixLayoutEnum::kRowMajor);
+
+            // TODO(crbug.com/490062439): This will need to be updated if we change stride.
+            uint32_t bytes_per_element = sm->Type()->Size();
+            if (auto* cnst = stride->As<core::ir::Constant>()) {
+                stride = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() * bytes_per_element));
+            } else {
+                stride = b.Multiply(stride, u32(bytes_per_element))->Result();
+            }
+            auto* load = b.CallExplicit<hlsl::ir::BuiltinCall>(
+                sm, BuiltinFn::kLoad, Vector{sm}, var, OffsetToValue(offset), stride, layout);
+            call->Result()->ReplaceAllUsesWith(load->Result());
+        });
+        call->Destroy();
     }
 
     void SubgroupMatrixStore(core::ir::Var* var,
@@ -790,6 +825,9 @@ struct State {
                             break;
                         case core::BuiltinFn::kSubgroupMatrixStore:
                             SubgroupMatrixStore(var, call, offset);
+                            break;
+                        case core::BuiltinFn::kSubgroupMatrixLoad:
+                            SubgroupMatrixLoad(var, call, offset);
                             break;
                         default:
                             TINT_IR_UNREACHABLE(ir) << call->Func();
