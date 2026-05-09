@@ -1,8 +1,10 @@
 #include <dx/linalg.h>
 using namespace dx::linalg;
+using Matrix_left_f32_8x8 = Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>;
+using Matrix_right_f32_8x8 = Matrix<ComponentType::F32, 8, 8, MatrixUse::B, MatrixScope::Wave>;
 struct S {
-  Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave> l;
-  Matrix<ComponentType::F32, 8, 8, MatrixUse::B, MatrixScope::Wave> r;
+  Matrix_left_f32_8x8 l;
+  Matrix_right_f32_8x8 r;
 };
 
 struct S_Nested {
@@ -13,16 +15,16 @@ struct S_Nested {
 RWByteAddressBuffer buffer : register(u0);
 [numthreads(64, 1, 1)]
 void main() {
-  Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave> m = Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f);
-  Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave> m_array[4] = {Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f)};
-  Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave> v[4] = {Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f)};
-  Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave> m_nested_array[4][4] = {v, v, v, v};
-  S m_struct = {Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 8, MatrixUse::B, MatrixScope::Wave>::Splat(0.0f)};
-  S v_1 = {Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 8, MatrixUse::B, MatrixScope::Wave>::Splat(0.0f)};
+  Matrix_left_f32_8x8 m = Matrix_left_f32_8x8::Splat(0.0f);
+  Matrix_left_f32_8x8 m_array[4] = {Matrix_left_f32_8x8::Splat(0.0f), Matrix_left_f32_8x8::Splat(0.0f), Matrix_left_f32_8x8::Splat(0.0f), Matrix_left_f32_8x8::Splat(0.0f)};
+  Matrix_left_f32_8x8 v[4] = {Matrix_left_f32_8x8::Splat(0.0f), Matrix_left_f32_8x8::Splat(0.0f), Matrix_left_f32_8x8::Splat(0.0f), Matrix_left_f32_8x8::Splat(0.0f)};
+  Matrix_left_f32_8x8 m_nested_array[4][4] = {v, v, v, v};
+  S m_struct = {Matrix_left_f32_8x8::Splat(0.0f), Matrix_right_f32_8x8::Splat(0.0f)};
+  S v_1 = {Matrix_left_f32_8x8::Splat(0.0f), Matrix_right_f32_8x8::Splat(0.0f)};
   S_Nested m_nested_struct = {v_1};
-  Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave> m_let = m;
-  Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave> m_array_let[4] = m_array;
-  Matrix<ComponentType::F32, 8, 8, MatrixUse::A, MatrixScope::Wave> m_nested_array_let[4][4] = m_nested_array;
+  Matrix_left_f32_8x8 m_let = m;
+  Matrix_left_f32_8x8 m_array_let[4] = m_array;
+  Matrix_left_f32_8x8 m_nested_array_let[4][4] = m_nested_array;
   S m_struct_let = m_struct;
   S_Nested m_nested_struct_let = m_nested_struct;
   uint v_2 = 0u;

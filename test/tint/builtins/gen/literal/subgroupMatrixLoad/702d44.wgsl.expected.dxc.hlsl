@@ -1,10 +1,11 @@
 #include <dx/linalg.h>
 using namespace dx::linalg;
+using Matrix_left_u32_8x8 = Matrix<ComponentType::U32, 8, 8, MatrixUse::A, MatrixScope::Wave>;
 
 RWByteAddressBuffer prevent_dce : register(u0);
 RWByteAddressBuffer sb_rw : register(u1);
-Matrix<ComponentType::U32, 8, 8, MatrixUse::A, MatrixScope::Wave> subgroupMatrixLoad_702d44() {
-  Matrix<ComponentType::U32, 8, 8, MatrixUse::A, MatrixScope::Wave> res = Matrix<ComponentType::U32, 8, 8, MatrixUse::A, MatrixScope::Wave>::Load(sb_rw, 4u, 32u, MatrixLayout::ColMajor);
+Matrix_left_u32_8x8 subgroupMatrixLoad_702d44() {
+  Matrix_left_u32_8x8 res = Matrix_left_u32_8x8::Load(sb_rw, 4u, 32u, MatrixLayout::ColMajor);
   return res;
 }
 
