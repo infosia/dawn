@@ -1769,6 +1769,169 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(HlslWriterDecomposeStorageAccessTest, StorageSubgroupMatrixLoad) {
+    capabilities = core::ir::Capabilities{
+        core::ir::Capability::kAllowNonCoreTypes,
+    };
+
+    auto* var = b.Var("v", storage, ty.array<f32>(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* sm_ty =
+        ty.Get<core::type::SubgroupMatrix>(core::SubgroupMatrixKind::kLeft, ty.f32(), 8u, 8u);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* load = b.CallExplicit(sm_ty, core::BuiltinFn::kSubgroupMatrixLoad, Vector{sm_ty}, var,
+                                    0_u, b.Constant(false), 8_u);
+        b.Let("x", load);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:subgroup_matrix_left<f32, 8, 8> = subgroupMatrixLoad<subgroup_matrix_left<f32, 8, 8>> %v, 0u, false, 8u
+    %x:subgroup_matrix_left<f32, 8, 8> = let %3
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:hlsl.byte_address_buffer<read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:subgroup_matrix_left<f32, 8, 8> = hlsl.Load<subgroup_matrix_left<f32, 8, 8>> %v, 0u, 32u, 0u
+    %x:subgroup_matrix_left<f32, 8, 8> = let %3
+    ret
+  }
+}
+)";
+
+    Run(DecomposeStorageAccess);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriterDecomposeStorageAccessTest, StorageSubgroupMatrixLoadColMajor) {
+    capabilities = core::ir::Capabilities{
+        core::ir::Capability::kAllowNonCoreTypes,
+    };
+
+    auto* var = b.Var("v", storage, ty.array<f32>(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* sm_ty =
+        ty.Get<core::type::SubgroupMatrix>(core::SubgroupMatrixKind::kLeft, ty.f32(), 8u, 8u);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* load = b.CallExplicit(sm_ty, core::BuiltinFn::kSubgroupMatrixLoad, Vector{sm_ty}, var,
+                                    0_u, b.Constant(true), 8_u);
+        b.Let("x", load);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:subgroup_matrix_left<f32, 8, 8> = subgroupMatrixLoad<subgroup_matrix_left<f32, 8, 8>> %v, 0u, true, 8u
+    %x:subgroup_matrix_left<f32, 8, 8> = let %3
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:hlsl.byte_address_buffer<read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:subgroup_matrix_left<f32, 8, 8> = hlsl.Load<subgroup_matrix_left<f32, 8, 8>> %v, 0u, 32u, 1u
+    %x:subgroup_matrix_left<f32, 8, 8> = let %3
+    ret
+  }
+}
+)";
+
+    Run(DecomposeStorageAccess);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriterDecomposeStorageAccessTest, StorageSubgroupMatrixLoadDynamicStride) {
+    capabilities = core::ir::Capabilities{
+        core::ir::Capability::kAllowNonCoreTypes,
+    };
+
+    auto* var = b.Var("v", storage, ty.array<f32>(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* sm_ty =
+        ty.Get<core::type::SubgroupMatrix>(core::SubgroupMatrixKind::kLeft, ty.f32(), 8u, 8u);
+
+    auto* func = b.Function("foo", ty.void_());
+    auto* stride_param = b.FunctionParam("stride", ty.u32());
+    func->SetParams({stride_param});
+
+    b.Append(func->Block(), [&] {
+        auto* load = b.CallExplicit(sm_ty, core::BuiltinFn::kSubgroupMatrixLoad, Vector{sm_ty}, var,
+                                    0_u, b.Constant(false), stride_param);
+        b.Let("x", load);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, array<f32>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func(%stride:u32):void {
+  $B2: {
+    %4:subgroup_matrix_left<f32, 8, 8> = subgroupMatrixLoad<subgroup_matrix_left<f32, 8, 8>> %v, 0u, false, %stride
+    %x:subgroup_matrix_left<f32, 8, 8> = let %4
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:hlsl.byte_address_buffer<read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func(%stride:u32):void {
+  $B2: {
+    %4:u32 = mul %stride, 4u
+    %5:subgroup_matrix_left<f32, 8, 8> = hlsl.Load<subgroup_matrix_left<f32, 8, 8>> %v, 0u, %4, 0u
+    %x:subgroup_matrix_left<f32, 8, 8> = let %5
+    ret
+  }
+}
+)";
+
+    Run(DecomposeStorageAccess);
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(HlslWriterDecomposeStorageAccessTest, StorageSubgroupMatrixStore) {
     capabilities = core::ir::Capabilities{
         core::ir::Capability::kAllowNonCoreTypes,
