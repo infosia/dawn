@@ -1,5 +1,13 @@
-SKIP: FAILED
+#include <dx/linalg.h>
+using namespace dx::linalg;
 
-subgroup matrices are not supported by the HLSL backend
+RWByteAddressBuffer sb_rw : register(u0);
+void subgroupMatrixStore_5caefe() {
+  Matrix<ComponentType::I8, 8, 8, MatrixUse::B, MatrixScope::Wave>::Splat(int(0)).Store(sb_rw, 1u, 8u, MatrixLayout::ColMajor);
+}
 
-tint executable returned error: exit status 1
+[numthreads(1, 1, 1)]
+void compute_main() {
+  subgroupMatrixStore_5caefe();
+}
+
