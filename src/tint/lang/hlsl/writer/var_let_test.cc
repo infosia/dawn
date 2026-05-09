@@ -817,10 +817,11 @@ TEST_F(HlslWriterTest, Var_SubgroupMatrix_ZeroInit) {
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(#include <dx/linalg.h>
 using namespace dx::linalg;
+using Matrix_result_f32_8x16 = Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave>;
 
 [numthreads(1, 1, 1)]
 void main() {
-  Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave> a = Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave>::Splat(0.0f);
+  Matrix_result_f32_8x16 a = Matrix_result_f32_8x16::Splat(0.0f);
 }
 
 )");
@@ -837,10 +838,11 @@ TEST_F(HlslWriterTest, Var_SubgroupMatrix_Array_ZeroInit) {
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(#include <dx/linalg.h>
 using namespace dx::linalg;
+using Matrix_result_f32_8x16 = Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave>;
 
 [numthreads(1, 1, 1)]
 void main() {
-  Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave> a[4] = {Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave>::Splat(0.0f), Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave>::Splat(0.0f)};
+  Matrix_result_f32_8x16 a[4] = {Matrix_result_f32_8x16::Splat(0.0f), Matrix_result_f32_8x16::Splat(0.0f), Matrix_result_f32_8x16::Splat(0.0f), Matrix_result_f32_8x16::Splat(0.0f)};
 }
 
 )");
@@ -862,14 +864,15 @@ TEST_F(HlslWriterTest, Var_SubgroupMatrix_Struct_ZeroInit) {
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(#include <dx/linalg.h>
 using namespace dx::linalg;
+using Matrix_result_f32_8x16 = Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave>;
 struct S {
-  Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave> m;
+  Matrix_result_f32_8x16 m;
 };
 
 
 [numthreads(1, 1, 1)]
 void main() {
-  S a = {Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave>::Splat(0.0f)};
+  S a = {Matrix_result_f32_8x16::Splat(0.0f)};
 }
 
 )");
