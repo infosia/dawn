@@ -1321,7 +1321,7 @@ class Printer : public tint::TextGenerator {
                         out << "MatrixLayout::RowMajor";
                         break;
                     case type::MatrixLayoutEnum::kColMajor:
-                        out << "MatrixLayout::ColumnMajor";
+                        out << "MatrixLayout::ColMajor";
                         break;
                     default:
                         TINT_IR_UNREACHABLE(ir_);
