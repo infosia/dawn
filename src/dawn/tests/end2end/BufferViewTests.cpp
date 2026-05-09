@@ -43,19 +43,29 @@ class BufferViewTest : public DawnTest {
 
     void BaseLengthTest(const std::string& wgsl,
                         uint32_t len,
+                        uint32_t dynamicOffset,
                         const std::initializer_list<uint32_t>& uniforms,
                         const std::vector<uint32_t>& expected) {
         wgpu::ShaderModule module = utils::CreateShaderModule(device, wgsl);
 
+        wgpu::BindGroupLayout bgLayout = utils::MakeBindGroupLayout(
+            device, {{0, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::ReadOnlyStorage,
+                      dynamicOffset != 0, len},
+                     {1, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage},
+                     {2, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Uniform}});
+
+        wgpu::PipelineLayout pipelineLayout = utils::MakePipelineLayout(device, {bgLayout});
+
         std::vector<wgpu::ConstantEntry> constants{{nullptr, "len", static_cast<double>(len)}};
         wgpu::ComputePipelineDescriptor desc;
+        desc.layout = pipelineLayout;
         desc.compute.module = module;
         desc.compute.constants = constants.data();
         desc.compute.constantCount = constants.size();
         wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&desc);
 
         wgpu::BufferDescriptor srcDesc;
-        srcDesc.size = len;
+        srcDesc.size = len + dynamicOffset;
         srcDesc.usage =
             wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
         wgpu::Buffer src = device.CreateBuffer(&srcDesc);
@@ -70,19 +80,23 @@ class BufferViewTest : public DawnTest {
             device, wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopySrc, uniforms);
 
         wgpu::BindGroup bg =
-            utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+            utils::MakeBindGroup(device, bgLayout,
                                  {
-                                     {0, src, 0, srcDesc.size},
+                                     {0, src, 0, len},
                                      {1, out, 0, outDesc.size},
                                      {2, uni, 0, uniforms.size() * sizeof(uint32_t)},
                                  });
 
+        std::vector<uint32_t> offsets;
+        if (dynamicOffset != 0) {
+            offsets.push_back(dynamicOffset);
+        }
         wgpu::CommandBuffer commands;
         {
             wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
             wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
             pass.SetPipeline(pipeline);
-            pass.SetBindGroup(0, bg);
+            pass.SetBindGroup(0, bg, offsets.size(), offsets.data());
             pass.DispatchWorkgroups(1, 1, 1);
             pass.End();
             commands = encoder.Finish();
@@ -93,7 +107,7 @@ class BufferViewTest : public DawnTest {
             << "Buffer length = " << len << "\n";
     }
 
-    void TestBufferViewArrayLength(uint32_t len) {
+    void TestBufferViewArrayLength(uint32_t len, uint32_t dynamicOffset) {
         const std::string src = R"(
           override len : u32;
           struct Offsets {
@@ -180,10 +194,10 @@ class BufferViewTest : public DawnTest {
             (len - 16 - 32) / 16,  //
         };
 
-        BaseLengthTest(src, len, uniforms, expected);
+        BaseLengthTest(src, len, dynamicOffset, uniforms, expected);
     }
 
-    void TestBufferArrayViewArrayLength(uint32_t len) {
+    void TestBufferArrayViewArrayLength(uint32_t len, uint32_t dynamicOffset) {
         const std::string src = R"(
           override len : u32;
           @group(0) @binding(0) var<storage> in : buffer;
@@ -262,7 +276,7 @@ class BufferViewTest : public DawnTest {
             (uniformData[7] - 16) / 16,  //
         };
 
-        BaseLengthTest(src, len, uniforms, expected);
+        BaseLengthTest(src, len, dynamicOffset, uniforms, expected);
     }
 
     void TestArrayLengthFunctions(uint32_t len) {
@@ -369,7 +383,7 @@ class BufferViewTest : public DawnTest {
             (48 - 8) / 4,
         };
 
-        BaseLengthTest(wgsl, len, uniforms, expected);
+        BaseLengthTest(wgsl, len, 0, uniforms, expected);
     }
 
     void BaseViewTest(const std::string& wgsl) {
@@ -518,22 +532,22 @@ TEST_P(BufferViewTest, BufferViewArrayLength) {
     DAWN_SUPPRESS_TEST_IF(IsD3D11());
     DAWN_SUPPRESS_TEST_IF(IsD3D12());
 
-    TestBufferViewArrayLength(128);
-    TestBufferViewArrayLength(256);
-    TestBufferViewArrayLength(512);
-    TestBufferViewArrayLength(1024);
-    TestBufferViewArrayLength(64);
+    TestBufferViewArrayLength(128, 0);
+    TestBufferViewArrayLength(256, 256);
+    TestBufferViewArrayLength(512, 256);
+    TestBufferViewArrayLength(1024, 256);
+    TestBufferViewArrayLength(64, 0);
 }
 
 TEST_P(BufferViewTest, BufferArrayViewArrayLength) {
     DAWN_SUPPRESS_TEST_IF(IsD3D11());
     DAWN_SUPPRESS_TEST_IF(IsD3D12());
 
-    TestBufferArrayViewArrayLength(128);
-    TestBufferArrayViewArrayLength(256);
-    TestBufferArrayViewArrayLength(512);
-    TestBufferArrayViewArrayLength(1024);
-    TestBufferArrayViewArrayLength(64);
+    TestBufferArrayViewArrayLength(128, 0);
+    TestBufferArrayViewArrayLength(256, 256);
+    TestBufferArrayViewArrayLength(512, 256);
+    TestBufferArrayViewArrayLength(1024, 256);
+    TestBufferArrayViewArrayLength(64, 0);
 }
 
 TEST_P(BufferViewTest, ArrayLengthFunctions) {
