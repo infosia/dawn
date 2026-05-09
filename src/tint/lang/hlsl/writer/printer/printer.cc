@@ -208,6 +208,9 @@ class Printer : public tint::TextGenerator {
     /// `true` if the linalg.h header has been included.
     bool linalg_included = false;
 
+    /// Map from subgroup matrix type to a short alias for that type.
+    Hashmap<const core::type::SubgroupMatrix*, std::string, 4> subgroup_matrix_aliases_;
+
     enum LetType : uint8_t {
         kFunction,
         kModuleScope,
@@ -1509,35 +1512,50 @@ class Printer : public tint::TextGenerator {
                     preamble_buffer_.Append("#include <dx/linalg.h>");
                     preamble_buffer_.Append("using namespace dx::linalg;");
                 }
-
-                const char* component_type = tint::Switch(
-                    sm->Type(),                                    //
-                    [](const core::type::F16*) { return "F16"; },  //
-                    [](const core::type::F32*) { return "F32"; },  //
-                    [](const core::type::I8*) { return "I8"; },    //
-                    [](const core::type::I32*) { return "I32"; },  //
-                    [](const core::type::U8*) { return "U8"; },    //
-                    [](const core::type::U32*) { return "U32"; },  //
-                    TINT_ICE_ON_NO_MATCH);
-                const char* use = nullptr;
-                switch (sm->Kind()) {
-                    case core::SubgroupMatrixKind::kLeft:
-                        use = "A";
-                        break;
-                    case core::SubgroupMatrixKind::kRight:
-                        use = "B";
-                        break;
-                    case core::SubgroupMatrixKind::kResult:
-                        use = "Accumulator";
-                        break;
-                    case core::SubgroupMatrixKind::kUndefined:
-                        TINT_IR_UNREACHABLE(ir_);
-                }
-
-                out << "Matrix<ComponentType::" << component_type << ", " << sm->Rows() << ", "
-                    << sm->Columns() << ", MatrixUse::" << use << ", MatrixScope::Wave>";
+                out << GetSubgroupMatrixAlias(sm);
             },
             TINT_ICE_ON_NO_MATCH);
+    }
+
+    std::string_view GetSubgroupMatrixAlias(const core::type::SubgroupMatrix* sm) {
+        return subgroup_matrix_aliases_.GetOrAdd(sm, [&] {
+            const char* component_type = tint::Switch(
+                sm->Type(),                                    //
+                [](const core::type::F16*) { return "F16"; },  //
+                [](const core::type::F32*) { return "F32"; },  //
+                [](const core::type::I8*) { return "I8"; },    //
+                [](const core::type::I32*) { return "I32"; },  //
+                [](const core::type::U8*) { return "U8"; },    //
+                [](const core::type::U32*) { return "U32"; },  //
+                TINT_ICE_ON_NO_MATCH);
+
+            const char* use = nullptr;
+            switch (sm->Kind()) {
+                case core::SubgroupMatrixKind::kLeft:
+                    use = "A";
+                    break;
+                case core::SubgroupMatrixKind::kRight:
+                    use = "B";
+                    break;
+                case core::SubgroupMatrixKind::kResult:
+                    use = "Accumulator";
+                    break;
+                case core::SubgroupMatrixKind::kUndefined:
+                    TINT_IR_UNREACHABLE(ir_);
+            }
+
+            StringStream alias;
+            alias << "Matrix_" << ToString(sm->Kind()) << "_" << sm->Type()->FriendlyName() << "_"
+                  << sm->Rows() << "x" << sm->Columns();
+
+            StringStream alias_decl;
+            alias_decl << "using " << alias.str() << " = Matrix<ComponentType::" << component_type
+                       << ", " << sm->Rows() << ", " << sm->Columns() << ", MatrixUse::" << use
+                       << ", MatrixScope::Wave>;";
+            preamble_buffer_.Append(alias_decl.str());
+
+            return alias.str();
+        });
     }
 
     void EmitArrayType(StringStream& out,

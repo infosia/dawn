@@ -1,13 +1,14 @@
 #include <dx/linalg.h>
 using namespace dx::linalg;
+using Matrix_right_i8_8x8 = Matrix<ComponentType::I8, 8, 8, MatrixUse::B, MatrixScope::Wave>;
 
 RWByteAddressBuffer sb_rw : register(u0);
 void subgroupMatrixStore_5caefe() {
   uint arg_1 = 1u;
-  Matrix<ComponentType::I8, 8, 8, MatrixUse::B, MatrixScope::Wave> arg_2 = Matrix<ComponentType::I8, 8, 8, MatrixUse::B, MatrixScope::Wave>::Splat(int(0));
+  Matrix_right_i8_8x8 arg_2 = Matrix_right_i8_8x8::Splat(int(0));
   uint arg_4 = 8u;
   uint v = arg_1;
-  Matrix<ComponentType::I8, 8, 8, MatrixUse::B, MatrixScope::Wave> v_1 = arg_2;
+  Matrix_right_i8_8x8 v_1 = arg_2;
   uint v_2 = max(arg_4, 8u);
   if ((((v + (v_2 * 7u)) + 8u) <= 4096u)) {
     v_1.Store(sb_rw, (0u + (v * 1u)), (v_2 * 1u), MatrixLayout::ColMajor);
