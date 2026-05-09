@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff920e72_48ed75b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-09T01:30:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3cf04ce0_b5394e4b",
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14ccbf4b_33e4ebfe",
@@ -166,6 +184,24 @@
       "side": 1,
       "message": "We’ve already reported this issue to the driver team, but there is no update or feedback from them for the time being. We’ll keep following up.",
       "parentUuid": "14a9e8fa_a26d2dca",
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b9c095d_8fe98c53",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-09T01:30:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "94ac3146_a329fe11",
       "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
