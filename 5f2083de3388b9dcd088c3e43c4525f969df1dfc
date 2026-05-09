@@ -16,6 +16,98 @@
       "message": "PTAL.",
       "revId": "5f2083de3388b9dcd088c3e43c4525f969df1dfc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa8858a4_655e514f",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-09T03:53:30Z",
+      "side": 1,
+      "message": "Isn\u0027t this going to be annoying to renumber if we change these things, e.g. removing filterable/unfilterable completely? Or are you trying to keep the numbers stable, and if so why?",
+      "revId": "5f2083de3388b9dcd088c3e43c4525f969df1dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74bcc85d_2c2b9343",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-09T03:53:30Z",
+      "side": 1,
+      "message": "Nit: prefer TINT_IR_ASSERT here",
+      "fixSuggestions": [
+        {
+          "fixId": "fc590e8b_f2b65f3c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/resource_table.cc",
+              "range": {
+                "startLine": 101,
+                "startChar": 0,
+                "endLine": 102,
+                "endChar": 0
+              },
+              "replacement": "        TINT_IR_ASSERT(ir, storage_buffer !\u003d nullptr);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5f2083de3388b9dcd088c3e43c4525f969df1dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8466a470_edc061ea",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-09T03:53:30Z",
+      "side": 1,
+      "message": "Nit: and here",
+      "revId": "5f2083de3388b9dcd088c3e43c4525f969df1dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6efb032_5d2f9ee4",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-09T03:53:30Z",
+      "side": 1,
+      "message": "Nit: TINT_IR_UNREACHABLE",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 52
+      },
+      "revId": "5f2083de3388b9dcd088c3e43c4525f969df1dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
