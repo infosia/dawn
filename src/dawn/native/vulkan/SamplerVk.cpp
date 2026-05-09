@@ -82,7 +82,7 @@ ResultOrError<Ref<Sampler>> Sampler::Create(Device* device, const StaticSamplerS
 
     YCbCrVkDescriptor yCbCrDesc;
     if (s.isYCbCr) {
-        yCbCrDesc = StaticSamplerSpecialization::GetYCbCrForTextureView(device, s.vkFormat,
+        yCbCrDesc = StaticSamplerSpecialization::GetYCbCrForTextureView(s.vkFormat,
                                                                         s.androidExternalFormat);
         samplerDesc.nextInChain = &yCbCrDesc;
     }
@@ -210,19 +210,12 @@ StaticSamplerSpecialization StaticSamplerSpecialization::From(const TextureView*
 
 // static
 YCbCrVkDescriptor StaticSamplerSpecialization::GetYCbCrForTextureView(
-    const Device* device,
     VkFormat vkFormat,
     uint32_t androidExternalFormat) {
     YCbCrVkDescriptor yCbCrDesc;
     yCbCrDesc.vkFormat = vkFormat;
     yCbCrDesc.externalFormat = androidExternalFormat;
-
-    if (device->IsToggleEnabled(Toggle::VulkanReplaceRGBModelConversionWithYCbCrIdentity)) {
-        yCbCrDesc.vkYCbCrModel = VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY;
-    } else {
-        yCbCrDesc.vkYCbCrModel = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY;
-    }
-
+    yCbCrDesc.vkYCbCrModel = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY;
     yCbCrDesc.vkYCbCrRange = VK_SAMPLER_YCBCR_RANGE_ITU_FULL;
     yCbCrDesc.vkComponentSwizzleRed = VK_COMPONENT_SWIZZLE_R;
     yCbCrDesc.vkComponentSwizzleGreen = VK_COMPONENT_SWIZZLE_G;
