@@ -427,6 +427,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f933ce2_6131a3d2",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-09T03:15:38Z",
+      "side": 1,
+      "message": "Update: Using a stable Agility SDK release no longer requires Developer Mode.",
+      "parentUuid": "215418ce_ea7c4f86",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 78,
+        "endChar": 44
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "158155e6_7415cdb0",
@@ -558,6 +582,30 @@
       "side": 1,
       "message": "Acknowledged",
       "parentUuid": "b2886056_5012fb7a",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95233fee_8bfc7eae",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-09T03:15:38Z",
+      "side": 1,
+      "message": "We previously tried upgrading DirectX-Headers to the latest preview version, but as Antonio mentioned, it breaks Linux/Mac builds. We\u0027ll keep the macro for now until a better solution is ready.",
+      "parentUuid": "5905fb4c_10240c9b",
       "range": {
         "startLine": 34,
         "startChar": 0,
