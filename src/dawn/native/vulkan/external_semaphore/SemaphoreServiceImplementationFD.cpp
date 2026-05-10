@@ -168,18 +168,24 @@ class ServiceImplementationFD : public ServiceImplementation {
             mDevice->fn.GetSemaphoreFdKHR(mDevice->GetVkDevice(), &semaphoreGetFdInfo, &fd),
             "vkGetSemaphoreFdKHR"));
 
-        DAWN_ASSERT(fd >= 0);
+        // fd = -1 is valid for sync FDs.
         return fd;
     }
 
     // Duplicate a new external handle from the given one.
     ExternalSemaphoreHandle DuplicateHandle(ExternalSemaphoreHandle handle) override {
+        if (handle < 0) {
+            return -1;
+        }
         int fd = dup(handle);
         DAWN_ASSERT(fd >= 0);
         return fd;
     }
 
     void CloseHandle(ExternalSemaphoreHandle handle) override {
+        if (handle < 0) {
+            return;
+        }
         int ret = close(handle);
         DAWN_ASSERT(ret == 0);
     }

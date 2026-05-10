@@ -52,9 +52,14 @@ ResultOrError<Ref<SharedFence>> SharedFence::Create(
 ResultOrError<Ref<SharedFence>> SharedFence::Create(Device* device,
                                                     StringView label,
                                                     const SharedFenceSyncFDDescriptor* descriptor) {
-    DAWN_INVALID_IF(descriptor->handle < 0, "File descriptor (%d) was invalid.",
-                    descriptor->handle);
-    dawn::utils::SystemHandle handle = dawn::utils::SystemHandle::Duplicate(descriptor->handle);
+    // Per Vulkan spec (vkImportSemaphoreFdKHR / vkImportFenceFdKHR), fd = -1
+    // for VK_EXTERNAL_*_HANDLE_TYPE_SYNC_FD_BIT is a valid sync file descriptor
+    // meaning "already signaled". Accept it without duplicating (dup(-1) would
+    // hit DAWN_CHECK in SystemHandle::Duplicate).
+    utils::SystemHandle handle;
+    if (descriptor->handle >= 0) {
+        handle = utils::SystemHandle::Duplicate(descriptor->handle);
+    }
     auto fence = AcquireRef(new SharedFence(device, label, std::move(handle)));
     fence->mType = wgpu::SharedFenceType::SyncFD;
     return fence;
