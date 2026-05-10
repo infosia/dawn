@@ -45,6 +45,7 @@
 
 namespace dawn::native::metal {
 
+class FencedDeleter;
 struct KalmanInfo;
 
 class Device final : public DeviceBase {
@@ -61,6 +62,7 @@ class Device final : public DeviceBase {
     MaybeError TickImpl() override;
 
     id<MTLDevice> GetMTLDevice() const;
+    Ref<FencedDeleter>& GetFencedDeleter();
 
     MaybeError CopyFromStagingToBuffer(BufferBase* source,
                                        uint64_t sourceOffset,
@@ -159,6 +161,8 @@ class Device final : public DeviceBase {
     // vertex/fragement stage
     bool mCounterSamplingAtStageBoundary;
     NSPRef<id<MTLBuffer>> mMockBlitMtlBuffer;
+
+    Ref<FencedDeleter> mDeleter;
 };
 
 }  // namespace dawn::native::metal

@@ -41,6 +41,7 @@
 #include "dawn/native/metal/BufferMTL.h"
 #include "dawn/native/metal/CommandBufferMTL.h"
 #include "dawn/native/metal/ComputePipelineMTL.h"
+#include "dawn/native/metal/FencedDeleterMTL.h"
 #include "dawn/native/metal/PhysicalDeviceMTL.h"
 #include "dawn/native/metal/PipelineLayoutMTL.h"
 #include "dawn/native/metal/QuerySetMTL.h"
@@ -185,6 +186,8 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         }
     }
 
+    mDeleter = AcquireRef(new FencedDeleter(this));
+
     return DeviceBase::Initialize(descriptor, std::move(queue));
 }
 
@@ -320,6 +323,10 @@ MaybeError Device::TickImpl() {
 
 id<MTLDevice> Device::GetMTLDevice() const {
     return mMtlDevice.Get();
+}
+
+Ref<FencedDeleter>& Device::GetFencedDeleter() {
+    return mDeleter;
 }
 
 MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,

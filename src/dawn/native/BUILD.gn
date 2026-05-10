@@ -669,6 +669,8 @@ source_set("sources") {
       "metal/ComputePipelineMTL.mm",
       "metal/DeviceMTL.h",
       "metal/DeviceMTL.mm",
+      "metal/FencedDeleterMTL.h",
+      "metal/FencedDeleterMTL.mm",
       "metal/Forward.h",
       "metal/MultiDrawEncoder.h",
       "metal/MultiDrawEncoder.mm",
