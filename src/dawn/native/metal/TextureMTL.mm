@@ -45,6 +45,7 @@
 #include "dawn/native/Queue.h"
 #include "dawn/native/metal/BufferMTL.h"
 #include "dawn/native/metal/DeviceMTL.h"
+#include "dawn/native/metal/FencedReferencer.h"
 #include "dawn/native/metal/QueueMTL.h"
 #include "dawn/native/metal/SharedFenceMTL.h"
 #include "dawn/native/metal/SharedTextureMemoryMTL.h"
@@ -846,6 +847,12 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
 }
 
 void TextureView::DestroyImpl(DestroyReason reason) {
+    if (mMtlTextureView) {
+        // TextureViews aren't tracked by PassResourceUsageTracker, but for ArgBufs we need to keep
+        // them ref'd until Metal is done using them. We use FencedReferencer for this instead of
+        // adding views to PassResourceUsageTracker (which affects all backends).
+        ToBackend(GetDevice())->GetFencedReferencer().RefUntilUnused(mMtlTextureView.Get());
+    }
     mMtlTextureView = nil;
 }
 
