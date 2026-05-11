@@ -75,8 +75,8 @@ struct tint_module_vars_struct {
 };
 
 float3 tint_ApplyGammaTransferFunction(float3 v, tint_TransferFunctionParams params) {
-  float3 const v_1 = float3(params.G);
-  return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < float3(params.D)));
+  float3 const v_1 = (float3(params.G));
+  return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < (float3(params.D))));
 }
 
 float tint_ApplyHLGSingleChannel(float v, tint_TransferFunctionParams params) {
@@ -92,16 +92,16 @@ float tint_ApplyHLGSingleChannel(float v, tint_TransferFunctionParams params) {
 float3 tint_ApplyHLGTransferFunction(float3 v, tint_TransferFunctionParams params) {
   float const v_2 = tint_ApplyHLGSingleChannel(v.x, params);
   float const v_3 = tint_ApplyHLGSingleChannel(v.y, params);
-  return float3(v_2, v_3, tint_ApplyHLGSingleChannel(v.z, params));
+  return (float3(v_2, v_3, tint_ApplyHLGSingleChannel(v.z, params)));
 }
 
 float3 tint_ApplyPQTransferFunction(float3 v, tint_TransferFunctionParams params) {
-  float3 const v_4 = float3(params.C);
-  float3 const v_5 = float3(params.D);
-  float3 const v_6 = float3(params.E);
-  float3 const v_7 = float3(params.A);
-  float3 const v_8 = powr(clamp(v, float3(0.0f), float3(1.0f)), (float3(1.0f) / float3(params.B)));
-  return powr((max((v_8 - v_4), float3(0.0f)) / (v_5 - (v_6 * v_8))), (float3(1.0f) / v_7));
+  float3 const v_4 = (float3(params.C));
+  float3 const v_5 = (float3(params.D));
+  float3 const v_6 = (float3(params.E));
+  float3 const v_7 = (float3(params.A));
+  float3 const v_8 = powr(clamp(v, (float3(0.0f)), (float3(1.0f))), ((float3(1.0f)) / (float3(params.B))));
+  return powr((max((v_8 - v_4), (float3(0.0f))) / (v_5 - (v_6 * v_8))), ((float3(1.0f)) / v_7));
 }
 
 float3 tint_ApplySrcTransferFunction(float3 v, tint_TransferFunctionParams params) {
@@ -121,8 +121,8 @@ float3 tint_ApplySrcTransferFunction(float3 v, tint_TransferFunctionParams param
 }
 
 float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
-  float2 const v_9 = rint((params.loadTransform * float3(float2(min(coords, params.apparentSize)), 1.0f)));
-  uint2 const v_10 = uint2(v_9);
+  float2 const v_9 = rint((params.loadTransform * (float3((float2(min(coords, params.apparentSize))), 1.0f))));
+  uint2 const v_10 = (uint2(v_9));
   float3 v_11 = 0.0f;
   float v_12 = 0.0f;
   if ((params.numPlanes == 1u)) {
@@ -131,7 +131,7 @@ float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plan
     v_12 = v_13.w;
   } else {
     float const v_14 = plane_0.read(v_10, 0u).x;
-    v_11 = (float4(v_14, plane_1.read(uint2((v_9 * params.plane1CoordFactor)), 0u).xy, 1.0f) * params.yuvToRgbConversionMatrix);
+    v_11 = ((float4(v_14, plane_1.read((uint2((v_9 * params.plane1CoordFactor))), 0u).xy, 1.0f)) * params.yuvToRgbConversionMatrix);
     v_12 = 1.0f;
   }
   float3 const v_15 = v_11;
@@ -141,7 +141,7 @@ float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plan
   } else {
     v_16 = v_15;
   }
-  return float4(v_16, v_12);
+  return (float4(v_16, v_12));
 }
 
 tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_ExternalTextureParams_packed_vec3* const from) {
@@ -151,14 +151,14 @@ tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_Exte
   tint_TransferFunctionParams const v_20 = (*from).srcTransferFunction;
   tint_TransferFunctionParams const v_21 = (*from).dstTransferFunction;
   tint_array<tint_packed_vec3_f32_array_element, 3> const v_22 = (*from).gamutConversionMatrix;
-  float3x3 const v_23 = float3x3(float3(v_22[0u].packed), float3(v_22[1u].packed), float3(v_22[2u].packed));
+  float3x3 const v_23 = (float3x3((float3(v_22[0u].packed)), (float3(v_22[1u].packed)), (float3(v_22[2u].packed))));
   return tint_ExternalTextureParams{.numPlanes=v_17, .doYuvToRgbConversionOnly=v_18, .yuvToRgbConversionMatrix=v_19, .srcTransferFunction=v_20, .dstTransferFunction=v_21, .gamutConversionMatrix=v_23, .sampleTransform=(*from).sampleTransform, .loadTransform=(*from).loadTransform, .samplePlane0RectMin=(*from).samplePlane0RectMin, .samplePlane0RectMax=(*from).samplePlane0RectMax, .samplePlane1RectMin=(*from).samplePlane1RectMin, .samplePlane1RectMax=(*from).samplePlane1RectMax, .apparentSize=(*from).apparentSize, .plane1CoordFactor=(*from).plane1CoordFactor};
 }
 
 float4 textureLoad_1bfdfb(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   tint_ExternalTextureParams const v_24 = tint_load_struct_packed_vec3(tint_module_vars.arg_0_params);
-  float4 res = tint_TextureLoadMultiplanarExternal(tint_module_vars.arg_0_plane0, tint_module_vars.arg_0_plane1, v_24, min(arg_1, ((v_24.apparentSize + uint2(1u)) - uint2(1u))));
+  float4 res = tint_TextureLoadMultiplanarExternal(tint_module_vars.arg_0_plane0, tint_module_vars.arg_0_plane1, v_24, min(arg_1, ((v_24.apparentSize + (uint2(1u))) - (uint2(1u)))));
   return res;
 }
 
@@ -243,8 +243,8 @@ struct tint_module_vars_struct {
 };
 
 float3 tint_ApplyGammaTransferFunction(float3 v, tint_TransferFunctionParams params) {
-  float3 const v_1 = float3(params.G);
-  return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < float3(params.D)));
+  float3 const v_1 = (float3(params.G));
+  return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < (float3(params.D))));
 }
 
 float tint_ApplyHLGSingleChannel(float v, tint_TransferFunctionParams params) {
@@ -260,16 +260,16 @@ float tint_ApplyHLGSingleChannel(float v, tint_TransferFunctionParams params) {
 float3 tint_ApplyHLGTransferFunction(float3 v, tint_TransferFunctionParams params) {
   float const v_2 = tint_ApplyHLGSingleChannel(v.x, params);
   float const v_3 = tint_ApplyHLGSingleChannel(v.y, params);
-  return float3(v_2, v_3, tint_ApplyHLGSingleChannel(v.z, params));
+  return (float3(v_2, v_3, tint_ApplyHLGSingleChannel(v.z, params)));
 }
 
 float3 tint_ApplyPQTransferFunction(float3 v, tint_TransferFunctionParams params) {
-  float3 const v_4 = float3(params.C);
-  float3 const v_5 = float3(params.D);
-  float3 const v_6 = float3(params.E);
-  float3 const v_7 = float3(params.A);
-  float3 const v_8 = powr(clamp(v, float3(0.0f), float3(1.0f)), (float3(1.0f) / float3(params.B)));
-  return powr((max((v_8 - v_4), float3(0.0f)) / (v_5 - (v_6 * v_8))), (float3(1.0f) / v_7));
+  float3 const v_4 = (float3(params.C));
+  float3 const v_5 = (float3(params.D));
+  float3 const v_6 = (float3(params.E));
+  float3 const v_7 = (float3(params.A));
+  float3 const v_8 = powr(clamp(v, (float3(0.0f)), (float3(1.0f))), ((float3(1.0f)) / (float3(params.B))));
+  return powr((max((v_8 - v_4), (float3(0.0f))) / (v_5 - (v_6 * v_8))), ((float3(1.0f)) / v_7));
 }
 
 float3 tint_ApplySrcTransferFunction(float3 v, tint_TransferFunctionParams params) {
@@ -289,8 +289,8 @@ float3 tint_ApplySrcTransferFunction(float3 v, tint_TransferFunctionParams param
 }
 
 float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
-  float2 const v_9 = rint((params.loadTransform * float3(float2(min(coords, params.apparentSize)), 1.0f)));
-  uint2 const v_10 = uint2(v_9);
+  float2 const v_9 = rint((params.loadTransform * (float3((float2(min(coords, params.apparentSize))), 1.0f))));
+  uint2 const v_10 = (uint2(v_9));
   float3 v_11 = 0.0f;
   float v_12 = 0.0f;
   if ((params.numPlanes == 1u)) {
@@ -299,7 +299,7 @@ float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plan
     v_12 = v_13.w;
   } else {
     float const v_14 = plane_0.read(v_10, 0u).x;
-    v_11 = (float4(v_14, plane_1.read(uint2((v_9 * params.plane1CoordFactor)), 0u).xy, 1.0f) * params.yuvToRgbConversionMatrix);
+    v_11 = ((float4(v_14, plane_1.read((uint2((v_9 * params.plane1CoordFactor))), 0u).xy, 1.0f)) * params.yuvToRgbConversionMatrix);
     v_12 = 1.0f;
   }
   float3 const v_15 = v_11;
@@ -309,7 +309,7 @@ float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plan
   } else {
     v_16 = v_15;
   }
-  return float4(v_16, v_12);
+  return (float4(v_16, v_12));
 }
 
 tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_ExternalTextureParams_packed_vec3* const from) {
@@ -319,14 +319,14 @@ tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_Exte
   tint_TransferFunctionParams const v_20 = (*from).srcTransferFunction;
   tint_TransferFunctionParams const v_21 = (*from).dstTransferFunction;
   tint_array<tint_packed_vec3_f32_array_element, 3> const v_22 = (*from).gamutConversionMatrix;
-  float3x3 const v_23 = float3x3(float3(v_22[0u].packed), float3(v_22[1u].packed), float3(v_22[2u].packed));
+  float3x3 const v_23 = (float3x3((float3(v_22[0u].packed)), (float3(v_22[1u].packed)), (float3(v_22[2u].packed))));
   return tint_ExternalTextureParams{.numPlanes=v_17, .doYuvToRgbConversionOnly=v_18, .yuvToRgbConversionMatrix=v_19, .srcTransferFunction=v_20, .dstTransferFunction=v_21, .gamutConversionMatrix=v_23, .sampleTransform=(*from).sampleTransform, .loadTransform=(*from).loadTransform, .samplePlane0RectMin=(*from).samplePlane0RectMin, .samplePlane0RectMax=(*from).samplePlane0RectMax, .samplePlane1RectMin=(*from).samplePlane1RectMin, .samplePlane1RectMax=(*from).samplePlane1RectMax, .apparentSize=(*from).apparentSize, .plane1CoordFactor=(*from).plane1CoordFactor};
 }
 
 float4 textureLoad_1bfdfb(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   tint_ExternalTextureParams const v_24 = tint_load_struct_packed_vec3(tint_module_vars.arg_0_params);
-  float4 res = tint_TextureLoadMultiplanarExternal(tint_module_vars.arg_0_plane0, tint_module_vars.arg_0_plane1, v_24, min(arg_1, ((v_24.apparentSize + uint2(1u)) - uint2(1u))));
+  float4 res = tint_TextureLoadMultiplanarExternal(tint_module_vars.arg_0_plane0, tint_module_vars.arg_0_plane1, v_24, min(arg_1, ((v_24.apparentSize + (uint2(1u))) - (uint2(1u)))));
   return res;
 }
 
@@ -421,8 +421,8 @@ struct vertex_main_outputs {
 };
 
 float3 tint_ApplyGammaTransferFunction(float3 v, tint_TransferFunctionParams params) {
-  float3 const v_1 = float3(params.G);
-  return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < float3(params.D)));
+  float3 const v_1 = (float3(params.G));
+  return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < (float3(params.D))));
 }
 
 float tint_ApplyHLGSingleChannel(float v, tint_TransferFunctionParams params) {
@@ -438,16 +438,16 @@ float tint_ApplyHLGSingleChannel(float v, tint_TransferFunctionParams params) {
 float3 tint_ApplyHLGTransferFunction(float3 v, tint_TransferFunctionParams params) {
   float const v_2 = tint_ApplyHLGSingleChannel(v.x, params);
   float const v_3 = tint_ApplyHLGSingleChannel(v.y, params);
-  return float3(v_2, v_3, tint_ApplyHLGSingleChannel(v.z, params));
+  return (float3(v_2, v_3, tint_ApplyHLGSingleChannel(v.z, params)));
 }
 
 float3 tint_ApplyPQTransferFunction(float3 v, tint_TransferFunctionParams params) {
-  float3 const v_4 = float3(params.C);
-  float3 const v_5 = float3(params.D);
-  float3 const v_6 = float3(params.E);
-  float3 const v_7 = float3(params.A);
-  float3 const v_8 = powr(clamp(v, float3(0.0f), float3(1.0f)), (float3(1.0f) / float3(params.B)));
-  return powr((max((v_8 - v_4), float3(0.0f)) / (v_5 - (v_6 * v_8))), (float3(1.0f) / v_7));
+  float3 const v_4 = (float3(params.C));
+  float3 const v_5 = (float3(params.D));
+  float3 const v_6 = (float3(params.E));
+  float3 const v_7 = (float3(params.A));
+  float3 const v_8 = powr(clamp(v, (float3(0.0f)), (float3(1.0f))), ((float3(1.0f)) / (float3(params.B))));
+  return powr((max((v_8 - v_4), (float3(0.0f))) / (v_5 - (v_6 * v_8))), ((float3(1.0f)) / v_7));
 }
 
 float3 tint_ApplySrcTransferFunction(float3 v, tint_TransferFunctionParams params) {
@@ -467,8 +467,8 @@ float3 tint_ApplySrcTransferFunction(float3 v, tint_TransferFunctionParams param
 }
 
 float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
-  float2 const v_9 = rint((params.loadTransform * float3(float2(min(coords, params.apparentSize)), 1.0f)));
-  uint2 const v_10 = uint2(v_9);
+  float2 const v_9 = rint((params.loadTransform * (float3((float2(min(coords, params.apparentSize))), 1.0f))));
+  uint2 const v_10 = (uint2(v_9));
   float3 v_11 = 0.0f;
   float v_12 = 0.0f;
   if ((params.numPlanes == 1u)) {
@@ -477,7 +477,7 @@ float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plan
     v_12 = v_13.w;
   } else {
     float const v_14 = plane_0.read(v_10, 0u).x;
-    v_11 = (float4(v_14, plane_1.read(uint2((v_9 * params.plane1CoordFactor)), 0u).xy, 1.0f) * params.yuvToRgbConversionMatrix);
+    v_11 = ((float4(v_14, plane_1.read((uint2((v_9 * params.plane1CoordFactor))), 0u).xy, 1.0f)) * params.yuvToRgbConversionMatrix);
     v_12 = 1.0f;
   }
   float3 const v_15 = v_11;
@@ -487,7 +487,7 @@ float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plan
   } else {
     v_16 = v_15;
   }
-  return float4(v_16, v_12);
+  return (float4(v_16, v_12));
 }
 
 tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_ExternalTextureParams_packed_vec3* const from) {
@@ -497,20 +497,20 @@ tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_Exte
   tint_TransferFunctionParams const v_20 = (*from).srcTransferFunction;
   tint_TransferFunctionParams const v_21 = (*from).dstTransferFunction;
   tint_array<tint_packed_vec3_f32_array_element, 3> const v_22 = (*from).gamutConversionMatrix;
-  float3x3 const v_23 = float3x3(float3(v_22[0u].packed), float3(v_22[1u].packed), float3(v_22[2u].packed));
+  float3x3 const v_23 = (float3x3((float3(v_22[0u].packed)), (float3(v_22[1u].packed)), (float3(v_22[2u].packed))));
   return tint_ExternalTextureParams{.numPlanes=v_17, .doYuvToRgbConversionOnly=v_18, .yuvToRgbConversionMatrix=v_19, .srcTransferFunction=v_20, .dstTransferFunction=v_21, .gamutConversionMatrix=v_23, .sampleTransform=(*from).sampleTransform, .loadTransform=(*from).loadTransform, .samplePlane0RectMin=(*from).samplePlane0RectMin, .samplePlane0RectMax=(*from).samplePlane0RectMax, .samplePlane1RectMin=(*from).samplePlane1RectMin, .samplePlane1RectMax=(*from).samplePlane1RectMax, .apparentSize=(*from).apparentSize, .plane1CoordFactor=(*from).plane1CoordFactor};
 }
 
 float4 textureLoad_1bfdfb(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   tint_ExternalTextureParams const v_24 = tint_load_struct_packed_vec3(tint_module_vars.arg_0_params);
-  float4 res = tint_TextureLoadMultiplanarExternal(tint_module_vars.arg_0_plane0, tint_module_vars.arg_0_plane1, v_24, min(arg_1, ((v_24.apparentSize + uint2(1u)) - uint2(1u))));
+  float4 res = tint_TextureLoadMultiplanarExternal(tint_module_vars.arg_0_plane0, tint_module_vars.arg_0_plane1, v_24, min(arg_1, ((v_24.apparentSize + (uint2(1u))) - (uint2(1u)))));
   return res;
 }
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = textureLoad_1bfdfb(tint_module_vars);
   return out;
 }

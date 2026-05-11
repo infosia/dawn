@@ -45,7 +45,7 @@ void cosh_c892bb() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   cosh_c892bb();
   return out;
 }

@@ -6,7 +6,7 @@ struct tint_module_vars_struct {
 };
 
 uint tint_f16_to_u32(half value) {
-  return uint(clamp(value, 0.0h, 65504.0h));
+  return (uint(clamp(value, 0.0h, 65504.0h)));
 }
 
 [[max_total_threads_per_threadgroup(1)]]

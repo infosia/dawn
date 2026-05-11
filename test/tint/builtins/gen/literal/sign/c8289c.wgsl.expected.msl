@@ -45,7 +45,7 @@ void sign_c8289c() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   sign_c8289c();
   return out;
 }

@@ -2,7 +2,7 @@
 using namespace metal;
 
 float v(int v_1) {
-  return float(v_1);
+  return (float(v_1));
 }
 
 fragment void v_2() {

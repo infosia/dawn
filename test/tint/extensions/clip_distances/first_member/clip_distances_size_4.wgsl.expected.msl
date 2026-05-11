@@ -24,7 +24,7 @@ struct main_outputs {
 };
 
 VertexOutputs main_inner() {
-  return VertexOutputs{.clipDistance=tint_array<float, 4>{}, .position=float4(1.0f, 2.0f, 3.0f, 4.0f)};
+  return VertexOutputs{.clipDistance=tint_array<float, 4>{}, .position=(float4(1.0f, 2.0f, 3.0f, 4.0f))};
 }
 
 vertex main_outputs v() {

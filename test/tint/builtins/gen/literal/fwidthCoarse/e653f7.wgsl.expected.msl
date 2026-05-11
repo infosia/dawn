@@ -6,7 +6,7 @@ struct tint_module_vars_struct {
 };
 
 float2 fwidthCoarse_e653f7() {
-  float2 res = fwidth(float2(1.0f));
+  float2 res = fwidth((float2(1.0f)));
   return res;
 }
 

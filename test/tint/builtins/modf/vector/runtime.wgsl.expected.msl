@@ -8,7 +8,7 @@ struct modf_result_vec2_f32 {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v() {
-  float2 const in = float2(1.25f, 3.75f);
+  float2 const in = (float2(1.25f, 3.75f));
   modf_result_vec2_f32 v_1 = {};
   v_1.fract = modf(in, v_1.whole);
   modf_result_vec2_f32 const res = v_1;

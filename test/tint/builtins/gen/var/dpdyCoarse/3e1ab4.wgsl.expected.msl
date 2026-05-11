@@ -6,7 +6,7 @@ struct tint_module_vars_struct {
 };
 
 float2 dpdyCoarse_3e1ab4() {
-  float2 arg_0 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
   float2 res = dfdy(arg_0);
   return res;
 }

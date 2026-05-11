@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half2 subgroupInclusiveMul_ac5df5() {
-  half2 arg_0 = half2(1.0h);
+  half2 arg_0 = (half2(1.0h));
   half2 res = simd_prefix_inclusive_product(arg_0);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 half2 subgroupInclusiveMul_ac5df5() {
-  half2 arg_0 = half2(1.0h);
+  half2 arg_0 = (half2(1.0h));
   half2 res = simd_prefix_inclusive_product(arg_0);
   return res;
 }

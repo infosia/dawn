@@ -22,7 +22,7 @@ struct main_outputs {
 };
 
 VertexOutputs main_inner() {
-  return VertexOutputs{.loc0=1, .loc1=1u, .loc2=1.0f, .loc3=float4(1.0f, 2.0f, 3.0f, 4.0f), .position=float4(0.0f), .loc4=2.25h, .loc5=half3(3.0h, 5.0h, 8.0h)};
+  return VertexOutputs{.loc0=1, .loc1=1u, .loc2=1.0f, .loc3=(float4(1.0f, 2.0f, 3.0f, 4.0f)), .position=(float4(0.0f)), .loc4=2.25h, .loc5=(half3(3.0h, 5.0h, 8.0h))};
 }
 
 vertex main_outputs v() {

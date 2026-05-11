@@ -6,7 +6,7 @@ struct tint_module_vars_struct {
 };
 
 void foo(device atomic_ulong* const p) {
-  atomic_min_explicit(p, as_type<ulong>(uint2(0u)), memory_order_relaxed);
+  atomic_min_explicit(p, as_type<ulong>((uint2(0u))), memory_order_relaxed);
 }
 
 fragment void v(device atomic_ulong* a [[buffer(0)]]) {

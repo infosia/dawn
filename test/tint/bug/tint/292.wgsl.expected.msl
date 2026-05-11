@@ -6,9 +6,9 @@ struct main_outputs {
 };
 
 float4 main_inner() {
-  float3 light = float3(1.20000004768371582031f, 1.0f, 2.0f);
+  float3 light = (float3(1.20000004768371582031f, 1.0f, 2.0f));
   float3 negative_light = -(light);
-  return float4(0.0f);
+  return (float4(0.0f));
 }
 
 vertex main_outputs v() {

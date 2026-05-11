@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int2 subgroupShuffle_bbb06c() {
-  int2 res = simd_shuffle(int2(1), 1);
+  int2 res = simd_shuffle((int2(1)), 1);
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 int2 subgroupShuffle_bbb06c() {
-  int2 res = simd_shuffle(int2(1), 1);
+  int2 res = simd_shuffle((int2(1)), 1);
   return res;
 }
 

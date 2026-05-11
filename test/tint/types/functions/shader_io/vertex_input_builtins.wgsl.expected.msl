@@ -7,7 +7,7 @@ struct main_outputs {
 
 float4 main_inner(uint vertex_index, uint instance_index) {
   uint const foo = (vertex_index + instance_index);
-  return float4(0.0f);
+  return (float4(0.0f));
 }
 
 vertex main_outputs v(uint vertex_index [[vertex_id]], uint instance_index [[instance_id]]) {

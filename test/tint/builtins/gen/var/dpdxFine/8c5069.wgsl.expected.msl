@@ -6,7 +6,7 @@ struct tint_module_vars_struct {
 };
 
 float4 dpdxFine_8c5069() {
-  float4 arg_0 = float4(1.0f);
+  float4 arg_0 = (float4(1.0f));
   float4 res = dfdx(arg_0);
   return res;
 }

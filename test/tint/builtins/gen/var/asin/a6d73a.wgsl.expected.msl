@@ -45,7 +45,7 @@ void asin_a6d73a() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   asin_a6d73a();
   return out;
 }

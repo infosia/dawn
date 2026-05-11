@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half3 subgroupShuffleDown_63fdb0() {
-  half3 arg_0 = half3(1.0h);
+  half3 arg_0 = (half3(1.0h));
   uint arg_1 = 1u;
   half3 res = simd_shuffle_down(arg_0, arg_1);
   return res;
@@ -17,7 +17,7 @@ half3 subgroupShuffleDown_63fdb0() {
 
 fragment void fragment_main(device packed_half3* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = packed_half3(subgroupShuffleDown_63fdb0());
+  (*tint_module_vars.prevent_dce) = (packed_half3(subgroupShuffleDown_63fdb0()));
 }
 //
 // compute_main
@@ -30,7 +30,7 @@ struct tint_module_vars_struct {
 };
 
 half3 subgroupShuffleDown_63fdb0() {
-  half3 arg_0 = half3(1.0h);
+  half3 arg_0 = (half3(1.0h));
   uint arg_1 = 1u;
   half3 res = simd_shuffle_down(arg_0, arg_1);
   return res;
@@ -39,5 +39,5 @@ half3 subgroupShuffleDown_63fdb0() {
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main(device packed_half3* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = packed_half3(subgroupShuffleDown_63fdb0());
+  (*tint_module_vars.prevent_dce) = (packed_half3(subgroupShuffleDown_63fdb0()));
 }

@@ -45,7 +45,7 @@ void ceil_e0b70a() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   ceil_e0b70a();
   return out;
 }

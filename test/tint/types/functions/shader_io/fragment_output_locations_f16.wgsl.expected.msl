@@ -66,7 +66,7 @@ struct main3_outputs {
 };
 
 float4 main3_inner() {
-  return float4(1.0f, 2.0f, 3.0f, 4.0f);
+  return (float4(1.0f, 2.0f, 3.0f, 4.0f));
 }
 
 fragment main3_outputs main3() {
@@ -104,7 +104,7 @@ struct main5_outputs {
 };
 
 half3 main5_inner() {
-  return half3(3.0h, 5.0h, 8.0h);
+  return (half3(3.0h, 5.0h, 8.0h));
 }
 
 fragment main5_outputs main5() {

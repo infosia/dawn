@@ -5,6 +5,6 @@ using namespace metal;
 kernel void f() {
   int const vec3f = 1;
   int const b = vec3f;
-  float3 const c = float3(0.0f);
-  float3 const d = float3(0.0f);
+  float3 const c = (float3(0.0f));
+  float3 const d = (float3(0.0f));
 }

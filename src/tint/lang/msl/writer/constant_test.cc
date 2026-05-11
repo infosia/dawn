@@ -177,7 +177,7 @@ TEST_F(MslWriterTest, Constant_Vector_Splat) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float3 const a = float3(1.5f);
+  float3 const a = (float3(1.5f));
 }
 )");
 }
@@ -195,7 +195,7 @@ TEST_F(MslWriterTest, Constant_Vector_Composite) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float3 const a = float3(1.5f, 1.0f, 1.5f);
+  float3 const a = (float3(1.5f, 1.0f, 1.5f));
 }
 )");
 }
@@ -213,7 +213,7 @@ TEST_F(MslWriterTest, Constant_Vector_Composite_AnyZero) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float3 const a = float3(1.0f, 0.0f, 1.5f);
+  float3 const a = (float3(1.0f, 0.0f, 1.5f));
 }
 )");
 }
@@ -231,7 +231,7 @@ TEST_F(MslWriterTest, Constant_Vector_Composite_AllZero) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float3 const a = float3(0.0f);
+  float3 const a = (float3(0.0f));
 }
 )");
 }
@@ -249,7 +249,7 @@ TEST_F(MslWriterTest, Constant_Matrix_Splat) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float3x2 const a = float3x2(float2(1.5f), float2(1.5f), float2(1.5f));
+  float3x2 const a = (float3x2((float2(1.5f)), (float2(1.5f)), (float2(1.5f))));
 }
 )");
 }
@@ -270,7 +270,7 @@ TEST_F(MslWriterTest, Constant_Matrix_Composite) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float3x2 const a = float3x2(float2(1.5f, 1.0f), float2(1.5f, 2.0f), float2(2.5f, 3.5f));
+  float3x2 const a = (float3x2((float2(1.5f, 1.0f)), (float2(1.5f, 2.0f)), (float2(2.5f, 3.5f))));
 }
 )");
 }
@@ -290,7 +290,7 @@ TEST_F(MslWriterTest, Constant_Matrix_Composite_AnyZero) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float2x2 const a = float2x2(float2(1.0f, 0.0f), float2(1.5f, 2.5f));
+  float2x2 const a = (float2x2((float2(1.0f, 0.0f)), (float2(1.5f, 2.5f))));
 }
 )");
 }
@@ -311,7 +311,7 @@ TEST_F(MslWriterTest, Constant_Matrix_Composite_AllZero) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float3x2 const a = float3x2(float2(0.0f), float2(0.0f), float2(0.0f));
+  float3x2 const a = (float3x2((float2(0.0f)), (float2(0.0f)), (float2(0.0f))));
 }
 )");
 }

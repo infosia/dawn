@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int4 subgroupExclusiveAdd_406ab4() {
-  int4 arg_0 = int4(1);
+  int4 arg_0 = (int4(1));
   int4 res = simd_prefix_exclusive_sum(arg_0);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 int4 subgroupExclusiveAdd_406ab4() {
-  int4 arg_0 = int4(1);
+  int4 arg_0 = (int4(1));
   int4 res = simd_prefix_exclusive_sum(arg_0);
   return res;
 }

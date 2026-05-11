@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupInclusiveAdd_8bbe75() {
-  uint4 res = simd_prefix_inclusive_sum(uint4(1u));
+  uint4 res = simd_prefix_inclusive_sum((uint4(1u)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupInclusiveAdd_8bbe75() {
-  uint4 res = simd_prefix_inclusive_sum(uint4(1u));
+  uint4 res = simd_prefix_inclusive_sum((uint4(1u)));
   return res;
 }
 

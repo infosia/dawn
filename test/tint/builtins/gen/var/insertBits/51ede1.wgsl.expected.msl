@@ -9,8 +9,8 @@ struct tint_module_vars_struct {
 };
 
 uint4 insertBits_51ede1() {
-  uint4 arg_0 = uint4(1u);
-  uint4 arg_1 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
+  uint4 arg_1 = (uint4(1u));
   uint arg_2 = 1u;
   uint arg_3 = 1u;
   uint const v = min(arg_2, 32u);
@@ -33,8 +33,8 @@ struct tint_module_vars_struct {
 };
 
 uint4 insertBits_51ede1() {
-  uint4 arg_0 = uint4(1u);
-  uint4 arg_1 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
+  uint4 arg_1 = (uint4(1u));
   uint arg_2 = 1u;
   uint arg_3 = 1u;
   uint const v = min(arg_2, 32u);
@@ -64,8 +64,8 @@ struct vertex_main_outputs {
 };
 
 uint4 insertBits_51ede1() {
-  uint4 arg_0 = uint4(1u);
-  uint4 arg_1 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
+  uint4 arg_1 = (uint4(1u));
   uint arg_2 = 1u;
   uint arg_3 = 1u;
   uint const v = min(arg_2, 32u);
@@ -75,7 +75,7 @@ uint4 insertBits_51ede1() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = insertBits_51ede1();
   return out;
 }

@@ -11,7 +11,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 textureGather_f2c6e3(tint_module_vars_struct tint_module_vars) {
-  uint4 res = tint_module_vars.arg_1.gather(tint_module_vars.arg_2, float3(1.0f), max(1, 0), component::y);
+  uint4 res = tint_module_vars.arg_1.gather(tint_module_vars.arg_2, (float3(1.0f)), max(1, 0), component::y);
   return res;
 }
 
@@ -32,7 +32,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 textureGather_f2c6e3(tint_module_vars_struct tint_module_vars) {
-  uint4 res = tint_module_vars.arg_1.gather(tint_module_vars.arg_2, float3(1.0f), max(1, 0), component::y);
+  uint4 res = tint_module_vars.arg_1.gather(tint_module_vars.arg_2, (float3(1.0f)), max(1, 0), component::y);
   return res;
 }
 
@@ -63,13 +63,13 @@ struct vertex_main_outputs {
 };
 
 uint4 textureGather_f2c6e3(tint_module_vars_struct tint_module_vars) {
-  uint4 res = tint_module_vars.arg_1.gather(tint_module_vars.arg_2, float3(1.0f), max(1, 0), component::y);
+  uint4 res = tint_module_vars.arg_1.gather(tint_module_vars.arg_2, (float3(1.0f)), max(1, 0), component::y);
   return res;
 }
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = textureGather_f2c6e3(tint_module_vars);
   return out;
 }

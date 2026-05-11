@@ -175,7 +175,7 @@ TEST_F(MslWriterTest, VarMatF32) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float3x2 a = float3x2(0.0f);
+  float3x2 a = (float3x2(0.0f));
 }
 )");
 }
@@ -193,7 +193,7 @@ TEST_F(MslWriterTest, VarMatF16) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  half3x2 a = half3x2(0.0h);
+  half3x2 a = (half3x2(0.0h));
 }
 )");
 }
@@ -211,7 +211,7 @@ TEST_F(MslWriterTest, VarVecF32SplatZero) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float3 a = float3(0.0f);
+  float3 a = (float3(0.0f));
 }
 )");
 }
@@ -230,7 +230,7 @@ TEST_F(MslWriterTest, VarVecF16SplatZero) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  half3 a = half3(0.0h);
+  half3 a = (half3(0.0h));
 }
 )");
 }
@@ -249,7 +249,7 @@ TEST_F(MslWriterTest, VarMatF32SplatZero) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float2x3 a = float2x3(float3(0.0f), float3(0.0f));
+  float2x3 a = (float2x3((float3(0.0f)), (float3(0.0f))));
 }
 )");
 }
@@ -269,7 +269,7 @@ TEST_F(MslWriterTest, VarMatF16SplatZero) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  half2x3 a = half2x3(half3(0.0h), half3(0.0h));
+  half2x3 a = (half2x3((half3(0.0h)), (half3(0.0h))));
 }
 )");
 }

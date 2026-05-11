@@ -9,13 +9,13 @@ struct tint_module_vars_struct {
 };
 
 uint3 bitcast_56266e() {
-  uint3 res = uint3(1065353216u);
+  uint3 res = (uint3(1065353216u));
   return res;
 }
 
 fragment void fragment_main(device packed_uint3* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = packed_uint3(bitcast_56266e());
+  (*tint_module_vars.prevent_dce) = (packed_uint3(bitcast_56266e()));
 }
 //
 // compute_main
@@ -28,14 +28,14 @@ struct tint_module_vars_struct {
 };
 
 uint3 bitcast_56266e() {
-  uint3 res = uint3(1065353216u);
+  uint3 res = (uint3(1065353216u));
   return res;
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main(device packed_uint3* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = packed_uint3(bitcast_56266e());
+  (*tint_module_vars.prevent_dce) = (packed_uint3(bitcast_56266e()));
 }
 //
 // vertex_main
@@ -54,13 +54,13 @@ struct vertex_main_outputs {
 };
 
 uint3 bitcast_56266e() {
-  uint3 res = uint3(1065353216u);
+  uint3 res = (uint3(1065353216u));
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = bitcast_56266e();
   return out;
 }

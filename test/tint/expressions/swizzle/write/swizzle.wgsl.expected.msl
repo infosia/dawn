@@ -19,7 +19,7 @@ struct S {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void a() {
-  int4 a_1 = int4(0);
+  int4 a_1 = (int4(0));
   a_1.x = 1;
   a_1.z = 2;
   S d = S{};

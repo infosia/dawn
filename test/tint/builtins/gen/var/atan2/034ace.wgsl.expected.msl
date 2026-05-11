@@ -45,7 +45,7 @@ void atan2_034ace() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   atan2_034ace();
   return out;
 }

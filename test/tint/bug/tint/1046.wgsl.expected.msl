@@ -62,7 +62,7 @@ struct main_inputs {
 
 FragmentOutput main_inner(FragmentInput v, tint_module_vars_struct tint_module_vars) {
   FragmentOutput output = {};
-  output.color = float4(1.0f, 0.0f, 0.0f, 1.0f);
+  output.color = (float4(1.0f, 0.0f, 0.0f, 1.0f));
   const device PointLights* const v_1 = tint_module_vars.pointLights;
   return output;
 }

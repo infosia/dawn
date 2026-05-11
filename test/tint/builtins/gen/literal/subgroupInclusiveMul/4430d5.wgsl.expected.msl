@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half4 subgroupInclusiveMul_4430d5() {
-  half4 res = simd_prefix_inclusive_product(half4(1.0h));
+  half4 res = simd_prefix_inclusive_product((half4(1.0h)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 half4 subgroupInclusiveMul_4430d5() {
-  half4 res = simd_prefix_inclusive_product(half4(1.0h));
+  half4 res = simd_prefix_inclusive_product((half4(1.0h)));
   return res;
 }
 

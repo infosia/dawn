@@ -5,7 +5,7 @@
 using namespace metal;
 
 void min_527b79() {
-  int2 res = int2(1);
+  int2 res = (int2(1));
 }
 
 fragment void fragment_main() {
@@ -18,7 +18,7 @@ fragment void fragment_main() {
 using namespace metal;
 
 void min_527b79() {
-  int2 res = int2(1);
+  int2 res = (int2(1));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -40,12 +40,12 @@ struct vertex_main_outputs {
 };
 
 void min_527b79() {
-  int2 res = int2(1);
+  int2 res = (int2(1));
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   min_527b79();
   return out;
 }

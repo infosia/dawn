@@ -39,15 +39,15 @@ struct tint_array_lengths_struct {
 
 void main_inner(uint3 global_id, tint_module_vars_struct tint_module_vars) {
   tint_array_lengths_struct const v = tint_array_lengths_struct{.tint_array_length_0_2=(((*tint_module_vars.tint_storage_buffer_sizes)[0u].y - 0u) / 4u), .tint_array_length_0_3=(((*tint_module_vars.tint_storage_buffer_sizes)[0u].z - 0u) / 4u), .tint_array_length_0_0=(((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u)};
-  uint2 const resultCell = uint2(global_id.y, global_id.x);
+  uint2 const resultCell = (uint2(global_id.y, global_id.x));
   uint const dimInner = (*tint_module_vars.uniforms).aShape.y;
   uint const dimOutter = (*tint_module_vars.uniforms).outShape.y;
   uint result = 0u;
   {
-    uint2 tint_loop_idx = uint2(4294967295u);
+    uint2 tint_loop_idx = (uint2(4294967295u));
     uint i = 0u;
     while(true) {
-      if (all((tint_loop_idx == uint2(0u)))) {
+      if (all((tint_loop_idx == (uint2(0u))))) {
         break;
       }
       if ((i < dimInner)) {
@@ -60,7 +60,7 @@ void main_inner(uint3 global_id, tint_module_vars_struct tint_module_vars) {
       {
         uint const tint_low_inc = (tint_loop_idx.x - 1u);
         tint_loop_idx.x = tint_low_inc;
-        uint const tint_carry = uint((tint_low_inc == 4294967295u));
+        uint const tint_carry = (uint((tint_low_inc == 4294967295u)));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         i = (i + 1u);
       }

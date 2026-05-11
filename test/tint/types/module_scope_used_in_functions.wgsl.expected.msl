@@ -39,7 +39,7 @@ void zoo(tint_module_vars_struct tint_module_vars) {
 void bar(float a, float b, tint_array_lengths_struct tint_array_lengths, tint_module_vars_struct tint_module_vars) {
   (*tint_module_vars.p) = a;
   (*tint_module_vars.w) = b;
-  device float* const v = (&(*tint_module_vars.storages)[min(uint(0), (tint_array_lengths.tint_array_length_0_1 - 1u))]);
+  device float* const v = (&(*tint_module_vars.storages)[min((uint(0)), (tint_array_lengths.tint_array_length_0_1 - 1u))]);
   (*v) = (*tint_module_vars.uniforms).x;
   zoo(tint_module_vars);
 }

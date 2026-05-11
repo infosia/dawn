@@ -9,9 +9,9 @@ struct tint_module_vars_struct {
 };
 
 void textureStore_cb5a7b(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   uint arg_2 = 1u;
-  uint4 arg_3 = uint4(1u);
+  uint4 arg_3 = (uint4(1u));
   uint2 const v = arg_1;
   uint const v_1 = arg_2;
   uint4 const v_2 = arg_3;
@@ -35,9 +35,9 @@ struct tint_module_vars_struct {
 };
 
 void textureStore_cb5a7b(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   uint arg_2 = 1u;
-  uint4 arg_3 = uint4(1u);
+  uint4 arg_3 = (uint4(1u));
   uint2 const v = arg_1;
   uint const v_1 = arg_2;
   uint4 const v_2 = arg_3;

@@ -9,8 +9,8 @@ struct tint_module_vars_struct {
 };
 
 int3 select_8fa62c() {
-  int3 arg_0 = int3(1);
-  int3 arg_1 = int3(1);
+  int3 arg_0 = (int3(1));
+  int3 arg_1 = (int3(1));
   bool arg_2 = true;
   int3 res = select(arg_0, arg_1, arg_2);
   return res;
@@ -18,7 +18,7 @@ int3 select_8fa62c() {
 
 fragment void fragment_main(device packed_int3* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = packed_int3(select_8fa62c());
+  (*tint_module_vars.prevent_dce) = (packed_int3(select_8fa62c()));
 }
 //
 // compute_main
@@ -31,8 +31,8 @@ struct tint_module_vars_struct {
 };
 
 int3 select_8fa62c() {
-  int3 arg_0 = int3(1);
-  int3 arg_1 = int3(1);
+  int3 arg_0 = (int3(1));
+  int3 arg_1 = (int3(1));
   bool arg_2 = true;
   int3 res = select(arg_0, arg_1, arg_2);
   return res;
@@ -41,7 +41,7 @@ int3 select_8fa62c() {
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main(device packed_int3* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = packed_int3(select_8fa62c());
+  (*tint_module_vars.prevent_dce) = (packed_int3(select_8fa62c()));
 }
 //
 // vertex_main
@@ -60,8 +60,8 @@ struct vertex_main_outputs {
 };
 
 int3 select_8fa62c() {
-  int3 arg_0 = int3(1);
-  int3 arg_1 = int3(1);
+  int3 arg_0 = (int3(1));
+  int3 arg_1 = (int3(1));
   bool arg_2 = true;
   int3 res = select(arg_0, arg_1, arg_2);
   return res;
@@ -69,7 +69,7 @@ int3 select_8fa62c() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = select_8fa62c();
   return out;
 }

@@ -10,7 +10,7 @@ struct main_outputs {
 };
 
 void foo(thread VSOut* const out) {
-  float4 pos = float4(1.0f, 2.0f, 3.0f, 4.0f);
+  float4 pos = (float4(1.0f, 2.0f, 3.0f, 4.0f));
   (*out).pos = pos;
 }
 

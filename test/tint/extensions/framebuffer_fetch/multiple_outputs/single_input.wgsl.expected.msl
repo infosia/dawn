@@ -18,7 +18,7 @@ struct f_inputs {
 };
 
 Out f_inner(float4 fbf) {
-  return Out{.x=float4(10.0f), .y=fbf, .z=float4(30.0f)};
+  return Out{.x=(float4(10.0f)), .y=fbf, .z=(float4(30.0f))};
 }
 
 fragment f_outputs f(f_inputs inputs [[stage_in]]) {

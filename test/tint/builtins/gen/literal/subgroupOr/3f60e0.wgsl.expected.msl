@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int2 subgroupOr_3f60e0() {
-  int2 res = simd_or(int2(1));
+  int2 res = simd_or((int2(1)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 int2 subgroupOr_3f60e0() {
-  int2 res = simd_or(int2(1));
+  int2 res = simd_or((int2(1)));
   return res;
 }
 

@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupMin_82ef23() {
-  uint4 arg_0 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
   uint4 res = simd_min(arg_0);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupMin_82ef23() {
-  uint4 arg_0 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
   uint4 res = simd_min(arg_0);
   return res;
 }

@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 subgroupMin_8bb8c1() {
-  uint2 res = simd_min(uint2(1u));
+  uint2 res = simd_min((uint2(1u)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 subgroupMin_8bb8c1() {
-  uint2 res = simd_min(uint2(1u));
+  uint2 res = simd_min((uint2(1u)));
   return res;
 }
 

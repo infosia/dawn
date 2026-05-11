@@ -30,7 +30,7 @@ float4 main_inner(tint_module_vars_struct tint_module_vars) {
     v_2 = v(tint_module_vars.S, 0, 1);
   }
   int const old_value = v_2.old_value;
-  float4 const v_3 = float4(float(old_value));
+  float4 const v_3 = (float4((float(old_value))));
   if (!((*tint_module_vars.continue_execution))) {
     discard_fragment();
   }

@@ -9,9 +9,9 @@ struct tint_module_vars_struct {
 };
 
 float2 fma_26a7a9() {
-  float2 arg_0 = float2(1.0f);
-  float2 arg_1 = float2(1.0f);
-  float2 arg_2 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
+  float2 arg_1 = (float2(1.0f));
+  float2 arg_2 = (float2(1.0f));
   float2 res = fma(arg_0, arg_1, arg_2);
   return res;
 }
@@ -31,9 +31,9 @@ struct tint_module_vars_struct {
 };
 
 float2 fma_26a7a9() {
-  float2 arg_0 = float2(1.0f);
-  float2 arg_1 = float2(1.0f);
-  float2 arg_2 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
+  float2 arg_1 = (float2(1.0f));
+  float2 arg_2 = (float2(1.0f));
   float2 res = fma(arg_0, arg_1, arg_2);
   return res;
 }
@@ -60,16 +60,16 @@ struct vertex_main_outputs {
 };
 
 float2 fma_26a7a9() {
-  float2 arg_0 = float2(1.0f);
-  float2 arg_1 = float2(1.0f);
-  float2 arg_2 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
+  float2 arg_1 = (float2(1.0f));
+  float2 arg_2 = (float2(1.0f));
   float2 res = fma(arg_0, arg_1, arg_2);
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = fma_26a7a9();
   return out;
 }

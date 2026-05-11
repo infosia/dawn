@@ -63,7 +63,7 @@ float atanh_7997d8() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = atanh_7997d8();
   return out;
 }

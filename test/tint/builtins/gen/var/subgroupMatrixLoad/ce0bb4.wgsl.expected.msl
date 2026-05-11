@@ -30,7 +30,7 @@ simdgroup_float8x8 subgroupMatrixLoad_ce0bb4(tint_module_vars_struct tint_module
   simdgroup_float8x8 v_2 = make_filled_simdgroup_matrix<float, 8, 8>(0.0f);
   if ((((v + (v_1 * 7u)) + 8u) <= 1024u)) {
     simdgroup_float8x8 v_3 = make_filled_simdgroup_matrix<float, 8, 8>(0.0f);
-    simdgroup_load(v_3, (&(*tint_module_vars.arg_0)[v]), ulong(v_1), ulong2(0ul), true);
+    simdgroup_load(v_3, (&(*tint_module_vars.arg_0)[v]), (ulong(v_1)), (ulong2(0ul)), true);
     v_2 = v_3;
   }
   simdgroup_float8x8 res = v_2;
@@ -53,7 +53,7 @@ void compute_main_inner(uint tint_local_index, tint_module_vars_struct tint_modu
     }
   }
   threadgroup_barrier(mem_flags::mem_threadgroup);
-  simdgroup_store(subgroupMatrixLoad_ce0bb4(tint_module_vars), (&(*tint_module_vars.prevent_dce)[0u]), ulong(64u), ulong2(0ul), false);
+  simdgroup_store(subgroupMatrixLoad_ce0bb4(tint_module_vars), (&(*tint_module_vars.prevent_dce)[0u]), (ulong(64u)), (ulong2(0ul)), false);
 }
 
 [[max_total_threads_per_threadgroup(1)]]

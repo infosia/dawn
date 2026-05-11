@@ -31,11 +31,11 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
   tint_array_lengths_struct const v = tint_array_lengths_struct{.tint_array_length_0_0=(((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u)};
   uint flatIndex = (((4u * GlobalInvocationID.z) + (2u * GlobalInvocationID.y)) + GlobalInvocationID.x);
   flatIndex = (flatIndex * 1u);
-  int2 const v_1 = int2(GlobalInvocationID.xy);
-  uint const v_2 = min(uint(0), (tint_module_vars.myTexture.get_array_size() - 1u));
-  uint const v_3 = min(uint(0), (tint_module_vars.myTexture.get_num_mip_levels() - 1u));
-  uint2 const v_4 = (uint2(tint_module_vars.myTexture.get_width(v_3), tint_module_vars.myTexture.get_height(v_3)) - uint2(1u));
-  float4 texel = tint_module_vars.myTexture.read(min(uint2(v_1), v_4), v_2, v_3);
+  int2 const v_1 = (int2(GlobalInvocationID.xy));
+  uint const v_2 = min((uint(0)), (tint_module_vars.myTexture.get_array_size() - 1u));
+  uint const v_3 = min((uint(0)), (tint_module_vars.myTexture.get_num_mip_levels() - 1u));
+  uint2 const v_4 = ((uint2(tint_module_vars.myTexture.get_width(v_3), tint_module_vars.myTexture.get_height(v_3))) - (uint2(1u)));
+  float4 texel = tint_module_vars.myTexture.read(min((uint2(v_1)), v_4), v_2, v_3);
   {
     uint i = 0u;
     while(true) {

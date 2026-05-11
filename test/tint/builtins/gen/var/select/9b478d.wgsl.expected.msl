@@ -48,7 +48,7 @@ void select_9b478d() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   select_9b478d();
   return out;
 }

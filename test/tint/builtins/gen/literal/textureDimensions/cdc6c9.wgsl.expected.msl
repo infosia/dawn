@@ -81,12 +81,12 @@ tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_Exte
   tint_TransferFunctionParams const v_3 = (*from).srcTransferFunction;
   tint_TransferFunctionParams const v_4 = (*from).dstTransferFunction;
   tint_array<tint_packed_vec3_f32_array_element, 3> const v_5 = (*from).gamutConversionMatrix;
-  float3x3 const v_6 = float3x3(float3(v_5[0u].packed), float3(v_5[1u].packed), float3(v_5[2u].packed));
+  float3x3 const v_6 = (float3x3((float3(v_5[0u].packed)), (float3(v_5[1u].packed)), (float3(v_5[2u].packed))));
   return tint_ExternalTextureParams{.numPlanes=v, .doYuvToRgbConversionOnly=v_1, .yuvToRgbConversionMatrix=v_2, .srcTransferFunction=v_3, .dstTransferFunction=v_4, .gamutConversionMatrix=v_6, .sampleTransform=(*from).sampleTransform, .loadTransform=(*from).loadTransform, .samplePlane0RectMin=(*from).samplePlane0RectMin, .samplePlane0RectMax=(*from).samplePlane0RectMax, .samplePlane1RectMin=(*from).samplePlane1RectMin, .samplePlane1RectMax=(*from).samplePlane1RectMax, .apparentSize=(*from).apparentSize, .plane1CoordFactor=(*from).plane1CoordFactor};
 }
 
 uint2 textureDimensions_cdc6c9(tint_module_vars_struct tint_module_vars) {
-  uint2 res = (tint_load_struct_packed_vec3(tint_module_vars.arg_0_params).apparentSize + uint2(1u));
+  uint2 res = (tint_load_struct_packed_vec3(tint_module_vars.arg_0_params).apparentSize + (uint2(1u)));
   return res;
 }
 
@@ -177,12 +177,12 @@ tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_Exte
   tint_TransferFunctionParams const v_3 = (*from).srcTransferFunction;
   tint_TransferFunctionParams const v_4 = (*from).dstTransferFunction;
   tint_array<tint_packed_vec3_f32_array_element, 3> const v_5 = (*from).gamutConversionMatrix;
-  float3x3 const v_6 = float3x3(float3(v_5[0u].packed), float3(v_5[1u].packed), float3(v_5[2u].packed));
+  float3x3 const v_6 = (float3x3((float3(v_5[0u].packed)), (float3(v_5[1u].packed)), (float3(v_5[2u].packed))));
   return tint_ExternalTextureParams{.numPlanes=v, .doYuvToRgbConversionOnly=v_1, .yuvToRgbConversionMatrix=v_2, .srcTransferFunction=v_3, .dstTransferFunction=v_4, .gamutConversionMatrix=v_6, .sampleTransform=(*from).sampleTransform, .loadTransform=(*from).loadTransform, .samplePlane0RectMin=(*from).samplePlane0RectMin, .samplePlane0RectMax=(*from).samplePlane0RectMax, .samplePlane1RectMin=(*from).samplePlane1RectMin, .samplePlane1RectMax=(*from).samplePlane1RectMax, .apparentSize=(*from).apparentSize, .plane1CoordFactor=(*from).plane1CoordFactor};
 }
 
 uint2 textureDimensions_cdc6c9(tint_module_vars_struct tint_module_vars) {
-  uint2 res = (tint_load_struct_packed_vec3(tint_module_vars.arg_0_params).apparentSize + uint2(1u));
+  uint2 res = (tint_load_struct_packed_vec3(tint_module_vars.arg_0_params).apparentSize + (uint2(1u)));
   return res;
 }
 
@@ -283,18 +283,18 @@ tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_Exte
   tint_TransferFunctionParams const v_3 = (*from).srcTransferFunction;
   tint_TransferFunctionParams const v_4 = (*from).dstTransferFunction;
   tint_array<tint_packed_vec3_f32_array_element, 3> const v_5 = (*from).gamutConversionMatrix;
-  float3x3 const v_6 = float3x3(float3(v_5[0u].packed), float3(v_5[1u].packed), float3(v_5[2u].packed));
+  float3x3 const v_6 = (float3x3((float3(v_5[0u].packed)), (float3(v_5[1u].packed)), (float3(v_5[2u].packed))));
   return tint_ExternalTextureParams{.numPlanes=v, .doYuvToRgbConversionOnly=v_1, .yuvToRgbConversionMatrix=v_2, .srcTransferFunction=v_3, .dstTransferFunction=v_4, .gamutConversionMatrix=v_6, .sampleTransform=(*from).sampleTransform, .loadTransform=(*from).loadTransform, .samplePlane0RectMin=(*from).samplePlane0RectMin, .samplePlane0RectMax=(*from).samplePlane0RectMax, .samplePlane1RectMin=(*from).samplePlane1RectMin, .samplePlane1RectMax=(*from).samplePlane1RectMax, .apparentSize=(*from).apparentSize, .plane1CoordFactor=(*from).plane1CoordFactor};
 }
 
 uint2 textureDimensions_cdc6c9(tint_module_vars_struct tint_module_vars) {
-  uint2 res = (tint_load_struct_packed_vec3(tint_module_vars.arg_0_params).apparentSize + uint2(1u));
+  uint2 res = (tint_load_struct_packed_vec3(tint_module_vars.arg_0_params).apparentSize + (uint2(1u)));
   return res;
 }
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = textureDimensions_cdc6c9(tint_module_vars);
   return out;
 }

@@ -9,8 +9,8 @@ struct tint_module_vars_struct {
 };
 
 float2 reflect_b61e10() {
-  float2 arg_0 = float2(1.0f);
-  float2 arg_1 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
+  float2 arg_1 = (float2(1.0f));
   float2 res = reflect(arg_0, arg_1);
   return res;
 }
@@ -30,8 +30,8 @@ struct tint_module_vars_struct {
 };
 
 float2 reflect_b61e10() {
-  float2 arg_0 = float2(1.0f);
-  float2 arg_1 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
+  float2 arg_1 = (float2(1.0f));
   float2 res = reflect(arg_0, arg_1);
   return res;
 }
@@ -58,15 +58,15 @@ struct vertex_main_outputs {
 };
 
 float2 reflect_b61e10() {
-  float2 arg_0 = float2(1.0f);
-  float2 arg_1 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
+  float2 arg_1 = (float2(1.0f));
   float2 res = reflect(arg_0, arg_1);
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = reflect_b61e10();
   return out;
 }

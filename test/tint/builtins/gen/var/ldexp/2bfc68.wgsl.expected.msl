@@ -5,8 +5,8 @@
 using namespace metal;
 
 void ldexp_2bfc68() {
-  int2 arg_1 = int2(1);
-  float2 res = ldexp(float2(1.0f), arg_1);
+  int2 arg_1 = (int2(1));
+  float2 res = ldexp((float2(1.0f)), arg_1);
 }
 
 fragment void fragment_main() {
@@ -19,8 +19,8 @@ fragment void fragment_main() {
 using namespace metal;
 
 void ldexp_2bfc68() {
-  int2 arg_1 = int2(1);
-  float2 res = ldexp(float2(1.0f), arg_1);
+  int2 arg_1 = (int2(1));
+  float2 res = ldexp((float2(1.0f)), arg_1);
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -42,13 +42,13 @@ struct vertex_main_outputs {
 };
 
 void ldexp_2bfc68() {
-  int2 arg_1 = int2(1);
-  float2 res = ldexp(float2(1.0f), arg_1);
+  int2 arg_1 = (int2(1));
+  float2 res = ldexp((float2(1.0f)), arg_1);
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   ldexp_2bfc68();
   return out;
 }

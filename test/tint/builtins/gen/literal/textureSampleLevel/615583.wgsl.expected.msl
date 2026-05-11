@@ -11,7 +11,7 @@ struct tint_module_vars_struct {
 };
 
 float textureSampleLevel_615583(tint_module_vars_struct tint_module_vars) {
-  float res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, float2(1.0f), 1u, level(1u));
+  float res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, (float2(1.0f)), 1u, (level(1u)));
   return res;
 }
 
@@ -32,7 +32,7 @@ struct tint_module_vars_struct {
 };
 
 float textureSampleLevel_615583(tint_module_vars_struct tint_module_vars) {
-  float res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, float2(1.0f), 1u, level(1u));
+  float res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, (float2(1.0f)), 1u, (level(1u)));
   return res;
 }
 
@@ -63,13 +63,13 @@ struct vertex_main_outputs {
 };
 
 float textureSampleLevel_615583(tint_module_vars_struct tint_module_vars) {
-  float res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, float2(1.0f), 1u, level(1u));
+  float res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, (float2(1.0f)), 1u, (level(1u)));
   return res;
 }
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = textureSampleLevel_615583(tint_module_vars);
   return out;
 }

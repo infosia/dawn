@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 subgroupMul_dc672a() {
-  uint2 res = simd_product(uint2(1u));
+  uint2 res = simd_product((uint2(1u)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 subgroupMul_dc672a() {
-  uint2 res = simd_product(uint2(1u));
+  uint2 res = simd_product((uint2(1u)));
   return res;
 }
 

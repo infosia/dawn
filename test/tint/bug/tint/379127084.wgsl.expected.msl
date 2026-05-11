@@ -66,63 +66,63 @@ struct main_inputs {
 void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_array_lengths_struct tint_array_lengths, tint_module_vars_struct tint_module_vars) {
   (*tint_module_vars.shadingSsboIndex) = _stageIn.ssboIndicesVar.y;
   int const _56_d = (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].noiseType_1;
-  float2 _57_k = float2(((_stageIn.localCoordsVar + 0.5f) * (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].baseFrequency_1));
-  float4 _58_l = float4(0.0f);
-  float2 _59_m = float2((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].stitchData_1);
+  float2 _57_k = (float2(((_stageIn.localCoordsVar + 0.5f) * (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].baseFrequency_1)));
+  float4 _58_l = (float4(0.0f));
+  float2 _59_m = (float2((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].stitchData_1));
   float _60_n = 1.0f;
   int _61_o = 0;
   {
-    uint2 tint_loop_idx = uint2(4294967295u);
+    uint2 tint_loop_idx = (uint2(4294967295u));
     while(true) {
-      if (all((tint_loop_idx == uint2(0u)))) {
+      if (all((tint_loop_idx == (uint2(0u))))) {
         break;
       }
       if ((_61_o < (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].numOctaves_1)) {
         float4 _62_f = 0.0f;
         float2 const _skTemp2 = floor(_57_k);
-        _62_f = float4(_skTemp2, _62_f.zw);
-        _62_f = float4(_62_f.xy, (_62_f.xy + float2(1.0f)));
-        if (bool((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].stitching_1)) {
+        _62_f = (float4(_skTemp2, _62_f.zw));
+        _62_f = (float4(_62_f.xy, (_62_f.xy + (float2(1.0f)))));
+        if ((bool((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].stitching_1))) {
           float4 const _skTemp3 = step(_59_m.xyxy, _62_f);
           _62_f = (_62_f - (_skTemp3 * _59_m.xyxy));
         }
-        float2 const v = float2(float2(((_62_f.x + 0.5f) * 0.00390625f), 0.5f));
-        float const _63_g = tint_module_vars.permutationsSampler_1_Texture.sample(tint_module_vars.permutationsSampler_1_Sampler, v, bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f))).x;
-        float2 const v_1 = float2(float2(((_62_f.z + 0.5f) * 0.00390625f), 0.5f));
-        float const _64_h = tint_module_vars.permutationsSampler_1_Texture.sample(tint_module_vars.permutationsSampler_1_Sampler, v_1, bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f))).x;
-        float2 _65_i = float2(_63_g, _64_h);
+        float2 const v = (float2((float2(((_62_f.x + 0.5f) * 0.00390625f), 0.5f))));
+        float const _63_g = tint_module_vars.permutationsSampler_1_Texture.sample(tint_module_vars.permutationsSampler_1_Sampler, v, (bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f)))).x;
+        float2 const v_1 = (float2((float2(((_62_f.z + 0.5f) * 0.00390625f), 0.5f))));
+        float const _64_h = tint_module_vars.permutationsSampler_1_Texture.sample(tint_module_vars.permutationsSampler_1_Sampler, v_1, (bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f)))).x;
+        float2 _65_i = (float2(_63_g, _64_h));
         if (false) {
-          float2 const _skTemp4 = floor(((_65_i * float2(255.0f)) + float2(0.5f)));
-          _65_i = (_skTemp4 * float2(0.0039215688593685627f));
+          float2 const _skTemp4 = floor(((_65_i * (float2(255.0f))) + (float2(0.5f))));
+          _65_i = (_skTemp4 * (float2(0.0039215688593685627f)));
         }
         float4 _66_j = ((256.0f * _65_i.xyxy) + _62_f.yyww);
-        _66_j = (_66_j * float4(0.00390625f));
+        _66_j = (_66_j * (float4(0.00390625f)));
         float4 const _67_p = _66_j;
         float2 const _skTemp5 = fract(_57_k);
         float2 const _68_d = _skTemp5;
-        float2 const _skTemp6 = (clamp(((_68_d - float2(0.0f)) / (float2(1.0f) - float2(0.0f))), float2(0.0f), float2(1.0f)) * (clamp(((_68_d - float2(0.0f)) / (float2(1.0f) - float2(0.0f))), float2(0.0f), float2(1.0f)) * (float2(3.0f) - (float2(2.0f) * clamp(((_68_d - float2(0.0f)) / (float2(1.0f) - float2(0.0f))), float2(0.0f), float2(1.0f))))));
+        float2 const _skTemp6 = (clamp(((_68_d - (float2(0.0f))) / ((float2(1.0f)) - (float2(0.0f)))), (float2(0.0f)), (float2(1.0f))) * (clamp(((_68_d - (float2(0.0f))) / ((float2(1.0f)) - (float2(0.0f)))), (float2(0.0f)), (float2(1.0f))) * ((float2(3.0f)) - ((float2(2.0f)) * clamp(((_68_d - (float2(0.0f))) / ((float2(1.0f)) - (float2(0.0f)))), (float2(0.0f)), (float2(1.0f)))))));
         float2 const _69_e = _skTemp6;
         float4 _71_g = 0.0f;
         int _72_h = 0;
         {
-          uint2 tint_loop_idx_1 = uint2(4294967295u);
+          uint2 tint_loop_idx_1 = (uint2(4294967295u));
           while(true) {
-            if (all((tint_loop_idx_1 == uint2(0u)))) {
+            if (all((tint_loop_idx_1 == (uint2(0u))))) {
               break;
             }
-            float const _73_i = ((float(_72_h) + 0.5f) * 0.25f);
-            float const v_2 = float(_67_p.x);
-            float2 const v_3 = float2(v_2, float(_73_i));
-            float4 const _74_j = tint_module_vars.noiseSampler_1_Texture.sample(tint_module_vars.noiseSampler_1_Sampler, v_3, bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f)));
-            float const v_4 = float(_67_p.y);
-            float2 const v_5 = float2(v_4, float(_73_i));
-            float4 const _75_k = tint_module_vars.noiseSampler_1_Texture.sample(tint_module_vars.noiseSampler_1_Sampler, v_5, bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f)));
-            float const v_6 = float(_67_p.w);
-            float2 const v_7 = float2(v_6, float(_73_i));
-            float4 const _76_l = tint_module_vars.noiseSampler_1_Texture.sample(tint_module_vars.noiseSampler_1_Sampler, v_7, bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f)));
-            float const v_8 = float(_67_p.z);
-            float2 const v_9 = float2(v_8, float(_73_i));
-            float4 const _77_m = tint_module_vars.noiseSampler_1_Texture.sample(tint_module_vars.noiseSampler_1_Sampler, v_9, bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f)));
+            float const _73_i = (((float(_72_h)) + 0.5f) * 0.25f);
+            float const v_2 = (float(_67_p.x));
+            float2 const v_3 = (float2(v_2, (float(_73_i))));
+            float4 const _74_j = tint_module_vars.noiseSampler_1_Texture.sample(tint_module_vars.noiseSampler_1_Sampler, v_3, (bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f))));
+            float const v_4 = (float(_67_p.y));
+            float2 const v_5 = (float2(v_4, (float(_73_i))));
+            float4 const _75_k = tint_module_vars.noiseSampler_1_Texture.sample(tint_module_vars.noiseSampler_1_Sampler, v_5, (bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f))));
+            float const v_6 = (float(_67_p.w));
+            float2 const v_7 = (float2(v_6, (float(_73_i))));
+            float4 const _76_l = tint_module_vars.noiseSampler_1_Texture.sample(tint_module_vars.noiseSampler_1_Sampler, v_7, (bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f))));
+            float const v_8 = (float(_67_p.z));
+            float2 const v_9 = (float2(v_8, (float(_73_i))));
+            float4 const _77_m = tint_module_vars.noiseSampler_1_Texture.sample(tint_module_vars.noiseSampler_1_Sampler, v_9, (bias(clamp(-0.47499999403953552246f, -16.0f, 15.9899997711181640625f))));
             float2 _78_n = _68_d;
             float const _skTemp7 = dot((((_74_j.yw + (_74_j.xz * 0.00390625f)) * 2.0f) - 1.0f), _78_n);
             float _79_o = _skTemp7;
@@ -140,11 +140,11 @@ void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_array_lengths_
             float const _skTemp12 = mix(_79_o, _80_p, _69_e.x);
             float const _82_r = _skTemp12;
             float const _skTemp13 = mix(_81_q, _82_r, _69_e.y);
-            _71_g[min(uint(_72_h), 3u)] = _skTemp13;
+            _71_g[min((uint(_72_h)), 3u)] = _skTemp13;
             {
               uint const tint_low_inc_1 = (tint_loop_idx_1.x - 1u);
               tint_loop_idx_1.x = tint_low_inc_1;
-              uint const tint_carry_1 = uint((tint_low_inc_1 == 4294967295u));
+              uint const tint_carry_1 = (uint((tint_low_inc_1 == 4294967295u)));
               tint_loop_idx_1.y = (tint_loop_idx_1.y - tint_carry_1);
               _72_h = as_type<int>((as_type<uint>(_72_h) + as_type<uint>(1)));
               if ((_72_h >= 4)) { break; }
@@ -157,45 +157,45 @@ void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_array_lengths_
           _83_q = _skTemp14;
         }
         _58_l = (_58_l + (_83_q * _60_n));
-        _57_k = (_57_k * float2(2.0f));
+        _57_k = (_57_k * (float2(2.0f)));
         _60_n = (_60_n * 0.5f);
-        _59_m = (_59_m * float2(2.0f));
+        _59_m = (_59_m * (float2(2.0f)));
       } else {
         break;
       }
       {
         uint const tint_low_inc = (tint_loop_idx.x - 1u);
         tint_loop_idx.x = tint_low_inc;
-        uint const tint_carry = uint((tint_low_inc == 4294967295u));
+        uint const tint_carry = (uint((tint_low_inc == 4294967295u)));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         _61_o = as_type<int>((as_type<uint>(_61_o) + as_type<uint>(1)));
       }
     }
   }
   if ((_56_d == 0)) {
-    _58_l = ((_58_l * float4(0.5f)) + float4(0.5f));
+    _58_l = ((_58_l * (float4(0.5f))) + (float4(0.5f)));
   }
   float4 const _skTemp15 = saturate(_58_l);
   _58_l = _skTemp15;
-  float3 const v_10 = float3(_58_l.xyz);
-  float3 const v_11 = float3((v_10 * float(_58_l.w)));
-  float const _skTemp16 = dot(float3(0.21259999275207519531f, 0.71520000696182250977f, 0.07220000028610229492f), float4(v_11, float(float(_58_l.w))).xyz);
+  float3 const v_10 = (float3(_58_l.xyz));
+  float3 const v_11 = (float3((v_10 * (float(_58_l.w)))));
+  float const _skTemp16 = dot((float3(0.21259999275207519531f, 0.71520000696182250977f, 0.07220000028610229492f)), (float4(v_11, (float((float(_58_l.w)))))).xyz);
   float const _skTemp17 = saturate(_skTemp16);
-  float4 _84_a = float4(0.0f, 0.0f, 0.0f, _skTemp17);
+  float4 _84_a = (float4(0.0f, 0.0f, 0.0f, _skTemp17));
   int const _85_d = (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].inHSL_4;
-  if (bool(_85_d)) {
+  if ((bool(_85_d))) {
     float4 _skTemp18 = 0.0f;
     if ((_84_a.y < _84_a.z)) {
-      _skTemp18 = float4(_84_a.zy, -1.0f, 0.6666666865348815918f);
+      _skTemp18 = (float4(_84_a.zy, -1.0f, 0.6666666865348815918f));
     } else {
-      _skTemp18 = float4(_84_a.yz, 0.0f, -0.3333333432674407959f);
+      _skTemp18 = (float4(_84_a.yz, 0.0f, -0.3333333432674407959f));
     }
     float4 const _86_e = _skTemp18;
     float4 _skTemp19 = 0.0f;
     if ((_84_a.x < _86_e.x)) {
-      _skTemp19 = float4(_86_e.x, _84_a.x, _86_e.yw);
+      _skTemp19 = (float4(_86_e.x, _84_a.x, _86_e.yw));
     } else {
-      _skTemp19 = float4(_84_a.x, _86_e.x, _86_e.yz);
+      _skTemp19 = (float4(_84_a.x, _86_e.x, _86_e.yz));
     }
     float4 const _87_f = _skTemp19;
     float const _88_h = _87_f.x;
@@ -207,33 +207,33 @@ void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_array_lengths_
     float const _skTemp22 = abs(((_90_j * 2.0f) - _84_a.w));
     float const _92_l = (_89_i / ((_84_a.w + 0.00009999999747378752f) - _skTemp22));
     float const _93_m = (_90_j / (_84_a.w + 0.00009999999747378752f));
-    _84_a = float4(_91_k, _92_l, _93_m, _84_a.w);
+    _84_a = (float4(_91_k, _92_l, _93_m, _84_a.w));
   } else {
     float const _skTemp23 = max(_84_a.w, 0.00009999999747378752f);
-    _84_a = float4((_84_a.xyz / _skTemp23), _84_a.w);
+    _84_a = (float4((_84_a.xyz / _skTemp23), _84_a.w));
   }
   float4x4 const v_12 = (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].matrix_4;
-  float4 const v_13 = (v_12 * float4(_84_a));
-  float4 _94_f = float4((v_13 + (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].translate_4));
-  if (bool(_85_d)) {
+  float4 const v_13 = (v_12 * (float4(_84_a)));
+  float4 _94_f = (float4((v_13 + (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].translate_4)));
+  if ((bool(_85_d))) {
     float const _skTemp24 = abs(((2.0f * _94_f.z) - 1.0f));
     float const _95_b = ((1.0f - _skTemp24) * _94_f.y);
-    float3 const _96_c = (_94_f.xxx + float3(0.0f, 0.6666666865348815918f, 0.3333333432674407959f));
+    float3 const _96_c = (_94_f.xxx + (float3(0.0f, 0.6666666865348815918f, 0.3333333432674407959f)));
     float3 const _skTemp25 = fract(_96_c);
     float3 const _skTemp26 = abs(((_skTemp25 * 6.0f) - 3.0f));
     float3 const _skTemp27 = saturate((_skTemp26 - 1.0f));
     float3 const _97_d = _skTemp27;
-    float4 const _skTemp28 = saturate(float4(((((_97_d - 0.5f) * _95_b) + _94_f.z) * _94_f.w), _94_f.w));
+    float4 const _skTemp28 = saturate((float4(((((_97_d - 0.5f) * _95_b) + _94_f.z) * _94_f.w), _94_f.w)));
     _94_f = _skTemp28;
   } else {
-    if (bool((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].clampRGB_4)) {
+    if ((bool((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), (tint_array_lengths.tint_array_length_0_0 - 1u))].clampRGB_4))) {
       float4 const _skTemp29 = saturate(_94_f);
       _94_f = _skTemp29;
     } else {
       float const _skTemp30 = saturate(_94_f.w);
       _94_f.w = _skTemp30;
     }
-    _94_f = float4((_94_f.xyz * _94_f.w), _94_f.w);
+    _94_f = (float4((_94_f.xyz * _94_f.w), _94_f.w));
   }
   float4 const outColor_0 = _94_f;
   (*_stageOut).sk_FragColor = outColor_0;

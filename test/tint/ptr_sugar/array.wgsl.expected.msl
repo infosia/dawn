@@ -47,7 +47,7 @@ void deref_var() {
   tint_array<int, 10> a = {};
   thread tint_array<int, 10>* const p = (&a);
   int i = 0;
-  int b = (*p)[min(uint(i), 9u)];
+  int b = (*p)[min((uint(i)), 9u)];
   (*p)[0u] = 42;
 }
 
@@ -55,7 +55,7 @@ void no_deref_var() {
   tint_array<int, 10> a = {};
   thread tint_array<int, 10>* const p = (&a);
   int i = 0;
-  int b = (*p)[min(uint(i), 9u)];
+  int b = (*p)[min((uint(i)), 9u)];
   (*p)[0u] = 42;
 }
 

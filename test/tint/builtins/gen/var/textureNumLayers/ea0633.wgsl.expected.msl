@@ -66,7 +66,7 @@ uint textureNumLayers_ea0633(tint_module_vars_struct tint_module_vars) {
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = textureNumLayers_ea0633(tint_module_vars);
   return out;
 }

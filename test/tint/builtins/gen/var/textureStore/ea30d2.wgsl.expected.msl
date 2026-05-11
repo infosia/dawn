@@ -9,9 +9,9 @@ struct tint_module_vars_struct {
 };
 
 void textureStore_ea30d2(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   int arg_2 = 1;
-  int4 arg_3 = int4(1);
+  int4 arg_3 = (int4(1));
   uint2 const v = arg_1;
   int const v_1 = arg_2;
   int4 const v_2 = arg_3;
@@ -35,9 +35,9 @@ struct tint_module_vars_struct {
 };
 
 void textureStore_ea30d2(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   int arg_2 = 1;
-  int4 arg_3 = int4(1);
+  int4 arg_3 = (int4(1));
   uint2 const v = arg_1;
   int const v_1 = arg_2;
   int4 const v_2 = arg_3;

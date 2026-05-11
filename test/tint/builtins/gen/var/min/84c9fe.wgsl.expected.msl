@@ -45,7 +45,7 @@ void min_84c9fe() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   min_84c9fe();
   return out;
 }

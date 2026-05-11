@@ -18,16 +18,16 @@ float4 main_inner(float2 vUV, tint_module_vars_struct tint_module_vars) {
   float3 const random = tint_module_vars.randomTexture.sample(tint_module_vars.Sampler, vUV).xyz;
   int i = 0;
   {
-    uint2 tint_loop_idx = uint2(4294967295u);
+    uint2 tint_loop_idx = (uint2(4294967295u));
     while(true) {
-      if (all((tint_loop_idx == uint2(0u)))) {
+      if (all((tint_loop_idx == (uint2(0u))))) {
         break;
       }
       if ((i < 1)) {
       } else {
         break;
       }
-      float3 const offset = float3(random.x);
+      float3 const offset = (float3(random.x));
       bool v = false;
       if ((offset.x < 0.0f)) {
         v = true;
@@ -51,7 +51,7 @@ float4 main_inner(float2 vUV, tint_module_vars_struct tint_module_vars) {
         {
           uint const tint_low_inc = (tint_loop_idx.x - 1u);
           tint_loop_idx.x = tint_low_inc;
-          uint const tint_carry = uint((tint_low_inc == 4294967295u));
+          uint const tint_carry = (uint((tint_low_inc == 4294967295u)));
           tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         }
         continue;
@@ -61,12 +61,12 @@ float4 main_inner(float2 vUV, tint_module_vars_struct tint_module_vars) {
       {
         uint const tint_low_inc = (tint_loop_idx.x - 1u);
         tint_loop_idx.x = tint_low_inc;
-        uint const tint_carry = uint((tint_low_inc == 4294967295u));
+        uint const tint_carry = (uint((tint_low_inc == 4294967295u)));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
       }
     }
   }
-  return float4(1.0f);
+  return (float4(1.0f));
 }
 
 fragment main_outputs v_3(main_inputs inputs [[stage_in]], sampler Sampler [[sampler(0)]], texture2d<float, access::sample> randomTexture [[texture(0)]]) {

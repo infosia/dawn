@@ -60,7 +60,7 @@ uint dot_97c7ee() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = dot_97c7ee();
   return out;
 }

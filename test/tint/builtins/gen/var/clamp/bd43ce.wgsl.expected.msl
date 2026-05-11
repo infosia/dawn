@@ -9,9 +9,9 @@ struct tint_module_vars_struct {
 };
 
 uint4 clamp_bd43ce() {
-  uint4 arg_0 = uint4(1u);
-  uint4 arg_1 = uint4(1u);
-  uint4 arg_2 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
+  uint4 arg_1 = (uint4(1u));
+  uint4 arg_2 = (uint4(1u));
   uint4 res = min(max(arg_0, arg_1), arg_2);
   return res;
 }
@@ -31,9 +31,9 @@ struct tint_module_vars_struct {
 };
 
 uint4 clamp_bd43ce() {
-  uint4 arg_0 = uint4(1u);
-  uint4 arg_1 = uint4(1u);
-  uint4 arg_2 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
+  uint4 arg_1 = (uint4(1u));
+  uint4 arg_2 = (uint4(1u));
   uint4 res = min(max(arg_0, arg_1), arg_2);
   return res;
 }
@@ -60,16 +60,16 @@ struct vertex_main_outputs {
 };
 
 uint4 clamp_bd43ce() {
-  uint4 arg_0 = uint4(1u);
-  uint4 arg_1 = uint4(1u);
-  uint4 arg_2 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
+  uint4 arg_1 = (uint4(1u));
+  uint4 arg_2 = (uint4(1u));
   uint4 res = min(max(arg_0, arg_1), arg_2);
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = clamp_bd43ce();
   return out;
 }

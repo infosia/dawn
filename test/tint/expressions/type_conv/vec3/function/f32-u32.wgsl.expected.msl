@@ -7,11 +7,11 @@ struct tint_module_vars_struct {
 
 float3 m(tint_module_vars_struct tint_module_vars) {
   (*tint_module_vars.t) = 1.0f;
-  return float3((*tint_module_vars.t));
+  return (float3((*tint_module_vars.t)));
 }
 
 uint3 tint_v3f32_to_v3u32(float3 value) {
-  return uint3(clamp(value, float3(0.0f), float3(4294967040.0f)));
+  return (uint3(clamp(value, (float3(0.0f)), (float3(4294967040.0f)))));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
