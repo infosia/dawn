@@ -9,7 +9,7 @@ void sin_67b03c() {
 }
 
 fragment void fragment_main() {
-  sin_67b03c();
+  (sin_67b03c());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void sin_67b03c() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  sin_67b03c();
+  (sin_67b03c());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void sin_67b03c() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  sin_67b03c();
+  (sin_67b03c());
   return out;
 }
 

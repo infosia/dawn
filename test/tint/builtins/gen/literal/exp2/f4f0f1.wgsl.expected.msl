@@ -9,7 +9,7 @@ void exp2_f4f0f1() {
 }
 
 fragment void fragment_main() {
-  exp2_f4f0f1();
+  (exp2_f4f0f1());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void exp2_f4f0f1() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  exp2_f4f0f1();
+  (exp2_f4f0f1());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void exp2_f4f0f1() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  exp2_f4f0f1();
+  (exp2_f4f0f1());
   return out;
 }
 

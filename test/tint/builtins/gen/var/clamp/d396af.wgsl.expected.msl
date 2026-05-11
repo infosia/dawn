@@ -9,7 +9,7 @@ void clamp_d396af() {
 }
 
 fragment void fragment_main() {
-  clamp_d396af();
+  (clamp_d396af());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void clamp_d396af() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  clamp_d396af();
+  (clamp_d396af());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void clamp_d396af() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  clamp_d396af();
+  (clamp_d396af());
   return out;
 }
 

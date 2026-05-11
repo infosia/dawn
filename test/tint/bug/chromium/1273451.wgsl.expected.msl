@@ -15,5 +15,5 @@ B f(A a) {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v() {
-  f(A{.a=1});
+  (f(A{.a=1}));
 }

@@ -33,5 +33,5 @@ void tint_store_and_preserve_padding(device S* const target, S value_param) {
 
 fragment void frag_main(device S* output [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.output=output};
-  tint_store_and_preserve_padding(tint_module_vars.output, S{.f=1.0f, .u=2u, .v=float4(3.0f)});
+  (tint_store_and_preserve_padding(tint_module_vars.output, S{.f=1.0f, .u=2u, .v=float4(3.0f)}));
 }

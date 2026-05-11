@@ -120,7 +120,7 @@ void main_1(tint_module_vars_struct tint_module_vars) {
 main_out main_inner(float fClipDistance3_param, float fClipDistance4_param, tint_module_vars_struct tint_module_vars) {
   (*tint_module_vars.fClipDistance3) = fClipDistance3_param;
   (*tint_module_vars.fClipDistance4) = fClipDistance4_param;
-  main_1(tint_module_vars);
+  (main_1(tint_module_vars));
   main_out const v_2 = main_out{.glFragColor_1=(*tint_module_vars.glFragColor)};
   if (!((*tint_module_vars.continue_execution))) {
     discard_fragment();

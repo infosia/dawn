@@ -29,5 +29,5 @@ void main_inner(uint3 id, tint_module_vars_struct tint_module_vars) {
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v(uint3 id [[thread_position_in_grid]], const device Input_packed_vec3* input [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.input=input};
-  main_inner(id, tint_module_vars);
+  (main_inner(id, tint_module_vars));
 }

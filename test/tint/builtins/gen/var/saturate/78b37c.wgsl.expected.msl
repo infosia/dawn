@@ -9,7 +9,7 @@ void saturate_78b37c() {
 }
 
 fragment void fragment_main() {
-  saturate_78b37c();
+  (saturate_78b37c());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void saturate_78b37c() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  saturate_78b37c();
+  (saturate_78b37c());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void saturate_78b37c() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  saturate_78b37c();
+  (saturate_78b37c());
   return out;
 }
 

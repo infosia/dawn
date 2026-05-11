@@ -9,7 +9,7 @@ void sign_f5da6a() {
 }
 
 fragment void fragment_main() {
-  sign_f5da6a();
+  (sign_f5da6a());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void sign_f5da6a() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  sign_f5da6a();
+  (sign_f5da6a());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void sign_f5da6a() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  sign_f5da6a();
+  (sign_f5da6a());
   return out;
 }
 

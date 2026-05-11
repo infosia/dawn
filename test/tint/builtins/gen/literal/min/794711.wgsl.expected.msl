@@ -9,7 +9,7 @@ void min_794711() {
 }
 
 fragment void fragment_main() {
-  min_794711();
+  (min_794711());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void min_794711() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  min_794711();
+  (min_794711());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void min_794711() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  min_794711();
+  (min_794711());
   return out;
 }
 

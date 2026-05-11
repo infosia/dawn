@@ -13,7 +13,7 @@ float4 textureLoad_81c381(tint_module_vars_struct tint_module_vars) {
   int arg_1 = 1;
   int arg_2 = 1;
   int const v = arg_1;
-  min(uint(arg_2), (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  (min(uint(arg_2), (tint_module_vars.arg_0.get_num_mip_levels() - 1u)));
   uint const v_1 = (uint(tint_module_vars.arg_0.get_width()) - 1u);
   float4 res = tint_module_vars.arg_0.read(min(uint(v), v_1));
   return res;
@@ -38,7 +38,7 @@ float4 textureLoad_81c381(tint_module_vars_struct tint_module_vars) {
   int arg_1 = 1;
   int arg_2 = 1;
   int const v = arg_1;
-  min(uint(arg_2), (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  (min(uint(arg_2), (tint_module_vars.arg_0.get_num_mip_levels() - 1u)));
   uint const v_1 = (uint(tint_module_vars.arg_0.get_width()) - 1u);
   float4 res = tint_module_vars.arg_0.read(min(uint(v), v_1));
   return res;
@@ -73,7 +73,7 @@ float4 textureLoad_81c381(tint_module_vars_struct tint_module_vars) {
   int arg_1 = 1;
   int arg_2 = 1;
   int const v = arg_1;
-  min(uint(arg_2), (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  (min(uint(arg_2), (tint_module_vars.arg_0.get_num_mip_levels() - 1u)));
   uint const v_1 = (uint(tint_module_vars.arg_0.get_width()) - 1u);
   float4 res = tint_module_vars.arg_0.read(min(uint(v), v_1));
   return res;

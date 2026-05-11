@@ -9,7 +9,7 @@ void sign_c8289c() {
 }
 
 fragment void fragment_main() {
-  sign_c8289c();
+  (sign_c8289c());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void sign_c8289c() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  sign_c8289c();
+  (sign_c8289c());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void sign_c8289c() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  sign_c8289c();
+  (sign_c8289c());
   return out;
 }
 

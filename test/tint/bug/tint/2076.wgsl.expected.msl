@@ -88,7 +88,7 @@ tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_Exte
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v_7(const constant tint_ExternalTextureParams_packed_vec3* randomTexture_params [[buffer(0)]], texture2d<float, access::sample> randomTexture_plane0 [[texture(1)]], texture2d<float, access::sample> randomTexture_plane1 [[texture(2)]], texture2d<float, access::sample> depthTexture [[texture(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.randomTexture_params=randomTexture_params, .randomTexture_plane0=randomTexture_plane0, .randomTexture_plane1=randomTexture_plane1, .depthTexture=depthTexture};
-  tint_load_struct_packed_vec3(tint_module_vars.randomTexture_params);
+  (tint_load_struct_packed_vec3(tint_module_vars.randomTexture_params));
 }
 //
 // main2

@@ -929,9 +929,14 @@ class Printer : public tint::TextGenerator {
 
     void EmitCallStmt(const core::ir::Call* c) {
         if (!c->Result()->IsUsed()) {
+            // This is a call (or constructor) whose result is not used.
             auto out = Line();
+            // If the name of the callee is a type (which is the case when it's a constructor), then
+            // this could end up looking like a C++ variable declaration. Parentheses ensure it'll
+            // be an expression.
+            out << "(";
             EmitValue(out, c->Result());
-            out << ";";
+            out << ");";
         }
     }
 

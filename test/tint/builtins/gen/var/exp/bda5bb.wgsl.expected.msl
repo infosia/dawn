@@ -9,7 +9,7 @@ void exp_bda5bb() {
 }
 
 fragment void fragment_main() {
-  exp_bda5bb();
+  (exp_bda5bb());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void exp_bda5bb() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  exp_bda5bb();
+  (exp_bda5bb());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void exp_bda5bb() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  exp_bda5bb();
+  (exp_bda5bb());
   return out;
 }
 

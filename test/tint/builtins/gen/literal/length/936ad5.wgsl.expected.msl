@@ -9,7 +9,7 @@ void length_936ad5() {
 }
 
 fragment void fragment_main() {
-  length_936ad5();
+  (length_936ad5());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void length_936ad5() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  length_936ad5();
+  (length_936ad5());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void length_936ad5() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  length_936ad5();
+  (length_936ad5());
   return out;
 }
 

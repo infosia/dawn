@@ -9,7 +9,7 @@ void mix_30de36() {
 }
 
 fragment void fragment_main() {
-  mix_30de36();
+  (mix_30de36());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void mix_30de36() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  mix_30de36();
+  (mix_30de36());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void mix_30de36() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  mix_30de36();
+  (mix_30de36());
   return out;
 }
 

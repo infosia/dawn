@@ -192,7 +192,7 @@ VertexOutput main_inner(float3 a_Position, float2 a_UV, float4 a_Color, float3 a
   (*tint_module_vars.a_Color1) = a_Color;
   (*tint_module_vars.a_Normal1) = a_Normal;
   (*tint_module_vars.a_PosMtxIdx1) = a_PosMtxIdx;
-  main1(tint_module_vars);
+  (main1(tint_module_vars));
   float4 const x_e11 = (*tint_module_vars.v_Color);
   float2 const x_e13 = (*tint_module_vars.v_TexCoord);
   float4 const x_e15 = (*tint_module_vars.gl_Position);

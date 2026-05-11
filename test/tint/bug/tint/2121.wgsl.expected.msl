@@ -16,7 +16,7 @@ void foo(thread VSOut* const out) {
 
 VSOut main_inner() {
   VSOut out = {};
-  foo((&out));
+  (foo((&out)));
   return out;
 }
 

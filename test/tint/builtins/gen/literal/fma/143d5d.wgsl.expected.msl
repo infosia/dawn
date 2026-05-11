@@ -9,7 +9,7 @@ void fma_143d5d() {
 }
 
 fragment void fragment_main() {
-  fma_143d5d();
+  (fma_143d5d());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void fma_143d5d() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  fma_143d5d();
+  (fma_143d5d());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void fma_143d5d() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  fma_143d5d();
+  (fma_143d5d());
   return out;
 }
 

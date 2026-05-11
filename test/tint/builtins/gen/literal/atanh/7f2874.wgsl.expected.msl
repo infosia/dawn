@@ -9,7 +9,7 @@ void atanh_7f2874() {
 }
 
 fragment void fragment_main() {
-  atanh_7f2874();
+  (atanh_7f2874());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void atanh_7f2874() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  atanh_7f2874();
+  (atanh_7f2874());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void atanh_7f2874() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  atanh_7f2874();
+  (atanh_7f2874());
   return out;
 }
 

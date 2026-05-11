@@ -9,7 +9,7 @@ void asinh_16b543() {
 }
 
 fragment void fragment_main() {
-  asinh_16b543();
+  (asinh_16b543());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void asinh_16b543() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  asinh_16b543();
+  (asinh_16b543());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void asinh_16b543() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  asinh_16b543();
+  (asinh_16b543());
   return out;
 }
 

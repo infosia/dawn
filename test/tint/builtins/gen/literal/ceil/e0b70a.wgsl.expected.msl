@@ -9,7 +9,7 @@ void ceil_e0b70a() {
 }
 
 fragment void fragment_main() {
-  ceil_e0b70a();
+  (ceil_e0b70a());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void ceil_e0b70a() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  ceil_e0b70a();
+  (ceil_e0b70a());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void ceil_e0b70a() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  ceil_e0b70a();
+  (ceil_e0b70a());
   return out;
 }
 

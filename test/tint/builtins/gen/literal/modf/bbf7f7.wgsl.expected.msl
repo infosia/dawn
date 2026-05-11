@@ -14,7 +14,7 @@ void modf_bbf7f7() {
 }
 
 fragment void fragment_main() {
-  modf_bbf7f7();
+  (modf_bbf7f7());
 }
 //
 // compute_main
@@ -33,7 +33,7 @@ void modf_bbf7f7() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  modf_bbf7f7();
+  (modf_bbf7f7());
 }
 //
 // vertex_main
@@ -61,7 +61,7 @@ void modf_bbf7f7() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  modf_bbf7f7();
+  (modf_bbf7f7());
   return out;
 }
 

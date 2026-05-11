@@ -94,14 +94,14 @@ void entry_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars
     (*tint_module_vars.a) = 0;
     (*tint_module_vars.b) = 0;
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
   (*tint_module_vars.a) = as_type<int>((as_type<uint>((*tint_module_vars.a)) + as_type<uint>((*tint_module_vars.b))));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_2* v [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=(&(*v).tint_symbol), .b=(&(*v).tint_symbol_1)};
-  entry_inner(tint_local_index, tint_module_vars);
+  (entry_inner(tint_local_index, tint_module_vars));
 }
 )");
 
@@ -156,13 +156,13 @@ void entry_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars
       }
     }
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
 }
 
 [[max_total_threads_per_threadgroup(64)]]
 kernel void entry(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_2 [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=(&(*v_2).tint_symbol)};
-  entry_inner(tint_local_index, tint_module_vars);
+  (entry_inner(tint_local_index, tint_module_vars));
 }
 )");
 
@@ -325,7 +325,7 @@ void v_2(uint v_3) {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void tint_entry_point(uint v_7 [[thread_index_in_threadgroup]]) {
-  v_2(v_7);
+  (v_2(v_7));
 }
 )");
 }
@@ -376,7 +376,7 @@ void entry_inner(uint v_2) {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry(uint v_5 [[thread_index_in_threadgroup]]) {
-  entry_inner(v_5);
+  (entry_inner(v_5));
 }
 )");
 }
@@ -506,7 +506,7 @@ struct tint_module_vars_struct {
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v(device SB* sb [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sb=sb};
-  atomic_max_explicit((&(*tint_module_vars.sb).a), as_type<ulong>(uint2(1u)), memory_order_relaxed);
+  (atomic_max_explicit((&(*tint_module_vars.sb).a), as_type<ulong>(uint2(1u)), memory_order_relaxed));
 }
 )");
 }
@@ -546,7 +546,7 @@ struct tint_module_vars_struct {
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v(device SB* sb [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sb=sb};
-  atomic_min_explicit((&(*tint_module_vars.sb).a), as_type<ulong>(uint2(1u)), memory_order_relaxed);
+  (atomic_min_explicit((&(*tint_module_vars.sb).a), as_type<ulong>(uint2(1u)), memory_order_relaxed));
 }
 )");
 }
@@ -625,14 +625,14 @@ void entry_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars
       }
     }
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
   (*reinterpret_cast<threadgroup float4*>(reinterpret_cast<threadgroup char*>(tint_module_vars.v) + 0u)).x = 0.0f;
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_3 [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.v=(&(*v_3).tint_symbol)};
-  entry_inner(tint_local_index, tint_module_vars);
+  (entry_inner(tint_local_index, tint_module_vars));
 }
 )");
 }

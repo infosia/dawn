@@ -6,5 +6,5 @@ int4 g() {
 }
 
 fragment void v() {
-  g();
+  (g());
 }

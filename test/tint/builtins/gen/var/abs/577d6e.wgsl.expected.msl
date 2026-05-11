@@ -9,7 +9,7 @@ void abs_577d6e() {
 }
 
 fragment void fragment_main() {
-  abs_577d6e();
+  (abs_577d6e());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void abs_577d6e() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  abs_577d6e();
+  (abs_577d6e());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void abs_577d6e() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  abs_577d6e();
+  (abs_577d6e());
   return out;
 }
 

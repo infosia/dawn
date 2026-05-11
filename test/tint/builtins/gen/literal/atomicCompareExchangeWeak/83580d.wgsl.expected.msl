@@ -26,14 +26,14 @@ void atomicCompareExchangeWeak_83580d(tint_module_vars_struct tint_module_vars) 
 
 void compute_main_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) {
   if ((tint_local_index < 1u)) {
-    atomic_store_explicit(tint_module_vars.arg_0, 0u, memory_order_relaxed);
+    (atomic_store_explicit(tint_module_vars.arg_0, 0u, memory_order_relaxed));
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
-  atomicCompareExchangeWeak_83580d(tint_module_vars);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
+  (atomicCompareExchangeWeak_83580d(tint_module_vars));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_2 [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0=(&(*v_2).tint_symbol)};
-  compute_main_inner(tint_local_index, tint_module_vars);
+  (compute_main_inner(tint_local_index, tint_module_vars));
 }

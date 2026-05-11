@@ -9,7 +9,7 @@ void transpose_5c133c() {
 }
 
 fragment void fragment_main() {
-  transpose_5c133c();
+  (transpose_5c133c());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void transpose_5c133c() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  transpose_5c133c();
+  (transpose_5c133c());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void transpose_5c133c() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  transpose_5c133c();
+  (transpose_5c133c());
   return out;
 }
 

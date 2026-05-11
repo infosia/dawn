@@ -14,7 +14,7 @@ void frexp_bf45ae() {
 }
 
 fragment void fragment_main() {
-  frexp_bf45ae();
+  (frexp_bf45ae());
 }
 //
 // compute_main
@@ -33,7 +33,7 @@ void frexp_bf45ae() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  frexp_bf45ae();
+  (frexp_bf45ae());
 }
 //
 // vertex_main
@@ -61,7 +61,7 @@ void frexp_bf45ae() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  frexp_bf45ae();
+  (frexp_bf45ae());
   return out;
 }
 

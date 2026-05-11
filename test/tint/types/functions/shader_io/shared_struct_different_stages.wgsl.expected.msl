@@ -51,5 +51,5 @@ void frag_main_inner(Interface colors) {
 }
 
 fragment void frag_main(frag_main_inputs inputs [[stage_in]], float4 Interface_pos [[position]]) {
-  frag_main_inner(Interface{.col1=inputs.Interface_col1, .col2=inputs.Interface_col2, .pos=Interface_pos});
+  (frag_main_inner(Interface{.col1=inputs.Interface_col1, .col2=inputs.Interface_col2, .pos=Interface_pos}));
 }

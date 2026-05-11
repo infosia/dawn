@@ -9,7 +9,7 @@ void faceForward_b42ef3() {
 }
 
 fragment void fragment_main() {
-  faceForward_b42ef3();
+  (faceForward_b42ef3());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void faceForward_b42ef3() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  faceForward_b42ef3();
+  (faceForward_b42ef3());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void faceForward_b42ef3() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  faceForward_b42ef3();
+  (faceForward_b42ef3());
   return out;
 }
 

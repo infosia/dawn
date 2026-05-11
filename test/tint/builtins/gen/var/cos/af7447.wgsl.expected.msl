@@ -9,7 +9,7 @@ void cos_af7447() {
 }
 
 fragment void fragment_main() {
-  cos_af7447();
+  (cos_af7447());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void cos_af7447() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  cos_af7447();
+  (cos_af7447());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void cos_af7447() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  cos_af7447();
+  (cos_af7447());
   return out;
 }
 

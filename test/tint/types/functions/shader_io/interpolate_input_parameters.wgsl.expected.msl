@@ -18,5 +18,5 @@ void main_inner(float none, float flat, float perspective_center, float perspect
 }
 
 fragment void v(main_inputs inputs [[stage_in]]) {
-  main_inner(inputs.none, inputs.flat, inputs.perspective_center, inputs.perspective_centroid, inputs.perspective_sample, inputs.linear_center, inputs.linear_centroid, inputs.linear_sample, inputs.perspective_default, inputs.linear_default);
+  (main_inner(inputs.none, inputs.flat, inputs.perspective_center, inputs.perspective_centroid, inputs.perspective_sample, inputs.linear_center, inputs.linear_centroid, inputs.linear_sample, inputs.perspective_default, inputs.linear_default));
 }

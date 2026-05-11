@@ -9,7 +9,7 @@ void cosh_f67ff1() {
 }
 
 fragment void fragment_main() {
-  cosh_f67ff1();
+  (cosh_f67ff1());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void cosh_f67ff1() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  cosh_f67ff1();
+  (cosh_f67ff1());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void cosh_f67ff1() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  cosh_f67ff1();
+  (cosh_f67ff1());
   return out;
 }
 

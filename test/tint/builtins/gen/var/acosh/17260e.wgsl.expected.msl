@@ -9,7 +9,7 @@ void acosh_17260e() {
 }
 
 fragment void fragment_main() {
-  acosh_17260e();
+  (acosh_17260e());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void acosh_17260e() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  acosh_17260e();
+  (acosh_17260e());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void acosh_17260e() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  acosh_17260e();
+  (acosh_17260e());
   return out;
 }
 

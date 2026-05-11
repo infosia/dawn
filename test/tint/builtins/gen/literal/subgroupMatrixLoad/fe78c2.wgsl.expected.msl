@@ -24,7 +24,7 @@ struct tint_symbol_1 {
 
 simdgroup_half8x8 subgroupMatrixLoad_fe78c2(tint_module_vars_struct tint_module_vars) {
   simdgroup_half8x8 v = make_filled_simdgroup_matrix<half, 8, 8>(0.0h);
-  simdgroup_load(v, (&(*tint_module_vars.arg_0)[1u]), ulong(8u), ulong2(0ul), true);
+  (simdgroup_load(v, (&(*tint_module_vars.arg_0)[1u]), ulong(8u), ulong2(0ul), true));
   simdgroup_half8x8 res = v;
   return res;
 }
@@ -44,12 +44,12 @@ void compute_main_inner(uint tint_local_index, tint_module_vars_struct tint_modu
       }
     }
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
-  simdgroup_store(subgroupMatrixLoad_fe78c2(tint_module_vars), (&(*tint_module_vars.prevent_dce)[0u]), ulong(64u), ulong2(0ul), false);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
+  (simdgroup_store(subgroupMatrixLoad_fe78c2(tint_module_vars), (&(*tint_module_vars.prevent_dce)[0u]), ulong(64u), ulong2(0ul), false));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main(uint tint_local_index [[thread_index_in_threadgroup]], device tint_array<half, 1024>* prevent_dce [[buffer(0)]], threadgroup tint_symbol_1* v_3 [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce, .arg_0=(&(*v_3).tint_symbol)};
-  compute_main_inner(tint_local_index, tint_module_vars);
+  (compute_main_inner(tint_local_index, tint_module_vars));
 }

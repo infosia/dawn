@@ -9,7 +9,7 @@ void tanh_6289fd() {
 }
 
 fragment void fragment_main() {
-  tanh_6289fd();
+  (tanh_6289fd());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void tanh_6289fd() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  tanh_6289fd();
+  (tanh_6289fd());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void tanh_6289fd() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  tanh_6289fd();
+  (tanh_6289fd());
   return out;
 }
 

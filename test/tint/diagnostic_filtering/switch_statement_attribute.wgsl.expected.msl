@@ -33,5 +33,5 @@ void main_inner(float x) {
 }
 
 fragment void v_1(main_inputs inputs [[stage_in]]) {
-  main_inner(inputs.x);
+  (main_inner(inputs.x));
 }

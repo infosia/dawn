@@ -9,7 +9,7 @@ void asin_0bac07() {
 }
 
 fragment void fragment_main() {
-  asin_0bac07();
+  (asin_0bac07());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void asin_0bac07() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  asin_0bac07();
+  (asin_0bac07());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void asin_0bac07() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  asin_0bac07();
+  (asin_0bac07());
   return out;
 }
 

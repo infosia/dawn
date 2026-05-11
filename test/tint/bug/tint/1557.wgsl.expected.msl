@@ -45,7 +45,7 @@ kernel void v(const constant int* u [[buffer(0)]]) {
         }
         default:
         {
-          g();
+          (g());
           break;
         }
       }

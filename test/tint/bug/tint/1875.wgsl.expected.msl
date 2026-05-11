@@ -44,7 +44,7 @@ kernel void v(device Outputs* outputs [[buffer(0)]], const constant tint_array<u
   a = (a + 1u);
   b = (b + 1u);
   c = (c + 1u);
-  push_output(a, v_1, tint_module_vars);
-  push_output(b, v_1, tint_module_vars);
-  push_output(c, v_1, tint_module_vars);
+  (push_output(a, v_1, tint_module_vars));
+  (push_output(b, v_1, tint_module_vars));
+  (push_output(c, v_1, tint_module_vars));
 }
