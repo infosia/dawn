@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0c2713c_55fbce76",
+        "filename": "src/dawn/common/ColorSpace.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1004016
+      },
+      "writtenOn": "2026-05-11T21:35:56Z",
+      "side": 1,
+      "message": "The HLG spec is unfortunately a bit messy here, and the CSS spec needs to be updated to include the HLG OOTF (which is like a gamma of 1.2, but weirdly applied).\n\nWhen we update that, we\u0027ll want to change this to 1000/203. But for now this is close.",
+      "fixSuggestions": [
+        {
+          "fixId": "c5c116d2_362dfb52",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/common/ColorSpace.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "// The HLG spec is unfortunately a bit messy here, and the CSS spec needs to be updated to include\n// the HLG OOTF (which is like a gamma of 1.2, but weirdly applied).\n// When we update that, we\u0027ll want to change this to 1000.0 / 203.0 * kSDRLuminanceOf1.\n// But for now this is close.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c78c5f1b07284f6684369dd62a9089dbbb1de0f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
