@@ -212,8 +212,7 @@ ResourceType DefaultResourceTypeFor(const core::type::Type* in_type) {
             if (s->IsComparison()) {
                 return ResourceType::kSampler_comparison;
             }
-
-            return ResourceType::kSampler;
+            return ResourceType::kSampler_non_filtering;
         },
         TINT_ICE_ON_NO_MATCH);
 }
@@ -360,6 +359,16 @@ std::vector<ResourceType> ConvertsFrom(const core::type::Type* in_type) {
             return {ResourceType::kSampler_filtering, ResourceType::kSampler_non_filtering};
         },
         [](Default) -> std::vector<ResourceType> { return {}; });
+}
+
+static std::array kFilterableResources = {
+    ResourceType::kTexture1d_f32_filterable,      ResourceType::kTexture2d_f32_filterable,
+    ResourceType::kTexture2dArray_f32_filterable, ResourceType::kTexture3d_f32_filterable,
+    ResourceType::kTextureCube_f32_filterable,    ResourceType::kTextureCubeArray_f32_filterable,
+};
+
+const std::span<ResourceType> FilterableResources() {
+    return kFilterableResources;
 }
 
 }  // namespace tint::core::type
