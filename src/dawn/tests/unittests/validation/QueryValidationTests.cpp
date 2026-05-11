@@ -176,6 +176,18 @@ TEST_F(OcclusionQueryValidationTest, InvalidOcclusionQuerySet) {
         occlusionQuerySet.Destroy();
         ASSERT_DEVICE_ERROR(queue.Submit(1, &commands));
     }
+
+    // Fail to submit occlusion query with a destroyed query set, even if no query is used on it.
+    {
+        renderPass.occlusionQuerySet = occlusionQuerySet;
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        wgpu::Queue queue = device.GetQueue();
+        occlusionQuerySet.Destroy();
+        ASSERT_DEVICE_ERROR(queue.Submit(1, &commands));
+    }
 }
 
 // Test query index of occlusion query
