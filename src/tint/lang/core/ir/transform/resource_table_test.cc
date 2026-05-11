@@ -1688,5 +1688,236 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_ResourceTableTest, GetResource_ResourceTexture_VarComparisonSampler) {
+    auto* sam_var = b.Var("comparison_sampler", ty.ptr(handle, ty.comparison_sampler()));
+    sam_var->SetBindingPoint(3, 2);
+    mod.root_block->Append(sam_var);
+
+    auto* texture_ty = ty.depth_texture(core::type::TextureDimension::k2d);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* tex =
+            b.CallExplicit(texture_ty, core::BuiltinFn::kGetResource, Vector{texture_ty}, 1_u);
+
+        core::ir::Load* sam = b.Load(sam_var);
+        b.Call(ty.f32(), core::BuiltinFn::kTextureSampleCompare, tex, sam,
+               b.Splat(ty.vec2<f32>(), 0_f), 0_f);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %comparison_sampler:ptr<handle, sampler_comparison, read> = var undef @binding_point(3, 2)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:texture_depth_2d = getResource<texture_depth_2d> 1u
+    %4:sampler_comparison = load %comparison_sampler
+    %5:f32 = textureSampleCompare %3, %4, vec2<f32>(0.0f), 0.0f
+    ret
+  }
+}
+)";
+
+    auto* expect = R"(
+tint_resource_table_metadata_struct = struct @align(4) {
+  array_length:u32 @offset(0)
+  bindings:array<u32> @offset(4)
+}
+
+$B1: {  # root
+  %comparison_sampler:ptr<handle, sampler_comparison, read> = var undef @binding_point(3, 2)
+  %2:ptr<handle, resource_table<texture_depth_2d>, read> = var undef @binding_point(0, 1)
+  %3:ptr<handle, resource_table<sampler>, read> = var undef @binding_point(0, 1)
+  %4:ptr<handle, resource_table<sampler_comparison>, read> = var undef @binding_point(0, 1)
+  %tint_resource_table_metadata:ptr<storage, tint_resource_table_metadata_struct, read> = var undef @binding_point(1, 2)
+}
+
+%foo = func():void {
+  $B2: {
+    %7:sampler_comparison = load %comparison_sampler
+    %tint_storage_metadata_length:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+    %9:u32 = load %tint_storage_metadata_length
+    %10:bool = lt 1u, %9
+    %11:bool = if %10 [t: $B3, f: $B4] {  # if_1
+      $B3: {  # true
+        %12:ptr<storage, u32, read> = access %tint_resource_table_metadata, 1u, 1u
+        %13:u32 = load %12
+        %14:bool = eq %13, 34u
+        exit_if %14  # if_1
+      }
+      $B4: {  # false
+        exit_if false  # if_1
+      }
+    }
+    %15:u32 = if %11 [t: $B5, f: $B6] {  # if_2
+      $B5: {  # true
+        exit_if 1u  # if_2
+      }
+      $B6: {  # false
+        %16:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+        %17:u32 = load %16
+        %18:u32 = add 0u, %17
+        exit_if %18  # if_2
+      }
+    }
+    %19:ptr<handle, texture_depth_2d, read> = access %2, %15
+    %20:texture_depth_2d = load %19
+    %21:f32 = textureSampleCompare %20, %7, vec2<f32>(0.0f), 0.0f
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    Helper helper;
+    Run(ResourceTable,
+        ResourceTableConfig{
+            .resource_table_binding = {0, 1},
+            .storage_buffer_binding = {1, 2},
+            .default_binding_type_order =
+                {
+                    ResourceType::kTextureDepth2d,
+                    ResourceType::kSampler_filtering,
+                    ResourceType::kSampler_non_filtering,
+                    ResourceType::kSampler_comparison,
+                },
+            .binding_to_resource_type =
+                {
+                    {BindingPoint{3, 2}, ResourceType::kSampler_comparison},
+                },
+        },
+        &helper);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_ResourceTableTest, GetResource_ResourceTexture_ResourcerComparisonSampler) {
+    auto* texture_ty = ty.depth_texture(core::type::TextureDimension::k2d);
+    auto* sampler_ty = ty.comparison_sampler();
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* tex =
+            b.CallExplicit(texture_ty, core::BuiltinFn::kGetResource, Vector{texture_ty}, 1_u);
+        auto* sam =
+            b.CallExplicit(sampler_ty, core::BuiltinFn::kGetResource, Vector{sampler_ty}, 2_u);
+
+        b.Call(ty.f32(), core::BuiltinFn::kTextureSampleCompare, tex, sam,
+               b.Splat(ty.vec2<f32>(), 0_f), 0_f);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%foo = func():void {
+  $B1: {
+    %2:texture_depth_2d = getResource<texture_depth_2d> 1u
+    %3:sampler_comparison = getResource<sampler_comparison> 2u
+    %4:f32 = textureSampleCompare %2, %3, vec2<f32>(0.0f), 0.0f
+    ret
+  }
+}
+)";
+
+    auto* expect = R"(
+tint_resource_table_metadata_struct = struct @align(4) {
+  array_length:u32 @offset(0)
+  bindings:array<u32> @offset(4)
+}
+
+$B1: {  # root
+  %1:ptr<handle, resource_table<texture_depth_2d>, read> = var undef @binding_point(0, 1)
+  %2:ptr<handle, resource_table<sampler>, read> = var undef @binding_point(0, 1)
+  %3:ptr<handle, resource_table<sampler_comparison>, read> = var undef @binding_point(0, 1)
+  %tint_resource_table_metadata:ptr<storage, tint_resource_table_metadata_struct, read> = var undef @binding_point(1, 2)
+}
+
+%foo = func():void {
+  $B2: {
+    %tint_storage_metadata_length:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+    %7:u32 = load %tint_storage_metadata_length
+    %8:bool = lt 1u, %7
+    %9:bool = if %8 [t: $B3, f: $B4] {  # if_1
+      $B3: {  # true
+        %10:ptr<storage, u32, read> = access %tint_resource_table_metadata, 1u, 1u
+        %11:u32 = load %10
+        %12:bool = eq %11, 34u
+        exit_if %12  # if_1
+      }
+      $B4: {  # false
+        exit_if false  # if_1
+      }
+    }
+    %13:u32 = if %9 [t: $B5, f: $B6] {  # if_2
+      $B5: {  # true
+        exit_if 1u  # if_2
+      }
+      $B6: {  # false
+        %14:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+        %15:u32 = load %14
+        %16:u32 = add 0u, %15
+        exit_if %16  # if_2
+      }
+    }
+    %17:ptr<handle, texture_depth_2d, read> = access %1, %13
+    %18:texture_depth_2d = load %17
+    %tint_storage_metadata_length_1:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u  # %tint_storage_metadata_length_1: 'tint_storage_metadata_length'
+    %20:u32 = load %tint_storage_metadata_length_1
+    %21:bool = lt 2u, %20
+    %22:bool = if %21 [t: $B7, f: $B8] {  # if_3
+      $B7: {  # true
+        %23:ptr<storage, u32, read> = access %tint_resource_table_metadata, 1u, 2u
+        %24:u32 = load %23
+        %25:bool = eq %24, 42u
+        exit_if %25  # if_3
+      }
+      $B8: {  # false
+        exit_if false  # if_3
+      }
+    }
+    %26:u32 = if %22 [t: $B9, f: $B10] {  # if_4
+      $B9: {  # true
+        exit_if 2u  # if_4
+      }
+      $B10: {  # false
+        %27:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+        %28:u32 = load %27
+        %29:u32 = add 3u, %28
+        exit_if %29  # if_4
+      }
+    }
+    %30:ptr<handle, sampler_comparison, read> = access %3, %26
+    %31:sampler_comparison = load %30
+    %32:f32 = textureSampleCompare %18, %31, vec2<f32>(0.0f), 0.0f
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    Helper helper;
+    Run(ResourceTable,
+        ResourceTableConfig{
+            .resource_table_binding = {0, 1},
+            .storage_buffer_binding = {1, 2},
+            .default_binding_type_order =
+                {
+                    ResourceType::kTextureDepth2d,
+                    ResourceType::kSampler_filtering,
+                    ResourceType::kSampler_non_filtering,
+                    ResourceType::kSampler_comparison,
+                },
+            .binding_to_resource_type =
+                {
+                    {BindingPoint{3, 2}, ResourceType::kSampler_comparison},
+                },
+        },
+        &helper);
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::core::ir::transform
