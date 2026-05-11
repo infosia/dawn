@@ -43,10 +43,10 @@ bool aboutEqual(float value, float expect) {
 
 void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_vars) {
   tint_array_lengths_struct const v = tint_array_lengths_struct{.tint_array_length_0_1=(((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u)};
-  uint2 const srcSize = uint2(tint_module_vars.src.get_width(0u), tint_module_vars.src.get_height(0u));
-  uint2 const dstSize = uint2(tint_module_vars.dst.get_width(0u), tint_module_vars.dst.get_height(0u));
-  uint2 const dstTexCoord = uint2(GlobalInvocationID.xy);
-  float4 const nonCoveredColor = float4(0.0f, 1.0f, 0.0f, 1.0f);
+  uint2 const srcSize = (uint2(tint_module_vars.src.get_width(0u), tint_module_vars.src.get_height(0u)));
+  uint2 const dstSize = (uint2(tint_module_vars.dst.get_width(0u), tint_module_vars.dst.get_height(0u)));
+  uint2 const dstTexCoord = (uint2(GlobalInvocationID.xy));
+  float4 const nonCoveredColor = (float4(0.0f, 1.0f, 0.0f, 1.0f));
   bool success = true;
   bool v_1 = false;
   if ((dstTexCoord.x < (*tint_module_vars.uniforms).dstCopyOrigin.x)) {
@@ -69,10 +69,10 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
   if (v_3) {
     bool v_4 = false;
     if (success) {
-      int2 const v_5 = int2(dstTexCoord);
-      uint const v_6 = min(uint(0), (tint_module_vars.dst.get_num_mip_levels() - 1u));
-      uint2 const v_7 = (uint2(tint_module_vars.dst.get_width(v_6), tint_module_vars.dst.get_height(v_6)) - uint2(1u));
-      v_4 = all((tint_module_vars.dst.read(min(uint2(v_5), v_7), v_6) == nonCoveredColor));
+      int2 const v_5 = (int2(dstTexCoord));
+      uint const v_6 = min((uint(0)), (tint_module_vars.dst.get_num_mip_levels() - 1u));
+      uint2 const v_7 = ((uint2(tint_module_vars.dst.get_width(v_6), tint_module_vars.dst.get_height(v_6))) - (uint2(1u)));
+      v_4 = all((tint_module_vars.dst.read(min((uint2(v_5)), v_7), v_6) == nonCoveredColor));
     } else {
       v_4 = false;
     }
@@ -82,14 +82,14 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
     if (((*tint_module_vars.uniforms).dstTextureFlipY == 1u)) {
       srcTexCoord.y = ((srcSize.y - srcTexCoord.y) - 1u);
     }
-    int2 const v_8 = int2(srcTexCoord);
-    uint const v_9 = min(uint(0), (tint_module_vars.src.get_num_mip_levels() - 1u));
-    uint2 const v_10 = (uint2(tint_module_vars.src.get_width(v_9), tint_module_vars.src.get_height(v_9)) - uint2(1u));
-    float4 const srcColor = tint_module_vars.src.read(min(uint2(v_8), v_10), v_9);
-    int2 const v_11 = int2(dstTexCoord);
-    uint const v_12 = min(uint(0), (tint_module_vars.dst.get_num_mip_levels() - 1u));
-    uint2 const v_13 = (uint2(tint_module_vars.dst.get_width(v_12), tint_module_vars.dst.get_height(v_12)) - uint2(1u));
-    float4 const dstColor = tint_module_vars.dst.read(min(uint2(v_11), v_13), v_12);
+    int2 const v_8 = (int2(srcTexCoord));
+    uint const v_9 = min((uint(0)), (tint_module_vars.src.get_num_mip_levels() - 1u));
+    uint2 const v_10 = ((uint2(tint_module_vars.src.get_width(v_9), tint_module_vars.src.get_height(v_9))) - (uint2(1u)));
+    float4 const srcColor = tint_module_vars.src.read(min((uint2(v_8)), v_10), v_9);
+    int2 const v_11 = (int2(dstTexCoord));
+    uint const v_12 = min((uint(0)), (tint_module_vars.dst.get_num_mip_levels() - 1u));
+    uint2 const v_13 = ((uint2(tint_module_vars.dst.get_width(v_12), tint_module_vars.dst.get_height(v_12))) - (uint2(1u)));
+    float4 const dstColor = tint_module_vars.dst.read(min((uint2(v_11)), v_13), v_12);
     if (((*tint_module_vars.uniforms).channelCount == 2u)) {
       bool v_14 = false;
       if (success) {

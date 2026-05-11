@@ -38,23 +38,23 @@ kernel void foo() {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.i=(&i)};
   tint_array<float, 4> a = tint_array<float, 4>{};
   {
-    uint2 tint_loop_idx = uint2(4294967295u);
-    thread float* const v_1 = (&a[min(uint(idx1(tint_module_vars)), 3u)]);
+    uint2 tint_loop_idx = (uint2(4294967295u));
+    thread float* const v_1 = (&a[min((uint(idx1(tint_module_vars))), 3u)]);
     (*v_1) = ((*v_1) * 2.0f);
     while(true) {
-      if (all((tint_loop_idx == uint2(0u)))) {
+      if (all((tint_loop_idx == (uint2(0u))))) {
         break;
       }
-      if ((a[min(uint(idx2(tint_module_vars)), 3u)] < 10.0f)) {
+      if ((a[min((uint(idx2(tint_module_vars))), 3u)] < 10.0f)) {
       } else {
         break;
       }
       {
         uint const tint_low_inc = (tint_loop_idx.x - 1u);
         tint_loop_idx.x = tint_low_inc;
-        uint const tint_carry = uint((tint_low_inc == 4294967295u));
+        uint const tint_carry = (uint((tint_low_inc == 4294967295u)));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
-        thread float* const v_2 = (&a[min(uint(idx3(tint_module_vars)), 3u)]);
+        thread float* const v_2 = (&a[min((uint(idx3(tint_module_vars))), 3u)]);
         (*v_2) = ((*v_2) + 1.0f);
       }
     }

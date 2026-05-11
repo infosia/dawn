@@ -45,7 +45,7 @@ void dot_eb9fbf() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   dot_eb9fbf();
   return out;
 }

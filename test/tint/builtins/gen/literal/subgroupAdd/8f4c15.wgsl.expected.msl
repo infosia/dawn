@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 float4 subgroupAdd_8f4c15() {
-  float4 res = simd_sum(float4(1.0f));
+  float4 res = simd_sum((float4(1.0f)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 float4 subgroupAdd_8f4c15() {
-  float4 res = simd_sum(float4(1.0f));
+  float4 res = simd_sum((float4(1.0f)));
   return res;
 }
 

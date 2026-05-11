@@ -6,7 +6,7 @@ struct main_outputs {
 };
 
 float4 main_inner(uint prim_idx) {
-  return float4(float(prim_idx));
+  return (float4((float(prim_idx))));
 }
 
 fragment main_outputs v(uint prim_idx [[primitive_id]]) {

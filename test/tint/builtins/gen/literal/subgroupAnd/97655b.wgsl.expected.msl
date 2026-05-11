@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int4 subgroupAnd_97655b() {
-  int4 res = simd_and(int4(1));
+  int4 res = simd_and((int4(1)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 int4 subgroupAnd_97655b() {
-  int4 res = simd_and(int4(1));
+  int4 res = simd_and((int4(1)));
   return res;
 }
 

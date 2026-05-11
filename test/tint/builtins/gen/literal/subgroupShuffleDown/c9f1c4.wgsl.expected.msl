@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 subgroupShuffleDown_c9f1c4() {
-  uint2 res = simd_shuffle_down(uint2(1u), 1u);
+  uint2 res = simd_shuffle_down((uint2(1u)), 1u);
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 subgroupShuffleDown_c9f1c4() {
-  uint2 res = simd_shuffle_down(uint2(1u), 1u);
+  uint2 res = simd_shuffle_down((uint2(1u)), 1u);
   return res;
 }
 

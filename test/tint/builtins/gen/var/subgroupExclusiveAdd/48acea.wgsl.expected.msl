@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 subgroupExclusiveAdd_48acea() {
-  uint2 arg_0 = uint2(1u);
+  uint2 arg_0 = (uint2(1u));
   uint2 res = simd_prefix_exclusive_sum(arg_0);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 subgroupExclusiveAdd_48acea() {
-  uint2 arg_0 = uint2(1u);
+  uint2 arg_0 = (uint2(1u));
   uint2 res = simd_prefix_exclusive_sum(arg_0);
   return res;
 }

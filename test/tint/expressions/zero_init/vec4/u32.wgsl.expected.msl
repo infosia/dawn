@@ -3,5 +3,5 @@ using namespace metal;
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void f() {
-  uint4 v = uint4(0u);
+  uint4 v = (uint4(0u));
 }

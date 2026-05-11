@@ -69,8 +69,8 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
   }
   device float4* const v_1 = (&(*tint_module_vars.lightsBuffer).lights[min(index, (v.tint_array_length_0_0 - 1u))].position);
   float const v_2 = ((*tint_module_vars.lightsBuffer).lights[min(index, (v.tint_array_length_0_0 - 1u))].position.y - 0.10000000149011611938f);
-  float const v_3 = float(index);
-  (*v_1).y = (v_2 + (0.00100000004749745131f * (v_3 - (64.0f * floor((float(index) / 64.0f))))));
+  float const v_3 = (float(index));
+  (*v_1).y = (v_2 + (0.00100000004749745131f * (v_3 - (64.0f * floor(((float(index)) / 64.0f))))));
   if (((*tint_module_vars.lightsBuffer).lights[min(index, (v.tint_array_length_0_0 - 1u))].position.y < (*tint_module_vars.uniforms).min.y)) {
     (*tint_module_vars.lightsBuffer).lights[min(index, (v.tint_array_length_0_0 - 1u))].position.y = (*tint_module_vars.uniforms).max.y;
   }
@@ -82,20 +82,20 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
   lightPos = (lightPos / lightPos.w);
   float lightRadius = (*tint_module_vars.lightsBuffer).lights[min(index, (v.tint_array_length_0_0 - 1u))].radius;
   float4 const v_4 = lightPos;
-  float4 boxMin = (v_4 - float4(float3(lightRadius), 0.0f));
+  float4 boxMin = (v_4 - (float4((float3(lightRadius)), 0.0f)));
   float4 const v_5 = lightPos;
-  float4 boxMax = (v_5 + float4(float3(lightRadius), 0.0f));
+  float4 boxMax = (v_5 + (float4((float3(lightRadius)), 0.0f)));
   tint_array<float4, 6> frustumPlanes = {};
-  frustumPlanes[4u] = float4(0.0f, 0.0f, -1.0f, viewNear);
-  frustumPlanes[5u] = float4(0.0f, 0.0f, 1.0f, -(viewFar));
+  frustumPlanes[4u] = (float4(0.0f, 0.0f, -1.0f, viewNear));
+  frustumPlanes[5u] = (float4(0.0f, 0.0f, 1.0f, -(viewFar)));
   int const TILE_SIZE = 16;
   int const TILE_COUNT_X = 2;
   int const TILE_COUNT_Y = 2;
   {
-    uint2 tint_loop_idx = uint2(4294967295u);
+    uint2 tint_loop_idx = (uint2(4294967295u));
     int y = 0;
     while(true) {
-      if (all((tint_loop_idx == uint2(0u)))) {
+      if (all((tint_loop_idx == (uint2(0u))))) {
         break;
       }
       if ((y < TILE_COUNT_Y)) {
@@ -103,28 +103,28 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
         break;
       }
       {
-        uint2 tint_loop_idx_1 = uint2(4294967295u);
+        uint2 tint_loop_idx_1 = (uint2(4294967295u));
         int x = 0;
         while(true) {
-          if (all((tint_loop_idx_1 == uint2(0u)))) {
+          if (all((tint_loop_idx_1 == (uint2(0u))))) {
             break;
           }
           if ((x < TILE_COUNT_X)) {
           } else {
             break;
           }
-          int2 tilePixel0Idx = int2(as_type<int>((as_type<uint>(x) * as_type<uint>(TILE_SIZE))), as_type<int>((as_type<uint>(y) * as_type<uint>(TILE_SIZE))));
-          float2 const v_6 = (2.0f * float2(tilePixel0Idx));
-          float2 floorCoord = ((v_6 / (*tint_module_vars.uniforms).fullScreenSize.xy) - float2(1.0f));
+          int2 tilePixel0Idx = (int2(as_type<int>((as_type<uint>(x) * as_type<uint>(TILE_SIZE))), as_type<int>((as_type<uint>(y) * as_type<uint>(TILE_SIZE)))));
+          float2 const v_6 = (2.0f * (float2(tilePixel0Idx)));
+          float2 floorCoord = ((v_6 / (*tint_module_vars.uniforms).fullScreenSize.xy) - (float2(1.0f)));
           int2 const v_7 = tilePixel0Idx;
-          float2 const v_8 = (2.0f * float2(as_type<int2>((as_type<uint2>(v_7) + as_type<uint2>(int2(TILE_SIZE))))));
-          float2 ceilCoord = ((v_8 / (*tint_module_vars.uniforms).fullScreenSize.xy) - float2(1.0f));
-          float2 viewFloorCoord = float2((((-(viewNear) * floorCoord.x) - (M[2u].x * viewNear)) / M[0u].x), (((-(viewNear) * floorCoord.y) - (M[2u].y * viewNear)) / M[1u].y));
-          float2 viewCeilCoord = float2((((-(viewNear) * ceilCoord.x) - (M[2u].x * viewNear)) / M[0u].x), (((-(viewNear) * ceilCoord.y) - (M[2u].y * viewNear)) / M[1u].y));
-          frustumPlanes[0u] = float4(1.0f, 0.0f, (-(viewFloorCoord.x) / viewNear), 0.0f);
-          frustumPlanes[1u] = float4(-1.0f, 0.0f, (viewCeilCoord.x / viewNear), 0.0f);
-          frustumPlanes[2u] = float4(0.0f, 1.0f, (-(viewFloorCoord.y) / viewNear), 0.0f);
-          frustumPlanes[3u] = float4(0.0f, -1.0f, (viewCeilCoord.y / viewNear), 0.0f);
+          float2 const v_8 = (2.0f * (float2(as_type<int2>((as_type<uint2>(v_7) + as_type<uint2>((int2(TILE_SIZE))))))));
+          float2 ceilCoord = ((v_8 / (*tint_module_vars.uniforms).fullScreenSize.xy) - (float2(1.0f)));
+          float2 viewFloorCoord = (float2((((-(viewNear) * floorCoord.x) - (M[2u].x * viewNear)) / M[0u].x), (((-(viewNear) * floorCoord.y) - (M[2u].y * viewNear)) / M[1u].y)));
+          float2 viewCeilCoord = (float2((((-(viewNear) * ceilCoord.x) - (M[2u].x * viewNear)) / M[0u].x), (((-(viewNear) * ceilCoord.y) - (M[2u].y * viewNear)) / M[1u].y)));
+          frustumPlanes[0u] = (float4(1.0f, 0.0f, (-(viewFloorCoord.x) / viewNear), 0.0f));
+          frustumPlanes[1u] = (float4(-1.0f, 0.0f, (viewCeilCoord.x / viewNear), 0.0f));
+          frustumPlanes[2u] = (float4(0.0f, 1.0f, (-(viewFloorCoord.y) / viewNear), 0.0f));
+          frustumPlanes[3u] = (float4(0.0f, -1.0f, (viewCeilCoord.y / viewNear), 0.0f));
           float dp = 0.0f;
           {
             uint i = 0u;
@@ -157,7 +157,7 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
             }
           }
           if ((dp >= 0.0f)) {
-            uint tileId = uint(as_type<int>((as_type<uint>(x) + as_type<uint>(as_type<int>((as_type<uint>(y) * as_type<uint>(TILE_COUNT_X)))))));
+            uint tileId = (uint(as_type<int>((as_type<uint>(x) + as_type<uint>(as_type<int>((as_type<uint>(y) * as_type<uint>(TILE_COUNT_X))))))));
             bool v_9 = false;
             if ((tileId < 0u)) {
               v_9 = true;
@@ -168,7 +168,7 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
               {
                 uint const tint_low_inc_1 = (tint_loop_idx_1.x - 1u);
                 tint_loop_idx_1.x = tint_low_inc_1;
-                uint const tint_carry_1 = uint((tint_low_inc_1 == 4294967295u));
+                uint const tint_carry_1 = (uint((tint_low_inc_1 == 4294967295u)));
                 tint_loop_idx_1.y = (tint_loop_idx_1.y - tint_carry_1);
                 x = as_type<int>((as_type<uint>(x) + as_type<uint>(1)));
               }
@@ -179,7 +179,7 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
               {
                 uint const tint_low_inc_1 = (tint_loop_idx_1.x - 1u);
                 tint_loop_idx_1.x = tint_low_inc_1;
-                uint const tint_carry_1 = uint((tint_low_inc_1 == 4294967295u));
+                uint const tint_carry_1 = (uint((tint_low_inc_1 == 4294967295u)));
                 tint_loop_idx_1.y = (tint_loop_idx_1.y - tint_carry_1);
                 x = as_type<int>((as_type<uint>(x) + as_type<uint>(1)));
               }
@@ -190,7 +190,7 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
           {
             uint const tint_low_inc_1 = (tint_loop_idx_1.x - 1u);
             tint_loop_idx_1.x = tint_low_inc_1;
-            uint const tint_carry_1 = uint((tint_low_inc_1 == 4294967295u));
+            uint const tint_carry_1 = (uint((tint_low_inc_1 == 4294967295u)));
             tint_loop_idx_1.y = (tint_loop_idx_1.y - tint_carry_1);
             x = as_type<int>((as_type<uint>(x) + as_type<uint>(1)));
           }
@@ -199,7 +199,7 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
       {
         uint const tint_low_inc = (tint_loop_idx.x - 1u);
         tint_loop_idx.x = tint_low_inc;
-        uint const tint_carry = uint((tint_low_inc == 4294967295u));
+        uint const tint_carry = (uint((tint_low_inc == 4294967295u)));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         y = as_type<int>((as_type<uint>(y) + as_type<uint>(1)));
       }

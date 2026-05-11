@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int2 subgroupMax_932164() {
-  int2 res = simd_max(int2(1));
+  int2 res = simd_max((int2(1)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 int2 subgroupMax_932164() {
-  int2 res = simd_max(int2(1));
+  int2 res = simd_max((int2(1)));
   return res;
 }
 

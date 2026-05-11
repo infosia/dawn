@@ -10,7 +10,7 @@ struct tint_module_vars_struct {
 
 float2 unpack2x16float_32a5cf() {
   uint arg_0 = 1u;
-  float2 res = float2(as_type<half2>(arg_0));
+  float2 res = (float2(as_type<half2>(arg_0)));
   return res;
 }
 
@@ -30,7 +30,7 @@ struct tint_module_vars_struct {
 
 float2 unpack2x16float_32a5cf() {
   uint arg_0 = 1u;
-  float2 res = float2(as_type<half2>(arg_0));
+  float2 res = (float2(as_type<half2>(arg_0)));
   return res;
 }
 
@@ -57,13 +57,13 @@ struct vertex_main_outputs {
 
 float2 unpack2x16float_32a5cf() {
   uint arg_0 = 1u;
-  float2 res = float2(as_type<half2>(arg_0));
+  float2 res = (float2(as_type<half2>(arg_0)));
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = unpack2x16float_32a5cf();
   return out;
 }

@@ -5,7 +5,7 @@
 using namespace metal;
 
 void atan2_c19683() {
-  float2 res = float2(0.78539818525314331055f);
+  float2 res = (float2(0.78539818525314331055f));
 }
 
 fragment void fragment_main() {
@@ -18,7 +18,7 @@ fragment void fragment_main() {
 using namespace metal;
 
 void atan2_c19683() {
-  float2 res = float2(0.78539818525314331055f);
+  float2 res = (float2(0.78539818525314331055f));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -40,12 +40,12 @@ struct vertex_main_outputs {
 };
 
 void atan2_c19683() {
-  float2 res = float2(0.78539818525314331055f);
+  float2 res = (float2(0.78539818525314331055f));
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   atan2_c19683();
   return out;
 }

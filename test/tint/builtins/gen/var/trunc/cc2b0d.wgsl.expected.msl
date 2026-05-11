@@ -63,7 +63,7 @@ half trunc_cc2b0d() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = trunc_cc2b0d();
   return out;
 }

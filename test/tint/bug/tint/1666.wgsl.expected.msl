@@ -24,23 +24,23 @@ struct tint_module_vars_struct {
 
 void vector() {
   int const idx = 3;
-  int const x = int2(1, 2)[min(uint(idx), 1u)];
+  int const x = (int2(1, 2))[min((uint(idx)), 1u)];
 }
 
 void v() {
   int const idx = 4;
-  float2 const x = float2x2(float2(1.0f, 2.0f), float2(3.0f, 4.0f))[min(uint(idx), 1u)];
+  float2 const x = (float2x2((float2(1.0f, 2.0f)), (float2(3.0f, 4.0f))))[min((uint(idx)), 1u)];
 }
 
 void fixed_size_array() {
   tint_array<int, 2> const arr = tint_array<int, 2>{1, 2};
   int const idx = 3;
-  int const x = arr[min(uint(idx), 1u)];
+  int const x = arr[min((uint(idx)), 1u)];
 }
 
 void runtime_size_array(tint_array_lengths_struct tint_array_lengths, tint_module_vars_struct tint_module_vars) {
   int const idx = -1;
-  float const x = (*tint_module_vars.rarr)[min(uint(idx), (tint_array_lengths.tint_array_length_0_0 - 1u))];
+  float const x = (*tint_module_vars.rarr)[min((uint(idx)), (tint_array_lengths.tint_array_length_0_0 - 1u))];
 }
 
 [[max_total_threads_per_threadgroup(1)]]

@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 float4 quadBroadcast_9d802c() {
-  float4 res = quad_broadcast(float4(1.0f), 1);
+  float4 res = quad_broadcast((float4(1.0f)), 1);
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 float4 quadBroadcast_9d802c() {
-  float4 res = quad_broadcast(float4(1.0f), 1);
+  float4 res = quad_broadcast((float4(1.0f)), 1);
   return res;
 }
 

@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 quadSwapDiagonal_c31636() {
-  uint4 res = quad_shuffle_xor(uint4(1u), 3u);
+  uint4 res = quad_shuffle_xor((uint4(1u)), 3u);
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 quadSwapDiagonal_c31636() {
-  uint4 res = quad_shuffle_xor(uint4(1u), 3u);
+  uint4 res = quad_shuffle_xor((uint4(1u)), 3u);
   return res;
 }
 

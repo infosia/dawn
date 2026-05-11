@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int2 quadSwapX_b1a5fe() {
-  int2 res = quad_shuffle_xor(int2(1), 1u);
+  int2 res = quad_shuffle_xor((int2(1)), 1u);
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 int2 quadSwapX_b1a5fe() {
-  int2 res = quad_shuffle_xor(int2(1), 1u);
+  int2 res = quad_shuffle_xor((int2(1)), 1u);
   return res;
 }
 

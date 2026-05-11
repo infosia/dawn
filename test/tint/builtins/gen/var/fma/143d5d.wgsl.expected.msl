@@ -5,7 +5,7 @@
 using namespace metal;
 
 void fma_143d5d() {
-  float4 res = float4(2.0f);
+  float4 res = (float4(2.0f));
 }
 
 fragment void fragment_main() {
@@ -18,7 +18,7 @@ fragment void fragment_main() {
 using namespace metal;
 
 void fma_143d5d() {
-  float4 res = float4(2.0f);
+  float4 res = (float4(2.0f));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -40,12 +40,12 @@ struct vertex_main_outputs {
 };
 
 void fma_143d5d() {
-  float4 res = float4(2.0f);
+  float4 res = (float4(2.0f));
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   fma_143d5d();
   return out;
 }

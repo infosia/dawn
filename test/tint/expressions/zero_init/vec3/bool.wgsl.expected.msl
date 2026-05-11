@@ -3,5 +3,5 @@ using namespace metal;
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void f() {
-  bool3 v = bool3(false);
+  bool3 v = (bool3(false));
 }

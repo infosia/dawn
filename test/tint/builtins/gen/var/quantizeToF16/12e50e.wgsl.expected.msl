@@ -10,7 +10,7 @@ struct tint_module_vars_struct {
 
 float quantizeToF16_12e50e() {
   float arg_0 = 1.0f;
-  float res = float(half(arg_0));
+  float res = (float((half(arg_0))));
   return res;
 }
 
@@ -30,7 +30,7 @@ struct tint_module_vars_struct {
 
 float quantizeToF16_12e50e() {
   float arg_0 = 1.0f;
-  float res = float(half(arg_0));
+  float res = (float((half(arg_0))));
   return res;
 }
 
@@ -57,13 +57,13 @@ struct vertex_main_outputs {
 
 float quantizeToF16_12e50e() {
   float arg_0 = 1.0f;
-  float res = float(half(arg_0));
+  float res = (float((half(arg_0))));
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = quantizeToF16_12e50e();
   return out;
 }

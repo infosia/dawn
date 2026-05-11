@@ -60,7 +60,7 @@ float distance_cfed73() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = distance_cfed73();
   return out;
 }

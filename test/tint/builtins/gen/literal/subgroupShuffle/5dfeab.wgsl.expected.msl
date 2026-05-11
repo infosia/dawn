@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 float4 subgroupShuffle_5dfeab() {
-  float4 res = simd_shuffle(float4(1.0f), 1);
+  float4 res = simd_shuffle((float4(1.0f)), 1);
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 float4 subgroupShuffle_5dfeab() {
-  float4 res = simd_shuffle(float4(1.0f), 1);
+  float4 res = simd_shuffle((float4(1.0f)), 1);
   return res;
 }
 

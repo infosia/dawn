@@ -45,7 +45,7 @@ void round_773a8f() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   round_773a8f();
   return out;
 }

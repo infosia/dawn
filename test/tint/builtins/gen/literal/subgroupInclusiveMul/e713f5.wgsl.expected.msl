@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int2 subgroupInclusiveMul_e713f5() {
-  int2 res = simd_prefix_inclusive_product(int2(1));
+  int2 res = simd_prefix_inclusive_product((int2(1)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 int2 subgroupInclusiveMul_e713f5() {
-  int2 res = simd_prefix_inclusive_product(int2(1));
+  int2 res = simd_prefix_inclusive_product((int2(1)));
   return res;
 }
 

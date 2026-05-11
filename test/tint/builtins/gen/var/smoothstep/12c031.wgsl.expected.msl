@@ -9,12 +9,12 @@ struct tint_module_vars_struct {
 };
 
 half2 smoothstep_12c031() {
-  half2 arg_0 = half2(2.0h);
-  half2 arg_1 = half2(4.0h);
-  half2 arg_2 = half2(3.0h);
+  half2 arg_0 = (half2(2.0h));
+  half2 arg_1 = (half2(4.0h));
+  half2 arg_2 = (half2(3.0h));
   half2 const v = arg_0;
-  half2 const v_1 = clamp(((arg_2 - v) / (arg_1 - v)), half2(0.0h), half2(1.0h));
-  half2 res = (v_1 * (v_1 * (half2(3.0h) - (half2(2.0h) * v_1))));
+  half2 const v_1 = clamp(((arg_2 - v) / (arg_1 - v)), (half2(0.0h)), (half2(1.0h)));
+  half2 res = (v_1 * (v_1 * ((half2(3.0h)) - ((half2(2.0h)) * v_1))));
   return res;
 }
 
@@ -33,12 +33,12 @@ struct tint_module_vars_struct {
 };
 
 half2 smoothstep_12c031() {
-  half2 arg_0 = half2(2.0h);
-  half2 arg_1 = half2(4.0h);
-  half2 arg_2 = half2(3.0h);
+  half2 arg_0 = (half2(2.0h));
+  half2 arg_1 = (half2(4.0h));
+  half2 arg_2 = (half2(3.0h));
   half2 const v = arg_0;
-  half2 const v_1 = clamp(((arg_2 - v) / (arg_1 - v)), half2(0.0h), half2(1.0h));
-  half2 res = (v_1 * (v_1 * (half2(3.0h) - (half2(2.0h) * v_1))));
+  half2 const v_1 = clamp(((arg_2 - v) / (arg_1 - v)), (half2(0.0h)), (half2(1.0h)));
+  half2 res = (v_1 * (v_1 * ((half2(3.0h)) - ((half2(2.0h)) * v_1))));
   return res;
 }
 
@@ -64,18 +64,18 @@ struct vertex_main_outputs {
 };
 
 half2 smoothstep_12c031() {
-  half2 arg_0 = half2(2.0h);
-  half2 arg_1 = half2(4.0h);
-  half2 arg_2 = half2(3.0h);
+  half2 arg_0 = (half2(2.0h));
+  half2 arg_1 = (half2(4.0h));
+  half2 arg_2 = (half2(3.0h));
   half2 const v = arg_0;
-  half2 const v_1 = clamp(((arg_2 - v) / (arg_1 - v)), half2(0.0h), half2(1.0h));
-  half2 res = (v_1 * (v_1 * (half2(3.0h) - (half2(2.0h) * v_1))));
+  half2 const v_1 = clamp(((arg_2 - v) / (arg_1 - v)), (half2(0.0h)), (half2(1.0h)));
+  half2 res = (v_1 * (v_1 * ((half2(3.0h)) - ((half2(2.0h)) * v_1))));
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = smoothstep_12c031();
   return out;
 }

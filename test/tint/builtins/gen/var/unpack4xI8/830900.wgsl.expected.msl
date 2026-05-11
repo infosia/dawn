@@ -11,9 +11,9 @@ struct tint_module_vars_struct {
 int4 unpack4xI8_830900() {
   uint arg_0 = 1u;
   uint const v = arg_0;
-  uint4 const v_1 = uint4(24u, 16u, 8u, 0u);
-  int4 const v_2 = as_type<int4>((uint4(v) << v_1));
-  int4 res = (v_2 >> uint4(24u));
+  uint4 const v_1 = (uint4(24u, 16u, 8u, 0u));
+  int4 const v_2 = as_type<int4>(((uint4(v)) << v_1));
+  int4 res = (v_2 >> (uint4(24u)));
   return res;
 }
 
@@ -34,9 +34,9 @@ struct tint_module_vars_struct {
 int4 unpack4xI8_830900() {
   uint arg_0 = 1u;
   uint const v = arg_0;
-  uint4 const v_1 = uint4(24u, 16u, 8u, 0u);
-  int4 const v_2 = as_type<int4>((uint4(v) << v_1));
-  int4 res = (v_2 >> uint4(24u));
+  uint4 const v_1 = (uint4(24u, 16u, 8u, 0u));
+  int4 const v_2 = as_type<int4>(((uint4(v)) << v_1));
+  int4 res = (v_2 >> (uint4(24u)));
   return res;
 }
 
@@ -64,15 +64,15 @@ struct vertex_main_outputs {
 int4 unpack4xI8_830900() {
   uint arg_0 = 1u;
   uint const v = arg_0;
-  uint4 const v_1 = uint4(24u, 16u, 8u, 0u);
-  int4 const v_2 = as_type<int4>((uint4(v) << v_1));
-  int4 res = (v_2 >> uint4(24u));
+  uint4 const v_1 = (uint4(24u, 16u, 8u, 0u));
+  int4 const v_2 = as_type<int4>(((uint4(v)) << v_1));
+  int4 res = (v_2 >> (uint4(24u)));
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = unpack4xI8_830900();
   return out;
 }

@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half2 subgroupBroadcast_13f36c() {
-  half2 res = simd_broadcast(half2(1.0h), 1u);
+  half2 res = simd_broadcast((half2(1.0h)), 1u);
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 half2 subgroupBroadcast_13f36c() {
-  half2 res = simd_broadcast(half2(1.0h), 1u);
+  half2 res = simd_broadcast((half2(1.0h)), 1u);
   return res;
 }
 

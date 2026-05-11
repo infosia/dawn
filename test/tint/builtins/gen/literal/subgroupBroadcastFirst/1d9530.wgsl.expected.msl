@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 subgroupBroadcastFirst_1d9530() {
-  uint2 res = simd_broadcast_first(uint2(1u));
+  uint2 res = simd_broadcast_first((uint2(1u)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 subgroupBroadcastFirst_1d9530() {
-  uint2 res = simd_broadcast_first(uint2(1u));
+  uint2 res = simd_broadcast_first((uint2(1u)));
   return res;
 }
 

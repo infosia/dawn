@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 void print_4bebe2(tint_module_vars_struct tint_module_vars) {
-  float3 arg_0 = float3(1.0f);
+  float3 arg_0 = (float3(1.0f));
   float3 const v = (*tint_module_vars.tint_print_invocation_id);
   os_log_default.log("[ frag fragment_main:L43 position(%f, %f, %f) ] %v3hlf", v.x, v.y, v.z, arg_0);
 }
@@ -35,7 +35,7 @@ struct tint_module_vars_struct {
 };
 
 void print_4bebe2(tint_module_vars_struct tint_module_vars) {
-  float3 arg_0 = float3(1.0f);
+  float3 arg_0 = (float3(1.0f));
   uint3 const v = (*tint_module_vars.tint_print_invocation_id);
   os_log_default.log("[ comp compute_main:L43 global_invocation_id(%u, %u, %u) ] %v3hlf", v.x, v.y, v.z, arg_0);
 }
@@ -70,15 +70,15 @@ struct vertex_main_outputs {
 };
 
 void print_4bebe2(tint_module_vars_struct tint_module_vars) {
-  float3 arg_0 = float3(1.0f);
+  float3 arg_0 = (float3(1.0f));
   uint2 const v = (*tint_module_vars.tint_print_invocation_id);
   os_log_default.log("[ vert vertex_main:L43 instance=%u, vertex=%u ] %v3hlf", v.x, v.y, arg_0);
 }
 
 VertexOutput vertex_main_inner(uint tint_symbol, uint tint_symbol_1, tint_module_vars_struct tint_module_vars) {
-  (*tint_module_vars.tint_print_invocation_id) = uint2(tint_symbol, tint_symbol_1);
+  (*tint_module_vars.tint_print_invocation_id) = (uint2(tint_symbol, tint_symbol_1));
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   print_4bebe2(tint_module_vars);
   return out;
 }

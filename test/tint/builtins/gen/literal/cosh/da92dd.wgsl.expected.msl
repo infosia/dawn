@@ -60,7 +60,7 @@ float cosh_da92dd() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = cosh_da92dd();
   return out;
 }

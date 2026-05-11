@@ -15,7 +15,7 @@ struct vert_main1_outputs {
 };
 
 VertexOutput foo(float x) {
-  return VertexOutput{.pos=float4(x, x, x, 1.0f), .loc0=42};
+  return VertexOutput{.pos=(float4(x, x, x, 1.0f)), .loc0=42};
 }
 
 VertexOutput vert_main1_inner() {
@@ -46,7 +46,7 @@ struct vert_main2_outputs {
 };
 
 VertexOutput foo(float x) {
-  return VertexOutput{.pos=float4(x, x, x, 1.0f), .loc0=42};
+  return VertexOutput{.pos=(float4(x, x, x, 1.0f)), .loc0=42};
 }
 
 VertexOutput vert_main2_inner() {

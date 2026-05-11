@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupAnd_d2c9a6() {
-  uint4 res = simd_and(uint4(1u));
+  uint4 res = simd_and((uint4(1u)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupAnd_d2c9a6() {
-  uint4 res = simd_and(uint4(1u));
+  uint4 res = simd_and((uint4(1u)));
   return res;
 }
 

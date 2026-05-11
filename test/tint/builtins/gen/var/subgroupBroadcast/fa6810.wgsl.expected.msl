@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int2 subgroupBroadcast_fa6810() {
-  int2 arg_0 = int2(1);
+  int2 arg_0 = (int2(1));
   int2 res = simd_broadcast(arg_0, 1);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 int2 subgroupBroadcast_fa6810() {
-  int2 arg_0 = int2(1);
+  int2 arg_0 = (int2(1));
   int2 res = simd_broadcast(arg_0, 1);
   return res;
 }

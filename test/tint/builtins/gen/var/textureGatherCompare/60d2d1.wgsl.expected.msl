@@ -11,7 +11,7 @@ struct tint_module_vars_struct {
 };
 
 float4 textureGatherCompare_60d2d1(tint_module_vars_struct tint_module_vars) {
-  float3 arg_2 = float3(1.0f);
+  float3 arg_2 = (float3(1.0f));
   int arg_3 = 1;
   float arg_4 = 1.0f;
   float4 res = tint_module_vars.arg_0.gather_compare(tint_module_vars.arg_1, arg_2, max(arg_3, 0), arg_4);
@@ -35,7 +35,7 @@ struct tint_module_vars_struct {
 };
 
 float4 textureGatherCompare_60d2d1(tint_module_vars_struct tint_module_vars) {
-  float3 arg_2 = float3(1.0f);
+  float3 arg_2 = (float3(1.0f));
   int arg_3 = 1;
   float arg_4 = 1.0f;
   float4 res = tint_module_vars.arg_0.gather_compare(tint_module_vars.arg_1, arg_2, max(arg_3, 0), arg_4);
@@ -69,7 +69,7 @@ struct vertex_main_outputs {
 };
 
 float4 textureGatherCompare_60d2d1(tint_module_vars_struct tint_module_vars) {
-  float3 arg_2 = float3(1.0f);
+  float3 arg_2 = (float3(1.0f));
   int arg_3 = 1;
   float arg_4 = 1.0f;
   float4 res = tint_module_vars.arg_0.gather_compare(tint_module_vars.arg_1, arg_2, max(arg_3, 0), arg_4);
@@ -78,7 +78,7 @@ float4 textureGatherCompare_60d2d1(tint_module_vars_struct tint_module_vars) {
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = textureGatherCompare_60d2d1(tint_module_vars);
   return out;
 }

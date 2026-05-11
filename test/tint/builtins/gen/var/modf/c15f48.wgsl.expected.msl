@@ -60,7 +60,7 @@ void modf_c15f48() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   modf_c15f48();
   return out;
 }

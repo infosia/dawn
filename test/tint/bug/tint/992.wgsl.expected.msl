@@ -7,8 +7,8 @@ struct frag_main_outputs {
 
 float4 frag_main_inner() {
   float b = 0.0f;
-  float3 v = float3(b);
-  return float4(v, 1.0f);
+  float3 v = (float3(b));
+  return (float4(v, 1.0f));
 }
 
 fragment frag_main_outputs frag_main() {

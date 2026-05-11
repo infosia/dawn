@@ -3,5 +3,5 @@ using namespace metal;
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void f() {
-  half3 const b = half3(1.0h, 2.0h, 3.0h);
+  half3 const b = (half3(1.0h, 2.0h, 3.0h));
 }

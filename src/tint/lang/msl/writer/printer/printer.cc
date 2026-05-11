@@ -611,6 +611,7 @@ class Printer : public tint::TextGenerator {
     /// Emit a convert instruction
     /// @param c the convert instruction
     void EmitConvert(StringStream& out, const core::ir::Convert* c) {
+        ScopedParen spEnsureIsExpression(out);
         EmitType(out, c->Result()->Type());
         out << "(";
         EmitValue(out, c->Operand(0));
@@ -973,6 +974,7 @@ class Printer : public tint::TextGenerator {
                 return;
             }
 
+            ScopedParen spEnsureIsExpression(out);
             EmitType(out, c->Result()->Type());
             out << "(";
             EmitValue(out, c->Operand(0));
@@ -1012,6 +1014,7 @@ class Printer : public tint::TextGenerator {
             return;
         }
         if (c->Func() == msl::BuiltinFn::kMakeDiagonalSimdgroupMatrix) {
+            ScopedParen spEnsureIsExpression(out);
             EmitType(out, c->Result()->Type());
             out << "(";
             EmitValue(out, c->Args()[0]);
@@ -1335,6 +1338,7 @@ class Printer : public tint::TextGenerator {
                 out << "}";
             },
             [&](Default) {
+                ScopedParen spEnsureIsExpression(out);
                 EmitType(out, c->Result()->Type());
                 out << "(";
                 size_t i = 0;
@@ -1819,6 +1823,7 @@ class Printer : public tint::TextGenerator {
             [&](const core::type::F32*) { PrintF32(out, c->ValueAs<f32>()); },
             [&](const core::type::F16*) { PrintF16(out, c->ValueAs<f16>()); },
             [&](const core::type::Vector* v) {
+                ScopedParen spEnsureIsExpression(out);
                 EmitType(out, v);
 
                 ScopedParen sp(out);
@@ -1829,6 +1834,7 @@ class Printer : public tint::TextGenerator {
                 emit_values(v->Width());
             },
             [&](const core::type::Matrix* m) {
+                ScopedParen spEnsureIsExpression(out);
                 EmitType(out, m);
                 ScopedParen sp(out);
                 emit_values(m->Columns());
@@ -1887,6 +1893,7 @@ class Printer : public tint::TextGenerator {
             [&](const core::type::U64*) { out << "0u"; },                             //
             [&](const core::type::Vector* vec) { EmitZeroValue(out, vec->Type()); },  //
             [&](const core::type::Matrix* mat) {
+                ScopedParen spEnsureIsExpression(out);
                 EmitType(out, mat);
 
                 ScopedParen sp(out);

@@ -440,7 +440,7 @@ struct entry_outputs {
 };
 
 float4 entry_inner(uint tint_vertex_index, tint_module_vars_struct tint_module_vars) {
-  return float4(as_type<float>((*tint_module_vars.tint_vertex_buffer_0)[min(tint_vertex_index, (tint_array_lengths_struct{.tint_array_length_0_1=((*tint_module_vars.tint_immediate_data).tint_storage_buffer_sizes[0u].x / 4u)}.tint_array_length_0_1 - 1u))]), 0.0f, 0.0f, 1.0f);
+  return (float4(as_type<float>((*tint_module_vars.tint_vertex_buffer_0)[min(tint_vertex_index, (tint_array_lengths_struct{.tint_array_length_0_1=((*tint_module_vars.tint_immediate_data).tint_storage_buffer_sizes[0u].x / 4u)}.tint_array_length_0_1 - 1u))]), 0.0f, 0.0f, 1.0f));
 }
 
 vertex entry_outputs entry(uint tint_vertex_index [[vertex_id]], const device tint_array<uint, 1>* tint_vertex_buffer_0 [[buffer(1)]], const constant tint_immediate_data_struct* tint_immediate_data [[buffer(30)]]) {
@@ -506,7 +506,7 @@ struct tint_module_vars_struct {
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v(device SB* sb [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sb=sb};
-  atomic_max_explicit((&(*tint_module_vars.sb).a), as_type<ulong>(uint2(1u)), memory_order_relaxed);
+  atomic_max_explicit((&(*tint_module_vars.sb).a), as_type<ulong>((uint2(1u))), memory_order_relaxed);
 }
 )");
 }
@@ -546,7 +546,7 @@ struct tint_module_vars_struct {
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v(device SB* sb [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sb=sb};
-  atomic_min_explicit((&(*tint_module_vars.sb).a), as_type<ulong>(uint2(1u)), memory_order_relaxed);
+  atomic_min_explicit((&(*tint_module_vars.sb).a), as_type<ulong>((uint2(1u))), memory_order_relaxed);
 }
 )");
 }

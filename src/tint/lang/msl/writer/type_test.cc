@@ -218,7 +218,7 @@ TEST_F(MslWriterTest, EmitType_Matrix_F32) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  float2x3 a = float2x3(0.0f);
+  float2x3 a = (float2x3(0.0f));
 }
 )");
 }
@@ -235,7 +235,7 @@ TEST_F(MslWriterTest, EmitType_Matrix_F16) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  half2x3 a = half2x3(0.0h);
+  half2x3 a = (half2x3(0.0h));
 }
 )");
 }
@@ -1014,20 +1014,20 @@ struct tint_module_vars_struct {
 };
 
 tint_array<float3, 4> tint_load_array_packed_vec3(device tint_array<tint_packed_vec3_f32_array_element, 4>* const from) {
-  return tint_array<float3, 4>{float3((*from)[0u].packed), float3((*from)[1u].packed), float3((*from)[2u].packed), float3((*from)[3u].packed)};
+  return tint_array<float3, 4>{(float3((*from)[0u].packed)), (float3((*from)[1u].packed)), (float3((*from)[2u].packed)), (float3((*from)[3u].packed))};
 }
 
 S tint_load_struct_packed_vec3(device S_packed_vec3* const from) {
   int const v = (*from).a;
-  uint3 const v_1 = uint3((*from).b);
-  float3 const v_2 = float3((*from).c);
+  uint3 const v_1 = (uint3((*from).b));
+  float3 const v_2 = (float3((*from).c));
   float const v_3 = (*from).d;
   tint_array<tint_packed_vec3_f32_array_element, 2> const v_4 = (*from).e;
-  float2x3 const v_5 = float2x3(float3(v_4[0u].packed), float3(v_4[1u].packed));
+  float2x3 const v_5 = (float2x3((float3(v_4[0u].packed)), (float3(v_4[1u].packed))));
   tint_array<tint_packed_vec3_f32_array_element, 3> const v_6 = (*from).f;
-  float3x3 const v_7 = float3x3(float3(v_6[0u].packed), float3(v_6[1u].packed), float3(v_6[2u].packed));
+  float3x3 const v_7 = (float3x3((float3(v_6[0u].packed)), (float3(v_6[1u].packed)), (float3(v_6[2u].packed))));
   tint_array<tint_packed_vec3_f32_array_element, 4> const v_8 = (*from).g;
-  float4x3 const v_9 = float4x3(float3(v_8[0u].packed), float3(v_8[1u].packed), float3(v_8[2u].packed), float3(v_8[3u].packed));
+  float4x3 const v_9 = (float4x3((float3(v_8[0u].packed)), (float3(v_8[1u].packed)), (float3(v_8[2u].packed)), (float3(v_8[3u].packed))));
   float const v_10 = (*from).h;
   tint_array<float3, 4> const v_11 = tint_load_array_packed_vec3((&(*from).i));
   return S{.a=v, .b=v_1, .c=v_2, .d=v_3, .e=v_5, .f=v_7, .g=v_9, .h=v_10, .i=v_11, .j=(*from).j};

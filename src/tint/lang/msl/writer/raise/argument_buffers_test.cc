@@ -229,32 +229,31 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  c:ptr<storage, f32, read_write> @offset(0), @binding_point(3, 2)
-  b:ptr<storage, u32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
+}
+
+$B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, u32, read_write> = var undef @binding_point(3, 4)
+  %c:ptr<storage, f32, read_write> = var undef @binding_point(3, 2)
 }
 
 %foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B1: {
-    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %6:ptr<storage, i32, read> = access %5, 0u
-    %7:i32 = load %6
-    %8:ptr<storage, u32, read_write> = access %4, 1u
-    %9:u32 = load %8
-    %10:ptr<storage, f32, read_write> = access %4, 0u
-    %11:f32 = load %10
-    %12:i32 = convert %9
+  $B2: {
+    %7:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %8:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %9:i32 = load %a
+    %10:u32 = load %b
+    %11:f32 = load %c
+    %12:i32 = convert %10
     %13:i32 = convert %11
-    %14:i32 = add %7, %12
+    %14:i32 = add %9, %12
     %15:i32 = add %14, %13
     %16:u32 = convert %15
-    %17:ptr<storage, u32, read_write> = access %4, 1u
-    store %17, %16
+    store %b, %16
     ret
   }
 }
@@ -1827,7 +1826,7 @@ $B1: {  # root
     ArgumentBuffersConfig cfg{};
     cfg.group_to_argument_buffer_info.insert({1, info});
     auto result = ArgumentBuffers(mod, cfg);
-    EXPECT_NE(result, Success);
+    ASSERT_NE(result, Success);
     EXPECT_EQ(result.Failure().reason, "dynamic offset supplied for non-buffer type");
 }
 

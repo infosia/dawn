@@ -11,7 +11,7 @@ struct tint_module_vars_struct {
 
 uint4 tint_subgroup_ballot(bool pred, tint_module_vars_struct tint_module_vars) {
   uint2 const v = as_type<uint2>((simd_vote::vote_t)simd_ballot(pred));
-  return uint4((v & (*tint_module_vars.tint_subgroup_size_mask)), 0u, 0u);
+  return (uint4((v & (*tint_module_vars.tint_subgroup_size_mask)), 0u, 0u));
 }
 
 uint4 subgroupBallot_1a8251(tint_module_vars_struct tint_module_vars) {
@@ -39,7 +39,7 @@ struct tint_module_vars_struct {
 
 uint4 tint_subgroup_ballot(bool pred, tint_module_vars_struct tint_module_vars) {
   uint2 const v = as_type<uint2>((simd_vote::vote_t)simd_ballot(pred));
-  return uint4((v & (*tint_module_vars.tint_subgroup_size_mask)), 0u, 0u);
+  return (uint4((v & (*tint_module_vars.tint_subgroup_size_mask)), 0u, 0u));
 }
 
 uint4 subgroupBallot_1a8251(tint_module_vars_struct tint_module_vars) {

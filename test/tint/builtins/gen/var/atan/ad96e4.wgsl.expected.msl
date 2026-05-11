@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 float2 atan_ad96e4() {
-  float2 arg_0 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
   float2 res = atan(arg_0);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 float2 atan_ad96e4() {
-  float2 arg_0 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
   float2 res = atan(arg_0);
   return res;
 }
@@ -56,14 +56,14 @@ struct vertex_main_outputs {
 };
 
 float2 atan_ad96e4() {
-  float2 arg_0 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
   float2 res = atan(arg_0);
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = atan_ad96e4();
   return out;
 }

@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int2 quadBroadcast_c0e704() {
-  int2 res = quad_broadcast(int2(1), 1);
+  int2 res = quad_broadcast((int2(1)), 1);
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 int2 quadBroadcast_c0e704() {
-  int2 res = quad_broadcast(int2(1), 1);
+  int2 res = quad_broadcast((int2(1)), 1);
   return res;
 }
 

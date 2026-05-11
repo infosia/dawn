@@ -12,7 +12,7 @@ struct tint_module_vars_struct {
 int4 textureLoad_453e01(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
   uint const v = arg_1;
-  int4 res = tint_module_vars.arg_0.read(min(v, (uint(tint_module_vars.arg_0.get_width()) - 1u)));
+  int4 res = tint_module_vars.arg_0.read(min(v, ((uint(tint_module_vars.arg_0.get_width())) - 1u)));
   return res;
 }
 
@@ -34,7 +34,7 @@ struct tint_module_vars_struct {
 int4 textureLoad_453e01(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
   uint const v = arg_1;
-  int4 res = tint_module_vars.arg_0.read(min(v, (uint(tint_module_vars.arg_0.get_width()) - 1u)));
+  int4 res = tint_module_vars.arg_0.read(min(v, ((uint(tint_module_vars.arg_0.get_width())) - 1u)));
   return res;
 }
 

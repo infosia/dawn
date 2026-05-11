@@ -45,7 +45,7 @@ void determinant_cefdf3() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   determinant_cefdf3();
   return out;
 }

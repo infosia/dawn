@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half4 subgroupShuffle_647034() {
-  half4 arg_0 = half4(1.0h);
+  half4 arg_0 = (half4(1.0h));
   int arg_1 = 1;
   half4 res = simd_shuffle(arg_0, arg_1);
   return res;
@@ -30,7 +30,7 @@ struct tint_module_vars_struct {
 };
 
 half4 subgroupShuffle_647034() {
-  half4 arg_0 = half4(1.0h);
+  half4 arg_0 = (half4(1.0h));
   int arg_1 = 1;
   half4 res = simd_shuffle(arg_0, arg_1);
   return res;

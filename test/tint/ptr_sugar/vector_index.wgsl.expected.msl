@@ -35,7 +35,7 @@ void deref_var() {
   int3 a = 0;
   thread int3* const p = (&a);
   int i = 0;
-  int b = (*p)[min(uint(i), 2u)];
+  int b = (*p)[min((uint(i)), 2u)];
   (*p).x = 42;
 }
 

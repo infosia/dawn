@@ -45,7 +45,7 @@ void acosh_3433e8() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   acosh_3433e8();
   return out;
 }

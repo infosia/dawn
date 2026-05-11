@@ -3,5 +3,5 @@ using namespace metal;
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v_1() {
-  float2x3 v = float2x3(0.0f);
+  float2x3 v = (float2x3(0.0f));
 }

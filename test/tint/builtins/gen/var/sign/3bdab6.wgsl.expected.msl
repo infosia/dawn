@@ -5,7 +5,7 @@
 using namespace metal;
 
 void sign_3bdab6() {
-  int4 res = int4(1);
+  int4 res = (int4(1));
 }
 
 fragment void fragment_main() {
@@ -18,7 +18,7 @@ fragment void fragment_main() {
 using namespace metal;
 
 void sign_3bdab6() {
-  int4 res = int4(1);
+  int4 res = (int4(1));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -40,12 +40,12 @@ struct vertex_main_outputs {
 };
 
 void sign_3bdab6() {
-  int4 res = int4(1);
+  int4 res = (int4(1));
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   sign_3bdab6();
   return out;
 }

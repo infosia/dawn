@@ -9,9 +9,9 @@ struct tint_module_vars_struct {
 };
 
 void textureStore_645420(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   int arg_2 = 1;
-  int4 arg_3 = int4(1);
+  int4 arg_3 = (int4(1));
   tint_module_vars.arg_0.write(arg_3, arg_1, arg_2);
 }
 
@@ -30,9 +30,9 @@ struct tint_module_vars_struct {
 };
 
 void textureStore_645420(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   int arg_2 = 1;
-  int4 arg_3 = int4(1);
+  int4 arg_3 = (int4(1));
   tint_module_vars.arg_0.write(arg_3, arg_1, arg_2);
 }
 

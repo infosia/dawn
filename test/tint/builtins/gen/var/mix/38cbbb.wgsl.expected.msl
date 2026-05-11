@@ -69,7 +69,7 @@ half mix_38cbbb() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = mix_38cbbb();
   return out;
 }

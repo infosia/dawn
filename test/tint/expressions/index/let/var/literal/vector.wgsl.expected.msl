@@ -2,9 +2,9 @@
 using namespace metal;
 
 float f() {
-  float3 const v = float3(1.0f, 2.0f, 3.0f);
+  float3 const v = (float3(1.0f, 2.0f, 3.0f));
   int i = 1;
-  return v[min(uint(i), 2u)];
+  return v[min((uint(i)), 2u)];
 }
 
 [[max_total_threads_per_threadgroup(1)]]

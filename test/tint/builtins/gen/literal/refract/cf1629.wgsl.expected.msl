@@ -5,7 +5,7 @@
 using namespace metal;
 
 void refract_cf1629() {
-  float2 res = float2(-3.0f);
+  float2 res = (float2(-3.0f));
 }
 
 fragment void fragment_main() {
@@ -18,7 +18,7 @@ fragment void fragment_main() {
 using namespace metal;
 
 void refract_cf1629() {
-  float2 res = float2(-3.0f);
+  float2 res = (float2(-3.0f));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -40,12 +40,12 @@ struct vertex_main_outputs {
 };
 
 void refract_cf1629() {
-  float2 res = float2(-3.0f);
+  float2 res = (float2(-3.0f));
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   refract_cf1629();
   return out;
 }

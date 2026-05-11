@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupExclusiveAdd_ec300f() {
-  uint4 res = simd_prefix_exclusive_sum(uint4(1u));
+  uint4 res = simd_prefix_exclusive_sum((uint4(1u)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupExclusiveAdd_ec300f() {
-  uint4 res = simd_prefix_exclusive_sum(uint4(1u));
+  uint4 res = simd_prefix_exclusive_sum((uint4(1u)));
   return res;
 }
 

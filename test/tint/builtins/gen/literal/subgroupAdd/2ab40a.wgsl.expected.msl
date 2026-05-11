@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half4 subgroupAdd_2ab40a() {
-  half4 res = simd_sum(half4(1.0h));
+  half4 res = simd_sum((half4(1.0h)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 half4 subgroupAdd_2ab40a() {
-  half4 res = simd_sum(half4(1.0h));
+  half4 res = simd_sum((half4(1.0h)));
   return res;
 }
 

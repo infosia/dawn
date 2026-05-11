@@ -33,7 +33,7 @@ struct main_outputs {
 
 float4 main_inner(tint_module_vars_struct tint_module_vars) {
   float const x = (*tint_module_vars.tint_member).matrix_view[0u].z;
-  return float4(x, 0.0f, 0.0f, 1.0f);
+  return (float4(x, 0.0f, 0.0f, 1.0f));
 }
 
 vertex main_outputs v(const constant S_packed_vec3* v_1 [[buffer(0)]]) {

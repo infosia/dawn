@@ -12,7 +12,7 @@ struct tint_module_vars_struct {
 uint4 textureLoad_454347(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
   uint const v = arg_1;
-  uint4 res = tint_module_vars.arg_0.read(min(v, (uint(tint_module_vars.arg_0.get_width()) - 1u)));
+  uint4 res = tint_module_vars.arg_0.read(min(v, ((uint(tint_module_vars.arg_0.get_width())) - 1u)));
   return res;
 }
 
@@ -34,7 +34,7 @@ struct tint_module_vars_struct {
 uint4 textureLoad_454347(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
   uint const v = arg_1;
-  uint4 res = tint_module_vars.arg_0.read(min(v, (uint(tint_module_vars.arg_0.get_width()) - 1u)));
+  uint4 res = tint_module_vars.arg_0.read(min(v, ((uint(tint_module_vars.arg_0.get_width())) - 1u)));
   return res;
 }
 
@@ -66,13 +66,13 @@ struct vertex_main_outputs {
 uint4 textureLoad_454347(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
   uint const v = arg_1;
-  uint4 res = tint_module_vars.arg_0.read(min(v, (uint(tint_module_vars.arg_0.get_width()) - 1u)));
+  uint4 res = tint_module_vars.arg_0.read(min(v, ((uint(tint_module_vars.arg_0.get_width())) - 1u)));
   return res;
 }
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = textureLoad_454347(tint_module_vars);
   return out;
 }

@@ -11,13 +11,13 @@ struct tint_module_vars_struct {
 };
 
 float3 Bad(uint index, float3 rd) {
-  float3 normal = float3(0.0f);
+  float3 normal = (float3(0.0f));
   normal[min(index, 2u)] = -(sign(rd[min(index, 2u)]));
   return normalize(normal);
 }
 
 void main_inner(uint idx, tint_module_vars_struct tint_module_vars) {
-  (*tint_module_vars.io).v = packed_float3(Bad((*tint_module_vars.io).i, float3((*tint_module_vars.io).v)));
+  (*tint_module_vars.io).v = (packed_float3(Bad((*tint_module_vars.io).i, (float3((*tint_module_vars.io).v)))));
 }
 
 [[max_total_threads_per_threadgroup(1)]]

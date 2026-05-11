@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int4 subgroupMin_1de104() {
-  int4 res = simd_min(int4(1));
+  int4 res = simd_min((int4(1)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 int4 subgroupMin_1de104() {
-  int4 res = simd_min(int4(1));
+  int4 res = simd_min((int4(1)));
   return res;
 }
 

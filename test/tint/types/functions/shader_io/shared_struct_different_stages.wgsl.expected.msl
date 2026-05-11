@@ -17,7 +17,7 @@ struct vert_main_outputs {
 };
 
 Interface vert_main_inner() {
-  return Interface{.col1=0.40000000596046447754f, .col2=0.60000002384185791016f, .pos=float4(0.0f)};
+  return Interface{.col1=0.40000000596046447754f, .col2=0.60000002384185791016f, .pos=(float4(0.0f))};
 }
 
 vertex vert_main_outputs vert_main() {

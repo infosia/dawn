@@ -13,7 +13,7 @@ struct tint_module_vars_struct {
 };
 
 void atomicStoreMin_f5f229(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   atomic_min_explicit((&(*tint_module_vars.sb_rw).arg_0), as_type<ulong>(arg_1), memory_order_relaxed);
 }
 
@@ -36,7 +36,7 @@ struct tint_module_vars_struct {
 };
 
 void atomicStoreMin_f5f229(tint_module_vars_struct tint_module_vars) {
-  uint2 arg_1 = uint2(1u);
+  uint2 arg_1 = (uint2(1u));
   atomic_min_explicit((&(*tint_module_vars.sb_rw).arg_0), as_type<ulong>(arg_1), memory_order_relaxed);
 }
 

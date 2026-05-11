@@ -6,7 +6,7 @@ struct main_outputs {
 };
 
 float4 main_inner(uint b) {
-  return float4(float(b));
+  return (float4((float(b))));
 }
 
 vertex main_outputs v(uint b [[instance_id]]) {

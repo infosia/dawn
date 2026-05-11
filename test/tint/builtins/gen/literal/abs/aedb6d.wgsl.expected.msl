@@ -45,7 +45,7 @@ void abs_aedb6d() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   abs_aedb6d();
   return out;
 }

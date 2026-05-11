@@ -42,7 +42,7 @@ S ret_struct_arr() {
 
 void foo(tint_array<int4, 4> src_param, tint_module_vars_struct tint_module_vars) {
   tint_array<int4, 4> src_function = {};
-  (*tint_module_vars.dst) = tint_array<int4, 4>{int4(1), int4(2), int4(3), int4(3)};
+  (*tint_module_vars.dst) = tint_array<int4, 4>{(int4(1)), (int4(2)), (int4(3)), (int4(3))};
   (*tint_module_vars.dst) = src_param;
   (*tint_module_vars.dst) = ret_arr();
   tint_array<int4, 4> const src_let = tint_array<int4, 4>{};
@@ -66,8 +66,8 @@ void main_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars)
       if ((v_1 >= 4u)) {
         break;
       }
-      (*tint_module_vars.src_workgroup)[v_1] = int4(0);
-      (*tint_module_vars.dst)[v_1] = int4(0);
+      (*tint_module_vars.src_workgroup)[v_1] = (int4(0));
+      (*tint_module_vars.dst)[v_1] = (int4(0));
       {
         v = (v_1 + 1u);
       }

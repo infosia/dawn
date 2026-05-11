@@ -13,7 +13,7 @@ struct tint_module_vars_struct {
 };
 
 void atomicStoreMax_707bde(tint_module_vars_struct tint_module_vars) {
-  atomic_max_explicit((&(*tint_module_vars.sb_rw).arg_0), as_type<ulong>(uint2(1u)), memory_order_relaxed);
+  atomic_max_explicit((&(*tint_module_vars.sb_rw).arg_0), as_type<ulong>((uint2(1u))), memory_order_relaxed);
 }
 
 fragment void fragment_main(device SB_RW_a64* sb_rw [[buffer(0)]]) {
@@ -35,7 +35,7 @@ struct tint_module_vars_struct {
 };
 
 void atomicStoreMax_707bde(tint_module_vars_struct tint_module_vars) {
-  atomic_max_explicit((&(*tint_module_vars.sb_rw).arg_0), as_type<ulong>(uint2(1u)), memory_order_relaxed);
+  atomic_max_explicit((&(*tint_module_vars.sb_rw).arg_0), as_type<ulong>((uint2(1u))), memory_order_relaxed);
 }
 
 [[max_total_threads_per_threadgroup(1)]]

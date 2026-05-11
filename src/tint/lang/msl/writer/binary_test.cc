@@ -257,8 +257,8 @@ TEST_P(MslWriterBinaryTest_SignedOverflowDefinedBehaviour, Emit_Vector) {
     EXPECT_EQ(output_.msl, MetalHeader() + R"(
 [[max_total_threads_per_threadgroup(1)]]
 kernel void entry() {
-  int4 const left = int4(1);
-  int4 const right = int4(3);
+  int4 const left = (int4(1));
+  int4 const right = (int4(3));
   int4 const val = as_type<int4>((as_type<uint4>(left) )" +
                                params.result + R"( as_type<uint4>(right)));
 }

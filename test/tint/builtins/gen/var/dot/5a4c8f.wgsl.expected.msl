@@ -45,7 +45,7 @@ void dot_5a4c8f() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   dot_5a4c8f();
   return out;
 }

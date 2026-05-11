@@ -45,7 +45,7 @@ void clamp_96e56a() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   clamp_96e56a();
   return out;
 }

@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int4 subgroupAdd_28db2c() {
-  int4 res = simd_sum(int4(1));
+  int4 res = simd_sum((int4(1)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 int4 subgroupAdd_28db2c() {
-  int4 res = simd_sum(int4(1));
+  int4 res = simd_sum((int4(1)));
   return res;
 }
 

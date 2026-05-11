@@ -38,11 +38,11 @@ kernel void v(const device FSUniforms* _storage [[buffer(0)]], const constant ti
   thread uint idx = 0u;
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.idx=(&idx), ._storage=_storage, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
   tint_array_lengths_struct const v_1 = tint_array_lengths_struct{.tint_array_length_0_0=(((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u)};
-  int2 v_2 = int2(0);
+  int2 v_2 = (int2(0));
   {
-    uint2 tint_loop_idx = uint2(4294967295u);
+    uint2 tint_loop_idx = (uint2(4294967295u));
     while(true) {
-      if (all((tint_loop_idx == uint2(0u)))) {
+      if (all((tint_loop_idx == (uint2(0u))))) {
         break;
       }
       if ((v_2.y >= (*tint_module_vars._storage).fsUniformData[min((*tint_module_vars.idx), (v_1.tint_array_length_0_0 - 1u))].size.y)) {
@@ -51,7 +51,7 @@ kernel void v(const device FSUniforms* _storage [[buffer(0)]], const constant ti
       {
         uint const tint_low_inc = (tint_loop_idx.x - 1u);
         tint_loop_idx.x = tint_low_inc;
-        uint const tint_carry = uint((tint_low_inc == 4294967295u));
+        uint const tint_carry = (uint((tint_low_inc == 4294967295u)));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
       }
     }
