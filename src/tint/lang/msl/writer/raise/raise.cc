@@ -240,10 +240,16 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
         };
 
         if (options.immediate_binding_point) {
+            printf("skip_bindings(immediate_binding_point): %d\n",
+                   options.immediate_binding_point->binding);
+            // FIXME: this is (0,30) and colliding with the actual BG
             cfg.skip_bindings.insert(options.immediate_binding_point.value());
         }
 
         if (array_length_from_constants.ubo_binding) {
+            printf("skip_bindings(array_length_from_constants): %d\n",
+                   array_length_from_constants.ubo_binding.value());
+            // FIXME: this 0u looks suspicious too
             cfg.skip_bindings.insert(
                 BindingPoint{0u, array_length_from_constants.ubo_binding.value()});
         }
