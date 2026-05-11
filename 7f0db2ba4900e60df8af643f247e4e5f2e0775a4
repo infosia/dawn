@@ -51,6 +51,24 @@
       "parentUuid": "8e1f8093_a1046d85",
       "revId": "7f0db2ba4900e60df8af643f247e4e5f2e0775a4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00b3f166_353e31f6",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T19:54:55Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "058b97c4_191b6952",
+      "revId": "7f0db2ba4900e60df8af643f247e4e5f2e0775a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
