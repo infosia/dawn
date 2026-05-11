@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "272bc140_9c790f91",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T08:25:06Z",
+      "side": 1,
+      "message": "This is an unrecoverable error that should produce a device loss, so `DAWN_INTERNAL_ERROR` would be the appropriate error here IMHO.\n\nIn the test we will need to check that this causes a loss on D3D12, I was thinking DeviceLostTests had some utility that we could copy here but it doesn\u0027t. It seems that we need to add an `EXPECT_DEVICE_LOSS` macro and machinery in DawnTest. Feel free to split in another CL (and just have a TODO here) since this a larger change than expected.",
+      "parentUuid": "049a72e1_aa8516ab",
+      "revId": "102ae90bb3503d06e2fd36c7a3f043df4a690680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c29f0028_45e36f12",
         "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
         "patchSetId": 2
