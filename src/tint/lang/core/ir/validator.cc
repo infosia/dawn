@@ -3018,7 +3018,8 @@ void Validator::ValidateIOAttributesImpl(IOAttributeContext& ctx,
                 return;
             }
 
-            if (a.builtin.has_value() && !skip_builtins) {
+            if (a.builtin.has_value() && !skip_builtins &&
+                usage != IOAttributeUsage::kUndefinedUsage) {
                 const auto& builtin = a.builtin.value();
 
                 uint32_t count = 0;
