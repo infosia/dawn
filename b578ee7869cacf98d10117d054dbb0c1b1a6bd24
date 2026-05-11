@@ -279,6 +279,24 @@
       "parentUuid": "a4d0fb6d_135f6e58",
       "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b010ea20_422ac2c1",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T08:28:05Z",
+      "side": 1,
+      "message": "This is cold code, unless querying the registry is massively slow (meaning 100 milliseconds), let\u0027s avoid global state.",
+      "parentUuid": "395a0b66_da9b549f",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
