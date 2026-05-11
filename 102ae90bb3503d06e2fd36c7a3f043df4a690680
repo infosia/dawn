@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a0fae0f_ad7e08df",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-11T16:15:03Z",
+      "side": 1,
+      "message": "Added a TODO and created a new bug.",
+      "parentUuid": "272bc140_9c790f91",
+      "revId": "102ae90bb3503d06e2fd36c7a3f043df4a690680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c29f0028_45e36f12",
