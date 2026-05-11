@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c24144f_c36455e9",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-11T19:04:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18e385b7_2ad61f8c",
+      "revId": "4b01165a328b66ef1b1dbafa53bce0d5e7d6ecd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2deb7ec9_168a1f61",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-11T18:30:57Z",
       "side": 1,
       "message": "Can you add a test with 2 usages to test the linalg include only happens once?",
+      "revId": "4b01165a328b66ef1b1dbafa53bce0d5e7d6ecd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59aadaa1_fe14b365",
+        "filename": "src/tint/lang/hlsl/writer/var_let_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-11T19:04:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2deb7ec9_168a1f61",
       "revId": "4b01165a328b66ef1b1dbafa53bce0d5e7d6ecd7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
