@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ae990e1_a4126513",
+        "filename": "src/dawn/native/TintUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T09:42:16Z",
+      "side": 1,
+      "message": "This will conveniently be completed and used for argument buffers.",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c23973fb_482d232f",
+        "filename": "src/dawn/native/TintUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T09:42:16Z",
+      "side": 1,
+      "message": "In these case that should cover all the possible resource that Dawn contains, can we instead `DAWN_UNREACHABLE`?",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a43e417_65628675",
+        "filename": "src/dawn/native/TintUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T09:42:16Z",
+      "side": 1,
+      "message": "And add TODOs for these?",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a63ca0db_e47a4b44",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T09:42:16Z",
+      "side": 1,
+      "message": "The computation of this table is the same between all backend, maybe it could live in `TintUtils.h` with a functor to have the remapped binding point, similar to `GenerateBindingRemapping`.",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6757c78b_65288bf7",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T09:42:16Z",
+      "side": 1,
+      "message": "```suggestion\n            for (const auto\u0026 [_, apiBindingIndex] : bgl-\u003eGetBindingMap()) {\n```",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
