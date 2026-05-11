@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcc03764_c5b31b87",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-11T15:55:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5dd980c5_e92bf6b8",
+      "revId": "5f2083de3388b9dcd088c3e43c4525f969df1dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74bcc85d_2c2b9343",
