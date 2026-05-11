@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e83b0d4_1310cfaf",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2853,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-11T18:21:15Z",
+      "side": 0,
+      "message": "Shouldn\u0027t we also remove the language feature? Or that\u0027s another CL?",
+      "revId": "cf01a289be5b7e6aa50b0599f9a856d1b5b991b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
