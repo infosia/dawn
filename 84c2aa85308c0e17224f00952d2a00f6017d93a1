@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da56c4d7_75854c36",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T19:05:37Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a5b4578d_a0459c98",
+      "revId": "84c2aa85308c0e17224f00952d2a00f6017d93a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b8864fc_ef2c2f9e",
