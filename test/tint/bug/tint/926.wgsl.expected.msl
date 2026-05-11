@@ -18,5 +18,5 @@ void computeMain_inner(uint3 global_id, tint_module_vars_struct tint_module_vars
 kernel void computeMain(uint3 global_id [[thread_position_in_grid]], device DrawIndirectArgs* drawOut [[buffer(0)]]) {
   thread uint cubeVerts = 0u;
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.drawOut=drawOut, .cubeVerts=(&cubeVerts)};
-  computeMain_inner(global_id, tint_module_vars);
+  (computeMain_inner(global_id, tint_module_vars));
 }

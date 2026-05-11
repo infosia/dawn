@@ -49,10 +49,10 @@ void no_deref_var() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v() {
-  deref_const();
-  no_deref_const();
-  deref_let();
-  no_deref_let();
-  deref_var();
-  no_deref_var();
+  (deref_const());
+  (no_deref_const());
+  (deref_let());
+  (no_deref_let());
+  (deref_var());
+  (no_deref_var());
 }

@@ -20,15 +20,15 @@ void main1_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars
   if ((tint_local_index < 1u)) {
     (*tint_module_vars.a) = 0;
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
   (*tint_module_vars.a) = 42;
-  uses_a(tint_module_vars);
+  (uses_a(tint_module_vars));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void main1(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=(&(*v).tint_symbol)};
-  main1_inner(tint_local_index, tint_module_vars);
+  (main1_inner(tint_local_index, tint_module_vars));
 }
 //
 // main2
@@ -52,15 +52,15 @@ void main2_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars
   if ((tint_local_index < 1u)) {
     (*tint_module_vars.b) = 0;
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
   (*tint_module_vars.b) = 7;
-  uses_b(tint_module_vars);
+  (uses_b(tint_module_vars));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void main2(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.b=(&(*v).tint_symbol)};
-  main2_inner(tint_local_index, tint_module_vars);
+  (main2_inner(tint_local_index, tint_module_vars));
 }
 //
 // main3
@@ -95,10 +95,10 @@ void no_uses() {
 
 void outer(tint_module_vars_struct tint_module_vars) {
   (*tint_module_vars.a) = 0;
-  uses_a(tint_module_vars);
-  uses_a_and_b(tint_module_vars);
-  uses_b(tint_module_vars);
-  no_uses();
+  (uses_a(tint_module_vars));
+  (uses_a_and_b(tint_module_vars));
+  (uses_b(tint_module_vars));
+  (no_uses());
 }
 
 void main3_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) {
@@ -106,15 +106,15 @@ void main3_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars
     (*tint_module_vars.a) = 0;
     (*tint_module_vars.b) = 0;
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
-  outer(tint_module_vars);
-  no_uses();
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
+  (outer(tint_module_vars));
+  (no_uses());
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void main3(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_2* v [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=(&(*v).tint_symbol), .b=(&(*v).tint_symbol_1)};
-  main3_inner(tint_local_index, tint_module_vars);
+  (main3_inner(tint_local_index, tint_module_vars));
 }
 //
 // main4
@@ -127,5 +127,5 @@ void no_uses() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void main4() {
-  no_uses();
+  (no_uses());
 }

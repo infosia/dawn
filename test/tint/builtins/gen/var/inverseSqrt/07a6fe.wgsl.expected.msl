@@ -9,7 +9,7 @@ void inverseSqrt_07a6fe() {
 }
 
 fragment void fragment_main() {
-  inverseSqrt_07a6fe();
+  (inverseSqrt_07a6fe());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void inverseSqrt_07a6fe() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  inverseSqrt_07a6fe();
+  (inverseSqrt_07a6fe());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void inverseSqrt_07a6fe() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  inverseSqrt_07a6fe();
+  (inverseSqrt_07a6fe());
   return out;
 }
 

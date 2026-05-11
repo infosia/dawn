@@ -9,7 +9,7 @@ void sign_3a39ac() {
 }
 
 fragment void fragment_main() {
-  sign_3a39ac();
+  (sign_3a39ac());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void sign_3a39ac() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  sign_3a39ac();
+  (sign_3a39ac());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void sign_3a39ac() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  sign_3a39ac();
+  (sign_3a39ac());
   return out;
 }
 

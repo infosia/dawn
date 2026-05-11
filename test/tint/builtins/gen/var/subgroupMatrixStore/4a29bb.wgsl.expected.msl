@@ -29,7 +29,7 @@ void subgroupMatrixStore_4a29bb(tint_module_vars_struct tint_module_vars) {
   simdgroup_half8x8 const v_1 = arg_2;
   uint const v_2 = max(arg_4, 8u);
   if ((((v + (v_2 * 7u)) + 8u) <= 1024u)) {
-    simdgroup_store(v_1, (&(*tint_module_vars.arg_0)[v]), ulong(v_2), ulong2(0ul), true);
+    (simdgroup_store(v_1, (&(*tint_module_vars.arg_0)[v]), ulong(v_2), ulong2(0ul), true));
   }
 }
 
@@ -48,12 +48,12 @@ void compute_main_inner(uint tint_local_index, tint_module_vars_struct tint_modu
       }
     }
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
-  subgroupMatrixStore_4a29bb(tint_module_vars);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
+  (subgroupMatrixStore_4a29bb(tint_module_vars));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_5 [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0=(&(*v_5).tint_symbol)};
-  compute_main_inner(tint_local_index, tint_module_vars);
+  (compute_main_inner(tint_local_index, tint_module_vars));
 }

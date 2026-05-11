@@ -9,7 +9,7 @@ void distance_83911f() {
 }
 
 fragment void fragment_main() {
-  distance_83911f();
+  (distance_83911f());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void distance_83911f() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  distance_83911f();
+  (distance_83911f());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void distance_83911f() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  distance_83911f();
+  (distance_83911f());
   return out;
 }
 

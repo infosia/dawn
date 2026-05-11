@@ -14,7 +14,7 @@ void asinh_468a48() {
 }
 
 float4 vertex_main_inner() {
-  asinh_468a48();
+  (asinh_468a48());
   return float4(0.0f);
 }
 
@@ -35,7 +35,7 @@ void asinh_468a48() {
 }
 
 fragment void fragment_main() {
-  asinh_468a48();
+  (asinh_468a48());
 }
 //
 // rgba32uintin
@@ -50,7 +50,7 @@ void asinh_468a48() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void rgba32uintin() {
-  asinh_468a48();
+  (asinh_468a48());
 }
 //
 // vs_main
@@ -198,14 +198,14 @@ void simulate_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_modul
   (*tint_module_vars.rand_seed) = (v_2 * (*tint_module_vars.sim_params).seed.zw);
   uint const idx = GlobalInvocationID.x;
   Particle particle = tint_load_struct_packed_vec3((&(*tint_module_vars.data).particles[min(idx, (v.tint_array_length_0_1 - 1u))]));
-  tint_store_and_preserve_padding((&(*tint_module_vars.data).particles[min(idx, (v.tint_array_length_0_1 - 1u))]), particle);
+  (tint_store_and_preserve_padding((&(*tint_module_vars.data).particles[min(idx, (v.tint_array_length_0_1 - 1u))]), particle));
 }
 
 [[max_total_threads_per_threadgroup(64)]]
 kernel void simulate(uint3 GlobalInvocationID [[thread_position_in_grid]], const constant SimulationParams* sim_params [[buffer(0)]], device Particles_packed_vec3* data [[buffer(1)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
   thread float2 rand_seed = 0.0f;
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.rand_seed=(&rand_seed), .sim_params=sim_params, .data=data, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
-  simulate_inner(GlobalInvocationID, tint_module_vars);
+  (simulate_inner(GlobalInvocationID, tint_module_vars));
 }
 //
 // export_level
@@ -258,12 +258,12 @@ void export_level_inner(uint3 coord, tint_module_vars_struct tint_module_vars) {
     float const sum = dot(float4(a, b, c, d), float4(1.0f));
     (*tint_module_vars.buf_out).weights[min(dst_offset, (v.tint_array_length_0_2 - 1u))] = fmod(sum, 4.0f);
     float4 const probabilities = (float4(a, (a * b), ((a / b) + c), sum) + max(sum, 0.0f));
-    tint_module_vars.tex_out.write(probabilities, uint2(int2(coord.xy)));
+    (tint_module_vars.tex_out.write(probabilities, uint2(int2(coord.xy))));
   }
 }
 
 [[max_total_threads_per_threadgroup(64)]]
 kernel void export_level(uint3 coord [[thread_position_in_grid]], const constant UBO* ubo [[buffer(0)]], const device Buffer* buf_in [[buffer(1)]], device Buffer* buf_out [[buffer(2)]], texture2d<float, access::write> tex_out [[texture(0)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.ubo=ubo, .buf_in=buf_in, .buf_out=buf_out, .tex_out=tex_out, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
-  export_level_inner(coord, tint_module_vars);
+  (export_level_inner(coord, tint_module_vars));
 }

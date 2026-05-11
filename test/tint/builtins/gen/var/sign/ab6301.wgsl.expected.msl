@@ -9,7 +9,7 @@ void sign_ab6301() {
 }
 
 fragment void fragment_main() {
-  sign_ab6301();
+  (sign_ab6301());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void sign_ab6301() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  sign_ab6301();
+  (sign_ab6301());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void sign_ab6301() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  sign_ab6301();
+  (sign_ab6301());
   return out;
 }
 

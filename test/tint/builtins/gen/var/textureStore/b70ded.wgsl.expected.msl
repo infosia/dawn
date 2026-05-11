@@ -11,12 +11,12 @@ struct tint_module_vars_struct {
 void textureStore_b70ded(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
   uint4 arg_2 = uint4(1u);
-  tint_module_vars.arg_0.write(arg_2, arg_1);
+  (tint_module_vars.arg_0.write(arg_2, arg_1));
 }
 
 fragment void fragment_main(texture1d<uint, access::write> arg_0 [[texture(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0=arg_0};
-  textureStore_b70ded(tint_module_vars);
+  (textureStore_b70ded(tint_module_vars));
 }
 //
 // compute_main
@@ -31,11 +31,11 @@ struct tint_module_vars_struct {
 void textureStore_b70ded(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
   uint4 arg_2 = uint4(1u);
-  tint_module_vars.arg_0.write(arg_2, arg_1);
+  (tint_module_vars.arg_0.write(arg_2, arg_1));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main(texture1d<uint, access::write> arg_0 [[texture(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0=arg_0};
-  textureStore_b70ded(tint_module_vars);
+  (textureStore_b70ded(tint_module_vars));
 }

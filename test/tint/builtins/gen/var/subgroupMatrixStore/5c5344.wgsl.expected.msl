@@ -29,12 +29,12 @@ void subgroupMatrixStore_5c5344(tint_module_vars_struct tint_module_vars) {
   simdgroup_float8x8 const v_1 = arg_2;
   uint const v_2 = max(arg_4, 8u);
   if ((((v + (v_2 * 7u)) + 8u) <= 1024u)) {
-    simdgroup_store(v_1, (&(*tint_module_vars.sb_rw).arg_0[v]), ulong(v_2), ulong2(0ul), true);
+    (simdgroup_store(v_1, (&(*tint_module_vars.sb_rw).arg_0[v]), ulong(v_2), ulong2(0ul), true));
   }
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main(device SB_RW* sb_rw [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sb_rw=sb_rw};
-  subgroupMatrixStore_5c5344(tint_module_vars);
+  (subgroupMatrixStore_5c5344(tint_module_vars));
 }

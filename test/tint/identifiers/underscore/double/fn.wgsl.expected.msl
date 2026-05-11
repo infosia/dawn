@@ -8,15 +8,15 @@ void a__() {
 }
 
 void b() {
-  a();
+  (a());
 }
 
 void b__() {
-  a__();
+  (a__());
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v() {
-  b();
-  b__();
+  (b());
+  (b__());
 }

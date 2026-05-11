@@ -12,7 +12,7 @@ fragment void v(texture2d<float, access::sample> tex [[texture(0)]], texture2d<f
   uint2 const v_2 = (uint2(tint_module_vars.tex.get_width(v_1), tint_module_vars.tex.get_height(v_1)) - uint2(1u));
   float4 res = tint_module_vars.tex.read(min(uint2(int2(1)), v_2), v_1);
   float4 const v_3 = res;
-  const_cast<texture2d<float, access::read_write>thread &>(tint_module_vars.store).fence();
-  tint_module_vars.store.write(v_3, uint2(int2(0)));
-  const_cast<texture2d<float, access::read_write>thread &>(tint_module_vars.store).fence();
+  (const_cast<texture2d<float, access::read_write>thread &>(tint_module_vars.store).fence());
+  (tint_module_vars.store.write(v_3, uint2(int2(0))));
+  (const_cast<texture2d<float, access::read_write>thread &>(tint_module_vars.store).fence());
 }

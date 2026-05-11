@@ -11,5 +11,5 @@ void f_inner(uint3 v) {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void f(uint3 v [[thread_position_in_grid]]) {
-  f_inner(v);
+  (f_inner(v));
 }

@@ -28,7 +28,7 @@ int f() {
       if (all((tint_loop_idx == uint2(0u)))) {
         break;
       }
-      g();
+      (g());
       break;
     }
   }

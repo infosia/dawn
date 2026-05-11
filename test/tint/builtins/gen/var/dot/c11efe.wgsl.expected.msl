@@ -9,7 +9,7 @@ void dot_c11efe() {
 }
 
 fragment void fragment_main() {
-  dot_c11efe();
+  (dot_c11efe());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void dot_c11efe() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  dot_c11efe();
+  (dot_c11efe());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void dot_c11efe() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  dot_c11efe();
+  (dot_c11efe());
   return out;
 }
 

@@ -9,7 +9,7 @@ void sinh_a3da7c() {
 }
 
 fragment void fragment_main() {
-  sinh_a3da7c();
+  (sinh_a3da7c());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void sinh_a3da7c() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  sinh_a3da7c();
+  (sinh_a3da7c());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void sinh_a3da7c() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  sinh_a3da7c();
+  (sinh_a3da7c());
   return out;
 }
 

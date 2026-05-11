@@ -29,5 +29,5 @@ void main_inner(uint subgroup_id, tint_module_vars_struct tint_module_vars) {
 [[max_total_threads_per_threadgroup(64)]]
 kernel void v(uint subgroup_id [[simdgroup_index_in_threadgroup]], device tint_array<uint, 1>* output [[buffer(0)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.output=output, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
-  main_inner(subgroup_id, tint_module_vars);
+  (main_inner(subgroup_id, tint_module_vars));
 }

@@ -9,7 +9,7 @@ void tan_7be368() {
 }
 
 fragment void fragment_main() {
-  tan_7be368();
+  (tan_7be368());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void tan_7be368() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  tan_7be368();
+  (tan_7be368());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void tan_7be368() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  tan_7be368();
+  (tan_7be368());
   return out;
 }
 

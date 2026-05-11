@@ -39,7 +39,7 @@ void main_inner(uint3 lid, uint tint_local_index, tint_module_vars_struct tint_m
   if ((tint_local_index < 256u)) {
     (*tint_module_vars.outputs)[(tint_local_index / 32u)][(tint_local_index % 32u)] = uint4(0u);
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
   int const init = int(lid.z);
   {
     int S = init;
@@ -61,10 +61,10 @@ void main_inner(uint3 lid, uint tint_local_index, tint_module_vars_struct tint_m
         break;
       }
       (*tint_module_vars.outputs)[lid.z][lid.x] = tint_v4f32_to_v4u32(tint_module_vars.src_image2d.read(uint2(uint((*tint_module_vars.U).i3.x)), 0));
-      threadgroup_barrier(mem_flags::mem_threadgroup);
+      (threadgroup_barrier(mem_flags::mem_threadgroup));
       uint4 result = (*tint_module_vars.outputs)[lid.z][lid.x];
       uint2 const v = uint2(uint((*tint_module_vars.U).i3.x));
-      tint_module_vars.dst_image2d.write(result, v);
+      (tint_module_vars.dst_image2d.write(result, v));
       {
         s_group = as_type<int>((as_type<uint>(s_group) + as_type<uint>(8)));
       }
@@ -75,5 +75,5 @@ void main_inner(uint3 lid, uint tint_local_index, tint_module_vars_struct tint_m
 [[max_total_threads_per_threadgroup(256)]]
 kernel void v_1(uint3 lid [[thread_position_in_threadgroup]], uint tint_local_index [[thread_index_in_threadgroup]], const constant Scalars* U [[buffer(0)]], texture2d<uint, access::write> dst_image2d [[texture(0)]], texture2d<float, access::sample> src_image2d [[texture(1)]], threadgroup tint_symbol_1* v_2 [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.U=U, .dst_image2d=dst_image2d, .src_image2d=src_image2d, .outputs=(&(*v_2).tint_symbol)};
-  main_inner(lid, tint_local_index, tint_module_vars);
+  (main_inner(lid, tint_local_index, tint_module_vars));
 }

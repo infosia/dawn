@@ -9,7 +9,7 @@ void trunc_f0f1a1() {
 }
 
 fragment void fragment_main() {
-  trunc_f0f1a1();
+  (trunc_f0f1a1());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void trunc_f0f1a1() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  trunc_f0f1a1();
+  (trunc_f0f1a1());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void trunc_f0f1a1() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  trunc_f0f1a1();
+  (trunc_f0f1a1());
   return out;
 }
 

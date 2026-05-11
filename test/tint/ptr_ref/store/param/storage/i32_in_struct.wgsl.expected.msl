@@ -16,5 +16,5 @@ void func(device int* const pointer) {
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v(device str* S [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.S=S};
-  func((&(*tint_module_vars.S).i));
+  (func((&(*tint_module_vars.S).i)));
 }

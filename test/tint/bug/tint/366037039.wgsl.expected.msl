@@ -50,7 +50,7 @@ void tint_store_array_packed_vec3_1(threadgroup tint_array<tint_packed_vec3_u32_
 void tint_store_array_packed_vec3(threadgroup S_packed_vec3* const to, S value) {
   (*to).a = packed_uint3(value.a);
   (*to).b = value.b;
-  tint_store_array_packed_vec3_1((&(*to).c), value.c);
+  (tint_store_array_packed_vec3_1((&(*to).c), value.c));
 }
 
 void tint_store_and_preserve_padding_1(device tint_array<tint_packed_vec3_u32_array_element, 4>* const target, tint_array<uint3, 4> value_param) {
@@ -73,7 +73,7 @@ void tint_store_and_preserve_padding_1(device tint_array<tint_packed_vec3_u32_ar
 void tint_store_and_preserve_padding(device S_packed_vec3* const target, S value_param) {
   (*target).a = packed_uint3(value_param.a);
   (*target).b = value_param.b;
-  tint_store_and_preserve_padding_1((&(*target).c), value_param.c);
+  (tint_store_and_preserve_padding_1((&(*target).c), value_param.c));
 }
 
 tint_array<uint3, 4> tint_load_array_packed_vec3_1(device tint_array<tint_packed_vec3_u32_array_element, 4>* const from) {
@@ -115,16 +115,16 @@ void foo_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) 
       }
     }
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
   S const u = tint_load_struct_packed_vec3(tint_module_vars.ubuffer);
   S const s = tint_load_struct_packed_vec3_1(tint_module_vars.sbuffer);
   S const w = tint_load_struct_packed_vec3_1(tint_module_vars.sbuffer);
-  tint_store_and_preserve_padding(tint_module_vars.sbuffer, S{});
-  tint_store_array_packed_vec3(tint_module_vars.wbuffer, S{});
+  (tint_store_and_preserve_padding(tint_module_vars.sbuffer, S{}));
+  (tint_store_array_packed_vec3(tint_module_vars.wbuffer, S{}));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void foo(uint tint_local_index [[thread_index_in_threadgroup]], const constant S_packed_vec3* ubuffer [[buffer(0)]], device S_packed_vec3* sbuffer [[buffer(1)]], threadgroup tint_symbol_1* v_8 [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.ubuffer=ubuffer, .sbuffer=sbuffer, .wbuffer=(&(*v_8).tint_symbol)};
-  foo_inner(tint_local_index, tint_module_vars);
+  (foo_inner(tint_local_index, tint_module_vars));
 }

@@ -36,7 +36,7 @@ void main_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars)
       }
     }
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
   threadgroup tint_array<int, 246>* const p = tint_module_vars.W;
   (*p)[0u] = 42;
 }
@@ -44,5 +44,5 @@ void main_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars)
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v_2(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_3 [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.W=(&(*v_3).tint_symbol)};
-  main_inner(tint_local_index, tint_module_vars);
+  (main_inner(tint_local_index, tint_module_vars));
 }

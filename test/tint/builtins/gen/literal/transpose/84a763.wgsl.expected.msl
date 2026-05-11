@@ -9,7 +9,7 @@ void transpose_84a763() {
 }
 
 fragment void fragment_main() {
-  transpose_84a763();
+  (transpose_84a763());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void transpose_84a763() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  transpose_84a763();
+  (transpose_84a763());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void transpose_84a763() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  transpose_84a763();
+  (transpose_84a763());
   return out;
 }
 

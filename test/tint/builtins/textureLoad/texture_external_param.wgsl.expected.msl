@@ -167,7 +167,7 @@ void doTextureLoad(tint_module_vars_struct tint_module_vars) {
 }
 
 float4 vertex_main_inner(tint_module_vars_struct tint_module_vars) {
-  doTextureLoad(tint_module_vars);
+  (doTextureLoad(tint_module_vars));
   return float4(0.0f);
 }
 
@@ -343,7 +343,7 @@ void doTextureLoad(tint_module_vars_struct tint_module_vars) {
 
 fragment void fragment_main(const constant tint_ExternalTextureParams_packed_vec3* arg_0_params [[buffer(0)]], texture2d<float, access::sample> arg_0_plane0 [[texture(0)]], texture2d<float, access::sample> arg_0_plane1 [[texture(1)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0_params=arg_0_params, .arg_0_plane0=arg_0_plane0, .arg_0_plane1=arg_0_plane1};
-  doTextureLoad(tint_module_vars);
+  (doTextureLoad(tint_module_vars));
 }
 //
 // compute_main
@@ -512,5 +512,5 @@ void doTextureLoad(tint_module_vars_struct tint_module_vars) {
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main(const constant tint_ExternalTextureParams_packed_vec3* arg_0_params [[buffer(0)]], texture2d<float, access::sample> arg_0_plane0 [[texture(0)]], texture2d<float, access::sample> arg_0_plane1 [[texture(1)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0_params=arg_0_params, .arg_0_plane0=arg_0_plane0, .arg_0_plane1=arg_0_plane1};
-  doTextureLoad(tint_module_vars);
+  (doTextureLoad(tint_module_vars));
 }

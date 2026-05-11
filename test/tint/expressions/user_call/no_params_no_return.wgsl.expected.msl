@@ -8,6 +8,6 @@ void c() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void b() {
-  c();
-  c();
+  (c());
+  (c());
 }

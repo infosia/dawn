@@ -16,5 +16,5 @@ void main_inner(int loc0, uint loc1, float loc2, float4 loc3) {
 }
 
 fragment void v_1(main_inputs inputs [[stage_in]]) {
-  main_inner(inputs.loc0, inputs.loc1, inputs.loc2, inputs.loc3);
+  (main_inner(inputs.loc0, inputs.loc1, inputs.loc2, inputs.loc3));
 }

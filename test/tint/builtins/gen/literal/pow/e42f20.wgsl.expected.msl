@@ -9,7 +9,7 @@ void pow_e42f20() {
 }
 
 fragment void fragment_main() {
-  pow_e42f20();
+  (pow_e42f20());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void pow_e42f20() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  pow_e42f20();
+  (pow_e42f20());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void pow_e42f20() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  pow_e42f20();
+  (pow_e42f20());
   return out;
 }
 

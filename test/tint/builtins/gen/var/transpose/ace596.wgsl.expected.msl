@@ -9,7 +9,7 @@ void transpose_ace596() {
 }
 
 fragment void fragment_main() {
-  transpose_ace596();
+  (transpose_ace596());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void transpose_ace596() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  transpose_ace596();
+  (transpose_ace596());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void transpose_ace596() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  transpose_ace596();
+  (transpose_ace596());
   return out;
 }
 

@@ -9,7 +9,7 @@ void sin_a9ab19() {
 }
 
 fragment void fragment_main() {
-  sin_a9ab19();
+  (sin_a9ab19());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void sin_a9ab19() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  sin_a9ab19();
+  (sin_a9ab19());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void sin_a9ab19() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  sin_a9ab19();
+  (sin_a9ab19());
   return out;
 }
 

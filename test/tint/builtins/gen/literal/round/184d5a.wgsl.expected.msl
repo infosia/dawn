@@ -9,7 +9,7 @@ void round_184d5a() {
 }
 
 fragment void fragment_main() {
-  round_184d5a();
+  (round_184d5a());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void round_184d5a() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  round_184d5a();
+  (round_184d5a());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void round_184d5a() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  round_184d5a();
+  (round_184d5a());
   return out;
 }
 

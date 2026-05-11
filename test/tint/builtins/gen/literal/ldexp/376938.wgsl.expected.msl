@@ -9,7 +9,7 @@ void ldexp_376938() {
 }
 
 fragment void fragment_main() {
-  ldexp_376938();
+  (ldexp_376938());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void ldexp_376938() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  ldexp_376938();
+  (ldexp_376938());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void ldexp_376938() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  ldexp_376938();
+  (ldexp_376938());
   return out;
 }
 

@@ -9,7 +9,7 @@ void log_655989() {
 }
 
 fragment void fragment_main() {
-  log_655989();
+  (log_655989());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void log_655989() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  log_655989();
+  (log_655989());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void log_655989() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  log_655989();
+  (log_655989());
   return out;
 }
 

@@ -13,5 +13,5 @@ void do_texture_load(texture2d<float, access::sample> t) {
 
 fragment void fs(array<texture2d<float, access::sample>, 4> sampled_textures [[texture(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sampled_textures=sampled_textures};
-  do_texture_load(tint_module_vars.sampled_textures[0]);
+  (do_texture_load(tint_module_vars.sampled_textures[0]));
 }

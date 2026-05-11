@@ -9,7 +9,7 @@ void select_4e60da() {
 }
 
 fragment void fragment_main() {
-  select_4e60da();
+  (select_4e60da());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void select_4e60da() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  select_4e60da();
+  (select_4e60da());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void select_4e60da() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  select_4e60da();
+  (select_4e60da());
   return out;
 }
 

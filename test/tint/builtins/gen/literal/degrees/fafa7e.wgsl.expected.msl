@@ -9,7 +9,7 @@ void degrees_fafa7e() {
 }
 
 fragment void fragment_main() {
-  degrees_fafa7e();
+  (degrees_fafa7e());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void degrees_fafa7e() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  degrees_fafa7e();
+  (degrees_fafa7e());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void degrees_fafa7e() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  degrees_fafa7e();
+  (degrees_fafa7e());
   return out;
 }
 

@@ -8,5 +8,5 @@ void f(thread float* const p) {
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v() {
   float a = 1.0f;
-  f((&a));
+  (f((&a)));
 }

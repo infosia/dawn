@@ -9,7 +9,7 @@ void sqrt_072192() {
 }
 
 fragment void fragment_main() {
-  sqrt_072192();
+  (sqrt_072192());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void sqrt_072192() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  sqrt_072192();
+  (sqrt_072192());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void sqrt_072192() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  sqrt_072192();
+  (sqrt_072192());
   return out;
 }
 
