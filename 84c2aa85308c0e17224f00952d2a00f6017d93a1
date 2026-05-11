@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22ea5d98_a2f51e44",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-11T19:04:48Z",
+      "side": 1,
+      "message": "Correct, it\u0027s a zero init or a single-value splat.\nAdded a comment and an assertion to clarify.",
+      "parentUuid": "65848bff_ace7570e",
+      "revId": "84c2aa85308c0e17224f00952d2a00f6017d93a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "808d0e1f_8a036b95",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-11T18:27:13Z",
       "side": 1,
       "message": "Do we need to assert this isn\u0027t a runtime array?",
+      "revId": "84c2aa85308c0e17224f00952d2a00f6017d93a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99892e97_2783f495",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-11T19:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "808d0e1f_8a036b95",
       "revId": "84c2aa85308c0e17224f00952d2a00f6017d93a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a5b4578d_a0459c98",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-11T19:04:48Z",
+      "side": 1,
+      "message": "We do not support splats for arrays, and AFAICT HLSL does not either.",
+      "parentUuid": "d85a48e6_78dbb22d",
+      "revId": "84c2aa85308c0e17224f00952d2a00f6017d93a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9b8864fc_ef2c2f9e",
         "filename": "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init_test.cc",
         "patchSetId": 2
@@ -65,6 +119,30 @@
       "writtenOn": "2026-05-11T18:27:13Z",
       "side": 1,
       "message": "Please fix this WARNING reported by ClangTidy: check: misc-override-with-different-visibility\n\nvisibility of function \u0027SetUp\u0027 i...\n\ncheck: misc-override-with-different-visibility\n\nvisibility of function \u0027SetUp\u0027 is changed from protected in class \u0027Test\u0027 to private (https://clang.llvm.org/extra/clang-tidy/checks/misc/override-with-different-visibility.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-override-with-different-visibility` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "84c2aa85308c0e17224f00952d2a00f6017d93a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "530e9506_0ebfe9b5",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-11T19:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b8864fc_ef2c2f9e",
       "range": {
         "startLine": 43,
         "startChar": 0,
