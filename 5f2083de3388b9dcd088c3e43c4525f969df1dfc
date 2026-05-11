@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5dd980c5_e92bf6b8",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T14:31:21Z",
+      "side": 1,
+      "message": "It is annoying but, it\u0027s also super helpful when you\u0027re reading the emitted IR or SPIR-V and see something like `%2:bool \u003d eq %sampler_kind %40` to be able to quickly see that `40` is `kSampler_filtering`",
+      "parentUuid": "aa8858a4_655e514f",
+      "revId": "5f2083de3388b9dcd088c3e43c4525f969df1dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "74bcc85d_2c2b9343",
         "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
         "patchSetId": 11
@@ -70,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d0ce66f_65c807d1",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T14:31:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74bcc85d_2c2b9343",
+      "revId": "5f2083de3388b9dcd088c3e43c4525f969df1dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8466a470_edc061ea",
@@ -87,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c02c027_15e590e2",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T14:31:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8466a470_edc061ea",
+      "revId": "5f2083de3388b9dcd088c3e43c4525f969df1dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6efb032_5d2f9ee4",
@@ -100,6 +154,30 @@
       "writtenOn": "2026-05-09T03:53:30Z",
       "side": 1,
       "message": "Nit: TINT_IR_UNREACHABLE",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 52
+      },
+      "revId": "5f2083de3388b9dcd088c3e43c4525f969df1dfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d12adf15_611be1e2",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T14:31:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6efb032_5d2f9ee4",
       "range": {
         "startLine": 224,
         "startChar": 0,
