@@ -201,9 +201,6 @@ LanguageFeature ParseLanguageFeature(std::string_view str) {
     if (str == "chromium_testing_unsafe_experimental") {
         return LanguageFeature::kChromiumTestingUnsafeExperimental;
     }
-    if (str == "filtering_parameters") {
-        return LanguageFeature::kFilteringParameters;
-    }
     if (str == "fragment_depth") {
         return LanguageFeature::kFragmentDepth;
     }
@@ -269,8 +266,6 @@ std::string_view ToString(LanguageFeature value) {
             return "chromium_testing_unimplemented";
         case LanguageFeature::kChromiumTestingUnsafeExperimental:
             return "chromium_testing_unsafe_experimental";
-        case LanguageFeature::kFilteringParameters:
-            return "filtering_parameters";
         case LanguageFeature::kFragmentDepth:
             return "fragment_depth";
         case LanguageFeature::kImmediateAddressSpace:
