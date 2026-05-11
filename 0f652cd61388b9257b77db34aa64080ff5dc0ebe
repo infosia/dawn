@@ -16,6 +16,212 @@
       "message": "Thanks Kyle for the suggestions around std::span! I haven\u0027t used it much before so I wasn\u0027t aware of all the best style choices.",
       "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98ac9d17_843c313b",
+        "filename": "src/dawn/native/Blob.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T18:20:00Z",
+      "side": 1,
+      "message": "static_cast will work for void* to byte like conversion.",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af776d50_94adddee",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T18:20:00Z",
+      "side": 1,
+      "message": "Q: Why convert to string_view instead of span?",
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b81f7a70_177297ac",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T18:20:00Z",
+      "side": 1,
+      "message": "Not for this CL but we could make Blob always have space hash and just use 0 when it\u0027s disabled. That would avoid reallocation/copy when hashing is enabled.",
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "743874a5_bf6f372d",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T18:20:00Z",
+      "side": 1,
+      "message": "We don\u0027t need to check mLoadFunction !\u003d nullptr a second time here, right? That can be removed from the lambda.",
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa14b079_fc2aacb8",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T18:20:00Z",
+      "side": 1,
+      "message": "Can you omit this std::span? std::array should convert.",
+      "range": {
+        "startLine": 178,
+        "startChar": 37,
+        "endLine": 178,
+        "endChar": 47
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09515648_e70ec821",
+        "filename": "src/dawn/native/BlobCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T18:20:00Z",
+      "side": 1,
+      "message": "Q: Why does this have a fixed size? I don\u0027t see that information used.\n\nFWIW this function could take std::span\u003cstd::byte\u003e as parameter and not be templated.",
+      "range": {
+        "startLine": 81,
+        "startChar": 56,
+        "endLine": 81,
+        "endChar": 58
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef3f8199_859ccf34",
+        "filename": "src/dawn/native/stream/ByteVectorSink.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T18:20:00Z",
+      "side": 1,
+      "message": "I think you should be able to convert this t span and then use subspan so it\u0027s checked? Like `std::as_bytes(this).subspan(currentSize, bytes)`.",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe2b7432_ffeebbb6",
+        "filename": "src/dawn/native/stream/ByteVectorSink.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T18:20:00Z",
+      "side": 1,
+      "message": "nit: std::ranges:copy(vec, ..)",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e80fa3b5_ca8ea53e",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T18:20:00Z",
+      "side": 1,
+      "message": "What happens if length is 0?",
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6401f51_b2e735b5",
+        "filename": "src/dawn/tests/unittests/native/BlobTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T18:20:00Z",
+      "side": 1,
+      "message": "nit: In general I don\u0027t think you need this std::span() just std::as_bytes(data).",
+      "range": {
+        "startLine": 61,
+        "startChar": 36,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
