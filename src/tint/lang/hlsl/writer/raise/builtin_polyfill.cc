@@ -81,6 +81,10 @@ struct State {
         tint::UnorderedKeyWrapper<std::tuple<const core::type::Type*, const core::type::Type*>>;
     Hashmap<BitcastType, core::ir::Function*, 4> bitcast_funcs_{};
 
+    using MatrixScalarKey =
+        tint::UnorderedKeyWrapper<std::tuple<const core::type::SubgroupMatrix*, core::BinaryOp>>;
+    Hashmap<MatrixScalarKey, core::ir::Function*, 4> matrix_scalar_funcs_{};
+
     /// Process the module.
     void Process() {
         // Find the bitcasts that need replacing.
@@ -208,6 +212,10 @@ struct State {
                         break;
                     case core::BuiltinFn::kSubgroupMatrixMultiply:
                         call_worklist.push_back([this, call] { SubgroupMatrixMultiply(call); });
+                        break;
+                    case core::BuiltinFn::kSubgroupMatrixScalarAdd:
+                        call_worklist.push_back(
+                            [this, call] { SubgroupMatrixScalar(call, core::BinaryOp::kAdd); });
                         break;
                     case core::BuiltinFn::kTextureDimensions:
                         call_worklist.push_back([this, call] { TextureDimensions(call); });
@@ -1930,6 +1938,61 @@ struct State {
             b.CallExplicitWithResult<hlsl::ir::BuiltinCall>(call->DetachResult(),
                                                             hlsl::BuiltinFn::kMultiply,
                                                             Vector{sm_ty->Type()}, left, right);
+        });
+        call->Destroy();
+    }
+
+    core::ir::Function* GetMatrixScalarHelper(const core::type::SubgroupMatrix* sm_ty,
+                                              core::BinaryOp op) {
+        return matrix_scalar_funcs_.GetOrAdd(
+            MatrixScalarKey{{sm_ty, op}}, [&]() -> core::ir::Function* {
+                auto* elem_ty = sm_ty->Type();
+                auto* scalar_ty = elem_ty;
+                if (elem_ty->Is<core::type::I8>()) {
+                    scalar_ty = ty.i32();
+                } else if (elem_ty->Is<core::type::U8>()) {
+                    scalar_ty = ty.u32();
+                }
+
+                auto fn_name = b.ir.symbols.New("tint_subgroup_matrix_scalar_op").Name();
+                auto* f = b.Function(fn_name, sm_ty);
+                auto* m_param = b.FunctionParam("m", sm_ty);
+                auto* s_param = b.FunctionParam("s", scalar_ty);
+                f->SetParams({m_param, s_param});
+
+                b.Append(f->Block(), [&] {
+                    auto* res = b.Var(ty.ptr<function>(sm_ty));
+                    b.LoopRange(0_u, u32(sm_ty->Columns() * sm_ty->Rows()), 1_u,
+                                [&](core::ir::Value* idx) {
+                                    auto* val = b.MemberCall<hlsl::ir::MemberBuiltinCall>(
+                                        scalar_ty, hlsl::BuiltinFn::kGet, m_param, idx);
+
+                                    core::ir::Value* op_result = nullptr;
+                                    switch (op) {
+                                        case core::BinaryOp::kAdd:
+                                            op_result = b.Add(val, s_param)->Result();
+                                            break;
+                                        default:
+                                            TINT_IR_UNREACHABLE(ir);
+                                    }
+
+                                    b.MemberCall<hlsl::ir::MemberBuiltinCall>(
+                                        ty.void_(), hlsl::BuiltinFn::kSet, res, idx, op_result);
+                                });
+                    b.Return(f, b.Load(res));
+                });
+                return f;
+            });
+    }
+
+    void SubgroupMatrixScalar(core::ir::CoreBuiltinCall* call, core::BinaryOp op) {
+        auto* mat = call->Args()[0];
+        auto* scalar = call->Args()[1];
+        auto* sm_ty = mat->Type()->As<core::type::SubgroupMatrix>();
+
+        auto* helper = GetMatrixScalarHelper(sm_ty, op);
+        b.InsertBefore(call, [&] {  //
+            b.CallWithResult(call->DetachResult(), helper, mat, scalar);
         });
         call->Destroy();
     }

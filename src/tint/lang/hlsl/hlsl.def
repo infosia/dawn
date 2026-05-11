@@ -344,6 +344,24 @@ implicit(N: num, T: scalar) fn select(vec<N, bool>, vec<N, T>, vec<N, T>) -> vec
                         subgroup_matrix<subgroup_matrix_kind_right, T, C, K>)
       -> subgroup_matrix<subgroup_matrix_kind_result, TR, C, R>
 
+@member_function implicit(K: subgroup_matrix_kind, T: fiu32_f16, C: num, R: num)
+  fn Get(subgroup_matrix<K, T, C, R>, index: u32) -> T
+
+@member_function implicit(K: subgroup_matrix_kind, C: num, R: num)
+  fn Get(subgroup_matrix<K, i8, C, R>, index: u32) -> i32
+
+@member_function implicit(K: subgroup_matrix_kind, C: num, R: num)
+  fn Get(subgroup_matrix<K, u8, C, R>, index: u32) -> u32
+
+@member_function implicit(K: subgroup_matrix_kind, T: fiu32_f16, C: num, R: num)
+  fn Set(ptr<function, subgroup_matrix<K, T, C, R>, read_write>, index: u32, value: T)
+
+@member_function implicit(K: subgroup_matrix_kind, C: num, R: num)
+  fn Set(ptr<function, subgroup_matrix<K, i8, C, R>, read_write>, index: u32, value: i32)
+
+@member_function implicit(K: subgroup_matrix_kind, C: num, R: num)
+  fn Set(ptr<function, subgroup_matrix<K, u8, C, R>, read_write>, index: u32, value: u32)
+
 ////////////////////////////////////////////////////////////////////////////////
 // Member Functions                                                           //
 ////////////////////////////////////////////////////////////////////////////////

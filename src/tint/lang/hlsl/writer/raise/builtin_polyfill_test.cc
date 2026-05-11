@@ -7711,5 +7711,248 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixMultiply_F32) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixScalarAdd_F32) {
+    auto* mat_ty = ty.subgroup_matrix_left(ty.f32(), 4, 4);
+    auto* func = b.Function("foo", mat_ty);
+    auto* m = b.FunctionParam("m", mat_ty);
+    auto* s = b.FunctionParam("s", ty.f32());
+    func->SetParams({m, s});
+
+    b.Append(func->Block(), [&] {
+        auto* call = b.Call(mat_ty, core::BuiltinFn::kSubgroupMatrixScalarAdd, m, s);
+        b.Return(func, call);
+    });
+
+    auto* src = R"(
+%foo = func(%m:subgroup_matrix_left<f32, 4, 4>, %s:f32):subgroup_matrix_left<f32, 4, 4> {
+  $B1: {
+    %4:subgroup_matrix_left<f32, 4, 4> = subgroupMatrixScalarAdd %m, %s
+    ret %4
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%m:subgroup_matrix_left<f32, 4, 4>, %s:f32):subgroup_matrix_left<f32, 4, 4> {
+  $B1: {
+    %4:subgroup_matrix_left<f32, 4, 4> = call %tint_subgroup_matrix_scalar_op, %m, %s
+    ret %4
+  }
+}
+%tint_subgroup_matrix_scalar_op = func(%m_1:subgroup_matrix_left<f32, 4, 4>, %s_1:f32):subgroup_matrix_left<f32, 4, 4> {  # %m_1: 'm', %s_1: 's'
+  $B2: {
+    %8:ptr<function, subgroup_matrix_left<f32, 4, 4>, read_write> = var undef
+    loop [i: $B3, b: $B4, c: $B5] {  # loop_1
+      $B3: {  # initializer
+        next_iteration 0u  # -> $B4
+      }
+      $B4 (%idx:u32): {  # body
+        %10:bool = gte %idx, 16u
+        if %10 [t: $B6] {  # if_1
+          $B6: {  # true
+            exit_loop  # loop_1
+          }
+        }
+        %11:f32 = %m_1.Get %idx
+        %12:f32 = add %11, %s_1
+        %13:void = %8.Set %idx, %12
+        continue  # -> $B5
+      }
+      $B5: {  # continuing
+        %14:u32 = add %idx, 1u
+        next_iteration %14  # -> $B4
+      }
+    }
+    %15:subgroup_matrix_left<f32, 4, 4> = load %8
+    ret %15
+  }
+}
+)";
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixScalarAdd_Deduplication) {
+    auto* mat_f32 = ty.subgroup_matrix_left(ty.f32(), 4, 4);
+    auto* mat_i32 = ty.subgroup_matrix_left(ty.i32(), 4, 4);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* m1 = b.Var(ty.ptr<function>(mat_f32));
+        auto* m2 = b.Var(ty.ptr<function>(mat_i32));
+
+        b.Call(mat_f32, core::BuiltinFn::kSubgroupMatrixScalarAdd, b.Load(m1), 1_f);
+        b.Call(mat_f32, core::BuiltinFn::kSubgroupMatrixScalarAdd, b.Load(m1), 2_f);
+
+        b.Call(mat_i32, core::BuiltinFn::kSubgroupMatrixScalarAdd, b.Load(m2), 1_i);
+        b.Call(mat_i32, core::BuiltinFn::kSubgroupMatrixScalarAdd, b.Load(m2), 2_i);
+
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%foo = func():void {
+  $B1: {
+    %2:ptr<function, subgroup_matrix_left<f32, 4, 4>, read_write> = var undef
+    %3:ptr<function, subgroup_matrix_left<i32, 4, 4>, read_write> = var undef
+    %4:subgroup_matrix_left<f32, 4, 4> = load %2
+    %5:subgroup_matrix_left<f32, 4, 4> = subgroupMatrixScalarAdd %4, 1.0f
+    %6:subgroup_matrix_left<f32, 4, 4> = load %2
+    %7:subgroup_matrix_left<f32, 4, 4> = subgroupMatrixScalarAdd %6, 2.0f
+    %8:subgroup_matrix_left<i32, 4, 4> = load %3
+    %9:subgroup_matrix_left<i32, 4, 4> = subgroupMatrixScalarAdd %8, 1i
+    %10:subgroup_matrix_left<i32, 4, 4> = load %3
+    %11:subgroup_matrix_left<i32, 4, 4> = subgroupMatrixScalarAdd %10, 2i
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func():void {
+  $B1: {
+    %2:ptr<function, subgroup_matrix_left<f32, 4, 4>, read_write> = var undef
+    %3:ptr<function, subgroup_matrix_left<i32, 4, 4>, read_write> = var undef
+    %4:subgroup_matrix_left<f32, 4, 4> = load %2
+    %5:subgroup_matrix_left<f32, 4, 4> = call %tint_subgroup_matrix_scalar_op, %4, 1.0f
+    %7:subgroup_matrix_left<f32, 4, 4> = load %2
+    %8:subgroup_matrix_left<f32, 4, 4> = call %tint_subgroup_matrix_scalar_op, %7, 2.0f
+    %9:subgroup_matrix_left<i32, 4, 4> = load %3
+    %10:subgroup_matrix_left<i32, 4, 4> = call %tint_subgroup_matrix_scalar_op_1, %9, 1i
+    %12:subgroup_matrix_left<i32, 4, 4> = load %3
+    %13:subgroup_matrix_left<i32, 4, 4> = call %tint_subgroup_matrix_scalar_op_1, %12, 2i
+    ret
+  }
+}
+%tint_subgroup_matrix_scalar_op = func(%m:subgroup_matrix_left<f32, 4, 4>, %s:f32):subgroup_matrix_left<f32, 4, 4> {
+  $B2: {
+    %16:ptr<function, subgroup_matrix_left<f32, 4, 4>, read_write> = var undef
+    loop [i: $B3, b: $B4, c: $B5] {  # loop_1
+      $B3: {  # initializer
+        next_iteration 0u  # -> $B4
+      }
+      $B4 (%idx:u32): {  # body
+        %18:bool = gte %idx, 16u
+        if %18 [t: $B6] {  # if_1
+          $B6: {  # true
+            exit_loop  # loop_1
+          }
+        }
+        %19:f32 = %m.Get %idx
+        %20:f32 = add %19, %s
+        %21:void = %16.Set %idx, %20
+        continue  # -> $B5
+      }
+      $B5: {  # continuing
+        %22:u32 = add %idx, 1u
+        next_iteration %22  # -> $B4
+      }
+    }
+    %23:subgroup_matrix_left<f32, 4, 4> = load %16
+    ret %23
+  }
+}
+%tint_subgroup_matrix_scalar_op_1 = func(%m_1:subgroup_matrix_left<i32, 4, 4>, %s_1:i32):subgroup_matrix_left<i32, 4, 4> {  # %m_1: 'm', %s_1: 's'
+  $B7: {
+    %26:ptr<function, subgroup_matrix_left<i32, 4, 4>, read_write> = var undef
+    loop [i: $B8, b: $B9, c: $B10] {  # loop_2
+      $B8: {  # initializer
+        next_iteration 0u  # -> $B9
+      }
+      $B9 (%idx_1:u32): {  # body
+        %28:bool = gte %idx_1, 16u
+        if %28 [t: $B11] {  # if_2
+          $B11: {  # true
+            exit_loop  # loop_2
+          }
+        }
+        %29:i32 = %m_1.Get %idx_1
+        %30:i32 = add %29, %s_1
+        %31:void = %26.Set %idx_1, %30
+        continue  # -> $B10
+      }
+      $B10: {  # continuing
+        %32:u32 = add %idx_1, 1u
+        next_iteration %32  # -> $B9
+      }
+    }
+    %33:subgroup_matrix_left<i32, 4, 4> = load %26
+    ret %33
+  }
+}
+)";
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixScalarAdd_I8) {
+    capabilities = core::ir::Capabilities{
+        core::ir::Capability::kAllowNonCoreTypes,
+        core::ir::Capability::kAllow8BitIntegers,
+    };
+
+    auto* mat_ty = ty.subgroup_matrix_left(ty.i8(), 4, 4);
+    auto* func = b.Function("foo", mat_ty);
+    auto* m = b.FunctionParam("m", mat_ty);
+    auto* s = b.FunctionParam("s", ty.i32());
+    func->SetParams({m, s});
+
+    b.Append(func->Block(), [&] {
+        auto* call = b.Call(mat_ty, core::BuiltinFn::kSubgroupMatrixScalarAdd, m, s);
+        b.Return(func, call);
+    });
+
+    auto* src = R"(
+%foo = func(%m:subgroup_matrix_left<i8, 4, 4>, %s:i32):subgroup_matrix_left<i8, 4, 4> {
+  $B1: {
+    %4:subgroup_matrix_left<i8, 4, 4> = subgroupMatrixScalarAdd %m, %s
+    ret %4
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%m:subgroup_matrix_left<i8, 4, 4>, %s:i32):subgroup_matrix_left<i8, 4, 4> {
+  $B1: {
+    %4:subgroup_matrix_left<i8, 4, 4> = call %tint_subgroup_matrix_scalar_op, %m, %s
+    ret %4
+  }
+}
+%tint_subgroup_matrix_scalar_op = func(%m_1:subgroup_matrix_left<i8, 4, 4>, %s_1:i32):subgroup_matrix_left<i8, 4, 4> {  # %m_1: 'm', %s_1: 's'
+  $B2: {
+    %8:ptr<function, subgroup_matrix_left<i8, 4, 4>, read_write> = var undef
+    loop [i: $B3, b: $B4, c: $B5] {  # loop_1
+      $B3: {  # initializer
+        next_iteration 0u  # -> $B4
+      }
+      $B4 (%idx:u32): {  # body
+        %10:bool = gte %idx, 16u
+        if %10 [t: $B6] {  # if_1
+          $B6: {  # true
+            exit_loop  # loop_1
+          }
+        }
+        %11:i32 = %m_1.Get %idx
+        %12:i32 = add %11, %s_1
+        %13:void = %8.Set %idx, %12
+        continue  # -> $B5
+      }
+      $B5: {  # continuing
+        %14:u32 = add %idx, 1u
+        next_iteration %14  # -> $B4
+      }
+    }
+    %15:subgroup_matrix_left<i8, 4, 4> = load %8
+    ret %15
+  }
+}
+)";
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer::raise
