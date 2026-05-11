@@ -118,6 +118,11 @@ class PhysicalDeviceBase : public RefCounted {
     FeatureValidationResult ValidateFeatureSupportedWithToggles(wgpu::FeatureName feature,
                                                                 const TogglesState& toggles) const;
 
+    // Just a wrapper of ValidateFeatureSupportedWithToggles, return true if a feature is supported
+    // by this adapter AND suitable with given toggles.
+    bool IsFeatureSupportedWithToggles(wgpu::FeatureName feature,
+                                       const TogglesState& toggles) const;
+
     // Populate backend properties. Ownership of allocations written are owned by the caller.
     virtual void PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
                                            const TogglesState& adapterToggles) const = 0;
@@ -146,10 +151,6 @@ class PhysicalDeviceBase : public RefCounted {
     uint32_t mSubgroupMinSize = kDefaultSubgroupMinSize;
     uint32_t mSubgroupMaxSize = kDefaultSubgroupMaxSize;
 
-    // Juat a wrapper of ValidateFeatureSupportedWithToggles, return true if a feature is supported
-    // by this adapter AND suitable with given toggles.
-    bool IsFeatureSupportedWithToggles(wgpu::FeatureName feature,
-                                       const TogglesState& toggles) const;
     // Mark a feature as enabled in mSupportedFeatures.
     void EnableFeature(Feature feature);
     // Used for the tests that intend to use an adapter without all features enabled.

@@ -1305,6 +1305,7 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
         // See crbug.com/391680973. We disable subgroups on this device unless the user has
         // explicitly enabled the 'enable_subgroups_intel_gen9' toggle.
         case wgpu::FeatureName::Subgroups:
+        case wgpu::FeatureName::SubgroupSizeControl:
             if (gpu_info::IsIntelGen9(GetVendorId(), GetDeviceId()) &&
                 !toggles.IsEnabled(Toggle::EnableSubgroupsIntelGen9)) {
                 return FeatureValidationResult(

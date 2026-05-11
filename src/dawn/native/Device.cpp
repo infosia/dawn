@@ -1712,6 +1712,8 @@ void DeviceBase::ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescri
         mEnabledFeatures.EnableFeature(Feature::RG11B10UfloatRenderable);
     }
     if (mEnabledFeatures.IsEnabled(Feature::SubgroupSizeControl)) {
+        DAWN_ASSERT(GetPhysicalDevice()->IsFeatureSupportedWithToggles(wgpu::FeatureName::Subgroups,
+                                                                       mToggles));
         mEnabledFeatures.EnableFeature(Feature::Subgroups);
     }
 
