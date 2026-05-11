@@ -16,6 +16,23 @@
       "message": "PTAL, thanks.",
       "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ea87d2c_ed679d1d",
+        "filename": "tools/fetch_agility_sdk.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-05-11T08:16:26Z",
+      "side": 1,
+      "message": "Referenced from http://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/scripts/winappsdk_setup.py",
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
