@@ -238,6 +238,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "af57f4e2_af387731",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-11T19:35:43Z",
+      "side": 1,
+      "message": "I feel the same way as Kyle, it seems like there\u0027s no very clear criteria for what we should do. But I lean toward using std::byte in Dawn for the following reasons:\n- Unlike Chromium, it is practical for us to change ALL usages of char/uint8_t/void* to std::byte (I already started looking at it a few weeks ago and I think it will be fairly easy)\n- Unlike Chromium, we intend for Dawn to work with strict aliasing enabled (AFAIK)\n\nAnd I think the guideline should be that we use it for any data that will be reinterpreted.\n\nAs for using it in this interface specifically, this will force std::byte to be used in Chromium, right? Will it require us to bypass the std::byte ban for a nontrivial amount of Chromium code? If yes, maybe we should use uint8_t here just for practicality.",
+      "parentUuid": "1bf4da2c_76f80c1f",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7f07e974_a1dd57e4",
         "filename": "src/dawn/native/Blob.h",
         "patchSetId": 5
