@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half4 asinh_95ab2b() {
-  half4 res = half4(0.88134765625h);
+  half4 res = (half4(0.88134765625h));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 half4 asinh_95ab2b() {
-  half4 res = half4(0.88134765625h);
+  half4 res = (half4(0.88134765625h));
   return res;
 }
 
@@ -54,13 +54,13 @@ struct vertex_main_outputs {
 };
 
 half4 asinh_95ab2b() {
-  half4 res = half4(0.88134765625h);
+  half4 res = (half4(0.88134765625h));
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = asinh_95ab2b();
   return out;
 }

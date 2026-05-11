@@ -55,7 +55,7 @@ void e(half f_1) {
 S tint_load_struct_packed_vec3(const constant S_packed_vec3* const from) {
   int const v_1 = (*from).before;
   tint_array<tint_packed_vec3_f16_array_element, 3> const v_2 = (*from).m;
-  half3x3 const v_3 = half3x3(half3(v_2[0u].packed), half3(v_2[1u].packed), half3(v_2[2u].packed));
+  half3x3 const v_3 = (half3x3((half3(v_2[0u].packed)), (half3(v_2[1u].packed)), (half3(v_2[2u].packed))));
   return S{.before=v_1, .m=v_3, .after=(*from).after};
 }
 
@@ -72,7 +72,7 @@ kernel void f(const constant tint_array<S_packed_vec3, 4>* u [[buffer(0)]]) {
   a(tint_load_array_packed_vec3(tint_module_vars.u));
   b(tint_load_struct_packed_vec3((&(*tint_module_vars.u)[2u])));
   tint_array<tint_packed_vec3_f16_array_element, 3> const v_7 = (*tint_module_vars.u)[2u].m;
-  c(half3x3(half3(v_7[0u].packed), half3(v_7[1u].packed), half3(v_7[2u].packed)));
-  d(half3((*tint_module_vars.u)[0u].m[1u].packed).zxy);
-  e(half3((*tint_module_vars.u)[0u].m[1u].packed).zxy.x);
+  c((half3x3((half3(v_7[0u].packed)), (half3(v_7[1u].packed)), (half3(v_7[2u].packed)))));
+  d((half3((*tint_module_vars.u)[0u].m[1u].packed)).zxy);
+  e((half3((*tint_module_vars.u)[0u].m[1u].packed)).zxy.x);
 }

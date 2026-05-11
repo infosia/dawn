@@ -23,22 +23,22 @@ struct main_inputs {
 };
 
 void main_inner(float x, tint_module_vars_struct tint_module_vars) {
-  float4 v = float4(0.0f);
+  float4 v = (float4(0.0f));
   {
-    uint2 tint_loop_idx = uint2(4294967295u);
+    uint2 tint_loop_idx = (uint2(4294967295u));
     while(true) {
-      if (all((tint_loop_idx == uint2(0u)))) {
+      if (all((tint_loop_idx == (uint2(0u))))) {
         break;
       }
       if ((x > v.x)) {
       } else {
         break;
       }
-      v = tint_module_vars.t.sample(tint_module_vars.s, float2(0.0f));
+      v = tint_module_vars.t.sample(tint_module_vars.s, (float2(0.0f)));
       {
         uint const tint_low_inc = (tint_loop_idx.x - 1u);
         tint_loop_idx.x = tint_low_inc;
-        uint const tint_carry = uint((tint_low_inc == 4294967295u));
+        uint const tint_carry = (uint((tint_low_inc == 4294967295u)));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
       }
     }

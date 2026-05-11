@@ -9,8 +9,8 @@ struct tint_module_vars_struct {
 };
 
 half4 mix_f1a543() {
-  half4 arg_0 = half4(1.0h);
-  half4 arg_1 = half4(1.0h);
+  half4 arg_0 = (half4(1.0h));
+  half4 arg_1 = (half4(1.0h));
   half arg_2 = 1.0h;
   half4 res = mix(arg_0, arg_1, arg_2);
   return res;
@@ -31,8 +31,8 @@ struct tint_module_vars_struct {
 };
 
 half4 mix_f1a543() {
-  half4 arg_0 = half4(1.0h);
-  half4 arg_1 = half4(1.0h);
+  half4 arg_0 = (half4(1.0h));
+  half4 arg_1 = (half4(1.0h));
   half arg_2 = 1.0h;
   half4 res = mix(arg_0, arg_1, arg_2);
   return res;
@@ -60,8 +60,8 @@ struct vertex_main_outputs {
 };
 
 half4 mix_f1a543() {
-  half4 arg_0 = half4(1.0h);
-  half4 arg_1 = half4(1.0h);
+  half4 arg_0 = (half4(1.0h));
+  half4 arg_1 = (half4(1.0h));
   half arg_2 = 1.0h;
   half4 res = mix(arg_0, arg_1, arg_2);
   return res;
@@ -69,7 +69,7 @@ half4 mix_f1a543() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = mix_f1a543();
   return out;
 }

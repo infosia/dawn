@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupMax_15ccbf() {
-  uint4 arg_0 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
   uint4 res = simd_max(arg_0);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupMax_15ccbf() {
-  uint4 arg_0 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
   uint4 res = simd_max(arg_0);
   return res;
 }

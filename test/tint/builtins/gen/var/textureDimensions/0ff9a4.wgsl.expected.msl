@@ -11,8 +11,8 @@ struct tint_module_vars_struct {
 
 uint2 textureDimensions_0ff9a4(tint_module_vars_struct tint_module_vars) {
   int arg_1 = 1;
-  uint const v = min(uint(arg_1), (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
-  uint2 res = uint2(tint_module_vars.arg_0.get_width(v), tint_module_vars.arg_0.get_height(v));
+  uint const v = min((uint(arg_1)), (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  uint2 res = (uint2(tint_module_vars.arg_0.get_width(v), tint_module_vars.arg_0.get_height(v)));
   return res;
 }
 
@@ -33,8 +33,8 @@ struct tint_module_vars_struct {
 
 uint2 textureDimensions_0ff9a4(tint_module_vars_struct tint_module_vars) {
   int arg_1 = 1;
-  uint const v = min(uint(arg_1), (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
-  uint2 res = uint2(tint_module_vars.arg_0.get_width(v), tint_module_vars.arg_0.get_height(v));
+  uint const v = min((uint(arg_1)), (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  uint2 res = (uint2(tint_module_vars.arg_0.get_width(v), tint_module_vars.arg_0.get_height(v)));
   return res;
 }
 
@@ -65,14 +65,14 @@ struct vertex_main_outputs {
 
 uint2 textureDimensions_0ff9a4(tint_module_vars_struct tint_module_vars) {
   int arg_1 = 1;
-  uint const v = min(uint(arg_1), (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
-  uint2 res = uint2(tint_module_vars.arg_0.get_width(v), tint_module_vars.arg_0.get_height(v));
+  uint const v = min((uint(arg_1)), (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  uint2 res = (uint2(tint_module_vars.arg_0.get_width(v), tint_module_vars.arg_0.get_height(v)));
   return res;
 }
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = textureDimensions_0ff9a4(tint_module_vars);
   return out;
 }

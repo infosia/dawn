@@ -69,7 +69,7 @@ void frexp_5257dd() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   frexp_5257dd();
   return out;
 }

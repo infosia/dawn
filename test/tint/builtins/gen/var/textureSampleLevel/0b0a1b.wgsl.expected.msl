@@ -11,10 +11,10 @@ struct tint_module_vars_struct {
 };
 
 float4 textureSampleLevel_0b0a1b(tint_module_vars_struct tint_module_vars) {
-  float2 arg_2 = float2(1.0f);
+  float2 arg_2 = (float2(1.0f));
   float arg_3 = 1.0f;
   float2 const v = arg_2;
-  float4 res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, v, level(arg_3), int2(1));
+  float4 res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, v, (level(arg_3)), (int2(1)));
   return res;
 }
 
@@ -35,10 +35,10 @@ struct tint_module_vars_struct {
 };
 
 float4 textureSampleLevel_0b0a1b(tint_module_vars_struct tint_module_vars) {
-  float2 arg_2 = float2(1.0f);
+  float2 arg_2 = (float2(1.0f));
   float arg_3 = 1.0f;
   float2 const v = arg_2;
-  float4 res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, v, level(arg_3), int2(1));
+  float4 res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, v, (level(arg_3)), (int2(1)));
   return res;
 }
 
@@ -69,16 +69,16 @@ struct vertex_main_outputs {
 };
 
 float4 textureSampleLevel_0b0a1b(tint_module_vars_struct tint_module_vars) {
-  float2 arg_2 = float2(1.0f);
+  float2 arg_2 = (float2(1.0f));
   float arg_3 = 1.0f;
   float2 const v = arg_2;
-  float4 res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, v, level(arg_3), int2(1));
+  float4 res = tint_module_vars.arg_0.sample(tint_module_vars.arg_1, v, (level(arg_3)), (int2(1)));
   return res;
 }
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = textureSampleLevel_0b0a1b(tint_module_vars);
   return out;
 }

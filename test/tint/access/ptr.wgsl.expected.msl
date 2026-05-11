@@ -40,7 +40,7 @@ int accept_ptr_to_struct_access_pass_ptr(thread S* const val) {
 }
 
 int tint_f32_to_i32(float value) {
-  return int(clamp(value, -2147483648.0f, 2147483520.0f));
+  return (int(clamp(value, -2147483648.0f, 2147483520.0f)));
 }
 
 int accept_ptr_vec_access_elements(thread float3* const v1) {
@@ -60,7 +60,7 @@ void main_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars)
   int v1 = 0;
   S v2 = S{};
   thread S* const v3 = (&v2);
-  float3 v4 = float3(0.0f);
+  float3 v4 = (float3(0.0f));
   int const t1 = atomic_load_explicit(tint_module_vars.g1, memory_order_relaxed);
   int const v_2 = accept_ptr_deref_pass_through((&v1));
   int const v_3 = as_type<int>((as_type<uint>(v_2) + as_type<uint>(accept_ptr_to_struct_and_access((&v2)))));

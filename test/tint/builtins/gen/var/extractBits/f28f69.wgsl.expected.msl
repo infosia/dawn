@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 extractBits_f28f69() {
-  uint2 arg_0 = uint2(1u);
+  uint2 arg_0 = (uint2(1u));
   uint arg_1 = 1u;
   uint arg_2 = 1u;
   uint const v = min(arg_1, 32u);
@@ -32,7 +32,7 @@ struct tint_module_vars_struct {
 };
 
 uint2 extractBits_f28f69() {
-  uint2 arg_0 = uint2(1u);
+  uint2 arg_0 = (uint2(1u));
   uint arg_1 = 1u;
   uint arg_2 = 1u;
   uint const v = min(arg_1, 32u);
@@ -62,7 +62,7 @@ struct vertex_main_outputs {
 };
 
 uint2 extractBits_f28f69() {
-  uint2 arg_0 = uint2(1u);
+  uint2 arg_0 = (uint2(1u));
   uint arg_1 = 1u;
   uint arg_2 = 1u;
   uint const v = min(arg_1, 32u);
@@ -72,7 +72,7 @@ uint2 extractBits_f28f69() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = extractBits_f28f69();
   return out;
 }

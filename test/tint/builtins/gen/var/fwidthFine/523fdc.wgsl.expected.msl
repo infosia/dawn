@@ -6,7 +6,7 @@ struct tint_module_vars_struct {
 };
 
 float3 fwidthFine_523fdc() {
-  float3 arg_0 = float3(1.0f);
+  float3 arg_0 = (float3(1.0f));
   float3 const v = arg_0;
   float3 const v_1 = dfdx(v);
   float3 res = (abs(v_1) + abs(dfdy(v)));
@@ -15,5 +15,5 @@ float3 fwidthFine_523fdc() {
 
 fragment void fragment_main(device packed_float3* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = packed_float3(fwidthFine_523fdc());
+  (*tint_module_vars.prevent_dce) = (packed_float3(fwidthFine_523fdc()));
 }

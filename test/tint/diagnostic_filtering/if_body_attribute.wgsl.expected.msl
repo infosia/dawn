@@ -24,7 +24,7 @@ struct main_inputs {
 
 void main_inner(float x, tint_module_vars_struct tint_module_vars) {
   if ((x > 0.0f)) {
-    tint_module_vars.t.sample(tint_module_vars.s, float2(0.0f));
+    tint_module_vars.t.sample(tint_module_vars.s, (float2(0.0f)));
   }
 }
 

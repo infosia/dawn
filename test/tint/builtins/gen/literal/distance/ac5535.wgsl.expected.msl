@@ -45,7 +45,7 @@ void distance_ac5535() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   distance_ac5535();
   return out;
 }

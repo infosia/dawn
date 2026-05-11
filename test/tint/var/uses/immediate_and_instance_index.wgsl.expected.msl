@@ -11,7 +11,7 @@ struct main_outputs {
 
 float4 main_inner(uint b, tint_module_vars_struct tint_module_vars) {
   float const v = (*tint_module_vars.a);
-  return float4((v + float(b)));
+  return (float4((v + (float(b)))));
 }
 
 vertex main_outputs v_1(uint b [[instance_id]], const constant float* a [[buffer(30)]]) {

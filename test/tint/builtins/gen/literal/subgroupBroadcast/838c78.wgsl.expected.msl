@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 float4 subgroupBroadcast_838c78() {
-  float4 res = simd_broadcast(float4(1.0f), 1);
+  float4 res = simd_broadcast((float4(1.0f)), 1);
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 float4 subgroupBroadcast_838c78() {
-  float4 res = simd_broadcast(float4(1.0f), 1);
+  float4 res = simd_broadcast((float4(1.0f)), 1);
   return res;
 }
 

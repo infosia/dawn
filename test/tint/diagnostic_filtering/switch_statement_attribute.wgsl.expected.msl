@@ -24,7 +24,7 @@ void main_inner(float x) {
   } else {
     v = false;
   }
-  switch(int(v)) {
+  switch((int(v))) {
     default:
     {
       break;

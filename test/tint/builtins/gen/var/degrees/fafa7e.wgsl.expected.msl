@@ -45,7 +45,7 @@ void degrees_fafa7e() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   degrees_fafa7e();
   return out;
 }

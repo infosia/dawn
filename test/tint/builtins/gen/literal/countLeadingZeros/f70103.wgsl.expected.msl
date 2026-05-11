@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 countLeadingZeros_f70103() {
-  uint4 res = uint4(31u);
+  uint4 res = (uint4(31u));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 countLeadingZeros_f70103() {
-  uint4 res = uint4(31u);
+  uint4 res = (uint4(31u));
   return res;
 }
 
@@ -54,13 +54,13 @@ struct vertex_main_outputs {
 };
 
 uint4 countLeadingZeros_f70103() {
-  uint4 res = uint4(31u);
+  uint4 res = (uint4(31u));
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = countLeadingZeros_f70103();
   return out;
 }

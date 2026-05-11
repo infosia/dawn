@@ -9,9 +9,9 @@ struct tint_module_vars_struct {
 };
 
 float2 select_266aff() {
-  float2 arg_0 = float2(1.0f);
-  float2 arg_1 = float2(1.0f);
-  bool2 arg_2 = bool2(true);
+  float2 arg_0 = (float2(1.0f));
+  float2 arg_1 = (float2(1.0f));
+  bool2 arg_2 = (bool2(true));
   float2 res = select(arg_0, arg_1, arg_2);
   return res;
 }
@@ -31,9 +31,9 @@ struct tint_module_vars_struct {
 };
 
 float2 select_266aff() {
-  float2 arg_0 = float2(1.0f);
-  float2 arg_1 = float2(1.0f);
-  bool2 arg_2 = bool2(true);
+  float2 arg_0 = (float2(1.0f));
+  float2 arg_1 = (float2(1.0f));
+  bool2 arg_2 = (bool2(true));
   float2 res = select(arg_0, arg_1, arg_2);
   return res;
 }
@@ -60,16 +60,16 @@ struct vertex_main_outputs {
 };
 
 float2 select_266aff() {
-  float2 arg_0 = float2(1.0f);
-  float2 arg_1 = float2(1.0f);
-  bool2 arg_2 = bool2(true);
+  float2 arg_0 = (float2(1.0f));
+  float2 arg_1 = (float2(1.0f));
+  bool2 arg_2 = (bool2(true));
   float2 res = select(arg_0, arg_1, arg_2);
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = select_266aff();
   return out;
 }

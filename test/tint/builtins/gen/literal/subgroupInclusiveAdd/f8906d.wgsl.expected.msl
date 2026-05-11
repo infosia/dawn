@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 float2 subgroupInclusiveAdd_f8906d() {
-  float2 res = simd_prefix_inclusive_sum(float2(1.0f));
+  float2 res = simd_prefix_inclusive_sum((float2(1.0f)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 float2 subgroupInclusiveAdd_f8906d() {
-  float2 res = simd_prefix_inclusive_sum(float2(1.0f));
+  float2 res = simd_prefix_inclusive_sum((float2(1.0f)));
   return res;
 }
 

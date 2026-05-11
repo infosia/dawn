@@ -49,7 +49,7 @@ void tint_store_and_preserve_padding(device S_packed_vec3* const target, S value
   (*target).u = value_param.u;
   (*target).v = value_param.v;
   (*target).x = value_param.x;
-  (*target).y = packed_half3(value_param.y);
+  (*target).y = (packed_half3(value_param.y));
 }
 
 void frag_main_inner(S input, tint_module_vars_struct tint_module_vars) {

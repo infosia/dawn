@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupXor_9d77e4() {
-  uint4 res = simd_xor(uint4(1u));
+  uint4 res = simd_xor((uint4(1u)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 uint4 subgroupXor_9d77e4() {
-  uint4 res = simd_xor(uint4(1u));
+  uint4 res = simd_xor((uint4(1u)));
   return res;
 }
 

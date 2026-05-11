@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 float2 subgroupShuffleUp_b58804() {
-  float2 arg_0 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
   uint arg_1 = 1u;
   float2 res = simd_shuffle_up(arg_0, arg_1);
   return res;
@@ -30,7 +30,7 @@ struct tint_module_vars_struct {
 };
 
 float2 subgroupShuffleUp_b58804() {
-  float2 arg_0 = float2(1.0f);
+  float2 arg_0 = (float2(1.0f));
   uint arg_1 = 1u;
   float2 res = simd_shuffle_up(arg_0, arg_1);
   return res;

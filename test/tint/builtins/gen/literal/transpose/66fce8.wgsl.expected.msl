@@ -5,7 +5,7 @@
 using namespace metal;
 
 void transpose_66fce8() {
-  float3x3 res = float3x3(float3(1.0f), float3(1.0f), float3(1.0f));
+  float3x3 res = (float3x3((float3(1.0f)), (float3(1.0f)), (float3(1.0f))));
 }
 
 fragment void fragment_main() {
@@ -18,7 +18,7 @@ fragment void fragment_main() {
 using namespace metal;
 
 void transpose_66fce8() {
-  float3x3 res = float3x3(float3(1.0f), float3(1.0f), float3(1.0f));
+  float3x3 res = (float3x3((float3(1.0f)), (float3(1.0f)), (float3(1.0f))));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -40,12 +40,12 @@ struct vertex_main_outputs {
 };
 
 void transpose_66fce8() {
-  float3x3 res = float3x3(float3(1.0f), float3(1.0f), float3(1.0f));
+  float3x3 res = (float3x3((float3(1.0f)), (float3(1.0f)), (float3(1.0f))));
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   transpose_66fce8();
   return out;
 }

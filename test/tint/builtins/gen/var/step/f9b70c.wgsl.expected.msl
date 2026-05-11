@@ -45,7 +45,7 @@ void step_f9b70c() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   step_f9b70c();
   return out;
 }

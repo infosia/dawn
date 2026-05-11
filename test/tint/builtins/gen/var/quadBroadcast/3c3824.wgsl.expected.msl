@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half2 quadBroadcast_3c3824() {
-  half2 arg_0 = half2(1.0h);
+  half2 arg_0 = (half2(1.0h));
   half2 res = quad_broadcast(arg_0, 1u);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 half2 quadBroadcast_3c3824() {
-  half2 arg_0 = half2(1.0h);
+  half2 arg_0 = (half2(1.0h));
   half2 res = quad_broadcast(arg_0, 1u);
   return res;
 }

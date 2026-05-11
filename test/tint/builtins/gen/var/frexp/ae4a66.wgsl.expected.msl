@@ -10,7 +10,7 @@ struct frexp_result_vec3_f16 {
 };
 
 void frexp_ae4a66() {
-  half3 arg_0 = half3(1.0h);
+  half3 arg_0 = (half3(1.0h));
   frexp_result_vec3_f16 v = {};
   v.fract = frexp(arg_0, v.exp);
   frexp_result_vec3_f16 res = v;
@@ -31,7 +31,7 @@ struct frexp_result_vec3_f16 {
 };
 
 void frexp_ae4a66() {
-  half3 arg_0 = half3(1.0h);
+  half3 arg_0 = (half3(1.0h));
   frexp_result_vec3_f16 v = {};
   v.fract = frexp(arg_0, v.exp);
   frexp_result_vec3_f16 res = v;
@@ -61,7 +61,7 @@ struct vertex_main_outputs {
 };
 
 void frexp_ae4a66() {
-  half3 arg_0 = half3(1.0h);
+  half3 arg_0 = (half3(1.0h));
   frexp_result_vec3_f16 v = {};
   v.fract = frexp(arg_0, v.exp);
   frexp_result_vec3_f16 res = v;
@@ -69,7 +69,7 @@ void frexp_ae4a66() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   frexp_ae4a66();
   return out;
 }

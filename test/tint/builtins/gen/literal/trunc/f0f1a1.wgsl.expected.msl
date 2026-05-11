@@ -5,7 +5,7 @@
 using namespace metal;
 
 void trunc_f0f1a1() {
-  float4 res = float4(1.0f);
+  float4 res = (float4(1.0f));
 }
 
 fragment void fragment_main() {
@@ -18,7 +18,7 @@ fragment void fragment_main() {
 using namespace metal;
 
 void trunc_f0f1a1() {
-  float4 res = float4(1.0f);
+  float4 res = (float4(1.0f));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -40,12 +40,12 @@ struct vertex_main_outputs {
 };
 
 void trunc_f0f1a1() {
-  float4 res = float4(1.0f);
+  float4 res = (float4(1.0f));
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   trunc_f0f1a1();
   return out;
 }

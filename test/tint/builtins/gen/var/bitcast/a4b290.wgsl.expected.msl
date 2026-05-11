@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 float4 bitcast_a4b290() {
-  uint4 arg_0 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
   float4 res = as_type<float4>(arg_0);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 float4 bitcast_a4b290() {
-  uint4 arg_0 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
   float4 res = as_type<float4>(arg_0);
   return res;
 }
@@ -56,14 +56,14 @@ struct vertex_main_outputs {
 };
 
 float4 bitcast_a4b290() {
-  uint4 arg_0 = uint4(1u);
+  uint4 arg_0 = (uint4(1u));
   float4 res = as_type<float4>(arg_0);
   return res;
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = bitcast_a4b290();
   return out;
 }

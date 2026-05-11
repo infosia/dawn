@@ -10,7 +10,7 @@ struct tint_module_vars_struct {
 };
 
 float4 textureLoad_83162f(tint_module_vars_struct tint_module_vars) {
-  float4 res = tint_module_vars.arg_0.read(min(uint3(1u), (uint3(tint_module_vars.arg_0.get_width(0u), tint_module_vars.arg_0.get_height(0u), tint_module_vars.arg_0.get_depth(0u)) - uint3(1u))));
+  float4 res = tint_module_vars.arg_0.read(min((uint3(1u)), ((uint3(tint_module_vars.arg_0.get_width(0u), tint_module_vars.arg_0.get_height(0u), tint_module_vars.arg_0.get_depth(0u))) - (uint3(1u)))));
   return res;
 }
 
@@ -30,7 +30,7 @@ struct tint_module_vars_struct {
 };
 
 float4 textureLoad_83162f(tint_module_vars_struct tint_module_vars) {
-  float4 res = tint_module_vars.arg_0.read(min(uint3(1u), (uint3(tint_module_vars.arg_0.get_width(0u), tint_module_vars.arg_0.get_height(0u), tint_module_vars.arg_0.get_depth(0u)) - uint3(1u))));
+  float4 res = tint_module_vars.arg_0.read(min((uint3(1u)), ((uint3(tint_module_vars.arg_0.get_width(0u), tint_module_vars.arg_0.get_height(0u), tint_module_vars.arg_0.get_depth(0u))) - (uint3(1u)))));
   return res;
 }
 
@@ -60,13 +60,13 @@ struct vertex_main_outputs {
 };
 
 float4 textureLoad_83162f(tint_module_vars_struct tint_module_vars) {
-  float4 res = tint_module_vars.arg_0.read(min(uint3(1u), (uint3(tint_module_vars.arg_0.get_width(0u), tint_module_vars.arg_0.get_height(0u), tint_module_vars.arg_0.get_depth(0u)) - uint3(1u))));
+  float4 res = tint_module_vars.arg_0.read(min((uint3(1u)), ((uint3(tint_module_vars.arg_0.get_width(0u), tint_module_vars.arg_0.get_height(0u), tint_module_vars.arg_0.get_depth(0u))) - (uint3(1u)))));
   return res;
 }
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   out.prevent_dce = textureLoad_83162f(tint_module_vars);
   return out;
 }

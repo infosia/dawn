@@ -13,8 +13,8 @@ struct frag_main_outputs {
 
 FragOutput frag_main_inner() {
   FragOutput output = {};
-  output.color = float4(0.5f, 0.5f, 0.5f, 1.0f);
-  output.blend = float4(0.5f, 0.5f, 0.5f, 1.0f);
+  output.color = (float4(0.5f, 0.5f, 0.5f, 1.0f));
+  output.blend = (float4(0.5f, 0.5f, 0.5f, 1.0f));
   return output;
 }
 

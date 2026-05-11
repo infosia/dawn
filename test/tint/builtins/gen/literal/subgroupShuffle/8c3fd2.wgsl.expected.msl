@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half2 subgroupShuffle_8c3fd2() {
-  half2 res = simd_shuffle(half2(1.0h), 1);
+  half2 res = simd_shuffle((half2(1.0h)), 1);
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 half2 subgroupShuffle_8c3fd2() {
-  half2 res = simd_shuffle(half2(1.0h), 1);
+  half2 res = simd_shuffle((half2(1.0h)), 1);
   return res;
 }
 

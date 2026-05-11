@@ -24,7 +24,7 @@ float4 main_inner(VertexInputs inputs) {
   uint const u = inputs.loc1;
   float const f = inputs.loc2;
   float4 const v = inputs.loc3;
-  return float4(0.0f);
+  return (float4(0.0f));
 }
 
 vertex main_outputs v_1(main_inputs inputs [[stage_in]]) {

@@ -6,7 +6,7 @@ struct main_outputs {
 };
 
 float4 main_inner(uint VertexIndex) {
-  return float4(0.0f, 0.0f, 0.0f, 1.0f);
+  return (float4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 vertex main_outputs v(uint VertexIndex [[vertex_id]]) {

@@ -10,7 +10,7 @@ struct tint_module_vars_struct {
 
 void textureStore_1fef04(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
-  int4 arg_2 = int4(1);
+  int4 arg_2 = (int4(1));
   uint const v = arg_1;
   int4 const v_1 = arg_2;
   const_cast<texture1d<int, access::read_write>thread &>(tint_module_vars.arg_0).fence();
@@ -34,7 +34,7 @@ struct tint_module_vars_struct {
 
 void textureStore_1fef04(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
-  int4 arg_2 = int4(1);
+  int4 arg_2 = (int4(1));
   uint const v = arg_1;
   int4 const v_1 = arg_2;
   const_cast<texture1d<int, access::read_write>thread &>(tint_module_vars.arg_0).fence();

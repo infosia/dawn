@@ -24,9 +24,9 @@ struct main_inputs {
 
 FragmentOutput main_inner(FragmentInput fIn, tint_module_vars_struct tint_module_vars) {
   float const sample = tint_module_vars.depthMap.sample(tint_module_vars.texSampler, fIn.vUv);
-  float3 const color = float3(sample, sample, sample);
+  float3 const color = (float3(sample, sample, sample));
   FragmentOutput fOut = {};
-  fOut.color = float4(color, 1.0f);
+  fOut.color = (float4(color, 1.0f));
   return fOut;
 }
 

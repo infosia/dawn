@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half4 quadSwapX_02834c() {
-  half4 arg_0 = half4(1.0h);
+  half4 arg_0 = (half4(1.0h));
   half4 res = quad_shuffle_xor(arg_0, 1u);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 half4 quadSwapX_02834c() {
-  half4 arg_0 = half4(1.0h);
+  half4 arg_0 = (half4(1.0h));
   half4 res = quad_shuffle_xor(arg_0, 1u);
   return res;
 }

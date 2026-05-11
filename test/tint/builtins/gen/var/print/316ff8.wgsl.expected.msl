@@ -76,9 +76,9 @@ void print_316ff8(tint_module_vars_struct tint_module_vars) {
 }
 
 VertexOutput vertex_main_inner(uint tint_symbol, uint tint_symbol_1, tint_module_vars_struct tint_module_vars) {
-  (*tint_module_vars.tint_print_invocation_id) = uint2(tint_symbol, tint_symbol_1);
+  (*tint_module_vars.tint_print_invocation_id) = (uint2(tint_symbol, tint_symbol_1));
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   print_316ff8(tint_module_vars);
   return out;
 }

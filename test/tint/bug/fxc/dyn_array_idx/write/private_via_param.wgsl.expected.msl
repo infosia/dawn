@@ -32,7 +32,7 @@ struct tint_module_vars_struct {
 };
 
 void x(thread S* const p, tint_module_vars_struct tint_module_vars) {
-  (*p).data[min(uint((*tint_module_vars.ubo).dynamic_idx), 63u)] = 1;
+  (*p).data[min((uint((*tint_module_vars.ubo).dynamic_idx)), 63u)] = 1;
 }
 
 [[max_total_threads_per_threadgroup(1)]]

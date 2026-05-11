@@ -5,7 +5,7 @@
 using namespace metal;
 
 void sinh_a3da7c() {
-  float4 res = float4(1.17520117759704589844f);
+  float4 res = (float4(1.17520117759704589844f));
 }
 
 fragment void fragment_main() {
@@ -18,7 +18,7 @@ fragment void fragment_main() {
 using namespace metal;
 
 void sinh_a3da7c() {
-  float4 res = float4(1.17520117759704589844f);
+  float4 res = (float4(1.17520117759704589844f));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -40,12 +40,12 @@ struct vertex_main_outputs {
 };
 
 void sinh_a3da7c() {
-  float4 res = float4(1.17520117759704589844f);
+  float4 res = (float4(1.17520117759704589844f));
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   sinh_a3da7c();
   return out;
 }

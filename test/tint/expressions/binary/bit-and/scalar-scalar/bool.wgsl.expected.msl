@@ -5,6 +5,6 @@ using namespace metal;
 kernel void f() {
   bool const a = true;
   bool const b = false;
-  uint const v = uint(a);
-  bool const r = bool((v & uint(b)));
+  uint const v = (uint(a));
+  bool const r = (bool((v & (uint(b)))));
 }

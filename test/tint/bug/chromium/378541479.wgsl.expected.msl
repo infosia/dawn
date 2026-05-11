@@ -12,5 +12,5 @@ kernel void compute_main(const constant uint* level [[buffer(0)]], const constan
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.level=level, .coords=coords, .tex=tex};
   uint2 const v = (*tint_module_vars.coords);
   uint const v_1 = min((*tint_module_vars.level), (tint_module_vars.tex.get_num_mip_levels() - 1u));
-  float res = tint_module_vars.tex.read(min(v, (uint2(tint_module_vars.tex.get_width(v_1), tint_module_vars.tex.get_height(v_1)) - uint2(1u))), v_1);
+  float res = tint_module_vars.tex.read(min(v, ((uint2(tint_module_vars.tex.get_width(v_1), tint_module_vars.tex.get_height(v_1))) - (uint2(1u)))), v_1);
 }

@@ -45,7 +45,7 @@ void cos_a297d4() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   cos_a297d4();
   return out;
 }

@@ -45,7 +45,7 @@ void distance_83911f() {
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   distance_83911f();
   return out;
 }

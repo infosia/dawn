@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 int4 quadBroadcast_76f499() {
-  int4 arg_0 = int4(1);
+  int4 arg_0 = (int4(1));
   int4 res = quad_broadcast(arg_0, 1);
   return res;
 }
@@ -29,7 +29,7 @@ struct tint_module_vars_struct {
 };
 
 int4 quadBroadcast_76f499() {
-  int4 arg_0 = int4(1);
+  int4 arg_0 = (int4(1));
   int4 res = quad_broadcast(arg_0, 1);
   return res;
 }

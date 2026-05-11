@@ -9,7 +9,7 @@ struct tint_module_vars_struct {
 };
 
 half2 subgroupAdd_cae1ed() {
-  half2 res = simd_sum(half2(1.0h));
+  half2 res = simd_sum((half2(1.0h)));
   return res;
 }
 
@@ -28,7 +28,7 @@ struct tint_module_vars_struct {
 };
 
 half2 subgroupAdd_cae1ed() {
-  half2 res = simd_sum(half2(1.0h));
+  half2 res = simd_sum((half2(1.0h)));
   return res;
 }
 

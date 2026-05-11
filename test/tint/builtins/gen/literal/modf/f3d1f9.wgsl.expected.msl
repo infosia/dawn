@@ -10,7 +10,7 @@ struct modf_result_vec4_f32 {
 };
 
 void modf_f3d1f9() {
-  modf_result_vec4_f32 res = modf_result_vec4_f32{.fract=float4(-0.5f), .whole=float4(-1.0f)};
+  modf_result_vec4_f32 res = modf_result_vec4_f32{.fract=(float4(-0.5f)), .whole=(float4(-1.0f))};
 }
 
 fragment void fragment_main() {
@@ -28,7 +28,7 @@ struct modf_result_vec4_f32 {
 };
 
 void modf_f3d1f9() {
-  modf_result_vec4_f32 res = modf_result_vec4_f32{.fract=float4(-0.5f), .whole=float4(-1.0f)};
+  modf_result_vec4_f32 res = modf_result_vec4_f32{.fract=(float4(-0.5f)), .whole=(float4(-1.0f))};
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -55,12 +55,12 @@ struct vertex_main_outputs {
 };
 
 void modf_f3d1f9() {
-  modf_result_vec4_f32 res = modf_result_vec4_f32{.fract=float4(-0.5f), .whole=float4(-1.0f)};
+  modf_result_vec4_f32 res = modf_result_vec4_f32{.fract=(float4(-0.5f)), .whole=(float4(-1.0f))};
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   modf_f3d1f9();
   return out;
 }

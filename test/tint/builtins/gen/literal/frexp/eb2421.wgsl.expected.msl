@@ -10,7 +10,7 @@ struct frexp_result_vec2_f32 {
 };
 
 void frexp_eb2421() {
-  frexp_result_vec2_f32 res = frexp_result_vec2_f32{.fract=float2(0.5f), .exp=int2(1)};
+  frexp_result_vec2_f32 res = frexp_result_vec2_f32{.fract=(float2(0.5f)), .exp=(int2(1))};
 }
 
 fragment void fragment_main() {
@@ -28,7 +28,7 @@ struct frexp_result_vec2_f32 {
 };
 
 void frexp_eb2421() {
-  frexp_result_vec2_f32 res = frexp_result_vec2_f32{.fract=float2(0.5f), .exp=int2(1)};
+  frexp_result_vec2_f32 res = frexp_result_vec2_f32{.fract=(float2(0.5f)), .exp=(int2(1))};
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -55,12 +55,12 @@ struct vertex_main_outputs {
 };
 
 void frexp_eb2421() {
-  frexp_result_vec2_f32 res = frexp_result_vec2_f32{.fract=float2(0.5f), .exp=int2(1)};
+  frexp_result_vec2_f32 res = frexp_result_vec2_f32{.fract=(float2(0.5f)), .exp=(int2(1))};
 }
 
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
-  out.pos = float4(0.0f);
+  out.pos = (float4(0.0f));
   frexp_eb2421();
   return out;
 }
