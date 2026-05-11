@@ -254,6 +254,82 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
     EXPECT_BUFFER_U32_RANGE_EQ(expectedMin.data(), atomicBufferMin, 0, 4);
 }
 
+// Same as Simple but just making sure offset (array) access is end2end tested.
+TEST_P(ShaderAtomicVec2Tests, StorageBufferAtomicVec2Array) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::AtomicVec2uMinMax}));
+
+    const unsigned int workgroupSize = GetParam().mWorkgroupSizeParameter;
+    const unsigned int dispatchSize = GetParam().mDispatchSizeParameter;
+    const unsigned int numInvocations = workgroupSize * dispatchSize;
+
+    std::stringstream code;
+    code << R"(
+
+    enable atomic_vec2u_min_max;
+
+
+@binding(0) @group(0) var<storage, read_write> atomic_storage_buffer_max : array<atomic<vec2<u32>>>;
+@binding(1) @group(0) var<storage, read_write> atomic_storage_buffer_min : array<atomic<vec2<u32>>>;
+
+@compute @workgroup_size()"
+         << workgroupSize << R"()
+fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
+    let i = global_id.x;
+    let num_invocations = )"
+         << numInvocations << R"(u;
+    let val = vec2<u32>(0x12345678, 0x9ABCDEF0);
+    atomicStoreMax(&atomic_storage_buffer_max[1], val);
+    atomicStoreMin(&atomic_storage_buffer_min[1], val);
+}
+)";
+
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(code.str());
+
+    wgpu::Buffer atomicBufferMax = CreateBuffer({
+        0x12345ABC,
+        0x12345ABC,
+        0x0,
+        0x0,
+    });
+    wgpu::Buffer atomicBufferMin = CreateBuffer({
+        0x12345ABC,
+        0x12345ABC,
+        0xFFFFFFFF,
+        0xFFFFFFFF,
+    });
+
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {{0, atomicBufferMax}, {1, atomicBufferMin}});
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(dispatchSize);
+        pass.End();
+        commands = encoder.Finish();
+    }
+
+    queue.Submit(1, &commands);
+
+    std::array<uint32_t, 4> expectedMax = {
+        0x12345ABC,
+        0x12345ABC,
+        0x12345678,
+        0x9ABCDEF0,
+    };
+    EXPECT_BUFFER_U32_RANGE_EQ(expectedMax.data(), atomicBufferMax, 0, 4);
+    std::array<uint32_t, 4> expectedMin = {
+        0x12345ABC,
+        0x12345ABC,
+        0x12345678,
+        0x9ABCDEF0,
+    };
+    EXPECT_BUFFER_U32_RANGE_EQ(expectedMin.data(), atomicBufferMin, 0, 4);
+}
+
 TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
     // Suppression for Mali gpus.
     DAWN_SUPPRESS_TEST_IF(IsARM());
