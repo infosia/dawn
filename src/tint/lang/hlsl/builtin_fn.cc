@@ -110,6 +110,10 @@ const char* str(BuiltinFn i) {
             return "select";
         case BuiltinFn::kMultiply:
             return "Multiply";
+        case BuiltinFn::kGet:
+            return "Get";
+        case BuiltinFn::kSet:
+            return "Set";
         case BuiltinFn::kLoad:
             return "Load";
         case BuiltinFn::kLoad2:
@@ -222,6 +226,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kStore2U16:
         case BuiltinFn::kStore3U16:
         case BuiltinFn::kStore4U16:
+        case BuiltinFn::kSet:
             return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kStore};
 
         case BuiltinFn::kLoad:
@@ -248,6 +253,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kSampleCmpLevelZero:
         case BuiltinFn::kSampleGrad:
         case BuiltinFn::kSampleLevel:
+        case BuiltinFn::kGet:
             return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kLoad};
 
         case BuiltinFn::kAsint:
