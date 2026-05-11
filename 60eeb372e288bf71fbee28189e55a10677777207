@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4adc3960_0c7ada6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-05-11T18:52:40Z",
+      "side": 1,
+      "message": "No CQ access, please give it a try and land once green!",
+      "revId": "60eeb372e288bf71fbee28189e55a10677777207",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
