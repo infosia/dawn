@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb95ef72_5b669b9c",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T19:07:57Z",
+      "side": 1,
+      "message": "Will try in a followup.",
+      "parentUuid": "87654460_63a11a32",
+      "revId": "10ce01e095696cde674e8f12733119794c5d2c79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "845da0bd_93eaf679",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f11727e4_6ec38263",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T19:07:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "845da0bd_93eaf679",
+      "revId": "10ce01e095696cde674e8f12733119794c5d2c79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bc5f52b_cc2ff56b",
@@ -48,6 +84,30 @@
       "writtenOn": "2026-05-11T16:53:45Z",
       "side": 1,
       "message": "Nit: The outer switch only has a single case, so seems unnecessary unless you are expecting to add more.\n\nSomething along the lines of:\n```suggestion\n            auto* res \u003d value-\u003eAs\u003cInstructionResult*\u003e();\n            TINT_IR_ASSERT(ir, res);\n            \n            // value was emitted by an instruction\n            auto* inst \u003d res-\u003eInstruction();\n            value \u003d tint::Switch(\n                inst,\n                [\u0026](Load* l) {\n                    ir::InstructionResult* from \u003d\n                        l-\u003eFrom()-\u003eAs\u003ccore::ir::InstructionResult\u003e();\n                    TINT_IR_ASSERT(ir, from);\n\n                    result \u003d from-\u003eInstruction()-\u003eAs\u003ccore::ir::Var\u003e();  // Done\n                    TINT_IR_ASSERT(ir, result);\n\n                    return nullptr;\n                },\n                [\u0026](Var* var) {\n                    result \u003d var;\n                    return nullptr;  // Done\n                },\n                TINT_ICE_ON_NO_MATCH);\n```",
+      "range": {
+        "startLine": 552,
+        "startChar": 12,
+        "endLine": 575,
+        "endChar": 38
+      },
+      "revId": "10ce01e095696cde674e8f12733119794c5d2c79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9bda254_7eb4783d",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T19:07:57Z",
+      "side": 1,
+      "message": "Done. There was more, but I ended up removing them.",
+      "parentUuid": "7bc5f52b_cc2ff56b",
       "range": {
         "startLine": 552,
         "startChar": 12,
@@ -89,6 +149,24 @@
           ]
         }
       ],
+      "revId": "10ce01e095696cde674e8f12733119794c5d2c79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3479fad7_74065e7c",
+        "filename": "src/tint/lang/core/type/resource_type.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T19:07:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "595f04a0_160ff94c",
       "revId": "10ce01e095696cde674e8f12733119794c5d2c79",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -33,6 +33,24 @@
       "message": "```suggestion\n    // Map from a post-remap binding-point to the ResourceType which is bound to that binding point.\n```\n\nMaybe also mention that it must contain entries for all bindful bindings (or at least all texture and sampler ones).",
       "revId": "6586170852c08578a227832f3f7307abd76d44bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "149df186_b9bebd01",
+        "filename": "src/tint/api/common/resource_table_config.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T19:07:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3d0ebce_6db2e253",
+      "revId": "6586170852c08578a227832f3f7307abd76d44bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
