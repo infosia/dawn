@@ -122,6 +122,8 @@ match f32_i32: f32 | i32
 match f32_f16: f32 | f16
 match fi32_f16: f32 | i32 | f16
 match fiu32_f16: f32 | i32 | u32 | f16
+match iu8: i8 | u8
+match iu32_iu8: i32 | u32 | i8 | u8
 
 match storage: address_space.storage
 match function: address_space.function
@@ -321,6 +323,26 @@ implicit(N: num, T: f32_f16) fn frexp(vec<N, T>, vec<N, T>) -> vec<N, T>
 implicit(T: scalar) fn select(bool, T, T) -> T
 implicit(T: scalar, N: num) fn select(bool, vec<N, T>, vec<N, T>) -> vec<N, T>
 implicit(N: num, T: scalar) fn select(vec<N, bool>, vec<N, T>, vec<N, T>) -> vec<N, T>
+
+@must_use @stage("compute") implicit(T: f16, C: num, R: num, K: num)
+  fn Multiply<TR: f32_f16>(subgroup_matrix<subgroup_matrix_kind_left, T, K, R>,
+                           subgroup_matrix<subgroup_matrix_kind_right, T, C, K>)
+      -> subgroup_matrix<subgroup_matrix_kind_result, TR, C, R>
+
+@must_use @stage("compute") implicit(T: f32, C: num, R: num, K: num)
+  fn Multiply<TR: f32>(subgroup_matrix<subgroup_matrix_kind_left, T, K, R>,
+                       subgroup_matrix<subgroup_matrix_kind_right, T, C, K>)
+      -> subgroup_matrix<subgroup_matrix_kind_result, TR, C, R>
+
+@must_use @stage("compute") implicit(T: iu8, C: num, R: num, K: num)
+  fn Multiply<TR: iu32_iu8>(subgroup_matrix<subgroup_matrix_kind_left, T, K, R>,
+                            subgroup_matrix<subgroup_matrix_kind_right, T, C, K>)
+      -> subgroup_matrix<subgroup_matrix_kind_result, TR, C, R>
+
+@must_use @stage("compute") implicit(T: iu32, C: num, R: num, K: num)
+  fn Multiply<TR: iu32>(subgroup_matrix<subgroup_matrix_kind_left, T, K, R>,
+                        subgroup_matrix<subgroup_matrix_kind_right, T, C, K>)
+      -> subgroup_matrix<subgroup_matrix_kind_result, TR, C, R>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Member Functions                                                           //
