@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "7f0db2ba4900e60df8af643f247e4e5f2e0775a4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e1f8093_a1046d85",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T09:47:06Z",
+      "side": 1,
+      "message": "Can we check what changed in the SPIR-V before / after to have an idea why it fails? LLVMPipe should be pretty good, so I\u0027m wondering if we could have a bug lurking somewhere.",
+      "revId": "7f0db2ba4900e60df8af643f247e4e5f2e0775a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
