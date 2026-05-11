@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2e4c576d_b10a5843",
+        "filename": "src/dawn/native/TintUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T17:51:20Z",
+      "side": 1,
+      "message": "The `BindingNotUsed` comes through here, is that something that would be UNREACHABLE in practise? Or should that return kEmpty and Undefined UNREACHABLE?",
+      "parentUuid": "c23973fb_482d232f",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9a43e417_65628675",
         "filename": "src/dawn/native/TintUtils.cpp",
         "patchSetId": 4
@@ -65,6 +83,24 @@
       "writtenOn": "2026-05-11T09:42:16Z",
       "side": 1,
       "message": "And add TODOs for these?",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd5dacd5_feff999e",
+        "filename": "src/dawn/native/TintUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T17:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a43e417_65628675",
       "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b279e832_07803dd8",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T17:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a63ca0db_e47a4b44",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6757c78b_65288bf7",
@@ -99,6 +153,24 @@
       "writtenOn": "2026-05-11T09:42:16Z",
       "side": 1,
       "message": "```suggestion\n            for (const auto\u0026 [_, apiBindingIndex] : bgl-\u003eGetBindingMap()) {\n```",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79894856_10b4aeba",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T17:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6757c78b_65288bf7",
       "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +192,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00ab3e36_aba9fbce",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T17:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a96bdc4_4e4f79f3",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1783cb87_dc70e292",
@@ -133,6 +223,24 @@
       "writtenOn": "2026-05-11T09:44:59Z",
       "side": 1,
       "message": "Can we also have cases that check that a filterable format can be used as `1d\u003cf32\u003e`? We should keep coverage that both filterable / unfilterable textures are possible to use with that type.",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "555a07e7_97c951f5",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T17:51:20Z",
+      "side": 1,
+      "message": "Isn\u0027t this one filterable, it\u0027s RGBA32Float, is that not a filterable 1d\u003cf32\u003e?",
+      "parentUuid": "1783cb87_dc70e292",
       "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
