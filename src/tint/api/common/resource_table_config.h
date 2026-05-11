@@ -93,11 +93,17 @@ struct ResourceTableConfig {
     // the number of bound shader samplers.
     bool get_sampler_index_from_metadata = false;
 
+    // Map from a post-remap binding-point to the ResourceType which is bound to that binding point.
+    // The table must contain entries for any bind-ful entry which is used with a bindless resource.
+    // (In practise, adding all bind-ful texture and sampler entries is sufficient)
+    std::unordered_map<BindingPoint, ResourceType> binding_to_resource_type;
+
     TINT_REFLECT(ResourceTableConfig,
                  resource_table_binding,
                  storage_buffer_binding,
                  default_binding_type_order,
-                 get_sampler_index_from_metadata);
+                 get_sampler_index_from_metadata,
+                 binding_to_resource_type);
     bool operator==(const ResourceTableConfig&) const = default;
 };
 
