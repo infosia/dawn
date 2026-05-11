@@ -206,6 +206,9 @@ struct State {
                     case core::BuiltinFn::kSubgroupInclusiveMul:
                         call_worklist.push_back([this, call] { SubgroupInclusive(call); });
                         break;
+                    case core::BuiltinFn::kSubgroupMatrixMultiply:
+                        call_worklist.push_back([this, call] { SubgroupMatrixMultiply(call); });
+                        break;
                     case core::BuiltinFn::kTextureDimensions:
                         call_worklist.push_back([this, call] { TextureDimensions(call); });
                         break;
@@ -1912,6 +1915,21 @@ struct State {
                     TINT_IR_UNREACHABLE(ir);
             }
             call->Result()->ReplaceAllUsesWith(inst->Result());
+        });
+        call->Destroy();
+    }
+
+    void SubgroupMatrixMultiply(core::ir::CoreBuiltinCall* call) {
+        b.InsertBefore(call, [&] {
+            auto* left = call->Args()[0];
+            auto* right = call->Args()[1];
+            auto* result_ty = call->Result()->Type();
+            auto* sm_ty = result_ty->As<core::type::SubgroupMatrix>();
+            TINT_IR_ASSERT(ir, sm_ty);
+
+            b.CallExplicitWithResult<hlsl::ir::BuiltinCall>(call->DetachResult(),
+                                                            hlsl::BuiltinFn::kMultiply,
+                                                            Vector{sm_ty->Type()}, left, right);
         });
         call->Destroy();
     }

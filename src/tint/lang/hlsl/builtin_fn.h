@@ -82,6 +82,7 @@ enum class BuiltinFn : uint8_t {
     kModf,
     kFrexp,
     kSelect,
+    kMultiply,
     kLoad,
     kLoad2,
     kLoad3,

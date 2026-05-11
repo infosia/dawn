@@ -162,6 +162,7 @@ struct State {
                         case BuiltinFn::kF32Tof16:
                         case BuiltinFn::kF16Tof32:
                         case BuiltinFn::kMul:
+                        case BuiltinFn::kMultiply:
                         case BuiltinFn::kPackU8:
                         case BuiltinFn::kPackS8:
                         case BuiltinFn::kPackClampS8:

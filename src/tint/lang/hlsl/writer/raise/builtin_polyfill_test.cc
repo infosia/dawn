@@ -7677,5 +7677,39 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Trunc_NoPolyfill) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixMultiply_F32) {
+    auto* left = b.FunctionParam("left", ty.subgroup_matrix_left(ty.f32(), 4, 8));
+    auto* right = b.FunctionParam("right", ty.subgroup_matrix_right(ty.f32(), 8, 4));
+    auto* result = ty.subgroup_matrix_result(ty.f32(), 8, 8);
+    auto* func = b.Function("foo", result);
+    func->SetParams({left, right});
+    b.Append(func->Block(), [&] {
+        auto* call = b.CallExplicit(result, core::BuiltinFn::kSubgroupMatrixMultiply,
+                                    Vector{ty.f32()}, left, right);
+        b.Return(func, call);
+    });
+
+    auto* src = R"(
+%foo = func(%left:subgroup_matrix_left<f32, 4, 8>, %right:subgroup_matrix_right<f32, 8, 4>):subgroup_matrix_result<f32, 8, 8> {
+  $B1: {
+    %4:subgroup_matrix_result<f32, 8, 8> = subgroupMatrixMultiply<f32> %left, %right
+    ret %4
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%left:subgroup_matrix_left<f32, 4, 8>, %right:subgroup_matrix_right<f32, 8, 4>):subgroup_matrix_result<f32, 8, 8> {
+  $B1: {
+    %4:subgroup_matrix_result<f32, 8, 8> = hlsl.Multiply<f32> %left, %right
+    ret %4
+  }
+}
+)";
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer::raise

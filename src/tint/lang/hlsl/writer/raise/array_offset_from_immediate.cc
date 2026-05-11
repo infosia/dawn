@@ -175,6 +175,7 @@ struct State {
                         case hlsl::BuiltinFn::kF32Tof16:
                         case hlsl::BuiltinFn::kF16Tof32:
                         case hlsl::BuiltinFn::kMul:
+                        case hlsl::BuiltinFn::kMultiply:
                         case hlsl::BuiltinFn::kPackU8:
                         case hlsl::BuiltinFn::kPackS8:
                         case hlsl::BuiltinFn::kPackClampS8:
