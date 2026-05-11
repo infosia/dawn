@@ -321,6 +321,11 @@ struct State {
         std::optional<size_t> texture_from_resource_table = std::nullopt;
         std::optional<size_t> sampler_from_resource_table = std::nullopt;
 
+        bool is_sampler_comparison_call =
+            call->Func() == core::BuiltinFn::kTextureSampleCompare ||
+            call->Func() == core::BuiltinFn::kTextureSampleCompareLevel ||
+            call->Func() == core::BuiltinFn::kTextureGatherCompare;
+
         size_t texture_operand_index = 0;
         if (call->Func() == core::BuiltinFn::kTextureGather) {
             texture_operand_index = 1;
@@ -363,24 +368,28 @@ struct State {
                 auto* has_result = b.InstructionResult(ty.bool_());
                 GenHasResource(has_result, info.binding_type, info.slot_idx);
 
-                // Get the ResourceKind for the texture
-                core::ir::If* if_ = b.If(has_result);
-                texture_kind = b.InstructionResult(ty.u32());
-                if_->SetResult(texture_kind);
-                b.Append(if_->True(), [&] {  //
-                    b.ExitIf(if_, GetTypeId(info.slot_idx));
-                });
-                b.Append(if_->False(), [&] {
-                    ResourceType res_type = core::type::DefaultResourceTypeFor(info.binding_type);
-                    b.ExitIf(if_, u32(res_type));
-                });
+                if (!is_sampler_comparison_call) {
+                    // Get the ResourceKind for the texture
+                    core::ir::If* if_ = b.If(has_result);
+                    texture_kind = b.InstructionResult(ty.u32());
+                    if_->SetResult(texture_kind);
+                    b.Append(if_->True(), [&] {  //
+                        b.ExitIf(if_, GetTypeId(info.slot_idx));
+                    });
+                    b.Append(if_->False(), [&] {
+                        ResourceType res_type =
+                            core::type::DefaultResourceTypeFor(info.binding_type);
+                        b.ExitIf(if_, u32(res_type));
+                    });
+                    ir.SetName(texture_kind, "texture_kind");
+                }
 
                 // Get the resource from the table and update the argument
                 ir::InstructionResult* res =
                     GenNonSampledGetResource(has_result, info.binding_type, info.slot_idx);
                 updateTextureArg(res);
             });
-        } else {
+        } else if (!is_sampler_comparison_call) {
             // We have a bind-ful texture, get the ResourceKind the API reported
             core::ir::InstructionResult* tex_res =
                 call->Operands()[texture_operand_index]->As<core::ir::InstructionResult>();
@@ -393,8 +402,8 @@ struct State {
             TINT_IR_ASSERT(ir, iter != config->binding_to_resource_type.end());
 
             b.InsertBefore(call, [&] { texture_kind = b.Let(u32(iter->second))->Result(); });
+            ir.SetName(texture_kind, "texture_kind");
         }
-        ir.SetName(texture_kind, "texture_kind");
 
         core::ir::InstructionResult* sampler_kind = nullptr;
         if (sampler_from_resource_table.has_value()) {
@@ -405,17 +414,21 @@ struct State {
                 auto* has_result = b.InstructionResult(ty.bool_());
                 GenHasResource(has_result, info.binding_type, info.slot_idx);
 
-                // Get the ResourceKind for the sampler
-                core::ir::If* if_ = b.If(has_result);
-                sampler_kind = b.InstructionResult(ty.u32());
-                if_->SetResult(sampler_kind);
-                b.Append(if_->True(), [&] {  //
-                    b.ExitIf(if_, GetTypeId(info.slot_idx));
-                });
-                b.Append(if_->False(), [&] {
-                    ResourceType res_type = core::type::DefaultResourceTypeFor(info.binding_type);
-                    b.ExitIf(if_, u32(res_type));
-                });
+                if (!is_sampler_comparison_call) {
+                    // Get the ResourceKind for the sampler
+                    core::ir::If* if_ = b.If(has_result);
+                    sampler_kind = b.InstructionResult(ty.u32());
+                    if_->SetResult(sampler_kind);
+                    b.Append(if_->True(), [&] {  //
+                        b.ExitIf(if_, GetTypeId(info.slot_idx));
+                    });
+                    b.Append(if_->False(), [&] {
+                        ResourceType res_type =
+                            core::type::DefaultResourceTypeFor(info.binding_type);
+                        b.ExitIf(if_, u32(res_type));
+                    });
+                    ir.SetName(sampler_kind, "sampler_kind");
+                }
 
                 // Get the resource from the table and update the argument
                 ir::InstructionResult* res =
@@ -423,7 +436,7 @@ struct State {
 
                 updateSamplerArg(res);
             });
-        } else {
+        } else if (!is_sampler_comparison_call) {
             // The sampler is bind-ful, get the ResourceKind from the API
             core::ir::InstructionResult* samp_res =
                 call->Operands()[texture_operand_index + 1]->As<core::ir::InstructionResult>();
@@ -436,115 +449,121 @@ struct State {
             TINT_IR_ASSERT(ir, iter != config->binding_to_resource_type.end());
 
             b.InsertBefore(call, [&] { sampler_kind = b.Let(u32(iter->second))->Result(); });
+            ir.SetName(sampler_kind, "sampler_kind");
         }
-        ir.SetName(sampler_kind, "sampler_kind");
 
-        // Validate that the sampler/texture pair work together
-        b.InsertBefore(call, [&] {
-            // We only care if we're using a filtering sampler with a non_filterable texture, so
-            // check if the sampler is filtering
-            core::ir::Instruction* sampler_compare =
-                b.Equal(sampler_kind, u32(ResourceType::kSampler_filtering));
+        // Only need to validate the texture/sampler if we aren't don't a
+        // comparison sampler.
+        if (!is_sampler_comparison_call) {
+            // Validate that the sampler/texture pair work together
+            b.InsertBefore(call, [&] {
+                // We only care if we're using a filtering sampler with a non_filterable texture, so
+                // check if the sampler is filtering
+                core::ir::Instruction* sampler_compare =
+                    b.Equal(sampler_kind, u32(ResourceType::kSampler_filtering));
 
-            // Returns `true` if we need to replace the sampler with a default non_filtering sampler
-            core::ir::If* samp_if = b.If(sampler_compare);
-            core::ir::InstructionResult* samp_res = b.InstructionResult(ty.bool_());
-            ir.SetName(samp_res, "use_sampler");
-            samp_if->SetResult(samp_res);
+                // Returns `true` if we need to replace the sampler with a default non_filtering
+                // sampler
+                core::ir::If* samp_if = b.If(sampler_compare);
+                core::ir::InstructionResult* samp_res = b.InstructionResult(ty.bool_());
+                ir.SetName(samp_res, "use_sampler");
+                samp_if->SetResult(samp_res);
 
-            // If the sampler is filtering
-            b.Append(samp_if->True(), [&] {
-                size_t idx = 0;
-                const std::span<ResourceType> filterable_types = core::type::FilterableResources();
+                // If the sampler is filtering
+                b.Append(samp_if->True(), [&] {
+                    size_t idx = 0;
+                    const std::span<ResourceType> filterable_types =
+                        core::type::FilterableResources();
 
-                core::ir::Binary* chk = b.Equal(texture_kind, u32(filterable_types[idx++]));
-                core::ir::If* t = b.If(chk);
-                core::ir::InstructionResult* tex_res = b.InstructionResult(ty.bool_());
-                t->SetResult(tex_res);
+                    core::ir::Binary* chk = b.Equal(texture_kind, u32(filterable_types[idx++]));
+                    core::ir::If* t = b.If(chk);
+                    core::ir::InstructionResult* tex_res = b.InstructionResult(ty.bool_());
+                    t->SetResult(tex_res);
 
-                // The texture is filterable, so we can use the sampler
-                b.Append(t->True(), [&] { b.ExitIf(t, true); });
+                    // The texture is filterable, so we can use the sampler
+                    b.Append(t->True(), [&] { b.ExitIf(t, true); });
 
-                for (; idx < filterable_types.size(); ++idx) {
-                    b.Append(t->False(), [&] {
-                        core::ir::Binary* sub_chk =
-                            b.Equal(texture_kind, u32(filterable_types[idx]));
-                        core::ir::If* sub_if = b.If(sub_chk);
-                        core::ir::InstructionResult* r = b.InstructionResult(ty.bool_());
-                        sub_if->SetResult(r);
+                    for (; idx < filterable_types.size(); ++idx) {
+                        b.Append(t->False(), [&] {
+                            core::ir::Binary* sub_chk =
+                                b.Equal(texture_kind, u32(filterable_types[idx]));
+                            core::ir::If* sub_if = b.If(sub_chk);
+                            core::ir::InstructionResult* r = b.InstructionResult(ty.bool_());
+                            sub_if->SetResult(r);
 
-                        // The texture is filterable, so we can use the sampler
-                        b.Append(sub_if->True(), [&] { b.ExitIf(sub_if, true); });
-                        b.ExitIf(t, r);
+                            // The texture is filterable, so we can use the sampler
+                            b.Append(sub_if->True(), [&] { b.ExitIf(sub_if, true); });
+                            b.ExitIf(t, r);
 
-                        t = sub_if;
-                    });
-                }
-                // Texture is not filterable, return false
-                b.Append(t->False(), [&] { b.ExitIf(t, false); });
+                            t = sub_if;
+                        });
+                    }
+                    // Texture is not filterable, return false
+                    b.Append(t->False(), [&] { b.ExitIf(t, false); });
 
-                b.ExitIf(samp_if, tex_res);
+                    b.ExitIf(samp_if, tex_res);
+                });
+
+                // Sampler != filtering, so use_sampler is true
+                b.Append(samp_if->False(), [&] { b.ExitIf(samp_if, true); });
+
+                const core::type::Type* result_ty = call->Result()->Type();
+
+                // Branch over if we can use the sampler or not, the `if` returns the result of the
+                // `call` we're attempting to make
+                core::ir::If* check = b.If(samp_res);
+                check->SetResult(call->DetachResult());
+
+                // Sampler and texture matched, just call
+                b.Append(check->True(), [&] {
+                    core::ir::Call* c = b.Call(result_ty, call->Func());
+                    for (ir::Value* arg : call->Args()) {
+                        c->AppendArg(arg);
+                    }
+                    b.ExitIf(check, c);
+                });
+
+                // Sampler and texture mismatch, pull a default sampler and use that
+                b.Append(check->False(), [&] {
+                    auto idx_iter =
+                        resource_type_to_default_idx.find(ResourceType::kSampler_non_filtering);
+                    TINT_IR_ASSERT(ir, idx_iter != resource_type_to_default_idx.end());
+
+                    // Get the table's API size, which is stored at index 0 in the metadata buffer
+                    auto* len_access = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 0_u);
+                    auto* num_elements = b.Load(len_access);
+
+                    ir::Value* final_index = b.Add(u32(idx_iter->second), num_elements)->Result();
+
+                    if (config->get_sampler_index_from_metadata) {
+                        // Get the sampler index from the metadata entry (high 16 bits)
+                        // TODO(crbug.com/503755700): Optimize to avoid loading twice from
+                        // storage_buffer[idx].
+                        auto* metadata_val = GetTypeId(final_index);
+                        auto* sampler_index = b.ShiftRight(metadata_val, u32(16));
+                        final_index = sampler_index->Result();
+                    }
+
+                    const core::type::Sampler* binding_type = ty.sampler();
+                    auto var = var_for_type.Get(binding_type);
+                    TINT_IR_ASSERT(ir, var);
+
+                    const core::type::Pointer* ptr_ty = ty.ptr(handle, binding_type, read);
+                    auto* access = b.Access(ptr_ty, (*var)->Result(), final_index);
+                    ir::Instruction* sampler = b.Load(access);
+
+                    // Create the call and swap in the new sampler
+                    core::ir::Call* c = b.Call(result_ty, call->Func());
+                    for (ir::Value* arg : call->Args()) {
+                        c->AppendArg(arg);
+                    }
+                    c->SetOperand(texture_operand_index + 1, sampler->Result());
+
+                    b.ExitIf(check, c);
+                });
             });
-
-            // Sampler != filtering, so use_sampler is true
-            b.Append(samp_if->False(), [&] { b.ExitIf(samp_if, true); });
-
-            const core::type::Type* result_ty = call->Result()->Type();
-
-            // Branch over if we can use the sampler or not, the `if` returns the result of the
-            // `call` we're attempting to make
-            core::ir::If* check = b.If(samp_res);
-            check->SetResult(call->DetachResult());
-
-            // Sampler and texture matched, just call
-            b.Append(check->True(), [&] {
-                core::ir::Call* c = b.Call(result_ty, call->Func());
-                for (ir::Value* arg : call->Args()) {
-                    c->AppendArg(arg);
-                }
-                b.ExitIf(check, c);
-            });
-
-            // Sampler and texture mismatch, pull a default sampler and use that
-            b.Append(check->False(), [&] {
-                auto idx_iter =
-                    resource_type_to_default_idx.find(ResourceType::kSampler_non_filtering);
-                TINT_IR_ASSERT(ir, idx_iter != resource_type_to_default_idx.end());
-
-                // Get the table's API size, which is stored at index 0 in the metadata buffer
-                auto* len_access = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 0_u);
-                auto* num_elements = b.Load(len_access);
-
-                ir::Value* final_index = b.Add(u32(idx_iter->second), num_elements)->Result();
-
-                if (config->get_sampler_index_from_metadata) {
-                    // Get the sampler index from the metadata entry (high 16 bits)
-                    // TODO(crbug.com/503755700): Optimize to avoid loading twice from
-                    // storage_buffer[idx].
-                    auto* metadata_val = GetTypeId(final_index);
-                    auto* sampler_index = b.ShiftRight(metadata_val, u32(16));
-                    final_index = sampler_index->Result();
-                }
-
-                const core::type::Sampler* binding_type = ty.sampler();
-                auto var = var_for_type.Get(binding_type);
-                TINT_IR_ASSERT(ir, var);
-
-                const core::type::Pointer* ptr_ty = ty.ptr(handle, binding_type, read);
-                auto* access = b.Access(ptr_ty, (*var)->Result(), final_index);
-                ir::Instruction* sampler = b.Load(access);
-
-                // Create the call and swap in the new sampler
-                core::ir::Call* c = b.Call(result_ty, call->Func());
-                for (ir::Value* arg : call->Args()) {
-                    c->AppendArg(arg);
-                }
-                c->SetOperand(texture_operand_index + 1, sampler->Result());
-
-                b.ExitIf(check, c);
-            });
-        });
-        call->Destroy();
+            call->Destroy();
+        }
     }
 
     // Returns the root Var for `value` by walking up the chain of instructions,
