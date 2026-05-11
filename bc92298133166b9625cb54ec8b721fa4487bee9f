@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09bc4d46_b59f9ada",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-11T23:20:38Z",
+      "side": 1,
+      "message": "Definitely feels better this way, thanks! One question.",
+      "revId": "bc92298133166b9625cb54ec8b721fa4487bee9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef51a938_e59ee2b5",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-11T23:20:38Z",
+      "side": 1,
+      "message": "I don\u0027t recall what was decided re: use of std::byte? Is this intentional or a leftover from the previous CL?",
+      "revId": "bc92298133166b9625cb54ec8b721fa4487bee9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
