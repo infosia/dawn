@@ -120,7 +120,6 @@ enum language_feature {
   immediate_address_space
   texture_and_sampler_let
   buffer_view
-  filtering_parameters
   swizzle_assignment
   linear_indexing
   texture_formats_tier1
