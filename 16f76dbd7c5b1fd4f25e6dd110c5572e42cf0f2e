@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7ea2121a_036d2c2f",
+        "filename": "DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-11T20:48:31Z",
+      "side": 1,
+      "message": "Why is this?",
+      "parentUuid": "12d57d58_d67603e0",
+      "range": {
+        "startLine": 845,
+        "startChar": 55,
+        "endLine": 845,
+        "endChar": 77
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c4fc6087_5b087e65",
         "filename": "src/dawn/native/BUILD.gn",
         "patchSetId": 8
@@ -606,6 +630,30 @@
       "side": 1,
       "message": "We previously tried upgrading DirectX-Headers to the latest preview version, but as Antonio mentioned, it breaks Linux/Mac builds. We\u0027ll keep the macro for now until a better solution is ready.",
       "parentUuid": "5905fb4c_10240c9b",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "782e1738_13418e15",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-11T20:48:31Z",
+      "side": 1,
+      "message": "Antonio is working on improving this. See [Update DirectX-Headers to latest](https://github.com/microsoft/DirectXShaderCompiler/pull/8431).",
+      "parentUuid": "95233fee_8bfc7eae",
       "range": {
         "startLine": 34,
         "startChar": 0,
