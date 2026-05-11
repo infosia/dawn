@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "72b542b1_5ec2e182",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-05-11T09:25:02Z",
+      "side": 0,
+      "message": "Note: this could happen in a follow-up. This might be easier to ship if Dawn has some bots not running on the CQ. This would avoid reverting the whole patch if we are just missing some files.",
+      "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "51dc2f9c_4f66b245",
         "filename": "unsafe_buffers_paths.txt",
         "patchSetId": 6
@@ -14,6 +31,24 @@
       "writtenOn": "2026-05-01T21:03:10Z",
       "side": 0,
       "message": "Removing the global suppressions for `dawn/native` and `src/utils` makes sense to me since they are shipped in Chrome.\n\nThe code in the other directories is never shipped in Chrome. Do we really need to remove these suppressions and start flagging those files as needing to be converted to safer constructs?",
+      "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d772fdc8_e7d820ad",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-05-11T09:25:02Z",
+      "side": 0,
+      "message": "Technically, Francisco already did the work to flag all the files (outside of dawn/node here), so what\u0027s left is already passing the `-Wunsafe-buffer-usage` error. So, it means we are only forcing new files to pass in the future, which is great.\n\nFor `dawn/node`, I will let Dawn owner to decide. It indeed doesn\u0027t impact chrome. This is only a nice to have.\n\n---\n\nIn Chrome, we enabled -WUnsafe-buffer-usage for all code, including tests.\n\nThe rational was:\n- Getting crash instead of undefined behavior in tests is easier to debug.\n- Code in test files is just as likely as any other code to be used as inspiration or even directly copy-n-pasted into production code somewhere. So it is better if we have the same errors surfaced everywhere.",
+      "parentUuid": "51dc2f9c_4f66b245",
       "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
