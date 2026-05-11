@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdfe8a52_dd3a8e02",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-11T17:51:40Z",
+      "side": 1,
+      "message": "Yeah, I actually wanted to do that because debugging was indeed annoying. I\u0027ll do it as follow up. Thanks!",
+      "parentUuid": "6be28e4c_cfd11191",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 39
+      },
+      "revId": "2182425617936cfdd9dc4026e2039ebc47699030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04fc8288_a5dcbf68",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a76224c0_2feed61c",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-11T17:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04fc8288_a5dcbf68",
+      "revId": "2182425617936cfdd9dc4026e2039ebc47699030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa030bb6_7ced315f",
@@ -71,6 +113,30 @@
       "writtenOn": "2026-05-11T16:31:56Z",
       "side": 1,
       "message": "Generating this recoverable error leaves the state out of sync for future calls. The sampler will be left in `mSamplerToEntry` but with an uninitialized index.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 89
+      },
+      "revId": "2182425617936cfdd9dc4026e2039ebc47699030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ef63b8f_f813f3f2",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-11T17:51:40Z",
+      "side": 1,
+      "message": "Yes, but it\u0027s meant to be unrecoverable. Since we\u0027re going to fix this before launching the feature, I\u0027d rather not complicate this code to support temporary recoverability.",
+      "parentUuid": "fa030bb6_7ced315f",
       "range": {
         "startLine": 73,
         "startChar": 0,
