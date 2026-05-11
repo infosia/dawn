@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65848bff_ace7570e",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T18:27:13Z",
+      "side": 1,
+      "message": "Just to confirm, the spec for subgroup matrix is that it can only be constructed with a single value? We can\u0027t provide all the operands correct?",
+      "revId": "84c2aa85308c0e17224f00952d2a00f6017d93a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "808d0e1f_8a036b95",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T18:27:13Z",
+      "side": 1,
+      "message": "Do we need to assert this isn\u0027t a runtime array?",
+      "revId": "84c2aa85308c0e17224f00952d2a00f6017d93a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d85a48e6_78dbb22d",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T18:27:13Z",
+      "side": 1,
+      "message": "Can we not just splat this? Why does it need a full array construction?",
+      "revId": "84c2aa85308c0e17224f00952d2a00f6017d93a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b8864fc_ef2c2f9e",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-11T18:27:13Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: misc-override-with-different-visibility\n\nvisibility of function \u0027SetUp\u0027 i...\n\ncheck: misc-override-with-different-visibility\n\nvisibility of function \u0027SetUp\u0027 is changed from protected in class \u0027Test\u0027 to private (https://clang.llvm.org/extra/clang-tidy/checks/misc/override-with-different-visibility.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-override-with-different-visibility` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "84c2aa85308c0e17224f00952d2a00f6017d93a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
