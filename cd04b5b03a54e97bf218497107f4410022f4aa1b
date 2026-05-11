@@ -60,6 +60,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f3b41c5_fe10749f",
+        "filename": "src/dawn/native/vulkan/SharedFenceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-11T21:09:41Z",
+      "side": 1,
+      "message": "This looks like it has the potential to hit some asserts as well? The default `utils::SystemHandle` constructor called above if the handle is -1 is created with a value of `kInvalidHandle` (OS specific). The `SharedFence` mostly uses the handle without checks, but in `SharedFence::DestroyImpl()` it calls `mHandle.Close()`, which asserts that the handle `IsValid()`.\n\nSee https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/utils/SystemHandle.cpp;l\u003d165;drc\u003dc83b80f441edc1c50de8d3977fa3feeb0ae96bc3\n\nProbably just need to check for `mHandle.IsValid()` in `SharedFence::DestroyImpl()` before attempting to close it.",
+      "revId": "cd04b5b03a54e97bf218497107f4410022f4aa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9829a5b9_108623a1",
         "filename": "src/dawn/native/vulkan/external_semaphore/SemaphoreServiceImplementationFD.cpp",
         "patchSetId": 1
