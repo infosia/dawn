@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6be28e4c_cfd11191",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-05-11T16:31:56Z",
+      "side": 1,
+      "message": "Since we\u0027re grabbing indices from the back, we allocate large values first, is there a reason we can\u0027t insert in the reverse order and work with small numbers? It makes debugging easier and the results arn\u0027t changed based on the `numSamplers` limits as much.",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 39
+      },
+      "revId": "2182425617936cfdd9dc4026e2039ebc47699030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "04fc8288_a5dcbf68",
         "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
         "patchSetId": 4
@@ -31,6 +54,29 @@
       "writtenOn": "2026-05-11T16:26:49Z",
       "side": 1,
       "message": "We should make sure the TODO appears in the bindless issue tree.",
+      "revId": "2182425617936cfdd9dc4026e2039ebc47699030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa030bb6_7ced315f",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-05-11T16:31:56Z",
+      "side": 1,
+      "message": "Generating this recoverable error leaves the state out of sync for future calls. The sampler will be left in `mSamplerToEntry` but with an uninitialized index.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 89
+      },
       "revId": "2182425617936cfdd9dc4026e2039ebc47699030",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
