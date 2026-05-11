@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "348f952c_b5dd0aa5",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-11T16:56:22Z",
+      "side": 1,
+      "message": "Can we just `or` the checks together instead of chaining a bunch of `if`s?",
+      "revId": "5b5161b6b27cf58249bf810d3656f6b7db4d7ef4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
