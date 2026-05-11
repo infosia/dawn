@@ -973,10 +973,11 @@ class Printer : public tint::TextGenerator {
                 return;
             }
 
+            out << "(";
             EmitType(out, c->Result()->Type());
             out << "(";
             EmitValue(out, c->Operand(0));
-            out << ")";
+            out << "))";
             return;
         }
         if (c->Func() == msl::BuiltinFn::kPointerOffset) {
