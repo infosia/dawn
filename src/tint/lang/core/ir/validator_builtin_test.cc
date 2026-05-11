@@ -42,6 +42,24 @@ namespace tint::core::ir {
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
 
+TEST_F(IR_ValidatorTest, Builtin_DuplicateOnNonEntryPoint_Allowed) {
+    auto* str_ty =
+        ty.Struct(mod.symbols.New("S"),
+                  {{mod.symbols.New("pos"), ty.vec4f(), {.builtin = BuiltinValue::kPosition}}});
+
+    auto* foo = b.Function("foo", ty.void_());
+    foo->AppendParam(b.FunctionParam("s0", str_ty));
+    foo->AppendParam(b.FunctionParam("s1", str_ty));
+
+    b.Append(foo->Block(), [&] { b.Return(foo); });
+
+    auto* main = ComputeEntryPoint("main");
+    b.Append(main->Block(), [&] { b.Return(main); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_EQ(res, Success) << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Builtin_DuplicateInput) {
     auto* f = FragmentEntryPoint();
     AddBuiltinParam(f, "sm1", BuiltinValue::kSampleMask, ty.u32());
