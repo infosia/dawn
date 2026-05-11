@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "511eeef4_3ebd6163",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T16:26:49Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "2182425617936cfdd9dc4026e2039ebc47699030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04fc8288_a5dcbf68",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T16:26:49Z",
+      "side": 1,
+      "message": "We should make sure the TODO appears in the bindless issue tree.",
+      "revId": "2182425617936cfdd9dc4026e2039ebc47699030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
