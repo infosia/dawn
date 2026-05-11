@@ -1,4 +1,3 @@
-SKIP: FAILED
 
 RWByteAddressBuffer o : register(u0);
 SamplerState tint_resource_table_array[] : register(s51, space43);
@@ -9,7 +8,7 @@ void fs() {
   bool v_1 = false;
   if ((v < tint_resource_table_metadata.Load(0u))) {
     uint2 v_2 = uint2((tint_resource_table_metadata.Load((4u + (v * 4u)))).xx);
-    v_1 = any((v_2 == uint2(34u, 33u)));
+    v_1 = any((v_2 == uint2(40u, 41u)));
   } else {
     v_1 = false;
   }
@@ -19,7 +18,7 @@ void fs() {
   uint v_3 = uint(int(1));
   bool v_4 = false;
   if ((v_3 < tint_resource_table_metadata.Load(0u))) {
-    v_4 = (tint_resource_table_metadata.Load((4u + (v_3 * 4u))) == 35u);
+    v_4 = (tint_resource_table_metadata.Load((4u + (v_3 * 4u))) == 42u);
   } else {
     v_4 = false;
   }

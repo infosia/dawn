@@ -59,11 +59,21 @@ struct State {
     /// The type manager.
     core::type::Manager& ty{ir.Types()};
 
+    /// The storage buffer used to hold API metadata
+    core::ir::Var* storage_buffer = nullptr;
+
+    /// Map from a tint Type to the `var` which holds the resource table of that
+    /// type
+    Hashmap<const core::type::Type*, core::ir::Var*, 4> var_for_type{};
+
+    /// Maps resource_index value to the default offset for that type
+    std::unordered_map<ResourceType, uint32_t> resource_type_to_default_idx{};
+
     /// Process the module.
     Result<SuccessType> Process() {
         // Find calls to hasResource() and getResource().
-        Vector<core::ir::BuiltinCall*, 8> has_resource_calls;
-        Vector<core::ir::BuiltinCall*, 8> get_resource_calls;
+        Vector<core::ir::CoreBuiltinCall*, 8> has_resource_calls;
+        Vector<core::ir::CoreBuiltinCall*, 8> get_resource_calls;
         for (auto* inst : ir.Instructions()) {
             auto* call = inst->As<core::ir::CoreBuiltinCall>();
             if (call == nullptr) {
@@ -83,19 +93,17 @@ struct State {
             return Failure{"hasResource and getResource require a resource table"};
         }
 
-        Hashmap<const core::type::Type*, core::ir::Var*, 4> var_for_type;
-        core::ir::Var* sb = nullptr;
         b.Append(ir.root_block, [&] {
             var_for_type = helper->GenerateVars(b, config->resource_table_binding,
                                                 config->default_binding_type_order);
-            sb = InjectStorageBuffer(config->storage_buffer_binding);
+            InjectStorageBuffer(config->storage_buffer_binding);
         });
+        TINT_IR_ASSERT(ir, storage_buffer != nullptr);
 
-        std::unordered_map<ResourceType, uint32_t> resource_type_to_idx;
         size_t def_size = config->default_binding_type_order.size();
         for (size_t i = 0; i < def_size; ++i) {
             auto res_ty = static_cast<ResourceType>(config->default_binding_type_order[i]);
-            resource_type_to_idx.insert({res_ty, static_cast<uint32_t>(i)});
+            resource_type_to_default_idx.insert({res_ty, static_cast<uint32_t>(i)});
         }
 
         // Replace the calls to hasResource() and getResource() that we found earlier.
@@ -103,21 +111,28 @@ struct State {
             b.InsertBefore(call, [&] {
                 auto* binding_ty = call->ExplicitTemplateParams()[0];
                 auto* idx = b.InsertConvertIfNeeded(ty.u32(), call->Args()[0]);
-                GenHasResource(call->DetachResult(), binding_ty, idx, sb);
+
+                GenHasResource(call->DetachResult(), binding_ty, idx);
             });
             call->Destroy();
         }
         for (auto* call : get_resource_calls) {
-            b.InsertBefore(call, [&] {
-                auto* binding_ty = call->ExplicitTemplateParams()[0];
-                auto* idx = b.InsertConvertIfNeeded(ty.u32(), call->Args()[0]);
-                GenGetResource(call->DetachResult(), binding_ty, idx, sb, var_for_type,
-                               resource_type_to_idx);
-            });
+            auto* binding_ty = call->ExplicitTemplateParams()[0];
+            auto* idx = b.InsertConvertIfNeeded(ty.u32(), call->Args()[0]);
+
+            ReplaceUsages(call->Result(), binding_ty, idx);
+            TINT_IR_ASSERT(ir, call->Result()->UsagesUnsorted().IsEmpty());
             call->Destroy();
         }
 
         return Success;
+    }
+
+    // Get the type id from the metadata buffer
+    core::ir::InstructionResult* GetTypeId(core::ir::Value* idx) {
+        // Get the type id from the metadata buffer
+        auto* metadata_access = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 1_u, idx);
+        return b.Load(metadata_access)->Result();
     }
 
     bool IsSampler(const core::type::Type* binding_type) const {
@@ -128,8 +143,7 @@ struct State {
     // Note, assumes it's called inside a builder append block.
     void GenHasResource(core::ir::InstructionResult* result,
                         const core::type::Type* binding_type,
-                        core::ir::Value* idx,
-                        core::ir::Var* storage_buffer) {
+                        core::ir::Value* idx) {
         // Get the table's API size, which is stored at index 0 in the metadata buffer
         auto* length = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 0_u);
         auto* len_check = b.LessThan(idx, b.Load(length));
@@ -138,28 +152,23 @@ struct State {
         has_check->SetResult(result);
 
         b.Append(has_check->True(), [&] {
-            // Get the type id from the metadata buffer
-            auto* metadata_access =
-                b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 1_u, idx);
-            auto* metadata_val = b.Load(metadata_access);
+            auto* metadata_val = GetTypeId(idx);
+
             ir::Value* type_id = nullptr;
             if (config->get_sampler_index_from_metadata) {
                 // Type id is in lower 16 bits
                 type_id = b.And(metadata_val, u32(0xFFFF))->Result();
             } else {
-                type_id = metadata_val->Result();
+                type_id = metadata_val;
             }
-
-            ResourceType resource_ty = core::type::TypeToResourceType(binding_type);
 
             core::ir::Value* eq = nullptr;
             std::vector<ResourceType> conv = core::type::ConvertsFrom(binding_type);
             if (!conv.empty()) {
-                auto* conv_ty = ty.vec(ty.u32(), static_cast<uint32_t>(conv.size()) + 1);
+                auto* conv_ty = ty.vec(ty.u32(), static_cast<uint32_t>(conv.size()));
                 auto* lhs = b.Construct(conv_ty, type_id);
 
                 Vector<Value*, 4> vals;
-                vals.Push(b.Value(u32(resource_ty)));
                 for (auto& r : conv) {
                     vals.Push(b.Value(u32(r)));
                 }
@@ -168,6 +177,7 @@ struct State {
                 auto* cmp = b.Equal(lhs, rhs);
                 eq = b.Call(ty.bool_(), core::BuiltinFn::kAny, cmp)->Result();
             } else {
+                ResourceType resource_ty = core::type::TypeToResourceType(binding_type);
                 eq = b.Equal(type_id, u32(resource_ty))->Result();
             }
             b.ExitIf(has_check, eq);
@@ -176,22 +186,62 @@ struct State {
         b.Append(has_check->False(), [&] { b.ExitIf(has_check, b.Constant(false)); });
     }
 
+    // Replaces all the usages of a `call` instruction (which is required to be
+    // a `GetResource` call with the needed conditional checks and code to
+    // retrieve from the storage buffer.
+    void ReplaceUsages(core::ir::InstructionResult* result,
+                       const core::type::Type* binding_type,
+                       core::ir::Value* idx) {
+        for (auto& usage : result->UsagesSorted()) {
+            tint::Switch(
+                usage.instruction,  //
+                [&](core::ir::Let* l) { ReplaceUsages(l->Result(), binding_type, idx); },
+                [&](core::ir::CoreBuiltinCall* call) {
+                    switch (call->Func()) {
+                        case core::BuiltinFn::kTextureStore:
+                        case core::BuiltinFn::kTextureLoad:
+                        case core::BuiltinFn::kTextureDimensions:
+                        case core::BuiltinFn::kTextureNumLayers:
+                        case core::BuiltinFn::kTextureNumLevels:
+                        case core::BuiltinFn::kTextureNumSamples: {
+                            b.InsertBefore(call, [&] {
+                                ir::InstructionResult* res =
+                                    GenNonSampledTextureGetResource(binding_type, idx);
+                                call->SetOperand(usage.operand_index, res);
+                            });
+                            break;
+                        }
+                        case core::BuiltinFn::kTextureGather:
+                        case core::BuiltinFn::kTextureGatherCompare:
+                        case core::BuiltinFn::kTextureSample:
+                        case core::BuiltinFn::kTextureSampleBias:
+                        case core::BuiltinFn::kTextureSampleCompare:
+                        case core::BuiltinFn::kTextureSampleCompareLevel:
+                        case core::BuiltinFn::kTextureSampleGrad:
+                        case core::BuiltinFn::kTextureSampleLevel:
+                        case core::BuiltinFn::kTextureSampleBaseClampToEdge:
+                        default:
+                            TINT_IR_UNREACHABLE(ir);
+                    }
+                },
+                [&](Default) { TINT_IR_UNREACHABLE(ir); }
+
+            );
+        }
+    }
+
     // Note, assumes it's called inside a builder append block.
-    void GenGetResource(core::ir::InstructionResult* result,
-                        const core::type::Type* binding_type,
-                        core::ir::Value* idx,
-                        core::ir::Var* storage_buffer,
-                        const Hashmap<const core::type::Type*, core::ir::Var*, 4>& alias_for_type,
-                        const std::unordered_map<ResourceType, uint32_t>& resource_type_to_idx) {
+    ir::InstructionResult* GenNonSampledTextureGetResource(const core::type::Type* binding_type,
+                                                           core::ir::Value* idx) {
         auto* has_result = b.InstructionResult(ty.bool_());
-        GenHasResource(has_result, binding_type, idx, storage_buffer);
+        GenHasResource(has_result, binding_type, idx);
 
         auto* get_check = b.If(has_result);
         auto* res = b.InstructionResult(ty.u32());
         get_check->SetResult(res);
 
-        auto alias = alias_for_type.Get(binding_type);
-        TINT_IR_ASSERT(ir, alias);
+        auto var = var_for_type.Get(binding_type);
+        TINT_IR_ASSERT(ir, var);
 
         b.Append(get_check->True(), [&] {
             // Table lookup succeeded, use the input index
@@ -202,17 +252,23 @@ struct State {
             // Table lookup failed, so get default resource located at the end of the table,
             // at API size + resource type index.
 
-            // Get the resource type index
-            auto res_type = core::type::TypeToResourceType(binding_type);
-            auto idx_iter = resource_type_to_idx.find(res_type);
-            TINT_IR_ASSERT(ir, idx_iter != resource_type_to_idx.end());
+            // This texture is not being combined with a sampler, so we just
+            // need _a_ default, this could be filterable or unfilterable it
+            // doesn't matter.
+            //
+            // This does mean for every possible filterable type, the default
+            // value must be bound (currently this is always the `filterable`
+            // variant. This is fine because Dawn binds all of the possible
+            // defaults.
+            auto res_type = core::type::DefaultResourceTypeFor(binding_type);
+            auto idx_iter = resource_type_to_default_idx.find(res_type);
+            TINT_IR_ASSERT(ir, idx_iter != resource_type_to_default_idx.end());
 
             // Get the table's API size, which is stored at index 0 in the metadata buffer
             auto* len_access = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 0_u);
             auto* num_elements = b.Load(len_access);
 
             auto* r = b.Add(u32(idx_iter->second), num_elements);
-
             b.ExitIf(get_check, r);
         });
 
@@ -220,31 +276,27 @@ struct State {
         if (config->get_sampler_index_from_metadata && IsSampler(binding_type)) {
             // Get the sampler index from the metadata entry (high 16 bits)
             // TODO(crbug.com/503755700): Optimize to avoid loading twice from storage_buffer[idx].
-            auto* metadata_access =
-                b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 1_u, res);
-            auto* metadata_val = b.Load(metadata_access);
+            auto* metadata_val = GetTypeId(res);
             auto* sampler_index = b.ShiftRight(metadata_val, u32(16));
             final_index = sampler_index->Result();
         }
 
         // TODO(439627523): Fix pointer access
         auto* ptr_ty = ty.ptr(handle, binding_type, read);
-        auto* access = b.Access(ptr_ty, (*alias)->Result(), final_index);
-        b.LoadWithResult(result, access);
+        auto* access = b.Access(ptr_ty, (*var)->Result(), final_index);
+        return b.Load(access)->Result();
     }
 
-    core::ir::Var* InjectStorageBuffer(const BindingPoint& bp) {
+    void InjectStorageBuffer(const BindingPoint& bp) {
         auto* str = ty.Struct(ir.symbols.New("tint_resource_table_metadata_struct"),
                               Vector<core::type::Manager::StructMemberDesc, 2>{
                                   {ir.symbols.New("array_length"), ty.u32()},
                                   {ir.symbols.New("bindings"), ty.array<u32>()},
                               });
-
         auto* sb_ty = ty.ptr(storage, str, read);
-        auto* sb = b.Var("tint_resource_table_metadata", sb_ty);
-        sb->SetBindingPoint(bp.group, bp.binding);
 
-        return sb;
+        storage_buffer = b.Var("tint_resource_table_metadata", sb_ty);
+        storage_buffer->SetBindingPoint(bp.group, bp.binding);
     }
 };
 
