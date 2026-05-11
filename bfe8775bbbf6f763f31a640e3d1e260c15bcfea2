@@ -16,6 +16,24 @@
       "message": "This is a Clang-only #pragma\n\nI can\u0027t remember if Dawn is meant to support building with Visual Studio / MSVC.",
       "revId": "bfe8775bbbf6f763f31a640e3d1e260c15bcfea2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfe20c15_fe731d6a",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T08:12:26Z",
+      "side": 1,
+      "message": "Dawn support MSVC / GCC, but `UNSAFE_BUFFERS_BUILD` is only enabled on clang GN (so with our hermetic clang), so this block will be skipped on all but the configuration that supports that clang plugin.",
+      "parentUuid": "24bf794d_2fa55665",
+      "revId": "bfe8775bbbf6f763f31a640e3d1e260c15bcfea2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
