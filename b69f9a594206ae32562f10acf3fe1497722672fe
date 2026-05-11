@@ -16,6 +16,24 @@
       "message": "You probably won\u0027t be able to run CQ on 144, so I would highly recommend to at least do a local build to make sure it builds before landing. You will almost also certainly need to put No-Try: true in the description.",
       "revId": "b69f9a594206ae32562f10acf3fe1497722672fe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92c0e977_0673d183",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4729644
+      },
+      "writtenOn": "2026-05-11T17:56:54Z",
+      "side": 1,
+      "message": "I’m actually inclined to not go ahead, because this CV is convoluted with the notify mode template changes (https://dawn-review.git.corp.google.com/c/dawn/+/290375) that got added after 144.\n\nOr do you have a better idea on landing a fix to https://g-issues.chromium.org/issues/493900619 without relying on that? Thank you.",
+      "parentUuid": "4061a849_fbc09523",
+      "revId": "b69f9a594206ae32562f10acf3fe1497722672fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
