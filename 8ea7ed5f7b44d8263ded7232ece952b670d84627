@@ -262,6 +262,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "70d8c653_102b3277",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-11T19:42:18Z",
+      "side": 1,
+      "message": "\u003e As for using it in this interface specifically, this will force std::byte to be used in Chromium, right?\n\nRight now webgpu_cpp.h defines DefineCachingInterface in terms of C types defines in webgpu.h so WGPUDawnLoadCacheDataFunction uses void*+size_t. Unless that changes there is zero impact on Chromium since this is all internal implementation details.\n\nIf webgpu_cpp.h was able to define caching functions using modern C++ types, eg. std::span\u003cstd::byte\u003e instead of void*+size_t, in the future then I still don\u0027t think it matters to Chrome. The std::span\u003cstd::byte\u003e can be converted to a base::span\u003cuint8_t\u003e at the interface boundary. Since Chrome doesn\u0027t use std::span it requires conversion regardless.",
+      "parentUuid": "af57f4e2_af387731",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7f07e974_a1dd57e4",
         "filename": "src/dawn/native/Blob.h",
         "patchSetId": 5
