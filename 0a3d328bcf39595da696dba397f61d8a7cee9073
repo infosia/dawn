@@ -16,6 +16,23 @@
       "message": "Brandon PTAL, apparently the Exynos GPU driver is more broken there than we were told.",
       "revId": "0a3d328bcf39595da696dba397f61d8a7cee9073",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ac8ca4c_a8522c26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-11T18:29:20Z",
+      "side": 1,
+      "message": "😩 \"More broken thank expected\" is extremely unfortunate.",
+      "revId": "0a3d328bcf39595da696dba397f61d8a7cee9073",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
