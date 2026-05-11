@@ -45,6 +45,7 @@
 #include "dawn/native/Instance.h"
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/RenderPipeline.h"
+#include "dawn/native/ResourceTable.h"
 #include "dawn/native/ResourceTableDefaultResources.h"
 #include "dawn/native/Serializable.h"
 #include "dawn/native/TintUtils.h"
@@ -146,17 +147,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         startOfBindGroups = startOfBindGroups + BindGroupIndex(1);
     }
 
-    std::optional<tint::ResourceTableConfig> resourceTableConfig = std::nullopt;
     if (in.layout->UsesResourceTable()) {
         startOfBindGroups = BindGroupIndex(1);
-
-        auto bindingTypeOrder = ResourceTableDefaultResources::GetOrder();
-        resourceTableConfig = tint::ResourceTableConfig{
-            .resource_table_binding = tint::BindingPoint(0, 1),
-            .storage_buffer_binding = tint::BindingPoint(0, 0),
-            .default_binding_type_order = {bindingTypeOrder.begin(), bindingTypeOrder.end()},
-            .binding_to_resource_type = {},
-        };
     }
 
     auto ToWGSLBindPoint = [](BindGroupIndex group, BindingNumber binding) -> tint::BindingPoint {
@@ -171,6 +163,20 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             .binding = uint32_t{index},
         };
     };
+
+    std::optional<tint::ResourceTableConfig> resourceTableConfig = std::nullopt;
+    if (in.layout->UsesResourceTable()) {
+        auto binding_to_resource_type = GenerateBindingToResourceType(in.layout, ToSPIRVBindPoint);
+
+        auto bindingTypeOrder = ResourceTableDefaultResources::GetOrder();
+        resourceTableConfig = tint::ResourceTableConfig{
+            .resource_table_binding = tint::BindingPoint(0, 1),
+            .storage_buffer_binding = tint::BindingPoint(0, 0),
+            .default_binding_type_order = {bindingTypeOrder.begin(), bindingTypeOrder.end()},
+            .binding_to_resource_type = binding_to_resource_type,
+        };
+    }
+
     tint::Bindings bindings =
         GenerateBindingRemapping(in.layout, in.stage->metadata->stage, ToSPIRVBindPoint);
 
