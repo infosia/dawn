@@ -1486,7 +1486,7 @@ TEST_P(ResourceTableTests, DISABLED_MultipleSamplers) {
 
 // Test that default samplers are correctly created, and accessed when an invalid index it provided.
 // TODO(507087794): Re-enable with new filterability rules
-TEST_P(ResourceTableTests, DISABLED_UseDefaultSamplers) {
+TEST_P(ResourceTableTests, UseDefaultSamplers) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
