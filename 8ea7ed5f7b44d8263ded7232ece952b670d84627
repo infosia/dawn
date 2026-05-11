@@ -284,6 +284,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "026b1391_d70acd5f",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "Yea the follow up changes do actually attempt to modernize our C++ header to use spans! That said, I think I was planning on having those use std::span\u003cuint8_t\u003e for now because that\u0027ll be easier to integrate into chromium. Anyways, seems like the general consensus is std::byte is ok in this case so I will keep it as is.",
+      "parentUuid": "70d8c653_102b3277",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "8ea7ed5f7b44d8263ded7232ece952b670d84627",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f07e974_a1dd57e4",

@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbe61c31_d0830983",
+        "filename": "src/dawn/native/Blob.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "The compiler actually doesn\u0027t like that. Briefly searching online, it seems like it doesn\u0027t allow that because std::byte* is considered it\u0027s own enum type, so you have to either do the reintepret_cast or static_cast the original thing to void* first, then static_cast again to std::byte*, so I think it\u0027s just a bit easier to keep it as this.",
+      "parentUuid": "98ac9d17_843c313b",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af776d50_94adddee",
@@ -54,6 +78,24 @@
       "writtenOn": "2026-05-11T18:20:00Z",
       "side": 1,
       "message": "Q: Why convert to string_view instead of span?",
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c30805f7_d9fa96fd",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "Ah, this was because in the child changes, I am trying to make the store function callback take a string_view. I removed the changes related to this and moved them into the child change where it makes more sense. Sorry!",
+      "parentUuid": "af776d50_94adddee",
       "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "005bf9e1_8bfa91f8",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "Yea, I was thinking that also! But yea, will do in a follow up.",
+      "parentUuid": "b81f7a70_177297ac",
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "743874a5_bf6f372d",
@@ -92,6 +152,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ce65960_071026b1",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "Yea, technically we don\u0027t need to check it here, but I actually want to keep this for now because the follow up changes (where I am changing some of the callback stuff), introduces an alternative callback member so we will need to check again the second time (for now). Once I migrate everyone to use the new member, I can move the check.",
+      "parentUuid": "743874a5_bf6f372d",
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa14b079_fc2aacb8",
@@ -105,6 +183,30 @@
       "writtenOn": "2026-05-11T18:20:00Z",
       "side": 1,
       "message": "Can you omit this std::span? std::array should convert.",
+      "range": {
+        "startLine": 178,
+        "startChar": 37,
+        "endLine": 178,
+        "endChar": 47
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "beeafc83_b80130a9",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "Unfortunately, I cannot. It seems like `std::as_bytes` is matching specifically against `std::span`s and doesn\u0027t have an overload for `std::array`.",
+      "parentUuid": "fa14b079_fc2aacb8",
       "range": {
         "startLine": 178,
         "startChar": 37,
@@ -138,6 +240,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec2fa3be_f24730c9",
+        "filename": "src/dawn/native/BlobCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "It was originally necessary for the CacheRequestTests because it seems like `std::span{\u003cc-style array\u003e)` creates a span that has an explicit size, whereas the default `std::span\u003cT\u003e` has a size that looks like just some really big number?\n\nAnyways, I just decided to use the `std::to_bytes` in the tests so we can just pass a `std::span\u003cconst std::byte\u003e` here.",
+      "parentUuid": "09515648_e70ec821",
+      "range": {
+        "startLine": 81,
+        "startChar": 56,
+        "endLine": 81,
+        "endChar": 58
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef3f8199_859ccf34",
@@ -151,6 +277,30 @@
       "writtenOn": "2026-05-11T18:20:00Z",
       "side": 1,
       "message": "I think you should be able to convert this t span and then use subspan so it\u0027s checked? Like `std::as_bytes(this).subspan(currentSize, bytes)`.",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95eb5f03_6e7310ec",
+        "filename": "src/dawn/native/stream/ByteVectorSink.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "Again, it seems like `std::as_bytes` only works on `span` types. I was able to achieve effectively the same thing by using the ctor though.",
+      "parentUuid": "ef3f8199_859ccf34",
       "range": {
         "startLine": 45,
         "startChar": 11,
@@ -184,6 +334,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54333734_26fd671a",
+        "filename": "src/dawn/native/stream/ByteVectorSink.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe2b7432_ffeebbb6",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e80fa3b5_ca8ea53e",
@@ -201,6 +375,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc243796_7db1caf4",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "Huh... great question. I looked at the original impl and it didn\u0027t handle it before, but reading some docs, I think it was creating a string with null which is technically UB from what I can tell. I added the explicit check and initialize the result to just an empty with the ctor instead.",
+      "parentUuid": "e80fa3b5_ca8ea53e",
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6401f51_b2e735b5",
@@ -214,6 +406,30 @@
       "writtenOn": "2026-05-11T18:20:00Z",
       "side": 1,
       "message": "nit: In general I don\u0027t think you need this std::span() just std::as_bytes(data).",
+      "range": {
+        "startLine": 61,
+        "startChar": 36,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee083ce0_6fe532f6",
+        "filename": "src/dawn/tests/unittests/native/BlobTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-11T22:40:09Z",
+      "side": 1,
+      "message": "Same issues as above. I do need it because `std::as_bytes` only works for spans and the c style array needs to be casted to a span before we can use it.",
+      "parentUuid": "d6401f51_b2e735b5",
       "range": {
         "startLine": 61,
         "startChar": 36,
