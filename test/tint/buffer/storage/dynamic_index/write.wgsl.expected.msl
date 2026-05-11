@@ -112,19 +112,19 @@ void main_inner(uint idx, tint_module_vars_struct tint_module_vars) {
   (*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].vec4_i32 = int4(0);
   (*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].vec4_u32 = uint4(0u);
   (*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat2x2_f32 = float2x2(float2(0.0f), float2(0.0f));
-  tint_store_and_preserve_padding((&(*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat2x3_f32), float2x3(float3(0.0f), float3(0.0f)));
+  (tint_store_and_preserve_padding((&(*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat2x3_f32), float2x3(float3(0.0f), float3(0.0f))));
   (*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat2x4_f32 = float2x4(float4(0.0f), float4(0.0f));
   (*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat3x2_f32 = float3x2(float2(0.0f), float2(0.0f), float2(0.0f));
-  tint_store_and_preserve_padding_1((&(*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat3x3_f32), float3x3(float3(0.0f), float3(0.0f), float3(0.0f)));
+  (tint_store_and_preserve_padding_1((&(*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat3x3_f32), float3x3(float3(0.0f), float3(0.0f), float3(0.0f))));
   (*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat3x4_f32 = float3x4(float4(0.0f), float4(0.0f), float4(0.0f));
   (*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat4x2_f32 = float4x2(float2(0.0f), float2(0.0f), float2(0.0f), float2(0.0f));
-  tint_store_and_preserve_padding_2((&(*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat4x3_f32), float4x3(float3(0.0f), float3(0.0f), float3(0.0f), float3(0.0f)));
+  (tint_store_and_preserve_padding_2((&(*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat4x3_f32), float4x3(float3(0.0f), float3(0.0f), float3(0.0f), float3(0.0f))));
   (*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].mat4x4_f32 = float4x4(float4(0.0f), float4(0.0f), float4(0.0f), float4(0.0f));
-  tint_store_and_preserve_padding_3((&(*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].arr2_vec3_f32), tint_array<float3, 2>{});
+  (tint_store_and_preserve_padding_3((&(*tint_module_vars.sb).arr[min(idx, (v_2.tint_array_length_0_0 - 1u))].arr2_vec3_f32), tint_array<float3, 2>{}));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v_3(uint idx [[thread_index_in_threadgroup]], device S_packed_vec3* sb [[buffer(0)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sb=sb, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
-  main_inner(idx, tint_module_vars);
+  (main_inner(idx, tint_module_vars));
 }

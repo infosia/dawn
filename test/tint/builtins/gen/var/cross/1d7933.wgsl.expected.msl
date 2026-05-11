@@ -9,7 +9,7 @@ void cross_1d7933() {
 }
 
 fragment void fragment_main() {
-  cross_1d7933();
+  (cross_1d7933());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void cross_1d7933() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  cross_1d7933();
+  (cross_1d7933());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void cross_1d7933() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  cross_1d7933();
+  (cross_1d7933());
   return out;
 }
 

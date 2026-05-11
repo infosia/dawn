@@ -7,9 +7,12 @@ struct S {
 
 struct tint_module_vars_struct {
   device S* s;
+  const device float* v1;
+  const device packed_uint3* v2;
 };
 
 [[max_total_threads_per_threadgroup(1)]]
-kernel void v(device S* s [[buffer(0)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.s=s};
+kernel void v(device S* s [[buffer(0)]], const device float* v1 [[buffer(1)]], const device packed_uint3* v2 [[buffer(2)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.s=s, .v1=v1, .v2=v2};
+  (uint3((*tint_module_vars.v2)));
 }

@@ -9,7 +9,7 @@ void reflect_bba2d0() {
 }
 
 fragment void fragment_main() {
-  reflect_bba2d0();
+  (reflect_bba2d0());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void reflect_bba2d0() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  reflect_bba2d0();
+  (reflect_bba2d0());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void reflect_bba2d0() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  reflect_bba2d0();
+  (reflect_bba2d0());
   return out;
 }
 

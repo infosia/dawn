@@ -14,7 +14,7 @@ void modf_a545b9() {
 }
 
 fragment void fragment_main() {
-  modf_a545b9();
+  (modf_a545b9());
 }
 //
 // compute_main
@@ -33,7 +33,7 @@ void modf_a545b9() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  modf_a545b9();
+  (modf_a545b9());
 }
 //
 // vertex_main
@@ -61,7 +61,7 @@ void modf_a545b9() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  modf_a545b9();
+  (modf_a545b9());
   return out;
 }
 

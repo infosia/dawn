@@ -25,12 +25,12 @@ void main_inner(float x) {
   switch(tint_f32_to_i32(x)) {
     default:
     {
-      dfdx(1.0f);
+      (dfdx(1.0f));
       break;
     }
   }
 }
 
 fragment void v(main_inputs inputs [[stage_in]]) {
-  main_inner(inputs.x);
+  (main_inner(inputs.x));
 }

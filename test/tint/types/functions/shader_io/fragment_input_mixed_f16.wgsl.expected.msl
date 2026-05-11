@@ -36,5 +36,5 @@ void main_inner(FragmentInputs0 inputs0, bool front_facing, uint loc1, uint samp
 
 fragment void v_1(float4 FragmentInputs0_position [[position]], main_inputs inputs [[stage_in]], bool front_facing [[front_facing]], uint sample_index [[sample_id]], uint FragmentInputs1_sample_mask [[sample_mask]]) {
   FragmentInputs0 const v_2 = FragmentInputs0{.position=FragmentInputs0_position, .loc0=inputs.FragmentInputs0_loc0};
-  main_inner(v_2, front_facing, inputs.loc1, sample_index, FragmentInputs1{.loc3=inputs.FragmentInputs1_loc3, .loc5=inputs.FragmentInputs1_loc5, .sample_mask=FragmentInputs1_sample_mask}, inputs.loc2, inputs.loc4);
+  (main_inner(v_2, front_facing, inputs.loc1, sample_index, FragmentInputs1{.loc3=inputs.FragmentInputs1_loc3, .loc5=inputs.FragmentInputs1_loc5, .sample_mask=FragmentInputs1_sample_mask}, inputs.loc2, inputs.loc4));
 }

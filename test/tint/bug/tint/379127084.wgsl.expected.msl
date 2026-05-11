@@ -241,7 +241,7 @@ void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_array_lengths_
 
 FSOut main_inner(FSIn _stageIn, tint_module_vars_struct tint_module_vars) {
   FSOut _stageOut = {};
-  _skslMain(_stageIn, (&_stageOut), tint_array_lengths_struct{.tint_array_length_0_0=(((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u)}, tint_module_vars);
+  (_skslMain(_stageIn, (&_stageOut), tint_array_lengths_struct{.tint_array_length_0_0=(((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u)}, tint_module_vars));
   return _stageOut;
 }
 

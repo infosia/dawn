@@ -9,7 +9,7 @@ void cos_6b1fdf() {
 }
 
 fragment void fragment_main() {
-  cos_6b1fdf();
+  (cos_6b1fdf());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void cos_6b1fdf() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  cos_6b1fdf();
+  (cos_6b1fdf());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void cos_6b1fdf() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  cos_6b1fdf();
+  (cos_6b1fdf());
   return out;
 }
 

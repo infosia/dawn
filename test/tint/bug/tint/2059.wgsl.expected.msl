@@ -76,7 +76,7 @@ void tint_store_and_preserve_padding_3(device tint_array<tint_array<tint_packed_
       if ((v_1 >= 1u)) {
         break;
       }
-      tint_store_and_preserve_padding((&(*target)[v_1]), value_param[v_1]);
+      (tint_store_and_preserve_padding((&(*target)[v_1]), value_param[v_1]));
       {
         v = (v_1 + 1u);
       }
@@ -85,7 +85,7 @@ void tint_store_and_preserve_padding_3(device tint_array<tint_array<tint_packed_
 }
 
 void tint_store_and_preserve_padding_2(device S2_packed_vec3* const target, S2 value_param) {
-  tint_store_and_preserve_padding_3((&(*target).m), value_param.m);
+  (tint_store_and_preserve_padding_3((&(*target).m), value_param.m));
 }
 
 void tint_store_and_preserve_padding_7(device tint_array<S2_packed_vec3, 1>* const target, tint_array<S2, 1> value_param) {
@@ -97,7 +97,7 @@ void tint_store_and_preserve_padding_7(device tint_array<S2_packed_vec3, 1>* con
       if ((v_3 >= 1u)) {
         break;
       }
-      tint_store_and_preserve_padding_2((&(*target)[v_3]), value_param[v_3]);
+      (tint_store_and_preserve_padding_2((&(*target)[v_3]), value_param[v_3]));
       {
         v_2 = (v_3 + 1u);
       }
@@ -106,7 +106,7 @@ void tint_store_and_preserve_padding_7(device tint_array<S2_packed_vec3, 1>* con
 }
 
 void tint_store_and_preserve_padding_1(device S_packed_vec3* const target, S value_param) {
-  tint_store_and_preserve_padding((&(*target).m), value_param.m);
+  (tint_store_and_preserve_padding((&(*target).m), value_param.m));
 }
 
 void tint_store_and_preserve_padding_6(device tint_array<S_packed_vec3, 1>* const target, tint_array<S, 1> value_param) {
@@ -118,7 +118,7 @@ void tint_store_and_preserve_padding_6(device tint_array<S_packed_vec3, 1>* cons
       if ((v_5 >= 1u)) {
         break;
       }
-      tint_store_and_preserve_padding_1((&(*target)[v_5]), value_param[v_5]);
+      (tint_store_and_preserve_padding_1((&(*target)[v_5]), value_param[v_5]));
       {
         v_4 = (v_5 + 1u);
       }
@@ -127,11 +127,11 @@ void tint_store_and_preserve_padding_6(device tint_array<S_packed_vec3, 1>* cons
 }
 
 void tint_store_and_preserve_padding_5(device S4_packed_vec3* const target, S4 value_param) {
-  tint_store_and_preserve_padding_6((&(*target).s), value_param.s);
+  (tint_store_and_preserve_padding_6((&(*target).s), value_param.s));
 }
 
 void tint_store_and_preserve_padding_4(device S3_packed_vec3* const target, S3 value_param) {
-  tint_store_and_preserve_padding_1((&(*target).s), value_param.s);
+  (tint_store_and_preserve_padding_1((&(*target).s), value_param.s));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -155,19 +155,19 @@ kernel void v_6(device tint_array<tint_packed_vec3_f32_array_element, 3>* buffer
     }
   }
   float3x3 const a = m;
-  tint_store_and_preserve_padding(tint_module_vars.buffer0, a);
+  (tint_store_and_preserve_padding(tint_module_vars.buffer0, a));
   S const a_1 = S{.m=m};
-  tint_store_and_preserve_padding_1(tint_module_vars.buffer1, a_1);
+  (tint_store_and_preserve_padding_1(tint_module_vars.buffer1, a_1));
   S2 const a_2 = S2{.m=tint_array<float3x3, 1>{m}};
-  tint_store_and_preserve_padding_2(tint_module_vars.buffer2, a_2);
+  (tint_store_and_preserve_padding_2(tint_module_vars.buffer2, a_2));
   S3 const a_3 = S3{.s=S{.m=m}};
-  tint_store_and_preserve_padding_4(tint_module_vars.buffer3, a_3);
+  (tint_store_and_preserve_padding_4(tint_module_vars.buffer3, a_3));
   S4 const a_4 = S4{.s=tint_array<S, 1>{S{.m=m}}};
-  tint_store_and_preserve_padding_5(tint_module_vars.buffer4, a_4);
+  (tint_store_and_preserve_padding_5(tint_module_vars.buffer4, a_4));
   tint_array<float3x3, 1> const a_5 = tint_array<float3x3, 1>{m};
-  tint_store_and_preserve_padding_3(tint_module_vars.buffer5, a_5);
+  (tint_store_and_preserve_padding_3(tint_module_vars.buffer5, a_5));
   tint_array<S, 1> const a_6 = tint_array<S, 1>{S{.m=m}};
-  tint_store_and_preserve_padding_6(tint_module_vars.buffer6, a_6);
+  (tint_store_and_preserve_padding_6(tint_module_vars.buffer6, a_6));
   tint_array<S2, 1> const a_7 = tint_array<S2, 1>{S2{.m=tint_array<float3x3, 1>{m}}};
-  tint_store_and_preserve_padding_7(tint_module_vars.buffer7, a_7);
+  (tint_store_and_preserve_padding_7(tint_module_vars.buffer7, a_7));
 }

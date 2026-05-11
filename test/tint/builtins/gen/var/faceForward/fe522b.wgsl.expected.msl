@@ -9,7 +9,7 @@ void faceForward_fe522b() {
 }
 
 fragment void fragment_main() {
-  faceForward_fe522b();
+  (faceForward_fe522b());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void faceForward_fe522b() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  faceForward_fe522b();
+  (faceForward_fe522b());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void faceForward_fe522b() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  faceForward_fe522b();
+  (faceForward_fe522b());
   return out;
 }
 

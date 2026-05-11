@@ -37,5 +37,5 @@ kernel void v_9() {
   thread int a = 0;
   thread float b = 0.0f;
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=(&a), .b=(&b)};
-  foo(0, tint_module_vars);
+  (foo(0, tint_module_vars));
 }

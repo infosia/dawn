@@ -9,7 +9,7 @@ void floor_218952() {
 }
 
 fragment void fragment_main() {
-  floor_218952();
+  (floor_218952());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void floor_218952() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  floor_218952();
+  (floor_218952());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void floor_218952() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  floor_218952();
+  (floor_218952());
   return out;
 }
 

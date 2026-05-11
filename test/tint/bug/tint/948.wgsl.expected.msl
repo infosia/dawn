@@ -267,7 +267,7 @@ main_out main_inner(float2 tUV_param, float2 tileID_1_param, float2 levelUnits_p
   (*tint_module_vars.stageUnits_1) = stageUnits_1_param;
   (*tint_module_vars.vPosition) = vPosition_param;
   (*tint_module_vars.vUV) = vUV_param;
-  main_1(tint_module_vars);
+  (main_1(tint_module_vars));
   return main_out{.glFragColor_1=(*tint_module_vars.glFragColor)};
 }
 

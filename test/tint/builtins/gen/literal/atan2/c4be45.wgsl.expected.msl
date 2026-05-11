@@ -9,7 +9,7 @@ void atan2_c4be45() {
 }
 
 fragment void fragment_main() {
-  atan2_c4be45();
+  (atan2_c4be45());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void atan2_c4be45() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  atan2_c4be45();
+  (atan2_c4be45());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void atan2_c4be45() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  atan2_c4be45();
+  (atan2_c4be45());
   return out;
 }
 

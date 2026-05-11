@@ -33,5 +33,5 @@ void tint_store_and_preserve_padding(device tint_array<tint_packed_vec3_f32_arra
 kernel void f(device tint_array<tint_packed_vec3_f32_array_element, 4>* out [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.out=out};
   float4x3 m = float4x3(float3(0.0f), float3(0.0f), float3(0.0f), float3(0.0f));
-  tint_store_and_preserve_padding(tint_module_vars.out, float4x3(m));
+  (tint_store_and_preserve_padding(tint_module_vars.out, float4x3(m)));
 }

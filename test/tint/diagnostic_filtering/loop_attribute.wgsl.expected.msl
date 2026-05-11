@@ -24,7 +24,7 @@ void main_inner(float x) {
       if (all((tint_loop_idx == uint2(0u)))) {
         break;
       }
-      dfdx(1.0f);
+      (dfdx(1.0f));
       {
         uint const tint_low_inc = (tint_loop_idx.x - 1u);
         tint_loop_idx.x = tint_low_inc;
@@ -37,5 +37,5 @@ void main_inner(float x) {
 }
 
 fragment void v(main_inputs inputs [[stage_in]]) {
-  main_inner(inputs.x);
+  (main_inner(inputs.x));
 }

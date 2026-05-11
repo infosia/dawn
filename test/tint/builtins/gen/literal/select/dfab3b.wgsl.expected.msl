@@ -9,7 +9,7 @@ void select_dfab3b() {
 }
 
 fragment void fragment_main() {
-  select_dfab3b();
+  (select_dfab3b());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void select_dfab3b() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  select_dfab3b();
+  (select_dfab3b());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void select_dfab3b() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  select_dfab3b();
+  (select_dfab3b());
   return out;
 }
 

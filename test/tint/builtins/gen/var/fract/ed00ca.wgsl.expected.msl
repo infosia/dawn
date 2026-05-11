@@ -9,7 +9,7 @@ void fract_ed00ca() {
 }
 
 fragment void fragment_main() {
-  fract_ed00ca();
+  (fract_ed00ca());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void fract_ed00ca() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  fract_ed00ca();
+  (fract_ed00ca());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void fract_ed00ca() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  fract_ed00ca();
+  (fract_ed00ca());
   return out;
 }
 

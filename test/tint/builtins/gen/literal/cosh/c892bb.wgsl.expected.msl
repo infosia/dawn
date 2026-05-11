@@ -9,7 +9,7 @@ void cosh_c892bb() {
 }
 
 fragment void fragment_main() {
-  cosh_c892bb();
+  (cosh_c892bb());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void cosh_c892bb() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  cosh_c892bb();
+  (cosh_c892bb());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void cosh_c892bb() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  cosh_c892bb();
+  (cosh_c892bb());
   return out;
 }
 

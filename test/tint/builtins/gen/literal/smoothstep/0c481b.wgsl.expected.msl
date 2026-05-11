@@ -9,7 +9,7 @@ void smoothstep_0c481b() {
 }
 
 fragment void fragment_main() {
-  smoothstep_0c481b();
+  (smoothstep_0c481b());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void smoothstep_0c481b() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  smoothstep_0c481b();
+  (smoothstep_0c481b());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void smoothstep_0c481b() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  smoothstep_0c481b();
+  (smoothstep_0c481b());
   return out;
 }
 

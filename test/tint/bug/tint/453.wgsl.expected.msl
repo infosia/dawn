@@ -17,5 +17,5 @@ kernel void v(texture2d<uint, access::sample> Src [[texture(0)]], texture2d<uint
   uint const x_24 = srcValue.x;
   uint const x_25 = (x_24 + 1u);
   uint4 const x_27 = srcValue;
-  tint_module_vars.Dst.write(x_27.xxxx, uint2(int2(0)));
+  (tint_module_vars.Dst.write(x_27.xxxx, uint2(int2(0))));
 }

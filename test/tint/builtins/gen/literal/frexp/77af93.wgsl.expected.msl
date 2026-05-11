@@ -14,7 +14,7 @@ void frexp_77af93() {
 }
 
 fragment void fragment_main() {
-  frexp_77af93();
+  (frexp_77af93());
 }
 //
 // compute_main
@@ -33,7 +33,7 @@ void frexp_77af93() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  frexp_77af93();
+  (frexp_77af93());
 }
 //
 // vertex_main
@@ -61,7 +61,7 @@ void frexp_77af93() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  frexp_77af93();
+  (frexp_77af93());
   return out;
 }
 

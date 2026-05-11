@@ -64,9 +64,9 @@ Outer tint_load_struct_packed_vec3(threadgroup Outer_packed_vec3* const from) {
 }
 
 Outer foo(tint_module_vars_struct tint_module_vars) {
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
   Outer const v_7 = tint_load_struct_packed_vec3(tint_module_vars.v);
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
   return v_7;
 }
 
@@ -87,18 +87,18 @@ void main_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars)
       if ((v_9 >= 4u)) {
         break;
       }
-      tint_store_array_packed_vec3((&(*tint_module_vars.v).a[v_9]), Inner{});
+      (tint_store_array_packed_vec3((&(*tint_module_vars.v).a[v_9]), Inner{}));
       {
         v_8 = (v_9 + 1u);
       }
     }
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
-  foo(tint_module_vars);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
+  (foo(tint_module_vars));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v_10(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_11 [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.v=(&(*v_11).tint_symbol)};
-  main_inner(tint_local_index, tint_module_vars);
+  (main_inner(tint_local_index, tint_module_vars));
 }

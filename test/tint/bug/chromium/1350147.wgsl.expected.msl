@@ -13,6 +13,6 @@ void more_tests_that_would_fail() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v() {
-  original_clusterfuzz_code();
-  more_tests_that_would_fail();
+  (original_clusterfuzz_code());
+  (more_tests_that_would_fail());
 }

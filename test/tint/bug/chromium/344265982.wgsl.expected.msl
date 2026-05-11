@@ -53,5 +53,5 @@ void foo(device tint_array<int, 4>* const arg) {
 
 fragment void v(device tint_array<int, 4>* v_1 [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.tint_member=v_1};
-  foo(tint_module_vars.tint_member);
+  (foo(tint_module_vars.tint_member));
 }

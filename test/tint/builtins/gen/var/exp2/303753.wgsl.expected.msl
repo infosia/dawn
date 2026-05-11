@@ -9,7 +9,7 @@ void exp2_303753() {
 }
 
 fragment void fragment_main() {
-  exp2_303753();
+  (exp2_303753());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void exp2_303753() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  exp2_303753();
+  (exp2_303753());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void exp2_303753() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  exp2_303753();
+  (exp2_303753());
   return out;
 }
 

@@ -9,7 +9,7 @@ void sign_55339e() {
 }
 
 fragment void fragment_main() {
-  sign_55339e();
+  (sign_55339e());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void sign_55339e() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  sign_55339e();
+  (sign_55339e());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void sign_55339e() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  sign_55339e();
+  (sign_55339e());
   return out;
 }
 

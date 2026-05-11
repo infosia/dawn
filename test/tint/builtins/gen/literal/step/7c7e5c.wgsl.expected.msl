@@ -9,7 +9,7 @@ void step_7c7e5c() {
 }
 
 fragment void fragment_main() {
-  step_7c7e5c();
+  (step_7c7e5c());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void step_7c7e5c() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  step_7c7e5c();
+  (step_7c7e5c());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void step_7c7e5c() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  step_7c7e5c();
+  (step_7c7e5c());
   return out;
 }
 

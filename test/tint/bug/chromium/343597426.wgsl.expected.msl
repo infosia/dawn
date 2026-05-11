@@ -18,5 +18,5 @@ void foo(bool a, bool b, bool c, bool d, bool e) {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void v() {
-  foo(true, true, false, false, false);
+  (foo(true, true, false, false, false));
 }

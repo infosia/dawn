@@ -9,7 +9,7 @@ void dot_eb9fbf() {
 }
 
 fragment void fragment_main() {
-  dot_eb9fbf();
+  (dot_eb9fbf());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void dot_eb9fbf() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  dot_eb9fbf();
+  (dot_eb9fbf());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void dot_eb9fbf() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  dot_eb9fbf();
+  (dot_eb9fbf());
   return out;
 }
 

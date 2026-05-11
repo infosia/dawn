@@ -14,7 +14,7 @@ void modf_8dbbbf() {
 }
 
 fragment void fragment_main() {
-  modf_8dbbbf();
+  (modf_8dbbbf());
 }
 //
 // compute_main
@@ -33,7 +33,7 @@ void modf_8dbbbf() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  modf_8dbbbf();
+  (modf_8dbbbf());
 }
 //
 // vertex_main
@@ -61,7 +61,7 @@ void modf_8dbbbf() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  modf_8dbbbf();
+  (modf_8dbbbf());
   return out;
 }
 

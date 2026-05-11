@@ -22,7 +22,7 @@ struct tint_symbol_1 {
 };
 
 void subgroupMatrixStore_4a29bb(tint_module_vars_struct tint_module_vars) {
-  simdgroup_store(make_filled_simdgroup_matrix<half, 8, 8>(0.0h), (&(*tint_module_vars.arg_0)[1u]), ulong(8u), ulong2(0ul), true);
+  (simdgroup_store(make_filled_simdgroup_matrix<half, 8, 8>(0.0h), (&(*tint_module_vars.arg_0)[1u]), ulong(8u), ulong2(0ul), true));
 }
 
 void compute_main_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) {
@@ -40,12 +40,12 @@ void compute_main_inner(uint tint_local_index, tint_module_vars_struct tint_modu
       }
     }
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
-  subgroupMatrixStore_4a29bb(tint_module_vars);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
+  (subgroupMatrixStore_4a29bb(tint_module_vars));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_2 [[threadgroup(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0=(&(*v_2).tint_symbol)};
-  compute_main_inner(tint_local_index, tint_module_vars);
+  (compute_main_inner(tint_local_index, tint_module_vars));
 }

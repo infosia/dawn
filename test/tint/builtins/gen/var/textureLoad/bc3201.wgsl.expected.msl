@@ -13,7 +13,7 @@ uint4 textureLoad_bc3201(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
   uint arg_2 = 1u;
   uint const v = arg_1;
-  min(arg_2, (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  (min(arg_2, (tint_module_vars.arg_0.get_num_mip_levels() - 1u)));
   uint4 res = tint_module_vars.arg_0.read(min(v, (uint(tint_module_vars.arg_0.get_width()) - 1u)));
   return res;
 }
@@ -37,7 +37,7 @@ uint4 textureLoad_bc3201(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
   uint arg_2 = 1u;
   uint const v = arg_1;
-  min(arg_2, (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  (min(arg_2, (tint_module_vars.arg_0.get_num_mip_levels() - 1u)));
   uint4 res = tint_module_vars.arg_0.read(min(v, (uint(tint_module_vars.arg_0.get_width()) - 1u)));
   return res;
 }
@@ -71,7 +71,7 @@ uint4 textureLoad_bc3201(tint_module_vars_struct tint_module_vars) {
   uint arg_1 = 1u;
   uint arg_2 = 1u;
   uint const v = arg_1;
-  min(arg_2, (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  (min(arg_2, (tint_module_vars.arg_0.get_num_mip_levels() - 1u)));
   uint4 res = tint_module_vars.arg_0.read(min(v, (uint(tint_module_vars.arg_0.get_width()) - 1u)));
   return res;
 }

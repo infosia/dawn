@@ -10,7 +10,7 @@ struct tint_module_vars_struct {
 };
 
 float4 textureLoad_3da3ed(tint_module_vars_struct tint_module_vars) {
-  min(1u, (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  (min(1u, (tint_module_vars.arg_0.get_num_mip_levels() - 1u)));
   uint const v = (uint(tint_module_vars.arg_0.get_width()) - 1u);
   float4 res = tint_module_vars.arg_0.read(min(uint(1), v));
   return res;
@@ -32,7 +32,7 @@ struct tint_module_vars_struct {
 };
 
 float4 textureLoad_3da3ed(tint_module_vars_struct tint_module_vars) {
-  min(1u, (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  (min(1u, (tint_module_vars.arg_0.get_num_mip_levels() - 1u)));
   uint const v = (uint(tint_module_vars.arg_0.get_width()) - 1u);
   float4 res = tint_module_vars.arg_0.read(min(uint(1), v));
   return res;
@@ -64,7 +64,7 @@ struct vertex_main_outputs {
 };
 
 float4 textureLoad_3da3ed(tint_module_vars_struct tint_module_vars) {
-  min(1u, (tint_module_vars.arg_0.get_num_mip_levels() - 1u));
+  (min(1u, (tint_module_vars.arg_0.get_num_mip_levels() - 1u)));
   uint const v = (uint(tint_module_vars.arg_0.get_width()) - 1u);
   float4 res = tint_module_vars.arg_0.read(min(uint(1), v));
   return res;

@@ -11,9 +11,9 @@ void g(int a, uint b, float c) {
 }
 
 void f_inner(int zero, uint one, float two) {
-  g(zero, one, two);
+  (g(zero, one, two));
 }
 
 fragment void f(f_inputs inputs [[stage_in]]) {
-  f_inner(inputs.zero, inputs.one, inputs.two);
+  (f_inner(inputs.zero, inputs.one, inputs.two));
 }

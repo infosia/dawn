@@ -29,7 +29,7 @@ void main_inner(float x) {
         tint_loop_idx.x = tint_low_inc;
         uint const tint_carry = uint((tint_low_inc == 4294967295u));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
-        dfdx(1.0f);
+        (dfdx(1.0f));
         if ((x > 0.0f)) { break; }
       }
     }
@@ -37,5 +37,5 @@ void main_inner(float x) {
 }
 
 fragment void v(main_inputs inputs [[stage_in]]) {
-  main_inner(inputs.x);
+  (main_inner(inputs.x));
 }

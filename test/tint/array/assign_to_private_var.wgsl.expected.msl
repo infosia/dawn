@@ -70,9 +70,9 @@ void main_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars)
       }
     }
   }
-  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (threadgroup_barrier(mem_flags::mem_threadgroup));
   tint_array<int4, 4> const a = tint_array<int4, 4>{};
-  foo(a, tint_module_vars);
+  (foo(a, tint_module_vars));
 }
 
 [[max_total_threads_per_threadgroup(1)]]
@@ -81,5 +81,5 @@ kernel void v_2(uint tint_local_index [[thread_index_in_threadgroup]], threadgro
   thread tint_array<int4, 4> dst = {};
   thread tint_array<tint_array<tint_array<int, 2>, 3>, 4> dst_nested = {};
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.src_private=(&src_private), .src_workgroup=(&(*v_3).tint_symbol), .src_uniform=src_uniform, .src_storage=src_storage, .dst=(&dst), .dst_nested=(&dst_nested)};
-  main_inner(tint_local_index, tint_module_vars);
+  (main_inner(tint_local_index, tint_module_vars));
 }

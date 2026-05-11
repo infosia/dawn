@@ -9,7 +9,7 @@ void distance_ac5535() {
 }
 
 fragment void fragment_main() {
-  distance_ac5535();
+  (distance_ac5535());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void distance_ac5535() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  distance_ac5535();
+  (distance_ac5535());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void distance_ac5535() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  distance_ac5535();
+  (distance_ac5535());
   return out;
 }
 

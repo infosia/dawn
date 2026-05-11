@@ -9,7 +9,7 @@ void max_a1b196() {
 }
 
 fragment void fragment_main() {
-  max_a1b196();
+  (max_a1b196());
 }
 //
 // compute_main
@@ -23,7 +23,7 @@ void max_a1b196() {
 
 [[max_total_threads_per_threadgroup(1)]]
 kernel void compute_main() {
-  max_a1b196();
+  (max_a1b196());
 }
 //
 // vertex_main
@@ -46,7 +46,7 @@ void max_a1b196() {
 VertexOutput vertex_main_inner() {
   VertexOutput out = {};
   out.pos = float4(0.0f);
-  max_a1b196();
+  (max_a1b196());
   return out;
 }
 

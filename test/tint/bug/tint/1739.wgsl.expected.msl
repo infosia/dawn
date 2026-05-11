@@ -158,9 +158,9 @@ kernel void v_24(const constant tint_ExternalTextureParams_packed_vec3* t_params
   tint_ExternalTextureParams const v_25 = tint_load_struct_packed_vec3(tint_module_vars.t_params);
   float4 red = tint_TextureLoadMultiplanarExternal(tint_module_vars.t_plane0, tint_module_vars.t_plane1, v_25, min(uint2(int2(10)), ((v_25.apparentSize + uint2(1u)) - uint2(1u))));
   float4 const v_26 = red;
-  tint_module_vars.outImage.write(v_26, uint2(int2(0)));
+  (tint_module_vars.outImage.write(v_26, uint2(int2(0))));
   tint_ExternalTextureParams const v_27 = tint_load_struct_packed_vec3(tint_module_vars.t_params);
   float4 green = tint_TextureLoadMultiplanarExternal(tint_module_vars.t_plane0, tint_module_vars.t_plane1, v_27, min(uint2(int2(70, 118)), ((v_27.apparentSize + uint2(1u)) - uint2(1u))));
   float4 const v_28 = green;
-  tint_module_vars.outImage.write(v_28, uint2(int2(1, 0)));
+  (tint_module_vars.outImage.write(v_28, uint2(int2(1, 0))));
 }
