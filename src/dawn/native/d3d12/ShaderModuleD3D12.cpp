@@ -181,6 +181,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
             .storage_buffer_binding = tint::BindingPoint(baseGroup, 0),
             .default_binding_type_order = {bindingTypeOrder.begin(), bindingTypeOrder.end()},
             .get_sampler_index_from_metadata = true,
+            .binding_to_resource_type = {},
         };
     }
 
