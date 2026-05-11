@@ -155,6 +155,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             .resource_table_binding = tint::BindingPoint(0, 1),
             .storage_buffer_binding = tint::BindingPoint(0, 0),
             .default_binding_type_order = {bindingTypeOrder.begin(), bindingTypeOrder.end()},
+            .binding_to_resource_type = {},
         };
     }
 
