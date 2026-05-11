@@ -16,6 +16,86 @@
       "message": "PTAL",
       "revId": "cd04b5b03a54e97bf218497107f4410022f4aa1b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8aaa141_392ba210",
+        "filename": "src/dawn/native/vulkan/SharedFenceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-11T20:56:15Z",
+      "side": 1,
+      "message": "We should name the constant `-1` in `UtilsVulkan.h`:\n\n`inline constexpr int kSemaphoreFdAlreadySignaledFd \u003d -1;`\n\nAnd move this comment there so it\u0027s referenced by all the code that uses the constant.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 50
+      },
+      "revId": "cd04b5b03a54e97bf218497107f4410022f4aa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7155a643_6d0eb19d",
+        "filename": "src/dawn/native/vulkan/SharedFenceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-11T20:56:15Z",
+      "side": 1,
+      "message": "```suggestion\n    if (descriptor-\u003ehandle !\u003d kSemaphoreFdAlreadySignaledFd) {\n```",
+      "revId": "cd04b5b03a54e97bf218497107f4410022f4aa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9829a5b9_108623a1",
+        "filename": "src/dawn/native/vulkan/external_semaphore/SemaphoreServiceImplementationFD.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-11T20:56:15Z",
+      "side": 1,
+      "message": "Let\u0027s scope this to ONLY handle -1 since that seems to be the only special negative value.\n\n```suggestion\n        int fd \u003d -2;  // Invalid value (-1 is valid, see kSemaphoreFdAlreadySignaledFd)\n        DAWN_TRY(CheckVkSuccess(\n            mDevice-\u003efn.GetSemaphoreFdKHR(mDevice-\u003eGetVkDevice(), \u0026semaphoreGetFdInfo, \u0026fd),\n            \"vkGetSemaphoreFdKHR\"));\n\n        DAWN_ASSERT(fd \u003e\u003d 0 || fd \u003d\u003d kSemaphoreFdAlreadySignaledFd);\n```",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 41
+      },
+      "revId": "cd04b5b03a54e97bf218497107f4410022f4aa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f189e9b_6025ec8a",
+        "filename": "src/dawn/native/vulkan/external_semaphore/SemaphoreServiceImplementationFD.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-11T20:56:15Z",
+      "side": 1,
+      "message": "```suggestion\n        if (handle \u003d\u003d kSemaphoreFdAlreadySignaledFd) {\n```",
+      "revId": "cd04b5b03a54e97bf218497107f4410022f4aa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
