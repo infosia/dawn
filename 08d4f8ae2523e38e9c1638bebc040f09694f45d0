@@ -51,6 +51,24 @@
       "parentUuid": "51dc2f9c_4f66b245",
       "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f016bb6f_1034e0c8",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-11T09:26:47Z",
+      "side": 0,
+      "message": "We should add `dawn/node` because we can and avoiding unsafe buffers is good practice. Fixing tests we can do over time but it\u0027s just good hygiene.",
+      "parentUuid": "d772fdc8_e7d820ad",
+      "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
