@@ -85,6 +85,11 @@ struct State {
         tint::UnorderedKeyWrapper<std::tuple<const core::type::SubgroupMatrix*, core::BinaryOp>>;
     Hashmap<MatrixScalarKey, core::ir::Function*, 4> matrix_scalar_funcs_{};
 
+    using MatrixMultiplyAccumulateKey = tint::UnorderedKeyWrapper<
+        std::tuple<const core::type::SubgroupMatrix*, const core::type::SubgroupMatrix*>>;
+    Hashmap<MatrixMultiplyAccumulateKey, core::ir::Function*, 4>
+        matrix_multiply_accumulate_funcs_{};
+
     /// Process the module.
     void Process() {
         // Find the bitcasts that need replacing.
@@ -226,6 +231,10 @@ struct State {
                         call_worklist.push_back([this, call] {
                             SubgroupMatrixScalar(call, core::BinaryOp::kMultiply);
                         });
+                        break;
+                    case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
+                        call_worklist.push_back(
+                            [this, call] { SubgroupMatrixMultiplyAccumulate(call); });
                         break;
                     case core::BuiltinFn::kTextureDimensions:
                         call_worklist.push_back([this, call] { TextureDimensions(call); });
@@ -1995,6 +2004,45 @@ struct State {
         b.InsertBefore(call, [&] {  //
             b.CallWithResult(call->DetachResult(), helper, mat, scalar);
         });
+        call->Destroy();
+    }
+
+    core::ir::Function* GetMatrixMultiplyAccumulateHelper(
+        const core::type::SubgroupMatrix* res_ty,
+        const core::type::SubgroupMatrix* left_ty,
+        const core::type::SubgroupMatrix* right_ty) {
+        return matrix_multiply_accumulate_funcs_.GetOrAdd(
+            MatrixMultiplyAccumulateKey{{res_ty, left_ty}}, [&]() -> core::ir::Function* {
+                auto fn_name = b.ir.symbols.New("tint_MatrixMultiplyAccumulate").Name();
+                auto* f = b.Function(fn_name, res_ty);
+                auto* a_param = b.FunctionParam("a", left_ty);
+                auto* b_param = b.FunctionParam("b", right_ty);
+                auto* c_param = b.FunctionParam("c", res_ty);
+                f->SetParams({a_param, b_param, c_param});
+
+                b.Append(f->Block(), [&] {
+                    auto* acc = b.Var("acc", c_param);
+                    b.MemberCall<hlsl::ir::MemberBuiltinCall>(
+                        ty.void_(), hlsl::BuiltinFn::kMultiplyAccumulate, acc, a_param, b_param);
+                    b.Return(f, b.Load(acc));
+                });
+                return f;
+            });
+    }
+
+    void SubgroupMatrixMultiplyAccumulate(core::ir::CoreBuiltinCall* call) {
+        auto* left = call->Args()[0];
+        auto* right = call->Args()[1];
+        auto* acc = call->Args()[2];
+
+        auto* left_ty = left->Type()->As<core::type::SubgroupMatrix>();
+        auto* right_ty = right->Type()->As<core::type::SubgroupMatrix>();
+        auto* res_ty = call->Result()->Type()->As<core::type::SubgroupMatrix>();
+
+        auto* helper = GetMatrixMultiplyAccumulateHelper(res_ty, left_ty, right_ty);
+
+        b.InsertBefore(call,
+                       [&] { b.CallWithResult(call->DetachResult(), helper, left, right, acc); });
         call->Destroy();
     }
 };
