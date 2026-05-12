@@ -8229,5 +8229,52 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixStore_Workgroup) {
+    capabilities.Add(core::ir::Capability::kAllowNonCoreTypes);
+
+    auto* mat_ty = ty.subgroup_matrix_left(ty.f32(), 4, 4);
+    auto* wg_var = b.Var("wg", workgroup, ty.array<f32, 256>(), core::Access::kReadWrite);
+    b.ir.root_block->Append(wg_var);
+
+    auto* func = b.Function("foo", ty.void_());
+    auto* mat = b.FunctionParam("mat", mat_ty);
+    func->SetParams({mat});
+
+    b.Append(func->Block(), [&] {
+        b.Call(ty.void_(), core::BuiltinFn::kSubgroupMatrixStore, wg_var, 0_u, mat,
+               b.Constant(false), 4_u);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %wg:ptr<workgroup, array<f32, 256>, read_write> = var undef
+}
+
+%foo = func(%mat:subgroup_matrix_left<f32, 4, 4>):void {
+  $B2: {
+    %4:void = subgroupMatrixStore %wg, 0u, %mat, false, 4u
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %wg:ptr<workgroup, array<f32, 256>, read_write> = var undef
+}
+
+%foo = func(%mat:subgroup_matrix_left<f32, 4, 4>):void {
+  $B2: {
+    %4:void = %mat.Store %wg, 0u, 4u, 0u
+    ret
+  }
+}
+)";
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer::raise
