@@ -217,6 +217,11 @@ struct State {
                         call_worklist.push_back(
                             [this, call] { SubgroupMatrixScalar(call, core::BinaryOp::kAdd); });
                         break;
+                    case core::BuiltinFn::kSubgroupMatrixScalarSubtract:
+                        call_worklist.push_back([this, call] {
+                            SubgroupMatrixScalar(call, core::BinaryOp::kSubtract);
+                        });
+                        break;
                     case core::BuiltinFn::kTextureDimensions:
                         call_worklist.push_back([this, call] { TextureDimensions(call); });
                         break;
@@ -1966,18 +1971,9 @@ struct State {
                                 [&](core::ir::Value* idx) {
                                     auto* val = b.MemberCall<hlsl::ir::MemberBuiltinCall>(
                                         scalar_ty, hlsl::BuiltinFn::kGet, m_param, idx);
-
-                                    core::ir::Value* op_result = nullptr;
-                                    switch (op) {
-                                        case core::BinaryOp::kAdd:
-                                            op_result = b.Add(val, s_param)->Result();
-                                            break;
-                                        default:
-                                            TINT_IR_UNREACHABLE(ir);
-                                    }
-
+                                    auto* binary = b.Binary(op, scalar_ty, val, s_param);
                                     b.MemberCall<hlsl::ir::MemberBuiltinCall>(
-                                        ty.void_(), hlsl::BuiltinFn::kSet, res, idx, op_result);
+                                        ty.void_(), hlsl::BuiltinFn::kSet, res, idx, binary);
                                 });
                     b.Return(f, b.Load(res));
                 });
