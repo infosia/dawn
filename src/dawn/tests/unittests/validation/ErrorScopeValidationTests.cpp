@@ -41,7 +41,6 @@ using testing::_;
 using testing::EmptySizedString;
 using testing::HasSubstr;
 using testing::MockCppCallback;
-using testing::NonEmptySizedString;
 using testing::SizedStringMatches;
 using utils::BinarySemaphore;
 

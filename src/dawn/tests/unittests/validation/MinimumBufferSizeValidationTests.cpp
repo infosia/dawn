@@ -37,7 +37,6 @@
 namespace dawn {
 namespace {
 
-using testing::Not;
 
 // Helper for describing bindings throughout the tests
 struct BindingDescriptor {

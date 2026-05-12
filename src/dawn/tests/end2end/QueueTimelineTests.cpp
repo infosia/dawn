@@ -35,7 +35,6 @@
 namespace dawn {
 namespace {
 
-using testing::_;
 using testing::EmptySizedString;
 using testing::InSequence;
 using testing::MockCppCallback;

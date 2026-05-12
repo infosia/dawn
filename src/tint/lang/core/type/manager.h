@@ -193,9 +193,8 @@ class Manager final {
     /// @param args the arguments used to create the temporary used for the search.
     /// @return a pointer to an instance of `T` with the provided arguments, or nullptr if the item
     ///         was not found.
-    template <typename TYPE,
-              typename _ = std::enable_if<tint::traits::IsTypeOrDerived<TYPE, Type>>,
-              typename... ARGS>
+    template <typename TYPE, typename... ARGS>
+        requires(tint::traits::IsTypeOrDerived<TYPE, Type>)
     auto* Find(ARGS&&... args) const {
         return types_.Find<TYPE>(std::forward<ARGS>(args)...);
     }

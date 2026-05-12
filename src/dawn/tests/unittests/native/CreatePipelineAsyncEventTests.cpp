@@ -49,8 +49,6 @@ using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::IsNull;
 using ::testing::MockCppCallback;
-using ::testing::NotNull;
-using ::testing::Test;
 
 using MockComputePipelineAsyncCallback = MockCppCallback<
     void (*)(wgpu::CreatePipelineAsyncStatus, wgpu::ComputePipeline, wgpu::StringView)>;

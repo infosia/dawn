@@ -93,7 +93,6 @@ void PrintTo(const ByteVectorSink& key, std::ostream* stream) {
 
 namespace {
 
-using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::PrintToString;
 using ::testing::Ref;

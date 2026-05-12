@@ -561,9 +561,7 @@ class DawnTestBase {
                                          {1, 1}, level, aspect, sizeof(U), bytesPerRow);
     }
 
-    template <typename E,
-              typename = typename std::enable_if<
-                  std::is_base_of<detail::CustomTextureExpectation, E>::value>::type>
+    template <typename E>
     std::ostringstream& AddTextureExpectation(const char* file,
                                               int line,
                                               E* expectation,
@@ -572,15 +570,15 @@ class DawnTestBase {
                                               wgpu::Extent3D extent,
                                               uint32_t level = 0,
                                               wgpu::TextureAspect aspect = wgpu::TextureAspect::All,
-                                              uint32_t bytesPerRow = 0) {
+                                              uint32_t bytesPerRow = 0)
+        requires std::is_base_of<detail::CustomTextureExpectation, E>::value
+    {
         // No device passed explicitly. Default it, and forward the rest of the args.
         return AddTextureExpectation(file, line, this->device, expectation, texture, origin, extent,
                                      level, aspect, bytesPerRow);
     }
 
-    template <typename E,
-              typename = typename std::enable_if<
-                  std::is_base_of<detail::CustomTextureExpectation, E>::value>::type>
+    template <typename E>
     std::ostringstream& AddTextureExpectation(const char* file,
                                               int line,
                                               wgpu::Device targetDevice,
@@ -590,7 +588,9 @@ class DawnTestBase {
                                               wgpu::Extent3D extent,
                                               uint32_t level = 0,
                                               wgpu::TextureAspect aspect = wgpu::TextureAspect::All,
-                                              uint32_t bytesPerRow = 0) {
+                                              uint32_t bytesPerRow = 0)
+        requires std::is_base_of<detail::CustomTextureExpectation, E>::value
+    {
         return AddTextureExpectationImpl(file, line, std::move(targetDevice), expectation, texture,
                                          origin, extent, level, aspect, expectation->DataSize(),
                                          bytesPerRow);

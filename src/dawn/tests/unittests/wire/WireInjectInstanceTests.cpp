@@ -39,8 +39,6 @@ namespace {
 using testing::_;
 using testing::Mock;
 using testing::MockCallback;
-using testing::NotNull;
-using testing::Return;
 
 class WireInjectInstanceTests : public WireTest {
   public:
