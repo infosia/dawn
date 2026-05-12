@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ab462db_86f9cd9f",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-12T14:49:55Z",
+      "side": 1,
+      "message": "Looking at how the analogous `ValidateMapAsync` is used in this code, I think what I\u0027ve got here is valid. In `APIMapAsync`, it calls `ValidateMapAsync` to validate the inputs, but then it switches on `mState` and does more validation on the current state:\n\n```cpp\n            DAWN_TRY(ValidateMapAsync(mode, offset, size));\n\n            switch (mState.load(std::memory_order::acquire)) {\n                case BufferState::Mapped:\n                case BufferState::MappedAtCreation:\n                    return DAWN_VALIDATION_ERROR(\"%s is already mapped.\", this);\n                case BufferState::InUse:\n                    return ConcurrentUseError();\n                case BufferState::PendingMap:\n                    return DAWN_VALIDATION_ERROR(\"%s already has an outstanding map pending.\",\n                                                 this);\n                case BufferState::Destroyed:\n                    return DAWN_VALIDATION_ERROR(\"%s is destroyed.\", this);\n                case BufferState::SharedMemoryNoAccess:\n                    return DAWN_VALIDATION_ERROR(\"%s used without shared memory access.\", this);\n                case BufferState::Unmapped:\n                    break;\n            }\n```\n\nAn argument can probably be made that even this should be moved to the validate call, but we probably are doing it this way to avoid checking the same state twice.",
+      "parentUuid": "62c1e7e2_9e773e58",
+      "revId": "f98453fdc29e10094e1a3521ec4baed31109ce43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "29e31c16_5d61e21c",
