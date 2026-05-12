@@ -39,7 +39,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/StringViewUtils.h"
-#include "dawn/common/Version_autogen.h"
+#include "dawn/dawn_version.h"
 #include "dawn/native/CacheKey.h"
 #include "dawn/native/Instance.h"
 #include "dawn/platform/DawnPlatform.h"
