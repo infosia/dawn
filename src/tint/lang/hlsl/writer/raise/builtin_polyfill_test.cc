@@ -8016,5 +8016,67 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixScalarSubtract_F32) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixScalarMultiply_F32) {
+    auto* mat_ty = ty.subgroup_matrix_left(ty.f32(), 4, 4);
+    auto* func = b.Function("foo", mat_ty);
+    auto* m = b.FunctionParam("m", mat_ty);
+    auto* s = b.FunctionParam("s", ty.f32());
+    func->SetParams({m, s});
+
+    b.Append(func->Block(), [&] {
+        auto* call = b.Call(mat_ty, core::BuiltinFn::kSubgroupMatrixScalarMultiply, m, s);
+        b.Return(func, call);
+    });
+
+    auto* src = R"(
+%foo = func(%m:subgroup_matrix_left<f32, 4, 4>, %s:f32):subgroup_matrix_left<f32, 4, 4> {
+  $B1: {
+    %4:subgroup_matrix_left<f32, 4, 4> = subgroupMatrixScalarMultiply %m, %s
+    ret %4
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%m:subgroup_matrix_left<f32, 4, 4>, %s:f32):subgroup_matrix_left<f32, 4, 4> {
+  $B1: {
+    %4:subgroup_matrix_left<f32, 4, 4> = call %tint_subgroup_matrix_scalar_op, %m, %s
+    ret %4
+  }
+}
+%tint_subgroup_matrix_scalar_op = func(%m_1:subgroup_matrix_left<f32, 4, 4>, %s_1:f32):subgroup_matrix_left<f32, 4, 4> {  # %m_1: 'm', %s_1: 's'
+  $B2: {
+    %8:ptr<function, subgroup_matrix_left<f32, 4, 4>, read_write> = var undef
+    loop [i: $B3, b: $B4, c: $B5] {  # loop_1
+      $B3: {  # initializer
+        next_iteration 0u  # -> $B4
+      }
+      $B4 (%idx:u32): {  # body
+        %10:bool = gte %idx, 16u
+        if %10 [t: $B6] {  # if_1
+          $B6: {  # true
+            exit_loop  # loop_1
+          }
+        }
+        %11:f32 = %m_1.Get %idx
+        %12:f32 = mul %11, %s_1
+        %13:void = %8.Set %idx, %12
+        continue  # -> $B5
+      }
+      $B5: {  # continuing
+        %14:u32 = add %idx, 1u
+        next_iteration %14  # -> $B4
+      }
+    }
+    %15:subgroup_matrix_left<f32, 4, 4> = load %8
+    ret %15
+  }
+}
+)";
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer::raise
