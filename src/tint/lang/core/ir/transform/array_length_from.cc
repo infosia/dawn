@@ -25,13 +25,14 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/core/ir/transform/array_length_from_uniform.h"
+#include "src/tint/lang/core/ir/transform/array_length_from.h"
 
 #include <algorithm>
 #include <utility>
 
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
+#include "src/tint/lang/core/ir/transform/prepare_immediate_data.h"
 #include "src/tint/lang/core/ir/validator.h"
 
 using namespace tint::core::fluent_types;     // NOLINT
@@ -46,11 +47,19 @@ struct State {
     /// The IR module.
     Module& ir;
 
+    bool from_uniform = true;
+
     /// The binding point to use for the uniform buffer.
     BindingPoint ubo_binding;
 
     /// The map from binding point to the element index which holds the size of that buffer.
     const std::unordered_map<BindingPoint, uint32_t>& bindpoint_to_size_index;
+
+    const core::ir::transform::ImmediateDataLayout& immediate_data_layout;
+
+    uint32_t buffer_sizes_offset = 0;
+
+    uint32_t buffer_sizes_array_elements_num = 0;
 
     /// The IR builder.
     core::ir::Builder b{ir};
@@ -437,8 +446,19 @@ struct State {
                 const uint32_t size_index = bindpoint_to_size_index.at(info.binding_point);
                 const uint32_t array_index = size_index / 4;
                 const uint32_t vec_index = size_index % 4;
-                auto* vec_ptr = b.Access<ptr<uniform, vec4u>>(BufferSizes(), u32(array_index));
-                auto* total_buffer_size = b.LoadVectorElement(vec_ptr, u32(vec_index))->Result();
+                Value* total_buffer_size = nullptr;
+                if (from_uniform) {
+                    auto* vec_ptr = b.Access<ptr<uniform, vec4u>>(BufferSizes(), u32(array_index));
+                    total_buffer_size = b.LoadVectorElement(vec_ptr, u32(vec_index))->Result();
+                } else {
+                    auto* buffer_sizes = b.Access(
+                        ty.ptr(immediate, ty.array(ty.vec4u(), buffer_sizes_array_elements_num)),
+                        immediate_data_layout.var,
+                        u32(immediate_data_layout.IndexOf(buffer_sizes_offset)));
+                    auto* vec_ptr = b.Access(ty.ptr(immediate, ty.vec4u()), buffer_sizes->Result(),
+                                             u32(array_index));
+                    total_buffer_size = b.LoadVectorElement(vec_ptr, u32(vec_index))->Result();
+                }
 
                 // Calculate actual array length:
                 //                total_buffer_size - array_offset
@@ -478,22 +498,53 @@ struct State {
     }
 
     /// @returns true if the transformed module needs a storage buffer sizes UBO
-    bool NeedsStorageBufferSizes() { return buffer_sizes_var != nullptr; }
+    bool NeedsStorageBufferSizes() {
+        if (from_uniform) {
+            return buffer_sizes_var != nullptr;
+        } else {
+            return !lengths_structure_members.IsEmpty() && lengths_constructor != nullptr;
+        }
+    }
 };
 
 }  // namespace
 
-Result<ArrayLengthFromUniformResult> ArrayLengthFromUniform(
+Result<ArrayLengthResult> ArrayLengthFromUniform(
     Module& ir,
     BindingPoint ubo_binding,
     const std::unordered_map<BindingPoint, uint32_t>& bindpoint_to_size_index) {
-    core::ir::AssertValid(ir, kArrayLengthFromUniformCapabilities,
-                          "before core.ArrayLengthFromUniform");
+    core::ir::AssertValid(ir, kArrayLengthCapabilities, "before core.ArrayLengthFromUniform");
 
-    State state{ir, ubo_binding, bindpoint_to_size_index};
+    State state{.ir = ir,
+                .from_uniform = true,
+                .ubo_binding = ubo_binding,
+                .bindpoint_to_size_index = bindpoint_to_size_index,
+                .immediate_data_layout = {}};
     state.Process();
 
-    ArrayLengthFromUniformResult result;
+    ArrayLengthResult result;
+    result.needs_storage_buffer_sizes = state.NeedsStorageBufferSizes();
+    return result;
+}
+
+Result<ArrayLengthResult> ArrayLengthFromImmediates(
+    Module& ir,
+    const core::ir::transform::ImmediateDataLayout& immediate_data_layout,
+    const uint32_t buffer_sizes_offset,
+    const uint32_t buffer_sizes_array_elements_num,
+    const std::unordered_map<BindingPoint, uint32_t>& bindpoint_to_size_index) {
+    core::ir::AssertValid(ir, kArrayLengthCapabilities, "before core.ArrayLengthFromImmediates");
+
+    State state{.ir = ir,
+                .from_uniform = false,
+                .ubo_binding = {},
+                .bindpoint_to_size_index = bindpoint_to_size_index,
+                .immediate_data_layout = immediate_data_layout,
+                .buffer_sizes_offset = buffer_sizes_offset,
+                .buffer_sizes_array_elements_num = buffer_sizes_array_elements_num};
+    state.Process();
+
+    ArrayLengthResult result;
     result.needs_storage_buffer_sizes = state.NeedsStorageBufferSizes();
     return result;
 }

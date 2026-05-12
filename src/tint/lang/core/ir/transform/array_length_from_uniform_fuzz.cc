@@ -26,7 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "src/tint/cmd/fuzz/common/ir_fuzzer.h"
-#include "src/tint/lang/core/ir/transform/array_length_from_uniform.h"
+#include "src/tint/lang/core/ir/transform/array_length_from.h"
 #include "src/tint/lang/core/ir/validator.h"
 
 namespace tint::core::ir::transform {
@@ -48,4 +48,4 @@ Result<SuccessType> ArrayLengthFromUniformFuzzer(
 }  // namespace tint::core::ir::transform
 
 TINT_IR_MODULE_FUZZER(tint::core::ir::transform::ArrayLengthFromUniformFuzzer,
-                      tint::core::ir::transform::kArrayLengthFromUniformCapabilities);
+                      tint::core::ir::transform::kArrayLengthCapabilities);
