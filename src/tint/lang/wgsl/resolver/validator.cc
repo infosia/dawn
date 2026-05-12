@@ -419,14 +419,6 @@ bool Validator::SampledTexture(const core::type::SampledTexture* t, const Source
         AddError(source) << "texture_2d<type>: type must be f32, i32 or u32";
         return false;
     }
-
-    if (t->Filterable() != core::TextureFilterable::kUndefined &&
-        !t->Type()->IsAnyOf<core::type::F32, core::type::F16>()) {
-        AddError(source) << "texture filterability only applies to float textures, got '"
-                         << sem_.TypeNameOf(t->Type()) << "'";
-        return false;
-    }
-
     return true;
 }
 

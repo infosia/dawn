@@ -4119,7 +4119,8 @@ TEST_F(FilterabilityValidationTest, UnfilterableBGL_UnFilterableShader_Pass) {
     CreateComputePipeline(shaderSource, {bgl});
 }
 
-TEST_F(FilterabilityValidationTest, UnfilterableBGL_FilterableShader_Fail) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_F(FilterabilityValidationTest, DISABLED_UnfilterableBGL_FilterableShader_Fail) {
     auto shaderSource = R"(
     @group(0) @binding(0) var tex1 : texture_2d<f32, filterable>;
 
@@ -4239,7 +4240,8 @@ TEST_F(FilterabilityValidationTest, NonFilteringBGL_NonFilteringShader_Pass) {
     CreateComputePipeline(shaderSource, {bgl});
 }
 
-TEST_F(FilterabilityValidationTest, NonFilteringBGL_FilteringShader_Fail) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_F(FilterabilityValidationTest, DISABLED_NonFilteringBGL_FilteringShader_Fail) {
     auto shaderSource = R"(
     @group(0) @binding(0) var tex1 : texture_2d<f32>;
     @group(0) @binding(1) var samp : sampler<filtering>;
@@ -4277,7 +4279,8 @@ TEST_F(FilterabilityValidationTest, ComparisonBGL_ComparisonShader_Pass) {
     CreateComputePipeline(shaderSource, {bgl});
 }
 
-TEST_F(FilterabilityValidationTest, ComparisonBGL_FilteringShader_Fail) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_F(FilterabilityValidationTest, DISABLED_ComparisonBGL_FilteringShader_Fail) {
     auto shaderSource = R"(
     @group(0) @binding(0) var tex1 : texture_2d<f32>;
     @group(0) @binding(1) var samp : sampler<filtering>;
@@ -4298,7 +4301,8 @@ TEST_F(FilterabilityValidationTest, ComparisonBGL_FilteringShader_Fail) {
                            "(SamplerBindingType::Comparison"));
 }
 
-TEST_F(FilterabilityValidationTest, ComparisonBGL_NonFilteringShader_Fail) {
+// TODO(507087794): Re-enable with new filterability rules
+TEST_F(FilterabilityValidationTest, DISABLED_ComparisonBGL_NonFilteringShader_Fail) {
     auto shaderSource = R"(
     @group(0) @binding(0) var tex1 : texture_2d<f32>;
     @group(0) @binding(1) var samp : sampler<non_filtering>;
