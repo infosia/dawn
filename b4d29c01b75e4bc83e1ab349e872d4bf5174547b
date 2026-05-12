@@ -261,6 +261,24 @@
       "parentUuid": "1783cb87_dc70e292",
       "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bad11e8_32b430e3",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-12T13:33:45Z",
+      "side": 1,
+      "message": "RGBA32Float is not filterable, unless `float32-filterable` is enabled. My point is that we should still check that both `tint::ResourceType::kTexture_1d_f32_[un]filterable` are valid to use with `texture_1d\u003cf32\u003e`.",
+      "parentUuid": "555a07e7_97c951f5",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
