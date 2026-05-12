@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9440977_6842dbf3",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4691,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-12T21:11:15Z",
+      "side": 1,
+      "message": "This feels like it should just be an ASSERT in the `Loop` constructor",
+      "revId": "99a673612331bdfdb69cdd763afac433d59bfd28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
