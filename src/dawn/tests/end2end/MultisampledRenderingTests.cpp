@@ -68,7 +68,9 @@ class MultisampledRenderingTest : public DawnTest {
         mResolveTexture = CreateTextureForRenderAttachment(kColorFormat, 1);
         mResolveView = mResolveTexture.CreateView();
 
-        mDepthStencilTexture = CreateTextureForRenderAttachment(kDepthStencilFormat, kSampleCount);
+        mDepthStencilTexture = CreateTextureForRenderAttachment(
+            kDepthStencilFormat, kSampleCount, /*mipLevelCount */ 1, /* arrayLayerCount */ 1,
+            /* transientAttachment */ true);
         mDepthStencilView = mDepthStencilTexture.CreateView();
     }
 
@@ -257,6 +259,8 @@ class MultisampledRenderingTest : public DawnTest {
 
         renderPass.cDepthStencilAttachmentInfo.depthClearValue = kClearDepth;
         renderPass.cDepthStencilAttachmentInfo.depthLoadOp = depthStencilLoadOp;
+        renderPass.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Discard;
+        renderPass.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::Discard;
 
         if (hasDepthStencilAttachment) {
             renderPass.cDepthStencilAttachmentInfo.view = mDepthStencilView;
@@ -1609,7 +1613,7 @@ TEST_P(MultisampledRenderToSingleSampledTest, DrawWithDepthTest) {
     // the last render pass.
     {
         utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
-            {singleSampledTextureView}, {nullptr}, wgpu::LoadOp::Load, wgpu::LoadOp::Load,
+            {singleSampledTextureView}, {nullptr}, wgpu::LoadOp::Load, wgpu::LoadOp::Clear,
             /*testDepth=*/true);
         renderPass.nextInChain = &renderPassSampleCount;
 

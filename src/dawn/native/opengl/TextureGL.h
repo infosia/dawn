@@ -64,6 +64,7 @@ class Texture final : public TextureBase {
                                                    const SubresourceRange& range);
 
     MaybeError SynchronizeTextureBeforeUse();
+    bool IsRenderbuffer() const;
 
   private:
     ~Texture() override;

@@ -277,23 +277,35 @@ ResultOrError<Ref<Texture>> Texture::Create(Device* device,
 
     bool clear = device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting);
     DAWN_TRY(device->EnqueueGL([texture, clear](const OpenGLFunctions& gl) -> MaybeError {
-        DAWN_GL_TRY(gl, GenTextures(1, &texture->mHandle));
+        if (texture->IsRenderbuffer()) {
+            DAWN_GL_TRY(gl, GenRenderbuffers(1, &texture->mHandle));
+        } else {
+            DAWN_GL_TRY(gl, GenTextures(1, &texture->mHandle));
+        }
 
         GLenum target = texture->GetGLTarget();
         uint32_t levels = texture->GetNumMipLevels();
         const GLFormat& glFormat = texture->GetGLFormat();
 
-        DAWN_GL_TRY(gl, BindTexture(target, texture->mHandle));
-        DAWN_TRY(AllocateTexture(gl, target, texture->GetSampleCount(), levels, glFormat,
-                                 texture->GetBaseSize()));
+        if (texture->IsRenderbuffer()) {
+            DAWN_GL_TRY(gl, BindRenderbuffer(GL_RENDERBUFFER, texture->mHandle));
+            DAWN_GL_TRY_ALWAYS_CHECK(
+                gl, RenderbufferStorageMultisampleEXT(
+                        GL_RENDERBUFFER, texture->GetSampleCount(), glFormat.internalFormat,
+                        texture->GetBaseSize().width, texture->GetBaseSize().height));
+        } else {
+            DAWN_GL_TRY(gl, BindTexture(target, texture->mHandle));
+            DAWN_TRY(AllocateTexture(gl, target, texture->GetSampleCount(), levels, glFormat,
+                                     texture->GetBaseSize()));
 
-        // The texture is not complete if it uses mipmapping and not all levels up to
-        // MAX_LEVEL have been defined.
-        DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_MAX_LEVEL, levels - 1));
+            // The texture is not complete if it uses mipmapping and not all levels up to
+            // MAX_LEVEL have been defined.
+            DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_MAX_LEVEL, levels - 1));
 
-        if (clear) {
-            DAWN_TRY(texture->ClearTexture(gl, texture->GetAllSubresources(),
-                                           TextureBase::ClearValue::NonZero));
+            if (clear) {
+                DAWN_TRY(texture->ClearTexture(gl, texture->GetAllSubresources(),
+                                               TextureBase::ClearValue::NonZero));
+            }
         }
         return {};
     }));
@@ -327,6 +339,11 @@ Texture::Texture(Device* device,
 }
 
 Texture::~Texture() {}
+
+bool Texture::IsRenderbuffer() const {
+    return ((GetUsage() & wgpu::TextureUsage::TransientAttachment)) &&
+           GetFormat().HasDepthOrStencil() && (GetSampleCount() > 1);
+}
 
 void Texture::DestroyImpl(DestroyReason reason) {
     TextureBase::DestroyImpl(reason);
@@ -743,6 +760,12 @@ MaybeError TextureView::BindToFramebuffer(const OpenGLFunctions& gl,
     }
 
     DAWN_ASSERT(textureHandle != 0);
+
+    if (ToBackend(GetTexture())->IsRenderbuffer()) {
+        DAWN_GL_TRY(gl,
+                    FramebufferRenderbuffer(target, attachment, GL_RENDERBUFFER, textureHandle));
+        return {};
+    }
 
     return FramebufferTextureHelper(gl, textarget, target, attachment, textureHandle, mipLevel,
                                     arrayLayer, samples);

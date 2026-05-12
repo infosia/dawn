@@ -315,6 +315,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     // MSAARenderToSingleSampled
     if (mFunctions.IsGLExtensionSupported("GL_EXT_multisampled_render_to_texture")) {
         EnableFeature(Feature::MSAARenderToSingleSampled);
+        EnableFeature(Feature::TransientAttachments);
     }
 }
 
