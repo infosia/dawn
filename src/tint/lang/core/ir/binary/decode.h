@@ -42,11 +42,18 @@ class Module;
 
 namespace tint::core::ir::binary {
 
+/// Options for decoding an IR module
+struct DecoderOptions {
+    /// If true, invalid identifiers will be renamed instead of erroring.
+    /// Note: Renaming not guaranteed to avoid name collisions
+    bool fix_identifiers = false;
+};
+
 /// @returns the decoded Module from the serialized protobuf.
-Result<Module> Decode(std::span<const std::byte> encoded);
+Result<Module> Decode(std::span<const std::byte> encoded, const DecoderOptions& options = {});
 
 /// @returns the decoded Module from the protobuf.
-Result<Module> Decode(const pb::Module& module);
+Result<Module> Decode(const pb::Module& module, const DecoderOptions& options = {});
 
 }  // namespace tint::core::ir::binary
 

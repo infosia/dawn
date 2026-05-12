@@ -61,7 +61,8 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* input, size_t size) {
 // the LibFuzzer runtime uses dlsym() instead of calling the function directly.
 extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* argc,
                                                                            char*** argv) {
-    int res = tint::fuzz::common::ParseFuzzerOptions(argc, argv, &options);
+    int res = tint::fuzz::common::ParseFuzzerOptions(tint::fuzz::common::FuzzerType::kWGSL, argc,
+                                                     argv, &options);
     if (res != 0) {
         return res;
     }
