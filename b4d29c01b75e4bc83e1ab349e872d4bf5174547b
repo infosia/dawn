@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c211cdd8_fcb2f5ca",
+        "filename": "src/dawn/native/TintUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-12T09:42:56Z",
+      "side": 1,
+      "message": "It\u0027s surprising, which test causes `BindingNotUsed` to arrive here? https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BindGroupLayoutInternal.cpp;drc\u003d398e74869153a12e825bc789c2134762cbe81c36;l\u003d459 should prevent that and AFAIK that\u0027s the only place where we create the BindingInfo.",
+      "parentUuid": "2e4c576d_b10a5843",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9a43e417_65628675",
         "filename": "src/dawn/native/TintUtils.cpp",
         "patchSetId": 4
