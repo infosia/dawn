@@ -29,6 +29,10 @@
 {% set prefix = Prefix.lower() %}
 #include "dawn/{{prefix}}_proc.h"
 
+#include <algorithm>
+
+#include "dawn/dawn_version.h"
+
 // The sanitizer is disabled for calls to procs.* since those functions may be
 // dynamically loaded.
 #include "dawn/common/Compiler.h"
@@ -47,6 +51,7 @@ WGPUInstance CreateInstanceThatWarns(const WGPUInstanceDescriptor* desc) {
 
 constexpr {{Prefix}}ProcTable MakeNullProcTable() {
     {{Prefix}}ProcTable procs = {};
+    std::ranges::copy(dawn::kDawnVersion, procs.version);
     procs.createInstance = CreateInstanceThatWarns;
     return procs;
 }
