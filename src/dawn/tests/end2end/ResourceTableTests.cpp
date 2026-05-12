@@ -1858,7 +1858,7 @@ TEST_P(ResourceTableTests, RemoveAddDuplicateSampler) {
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
         @compute @workgroup_size(1) fn main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
         }
     )");
     auto pipeline = device.CreateComputePipeline(&csDesc);
@@ -1918,7 +1918,7 @@ TEST_P(ResourceTableTests, AddDuplicateSamplersTwice) {
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
         @compute @workgroup_size(1) fn main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
         }
     )");
     auto pipeline = device.CreateComputePipeline(&csDesc);
@@ -1970,7 +1970,7 @@ TEST_P(ResourceTableTests, AddAndRemoveMaxSamplersTwice) {
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
         @compute @workgroup_size(1) fn main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
         }
     )");
     auto pipeline = device.CreateComputePipeline(&csDesc);
