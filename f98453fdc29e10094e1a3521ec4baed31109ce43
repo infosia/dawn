@@ -109,6 +109,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "619fe201_68782c60",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-12T20:35:59Z",
+      "side": 1,
+      "message": "Thanks, Loko!",
+      "parentUuid": "e7d25ac9_4b030fc4",
+      "revId": "f98453fdc29e10094e1a3521ec4baed31109ce43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "29e31c16_5d61e21c",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 1
