@@ -47,7 +47,7 @@
 #include "dawn/common/Sha3.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/common/SystemUtils.h"
-#include "dawn/common/Version_autogen.h"
+#include "dawn/dawn_version.h"
 #include "dawn/native/AsyncTask.h"
 #include "dawn/native/AttachmentState.h"
 #include "dawn/native/BindGroup.h"

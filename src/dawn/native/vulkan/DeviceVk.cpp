@@ -33,7 +33,7 @@
 #include "dawn/common/Math.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/common/Platform.h"
-#include "dawn/common/Version_autogen.h"
+#include "dawn/dawn_version.h"
 #include "dawn/native/BackendConnection.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"

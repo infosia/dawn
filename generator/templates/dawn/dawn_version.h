@@ -1,4 +1,4 @@
-// Copyright 2022 The Dawn & Tint Authors
+// Copyright 2026 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -25,8 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef COMMON_VERISON_AUTOGEN_H_
-#define COMMON_VERISON_AUTOGEN_H_
+#ifndef INCLUDE_DAWN_DAWN_VERSION_H_
+#define INCLUDE_DAWN_DAWN_VERSION_H_
 
 #include <array>
 #include <cstdint>
@@ -38,4 +38,4 @@ static constexpr std::array<uint8_t, 20> kDawnVersion = { {{get_version_byte_arr
 
 }  // namespace dawn
 
-#endif  // COMMON_VERISON_AUTOGEN_H_
+#endif  // INCLUDE_DAWN_DAWN_VERSION_H_
