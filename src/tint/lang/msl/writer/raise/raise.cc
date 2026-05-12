@@ -32,8 +32,7 @@
 
 #include "src/tint/api/common/binding_point.h"
 #include "src/tint/lang/core/ir/module.h"
-#include "src/tint/lang/core/ir/transform/array_length_from_immediate.h"
-#include "src/tint/lang/core/ir/transform/array_length_from_uniform.h"
+#include "src/tint/lang/core/ir/transform/array_length_from.h"
 #include "src/tint/lang/core/ir/transform/binary_polyfill.h"
 #include "src/tint/lang/core/ir/transform/binding_remapper.h"
 #include "src/tint/lang/core/ir/transform/builtin_polyfill.h"

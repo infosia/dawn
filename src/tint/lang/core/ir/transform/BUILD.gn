@@ -45,10 +45,8 @@ if (tint_build_unittests || tint_build_benchmarks) {
 
 libtint_source_set("transform") {
   sources = [
-    "array_length_from_immediate.cc",
-    "array_length_from_immediate.h",
-    "array_length_from_uniform.cc",
-    "array_length_from_uniform.h",
+    "array_length_from.cc",
+    "array_length_from.h",
     "bgra8unorm_polyfill.cc",
     "bgra8unorm_polyfill.h",
     "binary_polyfill.cc",
