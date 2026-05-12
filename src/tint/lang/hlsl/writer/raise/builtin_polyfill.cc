@@ -222,6 +222,11 @@ struct State {
                             SubgroupMatrixScalar(call, core::BinaryOp::kSubtract);
                         });
                         break;
+                    case core::BuiltinFn::kSubgroupMatrixScalarMultiply:
+                        call_worklist.push_back([this, call] {
+                            SubgroupMatrixScalar(call, core::BinaryOp::kMultiply);
+                        });
+                        break;
                     case core::BuiltinFn::kTextureDimensions:
                         call_worklist.push_back([this, call] { TextureDimensions(call); });
                         break;
