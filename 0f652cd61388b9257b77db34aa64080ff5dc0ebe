@@ -65,6 +65,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e96c4605_ff27e045",
+        "filename": "src/dawn/native/Blob.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-12T13:52:48Z",
+      "side": 1,
+      "message": "Ah I missed this wasn\u0027t casting from void*.",
+      "parentUuid": "bbe61c31_d0830983",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af776d50_94adddee",
@@ -207,6 +231,30 @@
       "side": 1,
       "message": "Unfortunately, I cannot. It seems like `std::as_bytes` is matching specifically against `std::span`s and doesn\u0027t have an overload for `std::array`.",
       "parentUuid": "fa14b079_fc2aacb8",
+      "range": {
+        "startLine": 178,
+        "startChar": 37,
+        "endLine": 178,
+        "endChar": 47
+      },
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce8a2883_f582da12",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-12T13:52:48Z",
+      "side": 1,
+      "message": "Ahh span is implicitly convertible from std::array but that implicit conversion doesn\u0027t work with the template deduction in std::as_byte.",
+      "parentUuid": "beeafc83_b80130a9",
       "range": {
         "startLine": 178,
         "startChar": 37,
@@ -389,6 +437,24 @@
       "side": 1,
       "message": "Huh... great question. I looked at the original impl and it didn\u0027t handle it before, but reading some docs, I think it was creating a string with null which is technically UB from what I can tell. I added the explicit check and initialize the result to just an empty with the ctor instead.",
       "parentUuid": "e80fa3b5_ca8ea53e",
+      "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fa2cb11_649d59f8",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-12T13:52:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure if 0 size string is UB (cppyreference isn\u0027t loading) but you can have 0 length string_view I\u0027m pretty sure. Both string and string_view Write() handle writing 0 length so handling in read sgtm.",
+      "parentUuid": "dc243796_7db1caf4",
       "revId": "0f652cd61388b9257b77db34aa64080ff5dc0ebe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
