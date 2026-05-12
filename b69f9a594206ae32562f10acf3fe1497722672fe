@@ -52,6 +52,24 @@
       "parentUuid": "92c0e977_0673d183",
       "revId": "b69f9a594206ae32562f10acf3fe1497722672fe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b656ecc4_63e43fe8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4729644
+      },
+      "writtenOn": "2026-05-12T14:58:45Z",
+      "side": 1,
+      "message": "Acknowledged. I think it\u0027s safer to abandon. Thank you, Loko.",
+      "parentUuid": "9f9b089a_d782833d",
+      "revId": "b69f9a594206ae32562f10acf3fe1497722672fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
