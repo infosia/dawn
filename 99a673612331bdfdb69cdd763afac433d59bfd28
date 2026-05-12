@@ -16,6 +16,24 @@
       "message": "This feels like it should just be an ASSERT in the `Loop` constructor",
       "revId": "99a673612331bdfdb69cdd763afac433d59bfd28",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de5e2283_3c8a63d1",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4691,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-12T21:18:09Z",
+      "side": 1,
+      "message": "Could be. Would need to do `SetInitializer()` too.",
+      "parentUuid": "c9440977_6842dbf3",
+      "revId": "99a673612331bdfdb69cdd763afac433d59bfd28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
