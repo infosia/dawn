@@ -442,7 +442,7 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       FeatureInfo::FeatureState::Experimental}},
     {Feature::ChromiumExperimentalSamplingResourceTable,
      {"Experimental support for the bindless sampling resource table",
-      "https://github.com/Kangz/gpuweb/blob/bindless/proposals/bindless.md",
+      "https://github.com/gpuweb/gpuweb/blob/main/proposals/bindless.md",
       FeatureInfo::FeatureState::Experimental}},
     {Feature::SubgroupSizeControl,
      {"Support the \"enable subgroup_size_control;\" directive in WGSL.",
