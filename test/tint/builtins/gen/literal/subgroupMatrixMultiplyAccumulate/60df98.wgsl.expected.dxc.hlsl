@@ -1,5 +1,23 @@
-SKIP: FAILED
+#include <dx/linalg.h>
+using namespace dx::linalg;
+using Matrix_result_i8_8x8 = Matrix<ComponentType::I8, 8, 8, MatrixUse::Accumulator, MatrixScope::Wave>;
+using Matrix_left_i8_8x8 = Matrix<ComponentType::I8, 8, 8, MatrixUse::A, MatrixScope::Wave>;
+using Matrix_right_i8_8x8 = Matrix<ComponentType::I8, 8, 8, MatrixUse::B, MatrixScope::Wave>;
 
-subgroup matrices are not supported by the HLSL backend
+RWByteAddressBuffer prevent_dce : register(u0);
+Matrix_result_i8_8x8 tint_MatrixMultiplyAccumulate(Matrix_left_i8_8x8 a, Matrix_right_i8_8x8 b, Matrix_result_i8_8x8 c) {
+  Matrix_result_i8_8x8 acc = c;
+  acc.MultiplyAccumulate(a, b);
+  return acc;
+}
 
-tint executable returned error: exit status 1
+Matrix_result_i8_8x8 subgroupMatrixMultiplyAccumulate_60df98() {
+  Matrix_result_i8_8x8 res = tint_MatrixMultiplyAccumulate(Matrix_left_i8_8x8::Splat(int(0)), Matrix_right_i8_8x8::Splat(int(0)), Matrix_result_i8_8x8::Splat(int(0)));
+  return res;
+}
+
+[numthreads(1, 1, 1)]
+void compute_main() {
+  subgroupMatrixMultiplyAccumulate_60df98().Store(prevent_dce, 0u, 64u, MatrixLayout::RowMajor);
+}
+

@@ -344,6 +344,26 @@ implicit(N: num, T: scalar) fn select(vec<N, bool>, vec<N, T>, vec<N, T>) -> vec
                         subgroup_matrix<subgroup_matrix_kind_right, T, C, K>)
       -> subgroup_matrix<subgroup_matrix_kind_result, TR, C, R>
 
+@member_function implicit(T: f16, TR: f32_f16, C: num, R: num, K: num)
+  fn MultiplyAccumulate(ptr<function, subgroup_matrix<subgroup_matrix_kind_result, TR, C, R>, read_write>,
+                         subgroup_matrix<subgroup_matrix_kind_left, T, K, R>,
+                         subgroup_matrix<subgroup_matrix_kind_right, T, C, K>)
+
+@member_function implicit(T: f32, TR: f32, C: num, R: num, K: num)
+  fn MultiplyAccumulate(ptr<function, subgroup_matrix<subgroup_matrix_kind_result, TR, C, R>, read_write>,
+                         subgroup_matrix<subgroup_matrix_kind_left, T, K, R>,
+                         subgroup_matrix<subgroup_matrix_kind_right, T, C, K>)
+
+@member_function implicit(T: iu8, TR: iu32_iu8, C: num, R: num, K: num)
+  fn MultiplyAccumulate(ptr<function, subgroup_matrix<subgroup_matrix_kind_result, TR, C, R>, read_write>,
+                         subgroup_matrix<subgroup_matrix_kind_left, T, K, R>,
+                         subgroup_matrix<subgroup_matrix_kind_right, T, C, K>)
+
+@member_function implicit(T: iu32, TR: iu32, C: num, R: num, K: num)
+  fn MultiplyAccumulate(ptr<function, subgroup_matrix<subgroup_matrix_kind_result, TR, C, R>, read_write>,
+                         subgroup_matrix<subgroup_matrix_kind_left, T, K, R>,
+                         subgroup_matrix<subgroup_matrix_kind_right, T, C, K>)
+
 @member_function implicit(K: subgroup_matrix_kind, T: fiu32_f16, C: num, R: num)
   fn Get(subgroup_matrix<K, T, C, R>, index: u32) -> T
 

@@ -110,6 +110,8 @@ const char* str(BuiltinFn i) {
             return "select";
         case BuiltinFn::kMultiply:
             return "Multiply";
+        case BuiltinFn::kMultiplyAccumulate:
+            return "MultiplyAccumulate";
         case BuiltinFn::kGet:
             return "Get";
         case BuiltinFn::kSet:
@@ -211,6 +213,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kWaveReadLaneAt:
         case BuiltinFn::kInterlockedMax64:
         case BuiltinFn::kInterlockedMin64:
+        case BuiltinFn::kMultiplyAccumulate:
             return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kLoad, core::ir::Instruction::Access::kStore};
 
         case BuiltinFn::kTextureStore:
