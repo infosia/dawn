@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f22f674_6160aa1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-12T14:34:00Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "f98453fdc29e10094e1a3521ec4baed31109ce43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30afb7a7_86ae433c",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-12T14:34:00Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be in [1] as that\u0027s where the validation for unmap is?",
+      "revId": "f98453fdc29e10094e1a3521ec4baed31109ce43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29e31c16_5d61e21c",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-12T14:34:00Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f98453fdc29e10094e1a3521ec4baed31109ce43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
