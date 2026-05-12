@@ -445,6 +445,9 @@ ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversion(
     vulkanYCbCrCreateInfo.forceExplicitReconstruction =
         static_cast<VkBool32>(yCbCrDescriptor.forceExplicitReconstruction);
 
+    DAWN_CHECK(vulkanYCbCrCreateInfo.ycbcrModel == VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY);
+    DAWN_CHECK(vulkanYCbCrCreateInfo.ycbcrRange == VK_SAMPLER_YCBCR_RANGE_ITU_FULL);
+
 #if DAWN_PLATFORM_IS(ANDROID)
     VkExternalFormatANDROID vulkanExternalFormat;
     // Chain VkExternalFormatANDROID only if needed.
