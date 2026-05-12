@@ -149,7 +149,6 @@ crbug.com/520527496 webgpu:shader,execution,memory_model,texture_intra_invocatio
 
 # Compressed texture image_copy failures on Pixel 6
 crbug.com/364917742 [ android arm ] webgpu:api,operation,command_buffer,image_copy:offsets_and_sizes:* [ Skip ]
-
 # Buffer already has an outstanding map pending
 crbug.com/391414855 [ android-Pixel-6 arm ] webgpu:api,validation,buffer,mapping:getMappedRange,state,mappingPending:* [ Skip ]
 
@@ -352,6 +351,16 @@ crbug.com/495780892 [ android-pixel-10 ] webgpu:shader,validation,expression,bin
 
 # Generates GL_OUT_OF_MEMORY
 crbug.com/361372970 [ android arm ] webgpu:api,validation,image_copy,layout_related:copy_end_overflows_u64:method="WriteTexture" [ Failure ]
+
+# BGRA failure on Pixel 6 with TransientAttachments enabled
+crbug.com/527930338 [ android-pixel-6 ] webgpu:api,operation,render_pass,resolve:render_pass_resolve:colorFormat="bgra8unorm";separateResolvePass=false;storeOperation="discard" [ Failure ]
+
+# BGRA failure on Pixel 6 with TransientAttachments enabled
+# Unexpectedly passing validation where it should fail
+crbug.com/527930338 [ android-pixel-6 ] webgpu:api,validation,createTexture:sampleCount,valid_sampleCount_with_other_parameter_varies:dimension="2d";format="bgra8unorm" [ Failure ]
+crbug.com/527930338 [ android-pixel-6 ] webgpu:api,validation,createTexture:texture_usage:dimension="2d";format="bgra8unorm" [ Failure ]
+crbug.com/527930338 [ android-pixel-6 ] webgpu:api,validation,createTexture:texture_usage:dimension="_undef_";format="bgra8unorm" [ Failure ]
+
 
 # Flaky memory_sync failures on Intel
 crbug.com/42241023 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:ww:boundary="command-buffer";writeOps=["storage","b2b-copy"];contexts=["render-bundle-encoder","command-encoder"] [ Failure ]
