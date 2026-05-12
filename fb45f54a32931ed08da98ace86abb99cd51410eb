@@ -84,6 +84,24 @@
       "message": "I think I\u0027m missing something, you said this both reverts and adds new functionality, but only 1 line changed?",
       "revId": "fb45f54a32931ed08da98ace86abb99cd51410eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bec4e594_af949f32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-12T21:19:31Z",
+      "side": 1,
+      "message": "I had stacked changes in my branch, with an alternative approach, so it looked like I was undoing something I had landed before. I will clean up this description.",
+      "parentUuid": "301cce47_61b67ea0",
+      "revId": "fb45f54a32931ed08da98ace86abb99cd51410eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
