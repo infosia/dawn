@@ -4688,6 +4688,10 @@ void Validator::CheckLoop(const Loop* l) {
     CheckResults(l);
     CheckOperands(l, 0);
 
+    if (l->Initializer()->Is<core::ir::MultiInBlock>()) {
+        AddError(l) << "loop initializer must be a block";
+    }
+
     if (!l->Initializer()->IsEmpty()) {
         if (!l->Initializer()->Terminator() ||
             !l->Initializer()->Terminator()->Is<core::ir::NextIteration>()) {

@@ -395,6 +395,22 @@ TEST_F(IR_ValidatorTest, Loop_RootBlock) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Loop_Initializer_MultiInBlock) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* loop = b.Loop();
+    loop->SetInitializer(b.MultiInBlock());
+    f->Block()->Append(loop);
+    f->Block()->Append(b.Return(f));
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(R"(:3:5 error: loop: loop initializer must be a block
+    loop [b: $B2] {  # loop_1
+    ^^^^^^^^^^^^^
+)"));
+}
+
 TEST_F(IR_ValidatorTest, Loop_InitializerNotTerminatedWithNextIteration) {
     auto* f = b.Function("my_func", ty.void_());
 
