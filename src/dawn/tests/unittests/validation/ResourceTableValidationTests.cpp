@@ -66,7 +66,7 @@ class ResourceTableValidationTest : public ValidationTest {
         auto shaderModuleUsesTable = utils::CreateShaderModule(device, R"(
             enable chromium_experimental_resource_table;
             @compute @workgroup_size(1) fn main() {
-                _ = hasResource<texture_2d<f32, filterable>>(0);
+                _ = hasResource<texture_2d<f32>>(0);
             }
         )");
         auto shaderModuleNoTable = utils::CreateShaderModule(device, R"(
@@ -101,7 +101,7 @@ class ResourceTableValidationTest : public ValidationTest {
                 return vec4f();
             }
             @fragment fn fs() -> @location(0) vec4f {
-                _ = hasResource<texture_2d<f32, filterable>>(0);
+                _ = hasResource<texture_2d<f32>>(0);
                 return vec4f();
             }
         )");
@@ -282,7 +282,7 @@ TEST_F(ResourceTableValidationTestDisabled, WGSLEnableNotAllowed) {
     ASSERT_DEVICE_ERROR(utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
         @compute @workgroup_size(1) fn main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
         }
     )"));
 }
@@ -293,7 +293,7 @@ TEST_F(ResourceTableValidationTest, PipelineCreation_ShaderRequiresLayoutWithRes
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
         @compute @workgroup_size(1) fn main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
         }
     )");
 
@@ -339,7 +339,7 @@ TEST_F(ResourceTableValidationTest, PipelineCreation_DefaultedLayoutWithResource
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
         @compute @workgroup_size(1) fn main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
         }
     )");
 
@@ -357,7 +357,7 @@ TEST_F(ResourceTableValidationTest, PipelineCreation_OneShaderDefaultedLayoutWit
             return vec4f(0, 0, 0.5, 0.5);
         }
         @compute @workgroup_size(1) fn compute_main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
         }
         @fragment fn fs() -> @location(0) vec4f {
             return vec4f(1.0, 0.0, 0.0, 1.0);
@@ -468,7 +468,7 @@ TEST_F(ResourceTableValidationTest,
             @group(2) @binding(0) var<uniform> c : u32;
             @group(3) @binding(0) var<uniform> d : u32;
             @compute @workgroup_size(1) fn main() {
-                // _ = hasResource<texture_2d<f32, filterable>>(0);
+                // _ = hasResource<texture_2d<f32>>(0);
                 _ = a;
                 _ = b;
                 _ = c;
@@ -487,7 +487,7 @@ TEST_F(ResourceTableValidationTest,
             @group(2) @binding(0) var<uniform> c : u32;
             @group(3) @binding(0) var<uniform> d : u32;
             @compute @workgroup_size(1) fn main() {
-                _ = hasResource<texture_2d<f32, filterable>>(0);
+                _ = hasResource<texture_2d<f32>>(0);
                 _ = a;
                 _ = b;
                 _ = c;
@@ -505,7 +505,7 @@ TEST_F(ResourceTableValidationTest,
             @group(1) @binding(0) var<uniform> b : u32;
             @group(2) @binding(0) var<uniform> c : u32;
             @compute @workgroup_size(1) fn main() {
-                _ = hasResource<texture_2d<f32, filterable>>(0);
+                _ = hasResource<texture_2d<f32>>(0);
                 _ = a;
                 _ = b;
                 _ = c;
@@ -540,7 +540,7 @@ TEST_F(ResourceTableValidationTest, GetBindGroupLayoutValidForOneLessIndex) {
         csDesc.compute.module = utils::CreateShaderModule(device, R"(
             enable chromium_experimental_resource_table;
             @compute @workgroup_size(1) fn main() {
-                _ = hasResource<texture_2d<f32, filterable>>(0);
+                _ = hasResource<texture_2d<f32>>(0);
             }
         )");
         wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
