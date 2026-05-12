@@ -27,8 +27,10 @@
 
 #include "src/tint/lang/core/ir/binary/decode.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <utility>
 
@@ -68,6 +70,7 @@ namespace {
 
 struct Decoder {
     const pb::Module& mod_in_;
+    const DecoderOptions& options_;
 
     Module mod_out_{};
     Vector<ir::Block*, 32> blocks_{};
@@ -85,6 +88,8 @@ struct Decoder {
 
     std::stringstream err_{};
     Hashset<std::string, 4> struct_names_{};
+
+    uint32_t fixed_ident_count_ = 0;
 
     Result<Module> Decode() {
         {
@@ -181,17 +186,28 @@ struct Decoder {
     }
 
     /// Checks that the given @p name is valid.
-    /// @returns true if the name is valid.
-    bool CheckName(const std::string& name, const char* kind) {
+    /// @returns the name if valid, otherwise a 'fixed' name if `options_.fix_identifiers` is true,
+    /// otherwise nullopt.
+    std::optional<std::string> CheckName(std::string name, const char* kind) {
         if (DAWN_UNLIKELY(name.find('\0') != std::string::npos)) {
-            err_ << kind << " '" << name << "' contains '\\0' before end of the string\n";
-            return false;
+            if (!options_.fix_identifiers) {
+                err_ << kind << " '" << name << "' contains '\\0' before end of the string\n";
+                return std::nullopt;
+            }
+
+            std::erase(name, '\0');
+            if (name.empty()) {
+                name = "tint_fixed_ident_" + std::to_string(fixed_ident_count_++);
+            }
         }
 
         // Reject excessively long names as they cause problems in some backends.
         if (DAWN_UNLIKELY(name.length() > 16384)) {
-            err_ << kind << " '" << name << "' is longer than 16384 characters\n";
-            return false;
+            if (!options_.fix_identifiers) {
+                err_ << kind << " '" << name << "' is longer than 16384 characters\n";
+                return std::nullopt;
+            }
+            name = name.substr(0, 16384);
         }
 
         if (DAWN_UNLIKELY(!tint::utf8::IsWGSLIdentifier(name))) {
@@ -225,17 +241,38 @@ struct Decoder {
                     case core::BuiltinType::kModfResultVec4Abstract:
                     case core::BuiltinType::kModfResultVec4F16:
                     case core::BuiltinType::kModfResultVec4F32:
-                        return true;
+                        return name;
                     default:
                         break;
                 }
             }
 
-            err_ << kind << " '" << name << "' is not a valid WGSL identifier\n";
-            return false;
+            if (!options_.fix_identifiers) {
+                err_ << kind << " '" << name << "' is not a valid WGSL identifier\n";
+                return std::nullopt;
+            }
+
+            // Try to fix name by replacing invalid characters with '_' so that it looks similar to
+            // the original identifier
+            std::string fixed;
+            for (const char c : name) {
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') ||
+                    c == '_') {
+                    fixed += c;
+                } else {
+                    fixed += '_';
+                }
+            }
+
+            if (!utf8::IsWGSLIdentifier(fixed)) {
+                // Have failed to spot fix the identifier, so just outright replacing it
+                name = "tint_fixed_ident_" + std::to_string(fixed_ident_count_++);
+            } else {
+                name = fixed;
+            }
         }
 
-        return true;
+        return name;
     }
 
     /// @returns true if all blocks are reachable, acyclic nesting depth is less than or equal to
@@ -305,8 +342,8 @@ struct Decoder {
 
     void PopulateFunction(ir::Function* fn_out, const pb::Function& fn_in) {
         if (!fn_in.name().empty()) {
-            if (CheckName(fn_in.name(), "function name")) {
-                mod_out_.SetName(fn_out, fn_in.name());
+            if (auto name = CheckName(fn_in.name(), "function name")) {
+                mod_out_.SetName(fn_out, *name);
             }
         }
         fn_out->SetReturnType(Type(fn_in.return_type()));
@@ -862,38 +899,40 @@ struct Decoder {
     }
 
     const type::Type* CreateTypeStruct(const pb::TypeStruct& struct_in) {
-        auto struct_name = struct_in.name();
-        if (DAWN_UNLIKELY(struct_name.empty())) {
+        auto struct_name_in = struct_in.name();
+        if (DAWN_UNLIKELY(struct_name_in.empty())) {
             err_ << "struct must have a name\n";
             return mod_out_.Types().invalid();
         }
 
-        if (!CheckName(struct_name, "struct name")) {
+        auto struct_name = CheckName(struct_name_in, "struct name");
+        if (!struct_name) {
             return mod_out_.Types().invalid();
         }
 
-        if (!struct_names_.Add(struct_name)) {
-            err_ << "duplicate struct name: " << struct_name << "\n";
+        if (!struct_names_.Add(*struct_name)) {
+            err_ << "duplicate struct name: " << *struct_name << "\n";
             return mod_out_.Types().invalid();
         }
 
         Vector<const core::type::StructMember*, 8> members_out;
         uint32_t offset = 0;
         for (auto& member_in : struct_in.member()) {
-            auto member_name = member_in.name();
-            if (DAWN_UNLIKELY(member_name.empty())) {
+            auto member_name_in = member_in.name();
+            if (DAWN_UNLIKELY(member_name_in.empty())) {
                 err_ << "struct member must have a name\n";
                 return mod_out_.Types().invalid();
             }
 
-            if (!CheckName(member_name, "member name")) {
+            auto member_name = CheckName(member_name_in, "member name");
+            if (!member_name) {
                 return mod_out_.Types().invalid();
             }
 
-            auto symbol = mod_out_.symbols.Register(member_name);
+            auto symbol = mod_out_.symbols.Register(*member_name);
             auto* type = Type(member_in.type());
             if (type == nullptr) {
-                err_ << "struct member '" << member_name << "' type  is invalid\n";
+                err_ << "struct member '" << *member_name << "' type  is invalid\n";
                 return mod_out_.Types().invalid();
             }
 
@@ -931,7 +970,7 @@ struct Decoder {
             err_ << "struct requires at least one member\n";
             return mod_out_.Types().invalid();
         }
-        auto name = mod_out_.symbols.Register(struct_name);
+        auto name = mod_out_.symbols.Register(*struct_name);
         return mod_out_.Types().Struct(name, std::move(members_out));
     }
 
@@ -1218,10 +1257,11 @@ struct Decoder {
         }
         auto* res_out = b.InstructionResult(type);
         if (!res_in.name().empty()) {
-            if (!CheckName(res_in.name(), "result name")) {
+            if (auto name = CheckName(res_in.name(), "result name")) {
+                mod_out_.SetName(res_out, *name);
+            } else {
                 return nullptr;
             }
-            mod_out_.SetName(res_out, res_in.name());
         }
         return res_out;
     }
@@ -1234,10 +1274,11 @@ struct Decoder {
         }
         auto* param_out = b.FunctionParam(type);
         if (!param_in.name().empty()) {
-            if (!CheckName(param_in.name(), "param name")) {
+            if (auto name = CheckName(param_in.name(), "param name")) {
+                mod_out_.SetName(param_out, *name);
+            } else {
                 return nullptr;
             }
-            mod_out_.SetName(param_out, param_in.name());
         }
 
         if (param_in.has_attributes()) {
@@ -1274,10 +1315,11 @@ struct Decoder {
         }
         auto* param_out = b.BlockParam(type);
         if (!param_in.name().empty()) {
-            if (!CheckName(param_in.name(), "param name")) {
+            if (auto name = CheckName(param_in.name(), "param name")) {
+                mod_out_.SetName(param_out, *name);
+            } else {
                 return nullptr;
             }
-            mod_out_.SetName(param_out, param_in.name());
         }
         return param_out;
     }
@@ -2179,7 +2221,7 @@ struct Decoder {
 
 }  // namespace
 
-Result<Module> Decode(std::span<const std::byte> encoded) {
+Result<Module> Decode(std::span<const std::byte> encoded, const DecoderOptions& options) {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
 
     pb::Module mod_in;
@@ -2187,11 +2229,11 @@ Result<Module> Decode(std::span<const std::byte> encoded) {
         return Failure{"failed to deserialize protobuf"};
     }
 
-    return Decode(mod_in);
+    return Decode(mod_in, options);
 }
 
-Result<Module> Decode(const pb::Module& mod_in) {
-    return Decoder{mod_in}.Decode();
+Result<Module> Decode(const pb::Module& mod_in, const DecoderOptions& options) {
+    return Decoder{mod_in, options}.Decode();
 }
 
 }  // namespace tint::core::ir::binary

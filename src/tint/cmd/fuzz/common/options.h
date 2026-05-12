@@ -50,6 +50,8 @@ struct Options {
     bool dump = false;
     /// If true, dump the IR whenever validation is performed.
     bool dump_ir_when_validating = false;
+    /// If true, invalid identifiers will be renamed instead of erroring
+    bool fix_identifiers = false;
 };
 
 }  // namespace tint::fuzz::common

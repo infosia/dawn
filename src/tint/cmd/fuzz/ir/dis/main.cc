@@ -128,6 +128,7 @@ struct Options {
     bool validate = false;
     bool dump_wgsl = false;
     bool dump_spirv = false;
+    bool fix_identifiers = false;
 };
 
 bool ParseArgs(tint::VectorRef<std::string_view> arguments, Options* opts) {
@@ -180,6 +181,11 @@ If not provided, will be inferred from output filename extension:
         "Writes the SPIR-V form of input to stdout, may fail due to validation errors",
         Alias{"emit-spirv"}, Default{false});
     TINT_DEFER(opts->dump_spirv = *dump_spirv.value);
+
+    auto& fix_identifiers = options.Add<BoolOption>(
+        "fix-identifiers", "Attempt to fix invalid identifiers, may cause name collisions",
+        Default{false});
+    TINT_DEFER(opts->fix_identifiers = *fix_identifiers.value);
 
     auto& help = options.Add<BoolOption>("help", "Show usage", ShortName{"h"});
 
@@ -369,8 +375,11 @@ bool Run(const Options& options) {
         return false;
     }
 
+    tint::core::ir::binary::DecoderOptions decoder_options;
+    decoder_options.fix_identifiers = options.fix_identifiers;
+
     {
-        auto module = tint::core::ir::binary::Decode(fuzz_pb.Get().module());
+        auto module = tint::core::ir::binary::Decode(fuzz_pb.Get().module(), decoder_options);
         if (module != tint::Success) {
             std::cerr << "Unable to decode ir protobuf from test case protobuf: "
                       << module.Failure() << "\n";
@@ -379,7 +388,7 @@ bool Run(const Options& options) {
     }
 
     {
-        auto module = tint::core::ir::binary::Decode(fuzz_pb.Get().module());
+        auto module = tint::core::ir::binary::Decode(fuzz_pb.Get().module(), decoder_options);
         EmitIR(options, module.Get());
 
         if (options.validate) {
@@ -407,7 +416,7 @@ bool Run(const Options& options) {
     }
 
     {
-        auto module = tint::core::ir::binary::Decode(fuzz_pb.Get().module());
+        auto module = tint::core::ir::binary::Decode(fuzz_pb.Get().module(), decoder_options);
         auto data = std::as_bytes(std::span(fuzz_pb.Get().data()));
         if (!EmitWGSL(options, module.Get(), data)) {
             return false;
@@ -415,7 +424,7 @@ bool Run(const Options& options) {
     }
 
     {
-        auto module = tint::core::ir::binary::Decode(fuzz_pb.Get().module());
+        auto module = tint::core::ir::binary::Decode(fuzz_pb.Get().module(), decoder_options);
         if (!EmitSpv(options, module.Get())) {
             return false;
         }
