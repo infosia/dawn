@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5efcd669_2f376ed1",
+        "filename": "src/dawn/common/SystemUtils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-05-12T08:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dddbe2a_ce10efcb",
+      "revId": "e491598d1168dced27bb0f1a61ca6729a8e7e8fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19261cdd_8c3dd831",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-05-11T08:28:05Z",
       "side": 1,
       "message": "nit: the conditional compilation is already in `IsWindowsVersionAtLeast` so we don\u0027t need it here.",
+      "revId": "e491598d1168dced27bb0f1a61ca6729a8e7e8fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "247dbda0_58c96578",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2026-05-12T08:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19261cdd_8c3dd831",
       "revId": "e491598d1168dced27bb0f1a61ca6729a8e7e8fd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
