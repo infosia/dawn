@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f8e4dd0_b7af9e66",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-05-12T13:23:04Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "72b542b1_5ec2e182",
+      "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51dc2f9c_4f66b245",
@@ -67,6 +85,24 @@
       "side": 0,
       "message": "We should add `dawn/node` because we can and avoiding unsafe buffers is good practice. Fixing tests we can do over time but it\u0027s just good hygiene.",
       "parentUuid": "d772fdc8_e7d820ad",
+      "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc8bd5fa_ea012792",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-05-12T13:23:04Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f016bb6f_1034e0c8",
       "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
