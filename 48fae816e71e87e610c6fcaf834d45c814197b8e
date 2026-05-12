@@ -51,6 +51,80 @@
       "parentUuid": "0a6c240a_b70c6c53",
       "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd2479c0_99808eed",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-12T20:36:47Z",
+      "side": 1,
+      "message": "I think we\u0027ll want to replace this with `heap_array`?\n```suggestion\n// TODO(crbug.com/512465980): Use ityp::heap_array instead of std::vector.\nstd::vector\u003cstd::byte\u003e GenerateHashPrefixedPayload(std::span\u003cconst std::byte\u003e value) {\n```",
+      "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0303a1f8_1618c0f4",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-12T20:36:47Z",
+      "side": 1,
+      "message": "```suggestion\n    std::vector\u003cstd::byte\u003e result(byteSizeWithHash);\n```",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 36
+      },
+      "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "666ed424_9ac7f80e",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-12T20:36:47Z",
+      "side": 1,
+      "message": "`std::ranges::search(key, versionSpan)`?",
+      "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1e80be3_5480e791",
+        "filename": "src/dawn/tests/unittests/native/BlobTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-12T20:36:47Z",
+      "side": 1,
+      "message": "Check also that a pointer gotten from the original blob is still valid after the move (because we depend on that)",
+      "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

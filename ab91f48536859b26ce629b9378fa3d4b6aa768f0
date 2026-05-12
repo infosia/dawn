@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11ccf369_83aada22",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-12T20:36:47Z",
+      "side": 0,
+      "message": "Was there something wrong with early return? It\u0027s easier to read.",
+      "revId": "ab91f48536859b26ce629b9378fa3d4b6aa768f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4015ff99_75eccab7",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-12T20:36:47Z",
+      "side": 0,
+      "message": "same here, it seems like it still does the same thing?",
+      "revId": "ab91f48536859b26ce629b9378fa3d4b6aa768f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
