@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6229cec_fa68b659",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-12T21:29:35Z",
+      "side": 1,
+      "message": "I was hoping that we could just delete the uniform version but it doesn\u0027t look like we\u0027ve migrated GL over yet.",
+      "revId": "a6e04776368c45faf60ec0c24ee5a2e9536147ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
