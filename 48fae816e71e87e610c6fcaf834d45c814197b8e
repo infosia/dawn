@@ -16,6 +16,23 @@
       "message": "lgtm",
       "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a6c240a_b70c6c53",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-12T19:34:16Z",
+      "side": 1,
+      "message": "What\u0027s the reason for adding this include? I can\u0027t see that it\u0027s used in the header.",
+      "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
