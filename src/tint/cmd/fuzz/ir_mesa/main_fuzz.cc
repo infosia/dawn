@@ -63,8 +63,12 @@ DEFINE_BINARY_PROTO_FUZZER(const tint::cmd::fuzz::ir::pb::Root& pb) {
     /// sub-fuzzer. Because the protobuf may error when deserializing and the module may be invalid,
     /// we early deserialize. If this fails, then we do not call Run().
     thread_local std::optional<tint::core::ir::Module> module;
+    tint::core::ir::binary::DecoderOptions decoder_options{
+        .strip_invalid_identifiers = options.strip_invalid_identifiers,
+    };
+
     {
-        auto decoded = tint::core::ir::binary::Decode(pb.module());
+        auto decoded = tint::core::ir::binary::Decode(pb.module(), decoder_options);
         if (decoded != tint::Success) {
             return;  // Failed to decode
         }
@@ -72,7 +76,7 @@ DEFINE_BINARY_PROTO_FUZZER(const tint::cmd::fuzz::ir::pb::Root& pb) {
     }
     auto acquire_module = [&] {
         if (!module) {
-            auto decoded = tint::core::ir::binary::Decode(pb.module());
+            auto decoded = tint::core::ir::binary::Decode(pb.module(), decoder_options);
             TINT_ASSERT(decoded == tint::Success)
                 << "module successfully decoded once, then failed a subsequent time\n"
                 << decoded.Failure();
@@ -94,7 +98,8 @@ DEFINE_BINARY_PROTO_FUZZER(const tint::cmd::fuzz::ir::pb::Root& pb) {
 // the LibFuzzer runtime uses dlsym() instead of calling the function directly.
 extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* argc,
                                                                            char*** argv) {
-    int res = tint::fuzz::common::ParseFuzzerOptions(argc, argv, &options);
+    int res = tint::fuzz::common::ParseFuzzerOptions(tint::fuzz::common::FuzzerType::kIR, argc,
+                                                     argv, &options);
     if (res != 0) {
         return res;
     }
