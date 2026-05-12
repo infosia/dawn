@@ -101,7 +101,7 @@ class ResourceTableTests : public DawnTest {
     // Test that the `table`, has resources of `wgslType` in the `expected` slots.
     void TestHasResource(wgpu::ResourceTable table,
                          std::vector<bool> expected,
-                         std::string wgslType = "texture_2d<f32, filterable>") {
+                         std::string wgslType = "texture_2d<f32>") {
         ASSERT_EQ(table.GetSize(), expected.size());
 
         // Create the test pipeline.
@@ -501,7 +501,7 @@ TEST_P(ResourceTableTests, ShaderWithResourceTableCreation) {
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
         @compute @workgroup_size(1) fn main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
         }
     )");
     device.CreateComputePipeline(&csDesc);
@@ -511,7 +511,7 @@ TEST_P(ResourceTableTests, ShaderWithResourceTableCreation) {
         enable chromium_experimental_resource_table;
         @group(0) @binding(0) var t0 : texture_2d<f32>;
         @compute @workgroup_size(1) fn main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
             _ = t0;
         }
     )");
@@ -524,7 +524,7 @@ TEST_P(ResourceTableTests, ShaderWithResourceTableCreation) {
         @group(1) @binding(0) var t1 : texture_2d<f32>;
         @group(2) @binding(0) var t2 : texture_2d<f32>;
         @compute @workgroup_size(1) fn main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
             _ = t0;
             _ = t1;
             _ = t2;
@@ -603,7 +603,7 @@ TEST_P(ResourceTableTests, HasResourceFilterableToUnfilterable) {
     wgpu::ResourceTable table = MakeResourceTable(3, {{1, {.textureView = tex.CreateView()}}});
 
     tex.Pin(wgpu::TextureUsage::TextureBinding);
-    TestHasResource(table, {false, true, false}, "texture_2d<f32, unfilterable>");
+    TestHasResource(table, {false, true, false}, "texture_2d<f32>");
 }
 
 // Test that calling texture.Destroy() implicitly unpins it.
@@ -730,28 +730,22 @@ TEST_P(ResourceTableTests, HasResourceMultipleTexturesTable) {
 }
 
 constexpr auto kWgslSampledTextureTypes = std::array{
-    "texture_1d<f32, filterable>",
-    "texture_1d<f32, unfilterable>",
+    "texture_1d<f32>",
     "texture_1d<i32>",
     "texture_1d<u32>",
-    "texture_2d<f32, filterable>",
-    "texture_2d<f32, unfilterable>",
+    "texture_2d<f32>",
     "texture_2d<i32>",
     "texture_2d<u32>",
-    "texture_2d_array<f32, filterable>",
-    "texture_2d_array<f32, unfilterable>",
+    "texture_2d_array<f32>",
     "texture_2d_array<i32>",
     "texture_2d_array<u32>",
-    "texture_cube<f32, filterable>",
-    "texture_cube<f32, unfilterable>",
+    "texture_cube<f32>",
     "texture_cube<i32>",
     "texture_cube<u32>",
-    "texture_cube_array<f32, filterable>",
-    "texture_cube_array<f32, unfilterable>",
+    "texture_cube_array<f32>",
     "texture_cube_array<i32>",
     "texture_cube_array<u32>",
-    "texture_3d<f32, filterable>",
-    "texture_3d<f32, unfilterable>",
+    "texture_3d<f32>",
     "texture_3d<i32>",
     "texture_3d<u32>",
 
@@ -765,8 +759,7 @@ constexpr auto kWgslSampledTextureTypes = std::array{
     "texture_depth_cube_array",
     "texture_depth_multisampled_2d",
 
-    "sampler<non_filtering>",
-    "sampler<filtering>",
+    "sampler",
     "sampler_comparison",
 };
 
@@ -843,13 +836,12 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
     using SamplerDesc = ResourceDescForTypeIDCase::SamplerDesc;
 
     // Regular 1D textures.
-    cases.push_back(
-        {.wgslTypes = {{"texture_1d<f32, filterable>"}, {"texture_1d<f32, unfilterable>"}},
-         .desc = TextureDesc{
-             .format = wgpu::TextureFormat::RGBA8Unorm,
-             .dimension = wgpu::TextureDimension::e1D,
-         }});
-    cases.push_back({.wgslTypes = {{"texture_1d<f32, unfilterable>"}},
+    cases.push_back({.wgslTypes = {{"texture_1d<f32>"}},
+                     .desc = TextureDesc{
+                         .format = wgpu::TextureFormat::RGBA8Unorm,
+                         .dimension = wgpu::TextureDimension::e1D,
+                     }});
+    cases.push_back({.wgslTypes = {{"texture_1d<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::RGBA32Float,
                          .dimension = wgpu::TextureDimension::e1D,
@@ -866,13 +858,12 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
                      }});
 
     // Regular 2D textures.
-    cases.push_back(
-        {.wgslTypes = {{"texture_2d<f32, filterable>"}, {"texture_2d<f32, unfilterable>"}},
-         .desc = TextureDesc{
-             .format = wgpu::TextureFormat::RGBA8Unorm,
-             .dimension = wgpu::TextureDimension::e2D,
-         }});
-    cases.push_back({.wgslTypes = {{"texture_2d<f32, unfilterable>"}},
+    cases.push_back({.wgslTypes = {{"texture_2d<f32>"}},
+                     .desc = TextureDesc{
+                         .format = wgpu::TextureFormat::RGBA8Unorm,
+                         .dimension = wgpu::TextureDimension::e2D,
+                     }});
+    cases.push_back({.wgslTypes = {{"texture_2d<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::RGBA32Float,
                          .dimension = wgpu::TextureDimension::e2D,
@@ -889,14 +880,13 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
                      }});
 
     // Regular 2D array textures.
-    cases.push_back({.wgslTypes = {{"texture_2d_array<f32, filterable>"},
-                                   {"texture_2d_array<f32, unfilterable>"}},
+    cases.push_back({.wgslTypes = {{"texture_2d_array<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::RGBA8Unorm,
                          .dimension = wgpu::TextureDimension::e2D,
                          .viewDimension = wgpu::TextureViewDimension::e2DArray,
                      }});
-    cases.push_back({.wgslTypes = {{"texture_2d_array<f32, unfilterable>"}},
+    cases.push_back({.wgslTypes = {{"texture_2d_array<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::RGBA32Float,
                          .dimension = wgpu::TextureDimension::e2D,
@@ -916,14 +906,13 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
                      }});
 
     // Regular cube textures.
-    cases.push_back(
-        {.wgslTypes = {{"texture_cube<f32, filterable>"}, {"texture_cube<f32, unfilterable>"}},
-         .desc = TextureDesc{
-             .format = wgpu::TextureFormat::RGBA8Unorm,
-             .dimension = wgpu::TextureDimension::e2D,
-             .viewDimension = wgpu::TextureViewDimension::Cube,
-         }});
-    cases.push_back({.wgslTypes = {{"texture_cube<f32, unfilterable>"}},
+    cases.push_back({.wgslTypes = {{"texture_cube<f32>"}},
+                     .desc = TextureDesc{
+                         .format = wgpu::TextureFormat::RGBA8Unorm,
+                         .dimension = wgpu::TextureDimension::e2D,
+                         .viewDimension = wgpu::TextureViewDimension::Cube,
+                     }});
+    cases.push_back({.wgslTypes = {{"texture_cube<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::RGBA32Float,
                          .dimension = wgpu::TextureDimension::e2D,
@@ -943,14 +932,13 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
                      }});
 
     // Regular cube array textures.
-    cases.push_back({.wgslTypes = {{"texture_cube_array<f32, filterable>"},
-                                   {"texture_cube_array<f32, unfilterable"}},
+    cases.push_back({.wgslTypes = {{"texture_cube_array<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::RGBA8Unorm,
                          .dimension = wgpu::TextureDimension::e2D,
                          .viewDimension = wgpu::TextureViewDimension::CubeArray,
                      }});
-    cases.push_back({.wgslTypes = {{"texture_cube_array<f32, unfilterable>"}},
+    cases.push_back({.wgslTypes = {{"texture_cube_array<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::RGBA32Float,
                          .dimension = wgpu::TextureDimension::e2D,
@@ -970,13 +958,12 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
                      }});
 
     // Regular 3d textures.
-    cases.push_back(
-        {.wgslTypes = {{"texture_3d<f32, filterable>"}, {"texture_3d<f32, unfilterable>"}},
-         .desc = TextureDesc{
-             .format = wgpu::TextureFormat::RGBA8Unorm,
-             .dimension = wgpu::TextureDimension::e3D,
-         }});
-    cases.push_back({.wgslTypes = {{"texture_3d<f32, unfilterable>"}},
+    cases.push_back({.wgslTypes = {{"texture_3d<f32>"}},
+                     .desc = TextureDesc{
+                         .format = wgpu::TextureFormat::RGBA8Unorm,
+                         .dimension = wgpu::TextureDimension::e3D,
+                     }});
+    cases.push_back({.wgslTypes = {{"texture_3d<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::RGBA32Float,
                          .dimension = wgpu::TextureDimension::e3D,
@@ -993,6 +980,12 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
                      }});
 
     // Color multisampled textures.
+    cases.push_back({.wgslTypes = {{"texture_multisampled_2d<f32>"}},
+                     .desc = TextureDesc{
+                         .format = wgpu::TextureFormat::RGBA8Unorm,
+                         .dimension = wgpu::TextureDimension::e2D,
+                         .sampleCount = 4,
+                     }});
     cases.push_back({.wgslTypes = {{"texture_multisampled_2d<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::RGBA16Float,
@@ -1013,31 +1006,29 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
                      }});
 
     // Depth textures (including multisampled).
-    cases.push_back({.wgslTypes = {{"texture_depth_2d"}, {"texture_2d<f32, unfilterable>"}},
+    cases.push_back({.wgslTypes = {{"texture_depth_2d"}, {"texture_2d<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::Depth32Float,
                          .dimension = wgpu::TextureDimension::e2D,
                      }});
-    cases.push_back(
-        {.wgslTypes = {{"texture_depth_2d_array"}, {"texture_2d_array<f32, unfilterable>"}},
-         .desc = TextureDesc{
-             .format = wgpu::TextureFormat::Depth32Float,
-             .dimension = wgpu::TextureDimension::e2D,
-             .viewDimension = wgpu::TextureViewDimension::e2DArray,
-         }});
-    cases.push_back({.wgslTypes = {{"texture_depth_cube"}, {"texture_cube<f32, unfilterable>"}},
+    cases.push_back({.wgslTypes = {{"texture_depth_2d_array"}, {"texture_2d_array<f32>"}},
+                     .desc = TextureDesc{
+                         .format = wgpu::TextureFormat::Depth32Float,
+                         .dimension = wgpu::TextureDimension::e2D,
+                         .viewDimension = wgpu::TextureViewDimension::e2DArray,
+                     }});
+    cases.push_back({.wgslTypes = {{"texture_depth_cube"}, {"texture_cube<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::Depth32Float,
                          .dimension = wgpu::TextureDimension::e2D,
                          .viewDimension = wgpu::TextureViewDimension::Cube,
                      }});
-    cases.push_back(
-        {.wgslTypes = {{"texture_depth_cube_array"}, {"texture_cube_array<f32, unfilterable>"}},
-         .desc = TextureDesc{
-             .format = wgpu::TextureFormat::Depth32Float,
-             .dimension = wgpu::TextureDimension::e2D,
-             .viewDimension = wgpu::TextureViewDimension::CubeArray,
-         }});
+    cases.push_back({.wgslTypes = {{"texture_depth_cube_array"}, {"texture_cube_array<f32>"}},
+                     .desc = TextureDesc{
+                         .format = wgpu::TextureFormat::Depth32Float,
+                         .dimension = wgpu::TextureDimension::e2D,
+                         .viewDimension = wgpu::TextureViewDimension::CubeArray,
+                     }});
     cases.push_back({.wgslTypes = {{"texture_depth_multisampled_2d"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::Depth32Float,
@@ -1071,7 +1062,7 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
                      }});
 
     // Depth-stencil textures with only one aspect selected.
-    cases.push_back({.wgslTypes = {{"texture_depth_2d"}, {"texture_2d<f32, unfilterable>"}},
+    cases.push_back({.wgslTypes = {{"texture_depth_2d"}, {"texture_2d<f32>"}},
                      .desc = TextureDesc{
                          .format = wgpu::TextureFormat::Depth24PlusStencil8,
                          .dimension = wgpu::TextureDimension::e2D,
@@ -1086,12 +1077,12 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
 
     // Non-filtering sampler
     cases.push_back({
-        .wgslTypes = {{"sampler<non_filtering>"}},
+        .wgslTypes = {{"sampler"}},
         .desc = SamplerDesc{},
     });
     // Filtering sampler
     cases.push_back({
-        .wgslTypes = {{"sampler<non_filtering>"}, {"sampler<filtering>"}},
+        .wgslTypes = {{"sampler"}},
         .desc =
             SamplerDesc{
                 .filtering = true,
@@ -1110,8 +1101,7 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
 }
 
 // Test that hasResource() works as expected for all supported resources in WGSL.
-// TODO(507087794): Re-enable with new filterability rules
-TEST_P(ResourceTableTests, DISABLED_HasResourceCompatibilityAllTypes) {
+TEST_P(ResourceTableTests, HasResourceCompatibilityAllTypes) {
     // We rely on RGBA32Float being unfilterable for this test so that we can test both filterable /
     // unfilterable float without needing any additional extensions.
     DAWN_ASSERT(!device.HasFeature(wgpu::FeatureName::Float32Filterable));
@@ -1154,17 +1144,17 @@ TEST_P(ResourceTableTests, HasResourceOOBIsFalse) {
         @group(0) @binding(0) var<storage, read_write> result : array<u32, 4>;
         var<immediate> resourceCount : u32;
         @compute @workgroup_size(1) fn getArrayLengths() {
-            result[0] = u32(hasResource<texture_2d<f32, filterable>>(resourceCount - 1));
-            result[1] = u32(hasResource<texture_2d<f32, filterable>>(resourceCount));
+            result[0] = u32(hasResource<texture_2d<f32>>(resourceCount - 1));
+            result[1] = u32(hasResource<texture_2d<f32>>(resourceCount));
 
             // Check against all the slots where the default resources are.
             var result2 = 0u;
             for (var i = 1u; i < 100; i++) {
-                result2 += u32(hasResource<texture_2d<f32, filterable>>(resourceCount + i));
+                result2 += u32(hasResource<texture_2d<f32>>(resourceCount + i));
             }
             result[2] = result2;
 
-            result[3] = u32(hasResource<texture_2d<f32, filterable>>(resourceCount + 10000000));
+            result[3] = u32(hasResource<texture_2d<f32>>(resourceCount + 10000000));
         }
     )");
     wgpu::ComputePipelineDescriptor csDesc = {.compute = {
@@ -1219,8 +1209,7 @@ TEST_P(ResourceTableTests, HasResourceOOBIsFalse) {
 // Check that the default bindings are of size 1 and filled with zeroes. This is not an exhaustive
 // test (that's for the CTS) but tries to check a few different interesting cases (MS, DS, Cube, 2D
 // array).
-// TODO(507087794): Re-enable with new filterability rules
-TEST_P(ResourceTableTests, DISABLED_DefaultBindingsAreZeroAndSizeOne) {
+TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
     // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
@@ -1240,10 +1229,10 @@ TEST_P(ResourceTableTests, DISABLED_DefaultBindingsAreZeroAndSizeOne) {
         }
 
         @compute @workgroup_size(1) fn checkDefault() {
-            // Default texture_2d<f32, filterable>
+            // Default texture_2d<f32>
             {
-                check(!hasResource<texture_2d<f32, filterable>>(0));
-                let t = getResource<texture_2d<f32, filterable>>(0);
+                check(!hasResource<texture_2d<f32>>(0));
+                let t = getResource<texture_2d<f32>>(0);
                 check(all(textureDimensions(t) == vec2(1)));
                 check(textureNumLevels(t) == 1);
                 check(all(textureLoad(t, vec2(0), 0) == vec4(0, 0, 0, 1)));
@@ -1340,8 +1329,8 @@ TEST_P(ResourceTableTests, Sampler) {
         }
 
         @fragment fn fs() -> @location(0) vec4f {
-            let s = getResource<sampler<non_filtering>>(0);
-            let t = getResource<texture_2d<f32, filterable>>(1);
+            let s = getResource<sampler>(0);
+            let t = getResource<texture_2d<f32>>(1);
             return textureSample(t, s, vec2f(0.5, 0.5));
         }
     )");
@@ -1411,10 +1400,10 @@ TEST_P(ResourceTableTests, DISABLED_MultipleSamplers) {
             }
 
             @fragment fn fs() -> @location(0) vec4f {
-                let samplerRepeat = getResource<sampler<non_filtering>>(%u);
-                let samplerMirror = getResource<sampler<non_filtering>>(%u);
-                let samplerClamp = getResource<sampler<non_filtering>>(%u);
-                let t = getResource<texture_2d<f32, filterable>>(%u);
+                let samplerRepeat = getResource<sampler>(%u);
+                let samplerMirror = getResource<sampler>(%u);
+                let samplerClamp = getResource<sampler>(%u);
+                let t = getResource<texture_2d<f32>>(%u);
 
                 results[0] = textureSample(t, samplerRepeat, vec2f(1, 0));
                 results[1] = textureSample(t, samplerRepeat, vec2f(1.5, 0));
@@ -1520,11 +1509,11 @@ TEST_P(ResourceTableTests, DISABLED_UseDefaultSamplers) {
         }
 
         @fragment fn fs() -> @location(0) vec4f {
-            let t = getResource<texture_2d<f32, filterable>>(0);
+            let t = getResource<texture_2d<f32>>(0);
             let dt = getResource<texture_depth_2d>(1);
 
-            let samplerNonFiltering = getResource<sampler<non_filtering>>(2);
-            let samplerFiltering = getResource<sampler<filtering>>(3);
+            let samplerNonFiltering = getResource<sampler>(2);
+            let samplerFiltering = getResource<sampler>(3);
             let samplerComparison = getResource<sampler_comparison>(4);
 
             results[0] = textureSample(t, samplerNonFiltering, vec2f(0.5, 0.5));
@@ -1618,8 +1607,8 @@ TEST_P(ResourceTableTests, DISABLED_RemoveThenAddSamplerInSameSlot) {
         }
 
         @fragment fn fs() -> @location(0) vec4f {
-            let t = getResource<texture_2d<f32, filterable>>(0);
-            let s = getResource<sampler<non_filtering>>(1);
+            let t = getResource<texture_2d<f32>>(0);
+            let s = getResource<sampler>(1);
 
             results[0] = textureSample(t, s, vec2f(1, 0));
             results[1] = textureSample(t, s, vec2f(1.5, 0));
@@ -1712,8 +1701,8 @@ TEST_P(ResourceTableTests, RemoveThenAddSamplerMultipleInSameSlot) {
         }
 
         @fragment fn fs() -> @location(0) vec4f {
-            let t = getResource<texture_2d<f32, filterable>>(0);
-            let s = getResource<sampler<non_filtering>>(1);
+            let t = getResource<texture_2d<f32>>(0);
+            let s = getResource<sampler>(1);
 
             results[0] = textureSample(t, s, vec2f(1, 0));
             results[1] = textureSample(t, s, vec2f(1.5, 0));
@@ -1806,7 +1795,7 @@ TEST_P(ResourceTableTests, RemoveThenAddSamplerMultipleInSameSlot) {
 }
 
 // Test what happens when we add more than kD3D12MaxUniqueSamplers unique samplers
-TEST_P(ResourceTableTests, DISABLED_AddUniqueSamplersOverLimit) {
+TEST_P(ResourceTableTests, AddUniqueSamplersOverLimit) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1814,7 +1803,7 @@ TEST_P(ResourceTableTests, DISABLED_AddUniqueSamplersOverLimit) {
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
         @compute @workgroup_size(1) fn main() {
-            _ = hasResource<texture_2d<f32, filterable>>(0);
+            _ = hasResource<texture_2d<f32>>(0);
         }
     )");
     auto pipeline = device.CreateComputePipeline(&csDesc);
@@ -2041,8 +2030,8 @@ TEST_P(ResourceTableTests, RemoveThenAddTextureInSameSlot) {
         }
 
         @fragment fn fs() -> @location(0) vec4f {
-            let t = getResource<texture_2d<f32, filterable>>(0);
-            let s = getResource<sampler<non_filtering>>(1);
+            let t = getResource<texture_2d<f32>>(0);
+            let s = getResource<sampler>(1);
             results[0] = textureSample(t, s, vec2f(0.5, 0.5));
             return vec4f(0);
         }
@@ -2123,8 +2112,8 @@ TEST_P(ResourceTableTests, RemoveThenAddTextureMultipleInSameSlot) {
         }
 
         @fragment fn fs() -> @location(0) vec4f {
-            let t = getResource<texture_2d<f32, filterable>>(0);
-            let s = getResource<sampler<non_filtering>>(1);
+            let t = getResource<texture_2d<f32>>(0);
+            let s = getResource<sampler>(1);
             results[0] = textureSample(t, s, vec2f(0.5, 0.5));
             return vec4f(0);
         }
@@ -2549,7 +2538,7 @@ TEST_P(ResourceTableTests, SwitchUseResourceTableAndNot) {
         var<immediate> resultIndex : u32;
 
         @fragment fn yes_resource_table() -> @location(0) vec4f {
-            results[resultIndex] = 10 + u32(hasResource<texture_2d<f32, filterable>>(resultIndex));
+            results[resultIndex] = 10 + u32(hasResource<texture_2d<f32>>(resultIndex));
             return vec4();
         }
 
@@ -2638,6 +2627,13 @@ TEST_P(ResourceTableTests, SwitchUseResourceTableAndNot) {
     EXPECT_BUFFER_U32_EQ(10, resultBuffer, 4);
     EXPECT_BUFFER_U32_EQ(42, resultBuffer, 8);
 }
+
+// TODO(479179409): Add tests for dynamic validation of filterability
+//   - BGL has tex2d, shader has tex1d, swap in default tex1d
+//   - BGL has sampler_comparison, shader has sampler, swap in sampler
+//   - BGL has unfilterable texture and filtering sampler, swap sampler to non_filternig
+//   - BGL has unfilterable texture, bind-less filtering sampler, swap texture
+//   - bind-less unfilterable texture, BGL has filtering sampler, swap sampler
 
 DAWN_INSTANTIATE_TEST(ResourceTableTests, D3D12Backend(), MetalBackend(), VulkanBackend());
 
