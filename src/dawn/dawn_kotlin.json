@@ -148,17 +148,5 @@
                 "omitted": true
             }
         }
-    },
-    "force_enable_items": [
-        "shared texture memory a hardware buffer",
-        "external texture",
-        "create external texture",
-        "create error external texture",
-        "external texture binding entry",
-        "external texture binding layout",
-        "dawn toggles descriptor",
-        "y cb cr vulkan samplers",
-        "shared fence sync FD",
-        "opaque y cb cr android for external texture"
-    ]
+    }
 }
