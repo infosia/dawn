@@ -34,6 +34,24 @@
       ],
       "revId": "c78c5f1b07284f6684369dd62a9089dbbb1de0f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9dd2311_de8a40e3",
+        "filename": "src/dawn/common/ColorSpace.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-12T09:28:32Z",
+      "side": 1,
+      "message": "Thanks for the info, do you know when that might happen? Because it would be a breaking change for folks using HLG at the moment and would be good to update Dawn sooner than later :)",
+      "parentUuid": "f0c2713c_55fbce76",
+      "revId": "c78c5f1b07284f6684369dd62a9089dbbb1de0f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
