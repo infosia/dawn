@@ -85,6 +85,24 @@
       "message": "High-level question: Is it important to try and do this in a careful way like this? Could we not just remove the name if it\u0027s invalid, or just replace it with a generic name?\n\nMaybe another way of thinking about this is: the backends are each supposed to do name sanitization. If we want to fuzz that properly, then we should probably be letting all the bad names through (and add the missing sanitization to the SPIR-V printer as needed). If we don\u0027t really want to fuzz the backend name sanitization, then we might as well just replace any bad name here with a generic good name, or just remove them completely.",
       "revId": "15bba63344a263e7187b968308415429696b23b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a75e85f_c6637d88",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-12T21:17:56Z",
+      "side": 1,
+      "message": "I guess my thinking was trying to preserve the existing name as much as possible, so that it could be used to track back to where it came from, either when looking at the original protobuf or if this is coming through as part of a pipeline preserving the name as much as possible to indicate what it was in the original input.\n\nThat being said the immediate practical problem I am trying to solve here is to assist investigating old-ish IR test cases that are now being rejected by the fuzzer because I tightened up the Decode().\n\nI am not planning on turning this on for general fuzzing, this is just debugging/dev tooling.\n\nSo I think it would be fine to just either remove the bad identifiers or replace them with like `tint_decode_fixed_NNN`, where NNN is an incrementing value.",
+      "parentUuid": "3bf3e5aa_f9bbec68",
+      "revId": "15bba63344a263e7187b968308415429696b23b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
