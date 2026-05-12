@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "97cf25a9_84eed7f0",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-12T14:35:52Z",
+      "side": 1,
+      "message": "I saw that we emit errors like `ConcurrentUseError()` in other cases, so I thought this was the right place. Let me see about moving it to [1].",
+      "parentUuid": "30afb7a7_86ae433c",
+      "revId": "f98453fdc29e10094e1a3521ec4baed31109ce43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "29e31c16_5d61e21c",
