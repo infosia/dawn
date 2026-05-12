@@ -50,7 +50,10 @@ namespace {
 
 class HlslWriter_BuiltinPolyfillTest : public core::ir::transform::TransformTest {
   public:
-    void SetUp() override { capabilities.Add(core::ir::Capability::kAllow16BitIntegers); }
+    void SetUp() override {
+        capabilities.Add(core::ir::Capability::kAllow8BitIntegers,
+                         core::ir::Capability::kAllow16BitIntegers);
+    }
 };
 
 TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastIdentity) {
@@ -8071,6 +8074,110 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixScalarMultiply_F32) {
     }
     %15:subgroup_matrix_left<f32, 4, 4> = load %8
     ret %15
+  }
+}
+)";
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixMultiplyAccumulate_F32) {
+    auto* left = b.FunctionParam("left", ty.subgroup_matrix_left(ty.f32(), 4, 4));
+    auto* right = b.FunctionParam("right", ty.subgroup_matrix_right(ty.f32(), 4, 4));
+    auto* acc = b.FunctionParam("acc", ty.subgroup_matrix_result(ty.f32(), 4, 4));
+    auto* result = ty.subgroup_matrix_result(ty.f32(), 4, 4);
+    auto* func = b.Function("foo", result);
+    func->SetParams({left, right, acc});
+    b.Append(func->Block(), [&] {
+        auto* call =
+            b.Call(result, core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate, left, right, acc);
+        b.Return(func, call);
+    });
+
+    auto* src = R"(
+%foo = func(%left:subgroup_matrix_left<f32, 4, 4>, %right:subgroup_matrix_right<f32, 4, 4>, %acc:subgroup_matrix_result<f32, 4, 4>):subgroup_matrix_result<f32, 4, 4> {
+  $B1: {
+    %5:subgroup_matrix_result<f32, 4, 4> = subgroupMatrixMultiplyAccumulate %left, %right, %acc
+    ret %5
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%left:subgroup_matrix_left<f32, 4, 4>, %right:subgroup_matrix_right<f32, 4, 4>, %acc:subgroup_matrix_result<f32, 4, 4>):subgroup_matrix_result<f32, 4, 4> {
+  $B1: {
+    %5:subgroup_matrix_result<f32, 4, 4> = call %tint_MatrixMultiplyAccumulate, %left, %right, %acc
+    ret %5
+  }
+}
+%tint_MatrixMultiplyAccumulate = func(%a:subgroup_matrix_left<f32, 4, 4>, %b:subgroup_matrix_right<f32, 4, 4>, %c:subgroup_matrix_result<f32, 4, 4>):subgroup_matrix_result<f32, 4, 4> {
+  $B2: {
+    %acc_1:ptr<function, subgroup_matrix_result<f32, 4, 4>, read_write> = var %c  # %acc_1: 'acc'
+    %11:void = %acc_1.MultiplyAccumulate %a, %b
+    %12:subgroup_matrix_result<f32, 4, 4> = load %acc_1
+    ret %12
+  }
+}
+)";
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupMatrixMultiplyAccumulate_Deduplication) {
+    auto* l1 = b.FunctionParam("l1", ty.subgroup_matrix_left(ty.f32(), 4, 4));
+    auto* r1 = b.FunctionParam("r1", ty.subgroup_matrix_right(ty.f32(), 4, 4));
+    auto* acc1 = b.FunctionParam("acc1", ty.subgroup_matrix_result(ty.f32(), 4, 4));
+    auto* l2 = b.FunctionParam("l2", ty.subgroup_matrix_left(ty.u8(), 4, 4));
+    auto* r2 = b.FunctionParam("r2", ty.subgroup_matrix_right(ty.u8(), 4, 4));
+    auto* acc2 = b.FunctionParam("acc2", ty.subgroup_matrix_result(ty.u32(), 4, 4));
+    auto* func = b.Function("foo", ty.void_());
+    func->SetParams({l1, r1, acc1, l2, r2, acc2});
+    b.Append(func->Block(), [&] {
+        b.Call(acc1->Type(), core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate, l1, r1, acc1);
+        b.Call(acc1->Type(), core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate, l1, r1, acc1);
+        b.Call(acc2->Type(), core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate, l2, r2, acc2);
+        b.Call(acc2->Type(), core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate, l2, r2, acc2);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%foo = func(%l1:subgroup_matrix_left<f32, 4, 4>, %r1:subgroup_matrix_right<f32, 4, 4>, %acc1:subgroup_matrix_result<f32, 4, 4>, %l2:subgroup_matrix_left<u8, 4, 4>, %r2:subgroup_matrix_right<u8, 4, 4>, %acc2:subgroup_matrix_result<u32, 4, 4>):void {
+  $B1: {
+    %8:subgroup_matrix_result<f32, 4, 4> = subgroupMatrixMultiplyAccumulate %l1, %r1, %acc1
+    %9:subgroup_matrix_result<f32, 4, 4> = subgroupMatrixMultiplyAccumulate %l1, %r1, %acc1
+    %10:subgroup_matrix_result<u32, 4, 4> = subgroupMatrixMultiplyAccumulate %l2, %r2, %acc2
+    %11:subgroup_matrix_result<u32, 4, 4> = subgroupMatrixMultiplyAccumulate %l2, %r2, %acc2
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%l1:subgroup_matrix_left<f32, 4, 4>, %r1:subgroup_matrix_right<f32, 4, 4>, %acc1:subgroup_matrix_result<f32, 4, 4>, %l2:subgroup_matrix_left<u8, 4, 4>, %r2:subgroup_matrix_right<u8, 4, 4>, %acc2:subgroup_matrix_result<u32, 4, 4>):void {
+  $B1: {
+    %8:subgroup_matrix_result<f32, 4, 4> = call %tint_MatrixMultiplyAccumulate, %l1, %r1, %acc1
+    %10:subgroup_matrix_result<f32, 4, 4> = call %tint_MatrixMultiplyAccumulate, %l1, %r1, %acc1
+    %11:subgroup_matrix_result<u32, 4, 4> = call %tint_MatrixMultiplyAccumulate_1, %l2, %r2, %acc2
+    %13:subgroup_matrix_result<u32, 4, 4> = call %tint_MatrixMultiplyAccumulate_1, %l2, %r2, %acc2
+    ret
+  }
+}
+%tint_MatrixMultiplyAccumulate = func(%a:subgroup_matrix_left<f32, 4, 4>, %b:subgroup_matrix_right<f32, 4, 4>, %c:subgroup_matrix_result<f32, 4, 4>):subgroup_matrix_result<f32, 4, 4> {
+  $B2: {
+    %acc:ptr<function, subgroup_matrix_result<f32, 4, 4>, read_write> = var %c
+    %18:void = %acc.MultiplyAccumulate %a, %b
+    %19:subgroup_matrix_result<f32, 4, 4> = load %acc
+    ret %19
+  }
+}
+%tint_MatrixMultiplyAccumulate_1 = func(%a_1:subgroup_matrix_left<u8, 4, 4>, %b_1:subgroup_matrix_right<u8, 4, 4>, %c_1:subgroup_matrix_result<u32, 4, 4>):subgroup_matrix_result<u32, 4, 4> {  # %a_1: 'a', %b_1: 'b', %c_1: 'c'
+  $B3: {
+    %acc_1:ptr<function, subgroup_matrix_result<u32, 4, 4>, read_write> = var %c_1  # %acc_1: 'acc'
+    %24:void = %acc_1.MultiplyAccumulate %a_1, %b_1
+    %25:subgroup_matrix_result<u32, 4, 4> = load %acc_1
+    ret %25
   }
 }
 )";

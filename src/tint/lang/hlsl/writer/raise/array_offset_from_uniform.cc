@@ -163,6 +163,7 @@ struct State {
                         case BuiltinFn::kF16Tof32:
                         case BuiltinFn::kMul:
                         case BuiltinFn::kMultiply:
+                        case BuiltinFn::kMultiplyAccumulate:
                         case BuiltinFn::kGet:
                         case BuiltinFn::kSet:
                         case BuiltinFn::kPackU8:

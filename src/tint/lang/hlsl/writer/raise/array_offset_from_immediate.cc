@@ -176,6 +176,7 @@ struct State {
                         case hlsl::BuiltinFn::kF16Tof32:
                         case hlsl::BuiltinFn::kMul:
                         case hlsl::BuiltinFn::kMultiply:
+                        case hlsl::BuiltinFn::kMultiplyAccumulate:
                         case hlsl::BuiltinFn::kGet:
                         case hlsl::BuiltinFn::kSet:
                         case hlsl::BuiltinFn::kPackU8:
