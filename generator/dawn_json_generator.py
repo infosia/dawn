@@ -114,6 +114,7 @@ def validate_and_get_tags(json_data):
         'native',
         'deprecated',
         'art',
+        'art_experimental',
     }
 
     tags = json_data.get('tags')
@@ -932,99 +933,13 @@ def analyze_converter_usage(params_kotlin):
                 mark_k2n(arg.type)
 
 
-def expand_force_enable_items(loaded_json, initial_items, enabled_tags):
-    """
-    Expands a list of user-requested items to include their code generation dependencies.
-
-    For example, if `"external texture"` is forced, this will recursively pull in
-    its dependencies (like `"texture descriptor"` and method argument types).
-    """
-    force_enabled = set(initial_items)
-    queue = list(initial_items)
-
-    def is_naturally_enabled(item_name):
-        # Items with no tags or tags matching `enabled_tags` are implicitly generated
-        item_data = loaded_json.get(item_name)
-        if not item_data: return False
-        tags = validate_and_get_tags(item_data)
-        if tags is None: return True
-        return any(tag in enabled_tags for tag in tags)
-
-    def add_item(item):
-        if item and item not in force_enabled:
-            # Skip items already compiled by default (like "texture format")
-            # to avoid incorrectly overriding their internal tagged values.
-            if not is_naturally_enabled(item):
-                force_enabled.add(item)
-                queue.append(item)
-
-    # 1. Pre-index all object methods so we can map a forced method back to its parent object
-    method_to_parent = {}
-    for type_name, type_data in loaded_json.items():
-        if type_name.startswith('_'): continue
-        if type_data.get('category') == 'object':
-            for method in type_data.get('methods', []):
-                method_name = method.get('name', '')
-                method_full_name = type_name + ' ' + method_name
-                # e.g. "create external texture" -> ("device", {...})
-                method_to_parent[method_name] = (type_name, method)
-                method_to_parent[method_full_name] = (type_name, method)
-
-    # 2. Process queue to recursively fetch dependencies
-    while queue:
-        item_name = queue.pop(0)
-
-        # 3. If the item is a known struct or object
-        item_data = loaded_json.get(item_name)
-        if item_data:
-            # Add the types of all its members (e.g. "external texture descriptor" -> "extent 2D")
-            for member in item_data.get('members', []):
-                add_item(member.get('type'))
-
-            # Add argument types if it's a callback function (e.g. "request adapter callback")
-            if item_data.get('category') in [
-                    'function pointer', 'callback function'
-            ]:
-                for arg in item_data.get('args', []):
-                    add_item(arg.get('type'))
-
-            # Ensure any structures it chains to are also compiled
-            for root in item_data.get('chain roots', []):
-                add_item(root)
-
-        # 4. If the item is a method (e.g. "create external texture")
-        if item_name in method_to_parent:
-            parent_type, method = method_to_parent[item_name]
-
-            # Force the method's parent object (e.g. "device")
-            add_item(parent_type)
-
-            # Force the method's return type (e.g. "external texture")
-            method_returns = method.get('returns')
-            if isinstance(method_returns, str):
-                add_item(method_returns)
-            elif isinstance(method_returns, dict):
-                add_item(method_returns.get('type'))
-
-            # Force all method argument types (e.g. "external texture descriptor")
-            for arg in method.get('args', []):
-                add_item(arg.get('type'))
-
-    return force_enabled
-
 def compute_kotlin_params(loaded_json,
                           kotlin_json,
                           webgpu_kt_docs_data=None,
                           doc_warn_log_file_path=None):
-    force_enable_items = expand_force_enable_items(loaded_json,
-                                                   kotlin_json.get(
-                                                       'force_enable_items',
-                                                       []),
-                                                   enabled_tags=['art'])
 
     params_kotlin = parse_json(loaded_json,
-                               enabled_tags=['art'],
-                               match_names=force_enable_items)
+                               enabled_tags=['art', 'art_experimental'])
     params_kotlin['kotlin_package'] = kotlin_json['kotlin_package']
     params_kotlin['jni_primitives'] = kotlin_json['jni_primitives']
     params_kotlin['jni_signatures'] = kotlin_json['jni_signatures']
