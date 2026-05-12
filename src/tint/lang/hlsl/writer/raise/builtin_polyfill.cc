@@ -41,6 +41,7 @@
 #include "src/tint/lang/core/type/multisampled_texture.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/storage_texture.h"
+#include "src/tint/lang/core/type/subgroup_matrix.h"
 #include "src/tint/lang/core/type/texture.h"
 #include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u32.h"
@@ -51,6 +52,7 @@
 #include "src/tint/lang/hlsl/ir/member_builtin_call.h"
 #include "src/tint/lang/hlsl/ir/ternary.h"
 #include "src/tint/lang/hlsl/type/int8_t4_packed.h"
+#include "src/tint/lang/hlsl/type/matrix_layout.h"
 #include "src/tint/lang/hlsl/type/uint8_t4_packed.h"
 #include "src/tint/utils/containers/hashmap.h"
 #include "src/tint/utils/math/hash.h"
@@ -235,6 +237,9 @@ struct State {
                     case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
                         call_worklist.push_back(
                             [this, call] { SubgroupMatrixMultiplyAccumulate(call); });
+                        break;
+                    case core::BuiltinFn::kSubgroupMatrixLoad:
+                        call_worklist.push_back([this, call] { SubgroupMatrixLoad(call); });
                         break;
                     case core::BuiltinFn::kTextureDimensions:
                         call_worklist.push_back([this, call] { TextureDimensions(call); });
@@ -2043,6 +2048,46 @@ struct State {
 
         b.InsertBefore(call,
                        [&] { b.CallWithResult(call->DetachResult(), helper, left, right, acc); });
+        call->Destroy();
+    }
+
+    core::ir::Constant* ColMajorToMatrixLayout(core::ir::Value* col_major) {
+        auto* const_col_major = col_major->As<core::ir::Constant>();
+        TINT_IR_ASSERT(ir, const_col_major);
+        return b.Constant(ir.constant_values.Get<core::constant::Scalar<u32>>(
+            ty.Get<type::MatrixLayout>(),
+            u32(const_col_major->Value()->ValueAs<bool>() ? type::MatrixLayoutEnum::kColMajor
+                                                          : type::MatrixLayoutEnum::kRowMajor)));
+    }
+
+    void SubgroupMatrixLoad(core::ir::CoreBuiltinCall* call) {
+        auto* ptr = call->Args()[0];
+        auto* ptr_ty = ptr->Type()->As<core::type::Pointer>();
+        TINT_IR_ASSERT(ir, ptr_ty);
+        if (ptr_ty->AddressSpace() != core::AddressSpace::kWorkgroup) {
+            return;
+        }
+
+        b.InsertBefore(call, [&] {
+            auto* offset = call->Args()[1];
+            auto* col_major = call->Args()[2];
+            auto* stride = call->Args()[3];
+
+            auto* sm_ty = call->Result()->Type()->As<core::type::SubgroupMatrix>();
+            TINT_IR_ASSERT(ir, sm_ty);
+
+            // TODO(crbug.com/512455144): 8-bit components need additional work to support.
+            if (sm_ty->Type()->IsAnyOf<core::type::I8, core::type::U8>()) {
+                TINT_IR_UNIMPLEMENTED(ir)
+                    << "8-bit subgroup matrix load from workgroup not supported";
+            }
+
+            auto* layout = ColMajorToMatrixLayout(col_major);
+
+            b.CallExplicitWithResult<hlsl::ir::BuiltinCall>(call->DetachResult(),
+                                                            hlsl::BuiltinFn::kLoad, Vector{sm_ty},
+                                                            ptr, offset, stride, layout);
+        });
         call->Destroy();
     }
 };
