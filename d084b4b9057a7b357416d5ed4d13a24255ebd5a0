@@ -52,6 +52,24 @@
       "parentUuid": "f822a318_07d337e3",
       "revId": "d084b4b9057a7b357416d5ed4d13a24255ebd5a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bf9fc12_91c5b4b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-12T18:08:58Z",
+      "side": 1,
+      "message": "Ok. I will include in this CL all the DAWN_RELEASE_ASSUME that I think should remain.",
+      "parentUuid": "03171e0f_7b5c42c5",
+      "revId": "d084b4b9057a7b357416d5ed4d13a24255ebd5a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
