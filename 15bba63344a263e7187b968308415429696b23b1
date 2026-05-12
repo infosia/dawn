@@ -103,6 +103,24 @@
       "parentUuid": "3bf3e5aa_f9bbec68",
       "revId": "15bba63344a263e7187b968308415429696b23b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b5e483b_92084d39",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-12T22:04:56Z",
+      "side": 1,
+      "message": "I think removing any bad identifier sounds like it would do the job for now then.\n\nI do think there\u0027s maybe value in not doing any of this in the decode step though, so that we properly fuzz the backends ability to deal with bad names (which would require making the SPIR-V printer robust to bad names). It\u0027s not that important though, since names coming from WGSL will always be \"good\", so only really affects people coming from the SPIR-V frontend. So maybe just something to consider for the future.",
+      "parentUuid": "9a75e85f_c6637d88",
+      "revId": "15bba63344a263e7187b968308415429696b23b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
