@@ -30,6 +30,8 @@
 #include <utility>
 
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/traverse.h"
+#include "src/tint/lang/core/ir/unreachable.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/lang/hlsl/ir/builtin_call.h"
@@ -49,12 +51,26 @@ struct State {
 
     /// Process the module.
     void Process() {
+        // Replace variable initializeres and construct instructions.
         for (auto* inst : ir.Instructions()) {
             if (auto* var = inst->As<core::ir::Var>()) {
                 ProcessVar(var);
             } else if (auto* construct = inst->As<core::ir::Construct>()) {
                 ProcessConstruct(construct);
             }
+        }
+
+        // Replace unreachable in functions that have a subgroup matrix in their return type.
+        for (auto* func : ir.functions) {
+            if (!ContainsSubgroupMatrix(func->ReturnType())) {
+                continue;
+            }
+            core::ir::Traverse(func->Block(), [&](core::ir::Unreachable* unreachable) {
+                b.InsertBefore(unreachable, [&] {  //
+                    b.Return(func, MakeZeroInitializer(func->ReturnType()));
+                });
+                unreachable->Destroy();
+            });
         }
     }
 
