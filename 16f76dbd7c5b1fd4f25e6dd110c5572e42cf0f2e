@@ -666,6 +666,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "39758a7d_75b961b7",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-12T00:35:25Z",
+      "side": 1,
+      "message": "Even if we pull the header from the NuGet package via CIPD, I still think we should avoid #defines. \n\nInstead, I think Dawn should _always_ compile with Agility SDK headers. Whether the Agility SDK is actually used should be governed by a Dawn toggle that\u0027s enabled by default. A toggle will make it easier to troubleshoot bugs.",
+      "parentUuid": "782e1738_13418e15",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "783b3856_dd18e831",
         "filename": "tools/fetch_agility_sdk.py",
         "patchSetId": 8

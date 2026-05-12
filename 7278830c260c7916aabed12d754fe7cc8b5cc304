@@ -20,6 +20,190 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "36c73027_ee20f123",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-12T00:35:25Z",
+      "side": 1,
+      "message": "By the time we call `LogAgilitySDKStatus`, `device` will always be valid. We can remove this unnecessary if check.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68646d8a_a3bb7a97",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-12T00:35:25Z",
+      "side": 1,
+      "message": "Should we output something to the InfoLog(), even when `QueryInterface` fails or `desc.SDKVersion \u003c kAgilitySDKVersion`?",
+      "range": {
+        "startLine": 52,
+        "startChar": 26,
+        "endLine": 52,
+        "endChar": 40
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9d229c5_a87c6fe6",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-12T00:35:25Z",
+      "side": 1,
+      "message": "For better encapsulation, add a CreateD3DDevice method to the Backend class and have the backend class take care of creating the device with (or without) the device factory correctly.",
+      "range": {
+        "startLine": 63,
+        "startChar": 58,
+        "endLine": 64,
+        "endChar": 65
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "187fd173_aea8c2bb",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-12T00:35:25Z",
+      "side": 1,
+      "message": "Always compiling with SDK headers would avoid the need for #defining `D3D_SHADER_MODEL_6_10`.",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 28
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac042972_479f9266",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-12T00:35:25Z",
+      "side": 1,
+      "message": "Nit: You can use IID_PPV_ARGS in the call to d3d12CreateDevice.",
+      "range": {
+        "startLine": 125,
+        "startChar": 42,
+        "endLine": 125,
+        "endChar": 79
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2e6a9ce_6b823ada",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-12T00:35:25Z",
+      "side": 1,
+      "message": "By the time `InitAgilitySDK` is called, `d3d12GetInterface` should already non-nullptr. We can lose this unnecessary nullptr check.",
+      "range": {
+        "startLine": 99,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35145de2_38bad5a5",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-12T00:35:25Z",
+      "side": 1,
+      "message": "Since you\u0027ve enabled the Dawn Toggle by default, we should simplify the code her by creating the device factory unconditionally. The Dawn toggle should determine whether we use the factory to create the device (toggle \u003d\u003d true) or just `D3D12CreateDevice` (toggle \u003d\u003d false). Calling `D3D12CreateDevice` after creating the factory will result in a device which doesn\u0027t use the AgilitySDK.\n\nThis way, we don\u0027t have to obsess about InitAgilitySDK called at the right time. Instead, it always runs.",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 35
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7457193_b5526576",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-12T00:35:25Z",
+      "side": 1,
+      "message": "After creating the factory, please call `SetFlags` and pass `D3D12_DEVICE_FACTORY_FLAG_ALLOW_RETURNING_EXISTING_DEVICE`.  This way, we can share the D3D12 device with the Chromium media engine when the device configurations are compatible. Otherwise, two instances of the UMD will be created in the process, chewing through memory unnecessarily.",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 36
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ea87d2c_ed679d1d",
         "filename": "tools/fetch_agility_sdk.py",
         "patchSetId": 19
