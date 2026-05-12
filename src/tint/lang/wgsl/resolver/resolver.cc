@@ -2848,31 +2848,20 @@ const core::type::Pointer* Resolver::Ptr(const ast::Identifier* ident) {
 }
 
 const core::type::Sampler* Resolver::Sampler(const ast::Identifier* ident) {
+    // TODO(507087175): Remove the `if` wrapper when the filterabilities have all been removed from
+    // the tests.
     if (!allowed_features_.features.contains(wgsl::LanguageFeature::kFilteringParameters)) {
         return DAWN_LIKELY(CheckNotTemplated("type", ident))
                    ? b.create<core::type::Sampler>(core::type::SamplerKind::kSampler)
                    : nullptr;
     }
-
-    core::SamplerFiltering filtering = core::SamplerFiltering::kUndefined;
-    if (auto* tmpl_ident = ident->As<ast::TemplatedIdentifier>()) {
-        // If we are templated, then there must be at least one template item
-        TINT_RET_IF(!CheckTemplatedIdentifierArgs(tmpl_ident, 1));
-
-        if (auto resolved = dependencies_.resolved_identifiers.Get(ident)) {
-            if (auto* ast_node = resolved->Node()) {
-                sem_.NoteDeclarationSource(ast_node);
-            }
-        }
-
-        filtering = sem_.GetSamplerFiltering(tmpl_ident->arguments[0]);
-        TINT_RET_IF(DAWN_UNLIKELY(filtering == core::SamplerFiltering::kUndefined));
-    }
-    return b.create<core::type::Sampler>(core::type::SamplerKind::kSampler, filtering);
+    return b.create<core::type::Sampler>(core::type::SamplerKind::kSampler);
 }
 
 const core::type::SampledTexture* Resolver::SampledTexture(const ast::Identifier* ident,
                                                            core::type::TextureDimension dim) {
+    // TODO(507087175): Remove the variable `allowed_args` when the filterabilities have all been
+    // removed from the tests.
     uint32_t allowed_args = 1;
     if (allowed_features_.features.contains(wgsl::LanguageFeature::kFilteringParameters)) {
         allowed_args = 2;
@@ -2884,13 +2873,7 @@ const core::type::SampledTexture* Resolver::SampledTexture(const ast::Identifier
     auto* ty_expr = sem_.GetType(tmpl_ident->arguments[0]);
     TINT_RET_IF(DAWN_UNLIKELY(!ty_expr));
 
-    core::TextureFilterable filterable = core::TextureFilterable::kUndefined;
-    if (tmpl_ident->arguments.Length() > 1) {
-        filterable = sem_.GetTextureFilterable(tmpl_ident->arguments[1]);
-        TINT_RET_IF(DAWN_UNLIKELY(filterable == core::TextureFilterable::kUndefined));
-    }
-
-    auto* out = b.create<core::type::SampledTexture>(dim, ty_expr, filterable);
+    auto* out = b.create<core::type::SampledTexture>(dim, ty_expr);
     return validator_.SampledTexture(out, ident->source) ? out : nullptr;
 }
 
@@ -3299,22 +3282,6 @@ sem::Expression* Resolver::Identifier(const ast::IdentifierExpression* expr) {
         return CheckNotTemplated("texel format", ident)
                    ? b.create<sem::BuiltinEnumExpression<core::TexelFormat>>(
                          expr, current_statement_, fmt)
-                   : nullptr;
-    }
-
-    if (auto filterable = resolved->TextureFilterable();
-        filterable != core::TextureFilterable::kUndefined) {
-        return CheckNotTemplated("texture filterable", ident)
-                   ? b.create<sem::BuiltinEnumExpression<core::TextureFilterable>>(
-                         expr, current_statement_, filterable)
-                   : nullptr;
-    }
-
-    if (auto filterable = resolved->SamplerFiltering();
-        filterable != core::SamplerFiltering::kUndefined) {
-        return CheckNotTemplated("sampler filtering", ident)
-                   ? b.create<sem::BuiltinEnumExpression<core::SamplerFiltering>>(
-                         expr, current_statement_, filterable)
                    : nullptr;
     }
 

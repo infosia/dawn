@@ -136,7 +136,8 @@ message TypeDepthTexture {
 message TypeSampledTexture {
     TextureDimension dimension = 1;
     uint32 sub_type = 2;  // Module.types
-    TextureFilterable filterable = 3;
+    reserved 3;
+    reserved "filterable";
 }
 
 message TypeMultisampledTexture {
@@ -160,7 +161,8 @@ message TypeExternalTexture {}
 
 message TypeSampler {
     SamplerKind kind = 1;
-    SamplerFiltering filtering = 2;
+    reserved 2;
+    reserved "filtering";
 }
 
 message TypeInputAttachment {
@@ -512,6 +514,7 @@ enum TextureDimension {
     cube_array = 5;
 }
 
+// Note, this is unused but keeps the linter happey
 enum TextureFilterable {
     filterable_undefined = 0;
     filterable = 1;
@@ -566,6 +569,7 @@ enum SamplerKind {
     comparison = 1;
 }
 
+// Note, this is unused but keeps the linter happey
 enum SamplerFiltering {
     filtering_undefined = 0;
     filtering = 1;
