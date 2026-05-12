@@ -533,5 +533,152 @@ S = struct @align(4) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(HlslWriterReplaceSubgroupMatrixInitTest, Unreachable_Basic) {
+    auto* func = b.Function("foo", ty.subgroup_matrix_result(ty.f32(), 16, 8));
+    b.Append(func->Block(), [&] { b.Unreachable(); });
+
+    auto* src = R"(
+%foo = func():subgroup_matrix_result<f32, 16, 8> {
+  $B1: {
+    unreachable
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func():subgroup_matrix_result<f32, 16, 8> {
+  $B1: {
+    %2:subgroup_matrix_result<f32, 16, 8> = hlsl.Splat<subgroup_matrix_result<f32, 16, 8>> 0.0f
+    ret %2
+  }
+}
+)";
+    Run(ReplaceSubgroupMatrixInit);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriterReplaceSubgroupMatrixInitTest, Unreachable_Struct) {
+    auto* s = ty.Struct(mod.symbols.New("S"),
+                        {
+                            {mod.symbols.New("m"), ty.subgroup_matrix_result(ty.f32(), 16, 8)},
+                        });
+    auto* func = b.Function("foo", s);
+    b.Append(func->Block(), [&] { b.Unreachable(); });
+
+    auto* src = R"(
+S = struct @align(4) {
+  m:subgroup_matrix_result<f32, 16, 8> @offset(0)
+}
+
+%foo = func():S {
+  $B1: {
+    unreachable
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+S = struct @align(4) {
+  m:subgroup_matrix_result<f32, 16, 8> @offset(0)
+}
+
+%foo = func():S {
+  $B1: {
+    %2:subgroup_matrix_result<f32, 16, 8> = hlsl.Splat<subgroup_matrix_result<f32, 16, 8>> 0.0f
+    %3:S = construct %2
+    ret %3
+  }
+}
+)";
+    Run(ReplaceSubgroupMatrixInit);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriterReplaceSubgroupMatrixInitTest, Unreachable_Array) {
+    auto* func = b.Function("foo", ty.array(ty.subgroup_matrix_result(ty.f32(), 16, 8), 4u));
+    b.Append(func->Block(), [&] { b.Unreachable(); });
+
+    auto* src = R"(
+%foo = func():array<subgroup_matrix_result<f32, 16, 8>, 4> {
+  $B1: {
+    unreachable
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func():array<subgroup_matrix_result<f32, 16, 8>, 4> {
+  $B1: {
+    %2:subgroup_matrix_result<f32, 16, 8> = hlsl.Splat<subgroup_matrix_result<f32, 16, 8>> 0.0f
+    %3:array<subgroup_matrix_result<f32, 16, 8>, 4> = construct %2, %2, %2, %2
+    ret %3
+  }
+}
+)";
+    Run(ReplaceSubgroupMatrixInit);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriterReplaceSubgroupMatrixInitTest, Unreachable_InControlFlow) {
+    auto* func = b.Function("foo", ty.subgroup_matrix_result(ty.f32(), 16, 8));
+    auto* cond = b.FunctionParam("cond", ty.bool_());
+    func->SetParams({cond});
+
+    b.Append(func->Block(), [&] {
+        auto* if_inst = b.If(cond);
+        b.Append(if_inst->True(), [&] { b.Unreachable(); });
+        b.Append(if_inst->False(), [&] {
+            b.Return(func, b.Construct(ty.subgroup_matrix_result(ty.f32(), 16, 8), 1.0_f));
+        });
+        b.Unreachable();
+    });
+
+    auto* src = R"(
+%foo = func(%cond:bool):subgroup_matrix_result<f32, 16, 8> {
+  $B1: {
+    if %cond [t: $B2, f: $B3] {  # if_1
+      $B2: {  # true
+        unreachable
+      }
+      $B3: {  # false
+        %3:subgroup_matrix_result<f32, 16, 8> = construct 1.0f
+        ret %3
+      }
+    }
+    unreachable
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%cond:bool):subgroup_matrix_result<f32, 16, 8> {
+  $B1: {
+    if %cond [t: $B2, f: $B3] {  # if_1
+      $B2: {  # true
+        %3:subgroup_matrix_result<f32, 16, 8> = hlsl.Splat<subgroup_matrix_result<f32, 16, 8>> 0.0f
+        ret %3
+      }
+      $B3: {  # false
+        %4:subgroup_matrix_result<f32, 16, 8> = hlsl.Splat<subgroup_matrix_result<f32, 16, 8>> 1.0f
+        ret %4
+      }
+    }
+    %5:subgroup_matrix_result<f32, 16, 8> = hlsl.Splat<subgroup_matrix_result<f32, 16, 8>> 0.0f
+    ret %5
+  }
+}
+)";
+    Run(ReplaceSubgroupMatrixInit);
+
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer::raise
