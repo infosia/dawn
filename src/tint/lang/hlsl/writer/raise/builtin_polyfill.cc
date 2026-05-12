@@ -241,6 +241,9 @@ struct State {
                     case core::BuiltinFn::kSubgroupMatrixLoad:
                         call_worklist.push_back([this, call] { SubgroupMatrixLoad(call); });
                         break;
+                    case core::BuiltinFn::kSubgroupMatrixStore:
+                        call_worklist.push_back([this, call] { SubgroupMatrixStore(call); });
+                        break;
                     case core::BuiltinFn::kTextureDimensions:
                         call_worklist.push_back([this, call] { TextureDimensions(call); });
                         break;
@@ -2087,6 +2090,38 @@ struct State {
             b.CallExplicitWithResult<hlsl::ir::BuiltinCall>(call->DetachResult(),
                                                             hlsl::BuiltinFn::kLoad, Vector{sm_ty},
                                                             ptr, offset, stride, layout);
+        });
+        call->Destroy();
+    }
+
+    void SubgroupMatrixStore(core::ir::CoreBuiltinCall* call) {
+        auto* ptr = call->Args()[0];
+        auto* ptr_ty = ptr->Type()->As<core::type::Pointer>();
+        TINT_IR_ASSERT(ir, ptr_ty);
+
+        if (ptr_ty->AddressSpace() != core::AddressSpace::kWorkgroup) {
+            return;
+        }
+
+        b.InsertBefore(call, [&] {
+            auto* offset = call->Args()[1];
+            auto* matrix = call->Args()[2];
+            auto* col_major = call->Args()[3];
+            auto* stride = call->Args()[4];
+
+            auto* sm_ty = matrix->Type()->As<core::type::SubgroupMatrix>();
+            TINT_IR_ASSERT(ir, sm_ty);
+
+            // TODO(crbug.com/512455144): 8-bit components need additional work to support.
+            if (sm_ty->Type()->IsAnyOf<core::type::I8, core::type::U8>()) {
+                TINT_IR_UNIMPLEMENTED(ir)
+                    << "8-bit subgroup matrix store to workgroup not supported";
+            }
+
+            auto* layout = ColMajorToMatrixLayout(col_major);
+
+            b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), hlsl::BuiltinFn::kStore, matrix,
+                                                      ptr, offset, stride, layout);
         });
         call->Destroy();
     }
