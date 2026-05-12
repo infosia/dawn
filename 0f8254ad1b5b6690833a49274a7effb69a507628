@@ -18,6 +18,528 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3809bc2c_5653ee72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "lgtm % nits",
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbd41be3_73d7defb",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "We should probably read this only once and use the same value for both the insert and setting the existing value below. WDYT?",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 96
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e2551f21_eacd0a11",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 61,
+                "startChar": 0,
+                "endLine": 63,
+                "endChar": 0
+              },
+              "replacement": "    ExecutionSerial completionSerial \u003d\n        queueAndSerial-\u003ecompletionSerial.load(std::memory_order_acquire);\n    auto [queueIt, inserted] \u003d\n        queueWaitSerials.insert({queueAndSerial-\u003equeue, completionSerial});\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 64,
+                "startChar": 0,
+                "endLine": 66,
+                "endChar": 0
+              },
+              "replacement": "        queueIt-\u003esecond \u003d std::min(queueIt-\u003esecond, completionSerial);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32e96fe8_240946d3",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "u-nit: return x? and maybe rename x to something like signaled so it\u0027s clear?",
+      "range": {
+        "startLine": 101,
+        "startChar": 65,
+        "endLine": 101,
+        "endChar": 82
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "54c6b8ed_0bb8ea9a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 101,
+                "startChar": 0,
+                "endLine": 102,
+                "endChar": 0
+              },
+              "replacement": "            return signaled.WaitFor(timeout, [](const bool\u0026 signaled) { return signaled; });\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdcd16b8_96da3025",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "Q: Should we handle this gracefully like we do for the callbacks below? I\u0027m not sure we should have an assert/CHECK that fails on bad client behavior?",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 43
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ff24301_f6e82f2b",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "nit: readyToCompleteEvents or just readyEvents or completableEvents?",
+      "range": {
+        "startLine": 264,
+        "startChar": 19,
+        "endLine": 264,
+        "endChar": 31
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "cd7b9bc8_ee2b2d58",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 206,
+                "startChar": 0,
+                "endLine": 207,
+                "endChar": 0
+              },
+              "replacement": "    SortedEventMap readyEvents;\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 221,
+                "startChar": 0,
+                "endLine": 222,
+                "endChar": 0
+              },
+              "replacement": "                readyEvents.emplace(futureID, event);\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 240,
+                "startChar": 0,
+                "endLine": 241,
+                "endChar": 0
+              },
+              "replacement": "    for (auto\u0026 [_, event] : readyEvents) {\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 252,
+                "startChar": 0,
+                "endLine": 253,
+                "endChar": 0
+              },
+              "replacement": "        for (auto\u0026 [futureID, _] : readyEvents) {\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 264,
+                "startChar": 0,
+                "endLine": 265,
+                "endChar": 0
+              },
+              "replacement": "    SortedEventMap readyEvents;\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 316,
+                "startChar": 0,
+                "endLine": 317,
+                "endChar": 0
+              },
+              "replacement": "                        readyEvents.emplace(futureID, nullptr);\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 321,
+                "startChar": 0,
+                "endLine": 322,
+                "endChar": 0
+              },
+              "replacement": "                            readyEvents.emplace(futureID, std::move(event));\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 370,
+                "startChar": 0,
+                "endLine": 371,
+                "endChar": 0
+              },
+              "replacement": "    for (auto\u0026 [_, event] : readyEvents) {\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 382,
+                "startChar": 0,
+                "endLine": 383,
+                "endChar": 0
+              },
+              "replacement": "        for (auto\u0026 [futureID, _] : readyEvents) {\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 387,
+                "startChar": 0,
+                "endLine": 388,
+                "endChar": 0
+              },
+              "replacement": "    return !readyEvents.empty() ? wgpu::WaitStatus::Success : wgpu::WaitStatus::TimedOut;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46a0e529_3725408b",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "nit: PreProcessWaits and PostProcessWaits?",
+      "range": {
+        "startLine": 266,
+        "startChar": 9,
+        "endLine": 266,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "14712cf1_1793584c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 266,
+                "startChar": 0,
+                "endLine": 267,
+                "endChar": 0
+              },
+              "replacement": "    auto PreProcessWaits \u003d [\u0026](Waiter* waiter) {\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 307,
+                "startChar": 0,
+                "endLine": 308,
+                "endChar": 0
+              },
+              "replacement": "    auto PostProcessWaits \u003d [\u0026](bool shouldComplete, Waiter* waiter) {\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 338,
+                "startChar": 0,
+                "endLine": 339,
+                "endChar": 0
+              },
+              "replacement": "        PreProcessWaits(/*waiter\u003d*/nullptr);\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 340,
+                "startChar": 0,
+                "endLine": 341,
+                "endChar": 0
+              },
+              "replacement": "        PostProcessWaits(/*shouldComplete\u003d*/true, /*waiter\u003d*/nullptr);\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 343,
+                "startChar": 0,
+                "endLine": 344,
+                "endChar": 0
+              },
+              "replacement": "        PreProcessWaits(\u0026waiter);\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 356,
+                "startChar": 0,
+                "endLine": 357,
+                "endChar": 0
+              },
+              "replacement": "            PostProcessWaits(/*shouldComplete\u003d*/false, \u0026waiter);\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 366,
+                "startChar": 0,
+                "endLine": 367,
+                "endChar": 0
+              },
+              "replacement": "        PostProcessWaits(/*shouldComplete\u003d*/true, \u0026waiter);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e9e8bf8_c5099172",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "nit: just waiter here and in the checks below",
+      "range": {
+        "startLine": 281,
+        "startChar": 24,
+        "endLine": 281,
+        "endChar": 41
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "49e0dbbb_9a2f50d5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 281,
+                "startChar": 0,
+                "endLine": 282,
+                "endChar": 0
+              },
+              "replacement": "                    if (waiter) {\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 288,
+                "startChar": 0,
+                "endLine": 289,
+                "endChar": 0
+              },
+              "replacement": "                if (waiter) {\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 295,
+                "startChar": 0,
+                "endLine": 296,
+                "endChar": 0
+              },
+              "replacement": "                if (event-\u003eIsReadyToComplete() \u0026\u0026 waiter) {\n"
+            },
+            {
+              "path": "src/dawn/native/EventManager.cpp",
+              "range": {
+                "startLine": 327,
+                "startChar": 0,
+                "endLine": 328,
+                "endChar": 0
+              },
+              "replacement": "                if (waiter) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ece17912_3dc5447b",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "```suggestion\n                    auto eventIt \u003d state-\u003eevents.find(futureID);\n                    Ref\u003cTrackedEvent\u003e event \u003d (eventIt !\u003d state-\u003eevents.end()) ?\n                        eventIt-\u003esecond : nullptr;\n                    if (!event || event-\u003eIsReadyToComplete()) {\n                        info.completed \u003d true;\n                        completables.emplace(futureID, std::move(event));\n                    }\n```",
+      "range": {
+        "startLine": 313,
+        "startChar": 20,
+        "endLine": 323,
+        "endChar": 21
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "332480c4_797cd0c0",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "nit: Create an event that can be manually signaled.",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 59
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e93b09b_97e52f8d",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "nit: readyToComplete?\n\nBut more importantly why should we allow a caller to set this to true instead of using the Completed tag event below?",
+      "range": {
+        "startLine": 160,
+        "startChar": 64,
+        "endLine": 160,
+        "endChar": 69
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a8c12a1c_27358084",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/EventManager.h",
+              "range": {
+                "startLine": 160,
+                "startChar": 0,
+                "endLine": 161,
+                "endChar": 0
+              },
+              "replacement": "    explicit TrackedEvent(wgpu::CallbackMode callbackMode, bool readyToComplete \u003d false);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfc83ab0_b89be93e",
@@ -36,6 +558,29 @@
         "startChar": 0,
         "endLine": 193,
         "endChar": 35
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32132f13_4068a077",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-05-12T22:31:32Z",
+      "side": 1,
+      "message": "u-nit: maybe put the Atomic above the comment block about the queue ref cycle?",
+      "range": {
+        "startLine": 198,
+        "startChar": 4,
+        "endLine": 198,
+        "endChar": 97
       },
       "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
