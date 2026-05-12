@@ -1,5 +1,16 @@
-SKIP: FAILED
+#include <dx/linalg.h>
+using namespace dx::linalg;
+using Matrix_left_f16_8x8 = Matrix<ComponentType::F16, 8, 8, MatrixUse::A, MatrixScope::Wave>;
 
-subgroup matrices are not supported by the HLSL backend
+RWByteAddressBuffer prevent_dce : register(u0);
+ByteAddressBuffer sb_ro : register(t1);
+Matrix_left_f16_8x8 subgroupMatrixLoad_63c04c() {
+  Matrix_left_f16_8x8 res = Matrix_left_f16_8x8::Load(sb_ro, 2u, 16u, MatrixLayout::ColMajor);
+  return res;
+}
 
-tint executable returned error: exit status 1
+[numthreads(1, 1, 1)]
+void compute_main() {
+  subgroupMatrixLoad_63c04c().Store(prevent_dce, 0u, 128u, MatrixLayout::RowMajor);
+}
+
