@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cb62b6c_223aad5d",
+        "filename": "src/dawn/native/TintUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-12T13:52:45Z",
+      "side": 1,
+      "message": "Done. I didn\u0027t realize `kBindingNotUsed` wasn\u0027t used, I just assumed it could happen.",
+      "parentUuid": "c211cdd8_fcb2f5ca",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a43e417_65628675",
@@ -277,6 +295,24 @@
       "side": 1,
       "message": "RGBA32Float is not filterable, unless `float32-filterable` is enabled. My point is that we should still check that both `tint::ResourceType::kTexture_1d_f32_[un]filterable` are valid to use with `texture_1d\u003cf32\u003e`.",
       "parentUuid": "555a07e7_97c951f5",
+      "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f46ed3f7_0c32bf21",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-12T13:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bad11e8_32b430e3",
       "revId": "b4d29c01b75e4bc83e1ab349e872d4bf5174547b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
