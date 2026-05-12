@@ -630,12 +630,19 @@ struct Decoder {
     }
 
     ir::Loop* CreateInstructionLoop(const pb::InstructionLoop& loop_in) {
-        auto* loop_out = mod_out_.CreateInstruction<ir::Loop>();
+        ir::Block* initializer = nullptr;
         if (loop_in.has_initializer()) {
-            loop_out->SetInitializer(Block(loop_in.initializer()));
+            initializer = Block(loop_in.initializer());
+            if (initializer->Is<ir::MultiInBlock>()) {
+                err_ << "loop initializer must not be a multi-in block\n";
+                return nullptr;
+            }
         } else {
-            loop_out->SetInitializer(b.Block());
+            initializer = b.Block();
         }
+
+        auto* loop_out = mod_out_.CreateInstruction<ir::Loop>();
+        loop_out->SetInitializer(initializer);
         loop_out->SetBody(BlockAs<ir::MultiInBlock>(loop_in.body()));
         if (loop_in.has_continuing()) {
             loop_out->SetContinuing(BlockAs<ir::MultiInBlock>(loop_in.continuing()));
