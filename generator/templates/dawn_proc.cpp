@@ -35,6 +35,7 @@
 
 // The sanitizer is disabled for calls to procs.* since those functions may be
 // dynamically loaded.
+#include "dawn/common/Assert.h"
 #include "dawn/common/Compiler.h"
 #include "dawn/common/Log.h"
 
@@ -61,10 +62,16 @@ static {{Prefix}}ProcTable procs = MakeNullProcTable();
 
 void {{prefix}}ProcSetProcs(const {{Prefix}}ProcTable* procs_) {
     if (procs_) {
+        // Verify that the proc table version matches our version, otherwise crash.
+        DAWN_CHECK(std::ranges::equal(procs_->version, dawn::kDawnVersion));
         procs = *procs_;
     } else {
         procs = kNullProcs;
     }
+}
+
+const uint8_t* {{prefix}}ProcGetVersion() {
+    return dawn::kDawnVersion.data();
 }
 
 {% for function in by_category["function"] %}
