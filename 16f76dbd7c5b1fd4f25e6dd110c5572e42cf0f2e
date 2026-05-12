@@ -690,6 +690,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a5c1dd75_f1ef1c06",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-12T13:53:58Z",
+      "side": 1,
+      "message": "Just an update for this CL: although I\u0027ve got that PR up for updating DXC to use latest DirectX-Headers, it\u0027s not clear whether or when it\u0027s going to land. Having said that, I discussed with Rafael, and for Dawn, we don\u0027t need to rely on DirectX-Headers to use Agility SDK, so we\u0027re going to just use the headers that come with the SDK. I\u0027m presently working on getting the Agility SDK nuget packages into our CIPD. Once that\u0027s done, we\u0027ll update this CL to use that instead of running a script to download it. Stay tuned.",
+      "parentUuid": "39758a7d_75b961b7",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "783b3856_dd18e831",
         "filename": "tools/fetch_agility_sdk.py",
         "patchSetId": 8
