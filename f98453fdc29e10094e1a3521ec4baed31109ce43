@@ -91,6 +91,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e7d25ac9_4b030fc4",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-12T20:33:46Z",
+      "side": 1,
+      "message": "This is probably fine here. The distinction between the validations here and the validations in `ValidateUnmap` is that `Unmap` is called internally as well, whereas the `ValidateUnmap` call only happens in the API path, i.e. `APIUnmap`. It\u0027s a bit ugly atm because we have `APIUnmap`, `Unmap` `UnmapInternal`, AND `UnmapImpl`... but they kind of represent: API, C++ public, C++ private, C++ inheritance overload respectively. Since this particular validation needs to happen even if we are dealing with a Dawn internal call, I think this is the right place for the error.",
+      "parentUuid": "1ab462db_86f9cd9f",
+      "revId": "f98453fdc29e10094e1a3521ec4baed31109ce43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "29e31c16_5d61e21c",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 1
