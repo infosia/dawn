@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b322f34_20b6c6bb",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-12T21:19:11Z",
+      "side": 0,
+      "message": "Yea, so I noted this in another comment as well, but I changed this to be like this because it makes it easier to modify in one of the child changes which will introduce new cache callback functions. I will revert to the early return once the changes here, the children changes, and updates in Chromium land.",
+      "parentUuid": "11ccf369_83aada22",
+      "revId": "ab91f48536859b26ce629b9378fa3d4b6aa768f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4015ff99_75eccab7",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-12T20:36:47Z",
       "side": 0,
       "message": "same here, it seems like it still does the same thing?",
+      "revId": "ab91f48536859b26ce629b9378fa3d4b6aa768f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f52ccba6_d2218a1e",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-12T21:19:11Z",
+      "side": 0,
+      "message": "See comment above.",
+      "parentUuid": "4015ff99_75eccab7",
       "revId": "ab91f48536859b26ce629b9378fa3d4b6aa768f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

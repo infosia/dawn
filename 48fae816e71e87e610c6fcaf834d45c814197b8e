@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c78b1b1d_ebe00393",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-12T21:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd2479c0_99808eed",
+      "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0303a1f8_1618c0f4",
@@ -83,6 +101,30 @@
       "writtenOn": "2026-05-12T20:36:47Z",
       "side": 1,
       "message": "```suggestion\n    std::vector\u003cstd::byte\u003e result(byteSizeWithHash);\n```",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 36
+      },
+      "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98a4c67e_7dc60012",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-12T21:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0303a1f8_1618c0f4",
       "range": {
         "startLine": 58,
         "startChar": 0,
@@ -110,6 +152,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da1e18c4_9d4f1c34",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-12T21:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "666ed424_9ac7f80e",
+      "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1e80be3_5480e791",
@@ -123,6 +183,24 @@
       "writtenOn": "2026-05-12T20:36:47Z",
       "side": 1,
       "message": "Check also that a pointer gotten from the original blob is still valid after the move (because we depend on that)",
+      "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00d7b79d_c44971f7",
+        "filename": "src/dawn/tests/unittests/native/BlobTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-12T21:19:11Z",
+      "side": 1,
+      "message": "I don\u0027t think we depend on that in general. The deleter is the only thing that the blob API guarantees. I don\u0027t think it makes sense to check the contents of b1 after the move.",
+      "parentUuid": "b1e80be3_5480e791",
       "revId": "48fae816e71e87e610c6fcaf834d45c814197b8e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
