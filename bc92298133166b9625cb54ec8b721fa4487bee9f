@@ -33,6 +33,24 @@
       "message": "I don\u0027t recall what was decided re: use of std::byte? Is this intentional or a leftover from the previous CL?",
       "revId": "bc92298133166b9625cb54ec8b721fa4487bee9f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36739bae_70a98fb2",
+        "filename": "src/dawn/native/Blob.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-12T02:38:46Z",
+      "side": 1,
+      "message": "The plan is to use std::byte, so gonna leave it with the additional byte condition.",
+      "parentUuid": "ef51a938_e59ee2b5",
+      "revId": "bc92298133166b9625cb54ec8b721fa4487bee9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
