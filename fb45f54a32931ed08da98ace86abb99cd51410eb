@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8d9e0f2_d7348469",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-12T19:53:27Z",
+      "side": 1,
+      "message": "FYI, I am going to add support for the dissembler emitting .tirbs, so it can be used for sanitizing test cases",
+      "revId": "fb45f54a32931ed08da98ace86abb99cd51410eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
