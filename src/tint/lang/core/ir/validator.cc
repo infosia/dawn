@@ -2994,10 +2994,6 @@ void Validator::ValidateIOAttributes(const Function* func) {
     IOAttributeContext impl_ctx{.input_builtins = {}, .output_builtins = {}};
     // Validate all remaining attributes on IO objects
     for (const auto& task : tasks) {
-        if (!func->IsEntryPoint()) {
-            impl_ctx.input_builtins.Clear();
-            impl_ctx.output_builtins.Clear();
-        }
         ValidateIOAttributesImpl(impl_ctx, task.anchor, task.type, task.attr, stage, task.dir,
                                  task.io_kind);
     }
@@ -3022,7 +3018,8 @@ void Validator::ValidateIOAttributesImpl(IOAttributeContext& ctx,
                 return;
             }
 
-            if (a.builtin.has_value() && !skip_builtins) {
+            if (a.builtin.has_value() && !skip_builtins &&
+                usage != IOAttributeUsage::kUndefinedUsage) {
                 const auto& builtin = a.builtin.value();
 
                 uint32_t count = 0;

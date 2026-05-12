@@ -60,6 +60,36 @@ TEST_F(IR_ValidatorTest, Builtin_DuplicateOnNonEntryPoint_Allowed) {
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Builtin_OnNonEntryPoint_AnyStageAllowed) {
+    auto* str_ty =
+        ty.Struct(mod.symbols.New("S"),
+                  {{mod.symbols.New("i"), ty.u32(), {.builtin = BuiltinValue::kVertexIndex}}});
+
+    auto* f = b.Function("f", ty.void_());
+    f->AppendParam(b.FunctionParam("p", str_ty));
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_EQ(res, Success) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Builtin_OnNonEntryPoint_StructuralTypeCheckStillApplies) {
+    auto* str_ty =
+        ty.Struct(mod.symbols.New("S"),
+                  {{mod.symbols.New("i"), ty.f32(), {.builtin = BuiltinValue::kVertexIndex}}});
+
+    auto* f = b.Function("f", ty.void_());
+    f->AppendParam(b.FunctionParam("p", str_ty));
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason, testing::HasSubstr("vertex_index must be an u32"))
+        << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Builtin_DuplicateInput) {
     auto* f = FragmentEntryPoint();
     AddBuiltinParam(f, "sm1", BuiltinValue::kSampleMask, ty.u32());
