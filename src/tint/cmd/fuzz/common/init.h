@@ -33,12 +33,21 @@
 
 namespace tint::fuzz::common {
 
+/// FuzzerType distinguishes between fuzzers based on their input format
+enum class FuzzerType {
+    /// IR-input fuzzer
+    kIR,
+    /// WGSL-input fuzzer
+    kWGSL,
+};
+
 /// ParseFuzzerOptions parses the command line arguments and populates the fuzzer options.
+/// @param type the type of fuzzer
 /// @param argc the number of command line arguments
 /// @param argv the command line arguments
 /// @param options the options to populate
 /// @returns 0 on success, or a non-zero value on failure
-int ParseFuzzerOptions(int* argc, char*** argv, Options* options);
+int ParseFuzzerOptions(FuzzerType type, int* argc, char*** argv, Options* options);
 
 }  // namespace tint::fuzz::common
 

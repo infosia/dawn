@@ -42,7 +42,7 @@
 namespace tint::fuzz::common {
 
 TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
-int ParseFuzzerOptions(int* argc, char*** argv, Options* options) {
+int ParseFuzzerOptions(FuzzerType type, int* argc, char*** argv, Options* options) {
     tint::cli::OptionSet opts;
 
     tint::Vector<std::string_view, 8> arguments;
@@ -80,6 +80,12 @@ int ParseFuzzerOptions(int* argc, char*** argv, Options* options) {
     auto& opt_dump_ir =
         opts.Add<tint::cli::BoolOption>("dump-ir", "Dump IR at each stage of the compilation flow");
 
+    tint::cli::BoolOption* opt_fix_identifiers = nullptr;
+    if (type == FuzzerType::kIR) {
+        opt_fix_identifiers = &opts.Add<tint::cli::BoolOption>(
+            "fix-identifiers", "Attempt to fix invalid identifiers, may cause name collisions");
+    }
+
     tint::cli::ParseOptions parse_opts;
     parse_opts.ignore_unknown = true;
     if (auto res = opts.Parse(arguments, parse_opts); res != tint::Success) {
@@ -102,6 +108,8 @@ int ParseFuzzerOptions(int* argc, char*** argv, Options* options) {
 #endif
     options->dump = opt_dump.value.value_or(false);
     options->dump_ir_when_validating = opt_dump_ir.value.value_or(false);
+    options->fix_identifiers =
+        opt_fix_identifiers ? opt_fix_identifiers->value.value_or(false) : false;
 
     PrintDxcPathFound(options->dxc);
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT

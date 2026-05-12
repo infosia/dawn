@@ -64,6 +64,23 @@ TEST_F(IRBinaryDecodeTest, InvalidFunctionName) {
                 testing::HasSubstr("function name '0invalid' is not a valid WGSL identifier"));
 }
 
+TEST_F(IRBinaryDecodeTest, FixInvalidFunctionName) {
+    auto* fn = b.Function("Function", ty.void_());
+    b.Append(fn->Block(), [&] { b.Return(fn); });
+
+    auto res = EncodeToProto(mod);
+    ASSERT_EQ(res, Success);
+
+    auto pb_mod = std::move(res.Get());
+    pb_mod->mutable_functions(0)->set_name("0invalid-name");
+
+    DecoderOptions options;
+    options.fix_identifiers = true;
+    auto decoded = Decode(*pb_mod, options);
+    ASSERT_EQ(decoded, Success);
+    EXPECT_EQ(decoded->NameOf(decoded->functions[0]).Name(), "tint_fixed_ident_0");
+}
+
 TEST_F(IRBinaryDecodeTest, InvalidStructName) {
     Vector members{
         ty.Get<core::type::StructMember>(b.ir.symbols.New("a"), ty.i32(), 0u, 0u, 4u, 4u,
@@ -82,6 +99,42 @@ TEST_F(IRBinaryDecodeTest, InvalidStructName) {
     EXPECT_NE(decoded, Success);
     EXPECT_THAT(decoded.Failure().reason,
                 testing::HasSubstr("struct name '__invalid' is not a valid WGSL identifier"));
+}
+
+TEST_F(IRBinaryDecodeTest, FixInvalidStructName) {
+    auto* S = ty.Struct(b.ir.symbols.New("S"), {{b.ir.symbols.New("a"), ty.i32()}});
+    b.Append(b.ir.root_block, [&] { b.Var(ty.ptr<function, read_write>(S)); });
+
+    auto res = EncodeToProto(mod);
+    ASSERT_EQ(res, Success);
+
+    auto pb_mod = std::move(res.Get());
+    bool found_proto = false;
+    for (int i = 0; i < pb_mod->types_size(); ++i) {
+        if (pb_mod->types(i).has_struct_()) {
+            pb_mod->mutable_types(i)->mutable_struct_()->set_name("__invalid");
+            found_proto = true;
+            break;
+        }
+    }
+    ASSERT_TRUE(found_proto);
+
+    DecoderOptions options;
+    options.fix_identifiers = true;
+    auto decoded = Decode(*pb_mod, options);
+    ASSERT_EQ(decoded, Success);
+
+    // Find the struct type and check its name.
+    bool found = false;
+    for (auto* type : decoded->Types()) {
+        if (auto* str = type->As<core::type::Struct>()) {
+            // "__invalid" becomes "tint_fixed_ident_0" because it starts with two underscores
+            EXPECT_EQ(str->Name().Name(), "tint_fixed_ident_0");
+            found = true;
+            break;
+        }
+    }
+    EXPECT_TRUE(found);
 }
 
 struct IRBinaryDecodeInternalNameTest : public IRTestHelper,
