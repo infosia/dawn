@@ -68,6 +68,23 @@
       },
       "revId": "15bba63344a263e7187b968308415429696b23b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bf3e5aa_f9bbec68",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-12T20:47:13Z",
+      "side": 1,
+      "message": "High-level question: Is it important to try and do this in a careful way like this? Could we not just remove the name if it\u0027s invalid, or just replace it with a generic name?\n\nMaybe another way of thinking about this is: the backends are each supposed to do name sanitization. If we want to fuzz that properly, then we should probably be letting all the bad names through (and add the missing sanitization to the SPIR-V printer as needed). If we don\u0027t really want to fuzz the backend name sanitization, then we might as well just replace any bad name here with a generic good name, or just remove them completely.",
+      "revId": "15bba63344a263e7187b968308415429696b23b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
