@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "254e7463_3c2fe560",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2076,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-13T14:19:20Z",
+      "side": 1,
+      "message": "nit: Not sure if it\u0027s worth it but I\u0027ve seen the pattern a few times of get col_major and convert to tint::MatrixLayoutEnum, maybe a helper method?",
+      "revId": "a2c06729056ee1f18eab8cd23d60af7d2eda3baa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
