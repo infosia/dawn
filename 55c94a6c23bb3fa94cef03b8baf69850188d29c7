@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2133b74f_b7331480",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T12:49:49Z",
+      "side": 1,
+      "message": "This is all ... quite impossible to make sense of.\n\nCan we do something like (follow-ups are fine if this is time-sensitive):\n\n - In this comment, show what the interface of the trait is, because reading it below is difficult.\n - Instead of having specializations for each callback type, add a `wgpu::detail::FromCAPI` and `wgpu::detail::ToCAPI` for all kinds of objects (reusing what we have in the template for `dawn_platform.h`?) and use that to replace `CArgConverter` instantiations to use a single generic template.\n - (can be a follow-up) Move parts that are not Jinja templates in their own header with tests ideally (like enum class bitmask).",
+      "revId": "55c94a6c23bb3fa94cef03b8baf69850188d29c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
