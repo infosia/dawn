@@ -34,6 +34,24 @@
       "parentUuid": "275561fd_74fa3989",
       "revId": "a7ad86d3df0789a9dbea5e2700810f198b721e43",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76a96e30_f4fcf7c9",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1974,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-13T13:06:39Z",
+      "side": 1,
+      "message": "We need to investigate, but maybe there\u0027s a bug in the VK implementation. This test adds 2K samplers in the first 2K slots, deletes them, then adds 2K samplers again but in the next 2K slots. Maybe the VK implementation is somehow using the first 2K samplers along with the next 2K ones?",
+      "parentUuid": "07a961b4_58e19377",
+      "revId": "a7ad86d3df0789a9dbea5e2700810f198b721e43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
