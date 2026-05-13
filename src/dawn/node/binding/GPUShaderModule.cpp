@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/dawn/node/binding/GPUShaderModule.h"
 
 #include <memory>
@@ -37,6 +32,7 @@
 #include <vector>
 
 #include "src/dawn/node/binding/Converter.h"
+#include "src/utils/compiler.h"
 
 namespace wgpu::binding {
 
@@ -128,7 +124,7 @@ GPUShaderModule::getCompilationInfo(Napi::Env env) {
                                wgpu::CompilationInfo const* compilationInfo) {
             Messages messages(compilationInfo->messageCount);
             for (uint32_t i = 0; i < compilationInfo->messageCount; i++) {
-                auto& msg = compilationInfo->messages[i];
+                auto& msg = DAWN_UNSAFE_TODO(compilationInfo->messages[i]);
                 messages[i] =
                     interop::GPUCompilationMessage::Create<GPUCompilationMessage>(ctx->env, msg);
             }

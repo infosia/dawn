@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/dawn/node/binding/GPURenderBundleEncoder.h"
 
 #include <utility>
@@ -94,7 +89,7 @@ void GPURenderBundleEncoder::setBindGroup(
     }
 
     enc_.SetBindGroup(index, bg, dynamicOffsetsDataLength,
-                      dynamicOffsetsData.Data() + dynamicOffsetsDataStart);
+                      DAWN_UNSAFE_TODO(dynamicOffsetsData.Data() + dynamicOffsetsDataStart));
 }
 
 void GPURenderBundleEncoder::setImmediates(Napi::Env env,

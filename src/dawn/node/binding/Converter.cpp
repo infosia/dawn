@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/dawn/node/binding/Converter.h"
 
 #include <cassert>
@@ -1207,7 +1202,7 @@ bool Converter::Convert(wgpu::VertexState& out, const interop::GPUVertexState& i
     out.buffers = outBuffers;
     for (size_t i = 0; i < in.buffers.size(); i++) {
         if (!in.buffers[i].has_value()) {
-            outBuffers[i].stepMode = wgpu::VertexStepMode::Undefined;
+            DAWN_UNSAFE_TODO(outBuffers[i].stepMode = wgpu::VertexStepMode::Undefined);
         }
     }
 
@@ -2066,11 +2061,11 @@ bool Converter::Convert(wgpu::OptionalBool& out, const std::optional<bool>& in) 
 
 char* Converter::ConvertStringReplacingNull(std::string_view in) {
     char* out = Allocate<char>(in.size() + 1);
-    out[in.size()] = '\0';
+    DAWN_UNSAFE_TODO(out[in.size()] = '\0');
 
     for (size_t i = 0; i < in.size(); i++) {
         if (in[i] == '\0') {
-            out[i] = '#';
+            DAWN_UNSAFE_TODO(out[i] = '#');
         } else {
             out[i] = in[i];
         }
