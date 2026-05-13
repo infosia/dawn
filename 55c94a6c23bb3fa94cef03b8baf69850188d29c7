@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c885d8b3_83c323c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-13T19:12:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deb35d85_f9951e71",
+      "revId": "55c94a6c23bb3fa94cef03b8baf69850188d29c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2133b74f_b7331480",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-13T12:49:49Z",
       "side": 1,
       "message": "This is all ... quite impossible to make sense of.\n\nCan we do something like (follow-ups are fine if this is time-sensitive):\n\n - In this comment, show what the interface of the trait is, because reading it below is difficult.\n - Instead of having specializations for each callback type, add a `wgpu::detail::FromCAPI` and `wgpu::detail::ToCAPI` for all kinds of objects (reusing what we have in the template for `dawn_platform.h`?) and use that to replace `CArgConverter` instantiations to use a single generic template.\n - (can be a follow-up) Move parts that are not Jinja templates in their own header with tests ideally (like enum class bitmask).",
+      "revId": "55c94a6c23bb3fa94cef03b8baf69850188d29c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7256672f_0def23fe",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-13T19:12:49Z",
+      "side": 1,
+      "message": "1) Made the comment more clear w.r.t to the interface.\n\n2) So I considered this, but the issue is that for some types, it\u0027s not a 1 to 1 conversion. Specifically, for array/span types, I am trying to hide the pointer and size arguments into a single type, and that is a lot harder to do with that design. I think it\u0027s possible to do something more similar to this in the future if the dawn.json file becomes more like the upstream header yaml that defines an array type, but in the meantime, I think this was the best design I could come up with.\n\n3) Agreed! This is something I want to do also.",
+      "parentUuid": "2133b74f_b7331480",
       "revId": "55c94a6c23bb3fa94cef03b8baf69850188d29c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
