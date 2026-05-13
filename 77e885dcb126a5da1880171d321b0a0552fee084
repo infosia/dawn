@@ -16,6 +16,24 @@
       "message": "Won\u0027t this cause problems when using the code in Chromium? The parts that we use should all be LLVM License, and certainly not GPL2",
       "revId": "77e885dcb126a5da1880171d321b0a0552fee084",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "031692ea_7f96da5f",
+        "filename": "third_party/directx-shader-compiler/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-13T13:10:31Z",
+      "side": 1,
+      "message": "I assume these are coming from https://github.com/microsoft/DirectXShaderCompiler/blob/main/LICENSE.TXT\n\nMost of these licenses do not apply to our usage of DXC. For example, the GPL license is for `autoconf/config.guess`, which we don\u0027t use.",
+      "parentUuid": "2f6dc661_9a9301f5",
+      "revId": "77e885dcb126a5da1880171d321b0a0552fee084",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
