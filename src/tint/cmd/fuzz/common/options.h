@@ -52,6 +52,8 @@ struct Options {
     bool dump_ir_when_validating = false;
     /// If true, invalid identifiers will be stripped instead of erroring
     bool strip_invalid_identifiers = false;
+    /// If true, the IR validator will be disabled.
+    bool disable_ir_validator = false;
 };
 
 }  // namespace tint::fuzz::common

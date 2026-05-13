@@ -79,6 +79,8 @@ int ParseFuzzerOptions(FuzzerType type, int* argc, char*** argv, Options* option
         opts.Add<tint::cli::BoolOption>("dump", "dumps shader input/output from fuzzer");
     auto& opt_dump_ir =
         opts.Add<tint::cli::BoolOption>("dump-ir", "Dump IR at each stage of the compilation flow");
+    auto& opt_disable_ir_validator =
+        opts.Add<tint::cli::BoolOption>("disable-ir-validator", "Disable IR validation");
 
     tint::cli::BoolOption* opt_strip_invalid_identifiers = nullptr;
     if (type == FuzzerType::kIR) {
@@ -108,6 +110,7 @@ int ParseFuzzerOptions(FuzzerType type, int* argc, char*** argv, Options* option
 #endif
     options->dump = opt_dump.value.value_or(false);
     options->dump_ir_when_validating = opt_dump_ir.value.value_or(false);
+    options->disable_ir_validator = opt_disable_ir_validator.value.value_or(false);
     options->strip_invalid_identifiers = opt_strip_invalid_identifiers
                                              ? opt_strip_invalid_identifiers->value.value_or(false)
                                              : false;
