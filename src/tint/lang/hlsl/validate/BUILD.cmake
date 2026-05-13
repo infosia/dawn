@@ -65,14 +65,9 @@ tint_target_add_dependencies(tint_lang_hlsl_validate lib
 )
 
 tint_target_add_external_dependencies(tint_lang_hlsl_validate lib
+  "dl"
+  "dxc-include"
   "src_utils"
 )
-
-if(TINT_BUILD_HLSL_WRITER)
-  tint_target_add_external_dependencies(tint_lang_hlsl_validate lib
-    "dl"
-    "dxc-include"
-  )
-endif(TINT_BUILD_HLSL_WRITER)
 
 endif(TINT_BUILD_HLSL_WRITER)

@@ -65,15 +65,12 @@ if (tint_build_ir_binary) {
       "${tint_src_dir}/utils/macros",
       "${tint_src_dir}/utils/math",
       "${tint_src_dir}/utils/memory",
+      "${tint_src_dir}/utils/protos/ir:proto",
       "${tint_src_dir}/utils/reflection",
       "${tint_src_dir}/utils/rtti",
       "${tint_src_dir}/utils/symbol",
       "${tint_src_dir}/utils/text",
     ]
-
-    if (tint_build_ir_binary) {
-      deps += [ "${tint_src_dir}/utils/protos/ir:proto" ]
-    }
   }
 }
 if (tint_build_unittests) {
@@ -92,6 +89,7 @@ if (tint_build_unittests) {
         "${tint_src_dir}/lang/core/intrinsic",
         "${tint_src_dir}/lang/core/ir",
         "${tint_src_dir}/lang/core/ir:unittests",
+        "${tint_src_dir}/lang/core/ir/binary",
         "${tint_src_dir}/lang/core/type",
         "${tint_src_dir}/utils",
         "${tint_src_dir}/utils/containers",
@@ -100,18 +98,12 @@ if (tint_build_unittests) {
         "${tint_src_dir}/utils/macros",
         "${tint_src_dir}/utils/math",
         "${tint_src_dir}/utils/memory",
+        "${tint_src_dir}/utils/protos/ir:proto",
         "${tint_src_dir}/utils/reflection",
         "${tint_src_dir}/utils/rtti",
         "${tint_src_dir}/utils/symbol",
         "${tint_src_dir}/utils/text",
       ]
-
-      if (tint_build_ir_binary) {
-        deps += [
-          "${tint_src_dir}/lang/core/ir/binary",
-          "${tint_src_dir}/utils/protos/ir:proto",
-        ]
-      }
     }
   }
 }
@@ -125,6 +117,7 @@ if (tint_build_ir_binary) {
       "${tint_src_dir}/lang/core",
       "${tint_src_dir}/lang/core/constant",
       "${tint_src_dir}/lang/core/ir",
+      "${tint_src_dir}/lang/core/ir/binary",
       "${tint_src_dir}/lang/core/type",
       "${tint_src_dir}/utils",
       "${tint_src_dir}/utils/bytes",
@@ -139,9 +132,5 @@ if (tint_build_ir_binary) {
       "${tint_src_dir}/utils/symbol",
       "${tint_src_dir}/utils/text",
     ]
-
-    if (tint_build_ir_binary) {
-      deps += [ "${tint_src_dir}/lang/core/ir/binary" ]
-    }
   }
 }

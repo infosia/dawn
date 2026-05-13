@@ -90,6 +90,7 @@ tint_target_add_dependencies(tint_lang_msl_writer_common_test test
   tint_api_common
   tint_lang_core
   tint_lang_core_type
+  tint_lang_msl_writer_common
   tint_utils
   tint_utils_containers
   tint_utils_ice
@@ -105,11 +106,5 @@ tint_target_add_external_dependencies(tint_lang_msl_writer_common_test test
   "gtest"
   "src_utils"
 )
-
-if(TINT_BUILD_MSL_WRITER)
-  tint_target_add_dependencies(tint_lang_msl_writer_common_test test
-    tint_lang_msl_writer_common
-  )
-endif(TINT_BUILD_MSL_WRITER)
 
 endif(TINT_BUILD_MSL_WRITER)

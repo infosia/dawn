@@ -84,6 +84,7 @@ if (tint_build_unittests) {
         "${dawn_root}/src/utils",
         "${tint_src_dir}:gmock_and_gtest",
         "${tint_src_dir}/api/common",
+        "${tint_src_dir}/lang/glsl/writer/common",
         "${tint_src_dir}/utils",
         "${tint_src_dir}/utils/containers",
         "${tint_src_dir}/utils/ice",
@@ -93,10 +94,6 @@ if (tint_build_unittests) {
         "${tint_src_dir}/utils/reflection",
         "${tint_src_dir}/utils/rtti",
       ]
-
-      if (tint_build_glsl_writer) {
-        deps += [ "${tint_src_dir}/lang/glsl/writer/common" ]
-      }
     }
   }
 }

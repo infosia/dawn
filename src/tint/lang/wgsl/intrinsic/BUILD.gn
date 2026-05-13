@@ -90,6 +90,7 @@ if (tint_build_unittests) {
         "${tint_src_dir}/lang/wgsl/intrinsic",
         "${tint_src_dir}/lang/wgsl/program",
         "${tint_src_dir}/lang/wgsl/resolver",
+        "${tint_src_dir}/lang/wgsl/resolver:unittests",
         "${tint_src_dir}/lang/wgsl/sem",
         "${tint_src_dir}/utils",
         "${tint_src_dir}/utils/containers",
@@ -103,10 +104,6 @@ if (tint_build_unittests) {
         "${tint_src_dir}/utils/symbol",
         "${tint_src_dir}/utils/text",
       ]
-
-      if (tint_build_wgsl_reader) {
-        deps += [ "${tint_src_dir}/lang/wgsl/resolver:unittests" ]
-      }
     }
   }
 }

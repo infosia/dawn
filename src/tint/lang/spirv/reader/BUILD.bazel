@@ -51,7 +51,9 @@ cc_library(
     "//src/tint/lang/core/constant",
     "//src/tint/lang/core/ir",
     "//src/tint/lang/core/type",
+    "//src/tint/lang/spirv/reader/common",
     "//src/tint/lang/spirv/reader/lower",
+    "//src/tint/lang/spirv/reader/parser",
     "//src/tint/utils",
     "//src/tint/utils/containers",
     "//src/tint/utils/diagnostic",
@@ -64,13 +66,7 @@ cc_library(
     "//src/tint/utils/symbol",
     "//src/tint/utils/text",
     "//src/utils",
-  ] + select({
-    ":tint_build_spv_reader": [
-      "//src/tint/lang/spirv/reader/common",
-      "//src/tint/lang/spirv/reader/parser",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
@@ -89,6 +85,9 @@ cc_library(
     "//src/tint/lang/core/constant",
     "//src/tint/lang/core/ir",
     "//src/tint/lang/core/type",
+    "//src/tint/lang/spirv/reader",
+    "//src/tint/lang/spirv/reader/common",
+    "//src/tint/lang/spirv/reader/common:test",
     "//src/tint/utils",
     "//src/tint/utils/containers",
     "//src/tint/utils/diagnostic",
@@ -101,20 +100,9 @@ cc_library(
     "//src/tint/utils/symbol",
     "//src/tint/utils/text",
     "@gtest",
+    "@spirv_tools",
     "//src/utils",
-  ] + select({
-    ":tint_build_spv_reader": [
-      "//src/tint/lang/spirv/reader",
-      "//src/tint/lang/spirv/reader/common",
-      "//src/tint/lang/spirv/reader/common:test",
-    ],
-    "//conditions:default": [],
-  }) + select({
-    ":tint_build_spv_reader_or_tint_build_spv_writer": [
-      "@spirv_tools",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
@@ -122,18 +110,5 @@ cc_library(
 alias(
   name = "tint_build_spv_reader",
   actual = "//src/tint:tint_build_spv_reader_true",
-)
-
-alias(
-  name = "tint_build_spv_writer",
-  actual = "//src/tint:tint_build_spv_writer_true",
-)
-
-selects.config_setting_group(
-    name = "tint_build_spv_reader_or_tint_build_spv_writer",
-    match_any = [
-        "tint_build_spv_reader",
-        "tint_build_spv_writer",
-    ],
 )
 

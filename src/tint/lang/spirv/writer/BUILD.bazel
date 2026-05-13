@@ -54,6 +54,9 @@ cc_library(
     "//src/tint/lang/core/ir/analysis",
     "//src/tint/lang/core/ir/transform",
     "//src/tint/lang/core/type",
+    "//src/tint/lang/spirv/writer/common",
+    "//src/tint/lang/spirv/writer/printer",
+    "//src/tint/lang/spirv/writer/raise",
     "//src/tint/utils",
     "//src/tint/utils/containers",
     "//src/tint/utils/diagnostic",
@@ -65,20 +68,9 @@ cc_library(
     "//src/tint/utils/rtti",
     "//src/tint/utils/symbol",
     "//src/tint/utils/text",
+    "@spirv_headers//:spirv_cpp11_headers", "@spirv_headers//:spirv_c_headers",
     "//src/utils",
-  ] + select({
-    ":tint_build_spv_reader_or_tint_build_spv_writer": [
-      "@spirv_headers//:spirv_cpp11_headers", "@spirv_headers//:spirv_c_headers",
-    ],
-    "//conditions:default": [],
-  }) + select({
-    ":tint_build_spv_writer": [
-      "//src/tint/lang/spirv/writer/common",
-      "//src/tint/lang/spirv/writer/printer",
-      "//src/tint/lang/spirv/writer/raise",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
@@ -118,6 +110,9 @@ cc_library(
     "//src/tint/lang/spirv/intrinsic",
     "//src/tint/lang/spirv/ir",
     "//src/tint/lang/spirv/type",
+    "//src/tint/lang/spirv/writer",
+    "//src/tint/lang/spirv/writer/common",
+    "//src/tint/lang/spirv/writer/common:test",
     "//src/tint/utils",
     "//src/tint/utils/containers",
     "//src/tint/utils/diagnostic",
@@ -130,21 +125,10 @@ cc_library(
     "//src/tint/utils/symbol",
     "//src/tint/utils/text",
     "@gtest",
+    "@spirv_headers//:spirv_cpp11_headers", "@spirv_headers//:spirv_c_headers",
+    "@spirv_tools",
     "//src/utils",
-  ] + select({
-    ":tint_build_spv_reader_or_tint_build_spv_writer": [
-      "@spirv_headers//:spirv_cpp11_headers", "@spirv_headers//:spirv_c_headers",
-      "@spirv_tools",
-    ],
-    "//conditions:default": [],
-  }) + select({
-    ":tint_build_spv_writer": [
-      "//src/tint/lang/spirv/writer",
-      "//src/tint/lang/spirv/writer/common",
-      "//src/tint/lang/spirv/writer/common:test",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
@@ -155,20 +139,7 @@ alias(
 )
 
 alias(
-  name = "tint_build_spv_reader",
-  actual = "//src/tint:tint_build_spv_reader_true",
-)
-
-alias(
   name = "tint_build_spv_writer",
   actual = "//src/tint:tint_build_spv_writer_true",
-)
-
-selects.config_setting_group(
-    name = "tint_build_spv_reader_or_tint_build_spv_writer",
-    match_any = [
-        "tint_build_spv_reader",
-        "tint_build_spv_writer",
-    ],
 )
 

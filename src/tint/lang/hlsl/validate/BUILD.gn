@@ -46,6 +46,8 @@ if (tint_build_hlsl_writer) {
     ]
     deps = [
       "${dawn_root}/src/utils",
+      "${tint_src_dir}:dl",
+      "${tint_src_dir}:dxc-include",
       "${tint_src_dir}/api/common",
       "${tint_src_dir}/lang/core",
       "${tint_src_dir}/lang/core/constant",
@@ -63,12 +65,5 @@ if (tint_build_hlsl_writer) {
       "${tint_src_dir}/utils/rtti",
       "${tint_src_dir}/utils/text",
     ]
-
-    if (tint_build_hlsl_writer) {
-      deps += [
-        "${tint_src_dir}:dl",
-        "${tint_src_dir}:dxc-include",
-      ]
-    }
   }
 }
