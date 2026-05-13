@@ -46,6 +46,7 @@ cc_library(
   ],
   deps = [
     "//src/tint/api/common",
+    "//src/tint/cmd/bench:bench",
     "//src/tint/lang/core",
     "//src/tint/lang/core/constant",
     "//src/tint/lang/core/ir",
@@ -53,7 +54,9 @@ cc_library(
     "//src/tint/lang/wgsl",
     "//src/tint/lang/wgsl/ast",
     "//src/tint/lang/wgsl/program",
+    "//src/tint/lang/wgsl/reader",
     "//src/tint/lang/wgsl/sem",
+    "//src/tint/lang/wgsl/writer",
     "//src/tint/lang/wgsl/writer/common",
     "//src/tint/utils",
     "//src/tint/utils/containers",
@@ -68,18 +71,7 @@ cc_library(
     "//src/tint/utils/text",
     "@benchmark",
     "//src/utils",
-  ] + select({
-    ":tint_build_wgsl_reader": [
-      "//src/tint/cmd/bench:bench",
-      "//src/tint/lang/wgsl/reader",
-    ],
-    "//conditions:default": [],
-  }) + select({
-    ":tint_build_wgsl_writer": [
-      "//src/tint/lang/wgsl/writer",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )

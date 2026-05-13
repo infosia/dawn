@@ -61,6 +61,8 @@ tint_target_add_dependencies(tint_lang_wgsl_reader lib
   tint_lang_wgsl_ir
   tint_lang_wgsl_program
   tint_lang_wgsl_reader_lower
+  tint_lang_wgsl_reader_parser
+  tint_lang_wgsl_reader_program_to_ir
   tint_lang_wgsl_resolver
   tint_lang_wgsl_sem
   tint_utils
@@ -80,13 +82,6 @@ tint_target_add_external_dependencies(tint_lang_wgsl_reader lib
   "src_utils"
 )
 
-if(TINT_BUILD_WGSL_READER)
-  tint_target_add_dependencies(tint_lang_wgsl_reader lib
-    tint_lang_wgsl_reader_parser
-    tint_lang_wgsl_reader_program_to_ir
-  )
-endif(TINT_BUILD_WGSL_READER)
-
 endif(TINT_BUILD_WGSL_READER)
 if(TINT_BUILD_WGSL_READER)
 ################################################################################
@@ -100,6 +95,7 @@ tint_add_target(tint_lang_wgsl_reader_test test
 
 tint_target_add_dependencies(tint_lang_wgsl_reader_test test
   tint_lang_wgsl
+  tint_lang_wgsl_reader
   tint_utils
   tint_utils_containers
   tint_utils_diagnostic
@@ -116,11 +112,5 @@ tint_target_add_external_dependencies(tint_lang_wgsl_reader_test test
   "gtest"
   "src_utils"
 )
-
-if(TINT_BUILD_WGSL_READER)
-  tint_target_add_dependencies(tint_lang_wgsl_reader_test test
-    tint_lang_wgsl_reader
-  )
-endif(TINT_BUILD_WGSL_READER)
 
 endif(TINT_BUILD_WGSL_READER)

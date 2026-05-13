@@ -81,9 +81,36 @@ func (t *Target) SourceFiles() []*File {
 	return out
 }
 
+// GeneratedFiles returns the sorted list of the target's generated files
+func (t *Target) GeneratedFiles() []*File {
+	out := make([]*File, len(t.GeneratedFileSet))
+	for i, name := range t.GeneratedFileSet.List() {
+		out[i] = t.Directory.Project.Files[name]
+	}
+	return out
+}
+
 // UnconditionalSourceFiles returns the sorted list of the target's source files that have no build condition
 func (t *Target) UnconditionalSourceFiles() []*File {
-	return transform.Filter(t.SourceFiles(), func(t *File) bool { return t.Condition == nil })
+	return transform.Filter(t.SourceFiles(), func(f *File) bool {
+		return len(f.Condition.AssumeTrue(t.Condition)) == 0
+	})
+}
+
+// UnconditionalInternalDependencies returns the sorted list of the target's internal dependencies
+// that have no build condition (simplified by the target's condition).
+func (t *Target) UnconditionalInternalDependencies() []*Target {
+	return transform.Filter(t.Dependencies.Internal(), func(d *Target) bool {
+		return len(d.Condition.AssumeTrue(t.Condition)) == 0
+	})
+}
+
+// UnconditionalExternalDependencies returns the sorted list of the target's external dependencies
+// that have no build condition (simplified by the target's condition).
+func (t *Target) UnconditionalExternalDependencies() []ExternalDependency {
+	return transform.Filter(t.Dependencies.External(), func(e ExternalDependency) bool {
+		return len(e.Condition.AssumeTrue(t.Condition)) == 0
+	})
 }
 
 // TargetConditional is a collection of source files and dependencies sharing the same condition
@@ -122,27 +149,30 @@ func (t *Target) Conditionals() TargetConditionals {
 	m := container.NewMap[string, *TargetConditional]()
 	for name := range t.SourceFileSet {
 		file := t.Directory.Project.Files[name]
-		if file.Condition != nil {
-			c := m.GetOrCreate(file.Condition.String(), func() *TargetConditional {
-				return &TargetConditional{Condition: file.Condition}
+		cond := file.Condition.AssumeTrue(t.Condition)
+		if len(cond) > 0 {
+			c := m.GetOrCreate(cond.String(), func() *TargetConditional {
+				return &TargetConditional{Condition: cond}
 			})
 			c.SourceFiles = append(c.SourceFiles, file)
 		}
 	}
 	for name := range t.Dependencies.internal {
 		dep := t.Directory.Project.Targets[name]
-		if dep.Condition != nil {
-			c := m.GetOrCreate(dep.Condition.String(), func() *TargetConditional {
-				return &TargetConditional{Condition: dep.Condition}
+		cond := dep.Condition.AssumeTrue(t.Condition)
+		if len(cond) > 0 {
+			c := m.GetOrCreate(cond.String(), func() *TargetConditional {
+				return &TargetConditional{Condition: cond}
 			})
 			c.InternalDependencies = append(c.InternalDependencies, dep)
 		}
 	}
 	for name := range t.Dependencies.external {
 		dep := t.Directory.Project.externals[name]
-		if dep.Condition != nil {
-			c := m.GetOrCreate(dep.Condition.String(), func() *TargetConditional {
-				return &TargetConditional{Condition: dep.Condition}
+		cond := dep.Condition.AssumeTrue(t.Condition)
+		if len(cond) > 0 {
+			c := m.GetOrCreate(cond.String(), func() *TargetConditional {
+				return &TargetConditional{Condition: cond}
 			})
 			c.ExternalDependencies = append(c.ExternalDependencies, dep)
 		}

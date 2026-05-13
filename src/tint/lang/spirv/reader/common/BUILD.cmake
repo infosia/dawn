@@ -80,13 +80,8 @@ tint_target_add_dependencies(tint_lang_spirv_reader_common_test test
 )
 
 tint_target_add_external_dependencies(tint_lang_spirv_reader_common_test test
+  "spirv-tools"
   "src_utils"
 )
-
-if(TINT_BUILD_SPV_READER OR TINT_BUILD_SPV_WRITER)
-  tint_target_add_external_dependencies(tint_lang_spirv_reader_common_test test
-    "spirv-tools"
-  )
-endif(TINT_BUILD_SPV_READER OR TINT_BUILD_SPV_WRITER)
 
 endif(TINT_BUILD_SPV_READER)

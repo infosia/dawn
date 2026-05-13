@@ -43,22 +43,13 @@ cc_binary(
     "main.cc",
   ],
   deps = [
+    "//src/tint/lang/wgsl/ls",
     "//src/tint/utils",
     "//src/tint/utils/ice",
     "//src/tint/utils/macros",
     "//src/tint/utils/rtti",
     "//src/utils",
-  ] + select({
-    ":tint_build_tintd": [
-      
-    ],
-    "//conditions:default": [],
-  }) + select({
-    ":tint_build_tintd_and_tint_build_wgsl_reader": [
-      "//src/tint/lang/wgsl/ls",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )

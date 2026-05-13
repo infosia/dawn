@@ -55,13 +55,9 @@ cc_library(
     "//src/tint/utils/memory",
     "//src/tint/utils/rtti",
     "//src/tint/utils/text",
+    "@spirv_tools",
     "//src/utils",
-  ] + select({
-    ":tint_build_spv_reader_or_tint_build_spv_writer": [
-      "@spirv_tools",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
@@ -72,19 +68,15 @@ cc_library(
     "validate_test.cc",
   ],
   deps = [
+    "//src/tint/lang/spirv/validate",
     "//src/tint/utils",
     "//src/tint/utils/ice",
     "//src/tint/utils/macros",
     "//src/tint/utils/rtti",
     "@gtest",
+    "@spirv_tools",
     "//src/utils",
-  ] + select({
-    ":tint_build_spv_reader_or_tint_build_spv_writer": [
-      "//src/tint/lang/spirv/validate",
-      "@spirv_tools",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )

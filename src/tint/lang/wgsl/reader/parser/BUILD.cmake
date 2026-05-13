@@ -164,6 +164,7 @@ tint_target_add_dependencies(tint_lang_wgsl_reader_parser_test test
   tint_lang_wgsl_ast
   tint_lang_wgsl_ast_test
   tint_lang_wgsl_program
+  tint_lang_wgsl_reader_parser
   tint_lang_wgsl_resolver
   tint_lang_wgsl_sem
   tint_utils
@@ -183,11 +184,5 @@ tint_target_add_external_dependencies(tint_lang_wgsl_reader_parser_test test
   "gtest"
   "src_utils"
 )
-
-if(TINT_BUILD_WGSL_READER)
-  tint_target_add_dependencies(tint_lang_wgsl_reader_parser_test test
-    tint_lang_wgsl_reader_parser
-  )
-endif(TINT_BUILD_WGSL_READER)
 
 endif(TINT_BUILD_WGSL_READER)

@@ -61,7 +61,6 @@ cc_library(
     "//src/utils",
   ] + select({
     ":tint_build_is_mac": [
-      
     ],
     "//conditions:default": [],
   }),
