@@ -4,7 +4,15 @@ URL: https://github.com/microsoft/DirectX-Shader-Compiler
 Update Mechanism: Autoroll
 Security Critical: yes
 Version: N/A
+<<<<<<< PATCH SET (1866ae18bd18dc279b7da2545b42200af80be51e Update License ID's based on LICENSE file)
+Revision: 35c1b99e9e552267da5efaea07c003e322d65777
+License: BSD-3-Clause, GPL-2.0-with-autoconf-exception, ISC, MIT, NCSA, Spencer-86, Unlicense, bcrypt-Solar-Designer, unicode_org
+||||||| BASE      (1f8268e27dc8517fb5b1d853ec2af4adc831eed0 Suppress Pixel 10 CTS failures)
+Revision: 35c1b99e9e552267da5efaea07c003e322d65777
+License: LLVM
+=======
 Revision: 517dd5eb5d8cbb46c15fc1230acac1d2f4779092
 License: LLVM
+>>>>>>> BASE      (a36d189db2e8bb5de466f7e4610e8c5efd89fb30 [ir][fuzz] Validate overrides have init operand)
 License File: LICENSE
 Shipped: yes
