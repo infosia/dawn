@@ -71,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db8bb9a2_6b46ff2b",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_helper_test.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-13T02:51:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c330426_f6a0e61c",
+      "range": {
+        "startLine": 666,
+        "startChar": 0,
+        "endLine": 667,
+        "endChar": 0
+      },
+      "revId": "ee2d586b1f3add94f1e08d2e8b389a606225de62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eec075d8_5e58574e",
@@ -84,6 +108,24 @@
       "writtenOn": "2026-05-07T13:07:02Z",
       "side": 1,
       "message": "I think you need to add `google/explicit-constructor` to this as well as the ones below",
+      "revId": "ee2d586b1f3add94f1e08d2e8b389a606225de62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87f0ff65_b39afc5e",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-13T02:51:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eec075d8_5e58574e",
       "revId": "ee2d586b1f3add94f1e08d2e8b389a606225de62",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
