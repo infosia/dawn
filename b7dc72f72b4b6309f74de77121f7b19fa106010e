@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "242b2ed7_c54eaa18",
+        "filename": "build_overrides/partition_alloc.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-05-13T12:33:47Z",
+      "side": 1,
+      "message": "Note: Chrome added a couple more like `is_ubsan`.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "b7dc72f72b4b6309f74de77121f7b19fa106010e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
