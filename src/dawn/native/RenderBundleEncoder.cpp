@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/RenderBundleEncoder.h"
 
 #include <string>
@@ -45,6 +40,7 @@
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -85,7 +81,7 @@ MaybeError ValidateRenderBundleEncoderDescriptor(DeviceBase* device,
     bool allColorFormatsUndefined = true;
     ColorAttachmentFormats colorAttachmentFormats;
     for (uint32_t i = 0; i < descriptor->colorFormatCount; ++i) {
-        wgpu::TextureFormat format = descriptor->colorFormats[i];
+        wgpu::TextureFormat format = DAWN_UNSAFE_TODO(descriptor->colorFormats[i]);
         if (format != wgpu::TextureFormat::Undefined) {
             DAWN_TRY_CONTEXT(ValidateColorAttachmentFormat(device, format),
                              "validating colorFormats[%u]", i);

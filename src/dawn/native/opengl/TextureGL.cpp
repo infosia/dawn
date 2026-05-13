@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/opengl/TextureGL.h"
 
 #include <algorithm>
@@ -49,6 +44,7 @@
 #include "dawn/native/opengl/SharedFenceGL.h"
 #include "dawn/native/opengl/SharedTextureMemoryGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::opengl {
 
@@ -566,7 +562,7 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
         DAWN_TRY_ASSIGN(srcBuffer, Buffer::CreateInternalBuffer(device, &descriptor, false));
 
         // Fill the buffer with clear color
-        memset(srcBuffer->GetMappedRange(0, bufferSize), clearColor, bufferSize);
+        DAWN_UNSAFE_TODO(memset(srcBuffer->GetMappedRange(0, bufferSize), clearColor, bufferSize));
         DAWN_TRY(srcBuffer->Unmap());
 
         DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, srcBuffer->GetHandle()));

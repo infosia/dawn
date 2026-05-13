@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/d3d12/TextureD3D12.h"
 
 #include <algorithm>
@@ -61,6 +56,7 @@
 #include "dawn/native/d3d12/TextureCopySplitter.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
 #include "dawn/native/utils/RenderDoc.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d12 {
 
@@ -915,7 +911,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
 
             DAWN_TRY(device->GetDynamicUploader()->WithUploadReservation(
                 uploadSize, blockInfo.byteSize, [&](UploadReservation reservation) -> MaybeError {
-                    memset(reservation.mappedPointer, clearColor, uploadSize);
+                    DAWN_UNSAFE_TODO(memset(reservation.mappedPointer, clearColor, uploadSize));
 
                     for (uint32_t level = range.baseMipLevel;
                          level < range.baseMipLevel + range.levelCount; ++level) {

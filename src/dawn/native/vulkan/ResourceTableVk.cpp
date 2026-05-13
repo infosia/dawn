@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/vulkan/ResourceTableVk.h"
 
 #include <vector>
@@ -43,6 +38,7 @@
 #include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
+#include "src/utils/compiler.h"
 namespace dawn::native::vulkan {
 
 // static
@@ -230,7 +226,7 @@ MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordin
             // Prepare the copies.
             std::vector<VkBufferCopy> copies(updates.size());
             for (auto [i, update] : Enumerate(updates)) {
-                stagedData[i] = update.data;
+                DAWN_UNSAFE_TODO(stagedData[i]) = update.data;
 
                 VkBufferCopy copy{
                     .srcOffset = reservation.offsetInBuffer + i * sizeof(uint32_t),

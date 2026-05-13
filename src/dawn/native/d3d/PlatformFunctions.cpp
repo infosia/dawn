@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/d3d/PlatformFunctions.h"
 
 #include <comdef.h>
@@ -38,6 +33,7 @@
 #include <vector>
 
 #include "dawn/common/SystemUtils.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d {
 
@@ -57,7 +53,7 @@ uint64_t ReadFromSZRegistryKey(HKEY registerKey, const char* registerKeyName) {
         return 0;
     }
     constexpr int32_t kRadix = 10;
-    return strtol(returnStringValue.data(), nullptr, kRadix);
+    return DAWN_UNSAFE_TODO(strtol(returnStringValue.data(), nullptr, kRadix));
 }
 
 }  // anonymous namespace

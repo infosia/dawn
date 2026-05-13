@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/d3d11/RenderPipelineD3D11.h"
 
 #include <d3dcompiler.h>
@@ -52,6 +47,7 @@
 #include "dawn/native/d3d11/UtilsD3D11.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d11 {
 namespace {
@@ -382,7 +378,7 @@ MaybeError RenderPipeline::InitializeBlendState() {
     static_assert(kMaxColorAttachments == std::size(blendDesc.RenderTarget));
     for (auto i : Range(kMaxColorAttachmentsTyped)) {
         D3D11_RENDER_TARGET_BLEND_DESC& rtBlendDesc =
-            blendDesc.RenderTarget[static_cast<uint8_t>(i)];
+            DAWN_UNSAFE_TODO(blendDesc.RenderTarget[static_cast<uint8_t>(i)]);
         const ColorTargetState* descriptor = GetColorTargetState(i);
         rtBlendDesc.BlendEnable = descriptor->blend != nullptr;
         if (rtBlendDesc.BlendEnable) {

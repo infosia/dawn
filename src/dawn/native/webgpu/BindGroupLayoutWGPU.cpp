@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/webgpu/BindGroupLayoutWGPU.h"
 
 #include <vector>
@@ -42,6 +37,7 @@
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::webgpu {
 
@@ -81,7 +77,7 @@ BindGroupLayout::BindGroupLayout(Device* device,
     externalTextureEntries.reserve(externalTextureCount);
 
     for (size_t i = 0; i < entries.size(); i++) {
-        UnpackedPtr<BindGroupLayoutEntry> entry = Unpack(&descriptor->entries[i]);
+        UnpackedPtr<BindGroupLayoutEntry> entry = Unpack(&DAWN_UNSAFE_TODO(descriptor->entries[i]));
         entries[i] = *ToAPI(*entry);
 
         switch (entry->buffer.type) {

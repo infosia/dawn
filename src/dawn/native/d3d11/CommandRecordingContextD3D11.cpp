@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/d3d11/CommandRecordingContextD3D11.h"
 
 #include <string>
@@ -44,6 +39,7 @@
 #include "dawn/native/d3d11/PipelineLayoutD3D11.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d11 {
 
@@ -186,7 +182,7 @@ void ScopedCommandRecordingContext::WriteUniformBufferRange(uint32_t offset,
                                                             size_t size) const {
     DAWN_ASSERT(offset < kMaxImmediateConstantsPerPipeline);
     DAWN_ASSERT(size <= sizeof(uint32_t) * (kMaxImmediateConstantsPerPipeline - offset));
-    std::memcpy(&Get()->mUniformBufferData[offset], data, size);
+    DAWN_UNSAFE_TODO(std::memcpy(&Get()->mUniformBufferData[offset], data, size));
     Get()->mUniformBufferDirty = true;
 }
 
