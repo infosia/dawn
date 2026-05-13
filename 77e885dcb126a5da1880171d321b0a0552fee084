@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f6dc661_9a9301f5",
+        "filename": "third_party/directx-shader-compiler/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T08:21:29Z",
+      "side": 1,
+      "message": "Won\u0027t this cause problems when using the code in Chromium? The parts that we use should all be LLVM License, and certainly not GPL2",
+      "revId": "77e885dcb126a5da1880171d321b0a0552fee084",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
