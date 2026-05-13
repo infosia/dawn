@@ -16,6 +16,24 @@
       "message": "Do you know if this will lose a lot of coverage?",
       "revId": "4935fc543fa4b2531c2a9d1c5a75054df62526ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c2c60d3_9c414dd7",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-05-13T15:24:54Z",
+      "side": 1,
+      "message": "I think very little to none. ShaderInt16 is on 85% of devices and shaderFloat16 is on 77%. Also shaderInt16 is a 1.4 requirement. ShaderFloat16 is on the 2024 roadmap, but no required core version yet.",
+      "parentUuid": "6893a31f_81384ca3",
+      "revId": "4935fc543fa4b2531c2a9d1c5a75054df62526ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
