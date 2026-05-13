@@ -116,6 +116,11 @@ namespace {
 /// @returns true if @p ident is an MSL keyword that needs to be avoided
 bool IsKeyword(std::string_view ident);
 
+// The list of properties that are not supported.
+const core::ir::Properties kUnsupportedProperties{
+    core::ir::Property::kAllowMultipleEntryPoints,
+};
+
 /// PIMPL class for the MSL generator
 class Printer : public tint::TextGenerator {
   public:
@@ -127,6 +132,11 @@ class Printer : public tint::TextGenerator {
     /// @returns the generated MSL shader
     tint::Result<Output> Generate() {
         core::ir::AssertValid(ir_, kPrinterCapabilities, "before msl.Printer");
+
+        // Check for unsupported properties.
+        for (auto prop : kUnsupportedProperties) {
+            TINT_IR_ASSERT(ir_, !ir_.properties.Contains(prop)) << "unsupported property " << prop;
+        }
 
         {
             TINT_SCOPED_ASSIGNMENT(current_buffer_, &preamble_buffer_);
