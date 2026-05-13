@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/metal/PhysicalDeviceMTL.h"
 
 #include "dawn/common/CoreFoundationRef.h"
@@ -45,6 +40,7 @@
 #include "dawn/native/metal/DeviceMTL.h"
 #include "dawn/native/metal/UtilsMetal.h"
 #include "dawn/platform/DawnPlatform.h"
+#include "src/utils/compiler.h"
 
 #if DAWN_PLATFORM_IS(MACOS)
 #import <IOKit/IOKitLib.h>
@@ -80,7 +76,7 @@ MaybeError GetVendorIdFromVendors(id<MTLDevice> device, PCIIDs* ids) {
     uint32_t vendorId = 0;
     const char* deviceName = [device.name UTF8String];
     for (const auto& it : kVendors) {
-        if (strstr(deviceName, it.trademark) != nullptr) {
+        if (DAWN_UNSAFE_TODO(strstr(deviceName, it.trademark)) != nullptr) {
             vendorId = it.vendorId;
             break;
         }
@@ -1031,9 +1027,9 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
                                     reinterpret_cast<host_info_t>(&hostInfo), &hostBasicInfoMsg);
             DAWN_CHECK(status == KERN_SUCCESS);
 
-            heapInfo[1].properties = wgpu::HeapProperty::HostVisible |
-                                     wgpu::HeapProperty::HostCoherent |
-                                     wgpu::HeapProperty::HostCached;
+            DAWN_UNSAFE_TODO(heapInfo[1].properties) = wgpu::HeapProperty::HostVisible |
+                                                       wgpu::HeapProperty::HostCoherent |
+                                                       wgpu::HeapProperty::HostCached;
             heapInfo[1].size = hostInfo.max_mem;
 #else
             DAWN_UNREACHABLE();
