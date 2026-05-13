@@ -52,6 +52,24 @@
       "parentUuid": "0c2c60d3_9c414dd7",
       "revId": "4935fc543fa4b2531c2a9d1c5a75054df62526ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e65ad29c_ba2bcd06",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-13T17:38:58Z",
+      "side": 1,
+      "message": "I double-checked this with Kai\u0027s magic script and it was just a handful of AMD devices that are dropped:\n\n```\nRequirement \"shaderInt16\" loses 10 (and partially loses 0) further deviceNames:\n  In ALL reports (10 deviceNames):\n    x AMD RADV CARRIZO: 7 of 7\n    x AMD RADV FIJI: 26 of 26\n    x AMD RADV ICELAND: 12 of 12\n    x AMD RADV POLARIS10: 161 of 161\n    x AMD RADV POLARIS11: 9 of 9\n    x AMD RADV POLARIS12: 10 of 10\n    x AMD RADV STONEY: 1 of 1\n    x AMD RADV TONGA: 3 of 3\n    x AMD RADV VEGA M: 2 of 2\n    x AMD RADV VEGAM: 2 of 2\n```",
+      "parentUuid": "f17e65f2_572aa321",
+      "revId": "4935fc543fa4b2531c2a9d1c5a75054df62526ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
