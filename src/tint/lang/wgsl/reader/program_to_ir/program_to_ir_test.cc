@@ -139,6 +139,14 @@ TEST_F(IR_FromProgramTest, EntryPoint) {
     EXPECT_EQ(m->functions[0]->Stage(), core::ir::Function::PipelineStage::kFragment);
 }
 
+TEST_F(IR_FromProgramTest, MultipleEntryPoints) {
+    Func("ep1", tint::Empty, ty.void_(), tint::Empty, Vector{Stage(ast::PipelineStage::kFragment)});
+    Func("ep2", tint::Empty, ty.void_(), tint::Empty, Vector{Stage(ast::PipelineStage::kFragment)});
+
+    auto m = Build();
+    ASSERT_EQ(m, Success);
+}
+
 TEST_F(IR_FromProgramTest, IfStatement) {
     auto* ast_if = If(true, Block(), Else(Block()));
     WrapInFunction(ast_if);

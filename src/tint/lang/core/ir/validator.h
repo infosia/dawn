@@ -55,8 +55,6 @@ enum class Capability : uint8_t {
     kAllowHandleVarsWithoutBindings,
     /// Allows module scoped lets
     kAllowModuleScopeLets,
-    /// Allows multiple entry points in the module.
-    kAllowMultipleEntryPoints,
     /// Allow overrides
     kAllowOverrides,
     /// Allows ref types
@@ -106,14 +104,25 @@ using Capabilities = EnumSet<Capability>;
 /// @param msg the msg to accompany the output
 /// @returns success or failure
 Result<SuccessType> Validate(const Module& mod,
-                             Capabilities capabilities = {},
+                             Capabilities capabilities,
                              std::string_view msg = "");
+
+/// Validates the module @p ir is correctly formed
+/// @param mod the module to validate
+/// @param msg the msg to accompany the output
+/// @returns success or failure
+Result<SuccessType> Validate(const Module& mod, std::string_view msg = "");
 
 /// Validates the module @p ir is correctly formed, iff required by the build configuration.
 /// @param mod the module to transform
 /// @param capabilities the optional capabilities that are allowed
 /// @param msg the msg to accompany the output
-void AssertValid(const Module& mod, Capabilities capabilities = {}, std::string_view msg = "");
+void AssertValid(const Module& mod, Capabilities capabilities, std::string_view msg = "");
+
+/// Validates the module @p ir is correctly formed, iff required by the build configuration.
+/// @param mod the module to transform
+/// @param msg the msg to accompany the output
+void AssertValid(const Module& mod, std::string_view msg = "");
 
 }  // namespace tint::core::ir
 
