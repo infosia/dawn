@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "930949ef_1889178d",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1971,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T16:00:36Z",
+      "side": 1,
+      "message": "Can we suppress only when validation layers are enabled and on Windows Intel since that\u0027s were it was reported unless we see crashes in other places?",
+      "revId": "c0dc1d22f7f447538a76bf0c8d7a7879b3f86eb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
