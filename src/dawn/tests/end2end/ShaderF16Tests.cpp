@@ -25,16 +25,12 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <vector>
 
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -71,7 +67,7 @@ class ShaderF16Tests : public DawnTestWithParams<ShaderF16TestsParams> {
             mUseDxcEnabledOrNonD3D12 = true;
         } else {
             for (auto* enabledToggle : GetParam().forceEnabledWorkarounds) {
-                if (strncmp(enabledToggle, "use_dxc", 7) == 0) {
+                if (DAWN_UNSAFE_TODO(strncmp(enabledToggle, "use_dxc", 7)) == 0) {
                     mUseDxcEnabledOrNonD3D12 = true;
                     break;
                 }

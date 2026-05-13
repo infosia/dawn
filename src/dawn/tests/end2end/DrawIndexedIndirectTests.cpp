@@ -25,17 +25,13 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <vector>
 
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderBundleEncoderDescriptor.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -180,7 +176,7 @@ TEST_P(DrawIndexedIndirectTest, BaseVertex) {
 
     const int negFour = -4;
     uint32_t unsignedNegFour;
-    std::memcpy(&unsignedNegFour, &negFour, sizeof(int));
+    DAWN_UNSAFE_TODO(std::memcpy(&unsignedNegFour, &negFour, sizeof(int)));
 
     // Test negative baseVertex
     // Test a draw with only the first 3 indices of the first quad (bottom left triangle)

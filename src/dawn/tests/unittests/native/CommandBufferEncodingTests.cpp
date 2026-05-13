@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <utility>
 #include <vector>
 
@@ -39,6 +34,7 @@
 #include "dawn/tests/DawnNativeTest.h"
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 namespace {
@@ -187,7 +183,7 @@ TEST_F(CommandBufferEncodingTests, ComputePassEncoderIndirectDispatchStateRestor
             ASSERT_EQ(ToAPI(cmd->group.Get()), bg.Get());
             ASSERT_EQ(cmd->dynamicOffsetCount, offsets.size());
             for (uint32_t i = 0; i < cmd->dynamicOffsetCount; ++i) {
-                ASSERT_EQ(dynamicOffsets[i], offsets[i]);
+                DAWN_UNSAFE_TODO(ASSERT_EQ(dynamicOffsets[i], offsets[i]));
             }
         };
     };

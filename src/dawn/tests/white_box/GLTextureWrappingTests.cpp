@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <utility>
 #include <vector>
 
@@ -40,6 +35,7 @@
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -302,7 +298,7 @@ class GLTextureUsageTests : public GLTextureTestBase {
         gl.ReadPixels(0, 0, 1, 1, glFormat, glType, result.data());
         gl.BindFramebuffer(GL_FRAMEBUFFER, 0);
         gl.DeleteFramebuffers(1, &fbo);
-        ASSERT_EQ(0, memcmp(result.data(), data, dataSize));
+        DAWN_UNSAFE_TODO(ASSERT_EQ(0, memcmp(result.data(), data, dataSize)));
     }
 
     template <class T>

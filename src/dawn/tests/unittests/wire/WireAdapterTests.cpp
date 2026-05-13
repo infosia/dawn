@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <unordered_set>
 #include <utility>
 #include <vector>
@@ -41,6 +36,7 @@
 #include "dawn/tests/unittests/wire/WireTest.h"
 #include "dawn/wire/WireClient.h"
 #include "dawn/wire/WireServer.h"
+#include "src/utils/compiler.h"
 #include "webgpu/webgpu_cpp.h"
 
 namespace dawn::wire {
@@ -220,7 +216,7 @@ TEST_P(WireAdapterTests, RequestDeviceSuccess) {
                 device.GetFeatures(reinterpret_cast<wgpu::SupportedFeatures*>(&features));
 
                 std::vector<WGPUFeatureName> featuresList(
-                    features.features, features.features + features.featureCount);
+                    features.features, DAWN_UNSAFE_TODO(features.features + features.featureCount));
                 ASSERT_EQ(featuresList.size(), fakeFeaturesList.size());
                 std::unordered_set<WGPUFeatureName> featureSet(fakeFeaturesList);
                 for (WGPUFeatureName feature : featuresList) {

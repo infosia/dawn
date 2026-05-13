@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #ifndef SRC_DAWN_TESTS_PERF_TESTS_DAWNPERFTEST_H_
 #define SRC_DAWN_TESTS_PERF_TESTS_DAWNPERFTEST_H_
 
@@ -40,6 +35,7 @@
 
 #include "dawn/tests/DawnTest.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/compiler.h"
 
 void InitDawnPerfTestEnvironment(int argc, char** argv);
 
@@ -206,7 +202,7 @@ class DawnPerfTestWithParams : public DawnTestWithParams<Params>, public DawnPer
         const uint64_t* readbackValues =
             static_cast<const uint64_t*>(mReadbackBuffer.GetConstMappedRange());
         ASSERT_EQ(2u, kTimestampQueryCount);
-        double gpuTimeElapsed = (readbackValues[1] - readbackValues[0]) / 1e9;
+        double gpuTimeElapsed = (DAWN_UNSAFE_TODO(readbackValues[1]) - readbackValues[0]) / 1e9;
         AddGPUTime(gpuTimeElapsed);
         mReadbackBuffer.Unmap();
     }

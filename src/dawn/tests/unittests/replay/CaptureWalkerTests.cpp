@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -40,6 +35,7 @@
 #include "src/dawn/replay/CaptureWalker.h"
 #include "src/dawn/replay/ReadHead.h"
 #include "src/dawn/replay/SurfaceDiscovery.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::replay {
 namespace {
@@ -179,7 +175,7 @@ TEST(CaptureWalkerTests, SurfaceDiscoverySkipsCommandBuffer) {
 
     auto Emit = [&](auto v) {
         const uint8_t* p = reinterpret_cast<const uint8_t*>(&v);
-        commands.insert(commands.end(), p, p + sizeof(v));
+        commands.insert(commands.end(), p, DAWN_UNSAFE_TODO(p + sizeof(v)));
     };
 
     auto EmitString = [&](std::string s) {

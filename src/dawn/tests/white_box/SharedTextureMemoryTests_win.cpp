@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <d3d11.h>
 #include <d3d11_4.h>
 #include <d3d12.h>
@@ -48,6 +43,7 @@
 #include "dawn/native/DawnNative.h"
 #include "dawn/tests/white_box/SharedTextureMemoryTests.h"
 #include "dawn/utils/SystemHandle.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -142,7 +138,7 @@ class Backend : public SharedTextureMemoryTestBackend {
     bool HasFenceSupport(const wgpu::Device& device) const {
         auto toggles = dawn::native::GetTogglesUsed(device.Get());
         return std::find_if(toggles.begin(), toggles.end(), [](const char* name) {
-                   return strcmp("d3d11_disable_fence", name) == 0;
+                   return DAWN_UNSAFE_TODO(strcmp("d3d11_disable_fence", name)) == 0;
                }) == toggles.end();
     }
 

@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <algorithm>
 #include <numeric>
 #include <string>
@@ -39,6 +34,7 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -704,7 +700,7 @@ TEST_P(ClampedOOBDynamicBufferOffsetTests, CheckOOBAccess) {
                                                    GetParam().mReadBufferUsage);
 
     // Fill the dst buffer with 0xFF.
-    memset(expectedDst.data(), 0xFF, dstBufferSize);
+    DAWN_UNSAFE_TODO(memset(expectedDst.data(), 0xFF, dstBufferSize));
     wgpu::Buffer dst =
         utils::CreateBufferFromData(device, &expectedDst[0], dstBufferSize,
                                     wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc);

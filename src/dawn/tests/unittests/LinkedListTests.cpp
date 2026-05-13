@@ -2,11 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 // This file is a copy of Chromium's /src/base/containers/linked_list_unittest.cc
 
 #include <list>
@@ -16,6 +11,7 @@
 #include "dawn/common/LinkedList.h"
 #include "dawn/utils/TestUtils.h"
 #include "gtest/gtest.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -68,7 +64,7 @@ void ExpectListContentsForDirection(const LinkedList<Node>& list,
          node = (forward ? node->next() : node->previous())) {
         ASSERT_LT(i, num_nodes);
         int index_of_id = forward ? i : num_nodes - i - 1;
-        EXPECT_EQ(node_ids[index_of_id], node->value()->id());
+        DAWN_UNSAFE_TODO(EXPECT_EQ(node_ids[index_of_id], node->value()->id()));
         ++i;
     }
     EXPECT_EQ(num_nodes, i);

@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/dawn/native/webgpu/CaptureContext.h"
 
 #include <concepts>
@@ -48,6 +43,7 @@
 #include "dawn/native/webgpu/QueueWGPU.h"
 #include "dawn/native/webgpu/Serialization.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::webgpu {
 
@@ -120,7 +116,7 @@ void CaptureContext::CaptureSurfaceConfigure(Surface* surface, const SurfaceConf
 
     std::vector<wgpu::TextureFormat> viewFormats;
     for (uint32_t i = 0; i < config->viewFormatCount; ++i) {
-        viewFormats.push_back(config->viewFormats[i]);
+        viewFormats.push_back(DAWN_UNSAFE_TODO(config->viewFormats[i]));
     }
 
     schema::RootCommandSurfaceConfigureCmd cmd{{
