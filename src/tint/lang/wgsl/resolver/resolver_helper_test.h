@@ -49,6 +49,14 @@
 #include "src/tint/utils/containers/vector.h"
 #include "src/tint/utils/rtti/traits.h"
 
+#define EXPECT_ERROR(in, err)         \
+    SCOPED_TRACE("called from here"); \
+    ExpectError((in), (err))
+
+#define EXPECT_SUCCESS(in)            \
+    SCOPED_TRACE("called from here"); \
+    ExpectSuccess((in))
+
 namespace tint::resolver {
 
 /// Helper class for testing
@@ -134,10 +142,10 @@ class TestHelper : public ProgramBuilder {
     std::string FriendlyName(const core::type::Type* type) { return type->FriendlyName(); }
 
     /// Run @p wgsl through the whole WGSL frontend, and check that it fails with @p error.
-    void EXPECT_ERROR(std::string_view wgsl, std::string_view error);
+    void ExpectError(std::string_view wgsl, std::string_view error);
 
     /// Run @p wgsl through the whole WGSL frontend, and check that does not produce an error.
-    void EXPECT_SUCCESS(std::string_view wgsl);
+    void ExpectSuccess(std::string_view wgsl);
 
   protected:
     std::unique_ptr<Resolver> resolver_;
