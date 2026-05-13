@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "275561fd_74fa3989",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1974,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-05-13T05:41:57Z",
+      "side": 1,
+      "message": "The test fails with Vulkan validation Layer on Intel Windows Vulkan driver.\nSee https://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Win10%20x64%20Release%20(Intel%20UHD%20770)/5822/overview：\n\n\"\nError: VUID-vkCreateSampler-maxSamplerAllocationCount-04110: vkCreateSampler(): Number of currently valid sampler objects (4000) is not less than the maximum allowed (4000).\nThe Vulkan spec states: There must be less than VkPhysicalDeviceLimits::maxSamplerAllocationCount VkSampler objects currently created on the device (https://docs.vulkan.org/spec/latest/chapters/samplers.html#VUID-vkCreateSampler-maxSamplerAllocationCount-04110)\n\"",
+      "revId": "a7ad86d3df0789a9dbea5e2700810f198b721e43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
