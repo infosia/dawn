@@ -27,6 +27,7 @@
 
 #include <limits>
 
+#include "dawn/common/Constants.h"
 #include "dawn/tests/DawnTest.h"
 
 namespace dawn {
@@ -39,10 +40,18 @@ class AllocatorMemoryInstrumentationTest : public DawnTest {
         // Native GetAllocatorMemoryInfo method is unsupported on wire.
         DAWN_TEST_UNSUPPORTED_IF(UsesWire());
     }
+
+    uint64_t InternalAllocationMemory() const {
+        // On D3D12 backend we always create a 4MB internal buffer for zero initialization.
+        if (IsD3D12()) {
+            return kD3D12ZeroBufferSize;
+        }
+        return 0;
+    }
 };
 
 // Test the detailed memory usage reported by GetAllocatorMemoryInfo()
-TEST_P(AllocatorMemoryInstrumentationTest, GetAllocatorMemoryInfoVulkan) {
+TEST_P(AllocatorMemoryInstrumentationTest, GetAllocatorMemoryInfo) {
     // Create a buffer with size 32.
     constexpr uint64_t kBufferSize = 32;
     constexpr wgpu::BufferDescriptor kBufferDesc = {
@@ -50,7 +59,7 @@ TEST_P(AllocatorMemoryInstrumentationTest, GetAllocatorMemoryInfoVulkan) {
         .size = kBufferSize,
     };
 
-    // Creating the buffer should allocate memory with Vulkan ResourceMemoryAllocator.
+    // Creating the buffer should allocate memory with ResourceMemoryAllocator.
     wgpu::Buffer uniformBuffer = device.CreateBuffer(&kBufferDesc);
     EXPECT_TRUE(uniformBuffer);
 
@@ -81,12 +90,12 @@ TEST_P(AllocatorMemoryInstrumentationTest, GetAllocatorMemoryInfoVulkan) {
     device.Tick();
 
     memInfo = native::GetAllocatorMemoryInfo(device.Get());
-    // Vulkan used memory should be 0 now.
-    EXPECT_EQ(memInfo.totalUsedMemory, 0u);
+    // Used memory should equal the internal allocation memory now.
+    EXPECT_EQ(memInfo.totalUsedMemory, InternalAllocationMemory());
     EXPECT_LE(memInfo.totalAllocatedMemory, prevAllocatedMemory);
 }
 
-DAWN_INSTANTIATE_TEST(AllocatorMemoryInstrumentationTest, VulkanBackend());
+DAWN_INSTANTIATE_TEST(AllocatorMemoryInstrumentationTest, D3D12Backend(), VulkanBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

@@ -40,11 +40,13 @@ namespace dawn::native::d3d12 {
 HeapAllocator::HeapAllocator(Device* device,
                              ResourceHeapKind resourceHeapKind,
                              D3D12_HEAP_FLAGS heapFlags,
-                             MemorySegment memorySegment)
+                             MemorySegment memorySegment,
+                             AllocationSizeTracker* allocationMemoryTracker)
     : mDevice(device),
       mResourceHeapKind(resourceHeapKind),
       mHeapFlags(heapFlags),
-      mMemorySegment(memorySegment) {}
+      mMemorySegment(memorySegment),
+      mAllocationMemoryTracker(allocationMemoryTracker) {}
 
 ResultOrError<std::unique_ptr<ResourceHeapBase>> HeapAllocator::AllocateResourceHeap(
     uint64_t size) {
@@ -67,6 +69,7 @@ ResultOrError<std::unique_ptr<ResourceHeapBase>> HeapAllocator::AllocateResource
 
     std::unique_ptr<ResourceHeapBase> heapBase =
         std::make_unique<Heap>(std::move(d3d12Heap), mMemorySegment, size);
+    mAllocationMemoryTracker->Increment(size);
 
     // Calling CreateHeap implicitly calls MakeResident on the new heap. We must track this to
     // avoid calling MakeResident a second time.

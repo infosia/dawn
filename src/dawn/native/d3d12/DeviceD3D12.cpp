@@ -38,6 +38,7 @@
 #include <sstream>
 #include <utility>
 
+#include "dawn/common/Constants.h"
 #include "dawn/common/GPUInfo.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/D3D12Backend.h"
@@ -76,9 +77,6 @@ namespace {
 // TODO(dawn:155): Figure out these values.
 static constexpr uint16_t kShaderVisibleDescriptorHeapSize = 1024;
 static constexpr uint8_t kAttachmentDescriptorHeapSize = 64;
-
-// Value may change in the future to better accommodate large clears.
-static constexpr uint64_t kZeroBufferSize = 1024 * 1024 * 4;  // 4 Mb
 
 static constexpr uint64_t kMaxDebugMessagesToPrint = 5;
 }  // namespace
@@ -311,7 +309,7 @@ MutexProtected<ResidencyManager>& Device::GetResidencyManager() const {
 
 MaybeError Device::CreateZeroBuffer() {
     BufferDescriptor zeroBufferDescriptor;
-    zeroBufferDescriptor.size = kZeroBufferSize;
+    zeroBufferDescriptor.size = kD3D12ZeroBufferSize;
     zeroBufferDescriptor.label = "ZeroBuffer_Internal";
 
     Ref<BufferBase> zeroBufferBase;
@@ -337,13 +335,13 @@ MaybeError Device::CreateZeroBuffer() {
             ToBackend(GetQueue())->GetPendingCommandContext(QueueBase::SubmitMode::Passive);
 
         DAWN_TRY(GetDynamicUploader()->WithUploadReservation(
-            kZeroBufferSize, kCopyBufferToBufferOffsetAlignment,
+            kD3D12ZeroBufferSize, kCopyBufferToBufferOffsetAlignment,
             [&](UploadReservation reservation) -> MaybeError {
-                memset(reservation.mappedPointer, 0u, kZeroBufferSize);
+                memset(reservation.mappedPointer, 0u, kD3D12ZeroBufferSize);
 
                 CopyFromStagingToBufferHelper(commandContext, reservation.buffer.Get(),
                                               reservation.offsetInBuffer, zeroBufferBase.Get(), 0,
-                                              kZeroBufferSize);
+                                              kD3D12ZeroBufferSize);
 
                 zeroBufferBase->SetInitialized(true);
                 return {};
@@ -366,7 +364,7 @@ MaybeError Device::ClearBufferToZero(CommandRecordingContext* commandContext,
     dstBuffer->TrackUsageAndTransitionNow(commandContext, wgpu::BufferUsage::CopyDst);
 
     while (size > 0) {
-        uint64_t copySize = std::min(kZeroBufferSize, size);
+        uint64_t copySize = std::min(kD3D12ZeroBufferSize, size);
         commandContext->GetCommandList()->CopyBufferRegion(
             dstBuffer->GetD3D12Resource(), offset, mZeroBuffer->GetD3D12Resource(), 0, copySize);
 
@@ -903,6 +901,15 @@ ComPtr<IDxcCompiler3> Device::GetDxcCompiler() const {
 
 const PerStage<std::wstring>& Device::GetDxcShaderProfiles() const {
     return mDxcShaderProfiles;
+}
+
+AllocatorMemoryInfo Device::GetAllocatorMemoryInfo() const {
+    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
+    AllocatorMemoryInfo info = {};
+    info.totalAllocatedMemory = (*mResourceAllocatorManager)->GetTotalAllocatedMemory();
+    info.totalUsedMemory = (*mResourceAllocatorManager)->GetTotalUsedMemory();
+    // D3D12 has no lazy memory concept, leave lazy fields as zero.
+    return info;
 }
 
 }  // namespace dawn::native::d3d12
