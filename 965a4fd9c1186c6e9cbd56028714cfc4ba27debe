@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11db5b28_49b6894b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T13:01:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "932d08f8_3ecf5b1a",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T13:01:23Z",
+      "side": 1,
+      "message": "Why? Can we have a TODO? (just realized it\u0027s existing, but a TODO would be nice)",
+      "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ee50834_64eb8cf1",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T13:01:23Z",
+      "side": 1,
+      "message": "Do we really need to hide the members? Developers can use them directly if they wish, even if they should use the constructors from lambdas.\n\nBut also this logic hides all members as soon as there is a callback info in the struct. This seems weird and incorrect in the general case? Ah no we have `render_cpp_struct_aliases` but still let\u0027s just have everything be public and folks can set the callback info manually if they want.",
+      "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2caa61d9_99c48430",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T13:01:23Z",
+      "side": 1,
+      "message": "These disappear if we have a generic `CArgsConverter` with `wgpu::detail::From/ToCAPI`",
+      "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "043fe960_fe261bb6",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T13:01:23Z",
+      "side": 1,
+      "message": "Aren\u0027t we going to have issues if the layout doesn\u0027t match between C and C++?",
+      "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
