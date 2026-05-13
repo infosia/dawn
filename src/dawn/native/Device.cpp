@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/Device.h"
 
 #include <webgpu/webgpu.h>
@@ -96,6 +91,7 @@
 #include "dawn/platform/metrics/HistogramMacros.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -1701,7 +1697,7 @@ void DeviceBase::ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescri
         {deviceDescriptor->requiredFeatures, deviceDescriptor->requiredFeatureCount}, mToggles));
 
     for (uint32_t i = 0; i < deviceDescriptor->requiredFeatureCount; ++i) {
-        mEnabledFeatures.EnableFeature(deviceDescriptor->requiredFeatures[i]);
+        mEnabledFeatures.EnableFeature(DAWN_UNSAFE_TODO(deviceDescriptor->requiredFeatures[i]));
     }
 
     // Handle features that implicitly enable other features.

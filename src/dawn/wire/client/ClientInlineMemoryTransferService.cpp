@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <cstring>
 #include <memory>
 #include <utility>
@@ -38,6 +33,7 @@
 #include "dawn/common/Assert.h"
 #include "dawn/wire/WireClient.h"
 #include "dawn/wire/client/Client.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::wire::client {
 
@@ -61,8 +57,8 @@ class InlineMemoryTransferService : public MemoryTransferService {
                 return false;
             }
 
-            void* start = static_cast<uint8_t*>(mStagingData.get()) + offset;
-            memcpy(start, deserializeData.data(), deserializeData.size());
+            void* start = DAWN_UNSAFE_TODO(static_cast<uint8_t*>(mStagingData.get()) + offset);
+            DAWN_UNSAFE_TODO(memcpy(start, deserializeData.data(), deserializeData.size()));
             return true;
         }
 
@@ -95,8 +91,9 @@ class InlineMemoryTransferService : public MemoryTransferService {
             DAWN_ASSERT(serializeData.data() != nullptr);
             DAWN_ASSERT(offset <= mSize);
             DAWN_ASSERT(serializeData.size() <= mSize - offset);
-            memcpy(serializeData.data(), static_cast<uint8_t*>(mStagingData.get()) + offset,
-                   serializeData.size());
+            DAWN_UNSAFE_TODO(memcpy(serializeData.data(),
+                                    static_cast<uint8_t*>(mStagingData.get()) + offset,
+                                    serializeData.size()));
         }
 
       private:
@@ -119,7 +116,7 @@ class InlineMemoryTransferService : public MemoryTransferService {
     WriteHandle* CreateWriteHandle(size_t size) override {
         auto stagingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
         if (stagingData) {
-            memset(stagingData.get(), 0, size);
+            DAWN_UNSAFE_TODO(memset(stagingData.get(), 0, size));
             return new WriteHandleImpl(std::move(stagingData), size);
         }
         return nullptr;

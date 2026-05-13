@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <algorithm>
 #include <numeric>
 #include <string>
@@ -38,6 +33,7 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -3550,10 +3546,10 @@ fn main(in : FSIn) -> @location(0) vec4f {
     const OutputData* data =
         reinterpret_cast<const OutputData*>(readbackBuffer.GetConstMappedRange());
     for (int i = 0; i < 3; ++i) {
-        EXPECT_GT(data[i].sk_Position[0], 0.0f);
-        EXPECT_LT(data[i].sk_Position[0], 1.0f);
-        EXPECT_GT(data[i].sk_Position[1], 0.0f);
-        EXPECT_LT(data[i].sk_Position[1], 1.0f);
+        DAWN_UNSAFE_TODO(EXPECT_GT(data[i].sk_Position[0], 0.0f));
+        DAWN_UNSAFE_TODO(EXPECT_LT(data[i].sk_Position[0], 1.0f));
+        DAWN_UNSAFE_TODO(EXPECT_GT(data[i].sk_Position[1], 0.0f));
+        DAWN_UNSAFE_TODO(EXPECT_LT(data[i].sk_Position[1], 1.0f));
     }
     readbackBuffer.Unmap();
 }

@@ -25,15 +25,12 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/tests/ToggleParser.h"
 
 #include <cstring>
 #include <sstream>
+
+#include "src/utils/compiler.h"
 
 ToggleParser::ToggleParser() = default;
 ToggleParser::~ToggleParser() = default;
@@ -41,9 +38,9 @@ ToggleParser::~ToggleParser() = default;
 bool ToggleParser::ParseEnabledToggles(char* arg) {
     constexpr const char kEnableTogglesSwitch[] = "--enable-toggles=";
     size_t argLen = sizeof(kEnableTogglesSwitch) - 1;
-    if (strncmp(arg, kEnableTogglesSwitch, argLen) == 0) {
+    if (DAWN_UNSAFE_TODO(strncmp(arg, kEnableTogglesSwitch, argLen)) == 0) {
         std::string toggle;
-        std::stringstream toggles(arg + argLen);
+        std::stringstream toggles(DAWN_UNSAFE_TODO(arg + argLen));
         while (getline(toggles, toggle, ',')) {
             mEnabledToggles.push_back(toggle);
         }
@@ -55,9 +52,9 @@ bool ToggleParser::ParseEnabledToggles(char* arg) {
 bool ToggleParser::ParseDisabledToggles(char* arg) {
     constexpr const char kDisableTogglesSwitch[] = "--disable-toggles=";
     size_t argLDis = sizeof(kDisableTogglesSwitch) - 1;
-    if (strncmp(arg, kDisableTogglesSwitch, argLDis) == 0) {
+    if (DAWN_UNSAFE_TODO(strncmp(arg, kDisableTogglesSwitch, argLDis)) == 0) {
         std::string toggle;
-        std::stringstream toggles(arg + argLDis);
+        std::stringstream toggles(DAWN_UNSAFE_TODO(arg + argLDis));
         while (getline(toggles, toggle, ',')) {
             mDisabledToggles.push_back(toggle);
         }

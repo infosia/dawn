@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <vector>
 
 #include "dawn/common/Assert.h"
@@ -37,6 +32,7 @@
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -444,8 +440,12 @@ TEST_P(DepthStencilStateTest, DepthStencilDisabled) {
     for (uint32_t last = 0; last < 3; ++last) {
         uint32_t i = (last + 1) % 3;
         uint32_t j = (last + 2) % 3;
-        DoTest({specs[i], specs[j], specs[last]}, specs[last].color);
-        DoTest({specs[j], specs[i], specs[last]}, specs[last].color);
+        DoTest(
+            {DAWN_UNSAFE_TODO(specs[i]), DAWN_UNSAFE_TODO(specs[j]), DAWN_UNSAFE_TODO(specs[last])},
+            DAWN_UNSAFE_TODO(specs[last]).color);
+        DoTest(
+            {DAWN_UNSAFE_TODO(specs[j]), DAWN_UNSAFE_TODO(specs[i]), DAWN_UNSAFE_TODO(specs[last])},
+            DAWN_UNSAFE_TODO(specs[last]).color);
     }
 }
 

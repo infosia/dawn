@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #ifndef SRC_DAWN_NATIVE_WAITANYSYSTEMEVENT_H_
 #define SRC_DAWN_NATIVE_WAITANYSYSTEMEVENT_H_
 
@@ -37,6 +32,7 @@
 #include <utility>
 
 #include "dawn/common/Platform.h"
+#include "src/utils/compiler.h"
 
 #if DAWN_PLATFORM_IS(WINDOWS)
 #include "dawn/common/windows_with_undefs.h"
@@ -86,7 +82,7 @@ template <typename It>
 #if DAWN_PLATFORM_IS(WINDOWS)
     absl::InlinedVector<HANDLE, 4 /* avoid heap allocation for small waits */> handles;
     handles.reserve(count);
-    for (auto it = begin; it != end; ++it) {
+    for (auto it = begin; it != end; DAWN_UNSAFE_TODO(++it)) {
         handles.push_back((*it).first.mPrimitive.Get());
     }
     DAWN_ASSERT(handles.size() <= MAXIMUM_WAIT_OBJECTS);
@@ -98,12 +94,12 @@ template <typename It>
     DAWN_CHECK(WAIT_OBJECT_0 <= status && status < WAIT_OBJECT_0 + count);
     const size_t completedIndex = status - WAIT_OBJECT_0;
 
-    *(*(begin + completedIndex)).second = true;
+    *(*(DAWN_UNSAFE_TODO(begin + completedIndex))).second = true;
     return true;
 #elif DAWN_PLATFORM_IS(POSIX)
     absl::InlinedVector<pollfd, 4 /* avoid heap allocation for small waits */> pollfds;
     pollfds.reserve(count);
-    for (auto it = begin; it != end; ++it) {
+    for (auto it = begin; it != end; DAWN_UNSAFE_TODO(++it)) {
         pollfds.push_back(pollfd{static_cast<int>((*it).first.mPrimitive.Get()), POLLIN, 0});
     }
     int status;
@@ -127,7 +123,7 @@ template <typename It>
     }
 
     size_t i = 0;
-    for (auto it = begin; it != end; ++it, ++i) {
+    for (auto it = begin; it != end; DAWN_UNSAFE_TODO(++it), ++i) {
         int revents = pollfds[i].revents;
         static constexpr int kAllowedEvents = POLLIN | POLLHUP;
         DAWN_CHECK((revents & kAllowedEvents) == revents);
