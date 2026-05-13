@@ -52,6 +52,24 @@
       "parentUuid": "07a961b4_58e19377",
       "revId": "a7ad86d3df0789a9dbea5e2700810f198b721e43",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c8be8cc_2f31c1fe",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1974,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T13:09:50Z",
+      "side": 1,
+      "message": "Ah that makes sense, we might not have time to recycle the VkSamplers yet, but the frontend cache has, so new dawn::native::vulkan::Samplers are created and make us go above the limit, even if they are the same samplers.",
+      "parentUuid": "76a96e30_f4fcf7c9",
+      "revId": "a7ad86d3df0789a9dbea5e2700810f198b721e43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
