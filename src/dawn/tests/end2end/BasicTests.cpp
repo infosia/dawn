@@ -25,17 +25,13 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <limits>
 #include <unordered_set>
 
 #include "dawn/common/FutureUtils.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -110,7 +106,8 @@ TEST_P(BasicTests, GetInstanceFeatures) {
         wgpu::InstanceFeatureName::MultipleDevicesPerAdapter,
         wgpu::InstanceFeatureName::TimedWaitAny,
     };
-    auto features = std::unordered_set(out.features, out.features + out.featureCount);
+    auto features =
+        std::unordered_set(out.features, DAWN_UNSAFE_TODO(out.features + out.featureCount));
 
     if (UsesWire()) {
         // Wire exposes a subset of features.

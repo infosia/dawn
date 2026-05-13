@@ -25,15 +25,11 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/common/SystemUtils.h"
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Log.h"
+#include "src/utils/compiler.h"
 
 #if DAWN_PLATFORM_IS(WINDOWS)
 #include "dawn/common/windows_with_undefs.h"
@@ -244,7 +240,8 @@ WindowsVersion GetCurrentWindowsVersion() {
             return 0;
         }
         constexpr int32_t kRadix = 10;
-        return static_cast<uint32_t>(strtol(returnStringValue.data(), nullptr, kRadix));
+        return static_cast<uint32_t>(
+            DAWN_UNSAFE_TODO(strtol(returnStringValue.data(), nullptr, kRadix)));
     };
 
     // Referenced from base/win/registry.cc in Chromium

@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/native/RenderPassWorkaroundsHelper.h"
 
 #include <utility>
@@ -44,6 +39,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/Texture.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -124,7 +120,8 @@ MaybeError RenderPassWorkaroundsHelper::Initialize(
     if (device->IsToggleEnabled(Toggle::AlwaysResolveIntoZeroLevelAndLayer)) {
         for (uint8_t i = 0; i < renderPassDescriptor->colorAttachmentCount; ++i) {
             ColorAttachmentIndex colorIdx(i);
-            const auto& colorAttachment = renderPassDescriptor->colorAttachments[i];
+            const auto& colorAttachment =
+                DAWN_UNSAFE_TODO(renderPassDescriptor->colorAttachments[i]);
             TextureViewBase* resolveTarget = colorAttachment.resolveTarget;
 
             if (resolveTarget != nullptr && (resolveTarget->GetBaseMipLevel() != 0 ||

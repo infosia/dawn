@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <array>
 #include <limits>
 #include <vector>
@@ -37,6 +32,7 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -369,7 +365,8 @@ TEST_P(ImmediateDataTests, SetImmediatesWithRangeOffset) {
         // data range.
         computePassEncoder.SetImmediates(kHalfImmediateDataSize, immediateData.data(),
                                          kHalfImmediateDataSize);
-        computePassEncoder.SetImmediates(0, immediateData.data() + 2, kHalfImmediateDataSize);
+        computePassEncoder.SetImmediates(0, DAWN_UNSAFE_TODO(immediateData.data() + 2),
+                                         kHalfImmediateDataSize);
         computePassEncoder.SetBindGroup(0, CreateBindGroup());
         computePassEncoder.DispatchWorkgroups(1);
         computePassEncoder.End();
