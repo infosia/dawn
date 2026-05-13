@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9448e0ab_0f9db74d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-13T14:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7314037_c8495601",
+      "revId": "fb45f54a32931ed08da98ace86abb99cd51410eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22f27cb5_0e577a0f",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-12T20:43:23Z",
       "side": 1,
       "message": "```suggestion\nnon-entry point contexts.\n```",
+      "revId": "fb45f54a32931ed08da98ace86abb99cd51410eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "833a5b5a_d7605b7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-13T14:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22f27cb5_0e577a0f",
       "revId": "fb45f54a32931ed08da98ace86abb99cd51410eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -100,6 +136,24 @@
       "side": 1,
       "message": "I had stacked changes in my branch, with an alternative approach, so it looked like I was undoing something I had landed before. I will clean up this description.",
       "parentUuid": "301cce47_61b67ea0",
+      "revId": "fb45f54a32931ed08da98ace86abb99cd51410eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60c4cb88_41460366",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-13T14:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec4e594_af949f32",
       "revId": "fb45f54a32931ed08da98ace86abb99cd51410eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
