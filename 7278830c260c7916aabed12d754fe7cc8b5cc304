@@ -41,6 +41,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d322ed11_5103fcd2",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-13T07:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36c73027_ee20f123",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ca2ed6b_e468a993",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-13T07:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36c73027_ee20f123",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68646d8a_a3bb7a97",
@@ -54,6 +102,30 @@
       "writtenOn": "2026-05-12T00:35:25Z",
       "side": 1,
       "message": "Should we output something to the InfoLog(), even when `QueryInterface` fails or `desc.SDKVersion \u003c kAgilitySDKVersion`?",
+      "range": {
+        "startLine": 52,
+        "startChar": 26,
+        "endLine": 52,
+        "endChar": 40
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc85f377_ef5f4ee0",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-13T07:54:04Z",
+      "side": 1,
+      "message": "I\u0027ve removed LogAgilitySDKStatus(). Logging now occurs once in Backend::Initialize(): \n- Factory created successfully: InfoLog outputs kAgilitySDKVersion (matches the runtime version, as CreateDeviceFactory only succeeds with exact DLL matches).\n- Factory creation failed: WarningLog notes potential missing DLLs.",
+      "parentUuid": "68646d8a_a3bb7a97",
       "range": {
         "startLine": 52,
         "startChar": 26,
@@ -87,6 +159,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92afe2e8_7835612a",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-13T07:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9d229c5_a87c6fe6",
+      "range": {
+        "startLine": 63,
+        "startChar": 58,
+        "endLine": 64,
+        "endChar": 65
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "187fd173_aea8c2bb",
@@ -100,6 +196,30 @@
       "writtenOn": "2026-05-12T00:35:25Z",
       "side": 1,
       "message": "Always compiling with SDK headers would avoid the need for #defining `D3D_SHADER_MODEL_6_10`.",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 28
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36142531_8cccdb41",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-13T07:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187fd173_aea8c2bb",
       "range": {
         "startLine": 140,
         "startChar": 7,
@@ -133,6 +253,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3f646b9_53d4b6db",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-13T07:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac042972_479f9266",
+      "range": {
+        "startLine": 125,
+        "startChar": 42,
+        "endLine": 125,
+        "endChar": 79
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d2e6a9ce_6b823ada",
@@ -146,6 +290,30 @@
       "writtenOn": "2026-05-12T00:35:25Z",
       "side": 1,
       "message": "By the time `InitAgilitySDK` is called, `d3d12GetInterface` should already non-nullptr. We can lose this unnecessary nullptr check.",
+      "range": {
+        "startLine": 99,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66a50c75_ff15dd80",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-13T07:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2e6a9ce_6b823ada",
       "range": {
         "startLine": 99,
         "startChar": 1,
@@ -197,6 +365,54 @@
         "startChar": 16,
         "endLine": 106,
         "endChar": 36
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c187fe5_e3560ce7",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-13T07:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7457193_b5526576",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 36
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "459b71a2_ce23f28e",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-13T07:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35145de2_38bad5a5",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 35
       },
       "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"

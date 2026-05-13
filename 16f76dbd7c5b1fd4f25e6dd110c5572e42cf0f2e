@@ -714,6 +714,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8cd62f3d_e161c13c",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-13T07:54:04Z",
+      "side": 1,
+      "message": "Thanks for your updates! In some bots(e.g. win-dawn-rel\n), the Agility SDK seems not downloaded, so __has_include will fall back to the Windows SDK\u0027s \u003cd3d12.h\u003e.\nSince D3D_SHADER_MODEL_6_10 is only available in the Agility SDK, I will keep this #ifdef for now.",
+      "parentUuid": "a5c1dd75_f1ef1c06",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "783b3856_dd18e831",
         "filename": "tools/fetch_agility_sdk.py",
         "patchSetId": 8
