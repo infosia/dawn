@@ -315,7 +315,7 @@ TEST_F(ResolverTypeValidationTest, ArraySize_IVecConst) {
 }
 
 TEST_F(ResolverTypeValidationTest, ArraySize_FloatOverride) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 override size = 10.0;
 var<private> a : array<f32, size>;
