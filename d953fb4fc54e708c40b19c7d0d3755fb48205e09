@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4cf1236_eaa28107",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-13T02:51:48Z",
+      "side": 1,
+      "message": "I had to manually intervene to help the AI",
+      "revId": "d953fb4fc54e708c40b19c7d0d3755fb48205e09",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
