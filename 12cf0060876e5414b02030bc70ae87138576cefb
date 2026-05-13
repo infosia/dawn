@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a73bbbf8_e1377ba2",
+        "filename": "include/dawn/replay/Replay.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-13T22:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abb48912_a3335f3f",
+      "revId": "12cf0060876e5414b02030bc70ae87138576cefb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbeb1e91_f622e5f8",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dda77bb4_8937c544",
+        "filename": "include/dawn/replay/Replay.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-13T22:11:01Z",
+      "side": 1,
+      "message": "Ack (b/512864786)",
+      "parentUuid": "dbeb1e91_f622e5f8",
+      "revId": "12cf0060876e5414b02030bc70ae87138576cefb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fcf44dbc_69781a72",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-05-13T13:59:08Z",
       "side": 1,
       "message": "When doing visitors, the general pattern is to make each of the visiting function return whether the visit should continue or stop. Here it would replace all the `MaybeError` with a `VisitResult \u003d ResultOrError\u003cVisitStatus::{Stop/Continue}\u003e`. To make things simpler all of the visiting function can have a default implementation that just says to continue.\n\nThis avoids having state and resetting manually since all we need to do is visit until stop, and then start again. This is also how the end of the visit is signaled in visitors.",
+      "revId": "12cf0060876e5414b02030bc70ae87138576cefb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01046a22_52ad88c8",
+        "filename": "src/dawn/replay/CaptureWalker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-13T22:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcf44dbc_69781a72",
       "revId": "12cf0060876e5414b02030bc70ae87138576cefb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
