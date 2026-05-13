@@ -34,6 +34,24 @@
       "parentUuid": "6893a31f_81384ca3",
       "revId": "4935fc543fa4b2531c2a9d1c5a75054df62526ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f17e65f2_572aa321",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T15:30:50Z",
+      "side": 1,
+      "message": "Thanks for the data, adding the restriction should be a noop basically then!",
+      "parentUuid": "0c2c60d3_9c414dd7",
+      "revId": "4935fc543fa4b2531c2a9d1c5a75054df62526ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
