@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "117652db_cd6f2ec2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-13T19:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11db5b28_49b6894b",
+      "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "932d08f8_3ecf5b1a",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-13T13:01:23Z",
       "side": 1,
       "message": "Why? Can we have a TODO? (just realized it\u0027s existing, but a TODO would be nice)",
+      "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89775f53_910bfe1c",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-13T19:13:18Z",
+      "side": 1,
+      "message": "There isn\u0027t really a TODO since I\u0027m not sure if there\u0027s anything to fix... but I updated the comment to document why this is necessary.",
+      "parentUuid": "932d08f8_3ecf5b1a",
       "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef87d77d_c24173c5",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-13T19:13:18Z",
+      "side": 1,
+      "message": "We decided to hide this quite a while ago. Otherwise, we would need to generate the callback info structs in C++ which would have callback function types with C types. It\u0027s doable, but IMO this is a lot more ergonomic, and if users want to do stuff with the actual members, they can work in C instead of C++. The whole point of the C++ bindings is to make it easier and more idiomatic to C++.",
+      "parentUuid": "5ee50834_64eb8cf1",
+      "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2caa61d9_99c48430",
@@ -69,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27437b34_8a2e0fb8",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-13T19:13:18Z",
+      "side": 1,
+      "message": "See comment in previous CL about this.",
+      "parentUuid": "2caa61d9_99c48430",
+      "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "043fe960_fe261bb6",
@@ -82,6 +154,24 @@
       "writtenOn": "2026-05-13T13:01:23Z",
       "side": 1,
       "message": "Aren\u0027t we going to have issues if the layout doesn\u0027t match between C and C++?",
+      "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "256ed4c4_9bff2400",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-13T19:13:18Z",
+      "side": 1,
+      "message": "We have the check above in the setters instead because we can\u0027t have the check outside of the class scope since its a protected member.",
+      "parentUuid": "043fe960_fe261bb6",
       "revId": "965a4fd9c1186c6e9cbd56028714cfc4ba27debe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
