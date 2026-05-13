@@ -124,6 +124,7 @@ if (tint_build_unittests) {
         "${tint_src_dir}/lang/wgsl/program",
         "${tint_src_dir}/lang/wgsl/resolver",
         "${tint_src_dir}/lang/wgsl/sem",
+        "${tint_src_dir}/lang/wgsl/writer/ast_printer",
         "${tint_src_dir}/lang/wgsl/writer/common",
         "${tint_src_dir}/utils",
         "${tint_src_dir}/utils/containers",
@@ -138,10 +139,6 @@ if (tint_build_unittests) {
         "${tint_src_dir}/utils/text",
         "${tint_src_dir}/utils/text_generator",
       ]
-
-      if (tint_build_wgsl_writer) {
-        deps += [ "${tint_src_dir}/lang/wgsl/writer/ast_printer" ]
-      }
     }
   }
 }

@@ -61,13 +61,7 @@ cc_library(
     "//src/tint/utils/rtti",
     "//src/tint/utils/text",
     "//src/utils",
-  ] + select({
-    ":tint_build_glsl_validator": [
-      
-      
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )

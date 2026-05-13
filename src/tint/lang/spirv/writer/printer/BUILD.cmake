@@ -57,6 +57,8 @@ tint_target_add_dependencies(tint_lang_spirv_writer_printer lib
   tint_lang_spirv_ir
   tint_lang_spirv_type
   tint_lang_spirv_writer_analysis
+  tint_lang_spirv_writer_common
+  tint_lang_spirv_writer_raise
   tint_utils
   tint_utils_containers
   tint_utils_diagnostic
@@ -71,20 +73,8 @@ tint_target_add_dependencies(tint_lang_spirv_writer_printer lib
 )
 
 tint_target_add_external_dependencies(tint_lang_spirv_writer_printer lib
+  "spirv-headers"
   "src_utils"
 )
-
-if(TINT_BUILD_SPV_READER OR TINT_BUILD_SPV_WRITER)
-  tint_target_add_external_dependencies(tint_lang_spirv_writer_printer lib
-    "spirv-headers"
-  )
-endif(TINT_BUILD_SPV_READER OR TINT_BUILD_SPV_WRITER)
-
-if(TINT_BUILD_SPV_WRITER)
-  tint_target_add_dependencies(tint_lang_spirv_writer_printer lib
-    tint_lang_spirv_writer_common
-    tint_lang_spirv_writer_raise
-  )
-endif(TINT_BUILD_SPV_WRITER)
 
 endif(TINT_BUILD_SPV_WRITER)

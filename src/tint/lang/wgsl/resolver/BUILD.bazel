@@ -162,18 +162,14 @@ cc_library(
     "texel_buffer_test.cc",
     "texture_and_sampler_let_extension_test.cc",
     "type_validation_test.cc",
+    "uniformity_test.cc",
     "unresolved_identifier_test.cc",
     "validation_test.cc",
     "validator_is_storeable_test.cc",
     "value_constructor_validation_test.cc",
     "variable_test.cc",
     "variable_validation_test.cc",
-  ] + select({
-    ":tint_build_wgsl_reader": [
-      "uniformity_test.cc",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   deps = [
     "//src/tint/api/common",
     "//src/tint/lang/core",
@@ -187,6 +183,7 @@ cc_library(
     "//src/tint/lang/wgsl/ast:test",
     "//src/tint/lang/wgsl/intrinsic",
     "//src/tint/lang/wgsl/program",
+    "//src/tint/lang/wgsl/reader",
     "//src/tint/lang/wgsl/resolver",
     "//src/tint/lang/wgsl/sem",
     "//src/tint/lang/wgsl/sem:test",
@@ -203,12 +200,7 @@ cc_library(
     "//src/tint/utils/text",
     "@gtest",
     "//src/utils",
-  ] + select({
-    ":tint_build_wgsl_reader": [
-      "//src/tint/lang/wgsl/reader",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )

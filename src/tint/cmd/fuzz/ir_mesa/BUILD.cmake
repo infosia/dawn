@@ -49,9 +49,12 @@ tint_target_add_dependencies(tint_cmd_fuzz_ir_mesa_fuzz_cmd fuzz_cmd
   tint_cmd_fuzz_common
   tint_cmd_fuzz_ir_helpers
   tint_cmd_fuzz_ir_fuzz
+  tint_cmd_fuzz_wgsl_fuzz
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_ir
+  tint_lang_core_ir_binary
+  tint_lang_core_ir_binary_fuzz
   tint_lang_core_ir_transform_fuzz
   tint_lang_core_type
   tint_lang_hlsl_writer_raise_fuzz
@@ -64,6 +67,7 @@ tint_target_add_dependencies(tint_cmd_fuzz_ir_mesa_fuzz_cmd fuzz_cmd
   tint_utils_macros
   tint_utils_math
   tint_utils_memory
+  tint_utils_protos_ir_fuzz_proto
   tint_utils_reflection
   tint_utils_rtti
   tint_utils_symbol
@@ -72,6 +76,7 @@ tint_target_add_dependencies(tint_cmd_fuzz_ir_mesa_fuzz_cmd fuzz_cmd
 
 tint_target_add_external_dependencies(tint_cmd_fuzz_ir_mesa_fuzz_cmd fuzz_cmd
   "libprotobuf-mutator"
+  "mesa"
   "src_utils"
 )
 
@@ -87,20 +92,6 @@ if(TINT_BUILD_HLSL_WRITER)
   )
 endif(TINT_BUILD_HLSL_WRITER)
 
-if(TINT_BUILD_IR_BINARY)
-  tint_target_add_dependencies(tint_cmd_fuzz_ir_mesa_fuzz_cmd fuzz_cmd
-    tint_lang_core_ir_binary
-    tint_lang_core_ir_binary_fuzz
-    tint_utils_protos_ir_fuzz_proto
-  )
-endif(TINT_BUILD_IR_BINARY)
-
-if(TINT_BUILD_MESA)
-  tint_target_add_external_dependencies(tint_cmd_fuzz_ir_mesa_fuzz_cmd fuzz_cmd
-    "mesa"
-  )
-endif(TINT_BUILD_MESA)
-
 if(TINT_BUILD_MSL_WRITER)
   tint_target_add_dependencies(tint_cmd_fuzz_ir_mesa_fuzz_cmd fuzz_cmd
     tint_lang_msl_writer_fuzz
@@ -112,12 +103,6 @@ if(TINT_BUILD_SPV_WRITER)
     tint_lang_spirv_writer_fuzz
   )
 endif(TINT_BUILD_SPV_WRITER)
-
-if(TINT_BUILD_WGSL_READER)
-  tint_target_add_dependencies(tint_cmd_fuzz_ir_mesa_fuzz_cmd fuzz_cmd
-    tint_cmd_fuzz_wgsl_fuzz
-  )
-endif(TINT_BUILD_WGSL_READER)
 
 if(TINT_BUILD_WGSL_WRITER)
   tint_target_add_dependencies(tint_cmd_fuzz_ir_mesa_fuzz_cmd fuzz_cmd

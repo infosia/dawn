@@ -111,6 +111,8 @@ tint_target_add_dependencies(tint_lang_hlsl_writer_test test
   tint_lang_core_intrinsic
   tint_lang_core_ir
   tint_lang_core_type
+  tint_lang_hlsl_validate
+  tint_lang_hlsl_writer
   tint_lang_hlsl_writer_common
   tint_utils
   tint_utils_command
@@ -131,13 +133,6 @@ tint_target_add_external_dependencies(tint_lang_hlsl_writer_test test
   "src_utils"
 )
 
-if(TINT_BUILD_HLSL_WRITER)
-  tint_target_add_dependencies(tint_lang_hlsl_writer_test test
-    tint_lang_hlsl_validate
-    tint_lang_hlsl_writer
-  )
-endif(TINT_BUILD_HLSL_WRITER)
-
 endif(TINT_BUILD_HLSL_WRITER)
 if(TINT_BUILD_HLSL_WRITER)
 ################################################################################
@@ -157,6 +152,8 @@ tint_target_add_dependencies(tint_lang_hlsl_writer_fuzz fuzz
   tint_lang_core_constant
   tint_lang_core_ir
   tint_lang_core_type
+  tint_lang_hlsl_validate
+  tint_lang_hlsl_writer
   tint_lang_hlsl_writer_common
   tint_lang_hlsl_writer_printer
   tint_utils
@@ -177,12 +174,5 @@ tint_target_add_dependencies(tint_lang_hlsl_writer_fuzz fuzz
 tint_target_add_external_dependencies(tint_lang_hlsl_writer_fuzz fuzz
   "src_utils"
 )
-
-if(TINT_BUILD_HLSL_WRITER)
-  tint_target_add_dependencies(tint_lang_hlsl_writer_fuzz fuzz
-    tint_lang_hlsl_validate
-    tint_lang_hlsl_writer
-  )
-endif(TINT_BUILD_HLSL_WRITER)
 
 endif(TINT_BUILD_HLSL_WRITER)

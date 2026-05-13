@@ -80,6 +80,7 @@ cc_library(
   ],
   deps = [
     "//src/tint/api/common",
+    "//src/tint/lang/glsl/writer/common",
     "//src/tint/utils",
     "//src/tint/utils/containers",
     "//src/tint/utils/ice",
@@ -90,12 +91,7 @@ cc_library(
     "//src/tint/utils/rtti",
     "@gtest",
     "//src/utils",
-  ] + select({
-    ":tint_build_glsl_writer": [
-      "//src/tint/lang/glsl/writer/common",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
