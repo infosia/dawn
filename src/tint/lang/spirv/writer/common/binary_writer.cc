@@ -36,6 +36,7 @@
 #include <string>
 
 #include "src/tint/utils/memory/bitcast.h"
+#include "src/utils/compiler.h"
 
 namespace tint::spirv::writer {
 namespace {
@@ -85,7 +86,7 @@ void BinaryWriter::ProcessOp(const Operand& op) {
     if (auto* str = std::get_if<std::string>(&op)) {
         auto idx = out_.size();
         out_.resize(out_.size() + OperandLength(op), 0);
-        memcpy(&out_[idx], str->c_str(), str->size() + 1);
+        DAWN_UNSAFE_TODO(memcpy(&out_[idx], str->c_str(), str->size() + 1));
         return;
     }
 }
