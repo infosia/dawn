@@ -894,7 +894,24 @@ class Printer : public tint::TextGenerator {
             return;
         }
 
-        out << c->Func() << "(";
+        out << c->Func();
+
+        // The linalg::Multiply function has two overloads, one with an explicit template parameter
+        // for the output component type and one that implicitly uses the same component type as the
+        // inputs. The overload with an explicit template parameter must be used if the input/output
+        // component types do not match, but cannot be used if they do match.
+        // The parameter is also an enum value, so we have to convert the template type into that
+        // enum value here.
+        if (c->Func() == hlsl::BuiltinFn::kMultiply) {
+            TINT_IR_ASSERT(ir_, c->ExplicitTemplateParams().Length() == 1u);
+            auto* explicit_type = c->ExplicitTemplateParams()[0];
+            auto* left_type = c->Args()[0]->Type()->As<core::type::SubgroupMatrix>()->Type();
+            if (explicit_type != left_type) {
+                out << "<" << SubgroupMatrixComponentTypeToEnum(explicit_type) << ">";
+            }
+        }
+
+        out << "(";
         bool needs_comma = false;
         for (const auto* arg : c->Args()) {
             if (needs_comma) {
@@ -1517,18 +1534,20 @@ class Printer : public tint::TextGenerator {
             TINT_ICE_ON_NO_MATCH);
     }
 
+    const char* SubgroupMatrixComponentTypeToEnum(const core::type::Type* type) {
+        return tint::Switch(
+            type,                                                         //
+            [](const core::type::F16*) { return "ComponentType::F16"; },  //
+            [](const core::type::F32*) { return "ComponentType::F32"; },  //
+            [](const core::type::I8*) { return "ComponentType::I8"; },    //
+            [](const core::type::I32*) { return "ComponentType::I32"; },  //
+            [](const core::type::U8*) { return "ComponentType::U8"; },    //
+            [](const core::type::U32*) { return "ComponentType::U32"; },  //
+            TINT_ICE_ON_NO_MATCH);
+    }
+
     std::string_view GetSubgroupMatrixAlias(const core::type::SubgroupMatrix* sm) {
         return subgroup_matrix_aliases_.GetOrAdd(sm, [&] {
-            const char* component_type = tint::Switch(
-                sm->Type(),                                    //
-                [](const core::type::F16*) { return "F16"; },  //
-                [](const core::type::F32*) { return "F32"; },  //
-                [](const core::type::I8*) { return "I8"; },    //
-                [](const core::type::I32*) { return "I32"; },  //
-                [](const core::type::U8*) { return "U8"; },    //
-                [](const core::type::U32*) { return "U32"; },  //
-                TINT_ICE_ON_NO_MATCH);
-
             const char* use = nullptr;
             switch (sm->Kind()) {
                 case core::SubgroupMatrixKind::kLeft:
@@ -1549,8 +1568,9 @@ class Printer : public tint::TextGenerator {
                   << sm->Rows() << "x" << sm->Columns();
 
             StringStream alias_decl;
-            alias_decl << "using " << alias.str() << " = Matrix<ComponentType::" << component_type
-                       << ", " << sm->Rows() << ", " << sm->Columns() << ", MatrixUse::" << use
+            alias_decl << "using " << alias.str() << " = Matrix<"
+                       << SubgroupMatrixComponentTypeToEnum(sm->Type()) << ", " << sm->Rows()
+                       << ", " << sm->Columns() << ", MatrixUse::" << use
                        << ", MatrixScope::Wave>;";
             preamble_buffer_.Append(alias_decl.str());
 
