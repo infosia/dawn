@@ -1966,6 +1966,9 @@ TEST_P(ResourceTableTests, AddDuplicateSamplersTwice) {
 TEST_P(ResourceTableTests, AddAndRemoveMaxSamplersTwice) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
+    // TODO(https://issues.chromium.org/issues/512829734): Fails on Vulkan if
+    // VkPhysicalDeviceLimits::maxSamplerAllocationCount <= 4K
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsWindows() && IsIntel());
 
     wgpu::ComputePipelineDescriptor csDesc;
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
