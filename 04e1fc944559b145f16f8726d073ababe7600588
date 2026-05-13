@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fbb9eb8_76ddcf24",
+        "filename": "src/dawn/native/metal/DeviceMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T12:20:45Z",
+      "side": 1,
+      "message": "u-nit: slight preference for having this be a `const` method as constness also means thread-safety in the future.",
+      "revId": "04e1fc944559b145f16f8726d073ababe7600588",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0926bb31_a56a5736",
+        "filename": "src/dawn/native/metal/DeviceMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T12:20:45Z",
+      "side": 1,
+      "message": "Why a `Ref` and not a `unique_ptr`? Ah because it is a SerialProcessor that\u0027s a refcounted object.",
+      "revId": "04e1fc944559b145f16f8726d073ababe7600588",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2de8bb34_0e787ce7",
+        "filename": "src/dawn/native/metal/FencedReferencer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T12:20:45Z",
+      "side": 1,
+      "message": "As far as I can tell these are never called so `MTLTextures` will be kept alive forever.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 2
+      },
+      "revId": "04e1fc944559b145f16f8726d073ababe7600588",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f54bf291_10c44d16",
+        "filename": "src/dawn/native/metal/FencedReferencer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T12:20:45Z",
+      "side": 1,
+      "message": "Why are these required?",
+      "revId": "04e1fc944559b145f16f8726d073ababe7600588",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
