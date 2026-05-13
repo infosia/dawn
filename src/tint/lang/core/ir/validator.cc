@@ -4812,6 +4812,10 @@ void Validator::CheckSwitch(const Switch* s) {
             } else if (!sel.val->Type()->IsIntegerScalar()) {
                 AddError(s) << "case selector type " << NameOf(sel.val->Type())
                             << " must be an integer scalar";
+            } else if (s->Condition() && sel.val->Type() != s->Condition()->Type()) {
+                AddError(s) << "case selector type " << NameOf(sel.val->Type())
+                            << " must match the switch condition type "
+                            << NameOf(s->Condition()->Type());
             }
         }
     }
