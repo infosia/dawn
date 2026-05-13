@@ -145,11 +145,6 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     mFramebufferCache = std::make_unique<FramebufferCache>(this);
     mRenderPassCache = std::make_unique<RenderPassCache>(this);
 
-    VkDeviceSize heapBlockSize =
-        ResourceMemoryAllocator::GetHeapBlockSize(descriptor.Get<DawnDeviceAllocatorControl>());
-    mResourceMemoryAllocator =
-        std::make_unique<MutexProtected<ResourceMemoryAllocator>>(this, heapBlockSize);
-
     mExternalMemoryService = std::make_unique<external_memory::Service>(this);
 
     if (uint32_t(HasFeature(Feature::SharedFenceVkSemaphoreOpaqueFD)) +
@@ -199,7 +194,14 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         mFramebufferFetchHelper = std::make_unique<FramebufferFetchHelper>(this);
     }
 
-    return DeviceBase::Initialize(descriptor, std::move(queue));
+    DAWN_TRY(DeviceBase::Initialize(descriptor, std::move(queue)));
+
+    VkDeviceSize heapBlockSize =
+        ResourceMemoryAllocator::GetHeapBlockSize(descriptor.Get<DawnDeviceAllocatorControl>());
+    mResourceMemoryAllocator =
+        std::make_unique<MutexProtected<ResourceMemoryAllocator>>(this, heapBlockSize);
+
+    return {};
 }
 
 Device::~Device() {
