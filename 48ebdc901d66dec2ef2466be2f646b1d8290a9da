@@ -33,6 +33,24 @@
       "message": "Let\u0027s avoid the const cast by marking this function non-const and resetting automatically so it looks like it is const?",
       "revId": "48ebdc901d66dec2ef2466be2f646b1d8290a9da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "639506d2_9f8989bd",
+        "filename": "src/dawn/replay/Capture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-13T22:11:35Z",
+      "side": 1,
+      "message": "Looks like `Capture::Walk` can be marked as const for current `CaptureImpl`. Not sure if it\u0027s not marked as const intentionally when first introduced (likely not).\n\nBut in future case I can think of (well I ask ai to think of):\n- lazy loading / streaming of the command stream: can mark as mutable as it\u0027s implementation details, not logical state\n- replace chunk of the stream (e.g. replace a shader): can happen in the replay visitor instead of in capture.\n\nSo just mark `Capture::Walk` as const (and remove const_cast)",
+      "parentUuid": "9a2d3ca0_475eb7d4",
+      "revId": "48ebdc901d66dec2ef2466be2f646b1d8290a9da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
