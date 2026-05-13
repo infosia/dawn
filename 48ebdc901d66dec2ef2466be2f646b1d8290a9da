@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dc4cb8f_b8ff6249",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T16:16:07Z",
+      "side": 1,
+      "message": "I\u0027m not going to be able to review this until Monday. Adding Kai.",
+      "revId": "48ebdc901d66dec2ef2466be2f646b1d8290a9da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a2d3ca0_475eb7d4",
+        "filename": "src/dawn/replay/Capture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-13T16:16:07Z",
+      "side": 1,
+      "message": "Let\u0027s avoid the const cast by marking this function non-const and resetting automatically so it looks like it is const?",
+      "revId": "48ebdc901d66dec2ef2466be2f646b1d8290a9da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
