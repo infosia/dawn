@@ -2482,4 +2482,20 @@ TEST_F(IR_ValidatorTest, Loop_PtrResult) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Switch_CaseSelectorTypeMismatchesConditionType) {
+    auto* f = b.Function("f", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* s = b.Switch(2_u);
+        b.Append(b.Case(s, {b.Constant(-4_i)}), [&] { b.ExitSwitch(s); });
+        b.Append(b.DefaultCase(s), [&] { b.ExitSwitch(s); });
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("error: switch: case selector type 'i32' must match the switch "
+                                   "condition type 'u32'"));
+}
+
 }  // namespace tint::core::ir
