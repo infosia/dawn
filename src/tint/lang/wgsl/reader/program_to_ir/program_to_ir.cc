@@ -230,6 +230,9 @@ class Impl {
     ResultType EmitModule() {
         auto* sem = program_.Sem().Module();
 
+        // Set properties that are supported by WGSL.
+        mod.properties.Add(core::ir::Property::kAllowMultipleEntryPoints);
+
         for (auto* decl : sem->DependencyOrderedDeclarations()) {
             tint::Switch(
                 decl,  //

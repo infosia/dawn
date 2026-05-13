@@ -89,6 +89,8 @@ struct Decoder {
     std::stringstream err_{};
     Hashset<std::string, 4> struct_names_{};
 
+    uint32_t entry_point_count = 0;
+
     Result<Module> Decode() {
         {
             const size_t n = static_cast<size_t>(mod_in_.types().size());
@@ -163,6 +165,11 @@ struct Decoder {
             for (auto* cont : continues_) {
                 InferControlInstruction(cont, &Continue::SetLoop);
             }
+        }
+
+        // Set properties that are used by the decoded module.
+        if (entry_point_count > 0) {
+            mod_out_.properties.Add(core::ir::Property::kAllowMultipleEntryPoints);
         }
 
         err = err_.str();
@@ -322,6 +329,7 @@ struct Decoder {
         if (fn_in.has_pipeline_stage()) {
             if (PipelineStage_IsValid(fn_in.pipeline_stage())) {
                 fn_out->SetStage(PipelineStage(fn_in.pipeline_stage()));
+                entry_point_count++;
             } else {
                 err_ << "invalid pipe line state, " << std::to_string(fn_in.pipeline_stage())
                      << "\n";
