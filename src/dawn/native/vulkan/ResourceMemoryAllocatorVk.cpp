@@ -134,28 +134,6 @@ class ResourceMemoryAllocator::SingleTypeAllocator : public ResourceHeapAllocato
     BuddyMemoryAllocator mBuddySystem;
 };
 
-void ResourceMemoryAllocator::AllocationSizeTracker::Increment(VkDeviceSize incrementSize) {
-    mTotalSize += incrementSize;
-}
-
-void ResourceMemoryAllocator::AllocationSizeTracker::Decrement(ExecutionSerial currentSerial,
-                                                               VkDeviceSize decrementSize) {
-    DAWN_ASSERT(mTotalSize >= decrementSize);
-    mMemoryToDecrement[currentSerial] += decrementSize;
-}
-
-void ResourceMemoryAllocator::AllocationSizeTracker::Tick(ExecutionSerial completedSerial) {
-    auto it = mMemoryToDecrement.begin();
-    while (it != mMemoryToDecrement.end() && it->first <= completedSerial) {
-        // Update tracking for allocation/used memory that will be deallocated.
-        DAWN_ASSERT(mTotalSize >= it->second);
-        mTotalSize -= it->second;
-        it++;
-    }
-    // Erase the map serials up to the completed serial.
-    mMemoryToDecrement.erase(mMemoryToDecrement.begin(), it);
-}
-
 VkDeviceSize ResourceMemoryAllocator::GetHeapBlockSize(const DawnDeviceAllocatorControl* control) {
     static constexpr VkDeviceSize kDefaultHeapBlockSize = 8ull * 1024ull * 1024ull;  // 8MiB
     VkDeviceSize heapBlockSize = kDefaultHeapBlockSize;

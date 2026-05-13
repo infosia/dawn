@@ -75,4 +75,25 @@ void PooledResourceMemoryAllocator::DeallocateResourceHeap(
 uint64_t PooledResourceMemoryAllocator::GetPoolSizeForTesting() const {
     return mPool.size();
 }
+
+void AllocationSizeTracker::Increment(uint64_t incrementSize) {
+    mTotalSize += incrementSize;
+}
+
+void AllocationSizeTracker::Decrement(ExecutionSerial currentSerial, uint64_t decrementSize) {
+    DAWN_ASSERT(mTotalSize >= decrementSize);
+    mMemoryToDecrement[currentSerial] += decrementSize;
+}
+
+void AllocationSizeTracker::Tick(ExecutionSerial completedSerial) {
+    auto it = mMemoryToDecrement.begin();
+    while (it != mMemoryToDecrement.end() && it->first <= completedSerial) {
+        // Update tracking for allocation/used memory that will be deallocated.
+        DAWN_ASSERT(mTotalSize >= it->second);
+        mTotalSize -= it->second;
+        it++;
+    }
+    // Erase the map serials up to the completed serial.
+    mMemoryToDecrement.erase(mMemoryToDecrement.begin(), it);
+}
 }  // namespace dawn::native
