@@ -25,17 +25,14 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/dawn/node/binding/GPUAdapterInfo.h"
 
 #include <cassert>
 #include <cctype>
 #include <iomanip>
 #include <sstream>
+
+#include "src/utils/compiler.h"
 
 namespace wgpu::binding {
 
@@ -129,7 +126,7 @@ GPUAdapterInfo::GPUAdapterInfo(const wgpu::AdapterInfo& info)
             auto* configs = static_cast<wgpu::AdapterPropertiesSubgroupMatrixConfigs*>(next);
             subgroup_matrix_configs_.reserve(configs->configCount);
             for (uint32_t i = 0; i < configs->configCount; i++) {
-                subgroup_matrix_configs_.push_back(configs->configs[i]);
+                DAWN_UNSAFE_TODO(subgroup_matrix_configs_.push_back(configs->configs[i]));
             }
         }
         next = next->nextInChain;

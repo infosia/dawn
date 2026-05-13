@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/dawn/node/binding/GPU.h"
 
 #include <algorithm>
@@ -44,6 +39,7 @@
 #include "src/dawn/node/binding/GPUAdapter.h"
 #include "src/dawn/node/binding/IteratorHelper.h"
 #include "src/dawn/node/binding/TogglesLoader.h"
+#include "src/utils/compiler.h"
 
 #if defined(_WIN32)
 #include <Windows.h>
@@ -322,7 +318,7 @@ interop::Interface<interop::WGSLLanguageFeatures> GPU::getWgslLanguageFeatures(N
     InteropWGSLFeatureSet featureSet;
     Converter conv(env);
     for (size_t i = 0; i < supportedFeatures.featureCount; i++) {
-        wgpu::WGSLLanguageFeatureName feature = supportedFeatures.features[i];
+        wgpu::WGSLLanguageFeatureName feature = DAWN_UNSAFE_TODO(supportedFeatures.features[i]);
         interop::WGSLLanguageFeatureName wgslFeature;
         if (conv(wgslFeature, feature)) {
             featureSet.emplace(wgslFeature);

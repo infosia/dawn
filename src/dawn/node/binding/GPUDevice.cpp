@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/dawn/node/binding/GPUDevice.h"
 
 #include <cassert>
@@ -58,6 +53,7 @@
 #include "src/dawn/node/binding/GPUSupportedLimits.h"
 #include "src/dawn/node/binding/GPUTexture.h"
 #include "src/dawn/node/utils/Debug.h"
+#include "src/utils/compiler.h"
 
 namespace wgpu::binding {
 
@@ -103,11 +99,11 @@ void chunkedWrite(wgpu::StringView msg) {
     while (msg.length != 0) {
         int n;
         if (msg.length > 4096) {
-            n = printf("%.4096s", msg.data);
+            n = DAWN_UNSAFE_TODO(printf("%.4096s", msg.data));
         } else {
-            n = printf("%.*s", static_cast<int>(msg.length), msg.data);
+            n = DAWN_UNSAFE_TODO(printf("%.*s", static_cast<int>(msg.length), msg.data));
         }
-        msg.data += n;
+        DAWN_UNSAFE_TODO(msg.data += n);
         msg.length -= n;
     }
 }
@@ -208,7 +204,7 @@ GPUDevice::GPUDevice(Napi::Env env,
       lost_promise_(lost_promise),
       label_(CopyLabel(desc.label)) {
     device_.SetLoggingCallback([](wgpu::LoggingType type, wgpu::StringView message) {
-        printf("%s:\n", str(type));
+        DAWN_UNSAFE_TODO(printf("%s:\n", str(type)));
         chunkedWrite(message);
     });
     {
@@ -238,10 +234,11 @@ void GPUDevice::handleUncapturedError(ErrorType type, wgpu::StringView message) 
 
     auto error = createErrorFromWGPUError(env_, type, message);
     if (!error.has_value()) {
-        fprintf(stderr,
-                "GPUDevice::handleUncapturedError: Failed to create GPUError object for error type "
-                "%s.\n",
-                str(type));
+        DAWN_UNSAFE_TODO(fprintf(
+            stderr,
+            "GPUDevice::handleUncapturedError: Failed to create GPUError object for error type "
+            "%s.\n",
+            str(type)));
         return;
     }
 
@@ -255,7 +252,7 @@ void GPUDevice::handleUncapturedError(ErrorType type, wgpu::StringView message) 
 
     bool doDefault = dispatchEvent(env_, eventObj);
     if (doDefault) {
-        printf("%s:\n", str(type));
+        DAWN_UNSAFE_TODO(printf("%s:\n", str(type)));
         chunkedWrite(message);
     }
 }

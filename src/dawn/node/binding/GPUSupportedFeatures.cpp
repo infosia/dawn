@@ -25,15 +25,11 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/dawn/node/binding/GPUSupportedFeatures.h"
 
 #include "src/dawn/node/binding/Converter.h"
 #include "src/dawn/node/binding/IteratorHelper.h"
+#include "src/utils/compiler.h"
 
 namespace wgpu::binding {
 
@@ -48,7 +44,7 @@ GPUSupportedFeatures::GPUSupportedFeatures(Napi::Env env,
     // Add all known GPUFeatureNames that are known by dawn.node and skip the other ones are they
     // may be native-only extension, Dawn-specific or other special cases.
     for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
-        wgpu::FeatureName feature = supportedFeatures.features[i];
+        wgpu::FeatureName feature = DAWN_UNSAFE_TODO(supportedFeatures.features[i]);
         interop::GPUFeatureName gpuFeature;
         if (conv(gpuFeature, feature)) {
             enabled_.emplace(gpuFeature);
