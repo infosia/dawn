@@ -357,9 +357,13 @@ struct State {
         call->Destroy();
     }
 
-    core::ir::Value* MatrixLayout(type::MatrixLayoutEnum value) {
+    core::ir::Constant* ColMajorToMatrixLayout(core::ir::Value* col_major) {
+        auto* const_col_major = col_major->As<core::ir::Constant>();
+        TINT_IR_ASSERT(ir, const_col_major);
         return b.Constant(ir.constant_values.Get<core::constant::Scalar<u32>>(
-            ty.Get<type::MatrixLayout>(), u32(value)));
+            ty.Get<type::MatrixLayout>(),
+            u32(const_col_major->Value()->ValueAs<bool>() ? type::MatrixLayoutEnum::kColMajor
+                                                          : type::MatrixLayoutEnum::kRowMajor)));
     }
 
     void SubgroupMatrixLoad(core::ir::Var* var,
@@ -376,12 +380,7 @@ struct State {
         b.InsertBefore(call, [&] {
             UpdateOffsetData(call_offset, sm->Type()->Size(), &offset);
 
-            auto* const_col_major = col_major->As<core::ir::Constant>();
-            TINT_IR_ASSERT(ir, const_col_major);
-            auto* layout = MatrixLayout(const_col_major->Value()->ValueAs<bool>()
-                                            ? type::MatrixLayoutEnum::kColMajor
-                                            : type::MatrixLayoutEnum::kRowMajor);
-
+            auto* layout = ColMajorToMatrixLayout(col_major);
             // TODO(crbug.com/490062439): This will need to be updated if we change stride.
             uint32_t bytes_per_element = sm->Type()->Size();
             if (auto* cnst = stride->As<core::ir::Constant>()) {
@@ -411,11 +410,7 @@ struct State {
         b.InsertBefore(call, [&] {
             UpdateOffsetData(call_offset, sm->Type()->Size(), &offset);
 
-            auto* const_col_major = col_major->As<core::ir::Constant>();
-            TINT_IR_ASSERT(ir, const_col_major);
-            auto* layout = MatrixLayout(const_col_major->Value()->ValueAs<bool>()
-                                            ? type::MatrixLayoutEnum::kColMajor
-                                            : type::MatrixLayoutEnum::kRowMajor);
+            auto* layout = ColMajorToMatrixLayout(col_major);
 
             // TODO(crbug.com/490062439): This will need to be updated if we change stride.
             uint32_t bytes_per_element = sm->Type()->Size();
