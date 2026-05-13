@@ -51,6 +51,7 @@ cc_library(
     "//src/tint/lang/core/constant",
     "//src/tint/lang/core/ir",
     "//src/tint/lang/core/type",
+    "//src/tint/lang/glsl/writer/common",
     "//src/tint/utils",
     "//src/tint/utils/containers",
     "//src/tint/utils/diagnostic",
@@ -63,12 +64,7 @@ cc_library(
     "//src/tint/utils/symbol",
     "//src/tint/utils/text",
     "//src/utils",
-  ] + select({
-    ":tint_build_glsl_writer": [
-      "//src/tint/lang/glsl/writer/common",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )

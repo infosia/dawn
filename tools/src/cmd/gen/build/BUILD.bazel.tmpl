@@ -6,6 +6,7 @@ load("@bazel_skylib//lib:selects.bzl", "selects")
 {{/* newline */}}
 
 {{- Eval "TargetIfNotEmpty" ($.Project.Target $ "lib")}}
+{{- Eval "TargetIfNotEmpty" ($.Project.Target $ "proto")}}
 {{- Eval "TargetIfNotEmpty" ($.Project.Target $ "test")}}
 {{- Eval "TargetIfNotEmpty" ($.Project.Target $ "bench")}}
 {{- Eval "TargetIfNotEmpty" ($.Project.Target $ "cmd")}}
@@ -37,6 +38,9 @@ load("@bazel_skylib//lib:selects.bzl", "selects")
 {{- if      $.Kind.IsLib -}}
 cc_library(
   name = "{{$.Directory.Name}}",
+{{- else if $.Kind.IsProto -}}
+cc_library(
+  name = "proto",
 {{- else if $.Kind.IsTest -}}
 cc_library(
   name = "test",
@@ -56,9 +60,17 @@ cc_binary(
   name = "bench_cmd",
 {{- end}}
   srcs = [
-{{-   range $File := $.UnconditionalSourceFiles}}
-{{-     if or (not $.Kind.IsLib) (HasSuffix $File.Name ".cc")}}
+{{-   if $.Kind.IsProto}}
+{{-     range $File := $.GeneratedFiles}}
+{{-       if HasSuffix $File.Name ".cc"}}
     "{{TrimPrefix $File.Name $.Directory.Path}}",
+{{-       end}}
+{{-     end}}
+{{-   else}}
+{{-     range $File := $.UnconditionalSourceFiles}}
+{{-       if or (not $.Kind.IsLib) (HasSuffix $File.Name ".cc")}}
+    "{{TrimPrefix $File.Name $.Directory.Path}}",
+{{-       end}}
 {{-     end}}
 {{-   end}}
   ]
@@ -75,24 +87,35 @@ cc_binary(
   })
 {{-     end}}
 {{-   end}},
-{{- if $.Kind.IsLib}}
+{{- if or $.Kind.IsLib $.Kind.IsProto}}
   hdrs = [
-{{-   range $File := $.UnconditionalSourceFiles}}
-{{-     if not (HasSuffix $File.Name ".cc")}}
+{{-   if $.Kind.IsProto}}
+{{-     range $File := $.GeneratedFiles}}
+{{-       if not (HasSuffix $File.Name ".cc")}}
     "{{TrimPrefix $File.Name $.Directory.Path}}",
+{{-       end}}
+{{-     end}}
+{{-   else}}
+{{-     range $File := $.UnconditionalSourceFiles}}
+{{-       if not (HasSuffix $File.Name ".cc")}}
+    "{{TrimPrefix $File.Name $.Directory.Path}}",
+{{-       end}}
 {{-     end}}
 {{-   end}}
   ],
 {{-   end}}
   deps = [
 {{- /* Emit unconditional internal dependencies */}}
-{{-   range $Dep := $.Dependencies.UnconditionalInternal}}
+{{-   range $Dep := $.UnconditionalInternalDependencies}}
     "{{Eval "Dependency" $Dep}}",
 {{-   end}}
 
 {{- /* Emit unconditional external dependencies */}}
-{{-   range $Dep := $.Dependencies.UnconditionalExternal}}
-    {{Eval "ExternalDependencyTarget" $Dep}}
+{{-   range $Dep := $.UnconditionalExternalDependencies}}
+{{-     $Target := Eval "ExternalDependencyTarget" $Dep}}
+{{-     if $Target}}
+    {{$Target}}
+{{-     end}}
 {{-   end}}
   ]
 {{-   if $Conditionals.HasDependencies}}
@@ -103,7 +126,10 @@ cc_binary(
       "{{Eval "Dependency" $Dep}}",
 {{-         end}}
 {{-         range $Dep := $Cond.ExternalDependencies}}
-      {{Eval "ExternalDependencyTarget" $Dep}}
+{{-           $Target := Eval "ExternalDependencyTarget" $Dep}}
+{{-           if $Target}}
+      {{$Target}}
+{{-           end}}
 {{-         end}}
     ],
 {{-       end}}
@@ -125,11 +151,14 @@ cc_binary(
 */ -}}
 {{- define "Dependency" -}}
 {{-   if      $.Kind.IsLib      -}}//src/tint/{{$.Directory.Path}}
+{{-   else if $.Kind.IsProto     -}}//src/tint/{{$.Directory.Path}}:proto
 {{-   else if $.Kind.IsTest     -}}//src/tint/{{$.Directory.Path}}:test
 {{-   else if $.Kind.IsBench    -}}//src/tint/{{$.Directory.Path}}:bench
 {{-   else if $.Kind.IsCmd      -}}//src/tint/{{$.Directory.Path}}:cmd
 {{-   else if $.Kind.IsTestCmd  -}}//src/tint/{{$.Directory.Path}}:test_cmd
 {{-   else if $.Kind.IsBenchCmd -}}//src/tint/{{$.Directory.Path}}:bench_cmd
+{{-   else if $.Kind.IsFuzz      -}}//src/tint/{{$.Directory.Path}}
+{{-   else if $.Kind.IsFuzzCmd   -}}//src/tint/{{$.Directory.Path}}:fuzz_cmd
 {{-   end}}
 {{- end}}
 

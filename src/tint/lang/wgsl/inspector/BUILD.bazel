@@ -93,6 +93,7 @@ cc_library(
     "//src/tint/lang/wgsl/ast",
     "//src/tint/lang/wgsl/inspector",
     "//src/tint/lang/wgsl/program",
+    "//src/tint/lang/wgsl/reader",
     "//src/tint/lang/wgsl/sem",
     "//src/tint/utils",
     "//src/tint/utils/containers",
@@ -107,12 +108,7 @@ cc_library(
     "//src/tint/utils/text",
     "@gtest",
     "//src/utils",
-  ] + select({
-    ":tint_build_wgsl_reader": [
-      "//src/tint/lang/wgsl/reader",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )

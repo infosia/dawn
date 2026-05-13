@@ -37,6 +37,20 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 load("//src/tint:flags.bzl", "COPTS")
 load("@bazel_skylib//lib:selects.bzl", "selects")
+cc_library(
+  name = "proto",
+  srcs = [
+    "ir_fuzz.pb.cc",
+  ],
+  hdrs = [
+    "ir_fuzz.pb.h",
+  ],
+  deps = [
+    "//src/tint/utils/protos/ir:proto",
+  ],
+  copts = COPTS,
+  visibility = ["//visibility:public"],
+)
 
 alias(
   name = "tint_build_ir_binary",

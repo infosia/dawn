@@ -72,7 +72,6 @@ cc_library(
     "//src/tint/utils/strconv",
     "//src/tint/utils/text",
     "//src/utils",
-    
   ] + select({
     ":tint_build_hlsl_writer": [
       "//src/tint/lang/hlsl/validate",

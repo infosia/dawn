@@ -88,6 +88,7 @@ if (tint_build_unittests) {
         "${tint_src_dir}/api/common",
         "${tint_src_dir}/lang/core",
         "${tint_src_dir}/lang/core/type",
+        "${tint_src_dir}/lang/msl/writer/common",
         "${tint_src_dir}/utils",
         "${tint_src_dir}/utils/containers",
         "${tint_src_dir}/utils/ice",
@@ -98,10 +99,6 @@ if (tint_build_unittests) {
         "${tint_src_dir}/utils/rtti",
         "${tint_src_dir}/utils/text",
       ]
-
-      if (tint_build_msl_writer) {
-        deps += [ "${tint_src_dir}/lang/msl/writer/common" ]
-      }
     }
   }
 }

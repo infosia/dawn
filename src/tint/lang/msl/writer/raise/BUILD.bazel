@@ -80,6 +80,7 @@ cc_library(
     "//src/tint/lang/msl/intrinsic",
     "//src/tint/lang/msl/ir",
     "//src/tint/lang/msl/type",
+    "//src/tint/lang/msl/writer/common",
     "//src/tint/utils",
     "//src/tint/utils/containers",
     "//src/tint/utils/diagnostic",
@@ -92,12 +93,7 @@ cc_library(
     "//src/tint/utils/symbol",
     "//src/tint/utils/text",
     "//src/utils",
-  ] + select({
-    ":tint_build_msl_writer": [
-      "//src/tint/lang/msl/writer/common",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
@@ -126,6 +122,8 @@ cc_library(
     "//src/tint/lang/core/ir/transform",
     "//src/tint/lang/core/ir/transform:test",
     "//src/tint/lang/core/type",
+    "//src/tint/lang/msl/writer/common",
+    "//src/tint/lang/msl/writer/raise",
     "//src/tint/utils",
     "//src/tint/utils/containers",
     "//src/tint/utils/diagnostic",
@@ -139,13 +137,7 @@ cc_library(
     "//src/tint/utils/text",
     "@gtest",
     "//src/utils",
-  ] + select({
-    ":tint_build_msl_writer": [
-      "//src/tint/lang/msl/writer/common",
-      "//src/tint/lang/msl/writer/raise",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
