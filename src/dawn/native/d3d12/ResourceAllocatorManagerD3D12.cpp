@@ -295,7 +295,17 @@ D3D12_HEAP_FLAGS GetHeapFlagsForCommittedResource(Device* device,
 
 }  // namespace
 
-ResourceAllocatorManager::ResourceAllocatorManager(Device* device) : mDevice(device) {
+ResourceAllocatorManager::ResourceAllocatorManager(Device* device, QueueBase* queue)
+    : mDevice(device) {
+    mAllocatedMemoryTracker = AcquireRef(new AllocationSizeTracker());
+    mUsedMemoryTracker = AcquireRef(new AllocationSizeTracker());
+
+    // Register with the execution queue so UpdateCompletedSerialTo is called automatically.
+    queue->RegisterSerialProcessor(QueuePriority::BestEffort,
+                                   Ref<AllocationSizeTracker>(mAllocatedMemoryTracker));
+    queue->RegisterSerialProcessor(QueuePriority::BestEffort,
+                                   Ref<AllocationSizeTracker>(mUsedMemoryTracker));
+
     D3D12_HEAP_FLAGS createNotZeroedHeapFlag =
         mDevice->IsToggleEnabled(Toggle::D3D12CreateNotZeroedHeap)
             ? D3D12_HEAP_FLAG_CREATE_NOT_ZEROED
@@ -305,7 +315,8 @@ ResourceAllocatorManager::ResourceAllocatorManager(Device* device) : mDevice(dev
         const ResourceHeapKind resourceHeapKind = static_cast<ResourceHeapKind>(i);
         D3D12_HEAP_FLAGS heapFlags = GetD3D12HeapFlags(resourceHeapKind) | createNotZeroedHeapFlag;
         mHeapAllocators[i] = std::make_unique<HeapAllocator>(
-            mDevice, resourceHeapKind, heapFlags, GetMemorySegment(mDevice, resourceHeapKind));
+            mDevice, resourceHeapKind, heapFlags, GetMemorySegment(mDevice, resourceHeapKind),
+            mAllocatedMemoryTracker.Get());
         mPooledHeapAllocators[i] =
             std::make_unique<PooledResourceMemoryAllocator>(mHeapAllocators[i].get());
         mSubAllocatedResourceAllocators[i] = std::make_unique<BuddyMemoryAllocator>(
@@ -420,6 +431,14 @@ void ResourceAllocatorManager::DeallocateMemory(ResourceHeapAllocation& allocati
     if (allocation.GetInfo().mMethod == AllocationMethod::kDirect) {
         mHeapsToDelete.Enqueue(std::unique_ptr<ResourceHeapBase>(allocation.GetResourceHeap()),
                                mDevice->GetQueue()->GetPendingCommandSerial());
+
+        mUsedMemoryTracker->Decrement(mDevice->GetQueue()->GetPendingCommandSerial(),
+                                      allocation.GetInfo().mRequestedSize);
+        mAllocatedMemoryTracker->Decrement(mDevice->GetQueue()->GetPendingCommandSerial(),
+                                           allocation.GetInfo().mRequestedSize);
+    } else if (allocation.GetInfo().mMethod == AllocationMethod::kSubAllocated) {
+        mUsedMemoryTracker->Decrement(mDevice->GetQueue()->GetPendingCommandSerial(),
+                                      allocation.GetInfo().mRequestedSize);
     }
 
     // Invalidate the allocation immediately in case one accidentally
@@ -502,6 +521,8 @@ ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::CreatePlacedReso
             optimizedClearValue, IID_PPV_ARGS(&placedResource)),
         "ID3D12Device::CreatePlacedResource"));
 
+    mUsedMemoryTracker->Increment(resourceInfo.SizeInBytes);
+
     // After CreatePlacedResource has finished, the heap can be unlocked from residency. This
     // will insert it into the residency LRU.
     mDevice->GetResidencyManager()->UnlockAllocation(heap);
@@ -556,6 +577,9 @@ ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::CreateCommittedR
             optimizedClearValue, IID_PPV_ARGS(&committedResource)),
         "ID3D12Device::CreateCommittedResource"));
 
+    mAllocatedMemoryTracker->Increment(resourceInfo.SizeInBytes);
+    mUsedMemoryTracker->Increment(resourceInfo.SizeInBytes);
+
     // When using CreateCommittedResource, D3D12 creates an implicit heap that contains the
     // resource allocation. Because Dawn's memory residency management occurs at the resource
     // heap granularity, every directly allocated ResourceHeapAllocation also stores a Heap
@@ -581,6 +605,14 @@ void ResourceAllocatorManager::FreeRecycledAllocations() {
     for (auto& alloc : mPooledHeapAllocators) {
         alloc->FreeRecycledAllocations();
     }
+}
+
+uint64_t ResourceAllocatorManager::GetTotalAllocatedMemory() const {
+    return mAllocatedMemoryTracker->GetSize();
+}
+
+uint64_t ResourceAllocatorManager::GetTotalUsedMemory() const {
+    return mUsedMemoryTracker->GetSize();
 }
 
 }  // namespace dawn::native::d3d12

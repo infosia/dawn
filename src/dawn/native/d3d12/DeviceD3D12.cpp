@@ -144,7 +144,8 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     mSamplerHeapCache = std::make_unique<SamplerHeapCache>(this);
 
     mResidencyManager = std::make_unique<MutexProtected<ResidencyManager>>(this);
-    mResourceAllocatorManager = std::make_unique<MutexProtected<ResourceAllocatorManager>>(this);
+    mResourceAllocatorManager =
+        std::make_unique<MutexProtected<ResourceAllocatorManager>>(this, queue.Get());
 
     // ShaderVisibleDescriptorAllocators use the ResidencyManager and must be initialized after.
     DAWN_TRY_ASSIGN(
@@ -899,6 +900,15 @@ ComPtr<IDxcCompiler3> Device::GetDxcCompiler() const {
 
 const PerStage<std::wstring>& Device::GetDxcShaderProfiles() const {
     return mDxcShaderProfiles;
+}
+
+AllocatorMemoryInfo Device::GetAllocatorMemoryInfo() const {
+    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
+    AllocatorMemoryInfo info = {};
+    info.totalAllocatedMemory = (*mResourceAllocatorManager)->GetTotalAllocatedMemory();
+    info.totalUsedMemory = (*mResourceAllocatorManager)->GetTotalUsedMemory();
+    // D3D12 has no lazy memory concept, leave lazy fields as zero.
+    return info;
 }
 
 }  // namespace dawn::native::d3d12

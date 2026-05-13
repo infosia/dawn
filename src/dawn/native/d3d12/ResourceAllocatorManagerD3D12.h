@@ -76,7 +76,7 @@ enum ResourceHeapKind {
 // multiple allocation methods.
 class ResourceAllocatorManager {
   public:
-    explicit ResourceAllocatorManager(Device* device);
+    ResourceAllocatorManager(Device* device, QueueBase* queue);
     ~ResourceAllocatorManager();
 
     ResultOrError<ResourceHeapAllocation> AllocateMemory(
@@ -89,6 +89,9 @@ class ResourceAllocatorManager {
     void DeallocateMemory(ResourceHeapAllocation& allocation);
 
     void Tick(ExecutionSerial lastCompletedSerial);
+
+    uint64_t GetTotalAllocatedMemory() const;
+    uint64_t GetTotalUsedMemory() const;
 
   private:
     void FreeSubAllocatedMemory(ResourceHeapAllocation& allocation);
@@ -121,6 +124,9 @@ class ResourceAllocatorManager {
 
     SerialQueue<ExecutionSerial, ResourceHeapAllocation> mAllocationsToDelete;
     SerialQueue<ExecutionSerial, std::unique_ptr<ResourceHeapBase>> mHeapsToDelete;
+
+    Ref<AllocationSizeTracker> mAllocatedMemoryTracker;
+    Ref<AllocationSizeTracker> mUsedMemoryTracker;
 };
 
 }  // namespace dawn::native::d3d12
