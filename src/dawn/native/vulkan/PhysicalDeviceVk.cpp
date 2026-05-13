@@ -351,9 +351,12 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::PrimitiveIndex);
     }
 
+    // buffer_view decompositions may use u16 if the smallest access is 16-bit, so require
+    // shaderInt16 as well.
     bool shaderF16Enabled = false;
     if (mDeviceInfo.HasExt(DeviceExt::ShaderFloat16Int8) &&
         mDeviceInfo.shaderFloat16Int8Features.shaderFloat16 == VK_TRUE &&
+        mDeviceInfo.features.shaderInt16 == VK_TRUE &&
         mDeviceInfo._16BitStorageFeatures.storageBuffer16BitAccess == VK_TRUE) {
         EnableFeature(Feature::ShaderF16);
         shaderF16Enabled = true;

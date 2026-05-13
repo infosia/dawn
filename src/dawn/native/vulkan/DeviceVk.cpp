@@ -590,6 +590,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     bool shaderFloat16Int8FeaturesAdded = false;
     if (HasFeature(Feature::ShaderF16)) {
         DAWN_CHECK(usedKnobs.HasExt(DeviceExt::ShaderFloat16Int8) &&
+                   mDeviceInfo.features.shaderInt16 == VK_TRUE &&
                    mDeviceInfo.shaderFloat16Int8Features.shaderFloat16 == VK_TRUE &&
                    mDeviceInfo._16BitStorageFeatures.storageBuffer16BitAccess == VK_TRUE);
         if (!IsToggleEnabled(Toggle::DecomposeUniformBuffers)) {
@@ -597,6 +598,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
                        VK_TRUE);
         }
 
+        usedKnobs.features.shaderInt16 = VK_TRUE;
         usedKnobs.shaderFloat16Int8Features.shaderFloat16 = VK_TRUE;
         usedKnobs._16BitStorageFeatures.storageBuffer16BitAccess = VK_TRUE;
         if (!IsToggleEnabled(Toggle::DecomposeUniformBuffers)) {
