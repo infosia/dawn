@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #ifndef SRC_DAWN_NODE_BINDING_CONVERTER_H_
 #define SRC_DAWN_NODE_BINDING_CONVERTER_H_
 
@@ -49,6 +44,7 @@
 #include "src/dawn/node/binding/Errors.h"
 #include "src/dawn/node/interop/NodeAPI.h"
 #include "src/dawn/node/interop/WebGPU.h"
+#include "src/utils/compiler.h"
 
 namespace wgpu::binding {
 
@@ -423,7 +419,7 @@ class Converter {
         }
         auto* els = Allocate<std::remove_const_t<OUT>>(in.size());
         for (size_t i = 0; i < in.size(); i++) {
-            if (!Convert(els[i], in[i])) {
+            if (!Convert(DAWN_UNSAFE_TODO(els[i]), in[i])) {
                 return false;
             }
         }
@@ -444,7 +440,7 @@ class Converter {
         auto* els = Allocate<std::remove_const_t<OUT>>(in.size());
         size_t i = 0;
         for (auto& [key, value] : in) {
-            if (!Convert(els[i++], key, value)) {
+            if (!Convert(DAWN_UNSAFE_TODO(els[i++]), key, value)) {
                 return false;
             }
         }
