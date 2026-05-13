@@ -38,7 +38,7 @@ TestHelper::TestHelper()
 
 TestHelper::~TestHelper() = default;
 
-void TestHelper::ExpectError(std::string_view wgsl, std::string_view error) {
+void TestHelper::EXPECT_ERROR(std::string_view wgsl, std::string_view error) {
     wgsl::reader::Options options{
         .allowed_features = wgsl::AllowedFeatures::Everything(),
     };
@@ -55,7 +55,7 @@ void TestHelper::ExpectError(std::string_view wgsl, std::string_view error) {
                                                  << error << "\n";
 }
 
-void TestHelper::ExpectSuccess(std::string_view wgsl) {
+void TestHelper::EXPECT_SUCCESS(std::string_view wgsl) {
     wgsl::reader::Options options{
         .allowed_features = wgsl::AllowedFeatures::Everything(),
     };

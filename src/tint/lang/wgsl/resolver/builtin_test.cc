@@ -261,7 +261,7 @@ TEST_F(ResolverBuiltinArrayTest, ArrayLength_Vector) {
 }
 
 TEST_F(ResolverBuiltinArrayTest, ArrayLength_Buffer_Workgroup) {
-    ExpectSuccess(R"(
+    EXPECT_SUCCESS(R"(
 fn bar(p : ptr<workgroup, buffer>) -> u32 {
   return arrayLength(bufferView<array<u32>>(p, 0));
 }
@@ -271,7 +271,7 @@ fn foo(p : ptr<workgroup, buffer<128>>) -> u32 {
 }
 
 TEST_F(ResolverBuiltinArrayTest, ArrayLength_Buffer_Uniform) {
-    ExpectSuccess(R"(
+    EXPECT_SUCCESS(R"(
 fn bar(p : ptr<uniform, buffer>) -> u32 {
   return arrayLength(bufferView<array<u32>>(p, 0));
 }

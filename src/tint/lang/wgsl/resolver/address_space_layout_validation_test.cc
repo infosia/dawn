@@ -39,14 +39,14 @@ using ResolverAddressSpaceLayoutValidationTest = ResolverTest;
 
 // Detect unaligned member for storage buffers
 TEST_F(ResolverAddressSpaceLayoutValidationTest, StorageBuffer_UnalignedMember) {
-    ExpectError(R"(
+    EXPECT_ERROR(R"(
 struct S {
     @size(5) a : f32,
     @align(1) b : f32,
 };
 @group(0) @binding(0) var<storage> a : S;
 )",
-                R"(
+                 R"(
 input.wgsl:4:15 error: the offset of a struct member of type 'f32' in address space 'storage' must be a multiple of 4 bytes, but 'b' is currently at offset 5. Consider setting '@align(4)' on this member
     @align(1) b : f32,
               ^
@@ -67,7 +67,7 @@ input.wgsl:6:23 note: 'S' used in address space 'storage' here
 }
 
 TEST_F(ResolverAddressSpaceLayoutValidationTest, StorageBuffer_UnalignedMember_SuggestedFix) {
-    ExpectSuccess(R"(
+    EXPECT_SUCCESS(R"(
 struct S {
     @size(5) a : f32,
     @align(4) b : f32,
@@ -78,7 +78,7 @@ struct S {
 
 // Detect unaligned struct member for uniform buffers
 TEST_F(ResolverAddressSpaceLayoutValidationTest, UniformBuffer_UnalignedMember_Struct) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 struct Inner {
     scalar : i32,
@@ -119,7 +119,7 @@ input.wgsl:11:23 note: 'Outer' used in address space 'uniform' here
 
 TEST_F(ResolverAddressSpaceLayoutValidationTest,
        UniformBuffer_UnalignedMember_Struct_SuggestedFix) {
-    ExpectSuccess(R"(
+    EXPECT_SUCCESS(R"(
 struct Inner {
     scalar : i32,
 };
@@ -134,7 +134,7 @@ struct Outer {
 
 TEST_F(ResolverAddressSpaceLayoutValidationTest,
        UniformBuffer_MembersOffsetNotMultipleOf16_SuggestedFix) {
-    ExpectSuccess(R"(
+    EXPECT_SUCCESS(R"(
 struct Inner {
     @align(4) @size(5) scalar : i32,
 };
@@ -150,7 +150,7 @@ struct Outer {
 // Make sure that this doesn't fail validation because vec3's align is 16, but
 // size is 12. 's' should be at offset 12, which is okay here.
 TEST_F(ResolverAddressSpaceLayoutValidationTest, UniformBuffer_Vec3MemberOffset_NoFail) {
-    ExpectSuccess(R"(
+    EXPECT_SUCCESS(R"(
 struct ScalarPackedAtEndOfVec3 {
     v : vec3<f32>,
     s : f32,
@@ -161,7 +161,7 @@ struct ScalarPackedAtEndOfVec3 {
 // Make sure that this doesn't fail validation because vec3's align is 8, but
 // size is 6. 's' should be at offset 6, which is okay here.
 TEST_F(ResolverAddressSpaceLayoutValidationTest, UniformBuffer_Vec3F16MemberOffset_NoFail) {
-    ExpectSuccess(R"(
+    EXPECT_SUCCESS(R"(
 enable f16;
 struct ScalarPackedAtEndOfVec3 {
     v : vec3<f16>,
@@ -172,14 +172,14 @@ struct ScalarPackedAtEndOfVec3 {
 
 // Detect unaligned member for immediate data buffers
 TEST_F(ResolverAddressSpaceLayoutValidationTest, Immediate_UnalignedMember) {
-    ExpectError(R"(
+    EXPECT_ERROR(R"(
 struct S {
     @size(5) a : f32,
     @align(1) b : f32,
 };
 var<immediate> a : S;
 )",
-                R"(
+                 R"(
 input.wgsl:4:15 error: the offset of a struct member of type 'f32' in address space 'immediate' must be a multiple of 4 bytes, but 'b' is currently at offset 5. Consider setting '@align(4)' on this member
     @align(1) b : f32,
               ^
@@ -200,7 +200,7 @@ var<immediate> a : S;
 }
 
 TEST_F(ResolverAddressSpaceLayoutValidationTest, Immediate_Aligned) {
-    ExpectSuccess(R"(
+    EXPECT_SUCCESS(R"(
 struct S {
     @size(5) a : f32,
     @align(4i) b : f32,
@@ -210,7 +210,7 @@ var<immediate> a : S;
 }
 
 TEST_F(ResolverAddressSpaceLayoutValidationTest, AlignAttributeTooSmall_Storage) {
-    ExpectError(R"(
+    EXPECT_ERROR(R"(
 struct S {
   @align(4) vector : vec4u,
   scalar : u32,
@@ -218,7 +218,7 @@ struct S {
 
 @group(0) @binding(0) var<storage, read_write> a : array<S>;
 )",
-                R"(
+                 R"(
 input.wgsl:3:10 error: alignment must be a multiple of '16' bytes for the 'storage' address space
   @align(4) vector : vec4u,
          ^
@@ -230,7 +230,7 @@ input.wgsl:7:23 note: 'S' used in address space 'storage' here
 }
 
 TEST_F(ResolverAddressSpaceLayoutValidationTest, AlignAttributeTooSmall_Workgroup) {
-    ExpectError(R"(
+    EXPECT_ERROR(R"(
 struct S {
   @align(4) vector : vec4u,
   scalar : u32,
@@ -238,7 +238,7 @@ struct S {
 
 var<workgroup> a : array<S, 4>;
 )",
-                R"(
+                 R"(
 input.wgsl:3:10 error: alignment must be a multiple of '16' bytes for the 'workgroup' address space
   @align(4) vector : vec4u,
          ^
@@ -250,14 +250,14 @@ var<workgroup> a : array<S, 4>;
 }
 
 TEST_F(ResolverAddressSpaceLayoutValidationTest, AlignAttributeTooSmall_Private) {
-    ExpectError(R"(
+    EXPECT_ERROR(R"(
 struct S {
   @align(4) vector : vec4u,
   scalar : u32,
 };
 var<private> a : array<S, 4>;
 )",
-                R"(
+                 R"(
 input.wgsl:3:10 error: alignment must be a multiple of '16' bytes for the 'private' address space
   @align(4) vector : vec4u,
          ^
@@ -269,7 +269,7 @@ var<private> a : array<S, 4>;
 }
 
 TEST_F(ResolverAddressSpaceLayoutValidationTest, AlignAttributeTooSmall_Function) {
-    ExpectError(R"(
+    EXPECT_ERROR(R"(
 struct S {
   @align(4) vector : vec4u,
   scalar : u32,
@@ -279,7 +279,7 @@ fn foo() {
   var a : array<S, 4>;
 }
 )",
-                R"(
+                 R"(
 input.wgsl:3:10 error: alignment must be a multiple of '16' bytes for the 'function' address space
   @align(4) vector : vec4u,
          ^

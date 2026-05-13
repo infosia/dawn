@@ -410,7 +410,7 @@ TEST_F(ResolverBufferViewTest, Return_NonHostShareable_Workgroup) {
 }
 
 TEST_F(ResolverBufferViewTest, Offset_Overflow) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 @group(0) @binding(0) var<storage, read_write> v : buffer<24>;
 fn foo() {
@@ -425,7 +425,7 @@ input.wgsl:4:29 error: the offset argument of bufferView plus the minimum size o
 }
 
 TEST_F(ResolverBufferViewTest, Variable_TooSmall_ThroughFunction) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 @group(0) @binding(0) var<storage, read_write> v : buffer<64>;
 fn foo(p : ptr<storage, buffer, read_write>) {
@@ -447,7 +447,7 @@ input.wgsl:4:7 note: due to call here
 }
 
 TEST_F(ResolverBufferViewTest, Parameter_TooSmall_ThroughFunction) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 fn foo(p : ptr<storage, buffer, read_write>) {
   _ = bufferView<u32>(p, 64);
@@ -468,7 +468,7 @@ input.wgsl:3:7 note: due to call here
 }
 
 TEST_F(ResolverBufferViewTest, MinSizeViolation) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 struct S {
   a : vec4u,
@@ -486,7 +486,7 @@ input.wgsl:7:24 error: the offset argument of bufferView plus the minimum size o
 }
 
 TEST_F(ResolverBufferViewTest, MinSizeViolation_ConstOffset) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 struct S {
   a : vec4u,
@@ -720,7 +720,7 @@ TEST_F(ResolverBufferArrayViewTest, InvalidType) {
 }
 
 TEST_F(ResolverBufferArrayViewTest, OffsetAndSize_TooSmall_Vec3) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 struct S {
   a : vec2<u32>,
@@ -739,7 +739,7 @@ input.wgsl:8:7 error: the buffer (24 bytes) must be large enough to include one 
 }
 
 TEST_F(ResolverBufferArrayViewTest, OffsetAndSize_Overflow) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 struct S {
   a : vec2<u32>,
@@ -758,7 +758,7 @@ input.wgsl:8:7 error: the offset and size arguments of bufferArrayView plus the 
 }
 
 TEST_F(ResolverBufferArrayViewTest, Size_StrideDivisble) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 @group(0) @binding(0) var<storage, read_write> v : buffer;
 fn foo() {
@@ -773,7 +773,7 @@ input.wgsl:4:42 error: the size argument (5 bytes) of bufferArrayView minus the 
 }
 
 TEST_F(ResolverBufferArrayViewTest, Size_StrideDivisbleWithReturnOffset) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 struct S {
   a : vec2<u32>,
@@ -792,7 +792,7 @@ input.wgsl:8:33 error: the size argument (13 bytes) of bufferArrayView minus the
 }
 
 TEST_F(ResolverBufferArrayViewTest, Variable_TooSmall_ThroughFunction) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 @group(0) @binding(0) var<storage, read_write> v : buffer<64>;
 fn foo(p : ptr<storage, buffer, read_write>) {
@@ -814,7 +814,7 @@ input.wgsl:4:7 note: due to call here
 }
 
 TEST_F(ResolverBufferArrayViewTest, Parameter_TooSmall_ThroughFunction) {
-    ExpectError(
+    EXPECT_ERROR(
         R"(
 struct S {
   a : vec2u,
