@@ -667,7 +667,7 @@ ResultOrError<VkSurfaceKHR> CreateVulkanSurface(InstanceBase* instance,
 
 #if defined(DAWN_USE_WAYLAND)
         case Surface::Type::WaylandSurface: {
-            if (info.HasExt(InstanceExt::XlibSurface)) {
+            if (info.HasExt(InstanceExt::WaylandSurface)) {
                 VkWaylandSurfaceCreateInfoKHR createInfo;
                 createInfo.sType = VK_STRUCTURE_TYPE_WAYLAND_SURFACE_CREATE_INFO_KHR;
                 createInfo.pNext = nullptr;
