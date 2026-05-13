@@ -4,7 +4,15 @@ URL: https://github.com/microsoft/DirectX-Shader-Compiler
 Update Mechanism: Autoroll
 Security Critical: yes
 Version: N/A
+<<<<<<< PATCH SET (77e885dcb126a5da1880171d321b0a0552fee084 Update License ID's based on LICENSE file)
+Revision: 348fc78326a18d7314de41fc8db339c8181e6511
+License: BSD-3-Clause, GPL-2.0-with-autoconf-exception, ISC, MIT, NCSA, Spencer-86, Unlicense, bcrypt-Solar-Designer, unicode_org
+||||||| BASE      (e872058ec5e468732fff6427334fbc81ef18a2fe [native] Spanify as much of the caching surface in native as)
+Revision: 348fc78326a18d7314de41fc8db339c8181e6511
+License: LLVM
+=======
 Revision: 42da79c4df141de195b78e8a92c5d1e40f2346f5
 License: LLVM
+>>>>>>> BASE      (e164e491545b8de47eca49771759430990e21ae1 Remove stale WebGPU Compat CTS expectations)
 License File: LICENSE
 Shipped: yes
