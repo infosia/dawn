@@ -47,4 +47,8 @@ source_set("chromium_test_compat") {
   ]
 
   public_configs = [ ":internal_config" ]
+
+  deps = [
+    "../:utils",
+  ]
 }
