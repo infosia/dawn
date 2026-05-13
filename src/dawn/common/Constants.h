@@ -124,6 +124,10 @@ inline constexpr uint32_t kReservedResourceTableSlots = 1000;
 // Required D3D12 shared buffer memory file mapping handle. The size must be a multiple of
 // `D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT` (65536) to hold a D3D12 buffer resource.
 inline constexpr uint32_t kD3D12SharedBufferMemoryFileMappingHandleSizeAlignment = 65536;
+
+// The size of the zero buffer on D3D12 (4MB). Value may change in the future to better accommodate
+// large clears.
+inline constexpr uint64_t kD3D12ZeroBufferSize = 4 * 1024 * 1024;
 }  // namespace dawn
 
 #endif  // SRC_DAWN_COMMON_CONSTANTS_H_
