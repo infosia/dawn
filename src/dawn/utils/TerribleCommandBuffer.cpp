@@ -87,4 +87,19 @@ bool TerribleCommandBuffer::Empty() {
     return mOffset == 0;
 }
 
+size_t TerribleCommandBuffer::GetOffsetForTesting() const {
+    return mOffset;
+}
+
+void TerribleCommandBuffer::SetOffsetForTesting(size_t offset) {
+    mOffset = offset;
+}
+
+dawn::wire::DeserializeBuffer TerribleCommandBuffer::GetDeserializeBufferForTesting(
+    size_t startOffset,
+    size_t endOffset) {
+    DAWN_ASSERT(endOffset >= startOffset);
+    return dawn::wire::DeserializeBuffer(&mBuffer[startOffset], endOffset - startOffset);
+}
+
 }  // namespace dawn::utils
