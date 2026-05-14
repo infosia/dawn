@@ -16,6 +16,57 @@
       "message": "I think this is equivalent in terms of guaranteeing that attachments are cleared? It also fixes the regression seen in css_value_type_shadow dropped frames and CPU time.",
       "revId": "82e7b7ac53b9e24fdd642cbdd7640324bd60e886",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17552819_986de2a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-14T19:45:26Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "82e7b7ac53b9e24fdd642cbdd7640324bd60e886",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dde2099b_4adf81b2",
+        "filename": "src/dawn/native/CommandBuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-14T19:45:26Z",
+      "side": 1,
+      "message": "I don\u0027t know that reverting all of these names back to their \"3D\" variants is worthwhile? In all cases they clear the texture, 3D or otherwise.",
+      "revId": "82e7b7ac53b9e24fdd642cbdd7640324bd60e886",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8473db2_2b775d31",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-14T19:45:26Z",
+      "side": 1,
+      "message": "Answering my own question here for posterity: The reason we pass this as a flag instead of expanding the `renderArea` in the code above is because the render pass scissor will still be set to the un-expanded values.",
+      "revId": "82e7b7ac53b9e24fdd642cbdd7640324bd60e886",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
