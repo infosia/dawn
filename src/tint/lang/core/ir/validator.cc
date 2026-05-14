@@ -2613,9 +2613,11 @@ void Validator::CheckRootBlock(const Block* blk) {
                     AddError(inst) << "root block: invalid instruction: " << inst->TypeInfo().name;
                 }
             });
+
+        // Process tasks queued by CheckInstruction (like AddResults) before moving to next
+        // instruction.
+        ProcessTasks();
     }
-    // Our ConstExprIfs in the root require us to process tasks here.
-    ProcessTasks();
 }
 
 void Validator::CheckOnlyUsedInRootBlock(const Instruction* inst) {
@@ -3441,6 +3443,17 @@ void Validator::CheckInstruction(const Instruction* inst) {
             allowed_types);
     }
 
+    // Push a task to add the results to the scope.
+    // This ensures that for control instructions, the results are only added to the scope
+    // after their nested blocks have been evaluated (since tasks are processed LIFO).
+    tasks_.Push([this, inst] {
+        for (auto* result : inst->Results()) {
+            if (result) {
+                scope_stack_.Add(result);
+            }
+        }
+    });
+
     tint::Switch(
         inst,                                                              //
         [&](const Access* a) { CheckAccess(a); },                          //
@@ -3461,10 +3474,6 @@ void Validator::CheckInstruction(const Instruction* inst) {
         [&](const Override* o) { CheckOverride(o); },                      //
         [&](const Var* var) { CheckVar(var); },                            //
         [&](const Default) { AddError(inst) << "missing validation"; });
-
-    for (auto* result : results) {
-        scope_stack_.Add(result);
-    }
 }
 
 void Validator::CheckOverride(const Override* o) {

@@ -1975,4 +1975,40 @@ TEST_F(IR_ValidatorDeathTest, ValidateIfNeeded_Enabled) {
 #endif
 }
 
+TEST_F(IR_ValidatorTest, Scoping_LoopResultUsedInBody) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* loop = b.Loop();
+        loop->AddResult(b.InstructionResult(ty.u32()));
+        b.Append(loop->Body(), [&] {
+            auto* s = b.Switch(loop->Result(0));
+            b.Case(s, {b.Constant(0_u)});
+            b.Continue(loop);
+        });
+        b.Unreachable();
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason, testing::HasSubstr("error: switch: %2 is not in scope"));
+}
+
+TEST_F(IR_ValidatorTest, Scoping_IfResultUsedInTrueBlock) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* if_ = b.If(true);
+        if_->AddResult(b.InstructionResult(ty.u32()));
+        b.Append(if_->True(), [&] {
+            b.Add(if_->Result(0), 1_u);
+            b.ExitIf(if_, b.Value(0_u));
+        });
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason, testing::HasSubstr("error: binary: %2 is not in scope"));
+}
+
 }  // namespace tint::core::ir
