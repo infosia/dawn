@@ -818,7 +818,9 @@ class CopyTests_T2TBase : public CopyTests, public Parent {
                 const wgpu::Extent3D& copySize,
                 wgpu::TextureDimension srcDimension,
                 wgpu::TextureDimension dstDimension,
-                bool copyWithinSameTexture = false) {
+                bool copyWithinSameTexture = false,
+                wgpu::TextureViewDimension srcBindingViewDimension = wgpu::TextureViewDimension::Undefined,
+                wgpu::TextureViewDimension dstBindingViewDimension = wgpu::TextureViewDimension::Undefined) {
         const wgpu::TextureFormat format = srcSpec.format;
 
         wgpu::TextureDescriptor srcDescriptor;
@@ -828,6 +830,14 @@ class CopyTests_T2TBase : public CopyTests, public Parent {
         srcDescriptor.format = format;
         srcDescriptor.mipLevelCount = srcSpec.levelCount;
         srcDescriptor.usage = wgpu::TextureUsage::CopyDst | wgpu::TextureUsage::CopySrc;
+
+        // Test cube texture copy for compat.
+        wgpu::TextureBindingViewDimension srcTextureBindingViewDimensionDesc;
+        if (srcBindingViewDimension != wgpu::TextureViewDimension::Undefined) {
+            srcTextureBindingViewDimensionDesc.textureBindingViewDimension = srcBindingViewDimension;
+            srcDescriptor.nextInChain = &srcTextureBindingViewDimensionDesc;
+        }
+
         wgpu::Texture srcTexture = this->device.CreateTexture(&srcDescriptor);
 
         wgpu::Texture dstTexture;
@@ -841,6 +851,14 @@ class CopyTests_T2TBase : public CopyTests, public Parent {
             dstDescriptor.format = dstSpec.format;
             dstDescriptor.mipLevelCount = dstSpec.levelCount;
             dstDescriptor.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
+
+            // Test cube texture copy for compat.
+            wgpu::TextureBindingViewDimension dstTextureBindingViewDimension;
+            if (dstBindingViewDimension != wgpu::TextureViewDimension::Undefined) {
+                dstTextureBindingViewDimension.textureBindingViewDimension = dstBindingViewDimension;
+                dstDescriptor.nextInChain = &dstTextureBindingViewDimension;
+            }
+
             dstTexture = this->device.CreateTexture(&dstDescriptor);
         }
 
@@ -3621,6 +3639,79 @@ DAWN_INSTANTIATE_TEST_P(CopyTests_T2T_Srgb,
                          WebGPUBackend()},
                         {wgpu::TextureFormat::RGBA8Unorm, wgpu::TextureFormat::RGBA8UnormSrgb,
                          wgpu::TextureFormat::BGRA8Unorm, wgpu::TextureFormat::BGRA8UnormSrgb});
+
+class CopyTests_T2T_Compat : public CopyTests_T2T {
+  protected:
+    void SetUp() override {
+        CopyTests_T2T::SetUp();
+        DAWN_TEST_UNSUPPORTED_IF(!IsCompatibilityMode());
+        DAWN_SUPPRESS_TEST_IF(IsANGLESwiftShader());
+    }
+};
+
+// Test copying 2d texture array with binding view dimension set to cube.
+TEST_P(CopyTests_T2T_Compat, TextureCubeToCubeFull) {
+    constexpr uint32_t kWidth = 32;
+    constexpr uint32_t kHeight = 32;
+    constexpr uint32_t kLayers = 6;
+
+    TextureSpec textureSpec;
+    textureSpec.textureSize = {kWidth, kHeight, kLayers};
+
+    DoTest(textureSpec, textureSpec, {kWidth, kHeight, kLayers},
+            wgpu::TextureDimension::e2D, wgpu::TextureDimension::e2D, false,
+            wgpu::TextureViewDimension::Cube, wgpu::TextureViewDimension::Cube);
+}
+
+TEST_P(CopyTests_T2T_Compat, Texture2DToCubeFull) {
+    constexpr uint32_t kWidth = 32;
+    constexpr uint32_t kHeight = 32;
+    constexpr uint32_t kLayers = 6;
+
+    TextureSpec textureSpec;
+    textureSpec.textureSize = {kWidth, kHeight, kLayers};
+
+    DoTest(textureSpec, textureSpec, {kWidth, kHeight, kLayers},
+            wgpu::TextureDimension::e2D, wgpu::TextureDimension::e2D, false,
+            wgpu::TextureViewDimension::Undefined, wgpu::TextureViewDimension::Cube);
+}
+
+TEST_P(CopyTests_T2T_Compat, TextureCubeTo2DFull) {
+    constexpr uint32_t kWidth = 32;
+    constexpr uint32_t kHeight = 32;
+    constexpr uint32_t kLayers = 6;
+
+    TextureSpec textureSpec;
+    textureSpec.textureSize = {kWidth, kHeight, kLayers};
+
+    DoTest(textureSpec, textureSpec, {kWidth, kHeight, kLayers},
+            wgpu::TextureDimension::e2D, wgpu::TextureDimension::e2D, false,
+            wgpu::TextureViewDimension::Cube, wgpu::TextureViewDimension::Undefined);
+}
+
+DAWN_INSTANTIATE_TEST_P(CopyTests_T2T_Compat,
+                        {
+                            D3D11Backend(),
+                            D3D11Backend({"d3d11_disable_map_on_default_buffers"}),
+                            OpenGLBackend(),
+                            OpenGLESBackend(),
+                            OpenGLESBackend({"gl_defer"}),
+                        },
+                        {
+                            // Control case: format not using blit workaround
+                            wgpu::TextureFormat::RGBA8Unorm,
+
+                            // Testing OpenGL compat Toggle::UseBlitForSnormTextureToBufferCopy
+                            wgpu::TextureFormat::R8Snorm,
+                            wgpu::TextureFormat::RG8Snorm,
+                            wgpu::TextureFormat::RGBA8Snorm,
+
+                            // Testing OpenGL compat Toggle::UseBlitForBGRA8UnormTextureToBufferCopy
+                            wgpu::TextureFormat::BGRA8Unorm,
+
+                            // Testing OpenGL compat Toggle::UseBlitForRGB9E5UfloatTextureCopy
+                            wgpu::TextureFormat::RGB9E5Ufloat,
+                        });
 
 static constexpr uint64_t kSmallBufferSize = 4;
 static constexpr uint64_t kLargeBufferSize = 1 << 16;
