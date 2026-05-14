@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5be29f4f_d692e4ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-14T21:26:54Z",
+      "side": 1,
+      "message": "Switching reviewers due to FR holiday",
+      "revId": "75a58ecd416da7c89fcf0da7f57bedc379385a6c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f14bae3a_6f8f8934",
