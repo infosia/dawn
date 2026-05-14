@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cdcd743_18c983fe",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-14T18:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91477b28_8b9dc7d4",
+      "revId": "e7df3edbb956a134f0a1ff4006c13b03653881aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6b0bbf8_fdab624b",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-05-06T14:27:51Z",
       "side": 1,
       "message": "wrong",
+      "range": {
+        "startLine": 292,
+        "startChar": 61,
+        "endLine": 292,
+        "endChar": 70
+      },
+      "revId": "e7df3edbb956a134f0a1ff4006c13b03653881aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1524b8bf_13b11589",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-14T18:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6b0bbf8_fdab624b",
       "range": {
         "startLine": 292,
         "startChar": 61,

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f75a2e2_0491e0fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-14T18:31:41Z",
+      "side": 1,
+      "message": "@dsinclair@chromium.org I\u0027ll need help with this, I don\u0027t understand what\u0027s supposed to be validated and what doesn\u0027t need to be. Right now there is only one `return Failure` and I don\u0027t know if there\u0027s a reason that one is needed and others are not.",
+      "revId": "a45e7d3b7d8924df9966361105114506c89d5c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55fe824d_947390b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-14T18:31:41Z",
+      "side": 1,
+      "message": "PTAL but no rush because I\u0027m putting this project down again for a bit",
+      "revId": "a45e7d3b7d8924df9966361105114506c89d5c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
