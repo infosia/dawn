@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8fce75c_e91d9ab9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-14T19:04:48Z",
+      "side": 1,
+      "message": "If we need information from dawn, we\u0027ll add it to validate to make sure it\u0027s present. (Like, I\u0027m guessing the unittests have missing config data that we should be validating for and causing a Failure if missing which is why the structs are empty?)\n\nWe\u0027ll often validate and then TINT_IR_ICE later just out of paranoia. The ice should never happen, but it\u0027s a safety net in case, for some reason, the validation gets broken/removed/skipped.\n\nIf you can point me specific places you\u0027re questioning I can probably give more specific answers, heh.",
+      "parentUuid": "8f75a2e2_0491e0fc",
+      "revId": "a45e7d3b7d8924df9966361105114506c89d5c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "55fe824d_947390b5",
@@ -31,6 +49,57 @@
       "writtenOn": "2026-05-14T18:31:41Z",
       "side": 1,
       "message": "PTAL but no rush because I\u0027m putting this project down again for a bit",
+      "revId": "a45e7d3b7d8924df9966361105114506c89d5c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2eb5ead1_5aa699ba",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-14T19:04:48Z",
+      "side": 1,
+      "message": "Can we turn the formatter on?",
+      "revId": "a45e7d3b7d8924df9966361105114506c89d5c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34d31cb3_c4159da8",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-14T19:04:48Z",
+      "side": 1,
+      "message": "Is it right that these structs ended up empty?",
+      "revId": "a45e7d3b7d8924df9966361105114506c89d5c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a993f57f_70219a07",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-14T19:04:48Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these have been moved into the arg buffers?",
       "revId": "a45e7d3b7d8924df9966361105114506c89d5c43",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
