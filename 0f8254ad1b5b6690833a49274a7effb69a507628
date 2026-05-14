@@ -86,6 +86,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37dab843_8f7c10c3",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd41be3_73d7defb",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 96
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32e96fe8_240946d3",
@@ -127,6 +151,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1de4bb3_7294a1be",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32e96fe8_240946d3",
+      "range": {
+        "startLine": 101,
+        "startChar": 65,
+        "endLine": 101,
+        "endChar": 82
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fdcd16b8_96da3025",
@@ -140,6 +188,30 @@
       "writtenOn": "2026-05-12T22:31:32Z",
       "side": 1,
       "message": "Q: Should we handle this gracefully like we do for the callbacks below? I\u0027m not sure we should have an assert/CHECK that fails on bad client behavior?",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 43
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c772f1e1_2fdee1b8",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "This is supposed to be an invariant to ensure that our code is written correctly, so leaving as is.",
+      "parentUuid": "fdcd16b8_96da3025",
       "range": {
         "startLine": 115,
         "startChar": 0,
@@ -281,6 +353,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05589d0c_e04d974d",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ff24301_f6e82f2b",
+      "range": {
+        "startLine": 264,
+        "startChar": 19,
+        "endLine": 264,
+        "endChar": 31
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46a0e529_3725408b",
@@ -382,6 +478,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4e9c0f9_f6d8631e",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46a0e529_3725408b",
+      "range": {
+        "startLine": 266,
+        "startChar": 9,
+        "endLine": 266,
+        "endChar": 21
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e9e8bf8_c5099172",
@@ -453,6 +573,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34c5f4e5_96643f60",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e9e8bf8_c5099172",
+      "range": {
+        "startLine": 281,
+        "startChar": 24,
+        "endLine": 281,
+        "endChar": 41
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ece17912_3dc5447b",
@@ -476,6 +620,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39a6c8a0_1b057feb",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ece17912_3dc5447b",
+      "range": {
+        "startLine": 313,
+        "startChar": 20,
+        "endLine": 323,
+        "endChar": 21
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "332480c4_797cd0c0",
@@ -489,6 +657,30 @@
       "writtenOn": "2026-05-12T22:31:32Z",
       "side": 1,
       "message": "nit: Create an event that can be manually signaled.",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 59
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90189ad4_fa1b0038",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "332480c4_797cd0c0",
       "range": {
         "startLine": 159,
         "startChar": 4,
@@ -540,6 +732,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "683ba823_29d90054",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "You suggested this before also, see my response in https://dawn-review.git.corp.google.com/c/dawn/+/300818/comment/4aebec59_cca25f42/. Basically I wasn\u0027t able to do it easily and switch the ctor depending on a condition so it ended up being a lot easier to provide this additional overload. It is at least protected so it should be alright for now.",
+      "parentUuid": "9e93b09b_97e52f8d",
+      "range": {
+        "startLine": 160,
+        "startChar": 64,
+        "endLine": 160,
+        "endChar": 69
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfc83ab0_b89be93e",
@@ -563,6 +779,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "266d7355_37985cb4",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfc83ab0_b89be93e",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 35
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32132f13_4068a077",
@@ -576,6 +816,30 @@
       "writtenOn": "2026-05-12T22:31:32Z",
       "side": 1,
       "message": "u-nit: maybe put the Atomic above the comment block about the queue ref cycle?",
+      "range": {
+        "startLine": 198,
+        "startChar": 4,
+        "endLine": 198,
+        "endChar": 97
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc351f35_789d195e",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-14T18:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32132f13_4068a077",
       "range": {
         "startLine": 198,
         "startChar": 4,
