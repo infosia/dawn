@@ -115,8 +115,8 @@ config("internal_config") {
   }
 
   if (build_with_chromium || use_fuzzing_engine) {
-    # Does a hard abort when an assertion fails so that fuzzers catch and parse the failure.
-    # Also call abort() so chrome can dump crash stach in console.
+    # Does a hard abort when an assertion fails so that fuzzers catch and parse
+    # the failure. Also call abort() so chrome can dump crash stach in console.
     defines += [ "DAWN_ABORT_ON_ASSERT" ]
   }
 
@@ -192,7 +192,8 @@ config("internal_config") {
   cflags = []
 
   if (is_clang) {
-    # We use __builtin_assume liberally in DAWN_ASSERT, allow ignoring side-effects there.
+    # We use __builtin_assume liberally in DAWN_ASSERT, allow ignoring
+    # side-effects there.
     cflags += [ "-Wno-assume" ]
 
     # Flags use of __COUNTER__, which is used in histogram macros that were
@@ -243,7 +244,8 @@ config("internal_config") {
 
     if (is_win) {
       cflags += [
-        # clang-cl doesn't know -pedantic, pass it explicitly to the clang driver
+        # clang-cl doesn't know -pedantic, pass it explicitly to the clang
+        # driver
         "/clang:-pedantic",
 
         # Allow the use of __uuidof()
@@ -259,10 +261,10 @@ config("internal_config") {
     # MSVC considers these invalid switch values. crbug.com/dawn/397.
     cflags += [ "/wd4063" ]
 
-    # MSVC things that a switch over all the enum values of an enum class is
-    # not sufficient to cover all control paths. Turn off this warning so that
-    # the respective clang warning tells us where to add switch cases
-    # (otherwise we have to add default: DAWN_UNREACHABLE() that silences clang too)
+    # MSVC things that a switch over all the enum values of an enum class is not
+    # sufficient to cover all control paths. Turn off this warning so that the
+    # respective clang warning tells us where to add switch cases (otherwise we
+    # have to add default: DAWN_UNREACHABLE() that silences clang too)
     cflags += [ "/wd4715" ]
 
     # MSVC needs a flag to enable a standard-compliant preprocessor.
@@ -382,6 +384,7 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       "StackAllocated.h",
       "StringViewUtils.cpp",
       "StringViewUtils.h",
+      "Strings.h",
       "SystemUtils.cpp",
       "SystemUtils.h",
       "ThreadLocal.cpp",

@@ -649,7 +649,7 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
     )
 endif()
 
-if ((DAWN_ENABLE_OPENGL OR DAWN_ENABLE_VULKAN) AND DAWN_ENABLE_SPIRV_VALIDATION)
+if (DAWN_ENABLE_SPIRV_VALIDATION)
     list(APPEND private_headers
         "SpirvValidation.h"
     )
@@ -977,7 +977,7 @@ if (DAWN_ENABLE_D3D12)
     endif()
 endif()
 
-if ((DAWN_ENABLE_OPENGL OR DAWN_ENABLE_VULKAN) AND DAWN_ENABLE_SPIRV_VALIDATION)
+if (DAWN_ENABLE_SPIRV_VALIDATION)
     target_compile_definitions(dawn_native PRIVATE "DAWN_ENABLE_SPIRV_VALIDATION")
     target_compile_definitions(dawn_native_objects PRIVATE "DAWN_ENABLE_SPIRV_VALIDATION")
 endif()
