@@ -263,6 +263,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de636c66_279dcb6e",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-14T15:43:06Z",
+      "side": 1,
+      "message": "Resolving this as we won\u0027t be using DirectX-Headers.",
+      "parentUuid": "d406698b_4dda410b",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 29
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0fd19bf_aca6a84a",
@@ -821,6 +845,30 @@
       "side": 1,
       "message": "I\u0027m going to work on adding this to CIPD.",
       "parentUuid": "5ab9ce6d_9143bd2c",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcce6448_10c244d7",
+        "filename": "tools/fetch_agility_sdk.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-14T15:43:06Z",
+      "side": 1,
+      "message": "Resolving this thread as I want to try to land this CL before Agility SDK goes into CIPD.",
+      "parentUuid": "28dfe2b0_4df411dc",
       "range": {
         "startLine": 38,
         "startChar": 0,
