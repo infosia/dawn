@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1abd756_b3ae1e1a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-14T21:06:15Z",
+      "side": 0,
+      "message": "All of the tests pass locally for me, so this feels like more of a sign than a cop?",
+      "revId": "8426470169dddb7691f379bffca5f1b7b6114ebc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
