@@ -84,6 +84,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kNotEqual:
         case BuiltinFn::kTextureSize:
         case BuiltinFn::kImageSize:
+        case BuiltinFn::kUaddCarry:
         case BuiltinFn::kNone:
             break;
     }
