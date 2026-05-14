@@ -51,7 +51,7 @@ import urllib.request
 import zipfile
 
 package_id = "Microsoft.Direct3D.D3D12"
-DEFAULT_VERSION = "1.619.2"
+DEFAULT_VERSION = "1.720.0"
 DEFAULT_OUTPUT_BASE = os.path.join("third_party", "agility_sdk")
 
 

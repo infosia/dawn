@@ -160,7 +160,7 @@ if (dawn_standalone && (dawn_enable_d3d11 || dawn_enable_d3d12)) {
 # Note: If you disable dawn_use_agility_sdk, run 'gn clean' or manually delete
 # out/XXX/D3D12/ to avoid loading stale DLLs.
 if (dawn_enable_d3d12) {
-  _agility_sdk_dir = "//third_party/agility_sdk_1.619.2"
+  _agility_sdk_dir = "//third_party/agility_sdk_1.720.0-preview"
 
   # Config for D3D12 headers from the Agility SDK.
   # Applied as a public_config so it propagates to all targets (including tests)
@@ -179,7 +179,7 @@ if (dawn_enable_d3d12) {
 
 if (dawn_use_agility_sdk) {
   if (!defined(_agility_sdk_dir)) {
-    _agility_sdk_dir = "//third_party/agility_sdk_1.619.2"
+    _agility_sdk_dir = "//third_party/agility_sdk_1.720.0-preview"
   }
   if (target_cpu == "x64") {
     copy("copy_agility_sdk_dlls") {
