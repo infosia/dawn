@@ -555,6 +555,8 @@ TEST_P(SubgroupMatrix_MatrixMatrixArithmeticTest, MatrixMultiply) {
                    << ComponentTypeToWgslType(config.resultComponentType);
         SCOPED_TRACE(configInfo.str());
 
+        std::cout << configInfo.str() << "\n";  // Print it
+
         TestSubgroupMatrixConfig(config, op, info.subgroupMaxSize, columnMajor);
     }
 }

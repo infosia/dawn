@@ -137,14 +137,20 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
     // Query supported shader models from highest to lowest.
     // D3D_SHADER_MODEL_6_10 is only defined in the Agility SDK headers; guard it
     // so builds that fall back to the Windows SDK header still compile.
-    D3D12_FEATURE_DATA_SHADER_MODEL knownShaderModels[] = {
-#if defined(D3D_SHADER_MODEL_6_10)
-        {D3D_SHADER_MODEL_6_10},
-#endif
-        {D3D_SHADER_MODEL_6_9},  {D3D_SHADER_MODEL_6_8}, {D3D_SHADER_MODEL_6_7},
-        {D3D_SHADER_MODEL_6_6},  {D3D_SHADER_MODEL_6_5}, {D3D_SHADER_MODEL_6_4},
-        {D3D_SHADER_MODEL_6_3},  {D3D_SHADER_MODEL_6_2}, {D3D_SHADER_MODEL_6_1},
-        {D3D_SHADER_MODEL_6_0},  {D3D_SHADER_MODEL_5_1}};
+    D3D12_FEATURE_DATA_SHADER_MODEL knownShaderModels[] = {// #if defined(D3D_SHADER_MODEL_6_10)
+                                                           {D3D_SHADER_MODEL_6_10},
+                                                           // #endif
+                                                           {D3D_SHADER_MODEL_6_9},
+                                                           {D3D_SHADER_MODEL_6_8},
+                                                           {D3D_SHADER_MODEL_6_7},
+                                                           {D3D_SHADER_MODEL_6_6},
+                                                           {D3D_SHADER_MODEL_6_5},
+                                                           {D3D_SHADER_MODEL_6_4},
+                                                           {D3D_SHADER_MODEL_6_3},
+                                                           {D3D_SHADER_MODEL_6_2},
+                                                           {D3D_SHADER_MODEL_6_1},
+                                                           {D3D_SHADER_MODEL_6_0},
+                                                           {D3D_SHADER_MODEL_5_1}};
 
     uint32_t driverShaderModel = 0;
     for (D3D12_FEATURE_DATA_SHADER_MODEL shaderModel : knownShaderModels) {
@@ -168,7 +174,7 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
 
     DAWN_ASSERT(shaderModelMajor < 10);
     DAWN_ASSERT(shaderModelMinor < 16);
-    info.highestSupportedShaderModel = 10 * shaderModelMajor + shaderModelMinor;
+    info.highestSupportedShaderModel = ShaderModel(shaderModelMajor, shaderModelMinor);
 
     // Device support wave intrinsics if shader model >= SM6.0 and capabilities flag WaveOps is set.
     // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics

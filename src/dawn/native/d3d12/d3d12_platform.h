@@ -40,8 +40,8 @@
 #pragma clang diagnostic ignored "-Wmicrosoft-enum-value"
 #pragma clang diagnostic ignored "-Wnested-anon-types"
 #endif
-#if __has_include("third_party/agility_sdk_1.619.2/build/native/include/d3d12.h")
-#include "third_party/agility_sdk_1.619.2/build/native/include/d3d12.h"
+#if __has_include("third_party/agility_sdk_1.720.0/build/native/include/d3d12.h")
+#include "third_party/agility_sdk_1.720.0/build/native/include/d3d12.h"
 #else
 #include <d3d12.h>
 #endif

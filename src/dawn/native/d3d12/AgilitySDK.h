@@ -41,7 +41,9 @@ namespace dawn::native::d3d12 {
 //   - //DEPS                                (NuGet package version)
 //   - src/dawn/native/BUILD.gn              (versioned directory path)
 //   - src/dawn/native/d3d12/AgilitySDK.h    (this constant)
-inline constexpr uint32_t kAgilitySDKVersion = 619u;
+// TODO(amaiorano): Extract this from 'third_party/AgilitySDK/Microsoft.Direct3D.D3D12.nuspec' from
+// <version> tag
+inline constexpr uint32_t kAgilitySDKVersion = 720u;
 
 }  // namespace dawn::native::d3d12
 
