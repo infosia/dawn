@@ -1552,6 +1552,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             }
 
             cmd->renderArea = renderArea;
+            cmd->scissorRenderArea = renderArea;
 
             if (descriptor->occlusionQuerySet) {
                 TrackUsedQuerySet(descriptor->occlusionQuerySet);

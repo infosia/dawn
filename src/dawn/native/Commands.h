@@ -191,6 +191,7 @@ struct BeginRenderPassCmd {
     uint32_t height;
 
     RenderAreaRect renderArea;
+    RenderAreaRect scissorRenderArea;
 
     // Used for partial resolve
     ResolveRect resolveRect;

@@ -1322,18 +1322,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 DAWN_TRY(PrepareResourcesForRenderPass(device, recordingContext, usage));
 
                 DAWN_TRY(LazyClearRenderPassAttachments(
-                    device, cmd,
-                    [&](TextureBase* texture, const SubresourceRange& range) -> MaybeError {
-                        Texture* textureVk = ToBackend(texture);
-                        DAWN_TRY(textureVk->EnsureSubresourceContentInitialized(recordingContext,
-                                                                                range));
-                        // EnsureSubresourceContentInitialized may transition some textures to a
-                        // different usage, so ensure they are transitioned back to RenderAttachment
-                        // after clearing.
-                        textureVk->TransitionUsageNow(recordingContext,
-                                                      wgpu::TextureUsage::RenderAttachment,
-                                                      wgpu::ShaderStage::None, range);
-                        return {};
+                    device, cmd, [&](TextureBase* texture, const SubresourceRange& range) {
+                        return ToBackend(texture)->EnsureSubresourceContentInitialized(
+                            recordingContext, range);
                     }));
                 DAWN_TRY(RecordRenderPass(recordingContext, cmd, usage, nextRenderPassNumber));
 
@@ -1726,10 +1717,10 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         device->fn.CmdSetViewport(commands, 0, 1, &viewport);
 
         VkRect2D scissorRect;
-        scissorRect.offset.x = renderPassCmd->renderArea.x;
-        scissorRect.offset.y = renderPassCmd->renderArea.y;
-        scissorRect.extent.width = renderPassCmd->renderArea.width;
-        scissorRect.extent.height = renderPassCmd->renderArea.height;
+        scissorRect.offset.x = renderPassCmd->scissorRenderArea.x;
+        scissorRect.offset.y = renderPassCmd->scissorRenderArea.y;
+        scissorRect.extent.width = renderPassCmd->scissorRenderArea.width;
+        scissorRect.extent.height = renderPassCmd->scissorRenderArea.height;
         device->fn.CmdSetScissor(commands, 0, 1, &scissorRect);
 
         // Apply default frag depth
