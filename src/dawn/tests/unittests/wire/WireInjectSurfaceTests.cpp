@@ -159,11 +159,11 @@ TEST_F(WireInjectSurfaceTests, InjectedSurfaceLifetime) {
 // Test that a surface reservation can be reclaimed. This is necessary to
 // avoid leaking ObjectIDs for reservations that are never injected.
 TEST_F(WireInjectSurfaceTests, ReclaimSurfaceReservation) {
-    // Test that doing a reservation and full release is an error.
+    // Test doing a reservation and full release does not cause an error.
     {
         auto [reservation, surface] = ReserveSurface(&mCapabilities);
         surface = nullptr;
-        FlushClient(false);
+        FlushClient();
     }
 
     // Test that doing a reservation and then reclaiming it recycles the ID.

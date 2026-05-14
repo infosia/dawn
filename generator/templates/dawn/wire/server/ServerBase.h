@@ -63,10 +63,10 @@ namespace dawn::wire::server {
             return std::get<KnownObjects<T>>(mKnown).Get(id, result);
         }
         template <typename T>
-        WireResult FillReservation(ObjectId id, T handle, Known<T>* known = nullptr) {
-            auto result = std::get<KnownObjects<T>>(mKnown).FillReservation(id, handle, known);
+        WireResult FillReservation(ObjectHandle handle, T nativeHandle, Known<T>* known = nullptr) {
+            auto result = std::get<KnownObjects<T>>(mKnown).FillReservation(handle, nativeHandle, known);
             if (result == WireResult::FatalError) {
-                Release(handle);
+                Release(nativeHandle);
             }
             return result;
         }
@@ -85,9 +85,12 @@ namespace dawn::wire::server {
             // the lock), i.e. On*Callback functions, cannot race with object deletion.
             auto serverGuard = GetGuard();
             Reserved<T> obj;
-            WIRE_TRY(Get(id, &obj));
-            *data = std::move(*obj.data);
-            std::get<KnownObjects<T>>(mKnown).Free(id);
+            if (Get(id, &obj) == WireResult::Success) {
+                *data = std::move(*obj.data);
+                std::get<KnownObjects<T>>(mKnown).Free(id);
+            } else {
+                data->state = AllocationState::Free;
+            }
             return WireResult::Success;
         }
 
