@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fcb32b1_99d38d92",
+        "filename": "src/tint/lang/glsl/builtin_fn.cc.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-05-14T23:47:01Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure about this, but frexp is in this category too. They both have out parameters.",
+      "revId": "f0c79e75b84bb1bdfd66875f7f20e3be62240fcd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
