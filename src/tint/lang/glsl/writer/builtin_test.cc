@@ -4346,5 +4346,35 @@ void main() {
 )");
 }
 
+TEST_F(GlslWriterTest, AddSat) {
+    auto* foo = b.Function("foo", ty.void_());
+    auto* lhs = b.FunctionParam("a", ty.u32());
+    auto* rhs = b.FunctionParam("b", ty.u32());
+    foo->SetParams({lhs, rhs});
+    b.Append(foo->Block(), [&] {
+        auto* call = b.Call(ty.u32(), core::BuiltinFn::kAddSat, lhs, rhs);
+        b.Let("res", call);
+        b.Return(foo);
+    });
+    auto* ep = b.ComputeFunction("main");
+    b.Append(ep->Block(), [&] {
+        b.Call(ty.void_(), foo, 0_u, 1_u);
+        b.Return(ep);
+    });
+
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_.glsl;
+    EXPECT_EQ(output_.glsl, GlslHeader() + R"(
+void foo(uint a, uint b) {
+  uint v = 0u;
+  uint res = mix(4294967295u, uaddCarry(a, b, v), (v == 0u));
+}
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+void main() {
+  foo(0u, 1u);
+}
+)");
+}
+
 }  // namespace
 }  // namespace tint::glsl::writer

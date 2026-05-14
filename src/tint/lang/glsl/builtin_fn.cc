@@ -134,6 +134,8 @@ const char* str(BuiltinFn i) {
             return "equal";
         case BuiltinFn::kNotEqual:
             return "notEqual";
+        case BuiltinFn::kUaddCarry:
+            return "uaddCarry";
     }
     return "<unknown>";
 }
@@ -191,6 +193,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kNotEqual:
         case BuiltinFn::kTextureSize:
         case BuiltinFn::kImageSize:
+        case BuiltinFn::kUaddCarry:
         case BuiltinFn::kNone:
             break;
     }
