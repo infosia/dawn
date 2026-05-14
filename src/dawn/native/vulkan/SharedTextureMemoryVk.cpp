@@ -500,6 +500,17 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     SharedTextureMemoryProperties properties =
         GetAHBSharedTextureMemoryProperties(ahbFunctions, aHardwareBuffer);
 
+    const CombinedLimits& limits = device->GetLimits();
+    DAWN_INVALID_IF(properties.size.width > limits.v1.maxTextureDimension2D,
+                    "Resource width (%u) exceeds maxTextureDimension2D (%u).",
+                    properties.size.width, limits.v1.maxTextureDimension2D);
+    DAWN_INVALID_IF(properties.size.height > limits.v1.maxTextureDimension2D,
+                    "Resource weight (%u) exceeds maxTextureDimension2D (%u).",
+                    properties.size.height, limits.v1.maxTextureDimension2D);
+    DAWN_INVALID_IF(properties.size.depthOrArrayLayers > limits.v1.maxTextureArrayLayers,
+                    "Resource layers (%d) exceeds maxTextureArrayLayers (%u).",
+                    properties.size.depthOrArrayLayers, limits.v1.maxTextureArrayLayers);
+
     bool usesExternalFormat = properties.format == wgpu::TextureFormat::OpaqueYCbCrAndroid;
     if (usesExternalFormat) {
         // When using the opaque YUV texture formats, only the TextureBinding usage is valid.
