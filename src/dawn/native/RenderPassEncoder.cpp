@@ -362,26 +362,31 @@ void RenderPassEncoder::APIExecuteBundles(uint32_t count, RenderBundleBase* cons
                 }
             }
 
+            // Always reset state
             mCommandBufferState = CommandBufferStateTracker{};
 
-            ExecuteBundlesCmd* cmd =
-                allocator->Allocate<ExecuteBundlesCmd>(Command::ExecuteBundles);
-            cmd->count = count;
+            // Only encode an ExecuteBundles command if count > 0
+            if (count) {
+                ExecuteBundlesCmd* cmd =
+                    allocator->Allocate<ExecuteBundlesCmd>(Command::ExecuteBundles);
+                cmd->count = count;
 
-            Ref<RenderBundleBase>* bundles = allocator->AllocateData<Ref<RenderBundleBase>>(count);
-            for (uint32_t i = 0; i < count; ++i) {
-                bundles[i] = renderBundles[i];
+                Ref<RenderBundleBase>* bundles =
+                    allocator->AllocateData<Ref<RenderBundleBase>>(count);
+                for (uint32_t i = 0; i < count; ++i) {
+                    bundles[i] = renderBundles[i];
 
-                mUsageTracker.MergeResourceUsages(bundles[i]->GetResourceUsage());
-                if (bundles[i]->GetResourceUsage().usesFramebufferFetch) {
-                    mUsageTracker.MarkFramebufferFetchUsed();
+                    mUsageTracker.MergeResourceUsages(bundles[i]->GetResourceUsage());
+                    if (bundles[i]->GetResourceUsage().usesFramebufferFetch) {
+                        mUsageTracker.MarkFramebufferFetchUsed();
+                    }
+
+                    if (IsValidationEnabled()) {
+                        mIndirectDrawMetadata.AddBundle(renderBundles[i]);
+                    }
+
+                    mDrawCount += bundles[i]->GetDrawCount();
                 }
-
-                if (IsValidationEnabled()) {
-                    mIndirectDrawMetadata.AddBundle(renderBundles[i]);
-                }
-
-                mDrawCount += bundles[i]->GetDrawCount();
             }
 
             return {};
