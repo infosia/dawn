@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "669eacb2_513ac8b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4821744
+      },
+      "writtenOn": "2026-05-14T18:12:05Z",
+      "side": 1,
+      "message": "I had to rebase the patch on latest code and then updated the patch based on the review comments and trying to git cl upload. But Presubmit check is failing.\n\n** Presubmit ERRORS: 2 **\nlucicfg validate \"global/main.star\"\nlucicfg validate global/main.star -log-level warning (1.95s) failed\n[P4130207 21:02:43.802 output.go:423 W] Discarding changes to builders/alerting-builders.txt, not in the tracked set\n[P4130207 21:02:43.803 output.go:423 W] Discarding changes to cq-usage/mega_cq_bots.txt, not in the tracked set\n[P4130207 21:02:43.803 output.go:423 W] Discarding changes to testing/mixins.pyl, not in the tracked set\n[P4130207 21:02:43.803 output.go:423 W] Discarding changes to testing/test_suites.pyl, not in the tracked set\n[P4130207 21:02:43.803 output.go:423 W] Discarding changes to testing/variants.pyl, not in the tracked set\nError: failed to send RPC to LUCI Config - failed to call LUCI Config: rpc error: code \u003d PermissionDenied desc \u003d \"user:sarath.singapati@huawei.com\" does not have permission to validate config set \"projects/dawn\"\n\n\nCommand \u0027/chromium_android/src/third_party/dawn/tools/bin/cts validate\u0027 returned non-zero exit status 1 in /chromium_android/src/third_party/dawn\nbigquery: constructing client: credentials: could not find default credentials. See https://cloud.google.com/docs/authentication/external/set-up-adc for more information\n\n** 0 Presubmit Messages, 24 Presubmit Warnings, 2 Presubmit ERRORS **\nPresubmit checks took 229.0s to calculate.\nThere were presubmit errors.\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\n$ git credential-luci info  // This seems to be OK, but upload fails.\nemail\u003dsarath.singapati@huawei.com\nhas_rapt\u003dfalse",
+      "revId": "cd04b5b03a54e97bf218497107f4410022f4aa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8aaa141_392ba210",
         "filename": "src/dawn/native/vulkan/SharedFenceVk.cpp",
         "patchSetId": 1
