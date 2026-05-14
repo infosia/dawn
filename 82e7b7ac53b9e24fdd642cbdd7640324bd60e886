@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b0a8dfb_f7d9a755",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-14T19:12:40Z",
+      "side": 1,
+      "message": "I think this is equivalent in terms of guaranteeing that attachments are cleared? It also fixes the regression seen in css_value_type_shadow dropped frames and CPU time.",
+      "revId": "82e7b7ac53b9e24fdd642cbdd7640324bd60e886",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
