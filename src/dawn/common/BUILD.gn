@@ -369,6 +369,7 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       "StackAllocated.h",
       "StringViewUtils.cpp",
       "StringViewUtils.h",
+      "Strings.h",
       "SystemUtils.cpp",
       "SystemUtils.h",
       "ThreadLocal.cpp",

@@ -87,6 +87,7 @@ set(private_headers
     "SerialStorage.h"
     "SlabAllocator.h"
     "StackAllocated.h"
+    "Strings.h"
     "StringViewUtils.h"
     "SystemUtils.h"
     "ThreadLocal.h"

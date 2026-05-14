@@ -771,8 +771,7 @@ source_set("sources") {
     deps += [ "${dawn_root}/src/dawn:serialization" ]
   }
 
-  if ((dawn_enable_opengl || dawn_enable_vulkan) &&
-      dawn_enable_spirv_validation) {
+  if (dawn_enable_spirv_validation) {
     sources += [
       "SpirvValidation.cpp",
       "SpirvValidation.h",
