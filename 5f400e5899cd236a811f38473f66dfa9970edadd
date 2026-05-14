@@ -16,6 +16,24 @@
       "message": "PTAL. Suggestions welcome if there\u0027s a way to do this only for constructor calls and not all function calls.",
       "revId": "5f400e5899cd236a811f38473f66dfa9970edadd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd1198d9_983ec78e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-14T15:55:52Z",
+      "side": 1,
+      "message": "I think this is fine for now, we can always trim it back in the future if we feel the need, but more parens shoudn\u0027t hurt anything.",
+      "parentUuid": "c1e0272e_418bf0b9",
+      "revId": "5f400e5899cd236a811f38473f66dfa9970edadd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
