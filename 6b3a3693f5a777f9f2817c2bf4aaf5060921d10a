@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "6b3a3693f5a777f9f2817c2bf4aaf5060921d10a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5340f9af_3012b369",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-14T18:23:07Z",
+      "side": 1,
+      "message": "Nevermind, forgot that we still need to clear state when calling executeBundles, even with 0 bundles. Need to refactor a bit.",
+      "revId": "6b3a3693f5a777f9f2817c2bf4aaf5060921d10a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
