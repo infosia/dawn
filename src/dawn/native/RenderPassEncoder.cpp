@@ -328,6 +328,11 @@ void RenderPassEncoder::APISetScissorRect(uint32_t x, uint32_t y, uint32_t width
 }
 
 void RenderPassEncoder::APIExecuteBundles(uint32_t count, RenderBundleBase* const* renderBundles) {
+    if (count == 0) {
+        // Don't bother encoding a command with no bundles in it.
+        return;
+    }
+
     mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
