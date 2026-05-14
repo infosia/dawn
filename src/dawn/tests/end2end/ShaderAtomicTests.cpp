@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <algorithm>
 #include <array>
 #include <cstdint>
 #include <numeric>
@@ -251,6 +252,84 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
     std::array<uint32_t, 4> expectedMax = {0x12345678, 0x9ABCDEF0, 0x12345ABC, 0x12345ABC};
     EXPECT_BUFFER_U32_RANGE_EQ(expectedMax.data(), atomicBufferMax, 0, 4);
     std::array<uint32_t, 4> expectedMin = {0x12345678, 0x9ABCDEF0, 0x12345ABC, 0x12345ABC};
+    EXPECT_BUFFER_U32_RANGE_EQ(expectedMin.data(), atomicBufferMin, 0, 4);
+}
+
+TEST_P(ShaderAtomicVec2Tests, StorageBufferAtomicVec2Conditional) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::AtomicVec2uMinMax}));
+
+    const unsigned int workgroupSize = GetParam().mWorkgroupSizeParameter;
+    const unsigned int dispatchSize = GetParam().mDispatchSizeParameter;
+    const unsigned int numInvocations = workgroupSize * dispatchSize;
+
+    std::stringstream code;
+    code << R"(
+enable atomic_vec2u_min_max;
+
+@binding(0) @group(0) var<storage, read_write> atomic_storage_buffer_max : atomic<vec2<u32>>;
+@binding(1) @group(0) var<storage, read_write> atomic_storage_buffer_min : atomic<vec2<u32>>;
+
+@compute @workgroup_size()"
+         << workgroupSize << R"()
+fn main(@builtin(local_invocation_index) local_idx : u32, @builtin(workgroup_id) wg_id : vec3<u32>) {
+    let i = local_idx;
+    let num_invocations = )"
+         << numInvocations << R"(u;
+    let val = vec2<u32>(wg_id.x, local_idx);
+    let test_val = local_idx * wg_id.x;
+    if( (test_val) % 7  == 0)
+    {
+        atomicStoreMax(&atomic_storage_buffer_max, val);
+        atomicStoreMin(&atomic_storage_buffer_min, val);
+    }
+}
+)";
+
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(code.str());
+
+    wgpu::Buffer atomicBufferMax = CreateBuffer({0x0, 0x0, 0x12345ABC, 0x12345ABC});
+    wgpu::Buffer atomicBufferMin = CreateBuffer({0xFFFFFFFF, 0xFFFFFFFF, 0x12345ABC, 0x12345ABC});
+
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {{0, atomicBufferMax}, {1, atomicBufferMin}});
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(dispatchSize);
+        pass.End();
+        commands = encoder.Finish();
+    }
+
+    queue.Submit(1, &commands);
+
+    // Simulation of shader including our conditional.
+    uint64_t max_expected = 0;
+    uint64_t min_expected = 0xFFFFFFFFFFFFFFFFull;
+    for (uint32_t i = 0; i < workgroupSize; i++) {
+        for (uint32_t j = 0; j < dispatchSize; j++) {
+            uint32_t local_idx = i;
+            uint32_t wg_id_x = j;
+            if ((local_idx * wg_id_x) % 7 == 0) {
+                uint64_t composite =
+                    (static_cast<uint64_t>(local_idx) << static_cast<uint64_t>(32)) |
+                    (static_cast<uint64_t>(wg_id_x));
+                max_expected = std::max(max_expected, composite);
+                min_expected = std::min(min_expected, composite);
+            }
+        }
+    }
+
+    std::array<uint32_t, 4> expectedMax = {static_cast<uint32_t>(max_expected & 0xFFFFFFFF),
+                                           static_cast<uint32_t>(max_expected >> 32), 0x12345ABC,
+                                           0x12345ABC};
+    EXPECT_BUFFER_U32_RANGE_EQ(expectedMax.data(), atomicBufferMax, 0, 4);
+    std::array<uint32_t, 4> expectedMin = {static_cast<uint32_t>(min_expected & 0xFFFFFFFF),
+                                           static_cast<uint32_t>(min_expected >> 32), 0x12345ABC,
+                                           0x12345ABC};
     EXPECT_BUFFER_U32_RANGE_EQ(expectedMin.data(), atomicBufferMin, 0, 4);
 }
 
