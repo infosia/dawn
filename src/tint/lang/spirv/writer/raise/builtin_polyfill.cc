@@ -184,6 +184,8 @@ struct State {
     /// The type manager.
     core::type::Manager& ty{ir.Types()};
 
+    Hashmap<const core::type::Type*, const core::type::Type*, 4> add_carry_structs;
+
     /// Process the module.
     void Process() {
         // Find the builtins that need replacing.
@@ -319,6 +321,9 @@ struct State {
                         worklist.push_back([this, builtin] {
                             SubgroupMatrixScalar(builtin, core::BinaryOp::kMultiply);
                         });
+                        break;
+                    case core::BuiltinFn::kAddSat:
+                        worklist.push_back([this, builtin] { AddSat(builtin); });
                         break;
                     default:
                         break;
@@ -1466,6 +1471,29 @@ struct State {
 
             auto* scalar_mat = b.Construct(sm_ty, scalar);
             b.BinaryWithResult<spirv::ir::Binary>(builtin->DetachResult(), op, mat, scalar_mat);
+        });
+        builtin->Destroy();
+    }
+
+    void AddSat(core::ir::CoreBuiltinCall* builtin) {
+        auto* type = builtin->Result()->Type();
+        auto* str_ty = add_carry_structs.GetOrAdd(type, [&] {
+            return ty.Struct(ir.symbols.New("add_carry_result"),
+                             {
+                                 {ir.symbols.New("result"), type},
+                                 {ir.symbols.New("carry"), type},
+                             });
+        });
+        b.InsertBefore(builtin, [&] {
+            auto* call = b.Call<spirv::ir::BuiltinCall>(str_ty, BuiltinFn::kAddCarry,
+                                                        builtin->Args()[0], builtin->Args()[1]);
+            auto* res = b.Access(type, call, 0_u);
+            auto* carry = b.Access(type, call, 1_u);
+            auto* eq = b.Equal(carry, b.Zero(type));
+            core::ir::Value* sat = (type->Is<core::type::Vector>() ? b.Splat(type, u32(0xffffffff))
+                                                                   : b.Constant(u32(0xffffffff)));
+            b.CallWithResult<spirv::ir::BuiltinCall>(builtin->DetachResult(),
+                                                     spirv::BuiltinFn::kSelect, eq, res, sat);
         });
         builtin->Destroy();
     }

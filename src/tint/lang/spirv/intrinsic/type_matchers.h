@@ -28,6 +28,8 @@
 #ifndef SRC_TINT_LANG_SPIRV_INTRINSIC_TYPE_MATCHERS_H_
 #define SRC_TINT_LANG_SPIRV_INTRINSIC_TYPE_MATCHERS_H_
 
+#include <iostream>
+
 #include "src/tint/lang/core/intrinsic/table.h"
 #include "src/tint/lang/core/type/array.h"
 #include "src/tint/lang/core/type/manager.h"
@@ -65,6 +67,64 @@ inline bool MatchStructWithRuntimeArray(core::intrinsic::MatchState&, const core
 
 inline const core::type::Type* BuildStructWithRuntimeArray(core::intrinsic::MatchState&,
                                                            const core::type::Type* ty) {
+    return ty;
+}
+
+inline bool MatchStructAddCarryScalar(core::intrinsic::MatchState& state,
+                                      const core::type::Type* ty,
+                                      const core::type::Type*& T) {
+    std::cerr << "Matching add_carry_scalar\n";
+    if (auto* str = ty->As<core::type::Struct>()) {
+        if (str->Members().Length() != 2) {
+            std::cerr << " Wrong member size = " << str->Members().Length() << "\n";
+            return false;
+        }
+        if (str->Members()[0]->Type() != str->Members()[1]->Type()) {
+            std::cerr << " Member types mismatch\n";
+            return false;
+        }
+        T = str->Members()[0]->Type();
+        return true;
+    }
+    std::cerr << " Not a struct!\n";
+    if (ty) {
+        std::cerr << " " << ty->FriendlyName() << "\n";
+    }
+    return false;
+}
+
+inline const core::type::Type* BuildStructAddCarryScalar(core::intrinsic::MatchState&,
+                                                         const core::type::Type* ty,
+                                                         const core::type::Type*) {
+    return ty;
+}
+
+inline bool MatchStructAddCarryVec(core::intrinsic::MatchState&,
+                                   const core::type::Type* ty,
+                                   core::intrinsic::Number& N,
+                                   const core::type::Type*& T) {
+    if (auto* str = ty->As<core::type::Struct>()) {
+        if (str->Members().Length() != 2) {
+            return false;
+        }
+        if (str->Members()[0]->Type() != str->Members()[1]->Type()) {
+            return false;
+        }
+        auto* vec_ty = str->Members()[0]->Type()->As<core::type::Vector>();
+        if (!vec_ty) {
+            return false;
+        }
+        N = vec_ty->Width();
+        T = vec_ty->Type();
+        return true;
+    }
+    return false;
+}
+
+inline const core::type::Type* BuildStructAddCarryVec(core::intrinsic::MatchState&,
+                                                      const core::type::Type* ty,
+                                                      core::intrinsic::Number&,
+                                                      const core::type::Type*) {
     return ty;
 }
 
