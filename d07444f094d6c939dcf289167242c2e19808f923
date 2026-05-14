@@ -165,6 +165,98 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d85d8905_c5ba5885",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-14T19:38:47Z",
+      "side": 1,
+      "message": "d3d12.h has a `D3D12_PREVIEW_SDK_VERSION` define you can use directly. Unless I am missing something, I don\u0027t think this file needs to be generated or exist.",
+      "range": {
+        "startLine": 44,
+        "startChar": 26,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77a20a36_d7963f80",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-14T19:38:47Z",
+      "side": 1,
+      "message": "Since you\u0027re running this code unconditionally, please put device factory creation into the PlatformFunctions class itself and call it from its Initialize method. \n\nIf we want to gate device factory creation behind a toggle that\u0027s checked here, then please rename to EnsureAgilitySDKDeviceFactory and improve it to only create the device factory once.  \n\nLogging should probably go into PlatformFunctions instead of here in the caller.",
+      "range": {
+        "startLine": 58,
+        "startChar": 52,
+        "endLine": 58,
+        "endChar": 81
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b32079f_f92c247e",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-14T19:38:47Z",
+      "side": 1,
+      "message": "This code can be simplified to have the local variable be the factory. Like below: \n\n```suggestion\nID3DDeviceFactory* factory \u003d GetInstance()-\u003eGetTogglesState().IsEnabled(Toggle::UseAgilitySDK) ? GetFunctions()-\u003edeviceFactory ? nullptr;\n\nif (factory) {\n  hr \u003d factory-\u003eCreateDevice(...); \n}\n```",
+      "range": {
+        "startLine": 96,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f40d642_c4e5db0a",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-14T19:38:47Z",
+      "side": 1,
+      "message": "Please use `ResultOrError` and return the D3D12 device as the result.",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 14
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e256dd74_07093d78",
         "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
         "patchSetId": 22
