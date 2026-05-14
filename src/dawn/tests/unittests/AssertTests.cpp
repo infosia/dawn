@@ -96,5 +96,14 @@ TEST_F(AssertDeathTest, JumpTableUnreachable) {
     g_var = g_var + 1;
 }
 
+// Voltile to make sure reads happen at runtim.
+volatile uint32_t g_var2 = 123;
+TEST_F(AssertDeathTest, AssertKills) {
+    g_var2 = g_var2 + 1;
+#if defined(DAWN_ENABLE_ASSERTS)
+    EXPECT_DEATH(DAWN_ASSERT(g_var2 != 124), "g_var2 != 124");
+#endif
+}
+
 }  // anonymous namespace
 }  // namespace dawn
