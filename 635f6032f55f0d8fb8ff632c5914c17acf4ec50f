@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2913568d_88da1eaa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-14T17:36:49Z",
+      "side": 1,
+      "message": "LGTM, though I do have a question.",
+      "revId": "635f6032f55f0d8fb8ff632c5914c17acf4ec50f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6b23d51_81ae4bd1",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-14T17:36:49Z",
+      "side": 1,
+      "message": "Where are we using SPIR-V outside of GL/Vulkan?",
+      "revId": "635f6032f55f0d8fb8ff632c5914c17acf4ec50f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
