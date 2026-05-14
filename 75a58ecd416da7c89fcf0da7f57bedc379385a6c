@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f14bae3a_6f8f8934",
+        "filename": "src/dawn/native/WaitAnySystemEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-14T21:10:03Z",
+      "side": 1,
+      "message": "Not a blocker but why is this unsafe? Isn\u0027t iterator::operator++ supposed to be checked? Is it because it\u0027s an absl type? (But we enable absl hardening so it should be safe anyway)",
+      "range": {
+        "startLine": 85,
+        "startChar": 37,
+        "endLine": 85,
+        "endChar": 59
+      },
+      "revId": "75a58ecd416da7c89fcf0da7f57bedc379385a6c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
