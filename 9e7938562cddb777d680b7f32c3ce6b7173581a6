@@ -33,6 +33,24 @@
       "message": "Is it possible to add a test for this?",
       "revId": "9e7938562cddb777d680b7f32c3ce6b7173581a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1024ab7a_4072dc35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-14T18:34:49Z",
+      "side": 1,
+      "message": "We already have a test that executes zero bundles and ensures that the state clears itself (it failed with my first patch revision.) Is there something else you\u0027d like to see covered?",
+      "parentUuid": "6c6258b0_5986bcd9",
+      "revId": "9e7938562cddb777d680b7f32c3ce6b7173581a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
