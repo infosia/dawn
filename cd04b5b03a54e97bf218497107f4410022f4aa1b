@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c9030ac_f62a4188",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-14T18:42:46Z",
+      "side": 1,
+      "message": "I don\u0027t know why that would happen, maybe you need to `gclient sync` after the rebase?\n\nIf it doesn\u0027t work just use `git cl upload --bypass-hooks`.",
+      "parentUuid": "669eacb2_513ac8b8",
+      "revId": "cd04b5b03a54e97bf218497107f4410022f4aa1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8aaa141_392ba210",
         "filename": "src/dawn/native/vulkan/SharedFenceVk.cpp",
         "patchSetId": 1
