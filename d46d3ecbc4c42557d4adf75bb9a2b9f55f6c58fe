@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "806dcd9d_3376f9d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-14T17:22:05Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"differnt\" is a possible misspelling of \"different\".\n\nTo bypass Spellchecker, ad...\n\n\"differnt\" is a possible misspelling of \"different\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 9,
+        "startChar": 26,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "d46d3ecbc4c42557d4adf75bb9a2b9f55f6c58fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
