@@ -99,15 +99,29 @@ MaybeError Backend::CreateD3DDevice(IUnknown* adapter, ComPtr<ID3D12Device>* dev
     ID3D12DeviceFactory* factory =
         useAgilityFactory ? GetFunctions()->deviceFactory.Get() : nullptr;
     if (factory) {
+        // Must enable experimental shader models to use D3D12 LinAlg while in Preview.
+        UUID Features[] = {D3D12ExperimentalShaderModels};
+        // TODO(amaiorano): Allow failure? If we have latest Agility SDK, is this expected to always
+        // succeed?
+        DAWN_TRY(CheckHRESULT(
+            factory->EnableExperimentalFeatures(_countof(Features), Features, nullptr, nullptr),
+            "D3D12ExperimentalShaderModels not available"));
+
+        // Create the device using the factory. This must succeed if we have a factory.
         hr = factory->CreateDevice(adapter, D3D_FEATURE_LEVEL_11_0,
                                    IID_PPV_ARGS(device->GetAddressOf()));
+
+        // If we have a factory, then this must succeed
+        if (FAILED(hr)) {
+            return DAWN_INTERNAL_ERROR("D3D12CreateDevice failed");
+        }
+        return {};
     }
-    if (FAILED(hr)) {
-        // Fallback to the global D3D12CreateDevice (no Agility SDK override,
-        // or CreateDeviceFactory was not available).
-        hr = GetFunctions()->d3d12CreateDevice(adapter, D3D_FEATURE_LEVEL_11_0,
-                                               IID_PPV_ARGS(device->GetAddressOf()));
-    }
+
+    // Fallback to the global D3D12CreateDevice (no Agility SDK override,
+    // or CreateDeviceFactory was not available).
+    hr = GetFunctions()->d3d12CreateDevice(adapter, D3D_FEATURE_LEVEL_11_0,
+                                           IID_PPV_ARGS(device->GetAddressOf()));
     if (FAILED(hr)) {
         return DAWN_INTERNAL_ERROR("D3D12CreateDevice failed");
     }
@@ -142,9 +156,19 @@ MaybeError Backend::EnsureDXC() {
         GetFunctions()->dxcCreateInstance(CLSID_DxcValidator, IID_PPV_ARGS(&dxcValidator)),
         "DXC create validator"));
 
+    ComPtr<IDxcUtils> dxcUtils;
+    DAWN_TRY(
+        CheckHRESULT(GetFunctions()->dxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils)),
+                     "DXC create utils"));
+
+    ComPtr<IDxcIncludeHandler> dxcIncludeHandler;
+    DAWN_TRY(CheckHRESULT(dxcUtils->CreateDefaultIncludeHandler(&dxcIncludeHandler),
+                          "DXC create handler"));
+
     mDxcLibrary = std::move(dxcLibrary);
     mDxcCompiler = std::move(dxcCompiler);
     mDxcValidator = std::move(dxcValidator);
+    mDxcIncludeHandler = std::move(dxcIncludeHandler);
 
     return {};
 #else
@@ -165,6 +189,11 @@ ComPtr<IDxcCompiler3> Backend::GetDxcCompiler() const {
 ComPtr<IDxcValidator> Backend::GetDxcValidator() const {
     DAWN_ASSERT(mDxcValidator != nullptr);
     return mDxcValidator;
+}
+
+ComPtr<IDxcIncludeHandler> Backend::GetDxcIncludeHandler() const {
+    DAWN_ASSERT(mDxcIncludeHandler != nullptr);
+    return mDxcIncludeHandler;
 }
 
 ResultOrError<Ref<PhysicalDeviceBase>> Backend::CreatePhysicalDeviceFromIDXGIAdapter(
