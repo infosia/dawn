@@ -33,6 +33,24 @@
       "message": "Where are we using SPIR-V outside of GL/Vulkan?",
       "revId": "635f6032f55f0d8fb8ff632c5914c17acf4ec50f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d39101a6_e293821e",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-05-14T17:38:38Z",
+      "side": 1,
+      "message": "I don\u0027t think we are, but it seemed a bit odd to have that conditional still there IMO",
+      "parentUuid": "c6b23d51_81ae4bd1",
+      "revId": "635f6032f55f0d8fb8ff632c5914c17acf4ec50f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
