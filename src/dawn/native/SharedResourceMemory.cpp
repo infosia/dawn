@@ -245,6 +245,7 @@ bool SharedResourceMemory::APIIsDeviceLost() const {
 
 template <typename Resource, typename EndAccessState>
 MaybeError SharedResourceMemory::EndAccess(Resource* resource, EndAccessState* state) {
+    DAWN_TRY(GetDevice()->ValidateIsAlive());
     DAWN_TRY(GetDevice()->ValidateObject(resource));
     DAWN_TRY(ValidateResourceCreatedFromSelf(resource));
 
