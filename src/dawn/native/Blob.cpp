@@ -53,8 +53,8 @@ Blob Blob::Create(size_t size) {
 }
 
 // static
-Blob Blob::Create(Blob&& original, size_t offset) {
-    Blob result(original.mData.subspan(offset), std::move(original.mDeleter));
+Blob Blob::Create(Blob&& original, size_t offset, size_t extent) {
+    Blob result(original.mData.subspan(offset, extent), std::move(original.mDeleter));
     original.mData = {};
     original.mDeleter = nullptr;
     return result;

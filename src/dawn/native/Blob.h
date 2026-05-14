@@ -47,8 +47,9 @@ class Blob {
     // Creates a blob of the given size.
     static Blob Create(size_t size);
 
-    // Takes ownership of the original blob, creating a new one that offsets the data by |offset|.
-    static Blob Create(Blob&& original, size_t offset);
+    // Takes ownership of the original blob, creating a new one with subspan of the original using
+    // `offset` and optionally `extent`.
+    static Blob Create(Blob&& original, size_t offset, size_t extent = std::dynamic_extent);
 
     template <typename T>
     static Blob Create(std::vector<T> vec)
