@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90e77eff_584ac1d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-15T20:50:46Z",
+      "side": 1,
+      "message": "As noted in the previous change, I needed to pull this out into another change that I will land after the parent is rolled and I land a related Chromium side change. Getting the review now though even though it will fail CQ for now until those changes resolve.",
+      "revId": "1b165f172de6ec1d6775640882a036a8ea07a630",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
