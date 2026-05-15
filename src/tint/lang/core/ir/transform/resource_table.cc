@@ -472,7 +472,7 @@ struct State {
                 // If the sampler is filtering
                 b.Append(samp_if->True(), [&] {
                     size_t idx = 0;
-                    const std::span<ResourceType> filterable_types =
+                    const std::span<const ResourceType> filterable_types =
                         core::type::FilterableResources();
 
                     core::ir::Binary* chk = b.Equal(texture_kind, u32(filterable_types[idx++]));

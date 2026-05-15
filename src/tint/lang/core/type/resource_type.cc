@@ -361,13 +361,13 @@ std::vector<ResourceType> ConvertsFrom(const core::type::Type* in_type) {
         [](Default) -> std::vector<ResourceType> { return {}; });
 }
 
-static std::array kFilterableResources = {
+static const std::array kFilterableResources = {
     ResourceType::kTexture1d_f32_filterable,      ResourceType::kTexture2d_f32_filterable,
     ResourceType::kTexture2dArray_f32_filterable, ResourceType::kTexture3d_f32_filterable,
     ResourceType::kTextureCube_f32_filterable,    ResourceType::kTextureCubeArray_f32_filterable,
 };
 
-const std::span<ResourceType> FilterableResources() {
+const std::span<const ResourceType> FilterableResources() {
     return kFilterableResources;
 }
 

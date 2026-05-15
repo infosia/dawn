@@ -42,7 +42,7 @@ ResourceType TypeToResourceType(const core::type::Type* in_type);
 ResourceType DefaultResourceTypeFor(const core::type::Type* in_type);
 
 // Returns the filterable types
-const std::span<ResourceType> FilterableResources();
+const std::span<const ResourceType> FilterableResources();
 
 // Converts a `ResourceType` back into a `core::type::Type`
 const core::type::Type* ResourceTypeToType(core::type::Manager& ty, ResourceType type);
