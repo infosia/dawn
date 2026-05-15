@@ -210,8 +210,8 @@ func populateSourceFiles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWr
 
 			if kind == targetProto {
 				noExt, _ := fileutils.SplitExt(filepath)
-				target.AddGeneratedFile(p.AddGeneratedFile(noExt + ".pb.h"))
-				target.AddGeneratedFile(p.AddGeneratedFile(noExt + ".pb.cc"))
+				target.AddGeneratedProtobufSource(p.AddGeneratedProtobufSource(noExt + ".pb.h"))
+				target.AddGeneratedProtobufSource(p.AddGeneratedProtobufSource(noExt + ".pb.cc"))
 			}
 		}
 	}
@@ -235,7 +235,7 @@ func scanSourceFiles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter
 	// parseFile parses the source file at 'path' represented by 'file'
 	// As this is run concurrently, it must not modify any shared state (including file)
 	parseFile := func(path string, file *File) (string, *ParsedFile, error) {
-		if file.IsGenerated {
+		if file.IsGeneratedProtobufSource {
 			return "", nil, nil
 		}
 
@@ -360,8 +360,8 @@ func scanSourceFiles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter
 func applyDirectoryConfigs(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	// For each directory in the project...
 	for _, dir := range p.Directories.Values() {
-		path := path.Join(dir.AbsPath(), "BUILD.cfg")
-		content, err := fsReaderWriter.ReadFile(path)
+		cfgPath := path.Join(dir.AbsPath(), "BUILD.cfg")
+		content, err := fsReaderWriter.ReadFile(cfgPath)
 		if err != nil {
 			continue
 		}
@@ -369,14 +369,14 @@ func applyDirectoryConfigs(p *Project, fsReaderWriter oswrapper.FilesystemReader
 		// Parse the config
 		cfg := DirectoryConfig{}
 		if err := json.Unmarshal(jsonc.ToJSON(content), &cfg); err != nil {
-			return fmt.Errorf("error while parsing '%v': %w", path, err)
+			return fmt.Errorf("error while parsing '%v': %w", cfgPath, err)
 		}
 
 		// Apply any directory-level condition
 		for _, target := range dir.Targets() {
 			cond, err := cnf.Parse(cfg.Condition)
 			if err != nil {
-				return fmt.Errorf("%v: could not parse condition: %w", path, err)
+				return fmt.Errorf("%v: could not parse condition: %w", cfgPath, err)
 			}
 			target.Condition = cond
 		}
@@ -401,11 +401,17 @@ func applyDirectoryConfigs(p *Project, fsReaderWriter oswrapper.FilesystemReader
 			}
 			target := p.Target(dir, tc.kind)
 			if target == nil {
-				return fmt.Errorf("%v: no files for target %v", path, tc.kind)
+				return fmt.Errorf("%v: no files for target %v", cfgPath, tc.kind)
 			}
 
 			// Apply any custom output name
 			target.OutputName = tc.cfg.OutputName
+
+			// Add generated sources
+			for _, src := range tc.cfg.GeneratedSources {
+				target.GeneratedSourcePaths.Add(path.Join(dir.Path, src))
+				p.AllTemplatePaths.Add(path.Join(dir.Path, src+".tmpl"))
+			}
 
 			// Assert that "test" GN target types have an output name set, as it will
 			// be used for the target name. Having different target and output names
@@ -425,7 +431,7 @@ func applyDirectoryConfigs(p *Project, fsReaderWriter oswrapper.FilesystemReader
 			if tc.cfg.Condition != "" {
 				condition, err := cnf.Parse(tc.cfg.Condition)
 				if err != nil {
-					return fmt.Errorf("%v: %v", path, err)
+					return fmt.Errorf("%v: %v", cfgPath, err)
 				}
 				target.Condition = cnf.And(target.Condition, condition)
 			}
@@ -434,7 +440,7 @@ func applyDirectoryConfigs(p *Project, fsReaderWriter oswrapper.FilesystemReader
 			for _, depPattern := range tc.cfg.AdditionalDependencies.Internal {
 				match, err := match.New(depPattern)
 				if err != nil {
-					return fmt.Errorf("%v: invalid pattern for '%v'.AdditionalDependencies.Internal.'%v': %w", path, tc.kind, depPattern, err)
+					return fmt.Errorf("%v: invalid pattern for '%v'.AdditionalDependencies.Internal.'%v': %w", cfgPath, tc.kind, depPattern, err)
 				}
 				additionalDeps := []*Target{}
 				for _, target := range p.Targets.Keys() {
@@ -443,7 +449,7 @@ func applyDirectoryConfigs(p *Project, fsReaderWriter oswrapper.FilesystemReader
 					}
 				}
 				if len(additionalDeps) == 0 {
-					return fmt.Errorf("%v: '%v'.AdditionalDependencies.Internal.'%v' did not match any targets", path, tc.kind, depPattern)
+					return fmt.Errorf("%v: '%v'.AdditionalDependencies.Internal.'%v' did not match any targets", cfgPath, tc.kind, depPattern)
 				}
 				for _, dep := range additionalDeps {
 					if dep != target {
@@ -456,7 +462,7 @@ func applyDirectoryConfigs(p *Project, fsReaderWriter oswrapper.FilesystemReader
 				dep, ok := p.externals[name]
 				if !ok {
 					return fmt.Errorf("%v: external dependency '%v'.AdditionalDependencies.External.'%v' not declared in '%v'",
-						path, tc.kind, name, p.externalsJsonPath)
+						cfgPath, tc.kind, name, p.externalsJsonPath)
 				}
 				target.Dependencies.AddExternal(dep)
 			}

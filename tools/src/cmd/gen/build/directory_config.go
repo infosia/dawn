@@ -40,6 +40,8 @@ type TargetConfig struct {
 		// List of external dependencies
 		External []ExternalDependencyName
 	}
+	// List of generated source files
+	GeneratedSources []string
 }
 
 // DirectoryConfig holds configuration options for a directory

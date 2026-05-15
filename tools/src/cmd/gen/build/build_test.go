@@ -31,6 +31,7 @@ import (
 	"fmt"
 	"testing"
 
+	"dawn.googlesource.com/dawn/tools/src/cmd/gen/common"
 	"dawn.googlesource.com/dawn/tools/src/cnf"
 	"dawn.googlesource.com/dawn/tools/src/container"
 	"dawn.googlesource.com/dawn/tools/src/oswrapper"
@@ -343,14 +344,14 @@ func TestLoadExternals(t *testing.T) {
 
 func TestPopulateSourceFiles(t *testing.T) {
 	tests := []struct {
-		name               string
-		skipFileCreation   bool
-		wantDirectories    []string
-		wantTargets        [][]string
-		wantFiles          [][]string
-		wantGeneratedFiles [][]string
-		wantErr            bool
-		wantErrMsg         string
+		name                         string
+		skipFileCreation             bool
+		wantDirectories              []string
+		wantTargets                  [][]string
+		wantFiles                    [][]string
+		wantGeneratedProtobufSources [][]string
+		wantErr                      bool
+		wantErrMsg                   string
 	}{
 		{ /////////////////////////////////////////////////////////////////////////
 			name:             "Non-existent root",
@@ -442,7 +443,7 @@ func TestPopulateSourceFiles(t *testing.T) {
 					"main_test.cc",
 				},
 			},
-			wantGeneratedFiles: [][]string{
+			wantGeneratedProtobufSources: [][]string{
 				{
 					"a",
 					string(targetProto),
@@ -519,7 +520,7 @@ func TestPopulateSourceFiles(t *testing.T) {
 				target := want.Targets[TargetName(targetName)]
 				target.AddSourceFile(want.AddFile(filepath))
 			}
-			for _, f := range testCase.wantGeneratedFiles {
+			for _, f := range testCase.wantGeneratedProtobufSources {
 				directoryName := f[0]
 				kind := TargetKind(f[1])
 				targetName := directoryName
@@ -528,7 +529,7 @@ func TestPopulateSourceFiles(t *testing.T) {
 				}
 				filepath := fmt.Sprintf("%s/%s", directoryName, f[2])
 				target := want.Targets[TargetName(targetName)]
-				target.AddGeneratedFile(want.AddGeneratedFile(filepath))
+				target.AddGeneratedProtobufSource(want.AddGeneratedProtobufSource(filepath))
 			}
 
 			err := populateSourceFiles(&p, wrapper)
@@ -540,6 +541,38 @@ func TestPopulateSourceFiles(t *testing.T) {
 			require.Equal(t, want, p)
 		})
 	}
+}
+
+func TestApplyDirectoryConfigs(t *testing.T) {
+	wrapper := oswrapper.CreateFSTestOSWrapper()
+	p := NewProject("/root", &common.Config{OsWrapper: wrapper})
+
+	// Create a directory and a target
+	dir := p.AddDirectory("a")
+	target := p.AddTarget(dir, targetLib)
+
+	// Create a BUILD.cfg file
+	cfgContent := `{
+  "Lib": {
+    "GeneratedSources": [
+      "file.cc",
+      "file.h"
+    ]
+  }
+}`
+	wrapper.MkdirAll("/root/a", 0o700)
+	wrapper.WriteFile("/root/a/BUILD.cfg", []byte(cfgContent), 0o600)
+
+	err := applyDirectoryConfigs(p, wrapper)
+	require.NoError(t, err)
+
+	// Check if target has generated sources
+	require.True(t, target.IsGeneratedSource("a/file.cc"))
+	require.True(t, target.IsGeneratedSource("a/file.h"))
+
+	// Check if project has all template paths
+	require.True(t, p.AllTemplatePaths.Contains("a/file.cc.tmpl"))
+	require.True(t, p.AllTemplatePaths.Contains("a/file.h.tmpl"))
 }
 
 func TestCheckInclude(t *testing.T) {
