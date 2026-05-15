@@ -341,8 +341,10 @@ ResultOrError<FenceAndSignalValue> SharedResourceMemory::EndAccessInternal(
     EndAccessState* rawState) {
     UnpackedPtr<EndAccessState> state;
     DAWN_TRY_ASSIGN(state, ValidateAndUnpack(rawState));
-    // Ensure that commands are submitted before exporting fences with the last usage serial.
-    DAWN_TRY(GetDevice()->GetQueue()->EnsureCommandsFlushed(lastUsageSerial));
+    if (!GetDevice()->IsLost()) {
+        // Ensure that commands are submitted before exporting fences with the last usage serial.
+        DAWN_TRY(GetDevice()->GetQueue()->EnsureCommandsFlushed(lastUsageSerial));
+    }
     return EndAccessImpl(resource, lastUsageSerial, state);
 }
 
