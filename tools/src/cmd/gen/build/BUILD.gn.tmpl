@@ -83,10 +83,13 @@ tint_fuzzer_test("{{$.Directory.Name}}") {
 {{- end}}
   sources = [
 {{- range $File := $.UnconditionalSourceFiles}}
-    "{{TrimPrefix $File.Name $.Directory.Path}}",
+    {{if $.IsGeneratedSource $File.Path}}"${target_gen_dir}/{{$File.Name}}"{{else}}"{{TrimPrefix $File.Name $.Directory.Path}}"{{end}},
 {{- end}}
   ]
   deps = [
+{{- if and (not $.Kind.IsProto) $.GeneratedSourcePaths.List}}
+    "${tint_src_dir}:generate_sources",
+{{- end}}
 
 {{- /* Emit unconditional internal dependencies */}}
 {{- range $Dep := $.UnconditionalInternalDependencies}}
@@ -106,7 +109,7 @@ tint_fuzzer_test("{{$.Directory.Name}}") {
 {{-     if $Cond.SourceFiles}}
     sources += [
 {{-       range $File := $Cond.SourceFiles}}
-      "{{TrimPrefix $File.Name $.Directory.Path}}",
+      {{if $.IsGeneratedSource $File.Path}}"${target_gen_dir}/{{$File.Name}}"{{else}}"{{TrimPrefix $File.Name $.Directory.Path}}"{{end}},
 {{-       end}}
     ]
 {{-     end}}

@@ -55,6 +55,8 @@ type Project struct {
 	externals container.Map[ExternalDependencyName, ExternalDependency]
 	// Path to the 'externals.json' file
 	externalsJsonPath string
+	// All generated source file paths used in the project
+	AllGeneratedSourcePaths container.Set[string]
 	// All template file paths used in the project
 	AllTemplatePaths container.Set[string]
 }
@@ -62,14 +64,15 @@ type Project struct {
 // NewProject returns a newly initialized Project
 func NewProject(root string, cfg *common.Config) *Project {
 	return &Project{
-		cfg:               cfg,
-		Root:              root,
-		Files:             container.NewMap[string, *File](),
-		Directories:       container.NewMap[string, *Directory](),
-		Targets:           container.NewMap[TargetName, *Target](),
-		externals:         container.NewMap[ExternalDependencyName, ExternalDependency](),
-		externalsJsonPath: filepath.Join(fileutils.DawnRoot(cfg.OsWrapper), "src", "tint", "externals.json"),
-		AllTemplatePaths:  container.NewSet[string](),
+		cfg:                     cfg,
+		Root:                    root,
+		Files:                   container.NewMap[string, *File](),
+		Directories:             container.NewMap[string, *Directory](),
+		Targets:                 container.NewMap[TargetName, *Target](),
+		externals:               container.NewMap[ExternalDependencyName, ExternalDependency](),
+		externalsJsonPath:       filepath.Join(fileutils.DawnRoot(cfg.OsWrapper), "src", "tint", "externals.json"),
+		AllGeneratedSourcePaths: container.NewSet[string](),
+		AllTemplatePaths:        container.NewSet[string](),
 	}
 }
 
