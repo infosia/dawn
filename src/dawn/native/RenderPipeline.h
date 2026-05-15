@@ -167,13 +167,13 @@ class RenderPipelineBase : public PipelineBase,
     virtual MaybeError InitializeImpl() = 0;
 
     // Vertex state
-    uint32_t mVertexBufferCount;
-    VertexAttributeMask mAttributeLocationsUsed;
-    PerVertexAttribute<VertexAttributeInfo> mAttributeInfos;
-    VertexBufferMask mVertexBuffersUsed;
-    VertexBufferMask mVertexBuffersUsedAsVertexBuffer;
-    VertexBufferMask mVertexBuffersUsedAsInstanceBuffer;
-    PerVertexBuffer<VertexBufferInfo> mVertexBufferInfos;
+    uint32_t mVertexBufferCount = 0;
+    VertexAttributeMask mAttributeLocationsUsed = {};
+    PerVertexAttribute<VertexAttributeInfo> mAttributeInfos = {};
+    VertexBufferMask mVertexBuffersUsed = {};
+    VertexBufferMask mVertexBuffersUsedAsVertexBuffer = {};
+    VertexBufferMask mVertexBuffersUsedAsInstanceBuffer = {};
+    PerVertexBuffer<VertexBufferInfo> mVertexBufferInfos = {};
 
     // Attachments
     Ref<AttachmentState> mAttachmentState;

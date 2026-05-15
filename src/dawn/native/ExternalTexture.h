@@ -115,10 +115,10 @@ class ExternalTextureBase : public ApiObjectBase {
     MaybeError ValidateRefresh();
     MaybeError ValidateExpire();
 
-    uint32_t mViewCount;
+    uint32_t mViewCount = 0;
     Ref<BufferBase> mParamsBuffer;
     std::array<Ref<TextureViewBase>, kMaxPlanesPerFormat> mTextureViews;
-    ExternalTextureState mState;
+    ExternalTextureState mState = ExternalTextureState::Active;
 };
 }  // namespace dawn::native
 

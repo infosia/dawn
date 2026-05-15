@@ -230,7 +230,7 @@ class BindGroupLayoutInternalBase : public ApiObjectBase,
     // "end" of the last binding type)
     BindingIndex GetBindingTypeStart(BindingTypeOrder type) const;
     BindingIndex GetBindingTypeEnd(BindingTypeOrder type) const;
-    std::array<BindingIndex, BindingTypeOrder_Count + 1> mBindingTypeStart;
+    std::array<BindingIndex, BindingTypeOrder_Count + 1> mBindingTypeStart = {};
 
     // Additional counts for types of bindings.
     uint32_t mUnverifiedBufferCount = 0;
