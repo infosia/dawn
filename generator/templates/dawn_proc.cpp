@@ -67,6 +67,10 @@ void {{prefix}}ProcSetProcs(const {{Prefix}}ProcTable* procs_) {
     }
 }
 
+const uint8_t* {{prefix}}ProcGetVersion() {
+    return dawn::kDawnVersion.data();
+}
+
 {% for function in by_category["function"] %}
     DAWN_NO_SANITIZE("cfi-icall")
     {{as_annotated_cType(function.returns)}} {{as_cMethod(None, function.name)}}(
