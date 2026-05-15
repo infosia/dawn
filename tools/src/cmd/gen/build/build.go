@@ -775,6 +775,32 @@ func emitBuildFiles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter)
 		}
 	}
 
+	// Emit generated_sources.cmake in the root directory
+	depsPath := path.Join(p.Root, "generated_sources.cmake")
+	sb := &strings.Builder{}
+	sb.WriteString(common.Header("", "", "#"))
+	sb.WriteString("\n")
+	sb.WriteString("set(TINT_GENERATED_SOURCE_DEPS\n")
+	sb.WriteString("  \"lang/core/core.def\"\n")
+	sb.WriteString("  \"lang/glsl/glsl.def\"\n")
+	sb.WriteString("  \"lang/hlsl/hlsl.def\"\n")
+	sb.WriteString("  \"lang/msl/msl.def\"\n")
+	sb.WriteString("  \"lang/spirv/spirv.def\"\n")
+	for _, t := range p.AllTemplatePaths.List() {
+		sb.WriteString(fmt.Sprintf("  \"%s\"\n", t))
+	}
+	sb.WriteString(")\n")
+
+	existing, _ := fsReaderWriter.ReadFile(depsPath)
+	if string(existing) != sb.String() {
+		if p.cfg.Flags.CheckStale {
+			return common.StaleFiles{depsPath}
+		}
+		if err := fsReaderWriter.WriteFile(depsPath, []byte(sb.String()), 0666); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
