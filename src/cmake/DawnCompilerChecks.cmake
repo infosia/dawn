@@ -25,6 +25,11 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Preserved for the c++ module interface to match the compile config
+# of the consuming project
+set(TOPLEVEL_CMAKE_CXX_STANDARD ${CMAKE_CXX_STANDARD})
+set(TOPLEVEL_CMAKE_CXX_EXTENSIONS ${CMAKE_CXX_EXTENSIONS})
+
 # Make sure we have C++20 enabled.
 # Needed to make sure libraries and executables not built by the
 # dawn_add_library still have the C++20 compiler flags enabled
