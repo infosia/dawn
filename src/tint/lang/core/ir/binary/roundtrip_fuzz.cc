@@ -65,5 +65,9 @@ Result<SuccessType> IRBinaryRoundtripFuzzer(core::ir::Module& module, const fuzz
 }  // namespace
 }  // namespace tint::core::ir::binary
 
+constexpr auto kUnsupportedProperties = tint::core::ir::Properties{
+    tint::core::ir::Property::kAllowOverrides,
+};
 TINT_IR_MODULE_FUZZER(tint::core::ir::binary::IRBinaryRoundtripFuzzer,
-                      tint::core::ir::Capabilities{});
+                      tint::core::ir::Capabilities{},
+                      kUnsupportedProperties);
