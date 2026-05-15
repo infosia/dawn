@@ -1639,6 +1639,12 @@ class MultiGeneratorFromDawnJSON(Generator):
                         'c_namespace': None,
                     }
                 ]))
+            renders.append(
+                FileRender('api_cpp.ixx', 'include/dawn/' + api + '.ixx', [
+                    RENDER_PARAMS_BASE, params_all, {
+                        'cpp_header': api + '/' + api + '_cpp.h',
+                    }
+                ]))
 
             renders.append(
                 FileRender(
