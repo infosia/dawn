@@ -85,6 +85,24 @@
       "message": "Answering my own question here for posterity: The reason we pass this as a flag instead of expanding the `renderArea` in the code above is because the render pass scissor will still be set to the un-expanded values.",
       "revId": "82e7b7ac53b9e24fdd642cbdd7640324bd60e886",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee705d00_d46945be",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-15T03:00:47Z",
+      "side": 1,
+      "message": "thanks, I had that question too. Probably worth explaining in a comment on the struct.",
+      "parentUuid": "d8473db2_2b775d31",
+      "revId": "82e7b7ac53b9e24fdd642cbdd7640324bd60e886",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
