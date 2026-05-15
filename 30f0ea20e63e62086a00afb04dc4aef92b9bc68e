@@ -16,6 +16,23 @@
       "message": "Figured I\u0027d pick this one up from the latest batch of fortify bugs. PTAL!",
       "revId": "30f0ea20e63e62086a00afb04dc4aef92b9bc68e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef974961_cd2eab36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-05-15T18:48:09Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "30f0ea20e63e62086a00afb04dc4aef92b9bc68e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
