@@ -588,7 +588,7 @@ deps = {
 
   # Misc dependencies inherited from Tint
   'third_party/protobuf': {
-    'url': '{chromium_git}/chromium/src/third_party/protobuf@6d5b90bb820011da117f9a2fda89e8d862059351',
+    'url': '{chromium_git}/chromium/src/third_party/protobuf@580cd27bd342adba88de9b28b9750c24fef10614',
     'condition': 'dawn_standalone',
   },
 
