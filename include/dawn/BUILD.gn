@@ -65,6 +65,11 @@ dawn_json_generator("cpp_headers_gen") {
   ]
 }
 
+dawn_json_generator("cpp_modules_gen") {
+  target = "cpp_modules"
+  outputs = [ "include/dawn/webgpu.ixx" ]
+}
+
 source_set("cpp_headers") {
   all_dependent_configs = [ ":public" ]
   sources = [ "${dawn_root}/include/webgpu/webgpu_enum_class_bitmasks.h" ]
@@ -72,7 +77,7 @@ source_set("cpp_headers") {
   if (is_wasm) {
     all_dependent_configs +=
         [ "${dawn_root}/src/emdawnwebgpu:emdawnwebgpu_config" ]
-    public_deps = [ "${dawn_root}/src/emdawnwebgpu:emdawnwebgpu" ]
+    public_deps = [ "${dawn_root}/src/emdawnwebgpu" ]
   } else {
     public_deps = [
       ":cpp_headers_gen",
@@ -80,6 +85,7 @@ source_set("cpp_headers") {
     ]
     sources += get_target_outputs(":cpp_headers_gen")
   }
+  public_deps += [ ":cpp_modules_gen" ]
 }
 
 ###############################################################################
