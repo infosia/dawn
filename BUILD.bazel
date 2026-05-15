@@ -26,6 +26,17 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//src/tint:generated_sources.bzl", "tint_generated_sources", "tint_generation_dependencies")
+
+genrule(
+    name = "generate_sources",
+    srcs = tint_generation_dependencies,
+    outs = tint_generated_sources,
+    cmd = "$(location //tools/src/cmd/gen:gen) sources $(RULEDIR)/gen",
+    tools = ["//tools/src/cmd/gen:gen"],
+    visibility = ["//visibility:public"],
+    tags = ["local"],
+)
 
 cc_library(
   name = "includes",
