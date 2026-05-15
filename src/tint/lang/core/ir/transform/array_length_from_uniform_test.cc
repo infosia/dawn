@@ -1813,5 +1813,193 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_ArrayLengthFromUniformTest, RuntimeStruct_NoMapping) {
+    auto* arr_ty = ty.runtime_array(ty.u32());
+    auto* S = ty.Struct(mod.symbols.New("S"), {
+                                                  {mod.symbols.New("a"), arr_ty},
+                                              });
+    auto* v = b.Var("v", ty.ptr(storage, S));
+    v->SetBindingPoint(0, 0);
+    mod.root_block->Append(v);
+
+    auto* bar = b.Function("bar", ty.void_());
+    auto* bar_p = b.FunctionParam("bar_p", ty.ptr(storage, S));
+    bar->SetParams({bar_p});
+    b.Append(bar->Block(), [&] {
+        auto* a = b.Access(ty.ptr(storage, arr_ty), bar_p, 0_u);
+        auto* len = b.Call(ty.u32(), BuiltinFn::kArrayLength, a);
+        b.Let("len", len);
+        b.Return(bar);
+    });
+
+    auto* foo = b.Function("foo", ty.void_());
+    b.Append(foo->Block(), [&] {
+        b.Call(ty.void_(), bar, v);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+S = struct @align(4) {
+  a:array<u32> @offset(0)
+}
+
+$B1: {  # root
+  %v:ptr<storage, S, read_write> = var undef @binding_point(0, 0)
+}
+
+%bar = func(%bar_p:ptr<storage, S, read_write>):void {
+  $B2: {
+    %4:ptr<storage, array<u32>, read_write> = access %bar_p, 0u
+    %5:u32 = arrayLength %4
+    %len:u32 = let %5
+    ret
+  }
+}
+%foo = func():void {
+  $B3: {
+    %8:void = call %bar, %v
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+S = struct @align(4) {
+  a:array<u32> @offset(0)
+}
+
+$B1: {  # root
+  %v:ptr<storage, S, read_write> = var undef @binding_point(0, 0)
+}
+
+%bar = func(%bar_p:ptr<storage, S, read_write>, %tint_array_length:u32):void {
+  $B2: {
+    %5:ptr<storage, array<u32>, read_write> = access %bar_p, 0u
+    %len:u32 = let %tint_array_length
+    ret
+  }
+}
+%foo = func():void {
+  $B3: {
+    %8:ptr<storage, array<u32>, read_write> = access %v, 0u
+    %9:u32 = arrayLength %8
+    %10:void = call %bar, %v, %9
+    ret
+  }
+}
+)";
+
+    std::unordered_map<BindingPoint, uint32_t> bindpoint_to_index;
+    Run(ArrayLengthFromUniform, BindingPoint{1, 2}, bindpoint_to_index);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_ArrayLengthFromUniformTest, RuntimeStruct_NoMapping_MultiLevel) {
+    auto* arr_ty = ty.runtime_array(ty.u32());
+    auto* S = ty.Struct(mod.symbols.New("S"), {
+                                                  {mod.symbols.New("a"), arr_ty},
+                                              });
+    auto* v = b.Var("v", ty.ptr(storage, S));
+    v->SetBindingPoint(0, 0);
+    mod.root_block->Append(v);
+
+    auto* bar = b.Function("bar", ty.void_());
+    auto* bar_p = b.FunctionParam("bar_p", ty.ptr(storage, S));
+    bar->SetParams({bar_p});
+    b.Append(bar->Block(), [&] {
+        auto* a = b.Access(ty.ptr(storage, arr_ty), bar_p, 0_u);
+        auto* len = b.Call(ty.u32(), BuiltinFn::kArrayLength, a);
+        b.Let("len", len);
+        b.Return(bar);
+    });
+
+    auto* foo = b.Function("foo", ty.void_());
+    auto* foo_p = b.FunctionParam("foo_p", ty.ptr(storage, S));
+    foo->SetParams({foo_p});
+    b.Append(foo->Block(), [&] {
+        b.Call(ty.void_(), bar, foo_p);
+        b.Return(foo);
+    });
+
+    auto* foobar = b.Function("foobar", ty.void_());
+    b.Append(foobar->Block(), [&] {
+        b.Call(ty.void_(), foo, v);
+        b.Return(foobar);
+    });
+
+    auto* src = R"(
+S = struct @align(4) {
+  a:array<u32> @offset(0)
+}
+
+$B1: {  # root
+  %v:ptr<storage, S, read_write> = var undef @binding_point(0, 0)
+}
+
+%bar = func(%bar_p:ptr<storage, S, read_write>):void {
+  $B2: {
+    %4:ptr<storage, array<u32>, read_write> = access %bar_p, 0u
+    %5:u32 = arrayLength %4
+    %len:u32 = let %5
+    ret
+  }
+}
+%foo = func(%foo_p:ptr<storage, S, read_write>):void {
+  $B3: {
+    %9:void = call %bar, %foo_p
+    ret
+  }
+}
+%foobar = func():void {
+  $B4: {
+    %11:void = call %foo, %v
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+S = struct @align(4) {
+  a:array<u32> @offset(0)
+}
+
+$B1: {  # root
+  %v:ptr<storage, S, read_write> = var undef @binding_point(0, 0)
+}
+
+%bar = func(%bar_p:ptr<storage, S, read_write>, %tint_array_length:u32):void {
+  $B2: {
+    %5:ptr<storage, array<u32>, read_write> = access %bar_p, 0u
+    %len:u32 = let %tint_array_length
+    ret
+  }
+}
+%foo = func(%foo_p:ptr<storage, S, read_write>, %tint_array_length_1:u32):void {  # %tint_array_length_1: 'tint_array_length'
+  $B3: {
+    %10:void = call %bar, %foo_p, %tint_array_length_1
+    ret
+  }
+}
+%foobar = func():void {
+  $B4: {
+    %12:ptr<storage, array<u32>, read_write> = access %v, 0u
+    %13:u32 = arrayLength %12
+    %14:void = call %foo, %v, %13
+    ret
+  }
+}
+)";
+
+    std::unordered_map<BindingPoint, uint32_t> bindpoint_to_index;
+    Run(ArrayLengthFromUniform, BindingPoint{1, 2}, bindpoint_to_index);
+
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::core::ir::transform

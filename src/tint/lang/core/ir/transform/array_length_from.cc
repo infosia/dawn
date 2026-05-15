@@ -149,13 +149,16 @@ struct State {
     /// @param insertion_point the insertion point for new instructions
     /// @param buffer true if call is a bufferLength call (arrayLength otherwise)
     /// @returns the computed length, or nullptr if the original builtin should be used
-    Value* GetComputedLength(Value* ptr, Instruction* insertion_point, bool buffer) {
+    Value* GetComputedLength(Value* ptr,
+                             Instruction* insertion_point,
+                             bool buffer,
+                             Constant* struct_index = nullptr) {
         // Trace back from the value until we reach the originating variable.
         while (true) {
             if (auto* param = ptr->As<FunctionParam>()) {
                 // The length of an array pointer passed as a function parameter will be passed as
                 // an additional parameter to the function.
-                return GetArrayLengthParam(param, buffer);
+                return GetArrayLengthParam(param, buffer, struct_index);
             }
 
             if (auto* result = ptr->As<InstructionResult>()) {
@@ -165,6 +168,10 @@ struct State {
                 }
                 if (auto* access = result->Instruction()->As<Access>()) {
                     ptr = access->Object();
+                    // Structs must be accessed with a constant.
+                    TINT_IR_ASSERT(ir, ptr->Type()->UnwrapPtr()->Is<core::type::Struct>());
+                    struct_index = access->Indices()[access->Indices().size() - 1]->As<Constant>();
+                    TINT_IR_ASSERT(ir, struct_index);
                     continue;
                 }
                 if (auto* let = result->Instruction()->As<Let>()) {
@@ -223,7 +230,8 @@ struct State {
                             length = b.Constant(u32(const_count.value()));
                         } else {
                             // Impossible to have come from a bufferLength call.
-                            length = GetComputedLength(call->Args()[0], call, false);
+                            // No need to carry the struct index anymore.
+                            length = GetComputedLength(call->Args()[0], call, false, nullptr);
                             if (!length) {
                                 return nullptr;
                             }
@@ -273,7 +281,9 @@ struct State {
     /// @param array_param the array parameter
     /// @param buffer true if call is a bufferLength call (arrayLength otherwise)
     /// @returns the array length parameter
-    FunctionParam* GetArrayLengthParam(FunctionParam* array_param, bool buffer) {
+    FunctionParam* GetArrayLengthParam(FunctionParam* array_param,
+                                       bool buffer,
+                                       Constant* struct_index) {
         return array_param_to_length_param.GetOrAdd(array_param, [&] {
             // Add a new parameter to receive the array length.
             auto* length = b.FunctionParam<u32>("tint_array_length");
@@ -284,7 +294,7 @@ struct State {
                 if (auto* call = use.instruction->As<core::ir::UserCall>()) {
                     // Get the length of the array in the calling function and pass that.
                     auto* arg = call->Args()[array_param->Index()];
-                    auto* len = GetComputedLength(arg, call, buffer);
+                    auto* len = GetComputedLength(arg, call, buffer, struct_index);
                     if (!len) {
                         // The originating variable was not in the bindpoint map, so we need to call
                         // the original builtin as the callee is expecting a value.
@@ -292,6 +302,15 @@ struct State {
                             if (buffer) {
                                 len = b.Call<u32>(BuiltinFn::kBufferLength, arg)->Result();
                             } else {
+                                if (struct_index) {
+                                    auto* ptr_ty = arg->Type()->As<type::Pointer>();
+                                    auto* str_ty = ptr_ty->UnwrapPtr()->As<type::Struct>();
+                                    auto* array_ty = str_ty->Members().Back()->Type();
+                                    arg = b.Access(ty.ptr(ptr_ty->AddressSpace(), array_ty,
+                                                          ptr_ty->Access()),
+                                                   arg, struct_index)
+                                              ->Result();
+                                }
                                 len = b.Call<u32>(BuiltinFn::kArrayLength, arg)->Result();
                             }
                         });
