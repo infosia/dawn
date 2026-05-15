@@ -190,6 +190,9 @@ struct BeginRenderPassCmd {
     uint32_t width;
     uint32_t height;
 
+    // Use the full render pass dimensions as render area to clear attachments. `renderArea` is
+    // still used to set the initial scissor rect even if this is true.
+    bool forceFullRenderArea = false;
     RenderAreaRect renderArea;
 
     // Used for partial resolve

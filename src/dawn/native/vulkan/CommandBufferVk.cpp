@@ -173,6 +173,12 @@ VkImageCopy ComputeImageCopyRegion(const TextureCopy& srcCopy,
 VkRect2D GetAlignedRenderArea(VkExtent2D granularity, BeginRenderPassCmd* renderPassCmd) {
     VkRect2D renderArea;
 
+    if (renderPassCmd->forceFullRenderArea) {
+        renderArea.offset = {};
+        renderArea.extent = {renderPassCmd->width, renderPassCmd->height};
+        return renderArea;
+    }
+
     if (granularity.width == 0 || granularity.width == 1) {
         renderArea.offset.x = renderPassCmd->renderArea.x;
         renderArea.extent.width = renderPassCmd->renderArea.width;
@@ -1322,18 +1328,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 DAWN_TRY(PrepareResourcesForRenderPass(device, recordingContext, usage));
 
                 DAWN_TRY(LazyClearRenderPassAttachments(
-                    device, cmd,
-                    [&](TextureBase* texture, const SubresourceRange& range) -> MaybeError {
-                        Texture* textureVk = ToBackend(texture);
-                        DAWN_TRY(textureVk->EnsureSubresourceContentInitialized(recordingContext,
-                                                                                range));
-                        // EnsureSubresourceContentInitialized may transition some textures to a
-                        // different usage, so ensure they are transitioned back to RenderAttachment
-                        // after clearing.
-                        textureVk->TransitionUsageNow(recordingContext,
-                                                      wgpu::TextureUsage::RenderAttachment,
-                                                      wgpu::ShaderStage::None, range);
-                        return {};
+                    device, cmd, [&](TextureBase* texture, const SubresourceRange& range) {
+                        return ToBackend(texture)->EnsureSubresourceContentInitialized(
+                            recordingContext, range);
                     }));
                 DAWN_TRY(RecordRenderPass(recordingContext, cmd, usage, nextRenderPassNumber));
 
