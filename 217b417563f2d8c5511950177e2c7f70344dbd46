@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29c9eb83_68b6cb68",
+        "filename": "src/cmake/DawnCompilerChecks.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-15T19:02:26Z",
+      "side": 1,
+      "message": "Might need some more considerations if PROJECT_IS_TOP_LEVEL for internal use",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
