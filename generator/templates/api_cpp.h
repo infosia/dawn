@@ -55,16 +55,20 @@
 #include "{{api}}/{{api}}_cpp_chained_struct.h"
 #include "{{api}}/{{api}}_enum_class_bitmasks.h"  // IWYU pragma: export
 
+#ifndef DAWN_INTERNAL_LINKAGE
+#define DAWN_INTERNAL_LINKAGE static
+#endif
+
 namespace {{metadata.namespace}} {
 
 {% set c_prefix = metadata.c_prefix %}
 {% for constant in by_category["constant"] %}
     {% set type = as_cppType(constant.type.name) %}
     {% if constant.cpp_value %}
-        static constexpr {{type}} k{{constant.name.CamelCase()}} = {{ constant.cpp_value }};
+        DAWN_INTERNAL_LINKAGE constexpr {{type}} k{{constant.name.CamelCase()}} = {{ constant.cpp_value }};
     {% else %}
         {% set value = c_prefix + "_" +  constant.name.SNAKE_CASE() %}
-        static constexpr {{type}} k{{constant.name.CamelCase()}} = {{ value }};
+        DAWN_INTERNAL_LINKAGE constexpr {{type}} k{{constant.name.CamelCase()}} = {{ value }};
     {% endif %}
 {% endfor %}
 
@@ -1168,7 +1172,7 @@ struct CallbackInfoHelper {
 // Free Functions
 {% for function in by_category["function"] if not function.no_cpp %}
     {% set FunctionName = as_cppType(function.name) %}
-    static inline {{as_annotated_cppType(function.returns)}} {{FunctionName}}(
+    DAWN_INTERNAL_LINKAGE inline {{as_annotated_cppType(function.returns)}} {{FunctionName}}(
         {%- for arg in function.arguments -%}
             {%- if not loop.first %}, {% endif -%}
             {{as_annotated_cppType(arg)}}{{render_cpp_default_value(arg, False)}}
