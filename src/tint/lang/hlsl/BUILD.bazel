@@ -43,10 +43,11 @@ exports_files(glob(["*.def", "*.tmpl"], allow_empty = True))
 cc_library(
   name = "hlsl",
   srcs = [
-    "builtin_fn.cc",
+    "//:gen/src/tint/lang/hlsl/builtin_fn.cc",
+    "//:gen/src/tint/lang/hlsl/builtin_fn.h",
   ],
   hdrs = [
-    "builtin_fn.h",
+    "//:gen/src/tint/lang/hlsl/builtin_fn.h",
   ],
   deps = [
     "//src/tint/lang/core/ir",
