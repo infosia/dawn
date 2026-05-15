@@ -775,30 +775,24 @@ func emitBuildFiles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter)
 		}
 	}
 
-	// Emit generated_sources.cmake in the root directory
-	depsPath := path.Join(p.Root, "generated_sources.cmake")
-	sb := &strings.Builder{}
-	sb.WriteString(common.Header("", "", "#"))
-	sb.WriteString("\n")
-	sb.WriteString("set(TINT_GENERATED_SOURCE_DEPS\n")
-	sb.WriteString("  \"lang/core/core.def\"\n")
-	sb.WriteString("  \"lang/glsl/glsl.def\"\n")
-	sb.WriteString("  \"lang/hlsl/hlsl.def\"\n")
-	sb.WriteString("  \"lang/msl/msl.def\"\n")
-	sb.WriteString("  \"lang/spirv/spirv.def\"\n")
-	for _, t := range p.AllTemplatePaths.List() {
-		sb.WriteString(fmt.Sprintf("  \"%s\"\n", t))
+	// Generate files the contain the inputs and/or outputs of the build-time source generation.
+	generatedSources := p.AllTemplatePaths.List()
+	for i, v := range generatedSources {
+		generatedSources[i] = "src/tint/" + strings.TrimSuffix(v, ".tmpl")
 	}
-	sb.WriteString(")\n")
-
-	existing, _ := fsReaderWriter.ReadFile(depsPath)
-	if string(existing) != sb.String() {
-		if p.cfg.Flags.CheckStale {
-			return common.StaleFiles{depsPath}
-		}
-		if err := fsReaderWriter.WriteFile(depsPath, []byte(sb.String()), 0666); err != nil {
-			return err
-		}
+	depsForGeneratedSources := []string{
+		"lang/core/core.def",
+		"lang/glsl/glsl.def",
+		"lang/hlsl/hlsl.def",
+		"lang/msl/msl.def",
+		"lang/spirv/spirv.def",
+	}
+	depsForGeneratedSources = append(depsForGeneratedSources, p.AllTemplatePaths.List()...)
+	if err := emitGeneratedSourceListForCMake(p, fsReaderWriter, depsForGeneratedSources); err != nil {
+		return err
+	}
+	if err := emitGeneratedSourceListForGN(p, fsReaderWriter, generatedSources, depsForGeneratedSources); err != nil {
+		return err
 	}
 
 	return nil
@@ -842,6 +836,52 @@ func emitDotFile(p *Project, kind TargetKind, fsWriter oswrapper.FilesystemWrite
 
 	g.GenerateDOT(file)
 	return nil
+}
+
+func emitGeneratedSourceListForCMake(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter, depsForGeneratedSources []string) error {
+	depsPath := path.Join(p.Root, "generated_sources.cmake")
+	sb := &strings.Builder{}
+	sb.WriteString(common.Header("", "", "#"))
+	sb.WriteString("\n")
+	emitList(sb, depsForGeneratedSources, "set(TINT_GENERATED_SOURCE_DEPS\n", ")\n", "  \"", "\"\n")
+
+	return writeFileIfStale(p, fsReaderWriter, depsPath, sb.String())
+}
+
+func emitGeneratedSourceListForGN(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter, generatedSources []string, depsForGeneratedSources []string) error {
+	gniPath := path.Join(p.Root, "generated_sources.gni")
+	sb := &strings.Builder{}
+	sb.WriteString(common.Header("", "", "#"))
+	sb.WriteString("\n")
+	sb.WriteString("import(\"tint.gni\")\n\n")
+
+	emitList(sb, generatedSources, "tint_generated_sources = [\n", "]\n\n", "  \"${root_gen_dir}/", "\",\n")
+	emitList(sb, depsForGeneratedSources, "tint_generation_dependencies = [\n", "]\n", "  \"", "\",\n")
+
+	return writeFileIfStale(p, fsReaderWriter, gniPath, sb.String())
+}
+
+func writeFileIfStale(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter, filepath string, content string) error {
+	existing, _ := fsReaderWriter.ReadFile(filepath)
+	if string(existing) != content {
+		if p.cfg.Flags.CheckStale {
+			return common.StaleFiles{filepath}
+		}
+		if err := fsReaderWriter.WriteFile(filepath, []byte(content), 0666); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func emitList(sb *strings.Builder, items []string, prefix, suffix, itemPrefix, itemSuffix string) {
+	sb.WriteString(prefix)
+	for _, item := range items {
+		sb.WriteString(itemPrefix)
+		sb.WriteString(item)
+		sb.WriteString(itemSuffix)
+	}
+	sb.WriteString(suffix)
 }
 
 var (
