@@ -59,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d91a01b6_4fe74a53",
+        "filename": "DEPS",
+        "patchSetId": 22
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00faea74_cfdf91a1",
+      "range": {
+        "startLine": 858,
+        "startChar": 2,
+        "endLine": 861,
+        "endChar": 14
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b6770b6b_555faacc",
@@ -72,6 +96,30 @@
       "writtenOn": "2026-05-14T15:43:06Z",
       "side": 1,
       "message": "I am thinking that I want to land this CL before we get Agility SDK into CIPD. Once it\u0027s in CIPD, I\u0027ll make the changes to remove this script, etc.\n\nPlease let\u0027s remove the version number from the directory name. So instead of `agility_sdk_1.619.2`, let\u0027s make it `AgilitySDK`. This should remove many of the \"1.619.2\"s that appear in too many places in this CL.",
+      "range": {
+        "startLine": 162,
+        "startChar": 36,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99946ebe_d0e402df",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 22
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6770b6b_555faacc",
       "range": {
         "startLine": 162,
         "startChar": 36,
@@ -101,6 +149,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "97fc7372_aa755cd0",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "I\u0027m concerned we can’t gate CreateD3DDevice using an adapter toggle due to ordering: CreateD3DDevice is called inside PhysicalDevice::InitializeImpl(), but SetupBackendAdapterToggles runs afterwards.\n\nRight now I’m using DAWN_USE_AGILITY_SDK to guard device creation. Is there any better approach you’d recommend?",
+      "parentUuid": "7b0281ea_da07ab0c",
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a1499201_55956a97",
         "filename": "src/dawn/native/Toggles.cpp",
         "patchSetId": 22
@@ -112,6 +178,30 @@
       "writtenOn": "2026-05-14T15:43:06Z",
       "side": 1,
       "message": "Remove fallback logic. If enabled, we use the Agility SDK runtime exclusively.",
+      "range": {
+        "startLine": 883,
+        "startChar": 7,
+        "endLine": 885,
+        "endChar": 54
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "047d3a8c_230a612f",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1499201_55956a97",
       "range": {
         "startLine": 883,
         "startChar": 7,
@@ -186,6 +276,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f80785be_b9d8cf32",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done, removed AgilitySDK.h and switched to D3D12_SDK_VERSION from d3d12.h. Used D3D12_SDK_VERSION (619) rather than D3D12_PREVIEW_SDK_VERSION (719) since the latter refers to an unreleased preview SDK and would cause CreateDeviceFactory to fail at runtime.",
+      "parentUuid": "d85d8905_c5ba5885",
+      "range": {
+        "startLine": 44,
+        "startChar": 26,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad75cf20_220094d2",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "I\u0027ve removed this file and used D3D12_SDK_VERSION instead of kAgilitySDKVersion  directly.",
+      "parentUuid": "7d19ea1c_a92cff5f",
+      "range": {
+        "startLine": 44,
+        "startChar": 47,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77a20a36_d7963f80",
@@ -199,6 +337,30 @@
       "writtenOn": "2026-05-14T19:38:47Z",
       "side": 1,
       "message": "Since you\u0027re running this code unconditionally, please put device factory creation into the PlatformFunctions class itself and call it from its Initialize method. \n\nIf we want to gate device factory creation behind a toggle that\u0027s checked here, then please rename to EnsureAgilitySDKDeviceFactory and improve it to only create the device factory once.  \n\nLogging should probably go into PlatformFunctions instead of here in the caller.",
+      "range": {
+        "startLine": 58,
+        "startChar": 52,
+        "endLine": 58,
+        "endChar": 81
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a513ee0_5bcc15a1",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "I currently create the device factory with gating it on DAWN_USE_AGILITY_SDK. Is it a better way to create it behind a toggle?",
+      "parentUuid": "77a20a36_d7963f80",
       "range": {
         "startLine": 58,
         "startChar": 52,
@@ -255,6 +417,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42cfbfb6_09e7e877",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f40d642_c4e5db0a",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 14
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e256dd74_07093d78",
@@ -290,6 +476,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc12b39d_8781a546",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e256dd74_07093d78",
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec7b1b7c_c356c878",
@@ -303,6 +507,30 @@
       "writtenOn": "2026-05-14T15:43:06Z",
       "side": 1,
       "message": "`agility_sdk` here and line below",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 50
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "315329dc_340dcc37",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec7b1b7c_c356c878",
       "range": {
         "startLine": 43,
         "startChar": 31,
@@ -336,6 +564,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37d0a220_d0e2433e",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d38ee93a_dd850d25",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 29
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2ea81ad_a5a342bf",
@@ -349,6 +601,30 @@
       "writtenOn": "2026-05-14T15:43:06Z",
       "side": 1,
       "message": "Same here.",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 258,
+        "endChar": 29
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b55460b8_1e5dd0d3",
+        "filename": "src/dawn/tests/unittests/ToggleTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2ea81ad_a5a342bf",
       "range": {
         "startLine": 256,
         "startChar": 4,
@@ -382,6 +658,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0aab9b51_ecbca09f",
+        "filename": "tools/fetch_agility_sdk.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa32a569_4bb4b200",
+      "range": {
+        "startLine": 36,
+        "startChar": 58,
+        "endLine": 36,
+        "endChar": 66
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "565573ed_8ed8eaf7",
@@ -405,6 +705,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "139b33d3_06f98469",
+        "filename": "tools/fetch_agility_sdk.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "565573ed_8ed8eaf7",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 27
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32153fab_4e7a0aef",
@@ -418,6 +742,24 @@
       "writtenOn": "2026-05-14T15:43:06Z",
       "side": 1,
       "message": "Let\u0027s delete the output_path first, so for version changes it does the right thing",
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a2c65db_d0b6c84a",
+        "filename": "tools/fetch_agility_sdk.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32153fab_4e7a0aef",
       "revId": "d07444f094d6c939dcf289167242c2e19808f923",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

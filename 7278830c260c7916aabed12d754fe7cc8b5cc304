@@ -136,6 +136,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfa89cce_4ee6242d",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-15T09:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc85f377_ef5f4ee0",
+      "range": {
+        "startLine": 52,
+        "startChar": 26,
+        "endLine": 52,
+        "endChar": 40
+      },
+      "revId": "7278830c260c7916aabed12d754fe7cc8b5cc304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9d229c5_a87c6fe6",
