@@ -60,7 +60,7 @@ tint_add_target({{$Name}} {{$Kind}}
 {{-   $UnconditionalSourceFiles := $.UnconditionalSourceFiles}}
 {{-   if $UnconditionalSourceFiles }}
 {{-     range $File := $UnconditionalSourceFiles}}
-  {{$File.Path}}
+  {{if $.IsGeneratedSource $File.Path}}"${PROJECT_BINARY_DIR}/gen/src/tint/{{$File.Path}}"{{else}}{{$File.Path}}{{end}}
 {{-     end}}
 {{-   end}}
 )
@@ -94,7 +94,7 @@ if({{Eval "Expression" $Cond.Condition}})
 {{-     if $Cond.SourceFiles}}
   tint_target_add_sources({{$Name}} {{$Kind}}
 {{-       range $File := $Cond.SourceFiles}}
-    "{{$File.Path}}"
+    {{if $.IsGeneratedSource $File.Path}}"${PROJECT_BINARY_DIR}/gen/src/tint/{{$File.Path}}"{{else}}"{{$File.Path}}"{{end}}
 {{-       end}}
   )
 {{-     end}}
