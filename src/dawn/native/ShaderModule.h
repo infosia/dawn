@@ -150,8 +150,8 @@ DAWN_SERIALIZABLE(struct, ShaderModuleParseResult, SHADER_MODULE_PARSE_RESULT_ME
 #undef SHADER_MODULE_PARSE_RESULT_MEMBER
 
 struct ShaderModuleEntryPoint {
-    bool defaulted;
-    std::string name;
+    bool defaulted = false;
+    std::string name = "";
 };
 
 void DumpShaderFromDescriptor(LogEmitter* logEmitter,
@@ -436,14 +436,14 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
 
     // The original data in the descriptor for caching.
     enum class Type : uint8_t { Undefined, Spirv, Wgsl };
-    Type mType;
+    Type mType = Type::Undefined;
     bool mAllowSpirvNonUniformDerivitives = false;
-    std::vector<uint32_t> mOriginalSpirv;
-    std::string mWgsl;
+    std::vector<uint32_t> mOriginalSpirv = {};
+    std::string mWgsl = "";
 
     // Secure hash computed from shader code and other metadata to be used as a cache key
     // representing the shader module.
-    ShaderModuleHash mHash;
+    ShaderModuleHash mHash = {};
 
     // TODO(dawn:2503): Remove the optional when Dawn can has a consistent default across backends.
     // Right now D3D uses strictness by default, and Vulkan/Metal use fast math by default.

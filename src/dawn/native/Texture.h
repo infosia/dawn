@@ -296,7 +296,7 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     // thread-safe.
     virtual std::optional<DeviceGuard> UseDeviceGuardForDestroy();
 
-    wgpu::TextureDimension mDimension;
+    wgpu::TextureDimension mDimension = wgpu::TextureDimension::Undefined;
     // Only used for compatibility mode
     wgpu::TextureViewDimension mCompatibilityTextureBindingViewDimension =
         wgpu::TextureViewDimension::Undefined;
@@ -408,7 +408,7 @@ class TextureViewBase : public ApiObjectBase {
     Ref<TextureBase> mTexture;
 
     const raw_ref<const Format> mFormat;
-    wgpu::TextureViewDimension mDimension;
+    wgpu::TextureViewDimension mDimension = wgpu::TextureViewDimension::Undefined;
     SubresourceRange mRange;
     const wgpu::TextureUsage mUsage = wgpu::TextureUsage::None;
     const wgpu::TextureUsage mInternalUsage = wgpu::TextureUsage::None;
