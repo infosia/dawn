@@ -33,6 +33,10 @@ if (tint_has_protobuf) {
   import("//third_party/protobuf/proto_library.gni")
 }
 
+# tint_gen_dir is the relative path of tint_root_dir to '//', under root_gen_dir
+tint_gen_dir = "//" + rebase_path(root_gen_dir, "//") + "/" +
+               rebase_path("//src/tint", "//")
+
 ###############################################################################
 # OS defines
 ###############################################################################
