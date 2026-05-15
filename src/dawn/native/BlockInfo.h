@@ -92,7 +92,7 @@ struct BlockOrigin3D {
 
 // Strong type version of Extent3D.
 struct TexelExtent3D {
-    TexelCount width;
+    TexelCount width{0};
     TexelCount height{1};
     TexelCount depthOrArrayLayers{1};
 
@@ -130,7 +130,7 @@ struct TexelExtent3D {
 
 // Stores an extent in block space
 struct BlockExtent3D {
-    BlockCount width;
+    BlockCount width{0};
     BlockCount height{1};
     BlockCount depthOrArrayLayers{1};
 
