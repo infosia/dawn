@@ -50,6 +50,24 @@
       "message": "```suggestion\n            return kSemaphoreFdAlreadySignaledFd;\n```",
       "revId": "c9c01de0f42783ff4e88e9c8f4497c44470f30c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2366ca2_521f34c4",
+        "filename": "src/dawn/native/vulkan/external_semaphore/SemaphoreServiceImplementationFD.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 4821744
+      },
+      "writtenOn": "2026-05-15T21:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e88e4ef8_26333ecc",
+      "revId": "c9c01de0f42783ff4e88e9c8f4497c44470f30c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
