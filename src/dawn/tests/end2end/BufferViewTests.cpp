@@ -395,7 +395,8 @@ class BufferViewTest : public DawnTest {
             1, 2, 3, 4, 0x3f800000, 0x40000000, 0x40400000, 0x40800000, 7, 8, 9, 10, 11, 12, 13, 14,
         };
         const std::vector<uint32_t> expected = {
-            1, 2, 3, 4, 0x3f800000, 0x40000000, 0x40400000, 0x40800000, 7, 8, 9, 10, 11, 12, 13, 14,
+            1, 2,  3,  4,  0x3f800000, 0x40000000, 0x40400000, 0x40800000, 7, 8,
+            9, 10, 11, 12, 13,         14,         0,          0,          0, 1234,
         };
 
         wgpu::ComputePipelineDescriptor desc;
@@ -448,6 +449,11 @@ class BufferViewTest : public DawnTest {
             b : vec4u,
           }
 
+          struct T {
+            a : vec3u,
+            b : u32,
+          }
+
           @compute @workgroup_size(1)
           fn main() {
             let uniform_v1 = bufferView<array<u32>>(&uniforms, 0);
@@ -476,6 +482,10 @@ class BufferViewTest : public DawnTest {
             let in3_ld = *in3;
             *out3_sub = *in3_sub;
             *out3 = in3_ld;
+
+            let out4 = bufferView<array<T>>(&out, 0);
+            let len = arrayLength(out4);
+            out4[len - 1].b = 1234;
           }
         )";
 
@@ -491,6 +501,11 @@ class BufferViewTest : public DawnTest {
           struct S {
             a : u32,
             b : vec4u,
+          }
+
+          struct T {
+            a : vec3u,
+            b : u32,
           }
 
           @compute @workgroup_size(1)
@@ -521,6 +536,10 @@ class BufferViewTest : public DawnTest {
             let in3_ld = in3[0];
             out3_sub[0] = in3_sub[0];
             out3[0] = in3_ld;
+
+            let out4 = bufferArrayView<array<T>>(&out, 0, bufferLength(&out));
+            let len = arrayLength(out4);
+            out4[len - 1].b = 1234;
           }
         )";
 
