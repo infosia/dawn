@@ -232,6 +232,7 @@ class Impl {
 
         // Set properties that are supported by WGSL.
         mod.properties.Add(core::ir::Property::kAllowMultipleEntryPoints);
+        mod.properties.Add(core::ir::Property::kAllowOverrides);
 
         for (auto* decl : sem->DependencyOrderedDeclarations()) {
             tint::Switch(
