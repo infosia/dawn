@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70d94cc9_bf579126",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-15T03:13:17Z",
+      "side": 1,
+      "message": "This message is outdated right? Now you\u0027ve kept DAWN_ASSERT and added DAWN_RELEASE_ASSUME.\n\nAnd I\u0027m guessing that the places you decided to use DAWN_RELEASE_ASSUME are specific places you thought it was safe and still useful? Explain this in the commit also.",
+      "revId": "a70540cda561c1c0e8585b410ad6ac0bce0a8a7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8597ad73_49588240",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-15T03:13:17Z",
+      "side": 1,
+      "message": "IIRC we used to have this but removed it in favor of usages of `[[maybe_unused]]` (and maybe `(void)`), do we really want to add it back?",
+      "revId": "a70540cda561c1c0e8585b410ad6ac0bce0a8a7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
