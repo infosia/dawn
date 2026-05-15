@@ -23,8 +23,9 @@ struct tint_array_lengths_struct {
 };
 
 struct S {
-  float4 a;
-  tint_array<uint, 1> b;
+  /* 0x0000 */ float4 a;
+  /* 0x0010 */ tint_array<uint, 1> b;
+  /* 0x0014 */ tint_array<int8_t, 12> tint_pad;
 };
 
 [[max_total_threads_per_threadgroup(1)]]

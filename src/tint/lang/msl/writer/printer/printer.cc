@@ -63,6 +63,7 @@
 #include "src/tint/lang/core/ir/switch.h"
 #include "src/tint/lang/core/ir/swizzle.h"
 #include "src/tint/lang/core/ir/terminate_invocation.h"
+#include "src/tint/lang/core/ir/traverse.h"
 #include "src/tint/lang/core/ir/unreachable.h"
 #include "src/tint/lang/core/ir/unused.h"
 #include "src/tint/lang/core/ir/user_call.h"
@@ -223,8 +224,26 @@ class Printer : public tint::TextGenerator {
     /// Find all structures that are used in host-shareable address spaces and mark them as such so
     /// that we know to pad the properly when we emit them.
     void FindHostShareableStructs() {
-        // We only look at function parameters of entry points, since this is how binding resources
-        // are handled in MSL.
+        auto RecordSubTypes = [&](const core::type::Pointer* ptr) {
+            // Look for structures at any nesting depth of this parameter's type.
+            Vector<const core::type::Type*, 8> type_queue;
+            type_queue.Push(ptr->StoreType());
+            while (!type_queue.IsEmpty()) {
+                auto* next = type_queue.Pop();
+                if (auto* str = next->As<core::type::Struct>()) {
+                    // Record this structure as host-shareable.
+                    host_shareable_structs_.Add(str);
+                    for (auto* member : str->Members()) {
+                        type_queue.Push(member->Type());
+                    }
+                } else if (auto* arr = next->As<core::type::Array>()) {
+                    type_queue.Push(arr->ElemType());
+                }
+            }
+        };
+
+        // We need to look at function parameters of the entry point and the results of
+        // msl.pointer_offset calls.
         for (auto func : ir_.functions) {
             if (!func->IsEntryPoint()) {
                 continue;
@@ -232,23 +251,19 @@ class Printer : public tint::TextGenerator {
             for (auto* param : func->Params()) {
                 auto* ptr = param->Type()->As<core::type::Pointer>();
                 if (ptr && core::IsHostShareable(ptr->AddressSpace())) {
-                    // Look for structures at any nesting depth of this parameter's type.
-                    Vector<const core::type::Type*, 8> type_queue;
-                    type_queue.Push(ptr->StoreType());
-                    while (!type_queue.IsEmpty()) {
-                        auto* next = type_queue.Pop();
-                        if (auto* str = next->As<core::type::Struct>()) {
-                            // Record this structure as host-shareable.
-                            host_shareable_structs_.Add(str);
-                            for (auto* member : str->Members()) {
-                                type_queue.Push(member->Type());
-                            }
-                        } else if (auto* arr = next->As<core::type::Array>()) {
-                            type_queue.Push(arr->ElemType());
-                        }
-                    }
+                    RecordSubTypes(ptr);
                 }
             }
+            Traverse(func->Block(), [&](msl::ir::BuiltinCall* call) {
+                if (call->Func() != msl::BuiltinFn::kPointerOffset) {
+                    return;
+                }
+                auto* ptr = call->Result()->Type()->As<core::type::Pointer>();
+                TINT_IR_ASSERT(ir_, ptr);
+                if (core::IsHostShareable(ptr->AddressSpace())) {
+                    RecordSubTypes(ptr);
+                }
+            });
         }
     }
 
