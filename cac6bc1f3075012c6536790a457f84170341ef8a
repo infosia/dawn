@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89975e04_9440e82d",
+        "filename": "theplan.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-15T19:33:38Z",
+      "side": 1,
+      "message": "Make sure you delete this file if you want to submit",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 30
+      },
+      "revId": "cac6bc1f3075012c6536790a457f84170341ef8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
