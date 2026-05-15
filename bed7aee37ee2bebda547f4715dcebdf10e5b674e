@@ -22,6 +22,30 @@
       },
       "revId": "bed7aee37ee2bebda547f4715dcebdf10e5b674e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b36a16ea_f80d8618",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-15T13:11:26Z",
+      "side": 1,
+      "message": "Good catch, it\u0027s vkGetPipelineCacheData, updated the comment.",
+      "parentUuid": "cf61d678_5bffd0c6",
+      "range": {
+        "startLine": 113,
+        "startChar": 11,
+        "endLine": 113,
+        "endChar": 35
+      },
+      "revId": "bed7aee37ee2bebda547f4715dcebdf10e5b674e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
