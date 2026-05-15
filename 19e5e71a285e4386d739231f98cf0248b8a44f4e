@@ -16,6 +16,23 @@
       "message": "Ah of course all the tests don\u0027t setup SamplerDescriptor correctly. I\u0027ll fix those after getting feedback here.",
       "revId": "19e5e71a285e4386d739231f98cf0248b8a44f4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e486282f_d021dd70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-15T17:07:50Z",
+      "side": 1,
+      "message": "Needs some dawn_end2end_tests updates, but the fix looks good.",
+      "revId": "19e5e71a285e4386d739231f98cf0248b8a44f4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
