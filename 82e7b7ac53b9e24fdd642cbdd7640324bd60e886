@@ -103,6 +103,24 @@
       "parentUuid": "d8473db2_2b775d31",
       "revId": "82e7b7ac53b9e24fdd642cbdd7640324bd60e886",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6813c30_8b19de05",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-15T20:01:19Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "ee705d00_d46945be",
+      "revId": "82e7b7ac53b9e24fdd642cbdd7640324bd60e886",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
