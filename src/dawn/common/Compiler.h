@@ -32,6 +32,11 @@
 
 // Defines macros for compiler-specific functionality
 
+// DAWN_UNUSED
+//
+// Prevents unused expression warnings.
+#define DAWN_UNUSED(EXPR) [[maybe_unused]] auto cond = !!(EXPR)
+
 // DAWN_UNUSED_FUNC
 //
 // Prevents unused variable/expression warnings on FUNC.
