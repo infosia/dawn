@@ -798,6 +798,9 @@ func emitBuildFiles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter)
 	if err := emitGeneratedSourceListForGN(p, fsReaderWriter, generatedSources, depsForGeneratedSources); err != nil {
 		return err
 	}
+	if err := emitGeneratedSourceListForBazel(p, fsReaderWriter, generatedSources, depsForGeneratedSources); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -864,6 +867,26 @@ func emitGeneratedSourceListForGN(p *Project, fsReaderWriter oswrapper.Filesyste
 	emitList(sb, depsForGeneratedSources, "tint_generation_dependencies = [\n", "]\n", "  \"", "\",\n")
 
 	return writeFileIfStale(p, fsReaderWriter, gniPath, sb.String())
+}
+
+func emitGeneratedSourceListForBazel(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter, generatedSources []string, depsForGeneratedSources []string) error {
+	bzlPath := path.Join(p.Root, "generated_sources.bzl")
+	sb := &strings.Builder{}
+	sb.WriteString(common.Header("", "", "#"))
+	sb.WriteString("\n")
+
+	emitList(sb, generatedSources, "tint_generated_sources = [\n", "]\n\n", "    \"gen/", "\",\n")
+
+	// Convert the list of dependencies into Bazel labels.
+	var labels []string
+	for _, dep := range depsForGeneratedSources {
+		dir, base := path.Split(dep)
+		dir = strings.TrimSuffix(dir, "/")
+		labels = append(labels, fmt.Sprintf("//src/tint/%s:%s", dir, base))
+	}
+	emitList(sb, labels, "tint_generation_dependencies = [\n", "]\n", "    \"", "\",\n")
+
+	return writeFileIfStale(p, fsReaderWriter, bzlPath, sb.String())
 }
 
 func writeFileIfStale(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter, filepath string, content string) error {
