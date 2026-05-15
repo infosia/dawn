@@ -87,6 +87,30 @@
       },
       "revId": "75a58ecd416da7c89fcf0da7f57bedc379385a6c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbbea749_19ce8ed0",
+        "filename": "src/dawn/native/WaitAnySystemEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-15T18:10:43Z",
+      "side": 1,
+      "message": "Oh! There is a test where it _is_ passed as a pointer. I misread and thought this iterator came from `handles` rather than from the outside. OK, looks correct then.",
+      "parentUuid": "dc6e1ca3_2413634c",
+      "range": {
+        "startLine": 85,
+        "startChar": 37,
+        "endLine": 85,
+        "endChar": 59
+      },
+      "revId": "75a58ecd416da7c89fcf0da7f57bedc379385a6c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
