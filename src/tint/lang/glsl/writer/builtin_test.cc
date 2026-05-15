@@ -2391,7 +2391,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSample_2d_Offset) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -2464,7 +2464,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSample_2d_Array_Offset) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -2534,7 +2534,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSample_3d_Offset) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -2677,7 +2677,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSample_Depth2d_Offset) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -2790,7 +2790,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSample_DepthCube_Array) {
     Options opts{};
     opts.entry_point_name = "main";
     opts.version = Version(Version::Standard::kDesktop, 4, 6);
-    auto result = Generate(opts);
+    auto result = Generate(opts, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, R"(#version 460
 precision highp float;
@@ -2826,7 +2826,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleBias_2d) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -2862,7 +2862,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleBias_2d_Offset) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -2898,7 +2898,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleBias_2d_Array) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -2936,7 +2936,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleBias_2d_Array_Offset) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -2971,7 +2971,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleBias_3d) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -3007,7 +3007,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleBias_3d_Offset) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -3041,7 +3041,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleBias_Cube) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -3080,7 +3080,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleBias_Cube_Array) {
     Options opts{};
     opts.entry_point_name = "main";
     opts.version = Version(Version::Standard::kDesktop, 4, 6);
-    auto result = Generate(opts);
+    auto result = Generate(opts, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, R"(#version 460
 precision highp float;
@@ -3958,7 +3958,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleCompare_2d_Offset) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -4108,7 +4108,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleCompare_Cube_Array) {
     Options opts{};
     opts.version = Version(Version::Standard::kDesktop, 4, 6);
     opts.entry_point_name = "main";
-    auto result = Generate(opts);
+    auto result = Generate(opts, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, R"(#version 460
 precision highp float;
@@ -4180,7 +4180,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleCompareLevel_2d_Offset) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    auto result = Generate({}, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
@@ -4332,7 +4332,7 @@ TEST_F(GlslWriterTest, BuiltinTextureSampleCompareLevel_Cube_Array) {
     Options opts{};
     opts.version = Version(Version::Standard::kDesktop, 4, 6);
     opts.entry_point_name = "main";
-    auto result = Generate(opts);
+    auto result = Generate(opts, core::ir::Function::PipelineStage::kFragment);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
     EXPECT_EQ(output_.glsl, R"(#version 460
 precision highp float;
