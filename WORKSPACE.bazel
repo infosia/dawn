@@ -25,7 +25,6 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 ################################################################################
 # NOTE: The Bazel build is best-effort and currently only support Tint targets.#
 #       There is no support for Dawn targets at this time                      #
@@ -74,3 +73,39 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
 bazel_skylib_workspace()
 
+http_archive(
+    name = "io_bazel_rules_go",
+    sha256 = "68af54cb97fbdee5e5e8fe8d210d15a518f9d62abfd71620c3eaff3b26a5ff86",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazel-contrib/rules_go/releases/download/v0.59.0/rules_go-v0.59.0.zip",
+        "https://github.com/bazel-contrib/rules_go/releases/download/v0.59.0/rules_go-v0.59.0.zip",
+    ],
+)
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+go_register_toolchains(version = "1.25.4")
+
+# Import dependencies for the templated source generator using Gazelle.
+http_archive(
+    name = "bazel_gazelle",
+    sha256 = "32938bda16e6700063035479063d9d24c60eda8d79fd4739563f50d331cb3209",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.35.0/bazel-gazelle-v0.35.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.35.0/bazel-gazelle-v0.35.0.tar.gz",
+    ],
+)
+load("@bazel_gazelle//:deps.bzl", "go_repository")
+go_repository(
+    name = "com_github_mzohreva_gographviz",
+    importpath = "github.com/mzohreva/gographviz",
+    sum = "h1:E1u0tpQfk5go6GQ4Gg03I3FRLKdcxM7PNzo5lKTqh7U=",
+    version = "v0.0.0-20180226085351-533f4a37d9c6",
+)
+go_repository(
+    name = "com_github_tidwall_jsonc",
+    importpath = "github.com/tidwall/jsonc",
+    sum = "h1:ZTKrmejRlAJYdn0kcaFqRAKlxxFIC21pYq8vLa4p2Wc=",
+    version = "v0.3.2",
+)
