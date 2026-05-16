@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "resolver",
+    srcs = ["resolve.go"],
+    importpath = "dawn.googlesource.com/dawn/tools/src/tint/intrinsic/resolver",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tools/src/container",
+        "//tools/src/tint/intrinsic/ast",
+        "//tools/src/tint/intrinsic/sem",
+        "//tools/src/tint/intrinsic/tok",
+    ],
+)
+
+go_test(
+    name = "resolver_test",
+    srcs = ["resolver_test.go"],
+    deps = [
+        ":resolver",
+        "//tools/src/oswrapper",
+        "//tools/src/tint/intrinsic/parser",
+    ],
+)

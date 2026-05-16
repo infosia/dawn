@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "parser",
+    srcs = ["parser.go"],
+    importpath = "dawn.googlesource.com/dawn/tools/src/tint/intrinsic/parser",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tools/src/oswrapper",
+        "//tools/src/tint/intrinsic/ast",
+        "//tools/src/tint/intrinsic/lexer",
+        "//tools/src/tint/intrinsic/tok",
+    ],
+)
+
+go_test(
+    name = "parser_test",
+    srcs = ["parser_test.go"],
+    deps = [
+        ":parser",
+        "//tools/src/fileutils",
+        "//tools/src/oswrapper",
+        "//tools/src/tint/intrinsic/ast",
+        "@com_github_google_go_cmp//cmp:go_default_library",
+    ],
+)

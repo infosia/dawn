@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "transform",
+    srcs = [
+        "errors.go",
+        "map.go",
+        "slice.go",
+    ],
+    importpath = "dawn.googlesource.com/dawn/tools/src/transform",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "transform_test",
+    srcs = [
+        "map_test.go",
+        "slice_test.go",
+    ],
+    deps = [":transform"],
+)

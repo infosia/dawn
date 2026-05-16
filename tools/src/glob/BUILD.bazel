@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "glob",
+    srcs = ["glob.go"],
+    importpath = "dawn.googlesource.com/dawn/tools/src/glob",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tools/src/match",
+        "//tools/src/oswrapper",
+    ],
+)
+
+go_test(
+    name = "glob_test",
+    srcs = ["glob_test.go"],
+    embed = [":glob"],
+    deps = [
+        "//tools/src/oswrapper",
+        "@com_github_stretchr_testify//require:go_default_library",
+    ],
+)

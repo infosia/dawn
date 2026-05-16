@@ -1,0 +1,46 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "build",
+    srcs = [
+        "build.go",
+        "condition.go",
+        "dependencies.go",
+        "directory.go",
+        "directory_config.go",
+        "external_dependency.go",
+        "file.go",
+        "project.go",
+        "target.go",
+        "target_kind.go",
+        "target_name.go",
+    ],
+    importpath = "dawn.googlesource.com/dawn/tools/src/cmd/gen/build",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tools/src/cmd/gen/common",
+        "//tools/src/cnf",
+        "//tools/src/container",
+        "//tools/src/fileutils",
+        "//tools/src/glob",
+        "//tools/src/match",
+        "//tools/src/oswrapper",
+        "//tools/src/template",
+        "//tools/src/transform",
+        "@com_github_mzohreva_gographviz//graphviz:go_default_library",
+        "@com_github_tidwall_jsonc//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "build_test",
+    srcs = ["build_test.go"],
+    embed = [":build"],
+    deps = [
+        "//tools/src/cmd/gen/common",
+        "//tools/src/cnf",
+        "//tools/src/container",
+        "//tools/src/oswrapper",
+        "@com_github_stretchr_testify//require:go_default_library",
+    ],
+)

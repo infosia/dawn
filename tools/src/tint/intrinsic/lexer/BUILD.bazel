@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "lexer",
+    srcs = ["lexer.go"],
+    importpath = "dawn.googlesource.com/dawn/tools/src/tint/intrinsic/lexer",
+    visibility = ["//visibility:public"],
+    deps = ["//tools/src/tint/intrinsic/tok"],
+)
+
+go_test(
+    name = "lexer_test",
+    srcs = ["lexer_test.go"],
+    deps = [
+        ":lexer",
+        "//tools/src/tint/intrinsic/tok",
+        "@com_github_google_go_cmp//cmp:go_default_library",
+    ],
+)

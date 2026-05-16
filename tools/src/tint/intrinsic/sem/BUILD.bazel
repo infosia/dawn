@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "sem",
+    srcs = ["sem.go"],
+    importpath = "dawn.googlesource.com/dawn/tools/src/tint/intrinsic/sem",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tools/src/container",
+        "//tools/src/tint/intrinsic/ast",
+    ],
+)

@@ -1,0 +1,16 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "gen",
+    srcs = [
+        "gen.go",
+        "permutate.go",
+    ],
+    importpath = "dawn.googlesource.com/dawn/tools/src/tint/intrinsic/gen",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tools/src/fileutils",
+        "//tools/src/lut",
+        "//tools/src/tint/intrinsic/sem",
+    ],
+)

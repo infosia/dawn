@@ -1,0 +1,37 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "cnf",
+    srcs = [
+        "cnf.go",
+        "decompose.go",
+        "expr.go",
+        "format.go",
+        "key.go",
+        "ops.go",
+        "optimize.go",
+        "parse.go",
+    ],
+    importpath = "dawn.googlesource.com/dawn/tools/src/cnf",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tools/src/container",
+        "//tools/src/transform",
+    ],
+)
+
+go_test(
+    name = "cnf_test",
+    srcs = [
+        "decompose_test.go",
+        "expr_test.go",
+        "helpers_test.go",
+        "ops_test.go",
+        "optimize_test.go",
+        "parse_test.go",
+    ],
+    deps = [
+        ":cnf",
+        "@com_github_google_go_cmp//cmp:go_default_library",
+    ],
+)

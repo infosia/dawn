@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ast",
+    srcs = ["ast.go"],
+    importpath = "dawn.googlesource.com/dawn/tools/src/tint/intrinsic/ast",
+    visibility = ["//visibility:public"],
+    deps = ["//tools/src/tint/intrinsic/tok"],
+)

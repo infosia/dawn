@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "oswrapper",
+    srcs = glob(["*.go"], exclude = ["*_test.go"]),
+    importpath = "dawn.googlesource.com/dawn/tools/src/oswrapper",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "oswrapper_test",
+    srcs = glob(["*_test.go"]),
+    embed = [":oswrapper"],
+    deps = [
+        "@com_github_stretchr_testify//require:go_default_library",
+    ],
+)

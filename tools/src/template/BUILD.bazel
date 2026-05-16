@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "template",
+    srcs = ["template.go"],
+    importpath = "dawn.googlesource.com/dawn/tools/src/template",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tools/src/container",
+        "//tools/src/fileutils",
+        "//tools/src/oswrapper",
+        "//tools/src/text",
+        "//tools/src/transform",
+    ],
+)
+
+go_test(
+    name = "template_test",
+    srcs = ["template_test.go"],
+    deps = [
+        ":template",
+        "//tools/src/oswrapper",
+        "@com_github_stretchr_testify//require:go_default_library",
+    ],
+)
