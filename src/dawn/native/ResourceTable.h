@@ -124,9 +124,9 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
     // of the ResourceTable (since the last call to AcquireDirtySlotUpdates or creation of the
     // ResourceTable).
     struct MetadataUpdate {
-        ResourceTableSlot slot;  // Slot index to update
-        uint32_t offset;         // Byte offset resource array
-        uint32_t data;           // tint::ResourceType in the low 16 bits
+        ResourceTableSlot slot = ResourceTableSlot(0);  // Slot index to update
+        uint32_t offset = 0;                            // Byte offset resource array
+        uint32_t data = 0;                              // tint::ResourceType in the low 16 bits
     };
     struct ResourceDiff {
         using Resource = std::variant<std::monostate, Ref<TextureViewBase>, Ref<SamplerBase>>;

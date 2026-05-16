@@ -150,8 +150,8 @@ DAWN_SERIALIZABLE(struct, ShaderModuleParseResult, SHADER_MODULE_PARSE_RESULT_ME
 #undef SHADER_MODULE_PARSE_RESULT_MEMBER
 
 struct ShaderModuleEntryPoint {
-    bool defaulted;
-    std::string name;
+    bool defaulted = false;
+    std::string name = "";
 };
 
 void DumpShaderFromDescriptor(LogEmitter* logEmitter,
@@ -221,6 +221,9 @@ enum class TextureQueryType : uint8_t { TextureNumLevels, TextureNumSamples };
     X(uint32_t, binding)
 DAWN_SERIALIZABLE(struct, TextureMetadataQuery, TEXTURE_METADATE_QUERY_MEMBER) {
     using TextureQueryType = detail::TextureQueryType;
+    TextureQueryType type = TextureQueryType::TextureNumLevels;
+    uint32_t group = 0;
+    uint32_t binding = 0;
 };
 #undef TEXTURE_METADATE_QUERY_MEMBER
 
@@ -230,7 +233,11 @@ DAWN_SERIALIZABLE(struct, TextureMetadataQuery, TEXTURE_METADATE_QUERY_MEMBER) {
     X(TextureComponentType, baseType)             \
     X(uint8_t, componentCount)                    \
     X(uint8_t, blendSrc)
-DAWN_SERIALIZABLE(struct, FragmentRenderAttachmentInfo, FRAGMENT_RENDER_ATTACHMENT_INFO_MEMBER){};
+DAWN_SERIALIZABLE(struct, FragmentRenderAttachmentInfo, FRAGMENT_RENDER_ATTACHMENT_INFO_MEMBER) {
+    TextureComponentType baseType = TextureComponentType::Float;
+    uint8_t componentCount = 0;
+    uint8_t blendSrc = 0;
+};
 #undef FRAGMENT_RENDER_ATTACHMENT_INFO_MEMBER
 
 #define INTER_STAGE_VARIABLE_INFO_MEMBER(X) \
@@ -239,12 +246,20 @@ DAWN_SERIALIZABLE(struct, FragmentRenderAttachmentInfo, FRAGMENT_RENDER_ATTACHME
     X(uint32_t, componentCount)             \
     X(InterpolationType, interpolationType) \
     X(InterpolationSampling, interpolationSampling)
-DAWN_SERIALIZABLE(struct, InterStageVariableInfo, INTER_STAGE_VARIABLE_INFO_MEMBER){};
+DAWN_SERIALIZABLE(struct, InterStageVariableInfo, INTER_STAGE_VARIABLE_INFO_MEMBER) {
+    std::string name = "";
+    InterStageComponentType baseType = InterStageComponentType::F32;
+    uint32_t componentCount = 0;
+    InterpolationType interpolationType = InterpolationType::Perspective;
+    InterpolationSampling interpolationSampling = InterpolationSampling::None;
+};
 #undef INTER_STAGE_VARIABLE_INFO_MEMBER
 
 // Match tint::OverrideId
 #define OVERRIDE_ID_MEMBER(X) X(uint16_t, value)
-DAWN_SERIALIZABLE(struct, OverrideId, OVERRIDE_ID_MEMBER){};
+DAWN_SERIALIZABLE(struct, OverrideId, OVERRIDE_ID_MEMBER) {
+    uint16_t value = 0;
+};
 #undef OVERRIDE_ID_MEMBER
 
 enum class OverrideType { Boolean, Float32, Uint32, Int32, Float16 };
@@ -256,6 +271,10 @@ enum class OverrideType { Boolean, Float32, Uint32, Int32, Float16 };
     X(bool, isUsed)
 DAWN_SERIALIZABLE(struct, Override, OVERRIDE_MEMBER) {
     using Type = OverrideType;
+    OverrideId id = {0};
+    OverrideType type = OverrideType::Float32;
+    bool isInitialized = false;
+    bool isUsed = false;
 };
 #undef OVERRIDE_MEMBER
 
@@ -345,7 +364,7 @@ DAWN_SERIALIZABLE(struct, EntryPointMetadata, ENTRY_POINT_METADATA_MEMBER) {
 // The WebGPU override variables only support these scalar types
 union OverrideScalar {
     // Use int32_t for boolean to initialize the full 32bit
-    int32_t b;
+    int32_t b = 0;
     float f32;
     int32_t i32;
     uint32_t u32;
@@ -436,14 +455,14 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
 
     // The original data in the descriptor for caching.
     enum class Type : uint8_t { Undefined, Spirv, Wgsl };
-    Type mType;
+    Type mType = Type::Undefined;
     bool mAllowSpirvNonUniformDerivitives = false;
-    std::vector<uint32_t> mOriginalSpirv;
-    std::string mWgsl;
+    std::vector<uint32_t> mOriginalSpirv = {};
+    std::string mWgsl = "";
 
     // Secure hash computed from shader code and other metadata to be used as a cache key
     // representing the shader module.
-    ShaderModuleHash mHash;
+    ShaderModuleHash mHash = {};
 
     // TODO(dawn:2503): Remove the optional when Dawn can has a consistent default across backends.
     // Right now D3D uses strictness by default, and Vulkan/Metal use fast math by default.

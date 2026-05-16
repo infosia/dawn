@@ -58,9 +58,9 @@ class [[nodiscard]] ErrorData {
     ErrorData(InternalErrorType type, std::string message);
 
     struct BacktraceRecord {
-        const char* file;
-        const char* function;
-        int line;
+        const char* file = nullptr;
+        const char* function = nullptr;
+        int line = 0;
     };
     void AppendBacktrace(const char* file, const char* function, int line);
     void AppendContext(std::string context);
