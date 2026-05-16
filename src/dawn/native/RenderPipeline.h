@@ -49,9 +49,9 @@ enum class VertexFormatBaseType {
 };
 
 struct VertexFormatInfo {
-    uint32_t byteSize;
-    uint32_t componentCount;
-    VertexFormatBaseType baseType;
+    uint32_t byteSize = 0;
+    uint32_t componentCount = 0;
+    VertexFormatBaseType baseType = VertexFormatBaseType::Float;
 };
 
 const VertexFormatInfo& GetVertexFormatInfo(wgpu::VertexFormat format);
@@ -70,19 +70,19 @@ size_t IndexFormatSize(wgpu::IndexFormat format);
 bool IsStripPrimitiveTopology(wgpu::PrimitiveTopology primitiveTopology);
 
 struct VertexAttributeInfo {
-    wgpu::VertexFormat format;
-    uint64_t offset;
-    VertexAttributeLocation shaderLocation;
-    VertexBufferSlot vertexBufferSlot;
+    wgpu::VertexFormat format = static_cast<wgpu::VertexFormat>(0);
+    uint64_t offset = 0;
+    VertexAttributeLocation shaderLocation = VertexAttributeLocation(0);
+    VertexBufferSlot vertexBufferSlot = VertexBufferSlot(0);
 };
 
 struct VertexBufferInfo {
-    uint64_t arrayStride;
-    wgpu::VertexStepMode stepMode;
-    uint16_t usedBytesInStride;
+    uint64_t arrayStride = 0;
+    wgpu::VertexStepMode stepMode = wgpu::VertexStepMode::Vertex;
+    uint16_t usedBytesInStride = 0;
     // As indicated in the spec, the lastStride is max(attribute.offset +
     // sizeof(attribute.format)) for each attribute in the buffer[slot]
-    uint64_t lastStride;
+    uint64_t lastStride = 0;
 };
 
 class RenderPipelineBase : public PipelineBase,
@@ -167,13 +167,13 @@ class RenderPipelineBase : public PipelineBase,
     virtual MaybeError InitializeImpl() = 0;
 
     // Vertex state
-    uint32_t mVertexBufferCount;
-    VertexAttributeMask mAttributeLocationsUsed;
-    PerVertexAttribute<VertexAttributeInfo> mAttributeInfos;
-    VertexBufferMask mVertexBuffersUsed;
-    VertexBufferMask mVertexBuffersUsedAsVertexBuffer;
-    VertexBufferMask mVertexBuffersUsedAsInstanceBuffer;
-    PerVertexBuffer<VertexBufferInfo> mVertexBufferInfos;
+    uint32_t mVertexBufferCount = 0;
+    VertexAttributeMask mAttributeLocationsUsed = {};
+    PerVertexAttribute<VertexAttributeInfo> mAttributeInfos = {};
+    VertexBufferMask mVertexBuffersUsed = {};
+    VertexBufferMask mVertexBuffersUsedAsVertexBuffer = {};
+    VertexBufferMask mVertexBuffersUsedAsInstanceBuffer = {};
+    PerVertexBuffer<VertexBufferInfo> mVertexBufferInfos = {};
 
     // Attachments
     Ref<AttachmentState> mAttachmentState;
