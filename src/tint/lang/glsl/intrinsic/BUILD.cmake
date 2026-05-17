@@ -39,7 +39,7 @@
 # Kind:      lib
 ################################################################################
 tint_add_target(tint_lang_glsl_intrinsic lib
-  lang/glsl/intrinsic/data.cc
+  "${PROJECT_BINARY_DIR}/gen/src/tint/lang/glsl/intrinsic/data.cc"
   lang/glsl/intrinsic/dialect.h
 )
 

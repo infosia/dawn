@@ -88,6 +88,7 @@ if (tint_build_benchmarks) {
       sources = [ "main_bench.cc" ]
       deps = [
         "${dawn_root}/src/utils",
+        "${tint_src_dir}:generate_sources",
         "${tint_src_dir}:google_benchmark",
         "${tint_src_dir}/api/common",
         "${tint_src_dir}/cmd/bench",

@@ -39,7 +39,7 @@
 # Kind:      lib
 ################################################################################
 tint_add_target(tint_lang_msl_intrinsic lib
-  lang/msl/intrinsic/data.cc
+  "${PROJECT_BINARY_DIR}/gen/src/tint/lang/msl/intrinsic/data.cc"
   lang/msl/intrinsic/dialect.h
   lang/msl/intrinsic/type_matchers.h
 )

@@ -43,13 +43,13 @@ exports_files(glob(["*.def", "*.tmpl"], allow_empty = True))
 cc_library(
   name = "wgsl",
   srcs = [
-    "enums.cc",
+    "//:gen/src/tint/lang/wgsl/enums.cc",
     "feature_status.cc",
     "reserved_words.cc",
   ],
   hdrs = [
     "allowed_features.h",
-    "enums.h",
+    "//:gen/src/tint/lang/wgsl/enums.h",
     "feature_status.h",
     "reserved_words.h",
   ],
@@ -75,7 +75,7 @@ cc_library(
   alwayslink = True,
   srcs = [
     "allowed_features_test.cc",
-    "enums_test.cc",
+    "//:gen/src/tint/lang/wgsl/enums_test.cc",
     "language_feature_status_test.cc",
   ] + select({
     "//conditions:default": [],

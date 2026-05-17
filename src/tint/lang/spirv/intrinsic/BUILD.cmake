@@ -39,7 +39,7 @@
 # Kind:      lib
 ################################################################################
 tint_add_target(tint_lang_spirv_intrinsic lib
-  lang/spirv/intrinsic/data.cc
+  "${PROJECT_BINARY_DIR}/gen/src/tint/lang/spirv/intrinsic/data.cc"
   lang/spirv/intrinsic/dialect.h
   lang/spirv/intrinsic/type_matchers.h
 )

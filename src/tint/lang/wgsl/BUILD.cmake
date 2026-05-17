@@ -51,8 +51,8 @@ include(lang/wgsl/writer/BUILD.cmake)
 ################################################################################
 tint_add_target(tint_lang_wgsl lib
   lang/wgsl/allowed_features.h
-  lang/wgsl/enums.cc
-  lang/wgsl/enums.h
+  "${PROJECT_BINARY_DIR}/gen/src/tint/lang/wgsl/enums.cc"
+  "${PROJECT_BINARY_DIR}/gen/src/tint/lang/wgsl/enums.h"
   lang/wgsl/feature_status.cc
   lang/wgsl/feature_status.h
   lang/wgsl/reserved_words.cc
@@ -83,7 +83,7 @@ tint_target_add_external_dependencies(tint_lang_wgsl lib
 ################################################################################
 tint_add_target(tint_lang_wgsl_test test
   lang/wgsl/allowed_features_test.cc
-  lang/wgsl/enums_test.cc
+  "${PROJECT_BINARY_DIR}/gen/src/tint/lang/wgsl/enums_test.cc"
   lang/wgsl/language_feature_status_test.cc
 )
 
