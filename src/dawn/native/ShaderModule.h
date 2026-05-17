@@ -117,7 +117,7 @@ struct TintProgram : public RefCounted {
 };
 
 #define CACHED_VALIDATION_ERROR_MEMBER(X) \
-    X(std::string, message)               \
+    X(std::string, message, "")           \
     X(std::vector<std::string>, contexts)
 // clang-format off
 DAWN_SERIALIZABLE(struct, CachedValidationError, CACHED_VALIDATION_ERROR_MEMBER){
@@ -150,8 +150,8 @@ DAWN_SERIALIZABLE(struct, ShaderModuleParseResult, SHADER_MODULE_PARSE_RESULT_ME
 #undef SHADER_MODULE_PARSE_RESULT_MEMBER
 
 struct ShaderModuleEntryPoint {
-    bool defaulted;
-    std::string name;
+    bool defaulted = false;
+    std::string name = "";
 };
 
 void DumpShaderFromDescriptor(LogEmitter* logEmitter,
@@ -192,8 +192,8 @@ using ShaderBindingInfoVariant = std::variant<BufferBindingInfo,
                                               ExternalTextureBindingInfo,
                                               InputAttachmentBindingInfo>;
 #define SHADER_BINDING_INFO_MEMBER(X)              \
-    X(BindingNumber, binding)                      \
-    X(BindingIndex, arraySize)                     \
+    X(BindingNumber, binding, BindingNumber(0))    \
+    X(BindingIndex, arraySize, BindingIndex(0))    \
     /*The variable name of the binding resource.*/ \
     X(std::string, name)                           \
     X(ShaderBindingInfoVariant, bindingInfo)
@@ -215,10 +215,10 @@ DAWN_SERIALIZABLE(struct, SamplerTexturePair, SAMPLER_TEXTURE_PAIR_MEMBER){};
 /// Match tint::inspector::Inspector::LevelSampleInfo
 enum class TextureQueryType : uint8_t { TextureNumLevels, TextureNumSamples };
 
-#define TEXTURE_METADATE_QUERY_MEMBER(X) \
-    X(TextureQueryType, type)            \
-    X(uint32_t, group)                   \
-    X(uint32_t, binding)
+#define TEXTURE_METADATE_QUERY_MEMBER(X)                          \
+    X(TextureQueryType, type, TextureQueryType::TextureNumLevels) \
+    X(uint32_t, group, 0)                                         \
+    X(uint32_t, binding, 0)
 DAWN_SERIALIZABLE(struct, TextureMetadataQuery, TEXTURE_METADATE_QUERY_MEMBER) {
     using TextureQueryType = detail::TextureQueryType;
 };
@@ -226,34 +226,34 @@ DAWN_SERIALIZABLE(struct, TextureMetadataQuery, TEXTURE_METADATE_QUERY_MEMBER) {
 
 // Structure to record the basic types (float, int and uint) of the fragment shader framebuffer
 // input/outputs (inputs being "framebuffer fetch").
-#define FRAGMENT_RENDER_ATTACHMENT_INFO_MEMBER(X) \
-    X(TextureComponentType, baseType)             \
-    X(uint8_t, componentCount)                    \
-    X(uint8_t, blendSrc)
+#define FRAGMENT_RENDER_ATTACHMENT_INFO_MEMBER(X)                  \
+    X(TextureComponentType, baseType, TextureComponentType::Float) \
+    X(uint8_t, componentCount, 0)                                  \
+    X(uint8_t, blendSrc, 0)
 DAWN_SERIALIZABLE(struct, FragmentRenderAttachmentInfo, FRAGMENT_RENDER_ATTACHMENT_INFO_MEMBER){};
 #undef FRAGMENT_RENDER_ATTACHMENT_INFO_MEMBER
 
-#define INTER_STAGE_VARIABLE_INFO_MEMBER(X) \
-    X(std::string, name)                    \
-    X(InterStageComponentType, baseType)    \
-    X(uint32_t, componentCount)             \
-    X(InterpolationType, interpolationType) \
-    X(InterpolationSampling, interpolationSampling)
+#define INTER_STAGE_VARIABLE_INFO_MEMBER(X)                                 \
+    X(std::string, name)                                                    \
+    X(InterStageComponentType, baseType, InterStageComponentType::F32)      \
+    X(uint32_t, componentCount, 0)                                          \
+    X(InterpolationType, interpolationType, InterpolationType::Perspective) \
+    X(InterpolationSampling, interpolationSampling, InterpolationSampling::None)
 DAWN_SERIALIZABLE(struct, InterStageVariableInfo, INTER_STAGE_VARIABLE_INFO_MEMBER){};
 #undef INTER_STAGE_VARIABLE_INFO_MEMBER
 
 // Match tint::OverrideId
-#define OVERRIDE_ID_MEMBER(X) X(uint16_t, value)
+#define OVERRIDE_ID_MEMBER(X) X(uint16_t, value, 0)
 DAWN_SERIALIZABLE(struct, OverrideId, OVERRIDE_ID_MEMBER){};
 #undef OVERRIDE_ID_MEMBER
 
 enum class OverrideType { Boolean, Float32, Uint32, Int32, Float16 };
 
-#define OVERRIDE_MEMBER(X) \
-    X(OverrideId, id)      \
-    X(OverrideType, type)  \
-    X(bool, isInitialized) \
-    X(bool, isUsed)
+#define OVERRIDE_MEMBER(X)                       \
+    X(OverrideId, id, {})                        \
+    X(OverrideType, type, OverrideType::Float32) \
+    X(bool, isInitialized, false)                \
+    X(bool, isUsed, false)
 DAWN_SERIALIZABLE(struct, Override, OVERRIDE_MEMBER) {
     using Type = OverrideType;
 };
@@ -285,15 +285,16 @@ using OverridesMap = absl::flat_hash_map<std::string, Override>;
     /* An array to record the basic types of the fragment shader framebuffer input/outputs.*/     \
     X(PerColorAttachment<detail::FragmentRenderAttachmentInfo>, fragmentOutputVariables)          \
     X(ColorAttachmentMask, fragmentOutputMask)                                                    \
+    /* An array to record the basic types of the fragment shader framebuffer input/outputs.*/     \
     X(PerColorAttachment<detail::FragmentRenderAttachmentInfo>, fragmentInputVariables)           \
     X(ColorAttachmentMask, fragmentInputMask)                                                     \
     /* Now that we only support vertex and fragment stages, there can't be both inter-stage    */ \
     /* inputs and outputs in one shader stage.                                                 */ \
     X(std::vector<bool>, usedInterStageVariables)                                                 \
     X(std::vector<detail::InterStageVariableInfo>, interStageVariables)                           \
-    X(uint32_t, totalInterStageShaderVariables)                                                   \
+    X(uint32_t, totalInterStageShaderVariables, 0)                                                \
     /* The shader stage for this entry point.*/                                                   \
-    X(SingleShaderStage, stage)                                                                   \
+    X(SingleShaderStage, stage, SingleShaderStage::Vertex)                                        \
     /* Map identifier to override variable. */                                                    \
     /* Identifier is unique: either the variable name or the numeric ID if specified */           \
     X(detail::OverridesMap, overrides)                                                            \
@@ -305,26 +306,26 @@ using OverridesMap = absl::flat_hash_map<std::string, Override>;
     /* overridden.                                                                             */ \
     X(absl::flat_hash_set<std::string>, initializedOverrides)                                     \
     /* Reflection information about potential `pixel_local` variable use. */                      \
-    X(bool, usesPixelLocal)                                                                       \
-    X(size_t, pixelLocalBlockSize)                                                                \
+    X(bool, usesPixelLocal, false)                                                                \
+    X(size_t, pixelLocalBlockSize, 0)                                                             \
     X(std::vector<PixelLocalMemberType>, pixelLocalMembers)                                       \
-    X(bool, usesFragDepth)                                                                        \
-    X(bool, usesFragPosition)                                                                     \
-    X(bool, usesSampleInterpolants)                                                               \
-    X(bool, usesInstanceIndex)                                                                    \
-    X(bool, usesNumWorkgroups)                                                                    \
-    X(bool, usesSampleMaskOutput)                                                                 \
-    X(bool, usesSampleIndex)                                                                      \
-    X(bool, usesVertexIndex)                                                                      \
-    X(bool, usesGlobalInvocationIndex)                                                            \
-    X(bool, usesWorkgroupIndex)                                                                   \
-    X(bool, usesTextureLoadWithDepthTexture)                                                      \
-    X(bool, usesDepthTextureWithNonComparisonSampler)                                             \
-    X(bool, usesSubgroupMatrix)                                                                   \
-    X(bool, usesFineDerivativeBuiltin)                                                            \
-    X(bool, usesResourceTable)                                                                    \
+    X(bool, usesFragDepth, false)                                                                 \
+    X(bool, usesFragPosition, false)                                                              \
+    X(bool, usesSampleInterpolants, false)                                                        \
+    X(bool, usesInstanceIndex, false)                                                             \
+    X(bool, usesNumWorkgroups, false)                                                             \
+    X(bool, usesSampleMaskOutput, false)                                                          \
+    X(bool, usesSampleIndex, false)                                                               \
+    X(bool, usesVertexIndex, false)                                                               \
+    X(bool, usesGlobalInvocationIndex, false)                                                     \
+    X(bool, usesWorkgroupIndex, false)                                                            \
+    X(bool, usesTextureLoadWithDepthTexture, false)                                               \
+    X(bool, usesDepthTextureWithNonComparisonSampler, false)                                      \
+    X(bool, usesSubgroupMatrix, false)                                                            \
+    X(bool, usesFineDerivativeBuiltin, false)                                                     \
+    X(bool, usesResourceTable, false)                                                             \
     /* Immediate Data block byte size */                                                          \
-    X(uint32_t, immediateDataRangeByteSize)                                                       \
+    X(uint32_t, immediateDataRangeByteSize, 0)                                                    \
     /* Immediate Data block used slots */                                                         \
     X(ImmediateConstantMask, immediateDataUsedSlots)
 DAWN_SERIALIZABLE(struct, EntryPointMetadata, ENTRY_POINT_METADATA_MEMBER) {
@@ -345,7 +346,7 @@ DAWN_SERIALIZABLE(struct, EntryPointMetadata, ENTRY_POINT_METADATA_MEMBER) {
 // The WebGPU override variables only support these scalar types
 union OverrideScalar {
     // Use int32_t for boolean to initialize the full 32bit
-    int32_t b;
+    int32_t b = 0;
     float f32;
     int32_t i32;
     uint32_t u32;
@@ -436,14 +437,14 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
 
     // The original data in the descriptor for caching.
     enum class Type : uint8_t { Undefined, Spirv, Wgsl };
-    Type mType;
+    Type mType = Type::Undefined;
     bool mAllowSpirvNonUniformDerivitives = false;
-    std::vector<uint32_t> mOriginalSpirv;
-    std::string mWgsl;
+    std::vector<uint32_t> mOriginalSpirv = {};
+    std::string mWgsl = "";
 
     // Secure hash computed from shader code and other metadata to be used as a cache key
     // representing the shader module.
-    ShaderModuleHash mHash;
+    ShaderModuleHash mHash = {};
 
     // TODO(dawn:2503): Remove the optional when Dawn can has a consistent default across backends.
     // Right now D3D uses strictness by default, and Vulkan/Metal use fast math by default.
@@ -461,7 +462,7 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     struct CompiledState {
         EntryPointMetadataTable entryPoints;
         PerStage<std::string> defaultEntryPointNames;
-        PerStage<size_t> entryPointCounts;
+        PerStage<size_t> entryPointCounts = {};
 
         MutexProtected<TintData> tintData;
 
