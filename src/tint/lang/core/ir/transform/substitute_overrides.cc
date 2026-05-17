@@ -280,6 +280,179 @@ struct State {
             }
         }
 
+        // Pipeline-creation errors related to buffers.
+        for (auto* inst : *ir.root_block) {
+            if (auto* var = inst->As<core::ir::Var>()) {
+                auto* buffer_ty = var->Result()->Type()->UnwrapPtr()->As<core::type::Buffer>();
+                if (!buffer_ty) {
+                    continue;
+                }
+
+                uint32_t size = buffer_ty->Size();
+                TINT_CHECK_RESULT(CheckBuffers(var, size));
+            }
+        }
+
+        return Success;
+    }
+
+    diag::Result<SuccessType> CheckBuffers(core::ir::Var* var, uint32_t input_size) {
+        Vector<std::pair<Usage, uint32_t>, 4> uses;
+        for (auto& u : var->Result()->UsagesSorted()) {
+            uses.Push(std::make_pair(u, input_size));
+        }
+        while (!uses.IsEmpty()) {
+            auto [use, buffer_size] = uses.Pop();
+            diag::Diagnostic error;
+            bool errored = tint::Switch(
+                use.instruction,
+                [&](Let* let) {
+                    for (auto& u : let->Result()->UsagesSorted()) {
+                        uses.Push(std::make_pair(u, buffer_size));
+                    }
+                    return false;
+                },
+                [&](UserCall* user) {
+                    // If the buffer size is decreased at a function boundary, use that size
+                    // instead.
+                    auto* target = user->Target();
+                    auto* param = target->Params()[use.operand_index - user->ArgsOperandOffset()];
+                    auto* param_buffer_ty = param->Type()->UnwrapPtr()->As<core::type::Buffer>();
+                    uint32_t next_size =
+                        param_buffer_ty->Size() > 0 ? param_buffer_ty->Size() : buffer_size;
+                    for (auto& u : param->UsagesSorted()) {
+                        uses.Push(std::make_pair(u, next_size));
+                    }
+                    return false;
+                },
+                [&](CoreBuiltinCall* call) {
+                    if (call->Func() != BuiltinFn::kBufferView &&
+                        call->Func() != BuiltinFn::kBufferArrayView) {
+                        return false;
+                    }
+
+                    // Calculate the minimum type size.
+                    auto* store_ty = call->Result()->Type()->UnwrapPtr();
+                    uint64_t ty_required_size = 0;
+                    uint64_t ty_offset = 0;
+                    uint64_t ty_stride = 0;
+                    if (store_ty->HasFixedFootprint()) {
+                        ty_required_size = store_ty->Size();
+                    } else if (auto* str = store_ty->As<core::type::Struct>()) {
+                        auto* last = str->Members().Back();
+                        auto* arr_ty = last->Type()->As<core::type::Array>();
+                        ty_offset = last->Offset();
+                        ty_stride = arr_ty->ImplicitStride();
+                        ty_required_size = ty_offset + ty_stride;
+                    } else {
+                        ty_stride = store_ty->As<core::type::Array>()->ImplicitStride();
+                        ty_required_size = ty_stride;
+                    }
+
+                    // Error conditions:
+                    // For both bufferView and bufferArrayView:
+                    // * ty_required_size + offset < buffer_size
+                    // * offset % store_ty->Align() != 0
+                    // For bufferArrayView
+                    // * size + offset < buffer_size
+                    // * size < ty_required_size
+                    // * (size - offset) % stride != 0
+                    //
+                    // Also error if any addition overflows a uint32_t.
+
+                    uint64_t offset_val = 0;
+                    if (auto* const_offset = call->Args()[1]->As<Constant>()) {
+                        if (const_offset->Type()->IsSignedIntegerScalar()) {
+                            if (const_offset->Value()->ValueAs<int32_t>() < 0) {
+                                error = MakeError(ir.SourceOf(call));
+                                error << call->FriendlyName() << " offset must be greater than 0";
+                                return true;
+                            }
+                        }
+                        offset_val = const_offset->Value()->ValueAs<uint64_t>();
+                    }
+
+                    if (offset_val + ty_required_size > std::numeric_limits<uint32_t>::max()) {
+                        error = MakeError(ir.SourceOf(call));
+                        error << call->FriendlyName() << " requires a size beyond 32 bits";
+                        return true;
+                    }
+
+                    if (buffer_size > 0 && buffer_size < offset_val + ty_required_size) {
+                        error = MakeError(ir.SourceOf(var));
+                        error << "invalid buffer size (" << buffer_size << " bytes) when used with "
+                              << call->FriendlyName() << " (" << offset_val + ty_required_size
+                              << " bytes required)";
+                        return true;
+                    }
+
+                    if (offset_val % store_ty->Align() != 0) {
+                        error = MakeError(ir.SourceOf(call));
+                        error << call->FriendlyName() << " offset (" << offset_val
+                              << " bytes) must be a multiple of result alignment ("
+                              << store_ty->Align() << " bytes)";
+                        return true;
+                    }
+
+                    if (call->Func() == BuiltinFn::kBufferView) {
+                        return false;
+                    }
+
+                    uint64_t size_val = 0;
+                    if (auto* const_size = call->Args()[2]->As<Constant>()) {
+                        if (const_size->Type()->IsSignedIntegerScalar()) {
+                            if (const_size->Value()->ValueAs<int32_t>() < 0) {
+                                error = MakeError(ir.SourceOf(call));
+                                error << call->FriendlyName() << " size must be greater than 0";
+                                return true;
+                            }
+                        }
+                        size_val = const_size->Value()->ValueAs<uint64_t>();
+                        if (size_val == 0) {
+                            error = MakeError(ir.SourceOf(call));
+                            error << call->FriendlyName() << " cannot be 0 sized";
+                            return true;
+                        }
+                    }
+
+                    if (offset_val + size_val > std::numeric_limits<uint32_t>::max()) {
+                        error = MakeError(ir.SourceOf(call));
+                        error << call->FriendlyName() << " requires a size beyond 32 bits";
+                        return true;
+                    }
+
+                    if (buffer_size > 0 && buffer_size < size_val + offset_val) {
+                        error = MakeError(ir.SourceOf(var));
+                        error << "invalid buffer size (" << buffer_size << " bytes) when used with "
+                              << call->FriendlyName() << " (" << size_val + offset_val
+                              << " bytes required)";
+                        return true;
+                    }
+
+                    if (size_val > 0 && size_val < ty_required_size) {
+                        error = MakeError(ir.SourceOf(call));
+                        error << call->FriendlyName() << " has invalid size (" << size_val
+                              << " bytes, requires " << ty_required_size << " bytes)";
+                        return true;
+                    }
+
+                    if (size_val > 0 && ((size_val - ty_offset) % ty_stride != 0)) {
+                        error = MakeError(ir.SourceOf(call));
+                        error << call->FriendlyName() << " size (" << size_val
+                              << " bytes) minus type offset (" << ty_offset
+                              << " bytes) must be a multiple of the type stride (" << ty_stride
+                              << " bytes)";
+                        return true;
+                    }
+
+                    return false;
+                },
+                [&](Default) { return false; });
+            if (errored) {
+                return diag::Failure(error);
+            }
+        }
+
         return Success;
     }
 
