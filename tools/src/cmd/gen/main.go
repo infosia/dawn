@@ -69,7 +69,7 @@ func (c *cmdAll) Name() string {
 }
 
 func (c *cmdAll) Desc() string {
-	return `all runs all the generators`
+	return `all runs all the generators that affect files that are checked into the repository`
 }
 
 func (c *cmdAll) RegisterFlags(ctx context.Context, cfg *common.Config) ([]string, error) {
@@ -77,10 +77,6 @@ func (c *cmdAll) RegisterFlags(ctx context.Context, cfg *common.Config) ([]strin
 }
 
 func (c *cmdAll) Run(ctx context.Context, cfg *common.Config) error {
-	sourcesCmd := templates.CmdSources{}
-	if err := sourcesCmd.Run(ctx, cfg); err != nil {
-		return err
-	}
 	testsCmd := templates.CmdTests{}
 	if err := testsCmd.Run(ctx, cfg); err != nil {
 		return err
