@@ -62,8 +62,8 @@ struct FeatureValidationResult {
     // Constructor of failed result
     explicit FeatureValidationResult(std::string errorMsg);
 
-    bool success;
-    std::string errorMessage;
+    bool success = false;
+    std::string errorMessage = "";
 };
 
 class PhysicalDeviceBase : public RefCounted {

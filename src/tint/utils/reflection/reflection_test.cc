@@ -111,22 +111,22 @@ struct VirtualNonCastable {
 
 struct VirtualCastable : Castable<VirtualCastable, CastableBase> {
     ~VirtualCastable() override = default;
-    int a, b, c;
+    int a = 0, b = 0, c = 0;
     TINT_REFLECT(VirtualCastable, a, b, c);
 };
 
 struct MissingFirst {
-    int a, b, c;
+    int a = 0, b = 0, c = 0;
     TINT_REFLECT(MissingFirst, b, c);
 };
 
 struct MissingMid {
-    int a, b, c;
+    int a = 0, b = 0, c = 0;
     TINT_REFLECT(MissingMid, a, c);
 };
 
 struct MissingLast {
-    int a, b, c;
+    int a = 0, b = 0, c = 0;
     TINT_REFLECT(MissingLast, a, b);
 };
 
