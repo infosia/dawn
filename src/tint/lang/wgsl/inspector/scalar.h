@@ -67,23 +67,23 @@ class Scalar {
     float AsFloat() const;
 
   private:
-    typedef enum {
+    enum Type {
         kNull,
         kBool,
         kU32,
         kI32,
         kFloat,
-    } Type;
+    };
 
-    typedef union {
-        bool b;
+    union Value {
+        bool b = false;
         uint32_t u;
         int32_t i;
         float f;
-    } Value;
+    };
 
-    Type type_;
-    Value value_;
+    Type type_ = kNull;
+    Value value_ = {};
 };
 
 }  // namespace tint::inspector
