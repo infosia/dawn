@@ -33,6 +33,40 @@
       "message": "Needs some dawn_end2end_tests updates, but the fix looks good.",
       "revId": "19e5e71a285e4386d739231f98cf0248b8a44f4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c29706cb_00f160d0",
+        "filename": "src/dawn/native/Sampler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-17T18:39:55Z",
+      "side": 1,
+      "message": "Any chance to get minimal validation tests for these?",
+      "revId": "19e5e71a285e4386d739231f98cf0248b8a44f4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3009487c_02cc75c8",
+        "filename": "src/dawn/native/Sampler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-17T18:39:55Z",
+      "side": 1,
+      "message": "Must be 1 most likely: see the default and CQ failures\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/dawn.json;drc\u003d9162c191dc179b9fb1d92a6e195d1416f9bfb523;l\u003d3752",
+      "revId": "19e5e71a285e4386d739231f98cf0248b8a44f4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
