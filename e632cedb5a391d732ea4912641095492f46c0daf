@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a9f66c5_f6c30620",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:38:48Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b95d6985_8cb6c4cb",
+        "filename": "generator/templates/dawn/wire/server/ServerBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:38:48Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised about this change, was it necessary for the test? Ideally the server stays as strict as possible and a double free is an error.",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "331cac67_b3524d94",
+        "filename": "generator/templates/mock_api.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:38:48Z",
+      "side": 1,
+      "message": "Does this ever happen now that we finished the refactor to make Dawn use Futures for all callbacks?",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4329249a_16a6b584",
+        "filename": "generator/templates/mock_api.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:38:48Z",
+      "side": 1,
+      "message": "Just to make sure I understand, we cap the number of in-flight futures here to 1, because the previous test code just did used to say call *the* callback when now there can be multiple in flight? Maybe comment that.\n\nAlso do we want to fix the tests to use the new style? In which can an issue and a TODO would be appropriate.",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89129090_cf5558b3",
+        "filename": "generator/templates/mock_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:38:48Z",
+      "side": 1,
+      "message": "nit: Can we declare `{{Suffix}}` as `{as_CppMethodSuffix(type.name, method.name)}` and use that? it would make things a little bit easier to read.",
+      "range": {
+        "startLine": 123,
+        "startChar": 31,
+        "endLine": 123,
+        "endChar": 77
+      },
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb90c6e0_8792f1b2",
+        "filename": "src/dawn/tests/unittests/wire/WireSpecificCommandTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:38:48Z",
+      "side": 1,
+      "message": "```suggestion\n    // Add the first request for a device and capture the C-\u003eS command for it.\n```",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35271441_23bebd4b",
+        "filename": "src/dawn/tests/unittests/wire/WireTest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:38:48Z",
+      "side": 1,
+      "message": "not needed here?",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67078a4a_34da3e1b",
+        "filename": "src/dawn/utils/TerribleCommandBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:38:48Z",
+      "side": 1,
+      "message": "This whole class is for testing purpose ^^",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8969b071_0925fd1b",
+        "filename": "src/dawn/utils/TerribleCommandBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:38:48Z",
+      "side": 1,
+      "message": "nit: to avoid adding the dependency on the wire internals, this could return a span that the test code uses to create a DeserializeBuffer.",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
