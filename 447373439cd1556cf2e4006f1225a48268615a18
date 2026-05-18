@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e05f2f8d_1871abbf",
+        "filename": "src/dawn/replay/CaptureWalker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:57:46Z",
+      "side": 1,
+      "message": "Sounds like it might be worth having a `VISIT_TRY` and `VISIT_TRY_ASSIGN` that handle the propagation of the stop signal.",
+      "revId": "447373439cd1556cf2e4006f1225a48268615a18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
