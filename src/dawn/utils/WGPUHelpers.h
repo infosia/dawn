@@ -204,7 +204,7 @@ struct BindingInitializationHelper {
     wgpu::Buffer buffer;
     mutable wgpu::ExternalTextureBindingEntry externalTextureBindingEntry;
 #ifndef __EMSCRIPTEN__
-    mutable wgpu::TexelBufferBindingEntry texelBufferBindingEntry = {};
+    mutable wgpu::TexelBufferBindingEntry texelBufferBindingEntry;
 #endif  // __EMSCRIPTEN__
     uint64_t offset = 0;
     uint64_t size = 0;

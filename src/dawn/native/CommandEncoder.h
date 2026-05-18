@@ -147,7 +147,7 @@ class CommandEncoder final : public ApiObjectBase {
 
     uint64_t mDebugGroupStackSize = 0;
 
-    UsageValidationMode mUsageValidationMode;
+    UsageValidationMode mUsageValidationMode = UsageValidationMode::Default;
 };
 
 }  // namespace dawn::native

@@ -626,6 +626,10 @@ MaybeError BindGroupBase::Initialize(const UnpackedPtr<BindGroupDescriptor>& des
         new (&mBindingData.bindings[i]) Ref<ObjectBase>();
     }
 
+    for (BindingIndex i{0}; i < layout->GetBindingTypeEnd(BindingTypeOrder_RegularBuffer); ++i) {
+        mBindingData.bufferData[i] = {};
+    }
+
     // Fill mBoundTextures with nullptr since these binding entries can possibly be bound without an
     // external texture.
     mBoundExternalTextures.resize(layout->GetExternalTextureCount(), nullptr);

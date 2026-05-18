@@ -60,8 +60,8 @@ struct StageAndDescriptor {
                        size_t constantCount,
                        ConstantEntry const* constants);
 
-    SingleShaderStage shaderStage;
-    raw_ptr<ShaderModuleBase> module;
+    SingleShaderStage shaderStage = SingleShaderStage::Vertex;
+    raw_ptr<ShaderModuleBase> module = nullptr;
     std::string entryPoint;
     size_t constantCount = 0u;
 
@@ -124,8 +124,8 @@ class PipelineLayoutBase : public ApiObjectBase,
     PipelineLayoutBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
     void DestroyImpl(DestroyReason reason) override;
 
-    PerBindGroup<Ref<BindGroupLayoutBase>> mBindGroupLayouts;
-    BindGroupMask mMask;
+    PerBindGroup<Ref<BindGroupLayoutBase>> mBindGroupLayouts = {};
+    BindGroupMask mMask = {};
     bool mHasPLS = false;
     std::vector<wgpu::TextureFormat> mStorageAttachmentSlots;
     uint32_t mImmediateDataRangeByteSize = 0;
