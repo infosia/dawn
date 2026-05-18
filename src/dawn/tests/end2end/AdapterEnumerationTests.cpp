@@ -82,9 +82,11 @@ TEST_F(AdapterEnumerationTests, OnlyFallback) {
         adapter.GetInfo(&info);
 
         EXPECT_TRUE(info.backendType == wgpu::BackendType::Vulkan ||
+                    info.backendType == wgpu::BackendType::D3D12 ||
                     info.backendType == wgpu::BackendType::WebGPU);
         EXPECT_EQ(info.adapterType, wgpu::AdapterType::CPU);
-        EXPECT_TRUE(gpu_info::IsGoogleSwiftshader(info.vendorID, info.deviceID));
+        EXPECT_TRUE(gpu_info::IsGoogleSwiftshader(info.vendorID, info.deviceID) ||
+                    gpu_info::IsMicrosoftWARP(info.vendorID, info.deviceID));
     }
 }
 
@@ -376,8 +378,7 @@ TEST_F(AdapterEnumerationTests, WebGPUBackend) {
             adapter.GetInfo(&info);
 
             EXPECT_EQ(info.backendType, wgpu::BackendType::WebGPU);
-            EXPECT_NE(std::string_view(info.device.data, info.device.length).find("SwiftShader"),
-                      std::string_view::npos);
+            EXPECT_EQ(info.adapterType, wgpu::AdapterType::CPU);
         }
     }
 
