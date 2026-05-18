@@ -74,6 +74,7 @@ class AdapterCreationTest : public ::testing::TestWithParam<wgpu::CallbackMode> 
                     continue;
                 }
                 swiftShaderAvailable |= gpu_info::IsGoogleSwiftshader(info.vendorID, info.deviceID);
+                warpAvailable |= gpu_info::IsMicrosoftWARP(info.vendorID, info.deviceID);
                 discreteGPUAvailable |= info.adapterType == wgpu::AdapterType::DiscreteGPU;
                 integratedGPUAvailable |= info.adapterType == wgpu::AdapterType::IntegratedGPU;
             }
@@ -109,6 +110,7 @@ class AdapterCreationTest : public ::testing::TestWithParam<wgpu::CallbackMode> 
     StrictMock<MockRequestAdapterCallback> mMockCb;
     bool anyAdapterAvailable = false;
     bool swiftShaderAvailable = false;
+    bool warpAvailable = false;
     bool discreteGPUAvailable = false;
     bool integratedGPUAvailable = false;
 };
@@ -148,13 +150,14 @@ TEST_P(AdapterCreationTest, NullGivesDefaultAdapter) {
     EXPECT_EQ(adapter != nullptr, anyAdapterAvailable);
 }
 
-// Test that requesting the fallback adapter returns SwiftShader.
+// Test that requesting the fallback adapter returns a software adapter.
 TEST_P(AdapterCreationTest, FallbackAdapter) {
     wgpu::RequestAdapterOptions options = {};
     options.forceFallbackAdapter = true;
 
+    bool fallbackAvailable = swiftShaderAvailable || warpAvailable;
     wgpu::Adapter adapter;
-    if (swiftShaderAvailable) {
+    if (fallbackAvailable) {
         EXPECT_CALL(mMockCb, Call(wgpu::RequestAdapterStatus::Success, _, EmptySizedString()))
             .WillOnce(WithArg<1>([&](wgpu::Adapter result) { adapter = std::move(result); }));
     } else {
@@ -163,13 +166,14 @@ TEST_P(AdapterCreationTest, FallbackAdapter) {
     }
     RequestAdapter(instance, &options);
 
-    EXPECT_EQ(adapter != nullptr, swiftShaderAvailable);
+    EXPECT_EQ(adapter != nullptr, fallbackAvailable);
     if (adapter != nullptr) {
         wgpu::AdapterInfo info;
         adapter.GetInfo(&info);
 
         EXPECT_EQ(info.adapterType, wgpu::AdapterType::CPU);
-        EXPECT_TRUE(gpu_info::IsGoogleSwiftshader(info.vendorID, info.deviceID));
+        EXPECT_TRUE(gpu_info::IsGoogleSwiftshader(info.vendorID, info.deviceID) ||
+                    gpu_info::IsMicrosoftWARP(info.vendorID, info.deviceID));
     }
 }
 
