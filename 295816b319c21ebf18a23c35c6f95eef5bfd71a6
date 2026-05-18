@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa72cf0a_649688d4",
+        "filename": "src/dawn/native/PooledResourceMemoryAllocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-05-18T08:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffe7fc55_7fc14d16",
+      "revId": "295816b319c21ebf18a23c35c6f95eef5bfd71a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "736f4f5c_c63c1e33",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-18T07:52:03Z",
       "side": 1,
       "message": "This should be a serial queue?",
+      "revId": "295816b319c21ebf18a23c35c6f95eef5bfd71a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5257706b_6b060143",
+        "filename": "src/dawn/native/PooledResourceMemoryAllocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-05-18T08:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "736f4f5c_c63c1e33",
       "revId": "295816b319c21ebf18a23c35c6f95eef5bfd71a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fcdd073_8bc40b91",
+        "filename": "src/dawn/native/d3d12/HeapAllocatorD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-05-18T08:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1f6a2a9_13db2f26",
+      "revId": "295816b319c21ebf18a23c35c6f95eef5bfd71a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f06df998_57969483",
@@ -65,6 +119,24 @@
       "writtenOn": "2026-05-18T07:52:03Z",
       "side": 1,
       "message": "Can we have a comment that explains the lifetime of the pointer? Here it is a member of the owner of the HeapAllocator so we know it will outlive it.",
+      "revId": "295816b319c21ebf18a23c35c6f95eef5bfd71a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e37e5497_abb21cd8",
+        "filename": "src/dawn/native/d3d12/HeapAllocatorD3D12.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-05-18T08:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f06df998_57969483",
       "revId": "295816b319c21ebf18a23c35c6f95eef5bfd71a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
