@@ -16,6 +16,24 @@
       "message": "Sounds like it might be worth having a `VISIT_TRY` and `VISIT_TRY_ASSIGN` that handle the propagation of the stop signal.",
       "revId": "447373439cd1556cf2e4006f1225a48268615a18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86a1352c_0fc32ccb",
+        "filename": "src/dawn/replay/CaptureWalker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-18T20:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e05f2f8d_1871abbf",
+      "revId": "447373439cd1556cf2e4006f1225a48268615a18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
