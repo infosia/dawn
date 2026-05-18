@@ -136,16 +136,16 @@ ResultOrError<Ref<PhysicalDeviceBase>> Backend::GetOrCreatePhysicalDeviceFromIDX
 
 std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
     const UnpackedPtr<RequestAdapterOptions>& options) {
-    if (options->forceFallbackAdapter) {
-        return {};
-    }
-
     // Get or create just the physical device matching the dxgi adapter.
     if (auto* luidOptions = options.Get<RequestAdapterOptionsLUID>()) {
         Ref<PhysicalDeviceBase> physicalDevice;
         if (GetInstance()->ConsumedErrorAndWarnOnce(
                 GetOrCreatePhysicalDeviceFromLUID(luidOptions->adapterLUID), &physicalDevice) ||
             !physicalDevice->SupportsFeatureLevel(options->featureLevel, GetInstance())) {
+            return {};
+        }
+        if (options->forceFallbackAdapter &&
+            physicalDevice->GetAdapterType() != wgpu::AdapterType::CPU) {
             return {};
         }
         return {std::move(physicalDevice)};
@@ -182,6 +182,10 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
                 GetOrCreatePhysicalDeviceFromIDXGIAdapter(std::move(dxgiAdapter)),
                 &physicalDevice) ||
             !physicalDevice->SupportsFeatureLevel(options->featureLevel, GetInstance())) {
+            continue;
+        }
+        if (options->forceFallbackAdapter &&
+            physicalDevice->GetAdapterType() != wgpu::AdapterType::CPU) {
             continue;
         }
         physicalDevices.push_back(std::move(physicalDevice));
