@@ -55,6 +55,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d24a12aa_f7bbdb58",
+        "filename": "src/dawn/native/TintUtils.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:43:15Z",
+      "side": 1,
+      "message": "Yeah this is likely better to use the format table.",
+      "revId": "a45e7d3b7d8924df9966361105114506c89d5c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbe774b9_44064bd8",
+        "filename": "src/dawn/native/TintUtils.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:43:15Z",
+      "side": 1,
+      "message": "I think we might need two different resource types for RO vs RW storage buffers for bindless.",
+      "revId": "a45e7d3b7d8924df9966361105114506c89d5c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d31bcee7_849f11fd",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:43:15Z",
+      "side": 1,
+      "message": "nit: could we have a forward declaration, or keep the code in ShaderModuleMTL.mm? I\u0027d like to avoid the Tint includes spreading across Dawn code.",
+      "revId": "a45e7d3b7d8924df9966361105114506c89d5c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2eb5ead1_5aa699ba",
         "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
         "patchSetId": 14
