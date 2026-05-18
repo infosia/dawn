@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bd81fc5_7d3d1e8f",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-05-18T16:08:04Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: modernize-avoid-c-style-cast\n\nC-style casts are discouraged; use static_c...\n\ncheck: modernize-avoid-c-style-cast\n\nC-style casts are discouraged; use static_cast (https://clang.llvm.org/extra/clang-tidy/checks/modernize/avoid-c-style-cast.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: modernize-avoid-c-style-cast` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 0
+      },
+      "revId": "8019690ed86f8ef1d294adb949eb2d9e8728a59c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "779eb75b_62792091",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-05-18T16:08:04Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: modernize-avoid-c-style-cast\n\nC-style casts are discouraged; use static_c...\n\ncheck: modernize-avoid-c-style-cast\n\nC-style casts are discouraged; use static_cast (https://clang.llvm.org/extra/clang-tidy/checks/modernize/avoid-c-style-cast.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: modernize-avoid-c-style-cast` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 0
+      },
+      "revId": "8019690ed86f8ef1d294adb949eb2d9e8728a59c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
