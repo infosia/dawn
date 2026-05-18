@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "10b63db4_0de142a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-18T20:49:48Z",
+      "side": 1,
+      "message": "Warp is always in the list of adapters returned by DXGI\u0027s EnumAdapters adapters, albeit last. I don\u0027t see any code in this CL which ensures that it only appears if it is the sole adapter on the system. Is that by design?  \n\nThe code works fine the way it is currently written. I think we can remove the \"... when it is the only adapter on the system ...\" verbiage from the CL description.",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 58
+      },
+      "revId": "17863b493e5cd5a8cdd2fb85ae7e76f0237f0093",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "978bd84e_c5acd60e",
