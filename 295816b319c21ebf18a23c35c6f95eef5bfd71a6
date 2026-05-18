@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffe7fc55_7fc14d16",
+        "filename": "src/dawn/native/PooledResourceMemoryAllocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:52:03Z",
+      "side": 1,
+      "message": "nit: GetSize",
+      "revId": "295816b319c21ebf18a23c35c6f95eef5bfd71a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "736f4f5c_c63c1e33",
+        "filename": "src/dawn/native/PooledResourceMemoryAllocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:52:03Z",
+      "side": 1,
+      "message": "This should be a serial queue?",
+      "revId": "295816b319c21ebf18a23c35c6f95eef5bfd71a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1f6a2a9_13db2f26",
+        "filename": "src/dawn/native/d3d12/HeapAllocatorD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:52:03Z",
+      "side": 1,
+      "message": "This is missing a decrement.",
+      "revId": "295816b319c21ebf18a23c35c6f95eef5bfd71a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f06df998_57969483",
+        "filename": "src/dawn/native/d3d12/HeapAllocatorD3D12.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-18T07:52:03Z",
+      "side": 1,
+      "message": "Can we have a comment that explains the lifetime of the pointer? Here it is a member of the owner of the HeapAllocator so we know it will outlive it.",
+      "revId": "295816b319c21ebf18a23c35c6f95eef5bfd71a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
