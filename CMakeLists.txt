@@ -101,7 +101,7 @@ elseif (WIN32)
     # Enable Vulkan in win32 compilation only
     # since UWP only supports d3d
     set(ENABLE_VULKAN ON)
-    set(ENABLE_SPIRV_VALIDATION ON)
+    set(ENABLE_SPIRV_VALIDATION ${ENABLE_VULKAN})
   endif()
 elseif(APPLE)
   set(ENABLE_METAL ON)
