@@ -72,9 +72,7 @@ cc_binary(
 {{-   else}}
 {{-     range $File := $.UnconditionalSourceFiles}}
 {{-       if or (not $.Kind.IsLib) (HasSuffix $File.Name ".cc")}}
-{{-         if not ($.IsGeneratedSource $File.Path)}}
     "{{TrimPrefix $File.Name $.Directory.Path}}",
-{{-         end}}
 {{-       end}}
 {{-     end}}
 {{-    range $Path := $.GeneratedSourcePaths.List}}
@@ -106,9 +104,7 @@ cc_binary(
 {{-   else}}
 {{-     range $File := $.UnconditionalSourceFiles}}
 {{-       if not (HasSuffix $File.Name ".cc")}}
-{{-         if not ($.IsGeneratedSource $File.Path)}}
     "{{TrimPrefix $File.Name $.Directory.Path}}",
-{{-         end}}
 {{-       end}}
 {{-     end}}
 {{-    range $Path := $.GeneratedSourcePaths.List}}
