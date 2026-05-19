@@ -34,6 +34,24 @@
       "parentUuid": "bf63ea5a_f0c0b871",
       "revId": "35e35a2e950ec37bd38c9e16901706bc6800f6d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea64a125_b5979ddb",
+        "filename": "src/tint/utils/system/terminal_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-19T12:55:38Z",
+      "side": 1,
+      "message": "That\u0027s a warning? Weird but ok, thanks for the explanation! As is LGTM",
+      "parentUuid": "969d6d4d_84b2b055",
+      "revId": "35e35a2e950ec37bd38c9e16901706bc6800f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
