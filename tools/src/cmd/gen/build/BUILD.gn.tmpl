@@ -83,9 +83,7 @@ tint_fuzzer_test("{{$.Directory.Name}}") {
 {{- end}}
   sources = [
 {{- range $File := $.UnconditionalSourceFiles}}
-{{-   if not ($.IsGeneratedSource $File.Path)}}
     "{{TrimPrefix $File.Name $.Directory.Path}}",
-{{-   end}}
 {{- end}}
 {{- range $Path := $.GeneratedSourcePaths.List}}
 {{-   if not (HasSuffix $Path ".txt")}}
