@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <algorithm>
 #include <array>
 #include <string>
@@ -42,6 +37,7 @@
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/TextureUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -576,17 +572,17 @@ class DepthCopyTests : public DepthStencilCopyTests {
                 uint16_t cleared = FloatToUnorm<uint16_t>(kClearDepth);
                 std::vector<uint16_t> expectedData(copyWidth * copyHeight, cleared);
                 for (uint32_t y = copyHeight / 2; y < copyHeight; y++) {
-                    auto rowStart = expectedData.data() + y * copyWidth;
-                    std::fill(rowStart, rowStart + copyWidth / 2, expected);
+                    auto rowStart = DAWN_UNSAFE_TODO(expectedData.data() + y * copyWidth);
+                    std::fill(rowStart, DAWN_UNSAFE_TODO(rowStart + copyWidth / 2), expected);
                 }
 
                 for (uint32_t z = 0; z < textureArrayLayerCount; ++z) {
                     uint32_t bufferOffsetPerArrayLayer = bytesPerImage * z;
                     for (uint32_t y = 0; y < copyHeight; ++y) {
-                        EXPECT_BUFFER_U16_RANGE_EQ(
+                        DAWN_UNSAFE_TODO(EXPECT_BUFFER_U16_RANGE_EQ(
                             expectedData.data() + copyWidth * y, destinationBuffer,
                             bufferCopyOffset + bufferOffsetPerArrayLayer + y * bytesPerRow,
-                            copyWidth);
+                            copyWidth));
                     }
                 }
             } else {
@@ -596,17 +592,17 @@ class DepthCopyTests : public DepthStencilCopyTests {
                                       : 0.0f;
                 std::vector<float> expectedData(copyWidth * copyHeight, kClearDepth);
                 for (uint32_t y = copyHeight / 2; y < copyHeight; y++) {
-                    auto rowStart = expectedData.data() + y * copyWidth;
-                    std::fill(rowStart, rowStart + copyWidth / 2, kInitDepth);
+                    auto rowStart = DAWN_UNSAFE_TODO(expectedData.data() + y * copyWidth);
+                    std::fill(rowStart, DAWN_UNSAFE_TODO(rowStart + copyWidth / 2), kInitDepth);
                 }
 
                 for (uint32_t z = 0; z < textureArrayLayerCount; ++z) {
                     uint32_t bufferOffsetPerArrayLayer = bytesPerImage * z;
                     for (uint32_t y = 0; y < copyHeight; ++y) {
-                        EXPECT_BUFFER_FLOAT_RANGE_TOLERANCE_EQ(
+                        DAWN_UNSAFE_TODO(EXPECT_BUFFER_FLOAT_RANGE_TOLERANCE_EQ(
                             expectedData.data() + copyWidth * y, destinationBuffer,
                             bufferCopyOffset + bufferOffsetPerArrayLayer + y * bytesPerRow,
-                            copyWidth, tolerance);
+                            copyWidth, tolerance));
                     }
                 }
             }
@@ -724,7 +720,7 @@ TEST_P(DepthCopyTests, PreserveBufferContent) {
                     // Fill the buffer with an original value other than 0 to check they are
                     // incorrectly overwritten outside of the copy range.
                     uint8_t* ptr = static_cast<uint8_t*>(buffer.GetMappedRange());
-                    std::fill(ptr, ptr + bufferDescriptor.size, kOriginalValue);
+                    std::fill(ptr, DAWN_UNSAFE_TODO(ptr + bufferDescriptor.size), kOriginalValue);
                     buffer.Unmap();
                 }
 
@@ -747,13 +743,13 @@ TEST_P(DepthCopyTests, PreserveBufferContent) {
 
                     // Check the content before copy range.
                     for (uint32_t i = 0; i < offset; i++) {
-                        EXPECT_EQ(ptr[i], kOriginalValue);
+                        DAWN_UNSAFE_TODO(EXPECT_EQ(ptr[i], kOriginalValue));
                     }
 
                     // Check the content after copy range.
                     uint32_t checkSize = bufferDescriptor.size - bufferEndOffset;
                     for (uint32_t i = 0; i < checkSize; i++) {
-                        EXPECT_EQ(ptr[bufferEndOffset + i], kOriginalValue);
+                        DAWN_UNSAFE_TODO(EXPECT_EQ(ptr[bufferEndOffset + i], kOriginalValue));
                     }
                     buffer.Unmap();
                 }
@@ -905,8 +901,8 @@ class DepthCopyFromBufferTests : public DepthStencilCopyTests {
                 0, 0, expected, expected, 0, 0, expected, expected,
             };
             size_t expectedSize = expectedData.size() * sizeof(uint16_t);
-            memcpy(srcBuffer.GetMappedRange(bufferCopyOffset, expectedSize), expectedData.data(),
-                   expectedSize);
+            DAWN_UNSAFE_TODO(memcpy(srcBuffer.GetMappedRange(bufferCopyOffset, expectedSize),
+                                    expectedData.data(), expectedSize));
             srcBuffer.Unmap();
 
             wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
@@ -922,8 +918,8 @@ class DepthCopyFromBufferTests : public DepthStencilCopyTests {
             };
             size_t expectedSize = expectedData.size() * sizeof(float);
 
-            memcpy(srcBuffer.GetMappedRange(bufferCopyOffset, expectedSize), expectedData.data(),
-                   expectedSize);
+            DAWN_UNSAFE_TODO(memcpy(srcBuffer.GetMappedRange(bufferCopyOffset, expectedSize),
+                                    expectedData.data(), expectedSize));
             srcBuffer.Unmap();
 
             wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
@@ -1031,16 +1027,16 @@ class StencilCopyTests : public DepthStencilCopyTests {
             std::vector<uint8_t> expectedData(copyWidth * copyHeight, kClearStencil);
             // std::fill(expectedData.data(), expectedData.data() + expectedData.size(), 0x77);
             for (uint32_t y = copyHeight / 2; y < copyHeight; y++) {
-                auto rowStart = expectedData.data() + y * copyWidth;
-                std::fill(rowStart, rowStart + copyWidth / 2, kInitStencil);
+                auto rowStart = DAWN_UNSAFE_TODO(expectedData.data() + y * copyWidth);
+                std::fill(rowStart, DAWN_UNSAFE_TODO(rowStart + copyWidth / 2), kInitStencil);
             }
 
             for (uint32_t z = 0; z < textureArrayLayerCount; ++z) {
                 uint32_t bufferOffsetPerArrayLayer = bytesPerImage * z;
                 for (uint32_t y = 0; y < copyHeight; ++y) {
-                    EXPECT_BUFFER_U8_RANGE_EQ(
+                    DAWN_UNSAFE_TODO(EXPECT_BUFFER_U8_RANGE_EQ(
                         expectedData.data() + copyWidth * y, destinationBuffer,
-                        bufferCopyOffset + bufferOffsetPerArrayLayer + y * bytesPerRow, copyWidth);
+                        bufferCopyOffset + bufferOffsetPerArrayLayer + y * bytesPerRow, copyWidth));
                 }
             }
         }
@@ -1100,7 +1096,8 @@ class StencilCopyTests : public DepthStencilCopyTests {
             uint8_t* mappedPtr = static_cast<uint8_t*>(srcBuffer.GetMappedRange(bufferCopyOffset));
             constexpr uint32_t kBytesPerRow = kTextureBytesPerRowAlignment;
             for (uint32_t y = 0; y < kHeight; ++y) {
-                memcpy(mappedPtr + y * kBytesPerRow, stencilData.data() + y * kWidth, kWidth);
+                DAWN_UNSAFE_TODO(
+                    memcpy(mappedPtr + y * kBytesPerRow, stencilData.data() + y * kWidth, kWidth));
             }
             srcBuffer.Unmap();
 
@@ -1282,7 +1279,7 @@ TEST_P(StencilCopyTests, PreserveBufferContent) {
                     // Fill the buffer with an original value other than 0 to check they are
                     // incorrectly overwritten outside of the copy range.
                     uint8_t* ptr = static_cast<uint8_t*>(buffer.GetMappedRange());
-                    std::fill(ptr, ptr + bufferDescriptor.size, kOriginalValue);
+                    std::fill(ptr, DAWN_UNSAFE_TODO(ptr + bufferDescriptor.size), kOriginalValue);
                     buffer.Unmap();
                 }
 
@@ -1305,13 +1302,13 @@ TEST_P(StencilCopyTests, PreserveBufferContent) {
 
                     // Check the content before copy range.
                     for (uint32_t i = 0; i < offset; i++) {
-                        EXPECT_EQ(ptr[i], kOriginalValue);
+                        DAWN_UNSAFE_TODO(EXPECT_EQ(ptr[i], kOriginalValue));
                     }
 
                     // Check the content after copy range.
                     uint32_t checkSize = bufferDescriptor.size - bufferEndOffset;
                     for (uint32_t i = 0; i < checkSize; i++) {
-                        EXPECT_EQ(ptr[bufferEndOffset + i], kOriginalValue);
+                        DAWN_UNSAFE_TODO(EXPECT_EQ(ptr[bufferEndOffset + i], kOriginalValue));
                     }
                     buffer.Unmap();
                 }
