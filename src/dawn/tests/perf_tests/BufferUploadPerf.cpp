@@ -25,15 +25,11 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <vector>
 
 #include "dawn/tests/perf_tests/DawnPerfTest.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -154,7 +150,8 @@ void BufferUploadPerf::Step() {
 
             for (unsigned int i = 0; i < kNumIterations; ++i) {
                 wgpu::Buffer buffer = device.CreateBuffer(&desc);
-                memcpy(buffer.GetMappedRange(0, data.size()), data.data(), data.size());
+                DAWN_UNSAFE_TODO(
+                    memcpy(buffer.GetMappedRange(0, data.size()), data.data(), data.size()));
                 buffer.Unmap();
                 encoder.CopyBufferToBuffer(buffer, 0, dst, 0, data.size());
             }
@@ -248,7 +245,7 @@ void BufferMapExtendedUsagesPerf::Step() {
     switch (GetParam().uploadMethod) {
         case UploadMethod::WriteBuffer: {
             for (unsigned int i = 0; i < kNumIterations; ++i) {
-                queue.WriteBuffer(buffers[i], 0, data.data(), data.size());
+                queue.WriteBuffer(DAWN_UNSAFE_TODO(buffers[i]), 0, data.data(), data.size());
             }
             // Make sure all WriteBuffer's are flushed.
             queue.Submit(0, nullptr);
@@ -264,10 +261,12 @@ void BufferMapExtendedUsagesPerf::Step() {
             wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
 
             for (unsigned int i = 0; i < kNumIterations; ++i) {
-                stagingBuffers[i] = device.CreateBuffer(&desc);
-                memcpy(stagingBuffers[i].GetMappedRange(0, data.size()), data.data(), data.size());
-                stagingBuffers[i].Unmap();
-                encoder.CopyBufferToBuffer(stagingBuffers[i], 0, buffers[i], 0, data.size());
+                DAWN_UNSAFE_TODO(stagingBuffers[i]) = device.CreateBuffer(&desc);
+                DAWN_UNSAFE_TODO(memcpy(stagingBuffers[i].GetMappedRange(0, data.size()),
+                                        data.data(), data.size()));
+                DAWN_UNSAFE_TODO(stagingBuffers[i]).Unmap();
+                encoder.CopyBufferToBuffer(DAWN_UNSAFE_TODO(stagingBuffers[i]), 0,
+                                           DAWN_UNSAFE_TODO(buffers[i]), 0, data.size());
             }
 
             wgpu::CommandBuffer commands = encoder.Finish();
@@ -279,10 +278,13 @@ void BufferMapExtendedUsagesPerf::Step() {
             wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
 
             for (unsigned int i = 0; i < kNumIterations; ++i) {
-                MapAsyncAndWait(stagingBuffers[i], wgpu::MapMode::Write, 0, data.size());
-                memcpy(stagingBuffers[i].GetMappedRange(0, data.size()), data.data(), data.size());
-                stagingBuffers[i].Unmap();
-                encoder.CopyBufferToBuffer(stagingBuffers[i], 0, buffers[i], 0, data.size());
+                MapAsyncAndWait(DAWN_UNSAFE_TODO(stagingBuffers[i]), wgpu::MapMode::Write, 0,
+                                data.size());
+                DAWN_UNSAFE_TODO(memcpy(stagingBuffers[i].GetMappedRange(0, data.size()),
+                                        data.data(), data.size()));
+                DAWN_UNSAFE_TODO(stagingBuffers[i]).Unmap();
+                encoder.CopyBufferToBuffer(DAWN_UNSAFE_TODO(stagingBuffers[i]), 0,
+                                           DAWN_UNSAFE_TODO(buffers[i]), 0, data.size());
             }
 
             wgpu::CommandBuffer commands = encoder.Finish();
@@ -292,9 +294,10 @@ void BufferMapExtendedUsagesPerf::Step() {
 
         case UploadMethod::MapWithExtendedUsages: {
             for (unsigned int i = 0; i < kNumIterations; ++i) {
-                MapAsyncAndWait(buffers[i], wgpu::MapMode::Write, 0, data.size());
-                memcpy(buffers[i].GetMappedRange(0, data.size()), data.data(), data.size());
-                buffers[i].Unmap();
+                MapAsyncAndWait(DAWN_UNSAFE_TODO(buffers[i]), wgpu::MapMode::Write, 0, data.size());
+                DAWN_UNSAFE_TODO(
+                    memcpy(buffers[i].GetMappedRange(0, data.size()), data.data(), data.size()));
+                DAWN_UNSAFE_TODO(buffers[i]).Unmap();
             }
             break;
         }
