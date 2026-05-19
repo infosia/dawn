@@ -16,6 +16,23 @@
       "message": "(non-AI CL :-) )\nRefactor Context: I find that previous assumption that internal immediates will be supported among backends is false. And the kMaxImmediateConstantsPerPipeline which based on 128 byte push constants range limited the possible usage of ImmediateConstantMask to manage all internal immediates among backends.\n\nPTAL, thanks!",
       "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf1ef876_c1b49464",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-19T18:47:55Z",
+      "side": 1,
+      "message": "Sorry I won\u0027t be able to get to this before I am OOO for a ~1week starting tomorrow. Re-assigning to Antonio to help review instead.",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
