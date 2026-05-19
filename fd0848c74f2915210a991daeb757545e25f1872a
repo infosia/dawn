@@ -33,6 +33,42 @@
       "message": "```suggestion\n# Defining a separate library for WKTs and linking it to libprotobuf\n```",
       "revId": "fd0848c74f2915210a991daeb757545e25f1872a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c63d0b8_f08f9bff",
+        "filename": "third_party/protobuf.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-19T20:16:09Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b89a96d7_fd10d015",
+      "revId": "fd0848c74f2915210a991daeb757545e25f1872a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b88951d_997acc3c",
+        "filename": "third_party/protobuf.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-19T20:16:09Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b89a96d7_fd10d015",
+      "revId": "fd0848c74f2915210a991daeb757545e25f1872a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
