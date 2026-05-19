@@ -42,11 +42,11 @@
 #include "dawn/common/GPUInfo.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Error.h"
-#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/Limits.h"
 #include "dawn/native/vulkan/BackendVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
+#include "dawn/native/vulkan/ImmediateConstantsLayoutVk.h"
 #include "dawn/native/vulkan/ResourceMemoryAllocatorVk.h"
 #include "dawn/native/vulkan/SwapChainVk.h"
 #include "dawn/native/vulkan/TextureVk.h"
@@ -924,8 +924,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
     // internal and external immediate data usages.
     constexpr uint32_t kVkGuaranteedMaxPushConstantsSize = 128;  // from Vulkan spec
     constexpr uint32_t kMaxInternalConstants =
-        std::max(sizeof(RenderImmediateConstants) - sizeof(UserImmediateConstants),
-                 sizeof(ComputeImmediateConstants) - sizeof(UserImmediateConstants));
+        sizeof(RenderImmediateConstantsVk) - sizeof(UserImmediateConstants);
     static_assert(kVkGuaranteedMaxPushConstantsSize >=
                   kMaxImmediateDataBytes + kMaxInternalConstants);
     DAWN_ASSERT(vkLimits.maxPushConstantsSize >= kVkGuaranteedMaxPushConstantsSize);

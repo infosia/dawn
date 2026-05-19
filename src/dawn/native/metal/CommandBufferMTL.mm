@@ -52,6 +52,7 @@
 #include "dawn/native/metal/BufferMTL.h"
 #include "dawn/native/metal/ComputePipelineMTL.h"
 #include "dawn/native/metal/DeviceMTL.h"
+#include "dawn/native/metal/ImmediateConstantsLayoutMTL.h"
 #include "dawn/native/metal/PipelineLayoutMTL.h"
 #include "dawn/native/metal/QuerySetMTL.h"
 #include "dawn/native/metal/RenderPipelineMTL.h"
@@ -530,6 +531,25 @@ struct StorageBufferLengthTracker {
     uint32_t mLastImmediateCounts;
 };
 
+class RenderImmediateConstantsTrackerMTL
+    : public UserImmediateConstantsTrackerBase<RenderImmediateConstantsMTL, RenderPipelineBase> {
+  public:
+    RenderImmediateConstantsTrackerMTL() = default;
+
+    void SetClampFragDepth(float minClampFragDepth, float maxClampFragDepth) {
+        // Put the data in the right layout to match the RenderImmediateConstants struct
+        ClampFragDepthArgs fragDepthArgs;
+        fragDepthArgs.minClampFragDepth = minClampFragDepth;
+        fragDepthArgs.maxClampFragDepth = maxClampFragDepth;
+
+        UpdateImmediateConstants(offsetof(RenderImmediateConstantsMTL, clampFragDepth),
+                                 fragDepthArgs);
+    }
+};
+
+using ComputeImmediateConstantsTrackerMTL =
+    UserImmediateConstantsTrackerBase<ComputeImmediateConstantsMTL, ComputePipelineBase>;
+
 // Template class that manages immediate constants for Metal backend.
 // This tracker combines immediate constant data with buffer length information,
 // uploading both to a single buffer that can be accessed by shaders.
@@ -607,7 +627,9 @@ class ImmediateConstantTracker : public T {
     // UBOs require we align the max buffer count to 4 elements (16 bytes).
     static constexpr size_t MaxBufferCount = StorageBufferLengthTracker::MaxBufferCount;
     static constexpr size_t kMaxImmediateBlockSize =
-        kMaxImmediateConstantsPerPipeline + MaxBufferCount;
+        kIsRenderImmediateConstants
+            ? sizeof(RenderImmediateConstantsMTL) / sizeof(uint32_t) + MaxBufferCount
+            : sizeof(UserImmediateConstants) / sizeof(uint32_t) + MaxBufferCount;
 
     // Writes data to the immediate block content for the specified shader stages.
     // This is used for both immediate constants and storage buffer length data.
@@ -1601,7 +1623,7 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
     SetDebugName(GetDevice(), encoder, "Dawn_ComputePassEncoder", computePassCmd->label);
 
     Command type;
-    ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase, id<MTLComputeCommandEncoder>>
+    ImmediateConstantTracker<ComputeImmediateConstantsTrackerMTL, id<MTLComputeCommandEncoder>>
         immediates = {};
     while (mCommands.NextCommandId(&type)) {
         switch (type) {
@@ -1789,7 +1811,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
 
     SetDebugName(GetDevice(), encoder, "Dawn_RenderPassEncoder", renderPassCmd->label);
 
-    ImmediateConstantTracker<RenderImmediateConstantsTrackerBase, id<MTLRenderCommandEncoder>>
+    ImmediateConstantTracker<RenderImmediateConstantsTrackerMTL, id<MTLRenderCommandEncoder>>
         immediates = {};
 
     // Apply default frag depth
