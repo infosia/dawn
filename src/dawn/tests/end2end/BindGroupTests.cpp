@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <string>
 #include <vector>
 
@@ -39,6 +34,7 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -687,8 +683,8 @@ TEST_P(BindGroupTests, SetDynamicBindGroupBeforePipeline) {
     size_t color1Offset = Align(sizeof(color0), mMinUniformBufferOffsetAlignment);
 
     std::vector<uint8_t> data(color1Offset + sizeof(color1));
-    memcpy(data.data(), color0.data(), sizeof(color0));
-    memcpy(data.data() + color1Offset, color1.data(), sizeof(color1));
+    DAWN_UNSAFE_TODO(memcpy(data.data(), color0.data(), sizeof(color0)));
+    DAWN_UNSAFE_TODO(memcpy(data.data() + color1Offset, color1.data(), sizeof(color1)));
 
     // Create a bind group and uniform buffer with the color data. It will be bound at the offset
     // to each color.
@@ -1006,25 +1002,25 @@ TEST_P(BindGroupTests, ThreePipelinesInSameRenderpass) {
     std::array<float, 4> color2 = {0, 0, 0.8, 0};
 
     std::vector<uint8_t> data(sizeof(color00));
-    memcpy(data.data(), color00.data(), sizeof(color00));
+    DAWN_UNSAFE_TODO(memcpy(data.data(), color00.data(), sizeof(color00)));
     wgpu::Buffer uniformBuffer00 =
         utils::CreateBufferFromData(device, data.data(), data.size(), wgpu::BufferUsage::Uniform);
     wgpu::BindGroup bindGroup00 =
         utils::MakeBindGroup(device, uniformLayout, {{0, uniformBuffer00, 0, 4 * sizeof(float)}});
 
-    memcpy(data.data(), color01.data(), sizeof(color01));
+    DAWN_UNSAFE_TODO(memcpy(data.data(), color01.data(), sizeof(color01)));
     wgpu::Buffer uniformBuffer01 =
         utils::CreateBufferFromData(device, data.data(), data.size(), wgpu::BufferUsage::Uniform);
     wgpu::BindGroup bindGroup01 =
         utils::MakeBindGroup(device, uniformLayout, {{0, uniformBuffer01, 0, 4 * sizeof(float)}});
 
-    memcpy(data.data(), color1.data(), sizeof(color1));
+    DAWN_UNSAFE_TODO(memcpy(data.data(), color1.data(), sizeof(color1)));
     wgpu::Buffer uniformBuffer1 =
         utils::CreateBufferFromData(device, data.data(), data.size(), wgpu::BufferUsage::Uniform);
     wgpu::BindGroup bindGroup1 =
         utils::MakeBindGroup(device, uniformLayout, {{0, uniformBuffer1, 0, 4 * sizeof(float)}});
 
-    memcpy(data.data(), color2.data(), sizeof(color2));
+    DAWN_UNSAFE_TODO(memcpy(data.data(), color2.data(), sizeof(color2)));
     wgpu::Buffer uniformBuffer2 =
         utils::CreateBufferFromData(device, data.data(), data.size(), wgpu::BufferUsage::Uniform);
     wgpu::BindGroup bindGroup2 =
@@ -1094,8 +1090,8 @@ TEST_P(BindGroupTests, BindGroupsPersistAfterPipelineChange) {
     size_t color1Offset = Align(sizeof(color0), mMinUniformBufferOffsetAlignment);
 
     std::vector<uint8_t> data(color1Offset + sizeof(color1));
-    memcpy(data.data(), color0.data(), sizeof(color0));
-    memcpy(data.data() + color1Offset, color1.data(), sizeof(color1));
+    DAWN_UNSAFE_TODO(memcpy(data.data(), color0.data(), sizeof(color0)));
+    DAWN_UNSAFE_TODO(memcpy(data.data() + color1Offset, color1.data(), sizeof(color1)));
 
     // Create a bind group and uniform buffer with the color data. It will be bound at the offset
     // to each color.
@@ -1187,10 +1183,10 @@ TEST_P(BindGroupTests, DrawThenChangePipelineAndBindGroup) {
     size_t color3Offset = Align(color2Offset + sizeof(color2), mMinUniformBufferOffsetAlignment);
 
     std::vector<uint8_t> data(color3Offset + sizeof(color3), 0);
-    memcpy(data.data(), color0.data(), sizeof(color0));
-    memcpy(data.data() + color1Offset, color1.data(), sizeof(color1));
-    memcpy(data.data() + color2Offset, color2.data(), sizeof(color2));
-    memcpy(data.data() + color3Offset, color3.data(), sizeof(color3));
+    DAWN_UNSAFE_TODO(memcpy(data.data(), color0.data(), sizeof(color0)));
+    DAWN_UNSAFE_TODO(memcpy(data.data() + color1Offset, color1.data(), sizeof(color1)));
+    DAWN_UNSAFE_TODO(memcpy(data.data() + color2Offset, color2.data(), sizeof(color2)));
+    DAWN_UNSAFE_TODO(memcpy(data.data() + color3Offset, color3.data(), sizeof(color3)));
 
     // Create a uniform and storage buffer bind groups to bind the color data.
     wgpu::Buffer uniformBuffer =
@@ -1287,10 +1283,10 @@ TEST_P(BindGroupTests, DrawThenChangePipelineTwiceAndBindGroup) {
     size_t color3Offset = Align(color2Offset + sizeof(color2), mMinUniformBufferOffsetAlignment);
 
     std::vector<uint8_t> data(color3Offset + sizeof(color3), 0);
-    memcpy(data.data(), color0.data(), sizeof(color0));
-    memcpy(data.data() + color1Offset, color1.data(), sizeof(color1));
-    memcpy(data.data() + color2Offset, color2.data(), sizeof(color2));
-    memcpy(data.data() + color3Offset, color3.data(), sizeof(color3));
+    DAWN_UNSAFE_TODO(memcpy(data.data(), color0.data(), sizeof(color0)));
+    DAWN_UNSAFE_TODO(memcpy(data.data() + color1Offset, color1.data(), sizeof(color1)));
+    DAWN_UNSAFE_TODO(memcpy(data.data() + color2Offset, color2.data(), sizeof(color2)));
+    DAWN_UNSAFE_TODO(memcpy(data.data() + color3Offset, color3.data(), sizeof(color3)));
 
     // Create a uniform and storage buffer bind groups to bind the color data.
     wgpu::Buffer uniformBuffer =
