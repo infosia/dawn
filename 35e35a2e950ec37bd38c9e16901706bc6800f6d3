@@ -16,6 +16,24 @@
       "message": "Why was this change needed?",
       "revId": "35e35a2e950ec37bd38c9e16901706bc6800f6d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "969d6d4d_84b2b055",
+        "filename": "src/tint/utils/system/terminal_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-05-19T12:03:20Z",
+      "side": 1,
+      "message": "this change was added because previously there was a `stdin` inside the `DAWN_UNSAFE_TODO` macro, which triggered the `-Werror,-Wdisabled-macro-expansion` compiler error, related to expand a macro inside a macro.\n\nTo solve this there was two options: to locally disable warning, or to use local variables for the macro. For the first option, pragmas are needed, and also some similar behavior could be introduced.\n\nAlso there is a third option, which is to keep the file-level exclusions (do not remove `#pragma allow_unsafe_buffers`)",
+      "parentUuid": "bf63ea5a_f0c0b871",
+      "revId": "35e35a2e950ec37bd38c9e16901706bc6800f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
