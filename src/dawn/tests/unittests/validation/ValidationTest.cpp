@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/tests/unittests/validation/ValidationTest.h"
 
 #include <webgpu/webgpu.h>
@@ -49,6 +44,7 @@
 #include "dawn/tests/ToggleParser.h"
 #include "dawn/utils/WireHelper.h"
 #include "dawn/webgpu_cpp_print.h"
+#include "src/utils/compiler.h"
 
 namespace {
 
@@ -67,27 +63,29 @@ void InitDawnValidationTestEnvironment(int argc, char** argv) {
     gToggleParser = std::make_unique<ToggleParser>();
 
     for (int i = 1; i < argc; ++i) {
-        if (strcmp("-w", argv[i]) == 0 || strcmp("--use-wire", argv[i]) == 0) {
+        if (DAWN_UNSAFE_TODO(strcmp("-w", argv[i])) == 0 ||
+            DAWN_UNSAFE_TODO(strcmp("--use-wire", argv[i])) == 0) {
             gUseWire = true;
             continue;
         }
 
         constexpr const char kWireTraceDirArg[] = "--wire-trace-dir=";
         size_t argLen = sizeof(kWireTraceDirArg) - 1;
-        if (strncmp(argv[i], kWireTraceDirArg, argLen) == 0) {
-            gWireTraceDir = argv[i] + argLen;
+        if (DAWN_UNSAFE_TODO(strncmp(argv[i], kWireTraceDirArg, argLen)) == 0) {
+            gWireTraceDir = DAWN_UNSAFE_TODO(argv[i] + argLen);
             continue;
         }
 
-        if (gToggleParser->ParseEnabledToggles(argv[i])) {
+        if (gToggleParser->ParseEnabledToggles(DAWN_UNSAFE_TODO(argv[i]))) {
             continue;
         }
 
-        if (gToggleParser->ParseDisabledToggles(argv[i])) {
+        if (gToggleParser->ParseDisabledToggles(DAWN_UNSAFE_TODO(argv[i]))) {
             continue;
         }
 
-        if (strcmp("-h", argv[i]) == 0 || strcmp("--help", argv[i]) == 0) {
+        if (DAWN_UNSAFE_TODO(strcmp("-h", argv[i])) == 0 ||
+            DAWN_UNSAFE_TODO(strcmp("--help", argv[i])) == 0) {
             dawn::InfoLog()
                 << "\n\nUsage: " << argv[0]
                 << " [GTEST_FLAGS...] [-w]\n"
@@ -101,11 +99,11 @@ void InitDawnValidationTestEnvironment(int argc, char** argv) {
 
         // Skip over args that look like they're for Googletest.
         constexpr const char kGtestArgPrefix[] = "--gtest_";
-        if (strncmp(kGtestArgPrefix, argv[i], sizeof(kGtestArgPrefix) - 1) == 0) {
+        if (DAWN_UNSAFE_TODO(strncmp(kGtestArgPrefix, argv[i], sizeof(kGtestArgPrefix) - 1)) == 0) {
             continue;
         }
 
-        dawn::WarningLog() << " Unused argument: " << argv[i];
+        dawn::WarningLog() << " Unused argument: " << DAWN_UNSAFE_TODO(argv[i]);
     }
 }
 
@@ -305,7 +303,7 @@ const dawn::native::ToggleInfo* ValidationTest::GetToggleInfo(const char* name) 
 bool ValidationTest::HasToggleEnabled(const char* toggle) const {
     auto toggles = dawn::native::GetTogglesUsed(backendDevice);
     return std::find_if(toggles.begin(), toggles.end(), [toggle](const char* name) {
-               return strcmp(toggle, name) == 0;
+               return DAWN_UNSAFE_TODO(strcmp(toggle, name)) == 0;
            }) != toggles.end();
 }
 
