@@ -41,6 +41,71 @@
 
 namespace dawn::native {
 namespace {
+DAWN_ENABLE_STRUCT_PADDING_WARNINGS
+// Define render pipeline immediate data layout for test.
+struct RenderImmediateTestConstants {
+    UserImmediateConstants userConstants;
+
+    ClampFragDepthArgs clampFragDepth;
+
+    // first index offset
+    uint32_t firstVertex;
+    uint32_t firstInstance;
+};
+
+// Define compute pipeline immediate data layout for test.
+struct ComputeImmediateTestConstants {
+    UserImmediateConstants userConstants;
+
+    NumWorkgroupsDimensions numWorkgroups;
+};
+DAWN_DISABLE_STRUCT_PADDING_WARNINGS
+
+class RenderImmediateConstantsTestTracker
+    : public UserImmediateConstantsTrackerBase<RenderImmediateTestConstants, RenderPipelineBase> {
+  public:
+    RenderImmediateConstantsTestTracker() = default;
+    void SetClampFragDepth(float minClampFragDepth, float maxClampFragDepth) {
+        // Put the data in the right layout to match the RenderImmediateConstants struct
+        ClampFragDepthArgs fragDepthArgs;
+        fragDepthArgs.minClampFragDepth = minClampFragDepth;
+        fragDepthArgs.maxClampFragDepth = maxClampFragDepth;
+
+        UpdateImmediateConstants(offsetof(RenderImmediateTestConstants, clampFragDepth),
+                                 fragDepthArgs);
+    }
+
+    void SetFirstIndexOffset(uint32_t firstVertex, uint32_t firstInstance) {
+        this->SetFirstVertex(firstVertex);
+        this->SetFirstInstance(firstInstance);
+    }
+
+    void SetFirstVertex(uint32_t firstVertex) {
+        UpdateImmediateConstants(offsetof(RenderImmediateTestConstants, firstVertex), firstVertex);
+    }
+
+    void SetFirstInstance(uint32_t firstInstance) {
+        UpdateImmediateConstants(offsetof(RenderImmediateTestConstants, firstInstance),
+                                 firstInstance);
+    }
+};
+
+class ComputeImmediateConstantsTestTracker
+    : public UserImmediateConstantsTrackerBase<ComputeImmediateTestConstants, ComputePipelineBase> {
+  public:
+    ComputeImmediateConstantsTestTracker() = default;
+    void SetNumWorkgroups(uint32_t numWorkgroupX, uint32_t numWorkgroupY, uint32_t numWorkgroupZ) {
+        // Put the data in the right layout to match the ComputeImmediateConstants struct
+        NumWorkgroupsDimensions numWorkgroupsDimensions;
+        numWorkgroupsDimensions.numWorkgroupsX = numWorkgroupX;
+        numWorkgroupsDimensions.numWorkgroupsY = numWorkgroupY;
+        numWorkgroupsDimensions.numWorkgroupsZ = numWorkgroupZ;
+
+        UpdateImmediateConstants(offsetof(ComputeImmediateTestConstants, numWorkgroups),
+                                 numWorkgroupsDimensions);
+    }
+};
+
 class ImmediateConstantsTrackerTest : public DawnNativeTest {
   protected:
     wgpu::RenderPipeline MakeTestRenderPipeline() {
@@ -76,7 +141,7 @@ class ComputeImmediateConstantsTrackerTest : public ImmediateConstantsTrackerTes
 
 // Test pipeline change reset dirty bits and update tracked pipeline constants mask.
 TEST_F(ImmediateConstantsTrackerTest, OnPipelineChange) {
-    RenderImmediateConstantsTrackerBase tracker;
+    RenderImmediateConstantsTestTracker tracker;
 
     // Control Case
     EXPECT_TRUE(tracker.GetDirtyBits() == ImmediateConstantMask(0));
@@ -102,7 +167,7 @@ TEST_F(ImmediateConstantsTrackerTest, SetImmediates) {
     size_t userImmediateDataStartByteOffset = 0u;
     // RenderImmediateConstantsTracker
     {
-        RenderImmediateConstantsTrackerBase tracker;
+        RenderImmediateConstantsTestTracker tracker;
         int32_t userImmediateData[] = {2, 4, -6, 8};
         tracker.SetImmediates(rangeOffset,
                               reinterpret_cast<uint8_t*>(&userImmediateData[dataOffset]),
@@ -116,7 +181,7 @@ TEST_F(ImmediateConstantsTrackerTest, SetImmediates) {
 
     // ComputeImmediateConstantsTracker
     {
-        ComputeImmediateConstantsTrackerBase tracker;
+        ComputeImmediateConstantsTestTracker tracker;
         int32_t userImmediateData[] = {2, 4, -6, 8};
         tracker.SetImmediates(rangeOffset,
                               reinterpret_cast<uint8_t*>(&userImmediateData[dataOffset]),
@@ -133,22 +198,22 @@ TEST_F(ImmediateConstantsTrackerTest, SetImmediates) {
 
 // Test setting clamp frag depth args with float value updates dirty bits and contents correctly.
 TEST_F(RenderImmediateConstantsTrackerTest, SetClampFragDepth) {
-    RenderImmediateConstantsTrackerBase tracker;
+    RenderImmediateConstantsTestTracker tracker;
     float minClampFragDepth = 0.1;
     float maxClampFragDepth = 0.95;
     tracker.SetClampFragDepth(minClampFragDepth, maxClampFragDepth);
 
     ImmediateConstantMask expected;
     // Hard coded to verify dirty bit.
-    expected |= 1u << (offsetof(RenderImmediateConstants, clampFragDepth) /
+    expected |= 1u << (offsetof(RenderImmediateTestConstants, clampFragDepth) /
                        kImmediateConstantElementByteSize);
-    expected |= 1u << (offsetof(RenderImmediateConstants, clampFragDepth) /
+    expected |= 1u << (offsetof(RenderImmediateTestConstants, clampFragDepth) /
                            kImmediateConstantElementByteSize +
                        1u);
     EXPECT_TRUE(tracker.GetDirtyBits() == expected);
 
     // Compare bits instead of values here to ensure bits level equality.
-    size_t clampFragDepthStartOffsetBytes = offsetof(RenderImmediateConstants, clampFragDepth);
+    size_t clampFragDepthStartOffsetBytes = offsetof(RenderImmediateTestConstants, clampFragDepth);
     size_t minClampFragDepthOffsetBytes =
         clampFragDepthStartOffsetBytes + offsetof(ClampFragDepthArgs, minClampFragDepth);
     size_t maxClampFragDepthOffsetBytes =
@@ -163,20 +228,20 @@ TEST_F(RenderImmediateConstantsTrackerTest, SetClampFragDepth) {
 
 // Test setting first index offset args updates dirty bits and contents correctly.
 TEST_F(RenderImmediateConstantsTrackerTest, SetFirstIndexOffset) {
-    size_t firstVertexByteOffset = offsetof(RenderImmediateConstants, firstVertex);
-    size_t firstInstanceByteOffset = offsetof(RenderImmediateConstants, firstInstance);
+    size_t firstVertexByteOffset = offsetof(RenderImmediateTestConstants, firstVertex);
+    size_t firstInstanceByteOffset = offsetof(RenderImmediateTestConstants, firstInstance);
     // SetFirstIndexOffset()
     {
-        RenderImmediateConstantsTrackerBase tracker;
+        RenderImmediateConstantsTestTracker tracker;
         uint32_t firstVertex = 1;
         uint32_t firstInstance = 2;
         tracker.SetFirstIndexOffset(firstVertex, firstInstance);
 
         ImmediateConstantMask expected;
         // Hard coded to verify dirty bit.
-        expected |= 1u << offsetof(RenderImmediateConstants, firstVertex) /
+        expected |= 1u << offsetof(RenderImmediateTestConstants, firstVertex) /
                               kImmediateConstantElementByteSize;
-        expected |= 1u << offsetof(RenderImmediateConstants, firstInstance) /
+        expected |= 1u << offsetof(RenderImmediateTestConstants, firstInstance) /
                               kImmediateConstantElementByteSize;
         EXPECT_TRUE(tracker.GetDirtyBits() == expected);
 
@@ -188,13 +253,13 @@ TEST_F(RenderImmediateConstantsTrackerTest, SetFirstIndexOffset) {
 
     // SetFirstVertex()
     {
-        RenderImmediateConstantsTrackerBase tracker;
+        RenderImmediateConstantsTestTracker tracker;
         uint32_t firstVertex = 1;
         tracker.SetFirstVertex(firstVertex);
 
         ImmediateConstantMask expected;
         // Hard coded to verify dirty bit.
-        expected |= 1u << offsetof(RenderImmediateConstants, firstVertex) /
+        expected |= 1u << offsetof(RenderImmediateTestConstants, firstVertex) /
                               kImmediateConstantElementByteSize;
         EXPECT_TRUE(tracker.GetDirtyBits() == expected);
 
@@ -204,13 +269,13 @@ TEST_F(RenderImmediateConstantsTrackerTest, SetFirstIndexOffset) {
 
     // SetFirstInstance()
     {
-        RenderImmediateConstantsTrackerBase tracker;
+        RenderImmediateConstantsTestTracker tracker;
         uint32_t firstInstance = 2;
         tracker.SetFirstInstance(firstInstance);
 
         ImmediateConstantMask expected;
         // Hard coded to verify dirty bit.
-        expected |= 1u << offsetof(RenderImmediateConstants, firstInstance) /
+        expected |= 1u << offsetof(RenderImmediateTestConstants, firstInstance) /
                               kImmediateConstantElementByteSize;
         EXPECT_TRUE(tracker.GetDirtyBits() == expected);
 
@@ -223,7 +288,7 @@ TEST_F(RenderImmediateConstantsTrackerTest, SetFirstIndexOffset) {
 
 // Test setting num workgroups dimensions update dirty bits and contents correctly.
 TEST_F(ComputeImmediateConstantsTrackerTest, SetNumWorkgroupDimensions) {
-    ComputeImmediateConstantsTrackerBase tracker;
+    ComputeImmediateConstantsTestTracker tracker;
     uint32_t numWorkgroupsX = 256;
     uint32_t numWorkgroupsY = 128;
     uint32_t numWorkgroupsZ = 64;
@@ -231,17 +296,17 @@ TEST_F(ComputeImmediateConstantsTrackerTest, SetNumWorkgroupDimensions) {
 
     ImmediateConstantMask expected;
     // Hard coded to verify dirty bit.
-    expected |= 1u << offsetof(ComputeImmediateConstants, numWorkgroups) /
+    expected |= 1u << offsetof(ComputeImmediateTestConstants, numWorkgroups) /
                           kImmediateConstantElementByteSize;
-    expected |= 1u << (offsetof(ComputeImmediateConstants, numWorkgroups) /
+    expected |= 1u << (offsetof(ComputeImmediateTestConstants, numWorkgroups) /
                            kImmediateConstantElementByteSize +
                        1u);
-    expected |= 1u << (offsetof(ComputeImmediateConstants, numWorkgroups) /
+    expected |= 1u << (offsetof(ComputeImmediateTestConstants, numWorkgroups) /
                            kImmediateConstantElementByteSize +
                        2u);
     EXPECT_TRUE(tracker.GetDirtyBits() == expected);
 
-    size_t numWorkgroupsStartByteOffset = offsetof(ComputeImmediateConstants, numWorkgroups);
+    size_t numWorkgroupsStartByteOffset = offsetof(ComputeImmediateTestConstants, numWorkgroups);
     size_t numWorkgroupXByteOffset =
         numWorkgroupsStartByteOffset + offsetof(NumWorkgroupsDimensions, numWorkgroupsX);
     size_t numWorkgroupYByteOffset =

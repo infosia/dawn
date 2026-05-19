@@ -37,11 +37,11 @@
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/CacheRequest.h"
-#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/Pipeline.h"
 #include "dawn/native/TintUtils.h"
 #include "dawn/native/opengl/BindGroupLayoutGL.h"
 #include "dawn/native/opengl/DeviceGL.h"
+#include "dawn/native/opengl/ImmediateConstantsLayoutGL.h"
 #include "dawn/native/opengl/PipelineGL.h"
 #include "dawn/native/opengl/PipelineLayoutGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
@@ -447,19 +447,19 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     auto immediateCount = RoundUp(pipelineImmediateMask.count(), 4u);
 
     req.tintOptions.minimum_immediate_size = immediateCount * kImmediateConstantElementByteSize;
-    if (HasImmediateConstants(&RenderImmediateConstants::firstVertex, pipelineImmediateMask)) {
+    if (HasImmediateConstants(&RenderImmediateConstantsGL::firstVertex, pipelineImmediateMask)) {
         req.tintOptions.first_vertex_offset = GetImmediateByteOffsetInPipelineIfAny(
-            &RenderImmediateConstants::firstVertex, pipelineImmediateMask);
+            &RenderImmediateConstantsGL::firstVertex, pipelineImmediateMask);
     }
 
-    if (HasImmediateConstants(&RenderImmediateConstants::firstInstance, pipelineImmediateMask)) {
+    if (HasImmediateConstants(&RenderImmediateConstantsGL::firstInstance, pipelineImmediateMask)) {
         req.tintOptions.first_instance_offset = GetImmediateByteOffsetInPipelineIfAny(
-            &RenderImmediateConstants::firstInstance, pipelineImmediateMask);
+            &RenderImmediateConstantsGL::firstInstance, pipelineImmediateMask);
     }
 
-    if (HasImmediateConstants(&RenderImmediateConstants::clampFragDepth, pipelineImmediateMask)) {
+    if (HasImmediateConstants(&RenderImmediateConstantsGL::clampFragDepth, pipelineImmediateMask)) {
         uint32_t offsetStartBytes = GetImmediateByteOffsetInPipeline(
-            &RenderImmediateConstants::clampFragDepth, pipelineImmediateMask);
+            &RenderImmediateConstantsGL::clampFragDepth, pipelineImmediateMask);
         req.tintOptions.depth_range_offsets = {
             offsetStartBytes, offsetStartBytes + kImmediateConstantElementByteSize};
     }

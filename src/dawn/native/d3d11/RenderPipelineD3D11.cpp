@@ -36,11 +36,11 @@
 
 #include "dawn/common/Range.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
-#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d/ShaderUtils.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
 #include "dawn/native/d3d11/Forward.h"
+#include "dawn/native/d3d11/ImmediateConstantsLayoutD3D11.h"
 #include "dawn/native/d3d11/PipelineLayoutD3D11.h"
 #include "dawn/native/d3d11/PipelineStateTrackerD3D11.h"
 #include "dawn/native/d3d11/ShaderModuleD3D11.h"
@@ -243,10 +243,12 @@ MaybeError RenderPipeline::InitializeImpl() {
     // offset.
     // TODO(crbug.com/366291600): Setting these bits respectively after immediate covers all cases.
     if (UsesVertexIndex() || UsesInstanceIndex()) {
-        mImmediateMask |= GetImmediateConstantBlockBits(
-            offsetof(RenderImmediateConstants, firstVertex), kImmediateConstantElementByteSize);
-        mImmediateMask |= GetImmediateConstantBlockBits(
-            offsetof(RenderImmediateConstants, firstInstance), kImmediateConstantElementByteSize);
+        mImmediateMask |=
+            GetImmediateConstantBlockBits(offsetof(RenderImmediateConstantsD3D11, firstVertex),
+                                          kImmediateConstantElementByteSize);
+        mImmediateMask |=
+            GetImmediateConstantBlockBits(offsetof(RenderImmediateConstantsD3D11, firstInstance),
+                                          kImmediateConstantElementByteSize);
     }
 
     DAWN_TRY(InitializeRasterizerState());

@@ -56,6 +56,7 @@
 #include "dawn/native/d3d11/ComputePipelineD3D11.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
 #include "dawn/native/d3d11/Forward.h"
+#include "dawn/native/d3d11/ImmediateConstantsLayoutD3D11.h"
 #include "dawn/native/d3d11/PipelineLayoutD3D11.h"
 #include "dawn/native/d3d11/PipelineStateTrackerD3D11.h"
 #include "dawn/native/d3d11/QuerySetD3D11.h"
@@ -225,6 +226,36 @@ HandlePixelLocalStorageAndGetPixelLocalStorageUAVs(
     return pixelLocalStorageUAVs;
 }
 
+class RenderImmediateConstantsTrackerD3D11
+    : public UserImmediateConstantsTrackerBase<RenderImmediateConstantsD3D11, RenderPipelineBase> {
+  public:
+    RenderImmediateConstantsTrackerD3D11() = default;
+
+    void SetFirstIndexOffset(uint32_t firstVertex, uint32_t firstInstance) {
+        UpdateImmediateConstants(offsetof(RenderImmediateConstantsD3D11, firstVertex), firstVertex);
+        UpdateImmediateConstants(offsetof(RenderImmediateConstantsD3D11, firstInstance),
+                                 firstInstance);
+    }
+};
+
+class ComputeImmediateConstantsTrackerD3D11
+    : public UserImmediateConstantsTrackerBase<ComputeImmediateConstantsD3D11,
+                                               ComputePipelineBase> {
+  public:
+    ComputeImmediateConstantsTrackerD3D11() = default;
+
+    void SetNumWorkgroups(uint32_t numWorkgroupX, uint32_t numWorkgroupY, uint32_t numWorkgroupZ) {
+        // Put the data in the right layout to match the ComputeImmediateConstants struct
+        NumWorkgroupsDimensions numWorkgroupsDimensions;
+        numWorkgroupsDimensions.numWorkgroupsX = numWorkgroupX;
+        numWorkgroupsDimensions.numWorkgroupsY = numWorkgroupY;
+        numWorkgroupsDimensions.numWorkgroupsZ = numWorkgroupZ;
+
+        UpdateImmediateConstants(offsetof(ComputeImmediateConstantsD3D11, numWorkgroups),
+                                 numWorkgroupsDimensions);
+    }
+};
+
 template <typename T>
 class ImmediateConstantTracker : public T {
   public:
@@ -253,8 +284,8 @@ class ImmediateConstantTracker : public T {
     }
 
     uint32_t GetFirstIndexContentStartOffset() {
-        uint32_t startIndex =
-            offsetof(RenderImmediateConstants, firstVertex) / kImmediateConstantElementByteSize;
+        uint32_t startIndex = offsetof(RenderImmediateConstantsD3D11, firstVertex) /
+                              kImmediateConstantElementByteSize;
         ImmediateConstantMask prefixBits = ImmediateConstantMask((1u << startIndex) - 1u);
         return (prefixBits & this->mDirty).count() * kImmediateConstantElementByteSize;
     }
@@ -542,7 +573,7 @@ MaybeError CommandBuffer::ExecuteComputePass(
     ComputePipeline* lastPipeline = nullptr;
     ComputePassBindGroupTracker bindGroupTracker(commandContext);
 
-    ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
+    ImmediateConstantTracker<ComputeImmediateConstantsTrackerD3D11> immediates = {};
 
     Command type;
     while (mCommands.NextCommandId(&type)) {
@@ -744,7 +775,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
     std::array<float, 4> blendColor = {0.0f, 0.0f, 0.0f, 0.0f};
     uint32_t stencilReference = 0;
 
-    ImmediateConstantTracker<RenderImmediateConstantsTrackerBase> immediates = {};
+    ImmediateConstantTracker<RenderImmediateConstantsTrackerD3D11> immediates = {};
 
     auto DoRenderBundleCommand = [&](CommandIterator* iter, Command type) -> MaybeError {
         switch (type) {
