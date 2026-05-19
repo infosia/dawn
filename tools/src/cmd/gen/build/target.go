@@ -103,11 +103,6 @@ func (t *Target) TemplateFiles() []*File {
 	return out
 }
 
-// IsGeneratedSource returns true if the file at 'path' is a generated source file
-func (t *Target) IsGeneratedSource(path string) bool {
-	return t.GeneratedSourcePaths.Contains(path)
-}
-
 // UnconditionalSourceFiles returns the sorted list of the target's source files that have no build condition
 func (t *Target) UnconditionalSourceFiles() []*File {
 	return transform.Filter(t.SourceFiles(), func(f *File) bool {
