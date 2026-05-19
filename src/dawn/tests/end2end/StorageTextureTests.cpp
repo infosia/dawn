@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <string>
 #include <vector>
 
@@ -41,6 +36,7 @@
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/TextureUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -82,16 +78,16 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RG32Uint: {
                 uint32_t* valuePtr = static_cast<uint32_t*>(pixelValuePtr);
                 valuePtr[0] = pixelValue + alsoAdd;
-                valuePtr[1] = pixelValue * 2;
+                DAWN_UNSAFE_TODO(valuePtr[1]) = pixelValue * 2;
                 break;
             }
 
             case wgpu::TextureFormat::RGBA32Uint: {
                 uint32_t* valuePtr = static_cast<uint32_t*>(pixelValuePtr);
                 valuePtr[0] = pixelValue + alsoAdd;
-                valuePtr[1] = pixelValue * 2;
-                valuePtr[2] = pixelValue * 3;
-                valuePtr[3] = pixelValue * 4;
+                DAWN_UNSAFE_TODO(valuePtr[1]) = pixelValue * 2;
+                DAWN_UNSAFE_TODO(valuePtr[2]) = pixelValue * 3;
+                DAWN_UNSAFE_TODO(valuePtr[3]) = pixelValue * 4;
                 break;
             }
 
@@ -105,16 +101,16 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RG32Sint: {
                 int32_t* valuePtr = static_cast<int32_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<int32_t>(pixelValue) + alsoAdd;
-                valuePtr[1] = -static_cast<int32_t>(pixelValue);
+                DAWN_UNSAFE_TODO(valuePtr[1]) = -static_cast<int32_t>(pixelValue);
                 break;
             }
 
             case wgpu::TextureFormat::RGBA32Sint: {
                 int32_t* valuePtr = static_cast<int32_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<int32_t>(pixelValue) + alsoAdd;
-                valuePtr[1] = -static_cast<int32_t>(pixelValue);
-                valuePtr[2] = static_cast<int32_t>(pixelValue * 2);
-                valuePtr[3] = -static_cast<int32_t>(pixelValue * 2);
+                DAWN_UNSAFE_TODO(valuePtr[1]) = -static_cast<int32_t>(pixelValue);
+                DAWN_UNSAFE_TODO(valuePtr[2]) = static_cast<int32_t>(pixelValue * 2);
+                DAWN_UNSAFE_TODO(valuePtr[3]) = -static_cast<int32_t>(pixelValue * 2);
                 break;
             }
 
@@ -128,16 +124,16 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RG32Float: {
                 float_t* valuePtr = static_cast<float_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<float_t>(pixelValue * 1.1f) + alsoAdd;
-                valuePtr[1] = -static_cast<float_t>(pixelValue * 2.2f);
+                DAWN_UNSAFE_TODO(valuePtr[1]) = -static_cast<float_t>(pixelValue * 2.2f);
                 break;
             }
 
             case wgpu::TextureFormat::RGBA32Float: {
                 float_t* valuePtr = static_cast<float_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<float_t>(pixelValue * 1.1f) + alsoAdd;
-                valuePtr[1] = -static_cast<float_t>(pixelValue * 1.1f);
-                valuePtr[2] = static_cast<float_t>(pixelValue * 2.2f);
-                valuePtr[3] = -static_cast<float_t>(pixelValue * 2.2f);
+                DAWN_UNSAFE_TODO(valuePtr[1]) = -static_cast<float_t>(pixelValue * 1.1f);
+                DAWN_UNSAFE_TODO(valuePtr[2]) = static_cast<float_t>(pixelValue * 2.2f);
+                DAWN_UNSAFE_TODO(valuePtr[3]) = -static_cast<float_t>(pixelValue * 2.2f);
                 break;
             }
 
@@ -152,7 +148,7 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RG16Float: {
                 uint16_t* valuePtr = static_cast<uint16_t*>(pixelValuePtr);
                 valuePtr[0] = Float32ToFloat16(static_cast<float_t>(pixelValue)) + alsoAdd;
-                valuePtr[1] = Float32ToFloat16(-static_cast<float_t>(pixelValue));
+                DAWN_UNSAFE_TODO(valuePtr[1]) = Float32ToFloat16(-static_cast<float_t>(pixelValue));
                 break;
             }
 
@@ -160,9 +156,11 @@ class StorageTextureTests : public DawnTest {
                 uint16_t* valuePtr = static_cast<uint16_t*>(pixelValuePtr);
                 float_t floatValue = static_cast<float_t>(pixelValue) + alsoAdd;
                 valuePtr[0] = Float32ToFloat16(floatValue);
-                valuePtr[1] = Float32ToFloat16(-static_cast<float_t>(pixelValue));
-                valuePtr[2] = Float32ToFloat16(static_cast<float_t>(pixelValue * 2));
-                valuePtr[3] = Float32ToFloat16(-static_cast<float_t>(pixelValue * 2));
+                DAWN_UNSAFE_TODO(valuePtr[1]) = Float32ToFloat16(-static_cast<float_t>(pixelValue));
+                DAWN_UNSAFE_TODO(valuePtr[2]) =
+                    Float32ToFloat16(static_cast<float_t>(pixelValue * 2));
+                DAWN_UNSAFE_TODO(valuePtr[3]) =
+                    Float32ToFloat16(-static_cast<float_t>(pixelValue * 2));
                 break;
             }
 
@@ -186,9 +184,9 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RGBA8Sint: {
                 int8_t* valuePtr = static_cast<int8_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<int8_t>(pixelValue) + alsoAdd;
-                valuePtr[1] = -static_cast<int8_t>(pixelValue);
-                valuePtr[2] = static_cast<int8_t>(pixelValue) * 2;
-                valuePtr[3] = -static_cast<int8_t>(pixelValue) * 2;
+                DAWN_UNSAFE_TODO(valuePtr[1]) = -static_cast<int8_t>(pixelValue);
+                DAWN_UNSAFE_TODO(valuePtr[2]) = static_cast<int8_t>(pixelValue) * 2;
+                DAWN_UNSAFE_TODO(valuePtr[3]) = -static_cast<int8_t>(pixelValue) * 2;
                 break;
             }
 
@@ -204,7 +202,7 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RG16Uint: {
                 uint16_t* valuePtr = static_cast<uint16_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<uint16_t>(pixelValue) + alsoAdd;
-                valuePtr[1] = static_cast<uint16_t>(pixelValue * 2);
+                DAWN_UNSAFE_TODO(valuePtr[1]) = static_cast<uint16_t>(pixelValue * 2);
                 break;
             }
 
@@ -219,7 +217,7 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RG16Sint: {
                 int16_t* valuePtr = static_cast<int16_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<int16_t>(pixelValue) + alsoAdd;
-                valuePtr[1] = -static_cast<int16_t>(pixelValue);
+                DAWN_UNSAFE_TODO(valuePtr[1]) = -static_cast<int16_t>(pixelValue);
                 break;
             }
 
@@ -227,9 +225,9 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RGBA16Uint: {
                 uint16_t* valuePtr = static_cast<uint16_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<uint16_t>(pixelValue) + alsoAdd;
-                valuePtr[1] = static_cast<uint16_t>(pixelValue * 2);
-                valuePtr[2] = static_cast<uint16_t>(pixelValue * 3);
-                valuePtr[3] = static_cast<uint16_t>(pixelValue * 4);
+                DAWN_UNSAFE_TODO(valuePtr[1]) = static_cast<uint16_t>(pixelValue * 2);
+                DAWN_UNSAFE_TODO(valuePtr[2]) = static_cast<uint16_t>(pixelValue * 3);
+                DAWN_UNSAFE_TODO(valuePtr[3]) = static_cast<uint16_t>(pixelValue * 4);
                 break;
             }
 
@@ -237,9 +235,9 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RGBA16Sint: {
                 int16_t* valuePtr = static_cast<int16_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<int16_t>(pixelValue) + alsoAdd;
-                valuePtr[1] = -static_cast<int16_t>(pixelValue);
-                valuePtr[2] = static_cast<int16_t>(pixelValue * 2);
-                valuePtr[3] = -static_cast<int16_t>(pixelValue * 2);
+                DAWN_UNSAFE_TODO(valuePtr[1]) = -static_cast<int16_t>(pixelValue);
+                DAWN_UNSAFE_TODO(valuePtr[2]) = static_cast<int16_t>(pixelValue * 2);
+                DAWN_UNSAFE_TODO(valuePtr[3]) = -static_cast<int16_t>(pixelValue * 2);
                 break;
             }
 
@@ -255,7 +253,7 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RG8Uint: {
                 uint8_t* valuePtr = static_cast<uint8_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<uint8_t>(pixelValue) + alsoAdd;
-                valuePtr[1] = static_cast<uint8_t>(pixelValue * 2);
+                DAWN_UNSAFE_TODO(valuePtr[1]) = static_cast<uint8_t>(pixelValue * 2);
                 break;
             }
 
@@ -270,7 +268,7 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RG8Sint: {
                 int8_t* valuePtr = static_cast<int8_t*>(pixelValuePtr);
                 valuePtr[0] = static_cast<int8_t>(pixelValue) + alsoAdd;
-                valuePtr[1] = -static_cast<int8_t>(pixelValue);
+                DAWN_UNSAFE_TODO(valuePtr[1]) = -static_cast<int8_t>(pixelValue);
                 break;
             }
 
@@ -544,8 +542,9 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
                 DAWN_UNREACHABLE();
                 break;
         }
-        const char* workgroupSize = !strcmp(stage, "compute") ? " @workgroup_size(1)" : "";
-        const bool isFragment = strcmp(stage, "fragment") == 0;
+        const char* workgroupSize =
+            !DAWN_UNSAFE_TODO(strcmp(stage, "compute")) ? " @workgroup_size(1)" : "";
+        const bool isFragment = DAWN_UNSAFE_TODO(strcmp(stage, "fragment")) == 0;
 
         std::ostringstream ostream;
         ostream << GetImageDeclaration(format, "write", dimension, 0) << "\n";
@@ -578,7 +577,7 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
     std::string CommonReadOnlyTestCode(const char* stage, wgpu::TextureFormat format) {
         wgpu::TextureViewDimension dimension = wgpu::TextureViewDimension::e2D;
         utils::WGSLComponentType componentType = utils::GetWGSLColorTextureComponentType(format);
-        const bool isFragment = strcmp(stage, "fragment") == 0;
+        const bool isFragment = DAWN_UNSAFE_TODO(strcmp(stage, "fragment")) == 0;
         std::string textureSize = "textureDimensions(storageImage0).xy";
 
         bool isIntegerComponent = (componentType == utils::WGSLComponentType::Int32 ||
@@ -659,8 +658,8 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
             const size_t initialDataOffset = bytesPerTextureRow * kHeight * slice;
             for (size_t y = 0; y < kHeight; ++y) {
                 for (size_t x = 0; x < bytesPerTextureRow; ++x) {
-                    uint8_t data =
-                        initialTextureData[initialDataOffset + bytesPerTextureRow * y + x];
+                    uint8_t data = DAWN_UNSAFE_TODO(
+                        initialTextureData[initialDataOffset + bytesPerTextureRow * y + x]);
                     size_t indexInUploadBuffer =
                         (kHeight * slice + y) * kTextureBytesPerRowAlignment + x;
                     uploadBufferData[indexInUploadBuffer] = data;
@@ -896,9 +895,9 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
                 const size_t resultBufferOffset =
                     kTextureBytesPerRowAlignment * (size.height * z + y);
                 const size_t expectedDataOffset = texelSize * size.width * (size.height * z + y);
-                EXPECT_BUFFER_U32_RANGE_EQ(
+                DAWN_UNSAFE_TODO(EXPECT_BUFFER_U32_RANGE_EQ(
                     reinterpret_cast<const uint32_t*>(expectedData + expectedDataOffset),
-                    resultBuffer, resultBufferOffset, texelSize);
+                    resultBuffer, resultBufferOffset, texelSize));
             }
         }
     }
