@@ -158,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6931dab9_fe000bd4",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-05-19T14:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15623494_840b3cd7",
+      "revId": "754e956664b739f0aa0c1f88fbf2b79ef149fb6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5f9e8e4_e24d1517",
@@ -171,6 +189,24 @@
       "writtenOn": "2026-05-19T11:26:01Z",
       "side": 1,
       "message": "Can we keep the todo to remove the blocklist in a few releases?",
+      "revId": "754e956664b739f0aa0c1f88fbf2b79ef149fb6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47ee3552_58b6f422",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-05-19T14:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5f9e8e4_e24d1517",
       "revId": "754e956664b739f0aa0c1f88fbf2b79ef149fb6b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
