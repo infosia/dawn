@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c959e54_642ceaf2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-19T16:53:48Z",
+      "side": 1,
+      "message": "Are these conditionals worth the confusion? These are all defaulted ON above, so this will always be true. (Same with the ones above)",
+      "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
