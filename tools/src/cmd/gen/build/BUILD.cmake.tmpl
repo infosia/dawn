@@ -60,9 +60,7 @@ tint_add_target({{$Name}} {{$Kind}}
 {{-   $UnconditionalSourceFiles := $.UnconditionalSourceFiles}}
 {{-   if $UnconditionalSourceFiles }}
 {{-     range $File := $UnconditionalSourceFiles}}
-{{-       if not ($.IsGeneratedSource $File.Path)}}
   {{$File.Path -}}
-{{-       end}}
 {{-     end}}
 {{-   end}}
 {{-   range $Path := $.GeneratedSourcePaths.List}}
