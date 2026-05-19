@@ -16,6 +16,24 @@
       "message": "You probably want to validate that the output directory exists and do a mkdir if it doesn\u0027t.",
       "revId": "685e6d982174992faad9921af64793d62b108a57",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e25d47fa_e578ee39",
+        "filename": "tools/src/cmd/gen/templates/templates.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-19T20:21:37Z",
+      "side": 1,
+      "message": "This already happens somewhere deeper in the gen flow (tested locally to verify).\n\nIt was probably needed for the .wgsl test generation, where it adds new subdirectories when you add new builtin functions.",
+      "parentUuid": "68d8a919_1378e95b",
+      "revId": "685e6d982174992faad9921af64793d62b108a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
