@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "dawn/tests/DawnTest.h"
 
 #include <algorithm>
@@ -47,6 +42,8 @@
 #include <tuple>
 #include <unordered_map>
 #include <unordered_set>
+
+#include "src/utils/compiler.h"
 
 // Need to be included before GLFW/glfw3.h to avoid MSVC warning C4005: 'APIENTRY': macro
 // redefinition
@@ -115,10 +112,10 @@ void printBuffer(testing::AssertionResult& result, const T* buffer, const size_t
     static constexpr unsigned int kBytes = sizeof(T);
 
     for (size_t index = 0; index < count; ++index) {
-        auto byteView = reinterpret_cast<const uint8_t*>(buffer + index);
+        auto byteView = reinterpret_cast<const uint8_t*>(DAWN_UNSAFE_TODO(buffer + index));
         for (unsigned int b = 0; b < kBytes; ++b) {
             char buf[4];
-            snprintf(buf, sizeof(buf), "%02X ", byteView[b]);
+            snprintf(buf, sizeof(buf), "%02X ", DAWN_UNSAFE_TODO(byteView[b]));
             result << buf;
         }
     }
@@ -383,22 +380,24 @@ DawnTestEnvironment::~DawnTestEnvironment() = default;
 void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
     size_t argLen = 0;  // Set when parsing --arg=X arguments
     for (int i = 1; i < argc; ++i) {
-        if (strcmp("-w", argv[i]) == 0 || strcmp("--use-wire", argv[i]) == 0) {
+        if (DAWN_UNSAFE_TODO(strcmp("-w", argv[i])) == 0 ||
+            DAWN_UNSAFE_TODO(strcmp("--use-wire", argv[i])) == 0) {
             mUseWire = true;
             continue;
         }
 
-        if (strcmp("-s", argv[i]) == 0 || strcmp("--enable-implicit-device-sync", argv[i]) == 0) {
+        if (DAWN_UNSAFE_TODO(strcmp("-s", argv[i])) == 0 ||
+            DAWN_UNSAFE_TODO(strcmp("--enable-implicit-device-sync", argv[i])) == 0) {
             mEnableImplicitDeviceSync = true;
             continue;
         }
 
-        if (strcmp("--run-suppressed-tests", argv[i]) == 0) {
+        if (DAWN_UNSAFE_TODO(strcmp("--run-suppressed-tests", argv[i])) == 0) {
             mRunSuppressedTests = true;
             continue;
         }
 
-        if (strcmp("--check-capture-replay", argv[i]) == 0) {
+        if (DAWN_UNSAFE_TODO(strcmp("--check-capture-replay", argv[i])) == 0) {
             mCheckCaptureReplay = true;
             // Force WebGPU backend.
             mBackendTypeFilter = wgpu::BackendType::WebGPU;
@@ -407,21 +406,21 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
         }
 
         // This is passed in by the bots on the dawn CQ for dawn end2end tests.
-        if (strcmp("--test-launcher-bot-mode", argv[i]) == 0) {
+        if (DAWN_UNSAFE_TODO(strcmp("--test-launcher-bot-mode", argv[i])) == 0) {
             mIsTestLauncherBotMode = true;
             continue;
         }
 
         constexpr const char kEnableBackendValidationSwitch[] = "--enable-backend-validation";
         argLen = sizeof(kEnableBackendValidationSwitch) - 1;
-        if (strncmp(argv[i], kEnableBackendValidationSwitch, argLen) == 0) {
-            const char* level = argv[i] + argLen;
+        if (DAWN_UNSAFE_TODO(strncmp(argv[i], kEnableBackendValidationSwitch, argLen)) == 0) {
+            const char* level = DAWN_UNSAFE_TODO(argv[i] + argLen);
             if (level[0] != '\0') {
-                if (strcmp(level, "=full") == 0) {
+                if (DAWN_UNSAFE_TODO(strcmp(level, "=full")) == 0) {
                     mBackendValidationLevel = native::BackendValidationLevel::Full;
-                } else if (strcmp(level, "=partial") == 0) {
+                } else if (DAWN_UNSAFE_TODO(strcmp(level, "=partial")) == 0) {
                     mBackendValidationLevel = native::BackendValidationLevel::Partial;
-                } else if (strcmp(level, "=disabled") == 0) {
+                } else if (DAWN_UNSAFE_TODO(strcmp(level, "=disabled")) == 0) {
                     mBackendValidationLevel = native::BackendValidationLevel::Disabled;
                 } else {
                     ErrorLog() << "Invalid backend validation level" << level;
@@ -433,25 +432,26 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
             continue;
         }
 
-        if (strcmp("-c", argv[i]) == 0 || strcmp("--begin-capture-on-startup", argv[i]) == 0) {
+        if (DAWN_UNSAFE_TODO(strcmp("-c", argv[i])) == 0 ||
+            DAWN_UNSAFE_TODO(strcmp("--begin-capture-on-startup", argv[i])) == 0) {
             mBeginCaptureOnStartup = true;
             continue;
         }
 
-        if (mToggleParser.ParseEnabledToggles(argv[i])) {
+        if (mToggleParser.ParseEnabledToggles(DAWN_UNSAFE_TODO(argv[i]))) {
             continue;
         }
 
-        if (mToggleParser.ParseDisabledToggles(argv[i])) {
+        if (mToggleParser.ParseDisabledToggles(DAWN_UNSAFE_TODO(argv[i]))) {
             continue;
         }
 
         constexpr const char kVendorIdFilterArg[] = "--adapter-vendor-id=";
         argLen = sizeof(kVendorIdFilterArg) - 1;
-        if (strncmp(argv[i], kVendorIdFilterArg, argLen) == 0) {
-            const char* vendorIdFilter = argv[i] + argLen;
+        if (DAWN_UNSAFE_TODO(strncmp(argv[i], kVendorIdFilterArg, argLen)) == 0) {
+            const char* vendorIdFilter = DAWN_UNSAFE_TODO(argv[i] + argLen);
             if (vendorIdFilter[0] != '\0') {
-                mVendorIdFilter = strtoul(vendorIdFilter, nullptr, 16);
+                mVendorIdFilter = DAWN_UNSAFE_TODO(strtoul(vendorIdFilter, nullptr, 16));
                 // Set filter flag if vendor id is non-zero.
                 mHasVendorIdFilter = mVendorIdFilter != 0;
             }
@@ -460,25 +460,25 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
 
         constexpr const char kUseAngleArg[] = "--use-angle=";
         argLen = sizeof(kUseAngleArg) - 1;
-        if (strncmp(argv[i], kUseAngleArg, argLen) == 0) {
-            mANGLEBackend = argv[i] + argLen;
+        if (DAWN_UNSAFE_TODO(strncmp(argv[i], kUseAngleArg, argLen)) == 0) {
+            mANGLEBackend = DAWN_UNSAFE_TODO(argv[i] + argLen);
             continue;
         }
 
         constexpr const char kExclusiveDeviceTypePreferenceArg[] =
             "--exclusive-device-type-preference=";
         argLen = sizeof(kExclusiveDeviceTypePreferenceArg) - 1;
-        if (strncmp(argv[i], kExclusiveDeviceTypePreferenceArg, argLen) == 0) {
-            const char* preference = argv[i] + argLen;
+        if (DAWN_UNSAFE_TODO(strncmp(argv[i], kExclusiveDeviceTypePreferenceArg, argLen)) == 0) {
+            const char* preference = DAWN_UNSAFE_TODO(argv[i] + argLen);
             if (preference[0] != '\0') {
                 std::istringstream ss(preference);
                 std::string type;
                 while (std::getline(ss, type, ',')) {
-                    if (strcmp(type.c_str(), "discrete") == 0) {
+                    if (DAWN_UNSAFE_TODO(strcmp(type.c_str(), "discrete")) == 0) {
                         mDevicePreferences.push_back(wgpu::AdapterType::DiscreteGPU);
-                    } else if (strcmp(type.c_str(), "integrated") == 0) {
+                    } else if (DAWN_UNSAFE_TODO(strcmp(type.c_str(), "integrated")) == 0) {
                         mDevicePreferences.push_back(wgpu::AdapterType::IntegratedGPU);
-                    } else if (strcmp(type.c_str(), "cpu") == 0) {
+                    } else if (DAWN_UNSAFE_TODO(strcmp(type.c_str(), "cpu")) == 0) {
                         mDevicePreferences.push_back(wgpu::AdapterType::CPU);
                     } else {
                         ErrorLog() << "Invalid device type preference: " << type;
@@ -491,30 +491,30 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
 
         constexpr const char kWireTraceDirArg[] = "--wire-trace-dir=";
         argLen = sizeof(kWireTraceDirArg) - 1;
-        if (strncmp(argv[i], kWireTraceDirArg, argLen) == 0) {
-            mWireTraceDir = argv[i] + argLen;
+        if (DAWN_UNSAFE_TODO(strncmp(argv[i], kWireTraceDirArg, argLen)) == 0) {
+            mWireTraceDir = DAWN_UNSAFE_TODO(argv[i] + argLen);
             continue;
         }
 
         constexpr const char kBackendArg[] = "--backend=";
         argLen = sizeof(kBackendArg) - 1;
-        if (strncmp(argv[i], kBackendArg, argLen) == 0) {
-            const char* param = argv[i] + argLen;
-            if (strcmp("d3d11", param) == 0) {
+        if (DAWN_UNSAFE_TODO(strncmp(argv[i], kBackendArg, argLen)) == 0) {
+            const char* param = DAWN_UNSAFE_TODO(argv[i] + argLen);
+            if (DAWN_UNSAFE_TODO(strcmp("d3d11", param)) == 0) {
                 mBackendTypeFilter = wgpu::BackendType::D3D11;
-            } else if (strcmp("d3d12", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("d3d12", param)) == 0) {
                 mBackendTypeFilter = wgpu::BackendType::D3D12;
-            } else if (strcmp("metal", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("metal", param)) == 0) {
                 mBackendTypeFilter = wgpu::BackendType::Metal;
-            } else if (strcmp("null", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("null", param)) == 0) {
                 mBackendTypeFilter = wgpu::BackendType::Null;
-            } else if (strcmp("opengl", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("opengl", param)) == 0) {
                 mBackendTypeFilter = wgpu::BackendType::OpenGL;
-            } else if (strcmp("opengles", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("opengles", param)) == 0) {
                 mBackendTypeFilter = wgpu::BackendType::OpenGLES;
-            } else if (strcmp("vulkan", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("vulkan", param)) == 0) {
                 mBackendTypeFilter = wgpu::BackendType::Vulkan;
-            } else if (strcmp("webgpu", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("webgpu", param)) == 0) {
                 mBackendTypeFilter = wgpu::BackendType::WebGPU;
             } else {
                 ErrorLog() << "Invalid backend \"" << param
@@ -528,25 +528,25 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
 
         constexpr const char kWebGPUInnerBackendTypeArg[] = "--webgpu-inner-backend=";
         argLen = sizeof(kWebGPUInnerBackendTypeArg) - 1;
-        if (strncmp(argv[i], kWebGPUInnerBackendTypeArg, argLen) == 0) {
-            const char* param = argv[i] + argLen;
-            if (strcmp("undefined", param) == 0) {
+        if (DAWN_UNSAFE_TODO(strncmp(argv[i], kWebGPUInnerBackendTypeArg, argLen)) == 0) {
+            const char* param = DAWN_UNSAFE_TODO(argv[i] + argLen);
+            if (DAWN_UNSAFE_TODO(strcmp("undefined", param)) == 0) {
                 mWebGPUInnerBackendTypeFilter = wgpu::BackendType::Undefined;
-            } else if (strcmp("d3d11", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("d3d11", param)) == 0) {
                 mWebGPUInnerBackendTypeFilter = wgpu::BackendType::D3D11;
-            } else if (strcmp("d3d12", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("d3d12", param)) == 0) {
                 mWebGPUInnerBackendTypeFilter = wgpu::BackendType::D3D12;
-            } else if (strcmp("metal", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("metal", param)) == 0) {
                 mWebGPUInnerBackendTypeFilter = wgpu::BackendType::Metal;
-            } else if (strcmp("null", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("null", param)) == 0) {
                 mWebGPUInnerBackendTypeFilter = wgpu::BackendType::Null;
-            } else if (strcmp("opengl", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("opengl", param)) == 0) {
                 mWebGPUInnerBackendTypeFilter = wgpu::BackendType::OpenGL;
-            } else if (strcmp("opengles", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("opengles", param)) == 0) {
                 mWebGPUInnerBackendTypeFilter = wgpu::BackendType::OpenGLES;
-            } else if (strcmp("vulkan", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("vulkan", param)) == 0) {
                 mWebGPUInnerBackendTypeFilter = wgpu::BackendType::Vulkan;
-            } else if (strcmp("fallback", param) == 0) {
+            } else if (DAWN_UNSAFE_TODO(strcmp("fallback", param)) == 0) {
                 mWebGPUInnerBackendTypeFilter = wgpu::BackendType::Undefined;
                 mWebGPUInnerForceFallbackAdapter = true;
             } else {
@@ -560,7 +560,8 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
             continue;
         }
 
-        if (strcmp("-h", argv[i]) == 0 || strcmp("--help", argv[i]) == 0) {
+        if (DAWN_UNSAFE_TODO(strcmp("-h", argv[i])) == 0 ||
+            DAWN_UNSAFE_TODO(strcmp("--help", argv[i])) == 0) {
             InfoLog()
                 << "\n\nUsage: " << argv[0]
                 << " [GTEST_FLAGS...] [-w] [-c]\n"
@@ -598,11 +599,11 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
 
         // Skip over args that look like they're for Googletest.
         constexpr const char kGtestArgPrefix[] = "--gtest_";
-        if (strncmp(kGtestArgPrefix, argv[i], sizeof(kGtestArgPrefix) - 1) == 0) {
+        if (DAWN_UNSAFE_TODO(strncmp(kGtestArgPrefix, argv[i], sizeof(kGtestArgPrefix) - 1)) == 0) {
             continue;
         }
 
-        WarningLog() << " Unused argument: " << argv[i];
+        WarningLog() << " Unused argument: " << DAWN_UNSAFE_TODO(argv[i]);
     }
 
     // TODO(crbug.com/dawn/1678): DawnWire doesn't support thread safe API yet.
@@ -792,7 +793,7 @@ std::vector<AdapterTestParam> DawnTestEnvironment::GetAvailableAdapterTestParams
     size_t numParams) {
     std::vector<AdapterTestParam> testParams;
     for (size_t i = 0; i < numParams; ++i) {
-        const auto& backendTestParams = params[i];
+        const auto& backendTestParams = DAWN_UNSAFE_TODO(params[i]);
         for (const auto& adapterProperties : mAdapterProperties) {
             if (backendTestParams.backendType == adapterProperties.backendType &&
                 adapterProperties.selected) {
@@ -1377,7 +1378,7 @@ bool DawnTestBase::IsTsan() {
 bool DawnTestBase::HasToggleEnabled(const char* toggle, const wgpu::Device& d) const {
     auto toggles = native::GetTogglesUsed(GetWireHelper()->GetBackendDevice(d));
     return std::find_if(toggles.begin(), toggles.end(), [toggle](const char* name) {
-               return strcmp(toggle, name) == 0;
+               return DAWN_UNSAFE_TODO(strcmp(toggle, name)) == 0;
            }) != toggles.end();
 }
 
@@ -1452,8 +1453,9 @@ std::set<wgpu::FeatureName> DawnTestBase::GetSupportedFeatures() {
     wgpu::SupportedFeatures supportedFeatures;
     adapter.GetFeatures(&supportedFeatures);
 
-    return std::set<wgpu::FeatureName>(supportedFeatures.features,
-                                       supportedFeatures.features + supportedFeatures.featureCount);
+    return std::set<wgpu::FeatureName>(
+        supportedFeatures.features,
+        DAWN_UNSAFE_TODO(supportedFeatures.features + supportedFeatures.featureCount));
 }
 
 uint64_t DawnTestBase::GetDeprecationWarningCountForTesting() const {
@@ -1470,7 +1472,7 @@ uint32_t DawnTestBase::GetDeviceCreationDeprecationWarningExpectation(
 
     std::unordered_set<wgpu::FeatureName> requiredFeatureSet;
     for (uint32_t i = 0; i < descriptor.requiredFeatureCount; ++i) {
-        requiredFeatureSet.insert(descriptor.requiredFeatures[i]);
+        requiredFeatureSet.insert(DAWN_UNSAFE_TODO(descriptor.requiredFeatures[i]));
     }
 
     return expectedDeprecatedCount;
@@ -1611,8 +1613,9 @@ void DawnTestBase::HandleDeviceCreationFailure() {
     static auto IsToggleDisabledInParam = [](const char* toggle, const AdapterTestParam& param) {
         const auto& disabledToggles = param.forceDisabledWorkarounds;
         return std::find_if(disabledToggles.cbegin(), disabledToggles.cend(),
-                            [toggle](const char* t) -> bool { return strcmp(toggle, t) == 0; }) !=
-               disabledToggles.cend();
+                            [toggle](const char* t) -> bool {
+                                return DAWN_UNSAFE_TODO(strcmp(toggle, t)) == 0;
+                            }) != disabledToggles.cend();
     };
 
     struct AllowedFailureCase {
@@ -2289,7 +2292,7 @@ void DawnTestBase::ResolveExpectations() {
             for (uint32_t r = 0; r < rowCount; ++r) {
                 for (uint32_t i = 0; i < expectation.rowBytes; ++i) {
                     packedData[i + r * expectation.rowBytes] =
-                        data[i + r * expectation.bytesPerRow];
+                        DAWN_UNSAFE_TODO(data[i + r * expectation.bytesPerRow]);
                 }
             }
             data = packedData.data();
@@ -2374,11 +2377,11 @@ void DawnTestBase::CheckReplayedReadbackBuffers(std::span<ReadbackSlot> existing
         auto originalData = static_cast<const uint8_t*>(readback.mappedData);
         auto replayData = static_cast<const uint8_t*>(replayedBuffer.GetConstMappedRange());
         for (size_t i = 0; i < readback.bufferSize; ++i) {
-            if (originalData[i] != replayData[i]) {
-                testing::AssertionResult result = testing::AssertionFailure()
-                                                  << "Original data[" << i << "] to be "
-                                                  << originalData[i] << ", replayed "
-                                                  << replayData[i] << "\n";
+            if (DAWN_UNSAFE_TODO(originalData[i]) != DAWN_UNSAFE_TODO(replayData[i])) {
+                testing::AssertionResult result =
+                    testing::AssertionFailure()
+                    << "Original data[" << i << "] to be " << DAWN_UNSAFE_TODO(originalData[i])
+                    << ", replayed " << DAWN_UNSAFE_TODO(replayData[i]) << "\n";
                 if (readback.bufferSize <= 1024) {
                     result << "Original:\n";
                     printBuffer(result, originalData, readback.bufferSize);
@@ -2454,7 +2457,7 @@ ExpectEq<T, U>::ExpectEq(T singleValue, T tolerance) : mTolerance(tolerance) {
 template <typename T, typename U>
 ExpectEq<T, U>::ExpectEq(const T* values, const unsigned int count, T tolerance)
     : mTolerance(tolerance) {
-    mExpected.assign(values, values + count);
+    mExpected.assign(values, DAWN_UNSAFE_TODO(values + count));
 }
 
 namespace {
@@ -2538,10 +2541,10 @@ testing::AssertionResult ExpectConstant<T>::Check(const void* data, size_t size)
     const T* actual = static_cast<const T*>(data);
 
     for (size_t i = 0; i < size / DataSize(); ++i) {
-        if (actual[i] != mConstant) {
+        if (DAWN_UNSAFE_TODO(actual[i]) != mConstant) {
             return testing::AssertionFailure()
                    << "Expected data[" << i << "] to match constant value " << mConstant
-                   << ", actual " << actual[i] << "\n";
+                   << ", actual " << DAWN_UNSAFE_TODO(actual[i]) << "\n";
         }
     }
 
@@ -2556,7 +2559,8 @@ testing::AssertionResult ExpectEq<T, U>::Check(const void* data, size_t size) {
     const U* actual = static_cast<const U*>(data);
 
     for (size_t i = 0; i < mExpected.size(); ++i) {
-        testing::AssertionResult check = CheckImpl(mExpected[i], actual[i], mTolerance);
+        testing::AssertionResult check =
+            CheckImpl(mExpected[i], DAWN_UNSAFE_TODO(actual[i]), mTolerance);
         if (!check) {
             testing::AssertionResult result = testing::AssertionFailure()
                                               << "Expected data[" << i << "] to be "
@@ -2615,11 +2619,12 @@ testing::AssertionResult ExpectBetweenColors<T>::Check(const void* data, size_t 
     const T* actual = static_cast<const T*>(data);
 
     for (size_t i = 0; i < mLowerColorChannels.size(); ++i) {
-        if (!(actual[i] >= mLowerColorChannels[i] && actual[i] <= mHigherColorChannels[i])) {
+        if (!(DAWN_UNSAFE_TODO(actual[i]) >= mLowerColorChannels[i] &&
+              DAWN_UNSAFE_TODO(actual[i]) <= mHigherColorChannels[i])) {
             testing::AssertionResult result = testing::AssertionFailure()
                                               << "Expected data[" << i << "] to be between "
                                               << mValues0[i] << " and " << mValues1[i]
-                                              << ", actual " << actual[i] << "\n";
+                                              << ", actual " << DAWN_UNSAFE_TODO(actual[i]) << "\n";
 
             if (mLowerColorChannels.size() <= 1024) {
                 result << "Expected between:\n";
@@ -2648,10 +2653,11 @@ testing::AssertionResult ExpectBetweenSnormTextureBounds<T>::Check(const void* d
     const T* actual = static_cast<const T*>(data);
 
     for (size_t i = 0; i < expectedLower.size(); ++i) {
-        if (!(actual[i] >= expectedLower[i] && actual[i] <= expectedUpper[i])) {
-            return testing::AssertionFailure()
-                   << absl::StrFormat("Expected data[%d] to be between %d and %d, actual %d\n", i,
-                                      expectedLower[i], expectedUpper[i], actual[i]);
+        if (!(DAWN_UNSAFE_TODO(actual[i]) >= expectedLower[i] &&
+              DAWN_UNSAFE_TODO(actual[i]) <= expectedUpper[i])) {
+            return testing::AssertionFailure() << absl::StrFormat(
+                       "Expected data[%d] to be between %d and %d, actual %d\n", i,
+                       expectedLower[i], expectedUpper[i], DAWN_UNSAFE_TODO(actual[i]));
         }
     }
 
