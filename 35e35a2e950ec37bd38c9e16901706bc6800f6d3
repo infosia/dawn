@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf63ea5a_f0c0b871",
+        "filename": "src/tint/utils/system/terminal_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-19T08:23:57Z",
+      "side": 1,
+      "message": "Why was this change needed?",
+      "revId": "35e35a2e950ec37bd38c9e16901706bc6800f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
