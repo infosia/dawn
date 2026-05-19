@@ -52,6 +52,24 @@
       "parentUuid": "7d0703b5_98cb1cb5",
       "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5082faa_1c2d6f57",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-05-19T17:08:19Z",
+      "side": 1,
+      "message": "Ah, now I understand the nuance between the two. WDYT of the latest PS?",
+      "parentUuid": "7c71498f_550beaa0",
+      "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
