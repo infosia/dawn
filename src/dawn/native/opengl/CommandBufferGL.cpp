@@ -50,6 +50,7 @@
 #include "dawn/native/opengl/ComputePipelineGL.h"
 #include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/Forward.h"
+#include "dawn/native/opengl/ImmediateConstantsLayoutGL.h"
 #include "dawn/native/opengl/PersistentPipelineStateGL.h"
 #include "dawn/native/opengl/PhysicalDeviceGL.h"
 #include "dawn/native/opengl/PipelineLayoutGL.h"
@@ -733,6 +734,33 @@ TexelExtent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy,
     return validTextureCopyExtent;
 }
 
+class RenderImmediateConstantsTrackerGL
+    : public UserImmediateConstantsTrackerBase<RenderImmediateConstantsGL, RenderPipelineBase> {
+  public:
+    RenderImmediateConstantsTrackerGL() = default;
+    void SetClampFragDepth(float minClampFragDepth, float maxClampFragDepth) {
+        // Put the data in the right layout to match the RenderImmediateConstants struct
+        ClampFragDepthArgs fragDepthArgs;
+        fragDepthArgs.minClampFragDepth = minClampFragDepth;
+        fragDepthArgs.maxClampFragDepth = maxClampFragDepth;
+
+        UpdateImmediateConstants(offsetof(RenderImmediateConstantsGL, clampFragDepth),
+                                 fragDepthArgs);
+    }
+
+    void SetFirstVertex(uint32_t firstVertex) {
+        UpdateImmediateConstants(offsetof(RenderImmediateConstantsGL, firstVertex), firstVertex);
+    }
+
+    void SetFirstInstance(uint32_t firstInstance) {
+        UpdateImmediateConstants(offsetof(RenderImmediateConstantsGL, firstInstance),
+                                 firstInstance);
+    }
+};
+
+using ComputeImmediateConstantsTrackerGL =
+    UserImmediateConstantsTrackerBase<ComputeImmediateConstantsGL, ComputePipelineBase>;
+
 template <typename T>
 class ImmediateConstantTracker : public T {
   public:
@@ -1173,7 +1201,7 @@ MaybeError CommandBuffer::ExecuteComputePass(const OpenGLFunctions& gl) {
     BindGroupTracker bindGroupTracker = {};
 
     Command type;
-    ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
+    ImmediateConstantTracker<ComputeImmediateConstantsTrackerGL> immediates = {};
     while (mCommands.NextCommandId(&type)) {
         switch (type) {
             case Command::EndComputePass: {
@@ -1408,7 +1436,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
 
     VertexStateBufferBindingTracker vertexStateBufferBindingTracker;
     BindGroupTracker bindGroupTracker = {};
-    ImmediateConstantTracker<RenderImmediateConstantsTrackerBase> immediates = {};
+    ImmediateConstantTracker<RenderImmediateConstantsTrackerGL> immediates = {};
 
     auto DoRenderBundleCommand = [&](CommandIterator* iter, Command type) -> MaybeError {
         switch (type) {

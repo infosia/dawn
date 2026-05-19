@@ -42,12 +42,10 @@
 #include "dawn/common/Constants.h"
 #include "dawn/common/ityp_bitset.h"
 #include "dawn/common/ityp_span.h"
-#include "dawn/native/ComputePipeline.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/Pipeline.h"
-#include "dawn/native/RenderPipeline.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
 
 namespace dawn::native {
@@ -125,24 +123,6 @@ class UserImmediateConstantsTrackerBase {
     ImmediateConstantMask mDirty = ImmediateConstantMask(0);
     RAW_PTR_EXCLUSION PipelineType* mLastPipeline = nullptr;
 };
-
-class RenderImmediateConstantsTrackerBase
-    : public UserImmediateConstantsTrackerBase<RenderImmediateConstants, RenderPipelineBase> {
-  public:
-    RenderImmediateConstantsTrackerBase() = default;
-    void SetClampFragDepth(float minClampFragDepth, float maxClampFragDepth);
-    void SetFirstIndexOffset(uint32_t firstVertex, uint32_t firstInstance);
-    void SetFirstVertex(uint32_t firstVertex);
-    void SetFirstInstance(uint32_t firstInstance);
-};
-
-class ComputeImmediateConstantsTrackerBase
-    : public UserImmediateConstantsTrackerBase<ComputeImmediateConstants, ComputePipelineBase> {
-  public:
-    ComputeImmediateConstantsTrackerBase() = default;
-    void SetNumWorkgroups(uint32_t numWorkgroupX, uint32_t numWorkgroupY, uint32_t numWorkgroupZ);
-};
-
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_IMMEDIATECONSTANTSTRACKER_H_

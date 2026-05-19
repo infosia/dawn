@@ -36,6 +36,20 @@
 
 namespace dawn::native {
 namespace {
+DAWN_ENABLE_STRUCT_PADDING_WARNINGS
+// Define render pipeline immediate data layout. Append members to
+// expand the layout.
+struct RenderImmediateTestConstants {
+    UserImmediateConstants userConstants;
+
+    ClampFragDepthArgs clampFragDepth;
+
+    // first index offset
+    uint32_t firstVertex;
+    uint32_t firstInstance;
+};
+DAWN_ENABLE_STRUCT_PADDING_WARNINGS
+
 class ImmediateConstantOffsetTest : public DawnTest {
   protected:
     void SetUp() override {
@@ -72,9 +86,9 @@ TEST_P(ImmediateConstantOffsetTest, ClampFragDepth) {
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() || IsOpenGL() || IsMetal() || IsD3D11() || IsD3D12());
     ImmediateConstantMask expectedImmediateConstantMask = ImmediateConstantMask(0);
     // Hard coded bits and index.
-    expectedImmediateConstantMask |= 1u << (offsetof(RenderImmediateConstants, clampFragDepth) /
+    expectedImmediateConstantMask |= 1u << (offsetof(RenderImmediateTestConstants, clampFragDepth) /
                                             kImmediateConstantElementByteSize);
-    expectedImmediateConstantMask |= 1u << (offsetof(RenderImmediateConstants, clampFragDepth) /
+    expectedImmediateConstantMask |= 1u << (offsetof(RenderImmediateTestConstants, clampFragDepth) /
                                                 kImmediateConstantElementByteSize +
                                             1u);
 

@@ -50,30 +50,10 @@ struct ClampFragDepthArgs {
     float maxClampFragDepth;
 };
 
-// Define render pipeline immediate data layout. Append members to
-// expand the layout.
-struct RenderImmediateConstants {
-    UserImmediateConstants userConstants;
-
-    ClampFragDepthArgs clampFragDepth;
-
-    // first index offset
-    uint32_t firstVertex;
-    uint32_t firstInstance;
-};
-
 struct NumWorkgroupsDimensions {
     uint32_t numWorkgroupsX;
     uint32_t numWorkgroupsY;
     uint32_t numWorkgroupsZ;
-};
-
-// Define compute pipeline immediate data layout. Append members to
-// expand the layout.
-struct ComputeImmediateConstants {
-    UserImmediateConstants userConstants;
-
-    NumWorkgroupsDimensions numWorkgroups;
 };
 DAWN_DISABLE_STRUCT_PADDING_WARNINGS
 

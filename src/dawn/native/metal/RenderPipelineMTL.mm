@@ -32,6 +32,7 @@
 #include "dawn/native/Instance.h"
 #include "dawn/native/metal/BackendMTL.h"
 #include "dawn/native/metal/DeviceMTL.h"
+#include "dawn/native/metal/ImmediateConstantsLayoutMTL.h"
 #include "dawn/native/metal/PipelineLayoutMTL.h"
 #include "dawn/native/metal/ShaderModuleMTL.h"
 #include "dawn/native/metal/TextureMTL.h"
@@ -380,7 +381,7 @@ MaybeError RenderPipeline::InitializeImpl() {
 
     if (UsesFragDepth() && !HasUnclippedDepth()) {
         mImmediateMask |= GetImmediateConstantBlockBits(
-            offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
+            offsetof(RenderImmediateConstantsMTL, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
 
     const PerStage<ProgrammableStage>& allStages = GetAllStages();

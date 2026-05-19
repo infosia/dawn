@@ -77,10 +77,9 @@ using ResourceTableSlot = TypedInteger<struct ResourceTableSlotT, uint32_t>;
 // Immediate data constant index get mapped to a packed range of indices
 using ImmediateConstantIndex = TypedInteger<struct ImmediateConstantIndexT, uint32_t>;
 constexpr ImmediateConstantIndex kMaxImmediateConstantIndexTyped =
-    ImmediateConstantIndex(kMaxImmediateConstantsPerPipeline);
+    ImmediateConstantIndex(kMaxImmediateConstantMaskBits);
 
-using ImmediateConstantMask =
-    ityp::bitset<ImmediateConstantIndex, kMaxImmediateConstantsPerPipeline>;
+using ImmediateConstantMask = ityp::bitset<ImmediateConstantIndex, kMaxImmediateConstantMaskBits>;
 
 // Color attachment indices represent the index in the wgpu::FragmentState::targets array, the
 // wgpu::RenderPassDescriptor::colorAttachments arry and other similar arrays.
