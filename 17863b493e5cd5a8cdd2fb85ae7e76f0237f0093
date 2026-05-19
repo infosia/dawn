@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4afa93c8_992b5bd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2026-05-19T06:43:10Z",
+      "side": 1,
+      "message": "The paragraph starting with the \"Note\" is to describe the situation previously existing. Now that it causes confusion, let me remove it.",
+      "parentUuid": "10b63db4_0de142a4",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 58
+      },
+      "revId": "17863b493e5cd5a8cdd2fb85ae7e76f0237f0093",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "978bd84e_c5acd60e",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
