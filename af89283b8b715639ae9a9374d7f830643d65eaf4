@@ -16,6 +16,24 @@
       "message": "```suggestion\nSplit `tools/run gen` into two commands\n```",
       "revId": "af89283b8b715639ae9a9374d7f830643d65eaf4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3fe8430_1a36e627",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-19T20:22:44Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "c514851f_c48f0905",
+      "revId": "af89283b8b715639ae9a9374d7f830643d65eaf4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
