@@ -64,8 +64,8 @@ class BitSetRangeIterator final {
 
         static constexpr size_t kBitsPerWord = sizeof(uint64_t) * 8;
         std::bitset<N> mBits;  // The original bitset shifted by mOffset + mSize.
-        uint32_t mOffset;
-        uint32_t mSize;
+        uint32_t mOffset = 0;
+        uint32_t mSize = 0;
     };
 
     Iterator begin() const { return Iterator(mBits); }
