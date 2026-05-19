@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <vector>
 
 #include "dawn/common/Math.h"
@@ -37,6 +32,7 @@
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -620,9 +616,9 @@ TEST_P(BufferZeroInitTest, CopyBufferToBufferDestination) {
 
         EXPECT_LAZY_CLEAR(0u, queue.Submit(1, &commandBuffer));
 
-        EXPECT_LAZY_CLEAR(
+        DAWN_UNSAFE_TODO(EXPECT_LAZY_CLEAR(
             0u, EXPECT_BUFFER_U32_RANGE_EQ(reinterpret_cast<const uint32_t*>(kInitialData.data()),
-                                           dstBuffer, 0, kBufferSize / sizeof(uint32_t)));
+                                           dstBuffer, 0, kBufferSize / sizeof(uint32_t))));
     }
 
     // Partial copy from the source buffer needs lazy initialization.
@@ -644,9 +640,9 @@ TEST_P(BufferZeroInitTest, CopyBufferToBufferDestination) {
             expectedData[index] = kInitialData[index - kDstOffset];
         }
 
-        EXPECT_LAZY_CLEAR(
+        DAWN_UNSAFE_TODO(EXPECT_LAZY_CLEAR(
             0u, EXPECT_BUFFER_U32_RANGE_EQ(reinterpret_cast<uint32_t*>(expectedData.data()),
-                                           dstBuffer, 0, kBufferSize / sizeof(uint32_t)));
+                                           dstBuffer, 0, kBufferSize / sizeof(uint32_t))));
     }
 
     // offset > 0 and dstOffset + CopySize == kBufferSize
@@ -667,9 +663,9 @@ TEST_P(BufferZeroInitTest, CopyBufferToBufferDestination) {
             expectedData[index] = kInitialData[index - kDstOffset];
         }
 
-        EXPECT_LAZY_CLEAR(
+        DAWN_UNSAFE_TODO(EXPECT_LAZY_CLEAR(
             0u, EXPECT_BUFFER_U32_RANGE_EQ(reinterpret_cast<uint32_t*>(expectedData.data()),
-                                           dstBuffer, 0, kBufferSize / sizeof(uint32_t)));
+                                           dstBuffer, 0, kBufferSize / sizeof(uint32_t))));
     }
 
     // offset > 0 and dstOffset + CopySize < kBufferSize
@@ -690,9 +686,9 @@ TEST_P(BufferZeroInitTest, CopyBufferToBufferDestination) {
             expectedData[index] = kInitialData[index - kDstOffset];
         }
 
-        EXPECT_LAZY_CLEAR(
+        DAWN_UNSAFE_TODO(EXPECT_LAZY_CLEAR(
             0u, EXPECT_BUFFER_U32_RANGE_EQ(reinterpret_cast<uint32_t*>(expectedData.data()),
-                                           dstBuffer, 0, kBufferSize / sizeof(uint32_t)));
+                                           dstBuffer, 0, kBufferSize / sizeof(uint32_t))));
     }
 }
 
@@ -712,7 +708,7 @@ TEST_P(BufferZeroInitTest, MapAsync_Read) {
 
         const uint32_t* mappedDataUint = static_cast<const uint32_t*>(buffer.GetConstMappedRange());
         for (uint32_t i = 0; i < kBufferSize / sizeof(uint32_t); ++i) {
-            EXPECT_EQ(0u, mappedDataUint[i]);
+            DAWN_UNSAFE_TODO(EXPECT_EQ(0u, mappedDataUint[i]));
         }
         buffer.Unmap();
     }
@@ -728,14 +724,14 @@ TEST_P(BufferZeroInitTest, MapAsync_Read) {
         const uint32_t* mappedDataUint =
             static_cast<const uint32_t*>(buffer.GetConstMappedRange(kOffset));
         for (uint32_t i = 0; i < kSize / sizeof(uint32_t); ++i) {
-            EXPECT_EQ(0u, mappedDataUint[i]);
+            DAWN_UNSAFE_TODO(EXPECT_EQ(0u, mappedDataUint[i]));
         }
         buffer.Unmap();
 
         EXPECT_LAZY_CLEAR(0u, MapAsyncAndWait(buffer, kMapMode, 0, kBufferSize));
         mappedDataUint = static_cast<const uint32_t*>(buffer.GetConstMappedRange());
         for (uint32_t i = 0; i < kBufferSize / sizeof(uint32_t); ++i) {
-            EXPECT_EQ(0u, mappedDataUint[i]);
+            DAWN_UNSAFE_TODO(EXPECT_EQ(0u, mappedDataUint[i]));
         }
         buffer.Unmap();
     }
@@ -795,12 +791,12 @@ TEST_P(BufferZeroInitTest, MappedAtCreation) {
         wgpu::Buffer buffer;
         EXPECT_LAZY_CLEAR(1u, buffer = CreateBuffer(kBufferSize, kBufferUsage, true));
         const uint8_t* mappedData = static_cast<const uint8_t*>(buffer.GetConstMappedRange());
-        EXPECT_EQ(0, memcmp(mappedData, kExpectedData.data(), kBufferSize));
+        DAWN_UNSAFE_TODO(EXPECT_EQ(0, memcmp(mappedData, kExpectedData.data(), kBufferSize)));
         buffer.Unmap();
 
         MapAsyncAndWait(buffer, wgpu::MapMode::Read, 0, kBufferSize);
         mappedData = static_cast<const uint8_t*>(buffer.GetConstMappedRange());
-        EXPECT_EQ(0, memcmp(mappedData, kExpectedData.data(), kBufferSize));
+        DAWN_UNSAFE_TODO(EXPECT_EQ(0, memcmp(mappedData, kExpectedData.data(), kBufferSize)));
         buffer.Unmap();
     }
 
@@ -817,8 +813,8 @@ TEST_P(BufferZeroInitTest, MappedAtCreation) {
 
         // Update data from the CPU side.
         uint32_t* mappedData = static_cast<uint32_t*>(buffer.GetMappedRange());
-        mappedData[2] = kExpectedFinalData[2];
-        mappedData[3] = kExpectedFinalData[3];
+        DAWN_UNSAFE_TODO(mappedData[2]) = kExpectedFinalData[2];
+        DAWN_UNSAFE_TODO(mappedData[3]) = kExpectedFinalData[3];
         buffer.Unmap();
 
         // Update data from the GPU side.
@@ -835,7 +831,8 @@ TEST_P(BufferZeroInitTest, MappedAtCreation) {
         MapAsyncAndWait(buffer, wgpu::MapMode::Read, 0, kBufferSize);
         const uint32_t* constMappedData =
             static_cast<const uint32_t*>(buffer.GetConstMappedRange());
-        EXPECT_EQ(0, memcmp(kExpectedFinalData.data(), constMappedData, kBufferSize));
+        DAWN_UNSAFE_TODO(
+            EXPECT_EQ(0, memcmp(kExpectedFinalData.data(), constMappedData, kBufferSize)));
     }
 
     // Buffer with MapWrite usage
@@ -847,7 +844,7 @@ TEST_P(BufferZeroInitTest, MappedAtCreation) {
         EXPECT_LAZY_CLEAR(1u, buffer = CreateBuffer(kBufferSize, kBufferUsage, true));
 
         const uint8_t* mappedData = static_cast<const uint8_t*>(buffer.GetConstMappedRange());
-        EXPECT_EQ(0, memcmp(mappedData, kExpectedData.data(), kBufferSize));
+        DAWN_UNSAFE_TODO(EXPECT_EQ(0, memcmp(mappedData, kExpectedData.data(), kBufferSize)));
         buffer.Unmap();
 
         EXPECT_LAZY_CLEAR(
@@ -862,7 +859,7 @@ TEST_P(BufferZeroInitTest, MappedAtCreation) {
         EXPECT_LAZY_CLEAR(1u, buffer = CreateBuffer(kBufferSize, kBufferUsage, true));
 
         const uint8_t* mappedData = static_cast<const uint8_t*>(buffer.GetConstMappedRange());
-        EXPECT_EQ(0, memcmp(mappedData, kExpectedData.data(), kBufferSize));
+        DAWN_UNSAFE_TODO(EXPECT_EQ(0, memcmp(mappedData, kExpectedData.data(), kBufferSize)));
         buffer.Unmap();
 
         EXPECT_LAZY_CLEAR(
