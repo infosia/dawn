@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <atomic>
 #include <condition_variable>
 #include <functional>
@@ -49,6 +44,7 @@
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/TextureUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -256,7 +252,7 @@ TEST_P(MultithreadTests, Buffers_MapInParallel) {
             wgpu::WaitStatus::Success);
 
         // Buffer is mapped, write into it and unmap .
-        memcpy(buffer.GetMappedRange(0, kSize), myData.data(), kSize);
+        DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(0, kSize), myData.data(), kSize));
         buffer.Unmap();
 
         // Check the content of the buffer.
@@ -290,7 +286,7 @@ TEST_P(MultithreadTests, MapUnmapDestroyInParallel) {
             wgpu::WaitStatus::Success);
 
         // Buffer is mapped, write into it
-        memcpy(buffer.GetMappedRange(0, kSize), myData.data(), kSize);
+        DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(0, kSize), myData.data(), kSize));
 
         // Unmap the buffer
         buffer.Unmap();
@@ -326,7 +322,7 @@ TEST_P(MultithreadTests, MapUnmapMultipleCyclesInParallel) {
                              UINT64_MAX),
             wgpu::WaitStatus::Success);
 
-        memcpy(buffer.GetMappedRange(0, kHalfSize), myData.data(), kHalfSize);
+        DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(0, kHalfSize), myData.data(), kHalfSize));
         buffer.Unmap();
 
         // Second map: write second half
@@ -339,8 +335,9 @@ TEST_P(MultithreadTests, MapUnmapMultipleCyclesInParallel) {
                              UINT64_MAX),
             wgpu::WaitStatus::Success);
 
-        memcpy(static_cast<uint8_t*>(buffer.GetMappedRange(0, kSize)) + kHalfSize,
-               reinterpret_cast<const uint8_t*>(myData.data()) + kHalfSize, kHalfSize);
+        DAWN_UNSAFE_TODO(memcpy(static_cast<uint8_t*>(buffer.GetMappedRange(0, kSize)) + kHalfSize,
+                                reinterpret_cast<const uint8_t*>(myData.data()) + kHalfSize,
+                                kHalfSize));
         buffer.Unmap();
 
         // Check the content of the buffer
@@ -377,7 +374,7 @@ TEST_P(MultithreadTests, MapAtCreationInParallel) {
         wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
 
         // Buffer is mapped at creation, write into it and unmap
-        memcpy(buffer.GetMappedRange(0, kSize), myData.data(), kSize);
+        DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(0, kSize), myData.data(), kSize));
         buffer.Unmap();
 
         // Check the content of the buffer
@@ -440,7 +437,7 @@ TEST_P(MultithreadTests, MapAtCreationThenMapAgainWithRenderPassInParallel) {
         wgpu::Buffer mapBuffer = device.CreateBuffer(&mapBufferDesc);
 
         // Step 2: Write red color
-        memcpy(mapBuffer.GetMappedRange(), kRed, sizeof(kRed));
+        DAWN_UNSAFE_TODO(memcpy(mapBuffer.GetMappedRange(), kRed, sizeof(kRed)));
         mapBuffer.Unmap();
 
         // Create uniform buffer for rendering
@@ -486,7 +483,7 @@ TEST_P(MultithreadTests, MapAtCreationThenMapAgainWithRenderPassInParallel) {
         }
 
         // Step 6: Write blue color
-        memcpy(mapBuffer.GetMappedRange(), kBlue, sizeof(kBlue));
+        DAWN_UNSAFE_TODO(memcpy(mapBuffer.GetMappedRange(), kBlue, sizeof(kBlue)));
         mapBuffer.Unmap();
 
         // Step 7: Copy from map buffer to uniform buffer
@@ -562,9 +559,9 @@ TEST_P(MultithreadTests, MapThenSubmitThenDestroy) {
         ASSERT_NE(data, nullptr);
         // Write red color (RGBA)
         data[0] = 0xFF0000FF;  // R
-        data[1] = 0xFF0000FF;  // G
-        data[2] = 0xFF0000FF;  // B
-        data[3] = 0xFF0000FF;  // A
+        DAWN_UNSAFE_TODO(data[1]) = 0xFF0000FF;  // G
+        DAWN_UNSAFE_TODO(data[2]) = 0xFF0000FF;  // B
+        DAWN_UNSAFE_TODO(data[3]) = 0xFF0000FF;  // A
         buffer.Unmap();
 
         // Use the buffer in a queue operation
@@ -680,7 +677,7 @@ TEST_P(MultithreadTests, T2BThenMapInParallel) {
             const uint32_t* mappedData =
                 static_cast<const uint32_t*>(buffer.GetConstMappedRange(0, kBufferSize));
             ASSERT_NE(mappedData, nullptr);
-            EXPECT_EQ(0, memcmp(mappedData, textureData.data(), kBufferSize));
+            DAWN_UNSAFE_TODO(EXPECT_EQ(0, memcmp(mappedData, textureData.data(), kBufferSize)));
             buffer.Unmap();
         });
     }
@@ -720,8 +717,9 @@ TEST_P(MultithreadTests, CreateShaderModuleInParallel) {
                           const wgpu::CompilationInfo* info) {
                 ASSERT_EQ(wgpu::CompilationInfoRequestStatus::Success, status);
                 for (size_t i = 0; i < info->messageCount; ++i) {
-                    EXPECT_THAT(info->messages[i].message, testing::HasSubstr("unreachable"));
-                    EXPECT_EQ(info->messages[i].lineNum, 5u + sourceIndex);
+                    DAWN_UNSAFE_TODO(
+                        EXPECT_THAT(info->messages[i].message, testing::HasSubstr("unreachable")));
+                    DAWN_UNSAFE_TODO(EXPECT_EQ(info->messages[i].lineNum, 5u + sourceIndex));
                 }
             });
     }
@@ -1107,7 +1105,7 @@ TEST_P(MultithreadTests, DestroyTextureAndViewsAtSameTime) {
             viewDescriptor.mipLevelCount = 1;
             viewDescriptor.baseArrayLayer = i;
             viewDescriptor.arrayLayerCount = 1;
-            textureViews[i] = texture.CreateView(&viewDescriptor);
+            DAWN_UNSAFE_TODO(textureViews[i]) = texture.CreateView(&viewDescriptor);
         }
 
         // Wait for all threads to be ready to destroy the Texture or TextureViews at the same time.
@@ -1135,7 +1133,7 @@ TEST_P(MultithreadTests, DestroyTextureAndViewsAtSameTime) {
             if (id == 0) {
                 texture.Destroy();
             } else {
-                textureViews[id - 1] = {};
+                DAWN_UNSAFE_TODO(textureViews[id - 1]) = {};
             }
         });
     }
@@ -2130,7 +2128,7 @@ class TimestampExpectation : public detail::Expectation {
         DAWN_ASSERT(size % sizeof(uint64_t) == 0);
         const uint64_t* timestamps = static_cast<const uint64_t*>(data);
         for (size_t i = 0; i < size / sizeof(uint64_t); i++) {
-            if (timestamps[i] == 0) {
+            if (DAWN_UNSAFE_TODO(timestamps[i]) == 0) {
                 return testing::AssertionFailure()
                        << "Expected data[" << i << "] to be greater than 0.\n";
             }
