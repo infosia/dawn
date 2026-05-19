@@ -145,7 +145,14 @@ class BufferZeroInitTest : public DawnTest {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         encoder.CopyTextureToBuffer(&texelCopyTextureInfo, &texelCopyBufferInfo, &spec.textureSize);
         wgpu::CommandBuffer commandBuffer = encoder.Finish();
-        EXPECT_LAZY_CLEAR(spec.lazyClearCount, queue.Submit(1, &commandBuffer));
+
+        // TODO(b/513631768): SetInitialized is now skipped for use_blit_for_t2b path.
+        uint32_t expectedLazyClearCount = spec.lazyClearCount;
+        if (expectedLazyClearCount == 0u && (HasToggleEnabled("use_blit_for_t2b"))) {
+            expectedLazyClearCount = 1u;
+        }
+
+        EXPECT_LAZY_CLEAR(expectedLazyClearCount, queue.Submit(1, &commandBuffer));
 
         const uint64_t expectedValueCount = bufferSize / sizeof(float);
         std::vector<float> expectedValues(expectedValueCount, 0.f);
@@ -1222,7 +1229,18 @@ TEST_P(BufferZeroInitTest, PaddingInitialized) {
                     encoder.CopyTextureToBuffer(&zeroTextureSrc, &dst, &extent);
 
                     wgpu::CommandBuffer commandBuffer = encoder.Finish();
-                    EXPECT_LAZY_CLEAR(0u, queue.Submit(1, &commandBuffer));
+
+                    // TODO(b/513631768): SetInitialized is now skipped for use_blit_for_t2b path.
+                    // On most backends, the compute blit workaround for CopyTextureToBuffer
+                    // triggers a lazy clear during the compute pass. However, on D3D11, if an
+                    // intermediate buffer is used (e.g. for Uniform buffers), the final
+                    // CopyBufferToBuffer is a full-range overwrite that optimizes away the lazy
+                    // clear.
+                    uint32_t expectedLazyClearCount = 0u;
+                    if (HasToggleEnabled("use_blit_for_t2b") && !IsD3D11()) {
+                        expectedLazyClearCount = 1u;
+                    }
+                    EXPECT_LAZY_CLEAR(expectedLazyClearCount, queue.Submit(1, &commandBuffer));
                 }
 
                 wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
