@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c514851f_c48f0905",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-19T20:16:47Z",
+      "side": 1,
+      "message": "```suggestion\nSplit `tools/run gen` into two commands\n```",
+      "revId": "af89283b8b715639ae9a9374d7f830643d65eaf4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
