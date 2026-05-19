@@ -16,6 +16,24 @@
       "message": "Are these conditionals worth the confusion? These are all defaulted ON above, so this will always be true. (Same with the ones above)",
       "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d0703b5_98cb1cb5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-05-19T16:55:48Z",
+      "side": 1,
+      "message": "When Skia had a Windows build that set `DAWN_ENABLE_VULKAN\u003dOFF` and `DAWN_ENABLE_D3D11\u003dON`, the default `ENABLE_SPIRV_VALIDATION\u003dON` caused issues. So they won\u0027t *always* be true.",
+      "parentUuid": "9c959e54_642ceaf2",
+      "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
