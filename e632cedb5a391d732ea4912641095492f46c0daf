@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eda7eb8_919def98",
+        "filename": "generator/templates/dawn/wire/server/ServerBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-19T16:53:16Z",
+      "side": 1,
+      "message": "Ah, I re-investigated this a bit more, and I think my initial understanding of the issue was incorrect, so I reverted this, and updated the tests. The issue was that because the tests are modifying the injected commands but still initially issuing them through the wire-client, there is a desync on the actual ids in the bookkeeping in the client. I think the correct behavior is to actually fail on the server-side when we try to `FlushClient` in the tests, so I updated them all and added a comment to document it.\n\nI think the takeaway is that trying to test with both a real client while modifying the command buffer makes things really weird... But I guess that\u0027s just the reality of these tests lol.",
+      "parentUuid": "b95d6985_8cb6c4cb",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "331cac67_b3524d94",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dc93538_e493b25b",
+        "filename": "generator/templates/mock_api.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-19T16:53:16Z",
+      "side": 1,
+      "message": "It does because not all callbacks use future, i.e. uncaptured error callback which is always a spontaneous callback that does not have a future associated with it.",
+      "parentUuid": "331cac67_b3524d94",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4329249a_16a6b584",
@@ -65,6 +101,24 @@
       "writtenOn": "2026-05-18T07:38:48Z",
       "side": 1,
       "message": "Just to make sure I understand, we cap the number of in-flight futures here to 1, because the previous test code just did used to say call *the* callback when now there can be multiple in flight? Maybe comment that.\n\nAlso do we want to fix the tests to use the new style? In which can an issue and a TODO would be appropriate.",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5fe1b94_b2e7728f",
+        "filename": "generator/templates/mock_api.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-19T16:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4329249a_16a6b584",
       "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +146,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47a32e58_6914c1b2",
+        "filename": "generator/templates/mock_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-19T16:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89129090_cf5558b3",
+      "range": {
+        "startLine": 123,
+        "startChar": 31,
+        "endLine": 123,
+        "endChar": 77
+      },
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb90c6e0_8792f1b2",
@@ -109,6 +187,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "855ea754_1b98dde2",
+        "filename": "src/dawn/tests/unittests/wire/WireSpecificCommandTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-19T16:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb90c6e0_8792f1b2",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35271441_23bebd4b",
@@ -122,6 +218,24 @@
       "writtenOn": "2026-05-18T07:38:48Z",
       "side": 1,
       "message": "not needed here?",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "445a20e6_aa35bb68",
+        "filename": "src/dawn/tests/unittests/wire/WireTest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-19T16:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35271441_23bebd4b",
       "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -156,6 +270,24 @@
       "writtenOn": "2026-05-18T07:38:48Z",
       "side": 1,
       "message": "nit: to avoid adding the dependency on the wire internals, this could return a span that the test code uses to create a DeserializeBuffer.",
+      "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff66eb7c_2c8c2a8b",
+        "filename": "src/dawn/utils/TerribleCommandBuffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-19T16:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8969b071_0925fd1b",
       "revId": "e632cedb5a391d732ea4912641095492f46c0daf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
