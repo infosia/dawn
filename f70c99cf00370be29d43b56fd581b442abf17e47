@@ -124,6 +124,24 @@
       "parentUuid": "15d05417_5e1cc7a9",
       "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1255b73f_ae444446",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-05-19T17:33:44Z",
+      "side": 1,
+      "message": "Yes, just removed the entire build directory and rebuilt and it worked.",
+      "parentUuid": "a257e98c_54795212",
+      "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
