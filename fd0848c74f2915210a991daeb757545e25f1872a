@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "fd0848c74f2915210a991daeb757545e25f1872a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b89a96d7_fd10d015",
+        "filename": "third_party/protobuf.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-19T20:14:59Z",
+      "side": 1,
+      "message": "```suggestion\n# Defining a separate library for WKTs and linking it to libprotobuf\n```",
+      "revId": "fd0848c74f2915210a991daeb757545e25f1872a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
