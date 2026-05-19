@@ -672,7 +672,13 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
         InternalErrorType::Validation | InternalErrorType::DeviceLost | additionalAllowedErrors;
 
     if (type == InternalErrorType::DeviceLost) {
-        mState = State::Disconnected;
+        if (ErrorInjectorEnabled()) {
+            State prev = State::Alive;
+            mState.compare_exchange_strong(prev, State::BeingDisconnected,
+                                           std::memory_order::acq_rel);
+        } else {
+            mState = State::Disconnected;
+        }
     } else if (!(allowedErrors & type)) {
         // If we receive an error which we did not explicitly allow, assume the backend can't
         // recover and lose the device now. Cleanup for the device will be deferred until the last
