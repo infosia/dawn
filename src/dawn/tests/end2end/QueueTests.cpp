@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <vector>
 
 #include "dawn/common/Math.h"
@@ -37,6 +32,7 @@
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/TextureUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -239,35 +235,35 @@ TEST_P(QueueWriteBufferTests, WriteUniformBufferWithVariousOffsetAndSizeAlignmen
 
     // Alignments: offset -- 4, size -- 4
     size_t offset = 1;
-    data[offset] = 100;
+    DAWN_UNSAFE_TODO(data[offset]) = 100;
     size_t size = kElementBytes;
-    queue.WriteBuffer(buffer, offset * kElementBytes, &data[offset], size);
+    queue.WriteBuffer(buffer, offset * kElementBytes, &DAWN_UNSAFE_TODO(data[offset]), size);
     EXPECT_BUFFER_U32_RANGE_EQ(data, buffer, 0, kElementCount);
 
     // Alignments: offset -- 16, size -- 16
     offset = 4;
-    data[offset] = 101;
-    data[offset + 1] = 102;
-    data[offset + 2] = 103;
-    data[offset + 3] = 104;
+    DAWN_UNSAFE_TODO(data[offset]) = 101;
+    DAWN_UNSAFE_TODO(data[offset + 1]) = 102;
+    DAWN_UNSAFE_TODO(data[offset + 2]) = 103;
+    DAWN_UNSAFE_TODO(data[offset + 3]) = 104;
     size = 4 * kElementBytes;
-    queue.WriteBuffer(buffer, offset * kElementBytes, &data[offset], size);
+    queue.WriteBuffer(buffer, offset * kElementBytes, &DAWN_UNSAFE_TODO(data[offset]), size);
     EXPECT_BUFFER_U32_RANGE_EQ(data, buffer, 0, kElementCount);
 
     // Alignments: offset -- 4, size -- 16
     offset = 10;
-    data[offset] = 105;
-    data[offset + 1] = 106;
-    data[offset + 2] = 107;
-    data[offset + 3] = 108;
-    queue.WriteBuffer(buffer, offset * kElementBytes, &data[offset], size);
+    DAWN_UNSAFE_TODO(data[offset]) = 105;
+    DAWN_UNSAFE_TODO(data[offset + 1]) = 106;
+    DAWN_UNSAFE_TODO(data[offset + 2]) = 107;
+    DAWN_UNSAFE_TODO(data[offset + 3]) = 108;
+    queue.WriteBuffer(buffer, offset * kElementBytes, &DAWN_UNSAFE_TODO(data[offset]), size);
     EXPECT_BUFFER_U32_RANGE_EQ(data, buffer, 0, kElementCount);
 
     // Alignments: offset -- 16, size -- 4
     offset = 12;
-    data[offset] = 109;
+    DAWN_UNSAFE_TODO(data[offset]) = 109;
     size = kElementBytes;
-    queue.WriteBuffer(buffer, offset * kElementBytes, &data[offset], size);
+    queue.WriteBuffer(buffer, offset * kElementBytes, &DAWN_UNSAFE_TODO(data[offset]), size);
     EXPECT_BUFFER_U32_RANGE_EQ(data, buffer, 0, kElementCount);
 }
 
@@ -314,7 +310,7 @@ void PackTextureData(const uint8_t* srcData,
             uint64_t dst = x * bytesPerTexel + y * dstBytesPerRow;
 
             for (uint64_t i = 0; i < bytesPerTexel; i++) {
-                dstData[dst + i] = srcData[src + i];
+                DAWN_UNSAFE_TODO(dstData[dst + i]) = DAWN_UNSAFE_TODO(srcData[src + i]);
             }
         }
     }
@@ -322,7 +318,7 @@ void PackTextureData(const uint8_t* srcData,
 
 void FillData(uint8_t* data, size_t count) {
     for (size_t i = 0; i < count; ++i) {
-        data[i] = static_cast<uint8_t>(i % 253);
+        DAWN_UNSAFE_TODO(data[i]) = static_cast<uint8_t>(i % 253);
     }
 }
 }  // namespace
@@ -403,9 +399,9 @@ class QueueWriteTextureTests : public DawnTestWithParams<WriteTextureFormatParam
             // Pack the data in the specified copy region to have the same
             // format as the expected texture data.
             std::vector<uint8_t> expected(byteSizeLastLayer, 0);
-            PackTextureData(data.data() + dataOffset, copySize.width, copySize.height,
-                            dataSpec.bytesPerRow, expected.data(), copySize.width * bytesPerTexel,
-                            bytesPerTexel);
+            PackTextureData(DAWN_UNSAFE_TODO(data.data() + dataOffset), copySize.width,
+                            copySize.height, dataSpec.bytesPerRow, expected.data(),
+                            copySize.width * bytesPerTexel, bytesPerTexel);
 
             EXPECT_TEXTURE_EQ(expected.data(), texture,
                               {textureSpec.copyOrigin.x, textureSpec.copyOrigin.y, slice},
