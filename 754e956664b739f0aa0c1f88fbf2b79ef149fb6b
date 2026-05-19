@@ -139,6 +139,40 @@
       "message": "We\u0027ve already sent blink I2S and here is the chrome status page https://chromestatus.com/feature/5199437611794432?gate\u003d4610270728159232. Maybe we could land this CL?",
       "revId": "754e956664b739f0aa0c1f88fbf2b79ef149fb6b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15623494_840b3cd7",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-19T11:26:01Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "754e956664b739f0aa0c1f88fbf2b79ef149fb6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5f9e8e4_e24d1517",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-19T11:26:01Z",
+      "side": 1,
+      "message": "Can we keep the todo to remove the blocklist in a few releases?",
+      "revId": "754e956664b739f0aa0c1f88fbf2b79ef149fb6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
