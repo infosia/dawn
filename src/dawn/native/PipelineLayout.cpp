@@ -168,6 +168,8 @@ PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
                                        const UnpackedPtr<PipelineLayoutDescriptor>& descriptor,
                                        ApiObjectBase::UntrackedByDeviceTag tag)
     : ApiObjectBase(device, descriptor->label),
+      mMask(0),
+      mHasPLS(false),
       mImmediateDataRangeByteSize(descriptor->immediateSize) {
     DAWN_CHECK(descriptor->bindGroupLayoutCount <= kMaxBindGroups);
 
@@ -215,7 +217,11 @@ PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
 PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
                                        ObjectBase::ErrorTag tag,
                                        StringView label)
-    : ApiObjectBase(device, tag, label) {}
+    : ApiObjectBase(device, tag, label),
+      mMask(0),
+      mHasPLS(false),
+      mImmediateDataRangeByteSize(0),
+      mUsesResourceTable(false) {}
 
 PipelineLayoutBase::~PipelineLayoutBase() = default;
 

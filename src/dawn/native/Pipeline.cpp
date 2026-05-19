@@ -260,7 +260,7 @@ PipelineBase::PipelineBase(DeviceBase* device,
                            PipelineLayoutBase* layout,
                            StringView label,
                            std::vector<StageAndDescriptor> stages)
-    : ApiObjectBase(device, label), mLayout(layout) {
+    : ApiObjectBase(device, label), mImmediateMask(0), mUserImmdiateSlots(0), mLayout(layout) {
     DAWN_CHECK(!stages.empty());
 
     for (const StageAndDescriptor& stage : stages) {
@@ -304,7 +304,7 @@ PipelineBase::PipelineBase(DeviceBase* device,
 }
 
 PipelineBase::PipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label)
-    : ApiObjectBase(device, tag, label) {}
+    : ApiObjectBase(device, tag, label), mImmediateMask(0), mUserImmdiateSlots(0) {}
 
 PipelineBase::~PipelineBase() = default;
 
