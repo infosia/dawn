@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <memory>
 #include <utility>
 #include <vector>
@@ -39,6 +34,7 @@
 #include "dawn/tests/DawnNativeTest.h"
 #include "dawn/tests/mocks/platform/CachingInterfaceMock.h"
 #include "dawn/webgpu_cpp_print.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 namespace {
@@ -134,7 +130,8 @@ TEST_P(CacheRequestTests, MakesCacheKey) {
     // Expect a call to LoadData with the expected key.
     EXPECT_CALL(mMockCache, LoadData(_, expectedKey.size(), nullptr, 0))
         .WillOnce(WithArg<0>([&](const void* actualKeyData) {
-            EXPECT_EQ(memcmp(actualKeyData, expectedKey.data(), expectedKey.size()), 0);
+            DAWN_UNSAFE_TODO(
+                EXPECT_EQ(memcmp(actualKeyData, expectedKey.data(), expectedKey.size()), 0));
             return 0;
         }));
 
@@ -146,7 +143,8 @@ TEST_P(CacheRequestTests, MakesCacheKey) {
 
     // The created cache key should be saved on the result.
     EXPECT_EQ(result.GetCacheKey().size(), expectedKey.size());
-    EXPECT_EQ(memcmp(result.GetCacheKey().data(), expectedKey.data(), expectedKey.size()), 0);
+    DAWN_UNSAFE_TODO(
+        EXPECT_EQ(memcmp(result.GetCacheKey().data(), expectedKey.data(), expectedKey.size()), 0));
 }
 
 // Test that members that are wrapped in UnsafeUnserializedValue do not impact the key.
@@ -194,7 +192,8 @@ TEST_P(CacheRequestTests, CacheKeyIgnoresUnsafeIgnoredValue) {
 
     // Expect their keys to be the same.
     EXPECT_EQ(r1.GetCacheKey().size(), r2.GetCacheKey().size());
-    EXPECT_EQ(memcmp(r1.GetCacheKey().data(), r2.GetCacheKey().data(), r1.GetCacheKey().size()), 0);
+    DAWN_UNSAFE_TODO(EXPECT_EQ(
+        memcmp(r1.GetCacheKey().data(), r2.GetCacheKey().data(), r1.GetCacheKey().size()), 0));
 }
 
 // Test the expected code path when there is a cache miss.
@@ -258,7 +257,7 @@ TEST_P(CacheRequestTests, CacheHit) {
     EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(actualStoredData.Size()));
     EXPECT_CALL(mMockCache, LoadData(_, _, _, actualStoredData.Size()))
         .WillOnce(WithArg<2>([&actualStoredData](void* dataOut) {
-            memcpy(dataOut, actualStoredData.DataPtr(), actualStoredData.Size());
+            DAWN_UNSAFE_TODO(memcpy(dataOut, actualStoredData.DataPtr(), actualStoredData.Size()));
             return actualStoredData.Size();
         }));
 
@@ -267,7 +266,7 @@ TEST_P(CacheRequestTests, CacheHit) {
     EXPECT_CALL(cacheHitFn, Call(_)).WillOnce(WithArg<0>([=](Blob blob) {
         // Expect the cached blob contents to match the cached data.
         EXPECT_EQ(blob.Size(), sizeof(kCachedData));
-        EXPECT_EQ(memcmp(blob.DataPtr(), kCachedData, sizeof(kCachedData)), 0);
+        DAWN_UNSAFE_TODO(EXPECT_EQ(memcmp(blob.DataPtr(), kCachedData, sizeof(kCachedData)), 0));
 
         return rv;
     }));
@@ -308,7 +307,7 @@ TEST_P(CacheRequestTests, CacheHitError) {
     EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(actualStoredData.Size()));
     EXPECT_CALL(mMockCache, LoadData(_, _, _, actualStoredData.Size()))
         .WillOnce(WithArg<2>([&actualStoredData](void* dataOut) {
-            memcpy(dataOut, actualStoredData.DataPtr(), actualStoredData.Size());
+            DAWN_UNSAFE_TODO(memcpy(dataOut, actualStoredData.DataPtr(), actualStoredData.Size()));
             return actualStoredData.Size();
         }));
 
@@ -316,7 +315,7 @@ TEST_P(CacheRequestTests, CacheHitError) {
     EXPECT_CALL(cacheHitFn, Call(_)).WillOnce(WithArg<0>([=](Blob blob) {
         // Expect the cached blob contents to match the cached data.
         EXPECT_EQ(blob.Size(), sizeof(kCachedData));
-        EXPECT_EQ(memcmp(blob.DataPtr(), kCachedData, sizeof(kCachedData)), 0);
+        DAWN_UNSAFE_TODO(EXPECT_EQ(memcmp(blob.DataPtr(), kCachedData, sizeof(kCachedData)), 0));
 
         // Return an error.
         return DAWN_VALIDATION_ERROR("fake test error");
@@ -434,7 +433,7 @@ TEST_P(CacheRequestTests, CacheHitHashValidationFailed) {
         EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(loadSize));
         EXPECT_CALL(mMockCache, LoadData(_, _, _, loadSize))
             .WillOnce(WithArg<2>([&](void* dataOut) {
-                memcpy(dataOut, loadBuffer, loadSize);
+                DAWN_UNSAFE_TODO(memcpy(dataOut, loadBuffer, loadSize));
                 return loadSize;
             }));
 
@@ -449,7 +448,8 @@ TEST_P(CacheRequestTests, CacheHitHashValidationFailed) {
             EXPECT_CALL(*cacheHitFn, Call(_)).WillOnce(WithArg<0>([=](Blob blob) {
                 // Expect the loaded blob contents to match the cached data.
                 EXPECT_EQ(blob.Size(), sizeof(kCachedData));
-                EXPECT_EQ(memcmp(blob.DataPtr(), kCachedData, sizeof(kCachedData)), 0);
+                DAWN_UNSAFE_TODO(
+                    EXPECT_EQ(memcmp(blob.DataPtr(), kCachedData, sizeof(kCachedData)), 0));
 
                 return rvCacheHit;
             }));
@@ -507,10 +507,11 @@ TEST_P(CacheRequestTests, CacheHitHashValidationFailed) {
     // Hash validation failure case 2: loaded blob hash mismatched.
     {
         Blob modifiedStoredData = Blob::Create(sizeWithHash);
-        memcpy(modifiedStoredData.DataPtr(), actualStoredData.DataPtr(), sizeWithHash);
+        DAWN_UNSAFE_TODO(
+            memcpy(modifiedStoredData.DataPtr(), actualStoredData.DataPtr(), sizeWithHash));
         // Modify the last byte to make the hash mismatch.
-        modifiedStoredData.DataPtr()[sizeWithHash - 1] =
-            ~modifiedStoredData.DataPtr()[sizeWithHash - 1];
+        DAWN_UNSAFE_TODO(modifiedStoredData.DataPtr()[sizeWithHash - 1]) =
+            ~DAWN_UNSAFE_TODO(modifiedStoredData.DataPtr()[sizeWithHash - 1]);
 
         DoTest(modifiedStoredData.DataPtr(), sizeWithHash, false);
     }
