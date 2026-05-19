@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <algorithm>
 #include <ostream>
 #include <vector>
@@ -37,6 +32,7 @@
 #include "dawn/tests/perf_tests/DawnPerfTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -158,24 +154,26 @@ void LoadStoreOpPerfTest::SetUpPerfTest() {
     singleSampledPipeline = device.CreateRenderPipeline(&pipelineDescriptor);
 
     for (uint32_t i = 0; i < kNumTextures; ++i) {
-        msaaTexture[i] = CreateTexture(wgpu::TextureFormat::RGBA8Unorm, 4);
-        resolveTexture[i] = CreateTexture(wgpu::TextureFormat::RGBA8Unorm, 1);
-        srcTexture1[i] = CreateTexture(wgpu::TextureFormat::RGBA8Unorm, 1);
-        srcTexture2[i] = CreateTexture(wgpu::TextureFormat::RGBA8Unorm, 1);
+        DAWN_UNSAFE_TODO(msaaTexture[i]) = CreateTexture(wgpu::TextureFormat::RGBA8Unorm, 4);
+        DAWN_UNSAFE_TODO(resolveTexture[i]) = CreateTexture(wgpu::TextureFormat::RGBA8Unorm, 1);
+        DAWN_UNSAFE_TODO(srcTexture1[i]) = CreateTexture(wgpu::TextureFormat::RGBA8Unorm, 1);
+        DAWN_UNSAFE_TODO(srcTexture2[i]) = CreateTexture(wgpu::TextureFormat::RGBA8Unorm, 1);
 
-        msaaTextureView[i] = msaaTexture[i].CreateView();
-        resolveTextureView[i] = resolveTexture[i].CreateView();
-        srcTextureView1[i] = srcTexture1[i].CreateView();
-        srcTextureView2[i] = srcTexture2[i].CreateView();
+        DAWN_UNSAFE_TODO(msaaTextureView[i]) = DAWN_UNSAFE_TODO(msaaTexture[i]).CreateView();
+        DAWN_UNSAFE_TODO(resolveTextureView[i]) = DAWN_UNSAFE_TODO(resolveTexture[i]).CreateView();
+        DAWN_UNSAFE_TODO(srcTextureView1[i]) = DAWN_UNSAFE_TODO(srcTexture1[i]).CreateView();
+        DAWN_UNSAFE_TODO(srcTextureView2[i]) = DAWN_UNSAFE_TODO(srcTexture2[i]).CreateView();
 
-        blitBindGroup1[i] = utils::MakeBindGroup(device, bgl, {{0, srcTextureView1[i]}});
-        blitBindGroup2[i] = utils::MakeBindGroup(device, bgl, {{0, srcTextureView2[i]}});
+        DAWN_UNSAFE_TODO(blitBindGroup1[i]) =
+            utils::MakeBindGroup(device, bgl, {{0, DAWN_UNSAFE_TODO(srcTextureView1[i])}});
+        DAWN_UNSAFE_TODO(blitBindGroup2[i]) =
+            utils::MakeBindGroup(device, bgl, {{0, DAWN_UNSAFE_TODO(srcTextureView2[i])}});
 
         // Clear the textures
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         float colorScale = std::max(0.1f, i / float(kNumTextures));
         {
-            utils::ComboRenderPassDescriptor renderPass({msaaTextureView[i]});
+            utils::ComboRenderPassDescriptor renderPass({DAWN_UNSAFE_TODO(msaaTextureView[i])});
             renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
             renderPass.cColorAttachments[0].clearValue = {0.0f, colorScale, 0.0f, 0.0f};
 
@@ -183,7 +181,7 @@ void LoadStoreOpPerfTest::SetUpPerfTest() {
             renderPassEncoder.End();
         }
         {
-            utils::ComboRenderPassDescriptor renderPass({srcTextureView1[i]});
+            utils::ComboRenderPassDescriptor renderPass({DAWN_UNSAFE_TODO(srcTextureView1[i])});
             renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
             renderPass.cColorAttachments[0].clearValue = {colorScale, 0.0f, colorScale, 0.0f};
 
@@ -191,7 +189,7 @@ void LoadStoreOpPerfTest::SetUpPerfTest() {
             renderPassEncoder.End();
         }
         {
-            utils::ComboRenderPassDescriptor renderPass({srcTextureView2[i]});
+            utils::ComboRenderPassDescriptor renderPass({DAWN_UNSAFE_TODO(srcTextureView2[i])});
             renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
             renderPass.cColorAttachments[0].clearValue = {0.0f, colorScale, colorScale, 0.0f};
 
@@ -222,8 +220,9 @@ void LoadStoreOpPerfTest::Step() {
 
             // 1st pass: blit the src texture 1 to the MSAA texture.
             {
-                utils::ComboRenderPassDescriptor renderPass({msaaTextureView[i]});
-                renderPass.cColorAttachments[0].resolveTarget = resolveTextureView[i];
+                utils::ComboRenderPassDescriptor renderPass({DAWN_UNSAFE_TODO(msaaTextureView[i])});
+                renderPass.cColorAttachments[0].resolveTarget =
+                    DAWN_UNSAFE_TODO(resolveTextureView[i]);
                 renderPass.cColorAttachments[0].loadOp =
                     isClear ? wgpu::LoadOp::Clear : wgpu::LoadOp::Load;
                 renderPass.cColorAttachments[0].storeOp =
@@ -231,7 +230,7 @@ void LoadStoreOpPerfTest::Step() {
                 renderPass.cColorAttachments[0].clearValue = {0.0f, 0.0f, 0.0f, 0.0f};
 
                 wgpu::RenderPassEncoder renderPassEncoder = encoder.BeginRenderPass(&renderPass);
-                renderPassEncoder.SetBindGroup(0, blitBindGroup1[i]);
+                renderPassEncoder.SetBindGroup(0, DAWN_UNSAFE_TODO(blitBindGroup1[i]));
                 renderPassEncoder.SetPipeline(msaaPipeline);
                 renderPassEncoder.Draw(3);
                 renderPassEncoder.End();
@@ -240,13 +239,14 @@ void LoadStoreOpPerfTest::Step() {
             // This is a non-MSAA attachment so we always use StoreOp=Store — discarding it
             // would throw away the resolve output that subsequent passes depend on.
             {
-                utils::ComboRenderPassDescriptor renderPass({resolveTextureView[i]});
+                utils::ComboRenderPassDescriptor renderPass(
+                    {DAWN_UNSAFE_TODO(resolveTextureView[i])});
                 renderPass.cColorAttachments[0].loadOp =
                     isClear ? wgpu::LoadOp::Clear : wgpu::LoadOp::Load;
                 renderPass.cColorAttachments[0].clearValue = {0.0f, 0.0f, 0.0f, 0.0f};
 
                 wgpu::RenderPassEncoder renderPassEncoder = encoder.BeginRenderPass(&renderPass);
-                renderPassEncoder.SetBindGroup(0, blitBindGroup2[i]);
+                renderPassEncoder.SetBindGroup(0, DAWN_UNSAFE_TODO(blitBindGroup2[i]));
                 renderPassEncoder.SetPipeline(singleSampledPipeline);
                 renderPassEncoder.Draw(3);
                 renderPassEncoder.End();
@@ -356,10 +356,10 @@ void StoreOpDepthPerfTest::SetUpPerfTest() {
     pipeline = device.CreateRenderPipeline(&pipelineDescriptor);
 
     for (uint32_t i = 0; i < kNumTextures; ++i) {
-        colorTexture[i] = CreateColorTexture();
-        depthTexture[i] = CreateDepthTexture();
-        colorTextureView[i] = colorTexture[i].CreateView();
-        depthTextureView[i] = depthTexture[i].CreateView();
+        DAWN_UNSAFE_TODO(colorTexture[i]) = CreateColorTexture();
+        DAWN_UNSAFE_TODO(depthTexture[i]) = CreateDepthTexture();
+        DAWN_UNSAFE_TODO(colorTextureView[i]) = DAWN_UNSAFE_TODO(colorTexture[i]).CreateView();
+        DAWN_UNSAFE_TODO(depthTextureView[i]) = DAWN_UNSAFE_TODO(depthTexture[i]).CreateView();
     }
 }
 
@@ -372,7 +372,8 @@ void StoreOpDepthPerfTest::Step() {
 
     for (unsigned int iteration = 0; iteration < kNumIterations; ++iteration) {
         for (uint32_t i = 0; i < kNumTextures; ++i) {
-            utils::ComboRenderPassDescriptor renderPass({colorTextureView[i]}, depthTextureView[i]);
+            utils::ComboRenderPassDescriptor renderPass({DAWN_UNSAFE_TODO(colorTextureView[i])},
+                                                        DAWN_UNSAFE_TODO(depthTextureView[i]));
             renderPass.UnsetDepthStencilLoadStoreOpsForFormat(wgpu::TextureFormat::Depth24Plus);
 
             // Color attachment
