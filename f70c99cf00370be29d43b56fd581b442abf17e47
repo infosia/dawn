@@ -106,6 +106,24 @@
       "parentUuid": "9707c2d7_38a3b289",
       "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a257e98c_54795212",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-19T17:25:22Z",
+      "side": 1,
+      "message": "Just as a check, you removed the CMakeCache.txt file when testing? Cmake really likes to cache things",
+      "parentUuid": "15d05417_5e1cc7a9",
+      "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
