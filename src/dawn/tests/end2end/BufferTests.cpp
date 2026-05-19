@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <algorithm>
 #include <array>
 #include <cstring>
@@ -45,6 +40,7 @@
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -124,7 +120,7 @@ class BufferMappingTests : public DawnTestWithParams<BufferMappingTestParams> {
 void CheckMapping(const void* actual, const void* expected, size_t size) {
     EXPECT_NE(actual, nullptr);
     if (actual != nullptr) {
-        EXPECT_EQ(0, memcmp(actual, expected, size));
+        DAWN_UNSAFE_TODO(EXPECT_EQ(0, memcmp(actual, expected, size)));
     }
 }
 
@@ -196,8 +192,10 @@ TEST_P(BufferMappingTests, MapRead_MultipleMappedRange) {
 
     MapAsyncAndWait(buffer, wgpu::MapMode::Read, 0, 12);
     ASSERT_EQ(myData[0], *static_cast<const uint32_t*>(buffer.GetConstMappedRange(0)));
-    ASSERT_EQ(myData[1], *(static_cast<const uint32_t*>(buffer.GetConstMappedRange(0)) + 1));
-    ASSERT_EQ(myData[2], *(static_cast<const uint32_t*>(buffer.GetConstMappedRange(0)) + 2));
+    DAWN_UNSAFE_TODO(
+        ASSERT_EQ(myData[1], *(static_cast<const uint32_t*>(buffer.GetConstMappedRange(0)) + 1)));
+    DAWN_UNSAFE_TODO(
+        ASSERT_EQ(myData[2], *(static_cast<const uint32_t*>(buffer.GetConstMappedRange(0)) + 2)));
     ASSERT_EQ(myData[2], *static_cast<const uint32_t*>(buffer.GetConstMappedRange(8)));
     buffer.Unmap();
 }
@@ -216,10 +214,11 @@ TEST_P(BufferMappingTests, MapRead_Large) {
 
     MapAsyncAndWait(buffer, wgpu::MapMode::Read, 0, kByteSize);
     EXPECT_EQ(nullptr, buffer.GetConstMappedRange(0, kByteSize + 4));
-    EXPECT_EQ(0, memcmp(buffer.GetConstMappedRange(), myData.data(), kByteSize));
-    EXPECT_EQ(0, memcmp(buffer.GetConstMappedRange(8), myData.data() + 2, kByteSize - 8));
-    EXPECT_EQ(
-        0, memcmp(buffer.GetConstMappedRange(8, kByteSize - 8), myData.data() + 2, kByteSize - 8));
+    DAWN_UNSAFE_TODO(EXPECT_EQ(0, memcmp(buffer.GetConstMappedRange(), myData.data(), kByteSize)));
+    DAWN_UNSAFE_TODO(
+        EXPECT_EQ(0, memcmp(buffer.GetConstMappedRange(8), myData.data() + 2, kByteSize - 8)));
+    DAWN_UNSAFE_TODO(EXPECT_EQ(
+        0, memcmp(buffer.GetConstMappedRange(8, kByteSize - 8), myData.data() + 2, kByteSize - 8)));
     buffer.Unmap();
 
     MapAsyncAndWait(buffer, wgpu::MapMode::Read, 16, kByteSize - 16);
@@ -231,8 +230,10 @@ TEST_P(BufferMappingTests, MapRead_Large) {
     EXPECT_EQ(nullptr, buffer.GetConstMappedRange(8));
 
     // Test a couple values.
-    EXPECT_EQ(0, memcmp(buffer.GetConstMappedRange(16), myData.data() + 4, kByteSize - 16));
-    EXPECT_EQ(0, memcmp(buffer.GetConstMappedRange(24), myData.data() + 6, kByteSize - 24));
+    DAWN_UNSAFE_TODO(
+        EXPECT_EQ(0, memcmp(buffer.GetConstMappedRange(16), myData.data() + 4, kByteSize - 16)));
+    DAWN_UNSAFE_TODO(
+        EXPECT_EQ(0, memcmp(buffer.GetConstMappedRange(24), myData.data() + 6, kByteSize - 24)));
 
     buffer.Unmap();
 }
@@ -269,7 +270,7 @@ TEST_P(BufferMappingTests, MapWrite_Basic) {
         MapAsyncAndWait(buffer, wgpu::MapMode::Write, 0, 4);
         ASSERT_NE(nullptr, buffer.GetMappedRange());
         ASSERT_NE(nullptr, buffer.GetConstMappedRange());
-        memcpy(buffer.GetMappedRange(), &myData1, sizeof(myData1));
+        DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(), &myData1, sizeof(myData1)));
         buffer.Unmap();
         EXPECT_BUFFER_U32_EQ(myData1, buffer, 0);
     }
@@ -296,7 +297,7 @@ TEST_P(BufferMappingTests, MapWrite_BasicRange) {
     MapAsyncAndWait(buffer, wgpu::MapMode::Write, 0, 4);
     ASSERT_NE(nullptr, buffer.GetMappedRange(0, 4));
     ASSERT_NE(nullptr, buffer.GetConstMappedRange(0, 4));
-    memcpy(buffer.GetMappedRange(), &myData, sizeof(myData));
+    DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(), &myData, sizeof(myData)));
     buffer.Unmap();
 
     EXPECT_BUFFER_U32_EQ(myData, buffer, 0);
@@ -321,7 +322,7 @@ TEST_P(BufferMappingTests, MapWrite_NonZeroOffset) {
 
     uint32_t myData = 2934875;
     MapAsyncAndWait(buffer, wgpu::MapMode::Write, 8, 4);
-    memcpy(buffer.GetMappedRange(8, 4), &myData, sizeof(myData));
+    DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(8, 4), &myData, sizeof(myData)));
     buffer.Unmap();
     EXPECT_BUFFER_U32_EQ(myData, buffer, 8);
 
@@ -343,14 +344,14 @@ TEST_P(BufferMappingTests, MapWrite_Twice) {
 
     uint32_t myData = 2934875;
     MapAsyncAndWait(buffer, wgpu::MapMode::Write, 0, 4);
-    memcpy(buffer.GetMappedRange(), &myData, sizeof(myData));
+    DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(), &myData, sizeof(myData)));
     buffer.Unmap();
 
     EXPECT_BUFFER_U32_EQ(myData, buffer, 0);
 
     myData = 9999999;
     MapAsyncAndWait(buffer, wgpu::MapMode::Write, 0, 4);
-    memcpy(buffer.GetMappedRange(), &myData, sizeof(myData));
+    DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(), &myData, sizeof(myData)));
     buffer.Unmap();
 
     EXPECT_BUFFER_U32_EQ(myData, buffer, 0);
@@ -363,13 +364,13 @@ TEST_P(BufferMappingTests, MapWrite_TwicePreserve) {
     uint32_t data1 = 0x08090a0b;
     size_t offset1 = 8;
     MapAsyncAndWait(buffer, wgpu::MapMode::Write, offset1, wgpu::kWholeMapSize);
-    memcpy(buffer.GetMappedRange(offset1), &data1, sizeof(data1));
+    DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(offset1), &data1, sizeof(data1)));
     buffer.Unmap();
 
     uint32_t data2 = 0x00010203;
     size_t offset2 = 0;
     MapAsyncAndWait(buffer, wgpu::MapMode::Write, offset2, wgpu::kWholeMapSize);
-    memcpy(buffer.GetMappedRange(offset2), &data2, sizeof(data2));
+    DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(offset2), &data2, sizeof(data2)));
     buffer.Unmap();
 
     EXPECT_BUFFER_U32_EQ(data1, buffer, offset1);
@@ -386,7 +387,7 @@ TEST_P(BufferMappingTests, MapWrite_TwiceRangeOverlap) {
     uint32_t data1[] = {0x01234567, 0x89abcdef};
     size_t offset1 = 8;
     MapAsyncAndWait(buffer, wgpu::MapMode::Write, offset1, 8);
-    memcpy(buffer.GetMappedRange(offset1, 8), data1, 8);
+    DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(offset1, 8), data1, 8));
     buffer.Unmap();
 
     EXPECT_BUFFER_U32_EQ(0x00000000, buffer, 0);
@@ -397,7 +398,7 @@ TEST_P(BufferMappingTests, MapWrite_TwiceRangeOverlap) {
     uint32_t data2[] = {0x01234567, 0x89abcdef, 0x55555555};
     size_t offset2 = 0;
     MapAsyncAndWait(buffer, wgpu::MapMode::Write, offset2, 12);
-    memcpy(buffer.GetMappedRange(offset2, 12), data2, 12);
+    DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(offset2, 12), data2, 12));
     buffer.Unmap();
 
     EXPECT_BUFFER_U32_EQ(0x01234567, buffer, 0);
@@ -415,8 +416,8 @@ TEST_P(BufferMappingTests, MapWrite_MultipleMappedRange) {
     uint32_t data2 = 0x00010203;
     size_t offset2 = 0;
     MapAsyncAndWait(buffer, wgpu::MapMode::Write, 0, 12);
-    memcpy(buffer.GetMappedRange(offset1), &data1, sizeof(data1));
-    memcpy(buffer.GetMappedRange(offset2), &data2, sizeof(data2));
+    DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(offset1), &data1, sizeof(data1)));
+    DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(offset2), &data2, sizeof(data2)));
     buffer.Unmap();
 
     EXPECT_BUFFER_U32_EQ(data1, buffer, offset1);
@@ -442,7 +443,8 @@ TEST_P(BufferMappingTests, MapWrite_Large) {
     EXPECT_EQ(nullptr, buffer.GetMappedRange(0));
     EXPECT_EQ(nullptr, buffer.GetMappedRange(8));
     EXPECT_EQ(nullptr, buffer.GetMappedRange(16, kByteSize - 8));
-    memcpy(buffer.GetMappedRange(16, kByteSize - 20), myData.data(), kByteSize - 20);
+    DAWN_UNSAFE_TODO(
+        memcpy(buffer.GetMappedRange(16, kByteSize - 20), myData.data(), kByteSize - 20));
     buffer.Unmap();
     EXPECT_BUFFER_U32_RANGE_EQ(myData.data(), buffer, 16, kDataSize - 5);
 }
@@ -510,7 +512,8 @@ TEST_P(BufferMappingTests, MapWrite_ManySimultaneous) {
 
     // All buffers are mapped, write into them and unmap them all.
     for (uint32_t i = 0; i < kBuffers; ++i) {
-        memcpy(buffers[i].GetMappedRange(0, descriptor.size), myData.data(), descriptor.size);
+        DAWN_UNSAFE_TODO(
+            memcpy(buffers[i].GetMappedRange(0, descriptor.size), myData.data(), descriptor.size));
         buffers[i].Unmap();
     }
 
@@ -563,7 +566,8 @@ TEST_P(BufferMappingTests, OffsetNotUpdatedOnError) {
     }
 
     // mMapOffset has not been updated so it should still be 4, which is data[1]
-    ASSERT_EQ(0, memcmp(buffer.GetConstMappedRange(8), &data[2], sizeof(uint32_t)));
+    DAWN_UNSAFE_TODO(
+        ASSERT_EQ(0, memcmp(buffer.GetConstMappedRange(8), &data[2], sizeof(uint32_t))));
 }
 
 // Test that Get(Const)MappedRange work inside map-write callback.
@@ -580,7 +584,7 @@ TEST_P(BufferMappingTests, MapWrite_InCallbackDefault) {
                         EXPECT_NE(nullptr, ptr);
                         if (ptr != nullptr) {
                             uint32_t data = myData;
-                            memcpy(ptr, &data, kSize);
+                            DAWN_UNSAFE_TODO(memcpy(ptr, &data, kSize));
                         }
                         buffer.Unmap();
                     });
@@ -602,7 +606,7 @@ TEST_P(BufferMappingTests, MapWrite_InCallbackRange) {
                         EXPECT_NE(nullptr, ptr);
                         if (ptr != nullptr) {
                             uint32_t data = myData;
-                            memcpy(ptr, &data, kSize);
+                            DAWN_UNSAFE_TODO(memcpy(ptr, &data, kSize));
                         }
                         buffer.Unmap();
                     });
@@ -944,7 +948,7 @@ class BufferMappedAtCreationTests : public DawnTest {
                                                 const std::vector<uint32_t>& data) {
         size_t byteLength = data.size() * sizeof(uint32_t);
         wgpu::Buffer buffer = BufferMappedAtCreation(usage, byteLength);
-        memcpy(buffer.GetMappedRange(), data.data(), byteLength);
+        DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(), data.data(), byteLength));
         return buffer;
     }
 };
@@ -1015,7 +1019,7 @@ TEST_P(BufferMappedAtCreationTests, MapReadUsageLarge) {
 
     const void* mappedData =
         MapAsyncAndWait(buffer, wgpu::MapMode::Read, kDataSize * sizeof(uint32_t));
-    ASSERT_EQ(0, memcmp(mappedData, myData.data(), kDataSize * sizeof(uint32_t)));
+    DAWN_UNSAFE_TODO(ASSERT_EQ(0, memcmp(mappedData, myData.data(), kDataSize * sizeof(uint32_t))));
     UnmapBuffer(buffer);
 }
 
@@ -1527,7 +1531,7 @@ class BufferMapExtendedUsagesTests : public DawnTest {
         wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
 
         MapAsyncAndWait(buffer, wgpu::MapMode::Write, 0, size);
-        memcpy(buffer.GetMappedRange(), data, size);
+        DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(), data, size));
         buffer.Unmap();
 
         return buffer;
@@ -1697,7 +1701,7 @@ TEST_P(BufferMapExtendedUsagesTests, MapWriteWithAnyUsage) {
         MapAsyncAndWait(buffer, wgpu::MapMode::Write, 0, 4);
         ASSERT_NE(nullptr, buffer.GetMappedRange());
         ASSERT_NE(nullptr, buffer.GetConstMappedRange());
-        memcpy(buffer.GetMappedRange(), &myData, sizeof(myData));
+        DAWN_UNSAFE_TODO(memcpy(buffer.GetMappedRange(), &myData, sizeof(myData)));
         buffer.Unmap();
 
         EXPECT_BUFFER_U32_EQ(myData, buffer, 0);
@@ -1741,7 +1745,7 @@ TEST_P(BufferMapExtendedUsagesTests, MapWriteVertexBufferAndDraw) {
     // Second render pass: draw with green color vertex buffer.
     MapAsyncAndWait(vertexBuffer, wgpu::MapMode::Write, 0, sizeof(kGreens));
     ASSERT_NE(nullptr, vertexBuffer.GetMappedRange());
-    memcpy(vertexBuffer.GetMappedRange(), kGreens, sizeof(kGreens));
+    DAWN_UNSAFE_TODO(memcpy(vertexBuffer.GetMappedRange(), kGreens, sizeof(kGreens)));
     vertexBuffer.Unmap();
 
     EncodeAndSubmitRenderPassForTest(greenRenderPass.renderPassInfo, renderPipeline, vertexBuffer,
@@ -1778,7 +1782,7 @@ TEST_P(BufferMapExtendedUsagesTests, MapWriteIndexBufferAndDraw) {
     // Second render pass: draw with green color index buffer.
     MapAsyncAndWait(indexBuffer, wgpu::MapMode::Write, 0, sizeof(kGreenIndices));
     ASSERT_NE(nullptr, indexBuffer.GetMappedRange());
-    memcpy(indexBuffer.GetMappedRange(), kGreenIndices, sizeof(kGreenIndices));
+    DAWN_UNSAFE_TODO(memcpy(indexBuffer.GetMappedRange(), kGreenIndices, sizeof(kGreenIndices)));
     indexBuffer.Unmap();
 
     EncodeAndSubmitRenderPassForTest(greenRenderPass.renderPassInfo, renderPipeline, vertexBuffer,
@@ -1846,7 +1850,8 @@ TEST_P(BufferMapExtendedUsagesTests, MapWriteQueryBufferThenDrawThenMapWrite) {
         constexpr size_t k3rdElemOffset = 2 * sizeof(uint64_t);
         MapAsyncAndWait(queryBuffer, wgpu::MapMode::Write, 0, kQueryResolveBufferSize);
         ASSERT_NE(nullptr, queryBuffer.GetMappedRange());
-        memcpy(queryBuffer.GetMappedRange(k3rdElemOffset), &kExpectedVal3, sizeof(kExpectedVal3));
+        DAWN_UNSAFE_TODO(memcpy(queryBuffer.GetMappedRange(k3rdElemOffset), &kExpectedVal3,
+                                sizeof(kExpectedVal3)));
         queryBuffer.Unmap();
     }
 
@@ -1892,7 +1897,7 @@ TEST_P(BufferMapExtendedUsagesTests, MapWriteUniformBufferAndDraw) {
     // Second render pass: draw with green color uniform buffer.
     MapAsyncAndWait(uniformBuffer, wgpu::MapMode::Write, 0, sizeof(kGreen));
     ASSERT_NE(nullptr, uniformBuffer.GetMappedRange());
-    memcpy(uniformBuffer.GetMappedRange(), &kGreen, sizeof(kGreen));
+    DAWN_UNSAFE_TODO(memcpy(uniformBuffer.GetMappedRange(), &kGreen, sizeof(kGreen)));
     uniformBuffer.Unmap();
 
     EncodeAndSubmitRenderPassForTest(greenRenderPass.renderPassInfo, renderPipeline, nullptr,
@@ -1927,7 +1932,7 @@ TEST_P(BufferMapExtendedUsagesTests, MapWriteStorageBufferAndDraw) {
     // Second render pass: draw with green color uniform buffer.
     MapAsyncAndWait(storageBuffer, wgpu::MapMode::Write, 0, sizeof(kGreen));
     ASSERT_NE(nullptr, storageBuffer.GetMappedRange());
-    memcpy(storageBuffer.GetMappedRange(), &kGreen, sizeof(kGreen));
+    DAWN_UNSAFE_TODO(memcpy(storageBuffer.GetMappedRange(), &kGreen, sizeof(kGreen)));
     storageBuffer.Unmap();
 
     EncodeAndSubmitRenderPassForTest(greenRenderPass.renderPassInfo, renderPipeline, nullptr,
@@ -1971,7 +1976,7 @@ TEST_P(BufferMapExtendedUsagesTests, MapWriteThenGPUWriteStorageBufferThenMapRea
 
         MapAsyncAndWait(ssbo, wgpu::MapMode::Write, 0, 4);
         ASSERT_NE(nullptr, ssbo.GetMappedRange());
-        memcpy(ssbo.GetMappedRange(), &kInitialValue, sizeof(kInitialValue));
+        DAWN_UNSAFE_TODO(memcpy(ssbo.GetMappedRange(), &kInitialValue, sizeof(kInitialValue)));
         ssbo.Unmap();
     }
 
@@ -2071,7 +2076,7 @@ void BufferMapExtendedUsagesTests::MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc
         constexpr size_t kBlueChannelOffset = 2 * sizeof(float);
         MapAsyncAndWait(ssbo, wgpu::MapMode::Write, 0, kSize);
         ASSERT_NE(nullptr, ssbo.GetMappedRange());
-        memcpy(ssbo.GetMappedRange(kBlueChannelOffset), &kOne, sizeof(kOne));
+        DAWN_UNSAFE_TODO(memcpy(ssbo.GetMappedRange(kBlueChannelOffset), &kOne, sizeof(kOne)));
         ssbo.Unmap();
     }
 
@@ -2146,7 +2151,7 @@ TEST_P(BufferMapExtendedUsagesTests,
 
         MapAsyncAndWait(ssbo, wgpu::MapMode::Write, 0, kSize);
         ASSERT_NE(nullptr, ssbo.GetMappedRange());
-        memcpy(ssbo.GetMappedRange(), &kRed, kSize);
+        DAWN_UNSAFE_TODO(memcpy(ssbo.GetMappedRange(), &kRed, kSize));
         ssbo.Unmap();
     }
     // Create buffer with blue color data.
