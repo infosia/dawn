@@ -285,7 +285,6 @@ DAWN_NATIVE_EXPORT bool CheckIsErrorForTesting(void* objectHandle);
 DAWN_NATIVE_EXPORT std::string GetObjectLabelForTesting(void* objectHandle);
 
 DAWN_NATIVE_EXPORT uint64_t GetAllocatedSizeForTesting(WGPUBuffer buffer);
-
 DAWN_NATIVE_EXPORT std::vector<const ToggleInfo*> AllToggleInfos();
 
 // Used to query the details of an feature. Return nullptr if featureName is not a valid
