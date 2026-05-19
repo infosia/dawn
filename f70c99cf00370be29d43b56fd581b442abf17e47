@@ -34,6 +34,24 @@
       "parentUuid": "9c959e54_642ceaf2",
       "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c71498f_550beaa0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-19T16:58:15Z",
+      "side": 1,
+      "message": "The `ENABLE_*` ones will, these are just used as defaults for the `DAWN_ENABLE_*` flags below. Users should not be setting the `ENABLE_*` versions directly.",
+      "parentUuid": "7d0703b5_98cb1cb5",
+      "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
