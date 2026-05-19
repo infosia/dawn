@@ -1098,7 +1098,7 @@ MaybeError RenderPipelineBase::InitializeWithShaders() {
 RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
                                        ObjectBase::ErrorTag tag,
                                        StringView label)
-    : PipelineBase(device, tag, label) {}
+    : PipelineBase(device, tag, label), mVertexBufferCount(0) {}
 
 RenderPipelineBase::~RenderPipelineBase() = default;
 

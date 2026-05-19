@@ -147,11 +147,7 @@ void ComboRenderPassDescriptor::UnsetDepthStencilLoadStoreOpsForFormat(wgpu::Tex
 }
 
 BasicRenderPass::BasicRenderPass()
-    : width(0),
-      height(0),
-      color(nullptr),
-      colorFormat(wgpu::TextureFormat::RGBA8Unorm),
-      renderPassInfo() {}
+    : width(0), height(0), color(nullptr), colorFormat(wgpu::TextureFormat::RGBA8Unorm) {}
 
 BasicRenderPass::BasicRenderPass(uint32_t texWidth,
                                  uint32_t texHeight,
