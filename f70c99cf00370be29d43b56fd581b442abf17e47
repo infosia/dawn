@@ -70,6 +70,24 @@
       "parentUuid": "7c71498f_550beaa0",
       "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9707c2d7_38a3b289",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-19T17:13:58Z",
+      "side": 1,
+      "message": "I think that makes sense (as long as cmake works that way, i always get confused as to how cmake works).\n\nDoes it have the option results at that point to set the next option?",
+      "parentUuid": "c5082faa_1c2d6f57",
+      "revId": "f70c99cf00370be29d43b56fd581b442abf17e47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
