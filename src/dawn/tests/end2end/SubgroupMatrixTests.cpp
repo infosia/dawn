@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <algorithm>
 #include <string>
 #include <vector>
@@ -39,6 +34,7 @@
 #include "dawn/utils/WGPUHelpers.h"
 #include "gtest/gtest.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -128,22 +124,22 @@ struct Matrix {
                 switch (component_type) {
                     case wgpu::SubgroupMatrixComponentType::F16:
                     case wgpu::SubgroupMatrixComponentType::F32:
-                        SetFloat(kFloatValues[index], c, r);
+                        SetFloat(DAWN_UNSAFE_TODO(kFloatValues[index]), c, r);
                         break;
                     case wgpu::SubgroupMatrixComponentType::I32:
                     case wgpu::SubgroupMatrixComponentType::I8:
-                        SetInt(kSIntValues[index], c, r);
+                        SetInt(DAWN_UNSAFE_TODO(kSIntValues[index]), c, r);
                         break;
                     case wgpu::SubgroupMatrixComponentType::U32:
                     case wgpu::SubgroupMatrixComponentType::U8:
-                        SetInt(kUIntValues[index], c, r);
+                        SetInt(DAWN_UNSAFE_TODO(kUIntValues[index]), c, r);
                         break;
                 }
             }
         }
     }
 
-    void FillWithZero() { memset(data, 0, TotalByteSize()); }
+    void FillWithZero() { DAWN_UNSAFE_TODO(memset(data, 0, TotalByteSize())); }
 
     int64_t GetInt(uint32_t c, uint32_t r) const {
         switch (component_type) {
@@ -232,7 +228,7 @@ struct Matrix {
         } else {
             index = c + r * cols;
         }
-        memcpy(&value, data + index * sizeof(T), sizeof(T));
+        DAWN_UNSAFE_TODO(memcpy(&value, data + index * sizeof(T), sizeof(T)));
         return value;
     }
 
@@ -244,7 +240,7 @@ struct Matrix {
         } else {
             index = c + r * cols;
         }
-        memcpy(data + index * sizeof(T), &value, sizeof(T));
+        DAWN_UNSAFE_TODO(memcpy(data + index * sizeof(T), &value, sizeof(T)));
     }
 };
 
@@ -325,7 +321,7 @@ TEST_P(SubgroupMatrixTest, WorkgroupSizeXMustBeMultipleOfMaxSubgroupSize) {
 
     // Test each supported config.
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
-        auto& config = subgroupMatrixConfigs.configs[i];
+        auto& config = DAWN_UNSAFE_TODO(subgroupMatrixConfigs.configs[i]);
 
         std::ostringstream shader;
         shader << "enable chromium_experimental_subgroup_matrix;\n";
@@ -496,9 +492,10 @@ fn main() {
             .mappedAtCreation = true,
         };
         wgpu::Buffer inputs = device.CreateBuffer(&inputDescriptor);
-        memcpy(inputs.GetMappedRange(), inputLHS.data, inputLHS.TotalByteSize());
-        memcpy(static_cast<uint8_t*>(inputs.GetMappedRange()) + inputLHS.TotalByteSize(),
-               inputRHS.data, inputRHS.TotalByteSize());
+        DAWN_UNSAFE_TODO(memcpy(inputs.GetMappedRange(), inputLHS.data, inputLHS.TotalByteSize()));
+        DAWN_UNSAFE_TODO(
+            memcpy(static_cast<uint8_t*>(inputs.GetMappedRange()) + inputLHS.TotalByteSize(),
+                   inputRHS.data, inputRHS.TotalByteSize()));
         inputs.Unmap();
 
         // Create the output buffer and copy the accumulator to it.
@@ -508,7 +505,7 @@ fn main() {
             .mappedAtCreation = true,
         };
         wgpu::Buffer output = device.CreateBuffer(&outputDescriptor);
-        memcpy(output.GetMappedRange(), acc.data, acc.TotalByteSize());
+        DAWN_UNSAFE_TODO(memcpy(output.GetMappedRange(), acc.data, acc.TotalByteSize()));
         output.Unmap();
 
         wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
@@ -547,7 +544,7 @@ TEST_P(SubgroupMatrix_MatrixMatrixArithmeticTest, MatrixMultiply) {
 
     // Test each supported config.
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
-        auto& config = subgroupMatrixConfigs.configs[i];
+        auto& config = DAWN_UNSAFE_TODO(subgroupMatrixConfigs.configs[i]);
 
         std::stringstream configInfo;
         configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
@@ -704,7 +701,7 @@ fn main() {
             .mappedAtCreation = true,
         };
         wgpu::Buffer inputs = device.CreateBuffer(&inputDescriptor);
-        memcpy(inputs.GetMappedRange(), inputLHS.data, inputLHS.TotalByteSize());
+        DAWN_UNSAFE_TODO(memcpy(inputs.GetMappedRange(), inputLHS.data, inputLHS.TotalByteSize()));
         inputs.Unmap();
 
         // Create the output buffer
@@ -749,7 +746,7 @@ TEST_P(SubgroupMatrix_MatrixScalarArithmeticTest, MatrixScalar) {
 
     // Test each supported config.
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
-        auto& config = subgroupMatrixConfigs.configs[i];
+        auto& config = DAWN_UNSAFE_TODO(subgroupMatrixConfigs.configs[i]);
 
         std::stringstream configInfo;
         configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
@@ -872,7 +869,8 @@ fn main() {
             .mappedAtCreation = true,
         };
         wgpu::Buffer inputBuffer = device.CreateBuffer(&inputDescriptor);
-        memcpy(inputBuffer.GetMappedRange(), inputMatrix.data, inputMatrix.TotalByteSize());
+        DAWN_UNSAFE_TODO(
+            memcpy(inputBuffer.GetMappedRange(), inputMatrix.data, inputMatrix.TotalByteSize()));
         inputBuffer.Unmap();
 
         uint64_t storeOffset = inputMatrix.TotalByteSize();
@@ -915,7 +913,7 @@ TEST_P(SubgroupMatrix_MatrixStoreTest, MatrixStoreWithOffset) {
 
     // Test each supported config.
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
-        auto& config = subgroupMatrixConfigs.configs[i];
+        auto& config = DAWN_UNSAFE_TODO(subgroupMatrixConfigs.configs[i]);
 
         std::stringstream configInfo;
         configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
@@ -1077,7 +1075,7 @@ TEST_P(SubgroupMatrix_MatrixConstructorTest, MatrixConstruct) {
 
     // Test each supported config.
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
-        auto& config = subgroupMatrixConfigs.configs[i];
+        auto& config = DAWN_UNSAFE_TODO(subgroupMatrixConfigs.configs[i]);
 
         std::stringstream configInfo;
         configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
@@ -1163,7 +1161,7 @@ TEST_P(SubgroupMatrix_TiledMatrixMultiplyTest, MatrixMultiply) {
 
     // Test each supported config.
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
-        auto& config = subgroupMatrixConfigs.configs[i];
+        auto& config = DAWN_UNSAFE_TODO(subgroupMatrixConfigs.configs[i]);
         uint32_t resultComponentByteSize = ComponentTypeToByteSize(config.resultComponentType);
 
         std::stringstream configInfo;
@@ -1310,9 +1308,10 @@ fn main(@builtin(subgroup_id) sgid: u32,
             .mappedAtCreation = true,
         };
         wgpu::Buffer inputs = device.CreateBuffer(&inputDescriptor);
-        memcpy(inputs.GetMappedRange(), inputLHS.data, inputLHS.TotalByteSize());
-        memcpy(static_cast<uint8_t*>(inputs.GetMappedRange()) + inputLHS.TotalByteSize(),
-               inputRHS.data, inputRHS.TotalByteSize());
+        DAWN_UNSAFE_TODO(memcpy(inputs.GetMappedRange(), inputLHS.data, inputLHS.TotalByteSize()));
+        DAWN_UNSAFE_TODO(
+            memcpy(static_cast<uint8_t*>(inputs.GetMappedRange()) + inputLHS.TotalByteSize(),
+                   inputRHS.data, inputRHS.TotalByteSize()));
         inputs.Unmap();
 
         // Create the output buffer.
