@@ -145,7 +145,14 @@ class BufferZeroInitTest : public DawnTest {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         encoder.CopyTextureToBuffer(&texelCopyTextureInfo, &texelCopyBufferInfo, &spec.textureSize);
         wgpu::CommandBuffer commandBuffer = encoder.Finish();
-        EXPECT_LAZY_CLEAR(spec.lazyClearCount, queue.Submit(1, &commandBuffer));
+
+        // TODO(b/513631768): SetInitialized is now skipped for use_blit_for_t2b path.
+        uint32_t expectedLazyClearCount = spec.lazyClearCount;
+        if (expectedLazyClearCount == 0u && (HasToggleEnabled("use_blit_for_t2b"))) {
+            expectedLazyClearCount = 1u;
+        }
+
+        EXPECT_LAZY_CLEAR(expectedLazyClearCount, queue.Submit(1, &commandBuffer));
 
         const uint64_t expectedValueCount = bufferSize / sizeof(float);
         std::vector<float> expectedValues(expectedValueCount, 0.f);
@@ -1222,7 +1229,16 @@ TEST_P(BufferZeroInitTest, PaddingInitialized) {
                     encoder.CopyTextureToBuffer(&zeroTextureSrc, &dst, &extent);
 
                     wgpu::CommandBuffer commandBuffer = encoder.Finish();
-                    EXPECT_LAZY_CLEAR(0u, queue.Submit(1, &commandBuffer));
+
+                    // TODO(b/513631768): SetInitialized is now skipped for use_blit_for_t2b path.
+                    // Skip D3D11 + Qualcomm as they may use intermediate buffer for blit path.
+                    if (!(IsD3D11() && IsQualcomm())) {
+                        uint32_t expectedLazyClearCount = 0u;
+                        if (HasToggleEnabled("use_blit_for_t2b")) {
+                            expectedLazyClearCount = 1u;
+                        }
+                        EXPECT_LAZY_CLEAR(expectedLazyClearCount, queue.Submit(1, &commandBuffer));
+                    }
                 }
 
                 wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
