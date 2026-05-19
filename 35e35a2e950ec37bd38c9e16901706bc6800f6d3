@@ -52,6 +52,24 @@
       "parentUuid": "969d6d4d_84b2b055",
       "revId": "35e35a2e950ec37bd38c9e16901706bc6800f6d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36ad4308_f80ac4dc",
+        "filename": "src/tint/utils/system/terminal_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-05-19T13:05:16Z",
+      "side": 1,
+      "message": "yes, it\u0027s a bit weird, but it was causing some tryjobs to fail",
+      "parentUuid": "ea64a125_b5979ddb",
+      "revId": "35e35a2e950ec37bd38c9e16901706bc6800f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
