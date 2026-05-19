@@ -49,6 +49,7 @@
 #include "dawn/native/d3d12/BindGroupLayoutD3D12.h"
 #include "dawn/native/d3d12/ComputePipelineD3D12.h"
 #include "dawn/native/d3d12/DeviceD3D12.h"
+#include "dawn/native/d3d12/ImmediateConstantsLayoutD3D12.h"
 #include "dawn/native/d3d12/PipelineLayoutD3D12.h"
 #include "dawn/native/d3d12/PlatformFunctionsD3D12.h"
 #include "dawn/native/d3d12/QuerySetD3D12.h"
@@ -403,6 +404,11 @@ MaybeError TransitionAndClearForSyncScope(CommandRecordingContext* commandContex
     return {};
 }
 
+using RenderImmediateConstantsTrackerD3D12 =
+    UserImmediateConstantsTrackerBase<RenderImmediateConstantsD3D12, RenderPipelineBase>;
+using ComputeImmediateConstantsTrackerD3D12 =
+    UserImmediateConstantsTrackerBase<ComputeImmediateConstantsD3D12, ComputePipelineBase>;
+
 template <typename T>
 class ImmediateConstantTracker : public T {
   public:
@@ -433,9 +439,9 @@ class ImmediateConstantTracker : public T {
 
   private:
     static constexpr bool kIsRenderImmediateConstants =
-        std::is_same_v<T, RenderImmediateConstantsTrackerBase>;
+        std::is_same_v<T, RenderImmediateConstantsTrackerD3D12>;
     static constexpr bool kIsComputeImmediateConstants =
-        std::is_same_v<T, ComputeImmediateConstantsTrackerBase>;
+        std::is_same_v<T, ComputeImmediateConstantsTrackerD3D12>;
 
     void SetRootConstant(ID3D12GraphicsCommandList* commandList,
                          uint32_t parameterIndex,
@@ -1424,7 +1430,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
 
     Command type;
     ComputePipeline* lastPipeline = nullptr;
-    ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
+    ImmediateConstantTracker<ComputeImmediateConstantsTrackerD3D12> immediates = {};
     while (mCommands.NextCommandId(&type)) {
         switch (type) {
             case Command::Dispatch: {
@@ -1789,7 +1795,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
 
     RenderPipeline* lastPipeline = nullptr;
     VertexBufferTracker vertexBufferTracker = {};
-    ImmediateConstantTracker<RenderImmediateConstantsTrackerBase> immediates = {};
+    ImmediateConstantTracker<RenderImmediateConstantsTrackerD3D12> immediates = {};
 
     auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) -> MaybeError {
         switch (type) {

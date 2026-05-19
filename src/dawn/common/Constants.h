@@ -50,11 +50,9 @@ inline constexpr uint64_t kAssumedMaxBufferSize =
 // All Immediate constants are 32 bit
 inline constexpr uint32_t kImmediateConstantElementByteSize = sizeof(uint32_t);
 
-// Total number of "internal" 32-bit immediates, which includes both external (user) immediates
-// and any other immediates used by Dawn internally (e.g. workgroup sizes).
-// Vulkan's min-max push constant limit is 128 bytes / 4 = 32 values,
-// while D3D12's limit is 256 bytes / 4 = 64 values, so we pick 32 here.
-inline constexpr uint32_t kMaxImmediateConstantsPerPipeline = 32u;
+// ImmediateConstantMask bits transfer to 64-bit uint to do bit algorithm
+// and iterate quickly.
+inline constexpr uint32_t kMaxImmediateConstantMaskBits = 64u;
 
 // Adapter Max limitation for user immediate constants is 64 bytes.
 inline constexpr uint32_t kMaxImmediateDataBytes = 64u;

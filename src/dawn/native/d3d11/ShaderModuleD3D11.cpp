@@ -33,7 +33,6 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/MatchVariant.h"
-#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/Pipeline.h"
 #include "dawn/native/TintUtils.h"
 #include "dawn/native/d3d/D3DCompilationRequest.h"
@@ -41,6 +40,7 @@
 #include "dawn/native/d3d11/BackendD3D11.h"
 #include "dawn/native/d3d11/BindGroupLayoutD3D11.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
+#include "dawn/native/d3d11/ImmediateConstantsLayoutD3D11.h"
 #include "dawn/native/d3d11/PhysicalDeviceD3D11.h"
 #include "dawn/native/d3d11/PipelineLayoutD3D11.h"
 #include "dawn/native/d3d11/PlatformFunctionsD3D11.h"
@@ -140,12 +140,12 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         tint::BindingPoint{0, PipelineLayout::kReservedConstantBufferSlot};
     if (stage == SingleShaderStage::Compute) {
         req.hlsl.tintOptions.num_workgroups_start_offset = GetImmediateByteOffsetInPipelineIfAny(
-            &ComputeImmediateConstants::numWorkgroups, pipelineImmediateMask);
+            &ComputeImmediateConstantsD3D11::numWorkgroups, pipelineImmediateMask);
     } else {
         req.hlsl.tintOptions.first_index_offset = GetImmediateByteOffsetInPipelineIfAny(
-            &RenderImmediateConstants::firstVertex, pipelineImmediateMask);
+            &RenderImmediateConstantsD3D11::firstVertex, pipelineImmediateMask);
         req.hlsl.tintOptions.first_instance_offset = GetImmediateByteOffsetInPipelineIfAny(
-            &RenderImmediateConstants::firstInstance, pipelineImmediateMask);
+            &RenderImmediateConstantsD3D11::firstInstance, pipelineImmediateMask);
     }
 
     if (stage == SingleShaderStage::Vertex) {

@@ -60,6 +60,7 @@
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/FramebufferCache.h"
 #include "dawn/native/vulkan/FramebufferFetchHelper.h"
+#include "dawn/native/vulkan/ImmediateConstantsLayoutVk.h"
 #include "dawn/native/vulkan/PhysicalDeviceVk.h"
 #include "dawn/native/vulkan/PipelineLayoutVk.h"
 #include "dawn/native/vulkan/QuerySetVk.h"
@@ -347,6 +348,25 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
     uint32_t mLastAppliedImmediateConstantSize = 0;
     uint32_t mImmediateConstantSize = 0;
 };
+
+class RenderImmediateConstantsTrackerVk
+    : public UserImmediateConstantsTrackerBase<RenderImmediateConstantsVk, RenderPipelineBase> {
+  public:
+    RenderImmediateConstantsTrackerVk() = default;
+
+    void SetClampFragDepth(float minClampFragDepth, float maxClampFragDepth) {
+        // Put the data in the right layout to match the RenderImmediateConstants struct
+        ClampFragDepthArgs fragDepthArgs;
+        fragDepthArgs.minClampFragDepth = minClampFragDepth;
+        fragDepthArgs.maxClampFragDepth = maxClampFragDepth;
+
+        UpdateImmediateConstants(offsetof(RenderImmediateConstantsVk, clampFragDepth),
+                                 fragDepthArgs);
+    }
+};
+
+using ComputeImmediateConstantsTrackerVk =
+    UserImmediateConstantsTrackerBase<ComputeImmediateConstantsVk, ComputePipelineBase>;
 
 template <typename T>
 class ImmediateConstantTracker : public T {
@@ -731,10 +751,10 @@ struct ProgrammablePassState : public StackAllocated {
     Pipeline* lastAppliedPipeline = nullptr;
 };
 
-using RenderPassState = ProgrammablePassState<RenderImmediateConstantsTrackerBase,
+using RenderPassState = ProgrammablePassState<RenderImmediateConstantsTrackerVk,
                                               RenderPipeline,
                                               VK_PIPELINE_BIND_POINT_GRAPHICS>;
-using ComputePassState = ProgrammablePassState<ComputeImmediateConstantsTrackerBase,
+using ComputePassState = ProgrammablePassState<ComputeImmediateConstantsTrackerVk,
                                                ComputePipeline,
                                                VK_PIPELINE_BIND_POINT_COMPUTE>;
 

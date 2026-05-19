@@ -41,6 +41,7 @@
 #include "dawn/native/TintUtils.h"
 #include "dawn/native/metal/BindGroupLayoutMTL.h"
 #include "dawn/native/metal/DeviceMTL.h"
+#include "dawn/native/metal/ImmediateConstantsLayoutMTL.h"
 #include "dawn/native/metal/PipelineLayoutMTL.h"
 #include "dawn/native/metal/RenderPipelineMTL.h"
 #include "dawn/native/metal/UtilsMetal.h"
@@ -331,9 +332,10 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.tintOptions.vertex_pulling_config = std::move(vertexPullingTransformConfig);
 
     // Set internal immediate constant offsets
-    if (HasImmediateConstants(&RenderImmediateConstants::clampFragDepth, pipelineImmediateMask)) {
+    if (HasImmediateConstants(&RenderImmediateConstantsMTL::clampFragDepth,
+                              pipelineImmediateMask)) {
         uint32_t offsetStartBytes = GetImmediateByteOffsetInPipeline(
-            &RenderImmediateConstants::clampFragDepth, pipelineImmediateMask);
+            &RenderImmediateConstantsMTL::clampFragDepth, pipelineImmediateMask);
         req.tintOptions.depth_range_offsets = {
             offsetStartBytes, offsetStartBytes + kImmediateConstantElementByteSize};
     }

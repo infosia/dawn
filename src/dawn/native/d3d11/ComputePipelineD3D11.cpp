@@ -31,9 +31,9 @@
 #include <utility>
 
 #include "dawn/native/CreatePipelineAsyncEvent.h"
-#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
+#include "dawn/native/d3d11/ImmediateConstantsLayoutD3D11.h"
 #include "dawn/native/d3d11/PipelineStateTrackerD3D11.h"
 #include "dawn/native/d3d11/ShaderModuleD3D11.h"
 #include "dawn/native/d3d11/UtilsD3D11.h"
@@ -56,8 +56,9 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
     uint32_t compileFlags = 0;
 
     if (UsesNumWorkgroups()) {
-        mImmediateMask |= GetImmediateConstantBlockBits(
-            offsetof(ComputeImmediateConstants, numWorkgroups), sizeof(NumWorkgroupsDimensions));
+        mImmediateMask |=
+            GetImmediateConstantBlockBits(offsetof(ComputeImmediateConstantsD3D11, numWorkgroups),
+                                          sizeof(NumWorkgroupsDimensions));
     }
 
     if (!device->IsToggleEnabled(Toggle::UseDXC) &&
