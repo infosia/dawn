@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <tuple>
 #include <vector>
 
@@ -39,6 +34,7 @@
 #include "dawn/tests/perf_tests/DawnPerfTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -303,7 +299,7 @@ void DrawCallPerf::SetUpPerfTest() {
 
         case VertexBuffer::Multiple: {
             for (uint32_t i = 0; i < kNumDraws; ++i) {
-                mVertexBuffers[i] = utils::CreateBufferFromData(
+                DAWN_UNSAFE_TODO(mVertexBuffers[i]) = utils::CreateBufferFromData(
                     device, kVertexData, sizeof(kVertexData), wgpu::BufferUsage::Vertex);
             }
             break;
@@ -312,7 +308,8 @@ void DrawCallPerf::SetUpPerfTest() {
         case VertexBuffer::Dynamic: {
             std::vector<char> data(mAlignedVertexDataSize * kNumDraws);
             for (uint32_t i = 0; i < kNumDraws; ++i) {
-                memcpy(data.data() + mAlignedVertexDataSize * i, kVertexData, sizeof(kVertexData));
+                DAWN_UNSAFE_TODO(memcpy(data.data() + mAlignedVertexDataSize * i, kVertexData,
+                                        sizeof(kVertexData)));
             }
 
             mVertexBuffers[0] = utils::CreateBufferFromData(device, data.data(), data.size(),
@@ -420,21 +417,22 @@ void DrawCallPerf::SetUpPerfTest() {
 
         case BindGroup::NoReuse:
             for (uint32_t i = 0; i < kNumDraws; ++i) {
-                mUniformBuffers[i] = utils::CreateBufferFromData(
-                    device, mUniformBufferData.data() + i * mNumUniformFloats, 3 * sizeof(float),
-                    wgpu::BufferUsage::Uniform);
+                DAWN_UNSAFE_TODO(mUniformBuffers[i]) = utils::CreateBufferFromData(
+                    device, DAWN_UNSAFE_TODO(mUniformBufferData.data() + i * mNumUniformFloats),
+                    3 * sizeof(float), wgpu::BufferUsage::Uniform);
             }
             // Bind groups are created on-the-fly.
             break;
 
         case BindGroup::Multiple:
             for (uint32_t i = 0; i < kNumDraws; ++i) {
-                mUniformBuffers[i] = utils::CreateBufferFromData(
-                    device, mUniformBufferData.data() + i * mNumUniformFloats, 3 * sizeof(float),
-                    wgpu::BufferUsage::Uniform);
+                DAWN_UNSAFE_TODO(mUniformBuffers[i]) = utils::CreateBufferFromData(
+                    device, DAWN_UNSAFE_TODO(mUniformBufferData.data() + i * mNumUniformFloats),
+                    3 * sizeof(float), wgpu::BufferUsage::Uniform);
 
-                mUniformBindGroups[i] = utils::MakeBindGroup(
-                    device, mUniformBindGroupLayout, {{0, mUniformBuffers[i], 0, kUniformSize}});
+                DAWN_UNSAFE_TODO(mUniformBindGroups[i]) = utils::MakeBindGroup(
+                    device, mUniformBindGroupLayout,
+                    {{0, DAWN_UNSAFE_TODO(mUniformBuffers[i]), 0, kUniformSize}});
             }
             break;
 
@@ -513,7 +511,7 @@ void DrawCallPerf::RecordRenderCommands(Encoder pass) {
                 break;
 
             case VertexBuffer::Multiple:
-                pass.SetVertexBuffer(0, mVertexBuffers[i]);
+                pass.SetVertexBuffer(0, DAWN_UNSAFE_TODO(mVertexBuffers[i]));
                 break;
 
             case VertexBuffer::Dynamic:
@@ -532,13 +530,14 @@ void DrawCallPerf::RecordRenderCommands(Encoder pass) {
 
             case BindGroup::NoReuse: {
                 wgpu::BindGroup bindGroup = utils::MakeBindGroup(
-                    device, mUniformBindGroupLayout, {{0, mUniformBuffers[i], 0, kUniformSize}});
+                    device, mUniformBindGroupLayout,
+                    {{0, DAWN_UNSAFE_TODO(mUniformBuffers[i]), 0, kUniformSize}});
                 pass.SetBindGroup(uniformBindGroupIndex, bindGroup);
                 break;
             }
 
             case BindGroup::Multiple:
-                pass.SetBindGroup(uniformBindGroupIndex, mUniformBindGroups[i]);
+                pass.SetBindGroup(uniformBindGroupIndex, DAWN_UNSAFE_TODO(mUniformBindGroups[i]));
                 break;
 
             case BindGroup::Dynamic: {
@@ -570,9 +569,10 @@ void DrawCallPerf::Step() {
             case BindGroup::NoReuse:
             case BindGroup::Multiple:
                 for (uint32_t i = 0; i < kNumDraws; ++i) {
-                    queue.WriteBuffer(mUniformBuffers[i], 0,
-                                      mUniformBufferData.data() + i * mNumUniformFloats,
-                                      3 * sizeof(float));
+                    queue.WriteBuffer(
+                        DAWN_UNSAFE_TODO(mUniformBuffers[i]), 0,
+                        DAWN_UNSAFE_TODO(mUniformBufferData.data() + i * mNumUniformFloats),
+                        3 * sizeof(float));
                 }
                 break;
             case BindGroup::Dynamic:
