@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46fe1ede_7d30a115",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-19T21:58:12Z",
+      "side": 1,
+      "message": "We could do this, but since this is just a test file I don\u0027t think it\u0027s really worthwhile. It\u0027s not a big problem for test files with just a few DAWN_UNSAFE_TODO, but for these ones that have a lot, I think we should either leave the file-level pragma OR go directly to fixing them. Otherwise it\u0027s just a bunch of noise we\u0027re not going to bother to fix.",
+      "revId": "5992be71adaf0f96559f4cec46c711a0b34bb18c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
