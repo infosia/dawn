@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cef8b464_8a94507b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-20T02:20:39Z",
+      "side": 1,
+      "message": "I can\u0027t actually see the bug unfortunately... But the change seems reasonable assuming that it was possible to encode the copy, never submit it, then have uninitialized data in the buffer.",
+      "revId": "8dbeb6cc4b0fe27f0b6173b2ebed862492a4a812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
