@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a01b66d_854c8417",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-20T19:54:19Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with this part of Dawn\u0027s flow so adding Kai as reviewer instead who is hopefully better replaced to review or reassign.",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29c9eb83_68b6cb68",
