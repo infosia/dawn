@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ee6da3a_25f5c74d",
+        "filename": "src/dawn/tests/end2end/BufferViewTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-20T18:54:46Z",
+      "side": 1,
+      "message": "Should these be uncommented or removed?",
+      "range": {
+        "startLine": 700,
+        "startChar": 0,
+        "endLine": 702,
+        "endChar": 34
+      },
+      "revId": "a9d0c80c45d33ad0d4b68e7ce33e501fa90a8460",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
