@@ -193,7 +193,7 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
     // can be updated from the server (via a response) or from the client (via an unmap/destroy
     // call).
     struct Response {
-        WGPUMapAsyncStatus status;
+        WGPUMapAsyncStatus status = {};
         std::string message;
     };
     MutexProtected<Response> mResponse;
@@ -494,7 +494,7 @@ void Buffer::APIUnmap() {
         size_t writeDataUpdateInfoLength =
             mWriteHandle->SizeOfSerializeDataUpdate(mMappedOffset, mMappedSize);
 
-        BufferUpdateMappedDataCmd cmd;
+        BufferUpdateMappedDataCmd cmd{};
         cmd.bufferId = GetWireHandle(client).id;
         // Set the pointer length, but the pointed-to data itself won't be serialized as usual (due
         // to skip_serialize). Instead, the custom CommandExtension below fills that memory.
@@ -535,7 +535,7 @@ void Buffer::APIUnmap() {
     mMappedOffset = 0;
     mMappedSize = 0;
 
-    BufferUnmapCmd cmd;
+    BufferUnmapCmd cmd{};
     cmd.self = ToAPI(this);
     client->SerializeCommand(cmd);
 
@@ -548,7 +548,7 @@ void Buffer::APIDestroy() {
     // Remove the current mapping and destroy Read/WriteHandles.
     FreeMappedData();
 
-    BufferDestroyCmd cmd;
+    BufferDestroyCmd cmd{};
     cmd.self = ToAPI(this);
     client->SerializeCommand(cmd);
 
