@@ -16,6 +16,24 @@
       "message": "The changes look fine but is this something that we can move to `ConstParamValidator` instead (`const_param_validator.cc`)? That\u0027s where we try to do most of the post-override validation for these things, which will help in the future with our vague plans to move more WGSL validation rules into the IR validator to avoid this duplication.",
       "revId": "08af1ccc4b5235a415589e5e532c9933194fa535",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3e97d2b_5e0f4069",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-05-20T15:51:43Z",
+      "side": 1,
+      "message": "I\u0027ll look at that. Can it do inter-procedural validation?",
+      "parentUuid": "8d7d4ac5_3a752d1f",
+      "revId": "08af1ccc4b5235a415589e5e532c9933194fa535",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
