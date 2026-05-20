@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "759d708b_7fd327b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4843662
+      },
+      "writtenOn": "2026-05-20T23:56:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a533b5d7_51b6048b",
+      "revId": "15c861414aebb913d6033fc0cb2f3fffba6d60e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e3d2869_87a57ea7",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-05-20T10:01:09Z",
       "side": 1,
       "message": "```suggestion\nFix:\n\n- a conditional \"presentFlags\" passed to CheckHRESULT method instead of a hardcoded 0\n\nFixed: 513613499\n```",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "15c861414aebb913d6033fc0cb2f3fffba6d60e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d85d741f_fb7668fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4843662
+      },
+      "writtenOn": "2026-05-20T23:56:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e3d2869_87a57ea7",
       "range": {
         "startLine": 13,
         "startChar": 0,
@@ -71,6 +113,24 @@
       "writtenOn": "2026-05-20T10:01:09Z",
       "side": 1,
       "message": "nit: run `git cl format` to fix the formatting.",
+      "revId": "15c861414aebb913d6033fc0cb2f3fffba6d60e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ab518d5_685a32db",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 4843662
+      },
+      "writtenOn": "2026-05-20T23:56:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13c97d63_f32c0813",
       "revId": "15c861414aebb913d6033fc0cb2f3fffba6d60e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
