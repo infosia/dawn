@@ -131,10 +131,10 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
     virtual MaybeError InitializeWithShaders() = 0;
 
     wgpu::ShaderStage mStageMask = wgpu::ShaderStage::None;
-    PerStage<ProgrammableStage> mStages;
+    PerStage<ProgrammableStage> mStages = {};
 
     Ref<PipelineLayoutBase> mLayout;
-    RequiredBufferSizes mMinBufferSizes;
+    RequiredBufferSizes mMinBufferSizes = {};
 };
 
 }  // namespace dawn::native
