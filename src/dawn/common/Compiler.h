@@ -32,6 +32,12 @@
 
 // Defines macros for compiler-specific functionality
 
+// DAWN_UNUSED
+//
+// Prevents unused expression warnings.
+
+#define DAWN_UNUSED(EXPR) static_assert(sizeof(!!(EXPR)) == 1)
+
 // DAWN_UNUSED_FUNC
 //
 // Prevents unused variable/expression warnings on FUNC.
