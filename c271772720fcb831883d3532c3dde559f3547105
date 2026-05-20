@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32d6f624_4951409d",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-20T03:18:46Z",
+      "side": 1,
+      "message": "It\u0027s hard to understand what\u0027s going on with ErrorInjectorEnabled without [the comment that used to be there](https://dawn-review.git.corp.google.com/c/dawn/+/302578/4/src/dawn/native/Device.cpp#b683). I was going to suggest adding it back, but actually, the code you added here is the same as what happens in the disallowed-error case. Looking at this closer I think we can separate this into two separate steps that are simpler. Does this look right? Or is something about this reordering invalid?\n\n```suggestion\n    // If ErrorInjectorEnabled() then this may be an injected DeviceLost, not a real one.\n    bool deviceDefinitelyStopped \u003d type \u003d\u003d InternalErrorType::DeviceLost \u0026\u0026 !ErrorInjectorEnabled();\n    if (deviceDefinitelyStopped) {\n        // If the device was lost naturally, the backend device has already stopped.\n        mState \u003d State::Disconnected;\n    } else {\n        // Otherwise it may still be executing. Transition to a non-alive state if we are currently\n        // alive, so that the application can no longer use the device.\n        State prev \u003d State::Alive;\n        mState.compare_exchange_strong(prev, State::BeingDisconnected, std::memory_order::acq_rel);\n    }\n\n    InternalErrorType allowedErrors \u003d\n        InternalErrorType::Validation | InternalErrorType::DeviceLost | additionalAllowedErrors;\n    if (!(allowedErrors \u0026 type)) {\n        // If we receive an error which we did not explicitly allow, assume the backend can\u0027t\n        // recover and lose the device now. Cleanup for the device will be deferred until the last\n        // external reference of the device is dropped, or an explicit call to Destroy.\n        error-\u003eAppendContext(\"handling unexpected error type %s when allowed errors are %s.\", type,\n                             allowedErrors);\n\n        // Handle the remainder of this error as if it caused a device lost.\n        type \u003d InternalErrorType::DeviceLost;\n    }\n```",
+      "range": {
+        "startLine": 671,
+        "startChar": 0,
+        "endLine": 696,
+        "endChar": 5
+      },
+      "revId": "c271772720fcb831883d3532c3dde559f3547105",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
