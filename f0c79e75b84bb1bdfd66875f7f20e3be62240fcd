@@ -16,6 +16,24 @@
       "message": "I wasn\u0027t sure about this, but frexp is in this category too. They both have out parameters.",
       "revId": "f0c79e75b84bb1bdfd66875f7f20e3be62240fcd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78ff203c_a0a9cd9e",
+        "filename": "src/tint/lang/glsl/builtin_fn.cc.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-20T17:32:55Z",
+      "side": 1,
+      "message": "I think we do need to signal that it stores. It won\u0027t matter for your polyfill, but if we start using it for other things (e.g. we add `add_sat` to WGSL), then the inliner will do the wrong.\n\nYou can see this by adding a unit test that uses the builtin directly:\n```\nTEST_F(GlslWriterTest, AddSat_SideEffects) {\n    auto* foo \u003d b.Function(\"foo\", ty.void_());\n    auto* lhs \u003d b.FunctionParam(\"a\", ty.u32());\n    auto* rhs \u003d b.FunctionParam(\"b\", ty.u32());\n    foo-\u003eSetParams({lhs, rhs});\n    b.Append(foo-\u003eBlock(), [\u0026] {\n        auto* out \u003d b.Var\u003cfunction, u32\u003e();\n        auto* call \u003d\n            b.Call\u003cglsl::ir::BuiltinCall\u003e(ty.u32(), glsl::BuiltinFn::kUaddCarry, lhs, rhs, out);\n        // *** this load instruction is after the call instruction ***\n        b.Let(\"load_out_after_call\", b.Load(out));\n        b.Let(\"res\", call);\n        b.Return(foo);\n    });\n    auto* ep \u003d b.ComputeFunction(\"main\");\n    b.Append(ep-\u003eBlock(), [\u0026] {\n        b.Call(ty.void_(), foo, 0_u, 1_u);\n        b.Return(ep);\n    });\n\n    auto result \u003d Generate();\n    ASSERT_EQ(result, Success) \u003c\u003c result.Failure() \u003c\u003c output_.glsl;\n    EXPECT_EQ(output_.glsl, GlslHeader() + R\"(\nvoid foo(uint a, uint b) {\n  uint v \u003d 0u;\n  // *** this load happens before the call, instead of after it ***\n  uint load_out_after_call \u003d v;\n  uint res \u003d uaddCarry(a, b, v);\n}\nlayout(local_size_x \u003d 1, local_size_y \u003d 1, local_size_z \u003d 1) in;\nvoid main() {\n  foo(0u, 1u);\n}\n)\");\n}\n```\n\nfrexp and modf are probably wrong too and should be changed at some point, but I don\u0027t think will cause issues unless they are used outside of their polyfills which seems unlikely.",
+      "parentUuid": "3fcb32b1_99d38d92",
+      "revId": "f0c79e75b84bb1bdfd66875f7f20e3be62240fcd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
