@@ -34,6 +34,24 @@
       "parentUuid": "8d7d4ac5_3a752d1f",
       "revId": "08af1ccc4b5235a415589e5e532c9933194fa535",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a5734b5_a9cc7bfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-20T17:44:44Z",
+      "side": 1,
+      "message": "At the moment it\u0027s just a simple walk over instructions, but I think you could just move the traversal you\u0027ve done here over verbatim and do it as a separate walk.",
+      "parentUuid": "f3e97d2b_5e0f4069",
+      "revId": "08af1ccc4b5235a415589e5e532c9933194fa535",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
