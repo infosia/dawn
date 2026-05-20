@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18aad409_700e94d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-20T03:54:53Z",
+      "side": 1,
+      "message": "also 439062058",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f576bb67_4e62622f",
+        "filename": "src/dawn/native/CacheKey.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-20T03:54:53Z",
+      "side": 1,
+      "message": "Is CacheKey actually string-like? I know string_view is technically fine for any string of chars but it could be confusing if it contained a `\\0` for example. Might make more sense to just use a span.",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
