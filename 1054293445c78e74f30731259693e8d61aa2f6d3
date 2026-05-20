@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae92d820_24d8b428",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-20T17:44:59Z",
+      "side": 1,
+      "message": "Needs second review for some reason even though it was opened by Chrome Cherry Picker.",
+      "revId": "1054293445c78e74f30731259693e8d61aa2f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
