@@ -912,6 +912,7 @@ set(dawn_native_public_depends
     dawn::dawn_platform
     dawn::dawncpp_headers
     dawn::partition_alloc
+    libtint
     ${conditional_public_depends}
 )
 set(dawn_native_private_depends
@@ -922,7 +923,6 @@ set(dawn_native_private_depends
     absl::str_format_internal
     absl::strings
     dawn::dawn_system_utils
-    libtint
     ${conditional_private_depends}
 )
 
