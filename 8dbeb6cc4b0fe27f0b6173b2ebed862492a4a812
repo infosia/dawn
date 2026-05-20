@@ -16,6 +16,24 @@
       "message": "I can\u0027t actually see the bug unfortunately... But the change seems reasonable assuming that it was possible to encode the copy, never submit it, then have uninitialized data in the buffer.",
       "revId": "8dbeb6cc4b0fe27f0b6173b2ebed862492a4a812",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "932896ea_6d9816cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-20T17:46:25Z",
+      "side": 1,
+      "message": "oops. my bad. cc\u0027ed. But yeah you are right.",
+      "parentUuid": "cef8b464_8a94507b",
+      "revId": "8dbeb6cc4b0fe27f0b6173b2ebed862492a4a812",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
