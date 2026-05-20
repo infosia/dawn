@@ -51,6 +51,131 @@
       "parentUuid": "cf1ef876_c1b49464",
       "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98454a23_bc25d8ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T12:21:02Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1a3e6e6_04d84802",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T12:21:02Z",
+      "side": 1,
+      "message": "nit: \n```suggestion\n// Cap the maximum number of immediates (internal + external) to 64 for fast bit algorithms on the ImmediatesMask.\ninline constexpr uint32_t kMaxImmediateConstantMaskBits \u003d 64u;\n```",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 1
+      },
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97fb7355_ae81b4c6",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T12:21:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03d3d2e1_95a6ec9a",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T12:21:02Z",
+      "side": 1,
+      "message": "Since this is static conspexpr (it should be `inline constexpr` instead IIRC), IMHO it can be public, which avoids the awkward getter.",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13145fd3_cfdadba6",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T12:21:02Z",
+      "side": 1,
+      "message": "u-nit: that comment seems more confusing than helpful?",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f475c38e_88afb705",
+        "filename": "src/dawn/native/vulkan/ImmediateConstantsLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T12:21:02Z",
+      "side": 1,
+      "message": "Since we\u0027re touching this, let\u0027s also make a pass at using the final name for immediates:\n\n - `ImmediateConstantsLayout` -\u003e `ImmediatesLayout`\n - `RenderImmediateConstantsVk` -\u003e `RenderImmediates` (we\u0027re already in the `dawn::native::vulkan` namespace), etc.\n \nDitto in other backends / frontend.\n \n`git grep -i \"immediate\\.\\?constant\"` should return no matches ideally and I think it would be pretty quick to fix with a few find/replace operations (mostly to handle the two casings of Immediate vs. immediate and the pluralization of constant vs. constants).\n\nFor example  `git grep -i -l \"immediate\\.\\?constant\" | xargs sed -i \"\" \"s/ImmediateConstants/Immediates/\"`\n\nBut also feel free to do as a follow-up if that\u0027s too much change for this CL.",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc330c20_bab93ab1",
+        "filename": "src/dawn/native/vulkan/ImmediateConstantsLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T12:21:02Z",
+      "side": 1,
+      "message": "nit: comments can be wrapped to 100 characters per line. Ditto in other places.",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
