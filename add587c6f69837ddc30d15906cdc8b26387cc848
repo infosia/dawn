@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db4206f9_5dbc9be2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T08:12:53Z",
+      "side": 1,
+      "message": "LGTM, though TBH I\u0027d rather keep the file level suppressions for the files with lots of `DAWN_UNSAFE_TODO`, especially DawnTests.cpp because it\u0027s going to make it super noisy until we fix it.",
+      "revId": "add587c6f69837ddc30d15906cdc8b26387cc848",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
