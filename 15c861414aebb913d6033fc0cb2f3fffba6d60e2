@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a533b5d7_51b6048b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T10:01:09Z",
+      "side": 1,
+      "message": "nit: please wrap the commit message to 80 characters per line. (I thought that the git commit message editor would do that on its own)",
+      "revId": "15c861414aebb913d6033fc0cb2f3fffba6d60e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e3d2869_87a57ea7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T10:01:09Z",
+      "side": 1,
+      "message": "```suggestion\nFix:\n\n- a conditional \"presentFlags\" passed to CheckHRESULT method instead of a hardcoded 0\n\nFixed: 513613499\n```",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "15c861414aebb913d6033fc0cb2f3fffba6d60e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72cf76a8_0ec1f010",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T10:01:09Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "15c861414aebb913d6033fc0cb2f3fffba6d60e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13c97d63_f32c0813",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-20T10:01:09Z",
+      "side": 1,
+      "message": "nit: run `git cl format` to fix the formatting.",
+      "revId": "15c861414aebb913d6033fc0cb2f3fffba6d60e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
