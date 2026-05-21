@@ -39,7 +39,6 @@
 
 namespace dawn {
 namespace {
-
 constexpr static unsigned int kRTSize = 16;
 
 class DrawQuad {
@@ -688,9 +687,6 @@ TEST_P(RenderPassLoadOpTests, LoadOpClearWithBig32BitIntegralValuesOnMultipleCol
 // Test using LoadOp::Clear with different big unsigned integers as clearValues and LoadOp::Load on
 // the other color attachments in one render pass encoder works correctly.
 TEST_P(RenderPassLoadOpTests, MixedUseOfLoadOpLoadAndLoadOpClearWithBigIntegerValues) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     // TODO(383733873): ApplyClearBigIntegerColorValueWithDraw workaround doesn't work with multiple
     // outputs in compat mode.
     DAWN_TEST_UNSUPPORTED_IF(IsD3D11() && IsCompatibilityMode());
@@ -772,6 +768,5 @@ DAWN_INSTANTIATE_TEST(
     VulkanBackend({"vulkan_use_create_render_pass_2"}, {"vulkan_use_dynamic_rendering"}),
     VulkanBackend({}, {"vulkan_use_create_render_pass_2", "vulkan_use_dynamic_rendering"}),
     WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

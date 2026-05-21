@@ -52,7 +52,6 @@
 
 namespace dawn {
 namespace {
-
 template <typename Step>
 class LockStep {
   public:
@@ -118,12 +117,6 @@ class MultithreadTests : public DawnTest {
 
 // Test that dropping a device's last ref on another thread won't crash Instance::ProcessEvents.
 TEST_P(MultithreadTests, Device_DroppedOnAnotherThread) {
-    // TODO(crbug.com/dawn/1779): This test seems to cause flakiness in other sampling tests on
-    // NVIDIA.
-    DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
-    // TODO(crbug.com/42240870): Flaky on Linux TSAN Release
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsTsan());
-
     std::vector<wgpu::Device> devices(5);
 
     // Create devices.
@@ -155,12 +148,6 @@ TEST_P(MultithreadTests, Device_DroppedOnAnotherThread) {
 // Test that dropping a device's last ref inside a callback on another thread won't crash
 // Instance::ProcessEvents.
 TEST_P(MultithreadTests, Device_DroppedInCallback_OnAnotherThread) {
-    // TODO(crbug.com/dawn/1779): This test seems to cause flakiness in other sampling tests on
-    // NVIDIA.
-    DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
-    // TODO(crbug.com/407567233): Seeing a lot of timeouts on this test on TSAN bots.
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsTsan());
-
     std::vector<wgpu::Device> devices(10);
 
     // Create devices.
@@ -206,10 +193,6 @@ TEST_P(MultithreadTests, Device_WaitForDroppedAfterDropped) {
 
 // Test that we can wait for a device lost on another thread.
 TEST_P(MultithreadTests, Device_WaitForDroppedInAnotherThread) {
-    // TODO(crbug.com/dawn/1779): This test seems to cause flakiness in other sampling tests on
-    // NVIDIA.
-    DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
-
     enum class Step {
         Begin,
         Waiting,
@@ -387,9 +370,6 @@ TEST_P(MultithreadTests, MapAtCreationInParallel) {
 
 // Test map at creation, copy to uniform buffer, draw, then map again, copy and draw in parallel.
 TEST_P(MultithreadTests, MapAtCreationThenMapAgainWithRenderPassInParallel) {
-    // TODO(crbug.com/451928481): multithread support in GL is incomplete
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     constexpr uint32_t kNumThreads = 4;
     const float kRed[] = {1.0f, 0.0f, 0.0f, 1.0f};
     const float kBlue[] = {0.0f, 0.0f, 1.0f, 1.0f};
@@ -621,9 +601,6 @@ TEST_P(MultithreadTests, T2BThenDestroyTexture) {
 
 // Test that copy a texture to a buffer then map that buffer in parallel works.
 TEST_P(MultithreadTests, T2BThenMapInParallel) {
-    // TODO(crbug.com/459848483): Flaky on Win/Snapdragon X Elite.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
-
     constexpr uint32_t kTextureSize = 512;
     constexpr wgpu::TextureFormat kTextureFormat = wgpu::TextureFormat::RGBA8Unorm;
     constexpr uint32_t kBytesPerPixel = 4;
@@ -729,9 +706,6 @@ TEST_P(MultithreadTests, CreateShaderModuleInParallel) {
 
 // Test CreateComputePipelineAsync on multiple threads.
 TEST_P(MultithreadTests, CreateComputePipelineAsyncInParallel) {
-    // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
-
     std::vector<wgpu::ComputePipeline> pipelines(10);
     std::vector<std::string> shaderSources(pipelines.size());
     std::vector<uint32_t> expectedValues(shaderSources.size());
@@ -814,9 +788,6 @@ TEST_P(MultithreadTests, CreateComputePipelineAsyncInParallel) {
 
 // Test CreateComputePipeline on multiple threads.
 TEST_P(MultithreadTests, CreateComputePipelineInParallel) {
-    // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
-
     std::vector<wgpu::ComputePipeline> pipelines(10);
     std::vector<std::string> shaderSources(pipelines.size());
     std::vector<uint32_t> expectedValues(shaderSources.size());
@@ -880,9 +851,6 @@ TEST_P(MultithreadTests, CreateComputePipelineInParallel) {
 
 // Test CreateRenderPipelineAsync on multiple threads.
 TEST_P(MultithreadTests, CreateRenderPipelineAsyncInParallel) {
-    // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
-
     constexpr uint32_t kNumThreads = 10;
     constexpr wgpu::TextureFormat kRenderAttachmentFormat = wgpu::TextureFormat::RGBA8Unorm;
     constexpr uint8_t kColorStep = 250 / kNumThreads;
@@ -979,9 +947,6 @@ TEST_P(MultithreadTests, CreateRenderPipelineAsyncInParallel) {
 
 // Test CreateRenderPipeline on multiple threads.
 TEST_P(MultithreadTests, CreateRenderPipelineInParallel) {
-    // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
-
     constexpr uint32_t kNumThreads = 10;
     constexpr wgpu::TextureFormat kRenderAttachmentFormat = wgpu::TextureFormat::RGBA8Unorm;
     constexpr uint8_t kColorStep = 250 / kNumThreads;
@@ -1143,9 +1108,6 @@ TEST_P(MultithreadTests, DestroyTextureAndViewsAtSameTime) {
 
 // Test that creating, labeling and using various objects in parallel works.
 TEST_P(MultithreadTests, SetLabelInParallel) {
-    // TODO(crbug.com/451928481): multithread support in GL is incomplete
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     constexpr uint32_t kNumThreads = 20;
     constexpr uint32_t kSize = 1;
 
@@ -1219,9 +1181,6 @@ TEST_P(MultithreadTests, SetLabelInParallel) {
 
 // Test that setting label in parallel with a validation error doesn't race or crash.
 TEST_P(MultithreadTests, SetLabelAndValidationInParallel) {
-    // TODO(crbug.com/451928481): multithread support in GL is incomplete
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
 
     constexpr uint32_t kNumThreads = 20;
@@ -1362,15 +1321,6 @@ class MultithreadEncodingTests : public MultithreadTests {};
 
 // Test that encoding render passes in parallel should work
 TEST_P(MultithreadEncodingTests, RenderPassEncodersInParallel) {
-    // TODO(crbug.com/468047550): Fails on Win11/NVIDIA GTX 1660.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
-
-    // TODO(crbug.com/468047550): Fails on Win11/AMD RX 5500 XT.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
-    // TODO(crbug.com/473899151): [Capture] multisampled.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint32_t kRTSize = 16;
     constexpr uint32_t kNumThreads = 10;
 
@@ -1413,15 +1363,6 @@ TEST_P(MultithreadEncodingTests, RenderPassEncodersInParallel) {
 
 // Test that encoding render passes that resolve to a mip level in parallel should work
 TEST_P(MultithreadEncodingTests, RenderPassEncoders_ResolveToMipLevelOne_InParallel) {
-    // TODO(crbug.com/468047550): Fails on Win11/NVIDIA GTX 1660.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
-
-    // TODO(crbug.com/468047550): Fails on Win11/AMD RX 5500 XT.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
-    // TODO(crbug.com/473899151): [Capture] multisampled.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint32_t kRTSize = 16;
     constexpr uint32_t kNumThreads = 10;
 
@@ -1587,9 +1528,6 @@ class MultithreadTextureCopyTests : public MultithreadTests {
 // CopyTextureToTexture() command might internally allocate resources and we need to make sure that
 // it won't race with other threads' works.
 TEST_P(MultithreadTextureCopyTests, CopyDepthToDepthNoRace) {
-    // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
-
     enum class Step {
         Begin,
         WriteTexture,
@@ -1727,16 +1665,6 @@ TEST_P(MultithreadTextureCopyTests, CopyBufferToDepthNoRace) {
 // CopyTextureToTexture() command might internally allocate resources and we need to make sure that
 // it won't race with other threads' works.
 TEST_P(MultithreadTextureCopyTests, CopyStencilToStencilNoRace) {
-    // TODO(crbug.com/dawn/1497): glReadPixels: GL error: HIGH: Invalid format and type
-    // combination.
-    DAWN_SUPPRESS_TEST_IF(IsANGLE());
-
-    // TODO(dawn:1924): Intel Gen9 specific.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen9());
-
-    // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
-
     enum class Step {
         Begin,
         WriteTexture,
@@ -1853,8 +1781,6 @@ TEST_P(MultithreadTextureCopyTests, CopyBufferToStencilNoRace) {
 // This test is needed since CopyTextureForBrowser() command might internally allocate resources and
 // we need to make sure that it won't race with other threads' works.
 TEST_P(MultithreadTextureCopyTests, CopyTextureForBrowserNoRace) {
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
-
     enum class Step {
         Begin,
         WriteTexture,
@@ -1920,8 +1846,6 @@ TEST_P(MultithreadTextureCopyTests, CopyTextureForBrowserNoRace) {
 
 // Test that error from CopyTextureForBrowser() won't cause deadlock.
 TEST_P(MultithreadTextureCopyTests, CopyTextureForBrowserErrorNoDeadLock) {
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
-
     DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
 
     enum class Step {
@@ -2102,9 +2026,6 @@ class MultithreadDrawIndexedIndirectTests : public MultithreadTests {
 
 // Test indirect draws with offsets on multiple threads.
 TEST_P(MultithreadDrawIndexedIndirectTests, IndirectOffsetInParallel) {
-    // TODO(crbug.com/dawn/789): Test is failing after a roll on SwANGLE on Windows only.
-    DAWN_SUPPRESS_TEST_IF(IsANGLE() && IsWindows());
-
     utils::RGBA8 filled(0, 255, 0, 255);
     utils::RGBA8 notFilled(0, 0, 0, 0);
 
@@ -2173,11 +2094,6 @@ class MultithreadTimestampQueryTests : public MultithreadTests {
 // Test resolving timestamp queries on multiple threads. ResolveQuerySet() will create temp
 // resources internally so we need to make sure they are thread safe.
 TEST_P(MultithreadTimestampQueryTests, ResolveQuerySets_InParallel) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());  // Flaky on WARP
-
-    // TODO(crbug.com/451389800): [Capture] implement query set.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint32_t kQueryCount = 2;
     constexpr uint32_t kNumThreads = 10;
 
@@ -2283,6 +2199,5 @@ DAWN_INSTANTIATE_TEST(MultithreadTimestampQueryTests,
                       OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

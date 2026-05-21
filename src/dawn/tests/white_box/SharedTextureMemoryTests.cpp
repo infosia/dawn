@@ -46,9 +46,7 @@
 using testing::SizedStringMatches;
 
 namespace dawn {
-
 namespace {
-
 struct BackendBeginStateVk : public SharedTextureMemoryTestBackend::BackendBeginState {
     wgpu::SharedTextureMemoryVkImageLayoutBeginState imageLayouts{};
 };
@@ -56,7 +54,6 @@ struct BackendBeginStateVk : public SharedTextureMemoryTestBackend::BackendBegin
 struct BackendEndStateVk : public SharedTextureMemoryTestBackend::BackendEndState {
     wgpu::SharedTextureMemoryVkImageLayoutEndState imageLayouts{};
 };
-
 }  // anonymous namespace
 
 std::unique_ptr<SharedTextureMemoryTestBackend::BackendBeginState>
@@ -95,8 +92,6 @@ SharedTextureMemoryTestVulkanBackend::ChainBeginState(
 void SharedTextureMemoryNoFeatureTests::SetUp() {
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
     DawnTestWithParams<SharedTextureMemoryTestParams>::SetUp();
-    // TODO(crbug.com/483147423): Implement Capture.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
     GetParam().mBackend->SetUp(device);
 }
 
@@ -128,11 +123,6 @@ void SharedTextureMemoryTests::SetUp() {
     DawnTestWithParams<SharedTextureMemoryTestParams>::SetUp();
     DAWN_TEST_UNSUPPORTED_IF(
         !SupportsFeatures(GetParam().mBackend->RequiredFeatures(GetAdapter().Get())));
-    // TODO(crbug.com/342213634): Crashes on ChromeOS volteer devices.
-    // TODO(crbug.com/407561933): Triggers dawn validation errors
-    DAWN_SUPPRESS_TEST_IF(IsChromeOS() && IsVulkan() && IsIntel());
-    // TODO(crbug.com/483147423): Implement Capture.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
     // Compat cannot create 2D texture view from a 2D array texture.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() &&
@@ -806,7 +796,6 @@ GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(SharedTextureMemoryNoFeatureTests)
 GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(SharedTextureMemoryTests);
 
 namespace {
-
 using testing::HasSubstr;
 using testing::MockCppCallback;
 
@@ -993,12 +982,6 @@ TEST_P(SharedTextureMemoryTests, GetPropertiesErrorMemory) {
 
 // Tests that a SharedTextureMemory supports expected texture usages.
 TEST_P(SharedTextureMemoryTests, TextureUsages) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1094,12 +1077,6 @@ TEST_P(SharedTextureMemoryTests, GetPropertiesAHardwareBufferPropertiesRequiresA
 
 // Test that texture usages must be a subset of the shared texture memory's usage.
 TEST_P(SharedTextureMemoryTests, UsageValidation) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1134,12 +1111,6 @@ TEST_P(SharedTextureMemoryTests, UsageValidation) {
 
 // Test that it is an error if the texture format doesn't match the shared texture memory.
 TEST_P(SharedTextureMemoryTests, FormatValidation) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1159,12 +1130,6 @@ TEST_P(SharedTextureMemoryTests, FormatValidation) {
 
 // Test that it is an error if the texture size doesn't match the shared texture memory.
 TEST_P(SharedTextureMemoryTests, SizeValidation) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1193,12 +1158,6 @@ TEST_P(SharedTextureMemoryTests, SizeValidation) {
 
 // Test that it is an error if the texture mip level count is not 1.
 TEST_P(SharedTextureMemoryTests, MipLevelValidation) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1219,12 +1178,6 @@ TEST_P(SharedTextureMemoryTests, MipLevelValidation) {
 
 // Test that it is an error if the texture sample count is not 1.
 TEST_P(SharedTextureMemoryTests, SampleCountValidation) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1245,12 +1198,6 @@ TEST_P(SharedTextureMemoryTests, SampleCountValidation) {
 
 // Test that it is an error if the texture dimension is not 2D.
 TEST_P(SharedTextureMemoryTests, DimensionValidation) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1590,12 +1537,6 @@ TEST_P(SharedTextureMemoryTests, UseWithoutBegin) {
 
 // Test that it is valid (does not crash) if the memory is dropped while a texture access has begun.
 TEST_P(SharedTextureMemoryTests, TextureAccessOutlivesMemory) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     // NOTE: UseInRenderPass()/UseInCopy() do not currently support multiplanar
     // formats.
     for (wgpu::SharedTextureMemory memory :
@@ -1626,12 +1567,6 @@ TEST_P(SharedTextureMemoryTests, TextureAccessOutlivesMemory) {
 
 // Test that if the texture is uninitialized, it is cleared on first use.
 TEST_P(SharedTextureMemoryTests, UninitializedTextureIsCleared) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1738,12 +1673,6 @@ TEST_P(SharedTextureMemoryTests, UninitializedTextureIsCleared) {
 
 // Test that if the texture is uninitialized, EndAccess writes the state out as uninitialized.
 TEST_P(SharedTextureMemoryTests, UninitializedOnEndAccess) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     // It is not possible to run these tests for multiplanar formats for
     // multiple reasons:
     // * Test basic begin+end access exports the state as uninitialized
@@ -1814,18 +1743,6 @@ TEST_P(SharedTextureMemoryTests, UninitializedOnEndAccess) {
 
 // Test copying to texture memory on one device, then sampling it using another device.
 TEST_P(SharedTextureMemoryTests, CopyToTextureThenSample) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10 gles.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
-    // TODO(crbug.com/468228359): Flaky on Snapdragon X Elite w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
-
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
 
     for (const auto& memories :
@@ -1899,12 +1816,6 @@ TEST_P(SharedTextureMemoryTests, CopyToTextureThenSample) {
 // Test that BeginAccess without waiting on anything, followed by EndAccess
 // without using the texture, does not export any fences.
 TEST_P(SharedTextureMemoryTests, EndWithoutUse) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     for (const auto& memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::Texture texture = memory.CreateTexture();
@@ -1929,15 +1840,6 @@ TEST_P(SharedTextureMemoryTests, EndWithoutUse) {
 // If concurrent read is supported, use two read textures. The first EndAccess should
 // see no fences. The second should then export all the unacquired fences.
 TEST_P(SharedTextureMemoryTests, BeginEndWithoutUse) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10 gles.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
 
     for (const auto& memories :
@@ -2106,12 +2008,6 @@ TEST_P(SharedTextureMemoryTests, CopyToTextureThenSample2DArray) {
 // Test rendering to a texture memory on one device, then sampling it using another device.
 // Encode the commands after performing BeginAccess.
 TEST_P(SharedTextureMemoryTests, RenderThenSampleEncodeAfterBeginAccess) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
 
     for (const auto& memories :
@@ -2165,12 +2061,6 @@ TEST_P(SharedTextureMemoryTests, RenderThenSampleEncodeAfterBeginAccess) {
 // Test rendering to a texture memory on one device, then sampling it using another device.
 // Encode the commands before performing BeginAccess (the access is only held during) QueueSubmit.
 TEST_P(SharedTextureMemoryTests, RenderThenSampleEncodeBeforeBeginAccess) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
     for (const auto& memories :
          GetParam().mBackend->CreatePerDeviceSharedTextureMemoriesFilterByUsage(
@@ -2222,12 +2112,6 @@ TEST_P(SharedTextureMemoryTests, RenderThenSampleEncodeBeforeBeginAccess) {
 // EndAccess. The second device should still be able to wait on the first device and see the
 // results.
 TEST_P(SharedTextureMemoryTests, RenderThenTextureDestroyBeforeEndAccessThenSample) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
     for (const auto& memories :
          GetParam().mBackend->CreatePerDeviceSharedTextureMemoriesFilterByUsage(
@@ -2281,12 +2165,6 @@ TEST_P(SharedTextureMemoryTests, RenderThenTextureDestroyBeforeEndAccessThenSamp
 // accessing on the second device. Operations on the second device must
 // still wait for the preceding operations to complete.
 TEST_P(SharedTextureMemoryTests, RenderThenDropAllMemoriesThenSample) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
     for (auto memories : GetParam().mBackend->CreatePerDeviceSharedTextureMemoriesFilterByUsage(
              devices, wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TextureBinding,
@@ -2348,12 +2226,6 @@ TEST_P(SharedTextureMemoryTests, RenderThenLoseOrDestroyDeviceBeforeEndAccessThe
     // This test expects a fence returned from EndAccess, which is not possible if fences are
     // disabled in D3D11.
     DAWN_TEST_UNSUPPORTED_IF(IsD3D11() && HasToggleEnabled("d3d11_disable_fence"));
-
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     auto DoTest = [&](auto DestroyOrLoseDevice) {
         std::vector<wgpu::Device> devices = {CreateDevice(), CreateDevice()};
@@ -2420,12 +2292,6 @@ TEST_P(SharedTextureMemoryTests, RenderThenLoseOrDestroyDeviceBeforeEndAccessThe
 // Reads should happen strictly after the writes. The final write should wait for the reads.
 TEST_P(SharedTextureMemoryTests, SeparateDevicesWriteThenConcurrentReadThenWrite) {
     DAWN_TEST_UNSUPPORTED_IF(!GetParam().mBackend->SupportsConcurrentRead());
-
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     std::vector<wgpu::Device> devices = {device, CreateDevice(), CreateDevice()};
     for (const auto& memories :
@@ -2575,9 +2441,6 @@ TEST_P(SharedTextureMemoryTests, SameDeviceWriteThenConcurrentReadThenWrite) {
 
     DAWN_TEST_UNSUPPORTED_IF(!GetParam().mBackend->SupportsConcurrentRead());
 
-    // TODO(crbug.com/468228359): Flaky on Snapdragon X Elite w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
-
     for (const auto& memories :
          GetParam().mBackend->CreatePerDeviceSharedTextureMemoriesFilterByUsage(
              {device}, wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TextureBinding,
@@ -2717,12 +2580,6 @@ TEST_P(SharedTextureMemoryTests, SRGBReinterpretation) {
     // Format reinterpretation is not available in compatibility mode.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     // TODO(crbug.com/dawn/2304): Investigate if the VVL is wrong here.
     DAWN_SUPPRESS_TEST_IF(GetParam().mBackend->Name().find("dma buf") != std::string::npos &&
                           IsBackendValidationEnabled());
@@ -2817,12 +2674,6 @@ TEST_P(SharedTextureMemoryTests, SRGBReinterpretation) {
 // Test writing to texture memory in compute pass on one device, then sampling it using another
 // device.
 TEST_P(SharedTextureMemoryTests, WriteStorageThenReadSample) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
 
     for (const auto& memories :
@@ -2881,12 +2732,6 @@ TEST_P(SharedTextureMemoryTests, WriteStorageThenReadSample) {
 
 // Test writing to texture memory using queue.writeTexture, then sampling it using another device.
 TEST_P(SharedTextureMemoryTests, WriteTextureThenReadSample) {
-    // crbug.com/358166479
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // crbug.com/475503907
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
-
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
     for (const auto& memories :
          GetParam().mBackend->CreatePerDeviceSharedTextureMemoriesFilterByUsage(
@@ -2983,6 +2828,5 @@ TEST_P(SharedTextureMemoryVulkanTests, SingleFenceFeature) {
 }
 
 DAWN_INSTANTIATE_TEST(SharedTextureMemoryVulkanTests, VulkanBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

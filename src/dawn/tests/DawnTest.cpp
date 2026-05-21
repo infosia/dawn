@@ -110,6 +110,33 @@ using testing::MockCppCallback;
 DawnTestEnvironment* gTestEnv = nullptr;
 DawnTestBase* gCurrentTest = nullptr;
 
+// File-scope snapshot of the counters and the "expectations file is in effect"
+// flag, populated by DawnTestEnvironment::TearDown() before the gtest framework
+// deletes registered global environments (see UnitTestImpl::RunAllTests in
+// third_party/googletest/googletest/src/gtest.cc, which calls
+// `ForEach(environments_, internal::Delete<Environment>)` at the end of
+// RUN_ALL_TESTS()). The static GetSuppressedExitCode() reads from this
+// snapshot so main() can compute the exit code after RUN_ALL_TESTS() returns
+// without dereferencing the now-deleted gTestEnv instance.
+bool gFinalExpectationsActive = false;
+uint32_t gFinalUnexpectedFailureCount = 0;
+
+// Build the canonical "<TestSuite>.<TestName>/<Params>" name used to match
+// test expectations. GoogleTest's value-parameterized instantiations created
+// via DAWN_INSTANTIATE_PREFIXED_TEST_P (e.g. SharedTextureMemoryTests on
+// Metal) prepend a "<Prefix>/" component to `test_suite_name()` (e.g.
+// "Metal/SharedTextureMemoryTests"). Strip that prefix so expectation
+// patterns can reference tests by their underlying TEST_P() suite name
+// (e.g. "SharedTextureMemoryTests.*") regardless of whether the
+// instantiation used a prefix.
+std::string BuildFullTestName(const ::testing::TestInfo* info) {
+    std::string suiteName = info->test_suite_name();
+    if (auto slash = suiteName.find('/'); slash != std::string::npos) {
+        suiteName.erase(0, slash + 1);
+    }
+    return suiteName + "." + info->name();
+}
+
 template <typename T>
 void printBuffer(testing::AssertionResult& result, const T* buffer, const size_t count) {
     static constexpr unsigned int kBytes = sizeof(T);
@@ -338,6 +365,92 @@ void InitDawnEnd2EndTestEnvironment(int argc, char** argv) {
 
 namespace dawn {
 
+// The result set that DawnTestBase::SetUp computed for the currently-running test.
+// Set in SetUp (before the test body runs) and read by ExpectationsListener::OnTestEnd.
+// GTest runs tests serially in a single process, so a static is safe here.
+static TestResultSet gCurrentTestResultSet = 0;
+
+// The tags string for the currently-running test (sorted, comma-joined), and the bug IDs
+// of the contributing expectation lines (comma-joined). Populated in DawnTestBase::SetUp.
+// Wrapped in a function-local accessor to dodge static-init-order issues and the cpplint
+// "global string" rule (NOLINT: program-lifetime objects with non-trivial destructors are
+// fine for test binaries).
+static std::string& MutableCurrentTestTags() {
+    static std::string s;  // NOLINT(runtime/string)
+    return s;
+}
+static std::string& MutableCurrentTestBugs() {
+    static std::string s;  // NOLINT(runtime/string)
+    return s;
+}
+
+// GTest listener that classifies test outcomes against the expectations file and records
+// results for JSON output. In the initial implementation, [ Failure ] and [ RetryOnFailure ]
+// tests are skipped via GTEST_SKIP() (like [ Skip ]), so the run-and-verify classification
+// paths below are dormant. They will be activated in a follow-up CL that intercepts GTest
+// failures without corrupting GTest's internal state.
+class ExpectationsListener : public ::testing::EmptyTestEventListener {
+  public:
+    void OnTestStart(const ::testing::TestInfo& /*info*/) override {
+        gCurrentTestResultSet = 0;
+        MutableCurrentTestTags().clear();
+        MutableCurrentTestBugs().clear();
+    }
+
+    void OnTestEnd(const ::testing::TestInfo& info) override {
+        DawnTestEnvironment* env = DawnTestEnvironment::GetEnvironment();
+        const double durationSec = static_cast<double>(info.result()->elapsed_time()) / 1000.0;
+        std::string fullName = BuildFullTestName(&info);
+        const std::string& tags = MutableCurrentTestTags();
+        const std::string& bugs = MutableCurrentTestBugs();
+        const std::string bugSuffix = bugs.empty() ? std::string() : (" (" + bugs + ")");
+
+        if (info.result()->Skipped()) {
+            env->RecordTestResult({fullName, tags, "Skip", durationSec});
+            return;
+        }
+
+        if (HasResult(gCurrentTestResultSet, TestResult::Skip)) {
+            env->RecordTestResult({fullName, tags, "Skip", durationSec});
+            return;
+        }
+
+        const bool expectFailure = HasResult(gCurrentTestResultSet, TestResult::Failure);
+        const bool expectFlaky = HasResult(gCurrentTestResultSet, TestResult::RetryOnFailure);
+        const bool failed = info.result()->Failed();
+
+        if (expectFailure) {
+            if (failed) {
+                InfoLog() << "[ ExpectedFailure ] " << fullName << bugSuffix;
+                env->RecordExpectedFailure();
+                env->RecordTestResult({fullName, tags, "Failure", durationSec});
+            } else {
+                InfoLog() << "[ UnexpectedPass ] " << fullName << bugSuffix
+                          << "  (expectations entry can be removed)";
+                env->RecordUnexpectedPass();
+                env->RecordTestResult({fullName, tags, "Pass", durationSec});
+            }
+            return;
+        }
+        if (expectFlaky) {
+            if (failed) {
+                InfoLog() << "[ FlakyFailure ] " << fullName << bugSuffix;
+                env->RecordFlakyFailure();
+                env->RecordTestResult({fullName, tags, "RetryOnFailure", durationSec});
+            } else {
+                env->RecordTestResult({fullName, tags, "Pass", durationSec});
+            }
+            return;
+        }
+        if (failed) {
+            env->RecordUnexpectedFailure();
+            env->RecordTestResult({fullName, tags, "Failure", durationSec});
+        } else {
+            env->RecordTestResult({fullName, tags, "Pass", durationSec});
+        }
+    }
+};
+
 // Implementation of DawnTestEnvironment
 
 // static
@@ -355,6 +468,113 @@ DawnTestEnvironment::DawnTestEnvironment(int argc, char** argv) {
     InitializeDanglingPointerDetectorForTesting();
 
     ParseArgs(argc, argv);
+
+    // If the user didn't pass --expectations-file, try a list of well-known default
+    // locations relative to the test executable. This keeps the file format alive even
+    // when developers run the binary directly without remembering to pass the flag.
+    bool autoDiscoveredExpectationsFile = false;
+    std::vector<std::string> attemptedExpectationsCandidates;
+    std::string autoDiscoveryExeDir;
+    if (mExpectationsFile.empty()) {
+        std::string exeDir = GetExecutableDirectory().value_or("");
+        autoDiscoveryExeDir = exeDir;
+        const char kFileName[] = "dawn_end2end_tests_expectations.txt";
+        const char* sep = GetPathSeparator();
+        std::vector<std::string> candidates;
+        // 1. Working-directory relative — covers the common dev workflow of launching
+        //    the binary from the source root (e.g. `./out/release/dawn_end2end_tests`).
+        //    Also acts as a fallback when GetExecutableDirectory() returns empty.
+        candidates.push_back(std::string("src") + sep + "dawn" + sep + "tests" + sep + kFileName);
+        if (!exeDir.empty()) {
+            // 2. Alongside the executable (when copied via GN data deps).
+            candidates.push_back(exeDir + kFileName);
+            // 3-N. Walk parent directories. The file is shipped via GN runtime_deps at
+            //      `<root>/src/dawn/tests/<file>` (or `<root>/third_party/dawn/...` when
+            //      Dawn is rolled into a larger checkout, or `<root>/dawn/...` for
+            //      isolates that flatten the checkout layout). Covers nested out dirs
+            //      like `out/Default/x64/release/` as well as shallow `out/<cfg>/`.
+            std::string up = exeDir;
+            for (int depth = 0; depth < 6; ++depth) {
+                // Trim trailing separator if present, then go up one level.
+                if (!up.empty() && (up.back() == '/' || up.back() == '\\')) {
+                    up.pop_back();
+                }
+                const size_t lastSep = up.find_last_of("/\\");
+                if (lastSep == std::string::npos) {
+                    break;
+                }
+                up = up.substr(0, lastSep + 1);
+                candidates.push_back(up + "src" + sep + "dawn" + sep + "tests" + sep + kFileName);
+                candidates.push_back(up + "third_party" + sep + "dawn" + sep + "src" + sep +
+                                     "dawn" + sep + "tests" + sep + kFileName);
+                candidates.push_back(up + "dawn" + sep + "src" + sep + "dawn" + sep + "tests" +
+                                     sep + kFileName);
+            }
+        }
+        for (const std::string& path : candidates) {
+            std::ifstream probe(path);
+            if (probe.is_open()) {
+                mExpectationsFile = path;
+                autoDiscoveredExpectationsFile = true;
+                break;
+            }
+        }
+        if (!autoDiscoveredExpectationsFile) {
+            // Save the candidates for a later diagnostic so the bot stdout makes it
+            // obvious why no expectations were applied. Without this, a stale isolate
+            // layout silently disables every `[ Skip ]` / `[ Failure ]` row in the
+            // file, and tests that were previously suppressed start failing as if they
+            // were new regressions.
+            attemptedExpectationsCandidates = std::move(candidates);
+        }
+    }
+
+    if (!mExpectationsFile.empty()) {
+        std::string error;
+        // LoadFile returns false only for header-level failures (file missing, malformed
+        // header). Per-line errors are accumulated into `error` but parsing continues.
+        const bool loaded = mExpectationParser.LoadFile(mExpectationsFile, &error);
+        if (!error.empty()) {
+            // Use ErrorLog only when the file couldn't be opened / header is bad. For
+            // soft per-line errors, log a warning so a single typo doesn't crash bots.
+            if (!loaded) {
+                ErrorLog() << error;
+                DAWN_UNREACHABLE();
+            }
+            WarningLog() << "Issues while loading " << mExpectationsFile << ":\n" << error;
+        }
+        InfoLog() << "Loaded test expectations from: " << mExpectationsFile
+                  << (autoDiscoveredExpectationsFile ? " (auto-discovered)" : "");
+
+        // Install a listener that reports expected-failure / unexpected-pass outcomes.
+        // TestEventListeners::Append takes ownership of the listener and deletes it on
+        // shutdown, so the bare `new` is not a leak.
+        testing::UnitTest::GetInstance()->listeners().Append(new ExpectationsListener());
+
+        // Surface placeholder bug entries so the count visibly decays as they get triaged.
+        auto placeholders = mExpectationParser.GetPlaceholderBugMessages();
+        if (!placeholders.empty()) {
+            WarningLog() << placeholders.size()
+                         << " expectation(s) use the 'crbug.com/0' "
+                            "placeholder bug ID:";
+            for (const auto& msg : placeholders) {
+                WarningLog() << "  " << msg;
+            }
+        }
+    } else if (!attemptedExpectationsCandidates.empty()) {
+        // Auto-discovery ran but found nothing. Emit a loud, grep-able diagnostic so a
+        // bot misconfiguration (e.g. swarming isolate layout drift) doesn't silently
+        // disable every `[ Skip ]` / `[ Failure ]` row in the expectations file —
+        // which would make previously suppressed tests start failing as if they were
+        // new regressions. Pass --expectations-file=<path> to bypass auto-discovery.
+        ErrorLog() << "Could not auto-discover dawn_end2end_tests_expectations.txt. "
+                   << "exeDir="
+                   << (autoDiscoveryExeDir.empty() ? "<unknown>" : autoDiscoveryExeDir.c_str())
+                   << " Tried " << attemptedExpectationsCandidates.size() << " candidate path(s):";
+        for (const std::string& path : attemptedExpectationsCandidates) {
+            ErrorLog() << "  " << path;
+        }
+    }
 
     if (mBackendValidationLevel != native::BackendValidationLevel::Disabled) {
         mPlatformDebugLogger =
@@ -496,6 +716,20 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
             continue;
         }
 
+        constexpr const char kExpectationsFileArg[] = "--expectations-file=";
+        argLen = sizeof(kExpectationsFileArg) - 1;
+        if (strncmp(argv[i], kExpectationsFileArg, argLen) == 0) {
+            mExpectationsFile = argv[i] + argLen;
+            continue;
+        }
+
+        constexpr const char kResultsFileArg[] = "--results-file=";
+        argLen = sizeof(kResultsFileArg) - 1;
+        if (strncmp(argv[i], kResultsFileArg, argLen) == 0) {
+            mResultsFile = argv[i] + argLen;
+            continue;
+        }
+
         constexpr const char kBackendArg[] = "--backend=";
         argLen = sizeof(kBackendArg) - 1;
         if (strncmp(argv[i], kBackendArg, argLen) == 0) {
@@ -592,7 +826,13 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
                    "types. For each backend, tests will run only on adapters that match the first "
                    "available device type\n"
                    "  --run-suppressed-tests: Run all the tests that will be skipped by the macro "
-                   "DAWN_SUPPRESS_TEST_IF()\n";
+                   "DAWN_SUPPRESS_TEST_IF()\n"
+                   "  --expectations-file: Path to a test expectations file for skipping/failing "
+                   "tests without rebuilding. If not specified, a default file is auto-discovered "
+                   "relative to the test executable (e.g. src/dawn/tests/"
+                   "dawn_end2end_tests_expectations.txt for standalone builds).\n"
+                   "  --results-file: Path to write per-test results as JSON. "
+                   "Each entry has TestCase, Tags, Status, and Duration fields.\n";
             continue;
         }
 
@@ -909,6 +1149,106 @@ void DawnTestEnvironment::TearDown() {
     // When Vulkan validation layers are enabled, it's unsafe to call Vulkan APIs in the destructor
     // of a static/global variable, so the instance must be manually released beforehand.
     mInstance.reset();
+
+    // Snapshot the exit-code-relevant state into file-scope storage. The gtest
+    // framework deletes registered global test environments at the end of
+    // RUN_ALL_TESTS(), so main() cannot safely read these values from `this`
+    // afterward. GetSuppressedExitCode() reads from the snapshot instead.
+    gFinalExpectationsActive = !mExpectationsFile.empty();
+    gFinalUnexpectedFailureCount = mUnexpectedFailureCount;
+
+    if (!mExpectationsFile.empty()) {
+        InfoLog() << "Expectations file summary: " << mExpectedFailureCount
+                  << " expected failures, " << mUnexpectedPassCount << " unexpected passes, "
+                  << mFlakyFailureCount << " flaky failures, " << mUnexpectedFailureCount
+                  << " unexpected failures.";
+
+        auto unused = mExpectationParser.GetUnusedExpectationsMessages();
+        if (!unused.empty()) {
+            InfoLog() << "Found " << unused.size() << " unused expectation(s) in "
+                      << mExpectationsFile << ":";
+            for (const auto& msg : unused) {
+                InfoLog() << "  " << msg;
+            }
+        }
+    }
+
+    if (!mResultsFile.empty() && !mTestResults.empty()) {
+        // Minimal JSON string escaper. Test names from GTest can contain characters that
+        // require escaping (e.g. backslashes on parameterized Windows path conversions or
+        // embedded quotes from custom PrintToStringParamName implementations); without
+        // escaping the resulting file would be invalid JSON.
+        auto escape = [](const std::string& in) {
+            std::string out;
+            out.reserve(in.size());
+            for (char ch : in) {
+                unsigned char c = static_cast<unsigned char>(ch);
+                switch (c) {
+                    case '"':
+                        out += "\\\"";
+                        break;
+                    case '\\':
+                        out += "\\\\";
+                        break;
+                    case '\b':
+                        out += "\\b";
+                        break;
+                    case '\f':
+                        out += "\\f";
+                        break;
+                    case '\n':
+                        out += "\\n";
+                        break;
+                    case '\r':
+                        out += "\\r";
+                        break;
+                    case '\t':
+                        out += "\\t";
+                        break;
+                    default:
+                        if (c < 0x20) {
+                            char buf[8];
+                            std::snprintf(buf, sizeof(buf), "\\u%04x", c);
+                            out += buf;
+                        } else {
+                            out += ch;
+                        }
+                        break;
+                }
+            }
+            return out;
+        };
+
+        std::ofstream out(mResultsFile);
+        if (out.is_open()) {
+            out << "[\n";
+            for (size_t i = 0; i < mTestResults.size(); ++i) {
+                const auto& r = mTestResults[i];
+                std::string durationStr;
+                if (r.durationSeconds >= 1.0) {
+                    std::ostringstream ds;
+                    ds << std::fixed << std::setprecision(1) << r.durationSeconds << "s";
+                    durationStr = ds.str();
+                } else {
+                    std::ostringstream ds;
+                    ds << std::fixed << std::setprecision(0) << (r.durationSeconds * 1000.0)
+                       << "ms";
+                    durationStr = ds.str();
+                }
+                out << "  {\"TestCase\": \"" << escape(r.testName) << "\", \"Tags\": \""
+                    << escape(r.tags) << "\", \"Status\": \"" << escape(r.status)
+                    << "\", \"Duration\": \"" << escape(durationStr) << "\"}";
+                if (i + 1 < mTestResults.size()) {
+                    out << ",";
+                }
+                out << "\n";
+            }
+            out << "]\n";
+            InfoLog() << "Wrote " << mTestResults.size() << " test result(s) to " << mResultsFile;
+        } else {
+            ErrorLog() << "Failed to open results file for writing: " << mResultsFile;
+        }
+    }
 }
 
 bool DawnTestEnvironment::UsesWire() const {
@@ -929,6 +1269,75 @@ bool DawnTestEnvironment::RunSuppressedTests() const {
 
 bool DawnTestEnvironment::IsTestLauncherBotMode() const {
     return mIsTestLauncherBotMode;
+}
+
+bool DawnTestEnvironment::HasExpectationsFile() const {
+    return !mExpectationsFile.empty();
+}
+
+TestResultSet DawnTestEnvironment::GetTestExpectation(const std::string& testName,
+                                                      const TestConditions& conditions,
+                                                      std::vector<std::string>* outBugs) {
+    return mExpectationParser.GetExpectation(testName, conditions, outBugs);
+}
+
+std::vector<std::string> DawnTestEnvironment::GetUnusedExpectationsMessages() const {
+    return mExpectationParser.GetUnusedExpectationsMessages();
+}
+
+std::vector<std::string> DawnTestEnvironment::GetPlaceholderBugMessages() const {
+    return mExpectationParser.GetPlaceholderBugMessages();
+}
+
+void DawnTestEnvironment::RecordExpectedFailure() {
+    mExpectedFailureCount++;
+}
+
+void DawnTestEnvironment::RecordUnexpectedPass() {
+    mUnexpectedPassCount++;
+}
+
+void DawnTestEnvironment::RecordFlakyFailure() {
+    mFlakyFailureCount++;
+}
+
+void DawnTestEnvironment::RecordUnexpectedFailure() {
+    mUnexpectedFailureCount++;
+}
+
+void DawnTestEnvironment::RecordTestResult(TestResultEntry entry) {
+    mTestResults.push_back(std::move(entry));
+}
+
+uint32_t DawnTestEnvironment::GetExpectedFailureCount() const {
+    return mExpectedFailureCount;
+}
+
+uint32_t DawnTestEnvironment::GetUnexpectedPassCount() const {
+    return mUnexpectedPassCount;
+}
+
+uint32_t DawnTestEnvironment::GetFlakyFailureCount() const {
+    return mFlakyFailureCount;
+}
+
+uint32_t DawnTestEnvironment::GetUnexpectedFailureCount() const {
+    return mUnexpectedFailureCount;
+}
+
+int DawnTestEnvironment::GetSuppressedExitCode(int gtestResult) {
+    if (!gFinalExpectationsActive) {
+        return gtestResult;
+    }
+    // With an expectations file in effect, the process succeeds when no test produces an
+    // unexpected failure. Expected failures, flaky failures, and unexpected passes do not
+    // affect the exit code. UnexpectedPass is "good news" (the bug being tracked may be
+    // fixed) and only flags a stale expectations row that contributors can prune; failing
+    // the shard on it would surface as "exit code 1 but no failed tests", which swarming
+    // reports as "invalid results -- Did a shard fail early?" and blocks the CQ from ever
+    // landing an expectations refresh whose set of "really failing" entries does not
+    // perfectly match the current bot state.
+    return (gFinalUnexpectedFailureCount > 0) ? 1 : 0;
 }
 
 native::BackendValidationLevel DawnTestEnvironment::GetBackendValidationLevel() const {
@@ -1660,6 +2069,265 @@ void DawnTestBase::HandleDeviceCreationFailure() {
 }
 
 void DawnTestBase::SetUp() {
+    if (gTestEnv->HasExpectationsFile()) {
+        const auto* testInfo = ::testing::UnitTest::GetInstance()->current_test_info();
+        std::string fullName = BuildFullTestName(testInfo);
+
+        TestConditions conditions;
+        const uint32_t vendorID = mParam.adapterProperties.vendorID;
+        const uint32_t deviceID = mParam.adapterProperties.deviceID;
+        const wgpu::BackendType backend = mParam.adapterProperties.backendType;
+
+        // OS tags.
+#if DAWN_PLATFORM_IS(WINDOWS)
+        conditions.Add("win");
+        if (IsWindows11()) {
+            conditions.Add("win11");
+        }
+#elif DAWN_PLATFORM_IS(LINUX)
+        conditions.Add("linux");
+#elif DAWN_PLATFORM_IS(MACOS)
+        conditions.Add("mac");
+#elif DAWN_PLATFORM_IS(ANDROID)
+        conditions.Add("android");
+#elif DAWN_PLATFORM_IS(CHROMEOS)
+        conditions.Add("chromeos");
+#endif
+
+        // Backend tags.
+        switch (backend) {
+            case wgpu::BackendType::D3D11:
+                conditions.Add("d3d11");
+                break;
+            case wgpu::BackendType::D3D12:
+                conditions.Add("d3d12");
+                break;
+            case wgpu::BackendType::Metal:
+                conditions.Add("metal");
+                break;
+            case wgpu::BackendType::Vulkan:
+                conditions.Add("vulkan");
+                break;
+            case wgpu::BackendType::OpenGL:
+                conditions.Add("opengl");
+                break;
+            case wgpu::BackendType::OpenGLES:
+                conditions.Add("opengles");
+                break;
+            case wgpu::BackendType::Null:
+                conditions.Add("null");
+                break;
+            case wgpu::BackendType::WebGPU: {
+                conditions.Add("webgpu-on-webgpu");
+                // Mirror IsD3D11()/IsD3D12()/IsMetal()/... semantics: in C++, these
+                // predicates return true for both direct and WebGPU-on-X. The expectation
+                // file's bare backend tags (`d3d11`, `d3d12`, ...) should match the same
+                // configs the predicates do, so add the inner backend tag in addition to
+                // the webgpu-on-* tag.
+                switch (mParam.adapterProperties.innerBackendType) {
+                    case wgpu::BackendType::D3D11:
+                        conditions.Add("webgpu-on-d3d11");
+                        conditions.Add("d3d11");
+                        break;
+                    case wgpu::BackendType::D3D12:
+                        conditions.Add("webgpu-on-d3d12");
+                        conditions.Add("d3d12");
+                        break;
+                    case wgpu::BackendType::Metal:
+                        conditions.Add("webgpu-on-metal");
+                        conditions.Add("metal");
+                        break;
+                    case wgpu::BackendType::Vulkan:
+                        conditions.Add("webgpu-on-vulkan");
+                        conditions.Add("vulkan");
+                        break;
+                    case wgpu::BackendType::OpenGL:
+                        conditions.Add("webgpu-on-opengl");
+                        conditions.Add("opengl");
+                        break;
+                    case wgpu::BackendType::OpenGLES:
+                        conditions.Add("webgpu-on-opengles");
+                        conditions.Add("opengles");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            }
+            default:
+                break;
+        }
+
+        // GPU vendor tags.
+        if (gpu_info::IsAMD(vendorID)) {
+            conditions.Add("amd");
+        }
+        if (gpu_info::IsApple(vendorID)) {
+            conditions.Add("apple");
+        }
+        if (gpu_info::IsARM(vendorID)) {
+            conditions.Add("arm");
+        }
+        if (gpu_info::IsImgTec(vendorID)) {
+            conditions.Add("imgtec");
+        }
+        if (gpu_info::IsIntel(vendorID)) {
+            conditions.Add("intel");
+        }
+        if (gpu_info::IsNvidia(vendorID)) {
+            conditions.Add("nvidia");
+        }
+        if (gpu_info::IsQualcommPCI(vendorID) || gpu_info::IsQualcommACPI(vendorID)) {
+            conditions.Add("qualcomm");
+        }
+        if (gpu_info::IsMesaSoftware(vendorID, deviceID)) {
+            conditions.Add("mesa-software");
+        }
+
+        // Adapter / harness tags.
+        // SwiftShader detection: either a direct Google SwiftShader adapter (vendor=0x1AE0,
+        // device=0xC0DE), or ANGLE on top of SwiftShader (ANGLE adapter name starts with
+        // "ANGLE" and contains "SwiftShader"). The latter is exposed by the OpenGLES backend
+        // with vendorID=0 so the PCI ID check alone would miss it.
+        if (gpu_info::IsGoogleSwiftshader(vendorID, deviceID) || IsANGLESwiftShader()) {
+            conditions.Add("swiftshader");
+        }
+        if (gpu_info::IsMicrosoftWARP(vendorID, deviceID)) {
+            conditions.Add("warp");
+        }
+        // ANGLE detection (D3D backend running through ANGLE driver description).
+        if (mParam.adapterProperties.driverDescription.find("ANGLE") != std::string::npos) {
+            conditions.Add("angle");
+        }
+        // DXC tag: when the use_dxc toggle is force-enabled on this test param.
+        for (const char* tog : mParam.forceEnabledWorkarounds) {
+            if (std::string(tog) == "use_dxc") {
+                conditions.Add("dxc");
+                break;
+            }
+        }
+
+        // Intel generation tags.
+        if (gpu_info::IsIntelGen9(vendorID, deviceID)) {
+            conditions.Add("intel-gen9");
+        }
+        if (gpu_info::IsIntelGen12LP(vendorID, deviceID) ||
+            gpu_info::IsIntelGen12HP(vendorID, deviceID)) {
+            conditions.Add("intel-gen12");
+            conditions.Add("intel-gen12-or-later");
+        } else if (gpu_info::IsIntelXeLPG(vendorID, deviceID) ||
+                   gpu_info::IsIntelXe2LPG(vendorID, deviceID) ||
+                   gpu_info::IsIntelXe2HPG(vendorID, deviceID)) {
+            conditions.Add("intel-gen12-or-later");
+        }
+
+        // GPU architecture tags.
+        if (gpu_info::IsNvidiaTuring(vendorID, deviceID)) {
+            conditions.Add("nvidia-turing");
+        }
+        if (gpu_info::IsAMDRDNA1(vendorID, deviceID)) {
+            conditions.Add("amd-rdna1");
+        }
+
+        // Driver version tags.
+        if (IsMesa("23.2")) {
+            conditions.Add("mesa-23.2");
+        }
+
+        // Sanitizer / mode tags.
+        if (IsAsan()) {
+            conditions.Add("asan");
+        }
+        if (IsTsan()) {
+            conditions.Add("tsan");
+        }
+        if (mParam.adapterProperties.compatibilityMode) {
+            conditions.Add("compat");
+        }
+        if (gTestEnv->UsesWire()) {
+            conditions.Add("wire");
+        }
+        if (gTestEnv->IsImplicitDeviceSyncEnabled()) {
+            conditions.Add("implicit-device-sync");
+        }
+        if (gTestEnv->IsCaptureReplayCheckingEnabled()) {
+            conditions.Add("capture-replay");
+        }
+        if (gTestEnv->GetBackendValidationLevel() != native::BackendValidationLevel::Disabled) {
+            conditions.Add("backend-validation");
+        }
+        if (gTestEnv->GetBackendValidationLevel() == native::BackendValidationLevel::Full) {
+            conditions.Add("full-backend-validation");
+        }
+
+        std::vector<std::string> contributingBugs;
+        TestResultSet results =
+            gTestEnv->GetTestExpectation(fullName, conditions, &contributingBugs);
+        gCurrentTestResultSet = results;
+
+        // Build comma-separated sorted tags string for results file output, and a
+        // deduplicated comma-joined bug string for log lines.
+        {
+            std::vector<std::string> sortedTags(conditions.tags.begin(), conditions.tags.end());
+            std::sort(sortedTags.begin(), sortedTags.end());
+            std::string& tagsStr = MutableCurrentTestTags();
+            tagsStr.clear();
+            for (const auto& tag : sortedTags) {
+                if (!tagsStr.empty()) {
+                    tagsStr += ',';
+                }
+                tagsStr += tag;
+            }
+            std::sort(contributingBugs.begin(), contributingBugs.end());
+            contributingBugs.erase(std::unique(contributingBugs.begin(), contributingBugs.end()),
+                                   contributingBugs.end());
+            std::string& bugsStr = MutableCurrentTestBugs();
+            bugsStr.clear();
+            for (const auto& bug : contributingBugs) {
+                if (!bugsStr.empty()) {
+                    bugsStr += ',';
+                }
+                bugsStr += bug;
+            }
+        }
+        // The Skip decision is deferred to the END of SetUp (after device creation):
+        // GTEST_SKIP() from this point returns from DawnTest::SetUp() immediately, but a
+        // subclass SetUp() override that calls `DawnTest::SetUp(); ... device.Create...();`
+        // continues executing after the parent returns, and would touch a null `device`.
+        // Firing GTEST_SKIP() after device creation lets the subclass override finish
+        // safely; the Skip mark is still set so gtest skips the test body. We still want
+        // to capture failures during the rest of SetUp / TearDown for Skip+Failure rows,
+        // so the reporter is installed below either way.
+        //   `--run-suppressed-tests` bypasses `[ Skip ]` so that latent fixes can be
+        // surfaced; the test still runs and either becomes an unexpected pass or a real
+        // failure.
+
+        // For the initial landing, [ Failure ] and [ RetryOnFailure ] tests are skipped
+        // via GTEST_SKIP(), just like [ Skip ]. A follow-up CL will add run-and-verify
+        // semantics that intercept GTest failures without corrupting GTest's internal state.
+        if (!gTestEnv->RunSuppressedTests() && (HasResult(results, TestResult::Failure) ||
+                                                HasResult(results, TestResult::RetryOnFailure))) {
+            std::string reason = "Skipped by expectations file";
+            if (HasResult(results, TestResult::Failure)) {
+                reason += " [ Failure ]";
+            }
+            if (HasResult(results, TestResult::RetryOnFailure)) {
+                reason += " [ RetryOnFailure ]";
+            }
+            if (!contributingBugs.empty()) {
+                reason += " (";
+                for (size_t i = 0; i < contributingBugs.size(); ++i) {
+                    if (i > 0) {
+                        reason += ", ";
+                    }
+                    reason += contributingBugs[i];
+                }
+                reason += ")";
+            }
+            GTEST_SKIP() << reason;
+        }
+    }
+
     // Setup the per-test platform. Tests can provide one by overloading CreateTestPlatform.
     // This is NOT a thread-safe operation and is allowed here for testing only.
     mTestPlatform = CreateTestPlatform();
@@ -1716,6 +2384,14 @@ void DawnTestBase::SetUp() {
 
     if (IsCaptureReplayCheckingEnabled()) {
         mRecorder = Recorder::CreateAndStart(device);
+    }
+
+    // Honor an expectations-file [ Skip ] (unless `--run-suppressed-tests` is set) AFTER
+    // device creation so that any subclass SetUp() override calling DawnTest::SetUp() first
+    // can finish its own initialization without touching a null device. The Skip mark
+    // recorded here makes gtest skip TestBody; TearDown still runs but device is valid.
+    if (HasResult(gCurrentTestResultSet, TestResult::Skip) && !gTestEnv->RunSuppressedTests()) {
+        GTEST_SKIP() << "Skipped by expectations file";
     }
 }
 
