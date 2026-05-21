@@ -34,7 +34,6 @@
 
 namespace dawn {
 namespace {
-
 // Test that rendering to a subresource of a texture works.
 class SubresourceRenderAttachmentTest : public DawnTest {
     constexpr static uint32_t kRTSize = 2;
@@ -163,27 +162,16 @@ class SubresourceRenderAttachmentTest : public DawnTest {
 
 // Test rendering into a subresource of a color texture
 TEST_P(SubresourceRenderAttachmentTest, ColorTexture) {
-    // TODO(crbug.com/500793605): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
     DoTest(Type::Color);
 }
 
 // Test rendering into a subresource of a depth texture
 TEST_P(SubresourceRenderAttachmentTest, DepthTexture) {
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     DoTest(Type::Depth);
 }
 
 // Test rendering into a subresource of a stencil texture
 TEST_P(SubresourceRenderAttachmentTest, StencilTexture) {
-    // TODO(crbug.com/352360580): Investigate failures.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     DoTest(Type::Stencil);
 }
 
@@ -196,6 +184,5 @@ DAWN_INSTANTIATE_TEST(SubresourceRenderAttachmentTest,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

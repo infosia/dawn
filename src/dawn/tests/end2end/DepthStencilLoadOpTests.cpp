@@ -34,7 +34,6 @@
 
 namespace dawn {
 namespace {
-
 using Format = wgpu::TextureFormat;
 enum class Check {
     CopyStencil,
@@ -79,9 +78,6 @@ class DepthStencilLoadOpTests : public DawnTestWithParams<DepthStencilLoadOpTest
         DawnTestWithParams<DepthStencilLoadOpTestParams>::SetUp();
 
         DAWN_TEST_UNSUPPORTED_IF(!mIsFormatSupported);
-
-        // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-        DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
         wgpu::TextureDescriptor descriptor;
         descriptor.size = {kRTSize, kRTSize};
@@ -195,7 +191,6 @@ class DepthStencilLoadOpTests : public DawnTestWithParams<DepthStencilLoadOpTest
   private:
     bool mIsFormatSupported = false;
 };
-
 }  // anonymous namespace
 
 // Check that clearing a mip level works at all.
@@ -226,9 +221,6 @@ TEST_P(DepthStencilLoadOpTests, ClearBothMip0Then1) {
     // TODO(crbug.com/dawn/1828): depth16unorm broken on Apple GPUs.
     DAWN_SUPPRESS_TEST_IF(IsApple() && GetParam().mFormat == wgpu::TextureFormat::Depth16Unorm);
 
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     encoder.BeginRenderPass(&renderPassDescriptors[0]).End();
     encoder.BeginRenderPass(&renderPassDescriptors[1]).End();
@@ -244,9 +236,6 @@ TEST_P(DepthStencilLoadOpTests, ClearBothMip1Then0) {
     // TODO(crbug.com/dawn/1828): depth16unorm broken on Apple GPUs.
     DAWN_SUPPRESS_TEST_IF(IsApple() && GetParam().mFormat == wgpu::TextureFormat::Depth16Unorm);
 
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     encoder.BeginRenderPass(&renderPassDescriptors[1]).End();
     encoder.BeginRenderPass(&renderPassDescriptors[0]).End();
@@ -258,7 +247,6 @@ TEST_P(DepthStencilLoadOpTests, ClearBothMip1Then0) {
 }
 
 namespace {
-
 auto GenerateParam() {
     auto params1 = MakeParamGenerator<DepthStencilLoadOpTestParams>(
         {D3D11Backend(), D3D12Backend(), D3D12Backend({}, {"use_d3d12_render_pass"}),
@@ -295,9 +283,6 @@ class StencilClearValueOverflowTest : public DepthStencilLoadOpTests {};
 // stencil clear value in encoder.BeginRenderPass() (currently Dawn only supports 8-bit stencil
 // format).
 TEST_P(StencilClearValueOverflowTest, StencilClearValueOverFlowUint8) {
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint32_t kOverflowedStencilValue = kStencilValues[0] + 0x100;
     renderPassDescriptors[0].cDepthStencilAttachmentInfo.stencilClearValue =
         kOverflowedStencilValue;
@@ -314,9 +299,6 @@ TEST_P(StencilClearValueOverflowTest, StencilClearValueOverFlowUint8) {
 // the stencil clear value in encoder.BeginRenderPass() (currently Dawn only supports 8-bit stencil
 // format).
 TEST_P(StencilClearValueOverflowTest, StencilClearValueOverFlowUint16) {
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint32_t kOverflowedStencilValue = kStencilValues[0] + 0x10000;
     renderPassDescriptors[0].cDepthStencilAttachmentInfo.stencilClearValue =
         kOverflowedStencilValue;
@@ -395,9 +377,6 @@ class DepthTextureClearTwiceTest : public DawnTestWithParams<DepthTextureClearTw
 TEST_P(DepthTextureClearTwiceTest, ClearDepthAspectTwice) {
     DAWN_TEST_UNSUPPORTED_IF(!mIsFormatSupported);
 
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint32_t kSize = 64;
     constexpr uint32_t kLevelCount = 5;
 
@@ -463,6 +442,5 @@ DAWN_INSTANTIATE_TEST_P(
      wgpu::TextureFormat::Depth32Float, wgpu::TextureFormat::Depth32FloatStencil8,
      wgpu::TextureFormat::Depth24PlusStencil8},
     {true, false});
-
 }  // anonymous namespace
 }  // namespace dawn
