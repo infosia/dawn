@@ -34,7 +34,6 @@
 
 namespace dawn {
 namespace {
-
 // https://github.com/gpuweb/gpuweb/issues/108
 // Vulkan, Metal, and D3D11 have the same standard multisample pattern. D3D12 is the same as
 // D3D11 but it was left out of the documentation.
@@ -136,9 +135,6 @@ class MultisampledSamplingTest : public DawnTest {
 // must cover both the X and Y coordinates of the sample position (no false positives if
 // it covers the X position but not the Y, or vice versa).
 TEST_P(MultisampledSamplingTest, SamplePositions) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     // textureLoad with texture_depth_xxx is not supported in compat mode.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
@@ -286,6 +282,5 @@ DAWN_INSTANTIATE_TEST(MultisampledSamplingTest,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

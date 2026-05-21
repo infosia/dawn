@@ -34,7 +34,6 @@
 
 namespace dawn {
 namespace {
-
 // Clear the content of the result buffer into 0xFFFFFFFF.
 constexpr static uint64_t kSentinelValue = ~uint64_t(0u);
 constexpr static uint64_t kZero = 0u;
@@ -245,14 +244,6 @@ TEST_P(OcclusionQueryTests, QuerySetDestroy) {
 // zero indicates that no sample passed depth/stencil testing,
 // non-zero indicates that at least one sample passed depth/stencil testing.
 TEST_P(OcclusionQueryTests, QueryWithDepthStencilTest) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-    // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12());
-
-    // TODO(crbug.com/500774797): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
-
     // Disable depth/stencil testing, the samples always pass the testing, the expected occlusion
     // result is non-zero.
     TestOcclusionQueryWithDepthStencilTest(false, false, OcclusionExpectation::Result::NonZero);
@@ -271,14 +262,6 @@ TEST_P(OcclusionQueryTests, QueryWithDepthStencilTest) {
 // zero indicates that no sample passed scissor testing,
 // non-zero indicates that at least one sample passed scissor testing.
 TEST_P(OcclusionQueryTests, QueryWithScissorTest) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-    // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12());
-
-    // TODO(crbug.com/500774797): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
-
     // Test there are samples passed scissor testing, the expected occlusion result is non-zero.
     TestOcclusionQueryWithScissorTest({2, 1, 2, 1}, OcclusionExpectation::Result::NonZero);
 
@@ -288,8 +271,6 @@ TEST_P(OcclusionQueryTests, QueryWithScissorTest) {
 
 // Test begin occlusion query with same query index on different render pass
 TEST_P(OcclusionQueryTests, Rewrite) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr uint32_t kQueryCount = 1;
 
     wgpu::QuerySet querySet = CreateOcclusionQuerySet(kQueryCount);
@@ -328,8 +309,6 @@ TEST_P(OcclusionQueryTests, Rewrite) {
 // Test resolving occlusion query correctly if the queries are written sparsely, which also tests
 // the query resetting at the start of render passes on Vulkan backend.
 TEST_P(OcclusionQueryTests, ResolveSparseQueries) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr uint32_t kQueryCount = 7;
 
     wgpu::QuerySet querySet = CreateOcclusionQuerySet(kQueryCount);
@@ -443,15 +422,6 @@ TEST_P(OcclusionQueryTests, UnsubmittedEncoderMarksQueryAvailable) {
 
 // Test setting an occlusion query to non-zero, then rewriting it without drawing, resolves to 0.
 TEST_P(OcclusionQueryTests, RewriteNoDrawToZero) {
-    // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12());
-
-    // TODO(42242119): hang/crash on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
-    // TODO(crbug.com/500774797): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
-
     constexpr uint32_t kQueryCount = 1;
 
     wgpu::QuerySet querySet = CreateOcclusionQuerySet(kQueryCount);
@@ -493,12 +463,6 @@ TEST_P(OcclusionQueryTests, RewriteNoDrawToZeroSeparateSubmit) {
     // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12 and Xe GPUs.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12OrLater());
 
-    // TODO(42242119): hang/crash on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
-    // TODO(crbug.com/500774797): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
-
     constexpr uint32_t kQueryCount = 1;
 
     wgpu::QuerySet querySet = CreateOcclusionQuerySet(kQueryCount);
@@ -539,12 +503,6 @@ TEST_P(OcclusionQueryTests, RewriteNoDrawToZeroSeparateSubmit) {
 // Test that resetting an occlusion query to zero works when a draw is done where all primitives
 // fail the depth test.
 TEST_P(OcclusionQueryTests, RewriteToZeroWithDraw) {
-    // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12());
-
-    // TODO(crbug.com/500774797): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
-
     constexpr uint32_t kQueryCount = 1;
 
     utils::ComboRenderPipelineDescriptor descriptor;
@@ -604,11 +562,6 @@ TEST_P(OcclusionQueryTests, RewriteToZeroWithDraw) {
 
 // Test resolving occlusion query to the destination buffer with offset
 TEST_P(OcclusionQueryTests, ResolveToBufferWithOffset) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-
     constexpr uint32_t kQueryCount = 2;
 
     wgpu::QuerySet querySet = CreateOcclusionQuerySet(kQueryCount);
@@ -720,15 +673,6 @@ class TimestampQueryTestsBase : public QueryTests {
   protected:
     void SetUp() override {
         QueryTests::SetUp();
-
-        // TODO(crbug.com/458607667): Timestamp tests are flaky on WARP.
-        DAWN_SUPPRESS_TEST_IF(IsWARP());
-
-        // TODO(crbug.com/451389800): [Capture] implement query set.
-        DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
-        // TODO(crbug.com/502083482): Flakes on Windows 11/AMD RX 5500 XT.
-        DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
     }
 
     wgpu::QuerySet CreateQuerySetForTimestamp(uint32_t queryCount) {
@@ -1002,9 +946,6 @@ TEST_P(TimestampQueryTests, TimestampOnCommandEncoder) {
 
 // Test timestampWrites with query set in compute pass descriptor
 TEST_P(TimestampQueryTests, TimestampWritesQuerySetOnComputePass) {
-    // TODO (dawn:1473): Metal bug which fails to store GPU counters to different sample buffer.
-    DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsMetal() && IsApple());
-
     // Set timestampWrites with different query set on same compute pass
     wgpu::QuerySet querySet0 = CreateQuerySetForTimestamp(1);
     wgpu::QuerySet querySet1 = CreateQuerySetForTimestamp(1);
@@ -1048,10 +989,6 @@ TEST_P(TimestampQueryTests, TimestampWritesLocationOnComputePass) {
 
 // Test timestampWrites on compute pass without pipeline
 TEST_P(TimestampQueryTests, TimestampWritesOnComputePassWithNoPipline) {
-    // TODO (dawn:1473): Metal fails to store GPU counters to sampleBufferAttachments on empty
-    // encoders.
-    DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsMetal() && IsApple());
-
     wgpu::QuerySet querySet = CreateQuerySetForTimestamp(2);
 
     TestTimestampWritesOnComputePass({nullptr, querySet, 0, 1}, {}, false);
@@ -1059,9 +996,6 @@ TEST_P(TimestampQueryTests, TimestampWritesOnComputePassWithNoPipline) {
 
 // Test timestampWrites with query set in render pass descriptor
 TEST_P(TimestampQueryTests, TimestampWritesQuerySetOnRenderPass) {
-    // TODO (dawn:1473): Metal bug which fails to store GPU counters to different sample buffer.
-    DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsMetal() && IsApple());
-
     // Set timestampWrites with different query set on same render pass
     wgpu::QuerySet querySet0 = CreateQuerySetForTimestamp(1);
     wgpu::QuerySet querySet1 = CreateQuerySetForTimestamp(1);
@@ -1303,9 +1237,6 @@ TEST_P(TimestampQueryTests, ResolveTwiceToSameBuffer) {
 // Test calling WriteTimestamp many times into separate query sets.
 // Regression test for crbug.com/dawn/1603.
 TEST_P(TimestampQueryTests, ManyWriteTimestampDistinctQuerySets) {
-    // TODO(crbug.com/dawn/1829): Avoid OOM on Apple GPUs.
-    DAWN_SUPPRESS_TEST_IF(IsApple());
-
     constexpr uint32_t kQueryCount = 100;
     // Write timestamp with a different query sets many times
     for (uint32_t i = 0; i < kQueryCount; ++i) {
@@ -1394,9 +1325,6 @@ TEST_P(TimestampQueryInsidePassesTests, FromOnRenderPass) {
 
 // Test calling timestamp query from compute pass encoder
 TEST_P(TimestampQueryInsidePassesTests, FromComputePass) {
-    // TODO(crbug.com/dawn/1852): Flaky negative timestamps on Mac AMD and Windows WARP.
-    DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsMetal() && IsAMD());
-
     constexpr uint32_t kQueryCount = 2;
 
     // Write timestamp with different query indexes
@@ -1483,6 +1411,5 @@ DAWN_INSTANTIATE_TEST(TimestampQueryInsidePassesTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

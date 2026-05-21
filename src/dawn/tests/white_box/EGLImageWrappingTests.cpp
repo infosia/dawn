@@ -41,7 +41,6 @@
 
 namespace dawn {
 namespace {
-
 class EGLFunctions {
   public:
     EGLFunctions() = default;
@@ -453,8 +452,6 @@ class EGLImageUsageTests : public EGLImageTestBase {
 
 // Test clearing a R8 EGLImage
 TEST_P(EGLImageUsageTests, ClearR8EGLImage) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     ScopedEGLImage eglImage = CreateEGLImage(1, 1, GL_R8, GL_RED, GL_UNSIGNED_BYTE, nullptr);
 
     uint8_t data = 0x01;
@@ -464,8 +461,6 @@ TEST_P(EGLImageUsageTests, ClearR8EGLImage) {
 
 // Test clearing a RG8 EGLImage
 TEST_P(EGLImageUsageTests, ClearRG8EGLImage) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     ScopedEGLImage eglImage = CreateEGLImage(1, 1, GL_RG8, GL_RG, GL_UNSIGNED_BYTE, nullptr);
 
     uint16_t data = 0x0201;
@@ -475,8 +470,6 @@ TEST_P(EGLImageUsageTests, ClearRG8EGLImage) {
 
 // Test clearing an RGBA8 EGLImage
 TEST_P(EGLImageUsageTests, ClearRGBA8EGLImage) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     ScopedEGLImage eglImage = CreateEGLImage(1, 1, GL_RGBA8, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
     uint32_t data = 0x04030201;
@@ -486,8 +479,6 @@ TEST_P(EGLImageUsageTests, ClearRGBA8EGLImage) {
 
 // Test sampling an imported R8 GL texture
 TEST_P(EGLImageUsageTests, SampleR8EGLImage) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     uint8_t data[2] = {0x42, 0x42};
     ScopedEGLImage eglImage = CreateEGLImage(2, 1, GL_R8, GL_RED, GL_UNSIGNED_BYTE, data);
 
@@ -496,8 +487,6 @@ TEST_P(EGLImageUsageTests, SampleR8EGLImage) {
 
 // Test sampling an imported RG8 GL texture
 TEST_P(EGLImageUsageTests, SampleRG8EGLImage) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     uint16_t data[2] = {0x4221, 0x4221};
     ScopedEGLImage eglImage = CreateEGLImage(2, 1, GL_RG8, GL_RG, GL_UNSIGNED_BYTE, data);
 
@@ -506,8 +495,6 @@ TEST_P(EGLImageUsageTests, SampleRG8EGLImage) {
 
 // Test sampling an imported RGBA8 GL texture
 TEST_P(EGLImageUsageTests, SampleRGBA8EGLImage) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     uint32_t data[2] = {0x48844221, 0x48844221};
     ScopedEGLImage eglImage = CreateEGLImage(2, 1, GL_RGBA8, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
@@ -516,6 +503,5 @@ TEST_P(EGLImageUsageTests, SampleRGBA8EGLImage) {
 
 DAWN_INSTANTIATE_TEST(EGLImageValidationTests, OpenGLESBackend());
 DAWN_INSTANTIATE_TEST(EGLImageUsageTests, OpenGLESBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
