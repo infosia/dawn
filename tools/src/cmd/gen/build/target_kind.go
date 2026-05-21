@@ -109,6 +109,10 @@ var AllTargetKinds = []TargetKind{
 func targetKindFromFilename(filename string) TargetKind {
 	noExt, ext := fileutils.SplitExt(filename)
 
+	if filename == "dictionary.txt" {
+		return targetFuzzCmd
+	}
+
 	if ext == "proto" {
 		return targetProto
 	}
