@@ -1,0 +1,45 @@
+# Dawn End2End Test Expectations
+#
+# This file marks tests as expected to Skip, Fail, RetryOnFailure (flaky), or Slow without
+# requiring a rebuild. It uses the same typ-style tag-based format as webgpu-cts/expectations.txt
+# and webgl_conformance_*expectations.txt, with a vocabulary tailored to dawn_end2end_tests.
+#
+# Format (one expectation per line):
+#   [bug] [[ tag1 tag2 ... ]] TestSuite.TestName[/Param] [ Result1 Result2 ... ]
+#
+# Semantics:
+#   - Tags inside a single [ ... ] are AND-combined; the runner's tag set must include all of
+#     them for the line to apply.
+#   - When multiple lines match the same test, their results are UNION-merged.
+#   - Wildcards `*` may appear anywhere in the test name; use `\*` for a literal '*'.
+#   - Bug IDs are optional but recommended (crbug.com/..., dawn:..., b/...).
+#   - Lines beginning with `#` are comments. Inline `#` comments are allowed at end of line.
+#
+# BEGIN TAG HEADER
+# OS
+# tags: [ win win11 linux mac android chromeos ]
+# GPU
+# tags: [ amd apple arm intel nvidia qualcomm imgtec mesa-software ]
+# Backend
+# tags: [ d3d11 d3d12 metal vulkan opengl opengles null ]
+# WebGPU-on wrapper
+# tags: [ webgpu-on-webgpu webgpu-on-d3d11 webgpu-on-d3d12
+#         webgpu-on-metal webgpu-on-vulkan
+#         webgpu-on-opengl webgpu-on-opengles ]
+# Adapter
+# tags: [ swiftshader warp ]
+# Compiler / Wrapper
+# tags: [ angle dxc ]
+# Sanitizer
+# tags: [ asan tsan ]
+# Intel-Gen
+# tags: [ intel-gen9 intel-gen12 intel-gen12-or-later ]
+# GPU-Arch
+# tags: [ nvidia-turing amd-rdna1 ]
+# Driver
+# tags: [ mesa-23.2 ]
+# Mode
+# tags: [ compat wire backend-validation full-backend-validation
+#         implicit-device-sync capture-replay ]
+# results: [ Skip Failure RetryOnFailure Slow ]
+# END TAG HEADER
