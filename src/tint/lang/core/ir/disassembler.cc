@@ -771,14 +771,27 @@ void Disassembler::EmitLoop(const Loop* l) {
     }
     out_ << StyleInstruction("loop") << " [";
 
-    if (l->Initializer() != nullptr && !l->Initializer()->IsEmpty()) {
+    auto is_printable = [](const Block* b) {
+        if (b == nullptr) {
+            return false;
+        }
+        if (!b->IsEmpty()) {
+            return true;
+        }
+        if (auto* mb = b->As<MultiInBlock>(); mb && !mb->Params().IsEmpty()) {
+            return true;
+        }
+        return false;
+    };
+
+    if (is_printable(l->Initializer())) {
         out_ << StyleKeyword("i") << ": " << NameOf(l->Initializer());
         out_ << ", ";
     }
 
     out_ << StyleKeyword("b") << ": " << NameOf(l->Body());
 
-    if (l->Continuing() != nullptr && !l->Continuing()->IsEmpty()) {
+    if (is_printable(l->Continuing())) {
         out_ << ", ";
         out_ << StyleKeyword("c") << ": " << NameOf(l->Continuing());
     }
@@ -789,7 +802,7 @@ void Disassembler::EmitLoop(const Loop* l) {
     out_ << " {  " << StyleComment("# ", NameOf(l));
     EmitLine();
 
-    if (l->Initializer() != nullptr && !l->Initializer()->IsEmpty()) {
+    if (is_printable(l->Initializer())) {
         ScopedIndent si(indent_size_);
         EmitBlock(l->Initializer(), "initializer");
     }
@@ -799,7 +812,7 @@ void Disassembler::EmitLoop(const Loop* l) {
         EmitBlock(l->Body(), "body");
     }
 
-    if (l->Continuing() != nullptr && !l->Continuing()->IsEmpty()) {
+    if (is_printable(l->Continuing())) {
         ScopedIndent si(indent_size_);
         EmitBlock(l->Continuing(), "continuing");
     }
