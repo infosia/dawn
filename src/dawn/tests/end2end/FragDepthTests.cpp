@@ -31,16 +31,12 @@
 
 namespace dawn {
 namespace {
-
 constexpr wgpu::TextureFormat kDepthFormat = wgpu::TextureFormat::Depth32Float;
 
 class FragDepthTests : public DawnTest {
   protected:
     void SetUp() override {
         DawnTest::SetUp();
-
-        // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-        DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
     }
 };
 
@@ -96,9 +92,6 @@ TEST_P(FragDepthTests, FragDepthIsClampedToViewport) {
 // Test for the immediate data logic for ClampFragDepth in Vulkan to check that changing the
 // pipeline layout doesn't invalidate the immediate data that were set.
 TEST_P(FragDepthTests, ChangingPipelineLayoutDoesntInvalidateViewport) {
-    // TODO(dawn:1805): Load ByteAddressBuffer in Pixel Shader doesn't work with NVIDIA on D3D11
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsNvidia());
-
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @vertex fn vs() -> @builtin(position) vec4f {
             return vec4f(0.0, 0.0, 0.5, 1.0);
@@ -201,9 +194,6 @@ TEST_P(FragDepthTests, ChangingPipelineLayoutDoesntInvalidateViewport) {
 // Check that if the fragment is outside of the viewport during rasterization, it is clipped
 // even if it output @builtin(frag_depth).
 TEST_P(FragDepthTests, RasterizationClipBeforeFS) {
-    // TODO(dawn:1616): Metal too needs to clamping of @builtin(frag_depth) to the viewport.
-    DAWN_SUPPRESS_TEST_IF(IsMetal());
-
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @vertex fn vs() -> @builtin(position) vec4f {
             return vec4f(0.0, 0.0, 5.0, 1.0);
@@ -260,6 +250,5 @@ DAWN_INSTANTIATE_TEST(FragDepthTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

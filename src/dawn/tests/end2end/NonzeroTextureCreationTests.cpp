@@ -38,7 +38,6 @@
 
 namespace dawn {
 namespace {
-
 using Format = wgpu::TextureFormat;
 using Aspect = wgpu::TextureAspect;
 using Usage = wgpu::TextureUsage;
@@ -294,28 +293,16 @@ TEST_P(NonzeroCompressedTextureCreationTests, TextureCreationClears) {
 
 // Test that texture clears to a non-zero value because toggle is enabled.
 TEST_P(NonzeroDepthTextureCreationTests, TextureCreationClears) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
-    // TODO(crbug.com/474396043): [Capture] error value on Mac Intel.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled() && IsMetal() && IsIntel());
-
     Run();
 }
 
 // Test that texture clears to a non-zero value because toggle is enabled.
 TEST_P(NonzeroDepthStencilTextureCreationTests, TextureCreationClears) {
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     Run();
 }
 
 // Test that texture clears to a non-zero value because toggle is enabled.
 TEST_P(NonzeroStencilTextureCreationTests, TextureCreationClears) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     Run();
 }
 
@@ -516,6 +503,5 @@ DAWN_INSTANTIATE_TEST_P(
     {0u},  // mip
     {4u}   // sample count
 );
-
 }  // anonymous namespace
 }  // namespace dawn
