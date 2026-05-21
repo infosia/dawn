@@ -33,7 +33,6 @@
 
 namespace dawn {
 namespace {
-
 class NonzeroBufferCreationTests : public DawnTest {};
 
 // Verify that each byte of the buffer has all been initialized to 1 with the toggle enabled when it
@@ -76,9 +75,6 @@ TEST_P(NonzeroBufferCreationTests, BufferCreationWithMappedAtCreation) {
     // "nonzero_clear_resources_on_creation_for_testing" (we will have more tests on it in the
     // BufferZeroInitTests.
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
-
-    // TODO(crbug.com/473894293): [Capture] validation error: no CopyDst usage.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
     constexpr uint32_t kSize = 32u;
 
@@ -148,6 +144,5 @@ DAWN_INSTANTIATE_TEST(NonzeroBufferCreationTests,
                                     {"lazy_clear_resource_on_first_use"}),
                       WebGPUBackend({"nonzero_clear_resources_on_creation_for_testing"},
                                     {"lazy_clear_resource_on_first_use"}));
-
 }  // anonymous namespace
 }  // namespace dawn

@@ -48,7 +48,6 @@
 
 namespace dawn {
 namespace {
-
 using testing::_;
 using testing::MockCppCallback;
 using testing::StrictMock;
@@ -314,9 +313,6 @@ TEST_P(BufferMappingTests, MapWrite_ZeroSized) {
 
 // Test map-writing with a non-zero offset.
 TEST_P(BufferMappingTests, MapWrite_NonZeroOffset) {
-    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     wgpu::Buffer buffer = CreateMapWriteBuffer(20);
 
     uint32_t myData = 2934875;
@@ -378,9 +374,6 @@ TEST_P(BufferMappingTests, MapWrite_TwicePreserve) {
 
 // Map write and unmap twice with overlapping ranges and make sure data is updated correctly
 TEST_P(BufferMappingTests, MapWrite_TwiceRangeOverlap) {
-    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     wgpu::Buffer buffer = CreateMapWriteBuffer(16);
 
     uint32_t data1[] = {0x01234567, 0x89abcdef};
@@ -425,9 +418,6 @@ TEST_P(BufferMappingTests, MapWrite_MultipleMappedRange) {
 
 // Test mapping a large buffer.
 TEST_P(BufferMappingTests, MapWrite_Large) {
-    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint32_t kDataSize = 1000 * 1000;
     constexpr size_t kByteSize = kDataSize * sizeof(uint32_t);
     wgpu::Buffer buffer = CreateMapWriteBuffer(kDataSize * sizeof(uint32_t));
@@ -449,9 +439,6 @@ TEST_P(BufferMappingTests, MapWrite_Large) {
 
 // Stress test mapping many buffers.
 TEST_P(BufferMappingTests, MapWrite_ManySimultaneous) {
-    // TODO(crbug.com/454861473): Flakily hangs indefinitely on Mac/AMD 5300M.
-    DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsAMD() && IsMetal());
-
     constexpr uint32_t kDataSize = 1000;
     std::vector<uint32_t> myData;
     for (uint32_t i = 0; i < kDataSize; ++i) {
@@ -960,9 +947,6 @@ TEST_P(BufferMappedAtCreationTests, MapWriteUsageSmall) {
 
 // Test that the simplest mappedAtCreation works for MapRead buffers.
 TEST_P(BufferMappedAtCreationTests, MapReadUsageSmall) {
-    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     uint32_t myData = 230502;
     wgpu::Buffer buffer = BufferMappedAtCreationWithData(wgpu::BufferUsage::MapRead, {myData});
     UnmapBuffer(buffer);
@@ -1001,9 +985,6 @@ TEST_P(BufferMappedAtCreationTests, MapWriteUsageLarge) {
 
 // Test mappedAtCreation for a large MapRead buffer
 TEST_P(BufferMappedAtCreationTests, MapReadUsageLarge) {
-    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint64_t kDataSize = 1000 * 1000;
     std::vector<uint32_t> myData;
     for (uint32_t i = 0; i < kDataSize; ++i) {
@@ -1210,10 +1191,6 @@ TEST_P(BufferTests, CreateBufferOOM) {
 
 // Test that in the creation of buffers validation errors should always be prior to OOM.
 TEST_P(BufferTests, CreateBufferOOMWithValidationError) {
-    // Fails on TSAN due to allowing too much memory. TSAN max is `0x10000000000` and the test
-    // allocates `0x4000000000000000`
-    DAWN_SUPPRESS_TEST_IF(IsTsan());
-
     DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
 
     wgpu::BufferDescriptor descriptor;
@@ -1489,9 +1466,6 @@ class BufferMapExtendedUsagesTests : public DawnTest {
         DAWN_TEST_UNSUPPORTED_IF(UsesWire());
         // Skip all tests if the required feature is not supported.
         DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::BufferMapExtendedUsages}));
-
-        // TODO(crbug.com/473894293): [Capture] validation error: no CopyDst usage.
-        DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
     }
 
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
@@ -2217,6 +2191,5 @@ DAWN_INSTANTIATE_TEST(BufferMapExtendedUsagesTests,
                       OpenGLESBackend({"gl_defer"}),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

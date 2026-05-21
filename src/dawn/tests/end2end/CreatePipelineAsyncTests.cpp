@@ -39,7 +39,6 @@
 
 namespace dawn {
 namespace {
-
 struct CreatePipelineAsyncTask {
     wgpu::ComputePipeline computePipeline = nullptr;
     wgpu::RenderPipeline renderPipeline = nullptr;
@@ -172,9 +171,6 @@ TEST_P(CreatePipelineAsyncTest, BasicUseOfCreateComputePipelineAsync) {
 TEST_P(CreatePipelineAsyncTest, CreateComputePipelineAsyncStress) {
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
-    // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
-
     for (size_t i = 0; i < 100; i++) {
         wgpu::ComputePipelineDescriptor csDesc;
         std::string shader = R"(
@@ -206,9 +202,6 @@ TEST_P(CreatePipelineAsyncTest, CreateComputePipelineAsyncStressManyThreads) {
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
     // TODO(crbug.com/42240635): eglMakeCurrent: Context can only be current on one thread
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
-
-    // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
 
     auto f = [&](size_t t) {
         wgpu::ComputePipelineDescriptor csDesc;
@@ -341,9 +334,6 @@ TEST_P(CreatePipelineAsyncTest, BasicUseOfCreateRenderPipelineAsync) {
 TEST_P(CreatePipelineAsyncTest, CreateRenderPipelineAsyncStress) {
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
-    // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
-
     wgpu::ShaderModule fsModule = utils::CreateShaderModule(device, R"(
         @fragment fn main() -> @location(0) vec4f {
             return vec4f(0.0, 1.0, 0.0, 1.0);
@@ -377,9 +367,6 @@ TEST_P(CreatePipelineAsyncTest, CreateRenderPipelineAsyncStressManyThreads) {
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
     // TODO(crbug.com/42240635): eglMakeCurrent: Context can only be current on one thread
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
-
-    // TODO(crbug.com/dawn/1766): TSAN reported race conditions in NVIDIA's vk driver.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && IsTsan());
 
     wgpu::ShaderModule fsModule = utils::CreateShaderModule(device, R"(
         @fragment fn main() -> @location(0) vec4f {
@@ -892,9 +879,6 @@ TEST_P(CreatePipelineAsyncTest, CreateRenderPipelineAsyncWithVertexBufferLayouts
 
 // Verify calling CreateRenderPipelineAsync() with valid depthStencilState works on all backends.
 TEST_P(CreatePipelineAsyncTest, CreateRenderPipelineAsyncWithDepthStencilState) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-
     wgpu::TextureDescriptor textureDescriptor;
     textureDescriptor.size = {1, 1, 1};
     textureDescriptor.format = wgpu::TextureFormat::RGBA8Unorm;
@@ -968,12 +952,6 @@ TEST_P(CreatePipelineAsyncTest, CreateRenderPipelineAsyncWithDepthStencilState) 
 
 // Verify calling CreateRenderPipelineAsync() with multisample.Count > 1 works on all backends.
 TEST_P(CreatePipelineAsyncTest, CreateRenderPipelineWithMultisampleState) {
-    // TODO(crbug.com/468047555): Fails on Win11/NVIDIA GTX 1660.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
-
-    // TODO(crbug.com/468047555): Fails on Win11/AMD RX 5500 XT.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
     wgpu::TextureDescriptor textureDescriptor;
     textureDescriptor.size = {1, 1, 1};
     textureDescriptor.format = wgpu::TextureFormat::RGBA8Unorm;
@@ -1040,8 +1018,6 @@ TEST_P(CreatePipelineAsyncTest, CreateRenderPipelineWithMultisampleState) {
 
 // Verify calling CreateRenderPipelineAsync() with valid BlendState works on all backends.
 TEST_P(CreatePipelineAsyncTest, CreateRenderPipelineAsyncWithBlendState) {
-    DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode());
-
     DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("disable_indexed_draw_buffers"));
 
     std::array<wgpu::Texture, 2> renderTargets;
@@ -1155,6 +1131,5 @@ DAWN_INSTANTIATE_TEST(CreatePipelineAsyncTest,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

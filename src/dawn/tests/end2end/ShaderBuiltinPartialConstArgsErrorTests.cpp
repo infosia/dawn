@@ -34,7 +34,6 @@
 
 namespace dawn {
 namespace {
-
 enum class Phase {
     kConst,
     kOverride,
@@ -182,9 +181,6 @@ TEST_P(ShaderBuiltinPartialConstLowHighTest, All) {
         wgpu::ComputePipelineDescriptor desc;
         desc.compute.module = shader;
         if (expect_pipeline_error) {
-            // TODO(crbug.com/462151326): Fix pipeline creation error of the inner layer to surface
-            // up properly in WebGPUBackend.
-            DAWN_SUPPRESS_TEST_IF(IsWebGPUOnWebGPU());
             ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&desc));
         } else {
             device.CreateComputePipeline(&desc);
@@ -283,9 +279,6 @@ TEST_P(ShaderBuiltinPartialConstOffsetCountTest, All) {
         wgpu::ComputePipelineDescriptor desc;
         desc.compute.module = shader;
         if (expect_pipeline_error) {
-            // TODO(crbug.com/462151326): Fix pipeline creation error of the inner layer to surface
-            // up properly in WebGPUBackend.
-            DAWN_SUPPRESS_TEST_IF(IsWebGPUOnWebGPU());
             ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&desc));
         } else {
             device.CreateComputePipeline(&desc);
@@ -433,9 +426,6 @@ TEST_P(ShaderBuiltinPartialConstExponentTest, All) {
         wgpu::ComputePipelineDescriptor desc;
         desc.compute.module = shader;
         if (expect_pipeline_error) {
-            // TODO(crbug.com/462151326): Fix pipeline creation error of the inner layer to surface
-            // up properly in WebGPUBackend.
-            DAWN_SUPPRESS_TEST_IF(IsWebGPUOnWebGPU());
             ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&desc));
         } else {
             device.CreateComputePipeline(&desc);
@@ -449,6 +439,5 @@ DAWN_INSTANTIATE_TEST_P(ShaderBuiltinPartialConstExponentTest,
                         {Phase::kConst, Phase::kOverride, Phase::kRuntime},  // mCountPhase
                         {true, false},                                       // mExponentTooBig
                         {true, false});                                      // Scalar (or Vector)
-
 }  // anonymous namespace
 }  // namespace dawn
