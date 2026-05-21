@@ -55,7 +55,6 @@ static constexpr std::array<wgpu::PresentMode, 4> kAllPresentModes = {
 
 namespace dawn {
 namespace {
-
 struct GLFWindowDestroyer {
     void operator()(GLFWwindow* ptr) { glfwDestroyWindow(ptr); }
 };
@@ -187,13 +186,6 @@ TEST_P(SurfaceConfigurationValidationTests, AlphaModeAuto) {
 
 // Using any combination of the reported capability is ok for configuring the surface.
 TEST_P(SurfaceConfigurationValidationTests, AnyCombinationOfCapabilities) {
-    // TODO(dawn:2320): Fails with "internal drawable creation failed" on the Windows NVIDIA CQ
-    // builders but not locally. This is a similar limitation to SurfaceTests.SwitchPresentMode.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsNvidia());
-
-    // TODO(crbug.com/463551855): Flaky on Snapdragon X Elite SoCs.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
-
     wgpu::Surface surface = CreateTestSurface();
 
     wgpu::SurfaceConfiguration config = baseConfig;
@@ -344,6 +336,5 @@ DAWN_INSTANTIATE_TEST(SurfaceConfigurationValidationTests,
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

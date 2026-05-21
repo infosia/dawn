@@ -38,7 +38,6 @@
 
 namespace dawn {
 namespace {
-
 // Helper for replacing all occurrences of substr in str with replacement
 std::string ReplaceAll(std::string str, const std::string& substr, const std::string& replacement) {
     size_t pos = 0;
@@ -543,9 +542,6 @@ TEST_P(ComputeLayoutMemoryBufferTests, StructMember) {
     // TODO(crbug.com/dawn/1606): find out why these tests fail on Windows for OpenGL.
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGLES() && IsWindows());
 
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     const bool isUniform = GetParam().mAddressSpace == AddressSpace::Uniform;
 
     // Sentinel value markers codes used to check that the start and end of
@@ -716,7 +712,6 @@ fn main() {
 TEST_P(ComputeLayoutMemoryBufferTests, NonStructMember) {
     // TODO(crbug.com/dawn/1606): find out why these tests fail on Windows for OpenGL.
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGLES() && IsWindows());
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
     const bool isUniform = GetParam().mAddressSpace == AddressSpace::Uniform;
 
@@ -1180,6 +1175,5 @@ INSTANTIATE_TEST_SUITE_P(,
                          ::testing::ValuesIn(GenerateParams()),
                          DawnTestBase::PrintToStringParamName("ComputeLayoutMemoryBufferTests"));
 GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(ComputeLayoutMemoryBufferTests);
-
 }  // anonymous namespace
 }  // namespace dawn

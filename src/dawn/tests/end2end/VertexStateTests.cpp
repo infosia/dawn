@@ -36,7 +36,6 @@
 
 namespace dawn {
 namespace {
-
 using wgpu::VertexFormat;
 using wgpu::VertexStepMode;
 
@@ -284,9 +283,6 @@ TEST_P(VertexStateTest, Basic) {
 
 // Test a stride of 0 works
 TEST_P(VertexStateTest, ZeroStride) {
-    // This test was failing only on AMD but the OpenGL backend doesn't gather PCI info yet.
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsOpenGL());
-
     utils::ComboVertexState vertexState;
     MakeVertexState({{0, VertexStepMode::Vertex, {{0, 0, VertexFormat::Float32x4}}}}, &vertexState);
     wgpu::RenderPipeline pipeline =
@@ -303,9 +299,6 @@ TEST_P(VertexStateTest, ZeroStride) {
 
 // Test attributes defaults to (0, 0, 0, 1) if the input state doesn't have all components
 TEST_P(VertexStateTest, AttributeExpanding) {
-    // This test was failing only on AMD but the OpenGL backend doesn't gather PCI info yet.
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsOpenGL());
-
     // R32F case
     {
         utils::ComboVertexState vertexState;
@@ -343,9 +336,6 @@ TEST_P(VertexStateTest, AttributeExpanding) {
 
 // Test a stride larger than the attributes
 TEST_P(VertexStateTest, StrideLargerThanAttributes) {
-    // This test was failing only on AMD but the OpenGL backend doesn't gather PCI info yet.
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsOpenGL());
-
     utils::ComboVertexState vertexState;
     MakeVertexState(
         {{8 * sizeof(float), VertexStepMode::Vertex, {{0, 0, VertexFormat::Float32x4}}}},
@@ -553,9 +543,6 @@ TEST_P(VertexStateTest, MultiplePipelinesMixedVertexState) {
 
 // Checks that using the last vertex buffer doesn't overflow the vertex buffer table in Metal.
 TEST_P(VertexStateTest, LastAllowedVertexBuffer) {
-    // TODO(crbug.com/474158751): [Capture] vertex slot 0 not set.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint32_t kBufferIndex = kMaxVertexBuffers - 1;
 
     utils::ComboVertexState vertexState;
@@ -721,6 +708,5 @@ DAWN_INSTANTIATE_TEST(OptionalVertexStateTest,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

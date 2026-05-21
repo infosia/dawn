@@ -48,7 +48,6 @@ struct wgpu::IsWGPUBitmask<dawn::CheckIndex> {
 
 namespace dawn {
 namespace {
-
 constexpr uint32_t kRTSize = 1;
 
 enum class DrawMode {
@@ -61,11 +60,9 @@ enum class DrawMode {
 bool IsIndirectDraw(DrawMode mode) {
     return mode == DrawMode::NonIndexedIndirect || mode == DrawMode::IndexedIndirect;
 }
-
 }  // anonymous namespace
 
 namespace {
-
 struct FirstIndexOffset {
     DrawMode mode = DrawMode::NonIndexed;
     uint32_t firstVertex = 0;
@@ -365,12 +362,6 @@ TEST_P(FirstIndexOffsetTests, IndexedThenNonIndexedVertex) {
 
 // Test that vertex_index when drawn using DrawIndirect()
 TEST_P(FirstIndexOffsetTests, NonIndexedIndirectVertexOffset) {
-    // TODO(crbug.com/dawn/1429): Fails with the full validation turned on.
-    DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsFullBackendValidationEnabled());
-
-    // TODO(crbug.com/459864802): Fails on Win/Snapdragon X Elite w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
-
     // Draw once: vertex_index starts at 9
     {
         TestVertexIndex({{DrawMode::NonIndexedIndirect, 9, 0}});
@@ -400,9 +391,6 @@ TEST_P(FirstIndexOffsetTests, NonIndexedIndirectInstanceOffset) {
 // Test that vertex_index and instance_index respectively when drawn using
 // DrawIndirect()
 TEST_P(FirstIndexOffsetTests, NonIndexedIndirectBothOffset) {
-    // TODO(crbug.com/459864802): Fails on Win/Snapdragon X Elite w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
-
     // Draw once: vertex_index starts at 7 and instance_index starts at 13
     {
         TestBothIndices({{DrawMode::NonIndexedIndirect, 9, 0}});
@@ -416,12 +404,6 @@ TEST_P(FirstIndexOffsetTests, NonIndexedIndirectBothOffset) {
 
 // Test that vertex_index when drawn using DrawIndexedIndirect()
 TEST_P(FirstIndexOffsetTests, IndexedIndirectVertex) {
-    // TODO(crbug.com/dawn/1429): Fails with the full validation turned on.
-    DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsFullBackendValidationEnabled());
-
-    // TODO(crbug.com/459864802): Fails on Win/Snapdragon X Elite w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
-
     // Draw once: vertex_index starts at 9
     {
         TestVertexIndex({{DrawMode::IndexedIndirect, 9, 0}});
@@ -467,6 +449,5 @@ DAWN_INSTANTIATE_TEST(FirstIndexOffsetTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

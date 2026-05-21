@@ -38,7 +38,6 @@
 
 namespace dawn {
 namespace {
-
 #define EXPECT_LAZY_CLEAR(N, statement)                                                  \
     do {                                                                                 \
         if (UsesWire()) {                                                                \
@@ -282,9 +281,6 @@ TEST_P(TextureZeroInitTest, CopyTextureToBufferSource) {
 // This tests that the code path of CopyTextureToBuffer with multiple texture array layers clears
 // correctly to Zero after first usage
 TEST_P(TextureZeroInitTest, CopyMultipleTextureArrayLayersToBufferSource) {
-    // TODO(crbug.com/500793610): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
-
     constexpr uint32_t kArrayLayers = 6u;
 
     const wgpu::TextureDescriptor descriptor = CreateTextureDescriptor(
@@ -412,8 +408,6 @@ TEST_P(TextureZeroInitTest, RenderingArrayLayerClearsToZero) {
 
 // This tests CopyBufferToTexture fully overwrites copy so lazy init is not needed.
 TEST_P(TextureZeroInitTest, CopyBufferToTexture) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     wgpu::TextureDescriptor descriptor =
         CreateTextureDescriptor(4, 1,
                                 wgpu::TextureUsage::CopyDst | wgpu::TextureUsage::TextureBinding |
@@ -740,14 +734,6 @@ TEST_P(TextureZeroInitTest, RenderingLoadingDepthStencil) {
 
 // Test that clear state is tracked independently for depth/stencil textures.
 TEST_P(TextureZeroInitTest, IndependentDepthStencilLoadAfterDiscard) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-    // TODO(dawn:1549) Fails on Qualcomm-based Android devices.
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsQualcomm());
-
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     wgpu::TextureDescriptor depthStencilDescriptor = CreateTextureDescriptor(
         1, 1, wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc,
         kDepthStencilFormat);
@@ -930,10 +916,6 @@ TEST_P(TextureZeroInitTest, StencilCopyThenDiscardAndReadBySampling) {
 // Test that a stencil texture that is written via copy, then discarded, sees
 // zero contents when it is read via copy.
 TEST_P(TextureZeroInitTest, StencilCopyThenDiscardAndReadByCopy) {
-    // TODO(crbug.com/479416037): QC's D3D11's DiscardView seems to have some bugs when backend
-    // validation is enabled.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm() && IsBackendValidationEnabled());
-
     for (wgpu::TextureFormat format :
          {wgpu::TextureFormat::Stencil8, wgpu::TextureFormat::Depth24PlusStencil8}) {
         wgpu::Texture depthStencilTexture = CreateAndFillStencilTexture(format);
@@ -964,16 +946,6 @@ TEST_P(TextureZeroInitTest, StencilCopyThenDiscardAndReadByCopy) {
 // Test that a stencil texture that is written via copy, then discarded, then copied to
 // another texture, sees zero contents when it is read via copy.
 TEST_P(TextureZeroInitTest, StencilCopyThenDiscardAndCopyToTextureThenReadByCopy) {
-    // TODO(crbug.com/479416037): QC's D3D11's DiscardView seems to have some bugs when backend
-    // validation is enabled.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm() && IsBackendValidationEnabled());
-
-    // TODO(crbug.com/468047554): Fails on Win11/NVIDIA GTX 1660.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
-
-    // TODO(crbug.com/468047554): Fails on Win11/AMD RX 5500 XT.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
     for (wgpu::TextureFormat format :
          {wgpu::TextureFormat::Stencil8, wgpu::TextureFormat::Depth24PlusStencil8}) {
         // Create the texture.
@@ -1033,9 +1005,6 @@ TEST_P(TextureZeroInitTest, StencilCopyThenDiscardAndCopyToTextureThenReadByCopy
 // Test that clear state is tracked independently for depth/stencil textures.
 // Lazy clear of the stencil aspect via copy should not touch depth.
 TEST_P(TextureZeroInitTest, IndependentDepthStencilCopyAfterDiscard) {
-    // TODO(dawn:1549) Fails on Qualcomm-based Android devices.
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsQualcomm());
-
     wgpu::TextureDescriptor depthStencilDescriptor = CreateTextureDescriptor(
         1, 1, wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc,
         kDepthStencilFormat);
@@ -1464,9 +1433,6 @@ TEST_P(TextureZeroInitTest, ComputePassSampledTextureClear) {
 
 // This tests that the code path of CopyTextureToBuffer clears correctly for non-renderable textures
 TEST_P(TextureZeroInitTest, NonRenderableTextureClear) {
-    // TODO(dawn:1877): Snorm copy failing ANGLE Swiftshader, need further investigation.
-    DAWN_SUPPRESS_TEST_IF(IsANGLESwiftShader());
-
     wgpu::TextureDescriptor descriptor =
         CreateTextureDescriptor(1, 1, wgpu::TextureUsage::CopySrc, kNonrenderableColorFormat);
     wgpu::Texture texture = device.CreateTexture(&descriptor);
@@ -1498,9 +1464,6 @@ TEST_P(TextureZeroInitTest, NonRenderableTextureClear) {
 
 // This tests that the code path of CopyTextureToBuffer clears correctly for non-renderable textures
 TEST_P(TextureZeroInitTest, NonRenderableTextureClearUnalignedSize) {
-    // TODO(dawn:1877): Snorm copy failing ANGLE Swiftshader, need further investigation.
-    DAWN_SUPPRESS_TEST_IF(IsANGLESwiftShader());
-
     wgpu::TextureDescriptor descriptor =
         CreateTextureDescriptor(1, 1, wgpu::TextureUsage::CopySrc, kNonrenderableColorFormat);
     descriptor.size.width = kUnalignedSize;
@@ -1535,9 +1498,6 @@ TEST_P(TextureZeroInitTest, NonRenderableTextureClearUnalignedSize) {
 // This tests that the code path of CopyTextureToBuffer clears correctly for non-renderable textures
 // with more than 1 array layers
 TEST_P(TextureZeroInitTest, NonRenderableTextureClearWithMultiArrayLayers) {
-    // TODO(dawn:1877): Snorm copy failing ANGLE Swiftshader, need further investigation.
-    DAWN_SUPPRESS_TEST_IF(IsANGLESwiftShader());
-
     wgpu::TextureDescriptor descriptor =
         CreateTextureDescriptor(1, 2, wgpu::TextureUsage::CopySrc, kNonrenderableColorFormat);
     wgpu::Texture texture = device.CreateTexture(&descriptor);
@@ -1571,10 +1531,6 @@ TEST_P(TextureZeroInitTest, NonRenderableTextureClearWithMultiArrayLayers) {
 // Then expect the render texture to not store the data from sample texture
 // because it will be lazy cleared by the EXPECT_TEXTURE_EQ call.
 TEST_P(TextureZeroInitTest, RenderPassStoreOpClear) {
-    // TODO(crbug.com/479416037): QC's D3D11's DiscardView seems to have some bugs when backend
-    // validation is enabled.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm() && IsBackendValidationEnabled());
-
     // Create needed resources
     wgpu::TextureDescriptor descriptor = CreateTextureDescriptor(
         1, 1, wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::CopyDst, kColorFormat);
@@ -1719,10 +1675,6 @@ TEST_P(TextureZeroInitTest, RenderingLoadingDepthStencilStoreOpClear) {
 // Test that if one mip of a texture is initialized and another is uninitialized, lazy clearing the
 // uninitialized mip does not clear the initialized mip.
 TEST_P(TextureZeroInitTest, PreservesInitializedMip) {
-    // TODO(crbug.com/479416037): QC's D3D11's DiscardView seems to have some bugs when backend
-    // validation is enabled.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm() && IsBackendValidationEnabled());
-
     wgpu::TextureDescriptor sampleTextureDescriptor =
         CreateTextureDescriptor(2, 1,
                                 wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst |
@@ -1799,10 +1751,6 @@ TEST_P(TextureZeroInitTest, PreservesInitializedMip) {
 // Test that if one layer of a texture is initialized and another is uninitialized, lazy clearing
 // the uninitialized layer does not clear the initialized layer.
 TEST_P(TextureZeroInitTest, PreservesInitializedArrayLayer) {
-    // TODO(crbug.com/479416037): QC's D3D11's DiscardView seems to have some bugs when backend
-    // validation is enabled.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm() && IsBackendValidationEnabled());
-
     // TODO(crbug.com/346362367): Compatibility mode does not support binding a `2d-array` texture
     // to a WGSL variable of type `texture_2d`.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
@@ -1889,9 +1837,6 @@ TEST_P(TextureZeroInitTest, PreservesInitializedArrayLayer) {
 // This is a regression test for crbug.com/dawn/451 where the lazy texture
 // init path on D3D12 had a divide-by-zero exception in the copy split logic.
 TEST_P(TextureZeroInitTest, CopyTextureToBufferNonRenderableUnaligned) {
-    // TODO(dawn:1877): Snorm copy failing ANGLE Swiftshader, need further investigation.
-    DAWN_SUPPRESS_TEST_IF(IsANGLESwiftShader());
-
     wgpu::TextureDescriptor descriptor;
     descriptor.size.width = kUnalignedSize;
     descriptor.size.height = kUnalignedSize;
@@ -2575,8 +2520,6 @@ TEST_P(CompressedTextureZeroInitTest, HalfCopyBufferToTexture) {
 // Test that 0 lazy clear count happens when we copy buffer to texture to a nonzero mip level
 // (with physical size different from the virtual mip size)
 TEST_P(CompressedTextureZeroInitTest, FullCopyToNonZeroMipLevel) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     wgpu::TextureDescriptor textureDescriptor;
     textureDescriptor.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst |
                               wgpu::TextureUsage::TextureBinding;
@@ -2599,8 +2542,6 @@ TEST_P(CompressedTextureZeroInitTest, FullCopyToNonZeroMipLevel) {
 // Test that 1 lazy clear count happens when we copy buffer to half texture to a nonzero mip level
 // (with physical size different from the virtual mip size)
 TEST_P(CompressedTextureZeroInitTest, HalfCopyToNonZeroMipLevel) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     wgpu::TextureDescriptor textureDescriptor;
     textureDescriptor.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst |
                               wgpu::TextureUsage::TextureBinding;
@@ -2768,7 +2709,6 @@ TEST_P(CompressedTextureZeroInitTest, HalfCopyTextureToTextureMipLevel) {
 TEST_P(CompressedTextureZeroInitTest, Copy2DArrayCompressedB2T2B) {
     // Compatibility mode does not support compressed texture-to-buffer copies.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
 
     // create srcTexture with data
     wgpu::TextureDescriptor textureDescriptor = CreateTextureDescriptor(
@@ -2852,6 +2792,5 @@ DAWN_INSTANTIATE_TEST(CompressedTextureZeroInitTest,
                       OpenGLESBackend({"gl_defer",
                                        "nonzero_clear_resources_on_creation_for_testing"}),
                       VulkanBackend({"nonzero_clear_resources_on_creation_for_testing"}));
-
 }  // anonymous namespace
 }  // namespace dawn

@@ -40,7 +40,6 @@
 
 namespace dawn {
 namespace {
-
 // Expect lazy clear count for test in device to increment by N after `statement`.
 // Note: WebGPU backend doesn't maintain the lazy clear count for testing but rely on the inner
 // layer implementation for the initialization.
@@ -781,9 +780,6 @@ TEST_P(BufferZeroInitTest, MapAsync_Write) {
 // Test that the code path of creating a buffer with BufferDescriptor.mappedAtCreation == true
 // clears the buffer correctly at the creation of the buffer.
 TEST_P(BufferZeroInitTest, MappedAtCreation) {
-    // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint32_t kBufferSize = 16u;
 
     constexpr std::array<uint32_t, kBufferSize / sizeof(uint32_t)> kExpectedData = {{0, 0, 0, 0}};
@@ -930,9 +926,6 @@ TEST_P(BufferZeroInitTest, CopyBufferToTexture) {
 TEST_P(BufferZeroInitTest, Copy2DTextureToBuffer) {
     constexpr wgpu::Extent3D kTextureSize = {64u, 8u, 1u};
 
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     // bytesPerRow == texelBlockSizeInBytes * copySize.width && bytesPerRow * copySize.height ==
     // buffer.size
     {
@@ -967,9 +960,6 @@ TEST_P(BufferZeroInitTest, Copy2DTextureToBuffer) {
 // Test that the code path of CopyTextureToBuffer clears the destination buffer correctly when it is
 // the first use of the buffer and the texture is a 2D array texture.
 TEST_P(BufferZeroInitTest, Copy2DArrayTextureToBuffer) {
-    // TODO(crbug.com/500445352): Produces incorrect output on Win/AMD RX 5500 XT.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
-
     constexpr wgpu::Extent3D kTextureSize = {64u, 4u, 3u};
 
     // bytesPerRow == texelBlockSizeInBytes * copySize.width && rowsPerImage == copySize.height &&
@@ -1071,9 +1061,6 @@ TEST_P(BufferZeroInitTest, BoundAsReadonlyStorageBuffer) {
 // Test that the buffer will be lazy initialized correctly when its first use is to be bound as a
 // storage buffer.
 TEST_P(BufferZeroInitTest, BoundAsStorageBuffer) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     constexpr uint32_t kBoundBufferSize = 32u;
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         struct SSBO {
@@ -1139,20 +1126,6 @@ TEST_P(BufferZeroInitTest, SetVertexBuffer) {
 // draw call. A backend which implements robust buffer access via clamping should
 // still see zeros at the end of the buffer.
 TEST_P(BufferZeroInitTest, PaddingInitialized) {
-    DAWN_SUPPRESS_TEST_IF(IsANGLE());                              // TODO(crbug.com/dawn/1084)
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsNvidia());  // TODO(crbug.com/dawn/1214)
-
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-
-    // TODO(crbug.com/473593119): [Capture] size not multiple of 4.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr wgpu::TextureFormat kColorAttachmentFormat = wgpu::TextureFormat::RGBA8Unorm;
     // A small sub-4-byte format means a single vertex can fit entirely within the padded buffer,
     // touching some of the padding. Test a small format, as well as larger formats.
@@ -1320,13 +1293,6 @@ TEST_P(BufferZeroInitTest, ResolveQuerySet) {
     // Skip if timestamp feature is not supported on device
     DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::TimestampQuery}));
 
-    // TODO(crbug.com/dawn/545): Crash occurs if we only call WriteTimestamp in a command encoder
-    // without any copy commands on Metal on AMD GPU.
-    DAWN_SUPPRESS_TEST_IF(IsMetal() && IsAMD());
-
-    // TODO(crbug.com/451389800): [Capture] implement query set.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     constexpr uint64_t kBufferSize = 16u;
     constexpr wgpu::BufferUsage kBufferUsage =
         wgpu::BufferUsage::QueryResolve | wgpu::BufferUsage::CopySrc;
@@ -1412,6 +1378,5 @@ DAWN_INSTANTIATE_TEST(BufferZeroInitTest,
                       OpenGLESBackend({"nonzero_clear_resources_on_creation_for_testing"}),
                       VulkanBackend({"nonzero_clear_resources_on_creation_for_testing"}),
                       WebGPUBackend({"nonzero_clear_resources_on_creation_for_testing"}));
-
 }  // anonymous namespace
 }  // namespace dawn
