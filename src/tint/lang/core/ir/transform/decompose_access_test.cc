@@ -7159,6 +7159,141 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_DecomposeAccessTest, Workgroup_PhonyLoad_Array_Skipped) {
+    auto* var = b.Var("v", workgroup, ty.array<u32, 4>(), core::Access::kReadWrite);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        b.Load(var);  // phony: `_ = v;`
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<workgroup, array<u32, 4>, read_write> = var undef
+}
+
+%foo = func():void {
+  $B2: {
+    %3:array<u32, 4> = load %v
+    ret
+  }
+}
+)";
+
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<workgroup, array<u32, 4>, read_write> = var undef
+}
+
+%foo = func():void {
+  $B2: {
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{.workgroup = true};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DecomposeAccessTest, Workgroup_PhonyLoad_Scalar_NotSkipped) {
+    auto* var = b.Var("v", workgroup, ty.u32(), core::Access::kReadWrite);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        b.Load(var);  // phony: `_ = v;`
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<workgroup, u32, read_write> = var undef
+}
+
+%foo = func():void {
+  $B2: {
+    %3:u32 = load %v
+    ret
+  }
+}
+)";
+
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<workgroup, array<u32, 1>, read_write> = var undef
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<workgroup, u32, read_write> = access %v, 0u
+    %4:u32 = load %3
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{.workgroup = true};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DecomposeAccessTest, Workgroup_UsedArrayElementLoad_NotSkipped) {
+    auto* var = b.Var("v", workgroup, ty.array<u32, 4>(), core::Access::kReadWrite);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        // Load one element of the array and bind the result via `let` -> the result is used.
+        auto* access = b.Access(ty.ptr(workgroup, ty.u32(), core::Access::kReadWrite), var, 0_u);
+        b.Let("a", b.Load(access));
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<workgroup, array<u32, 4>, read_write> = var undef
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<workgroup, u32, read_write> = access %v, 0u
+    %4:u32 = load %3
+    %a:u32 = let %4
+    ret
+  }
+}
+)";
+
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<workgroup, array<u32, 4>, read_write> = var undef
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<workgroup, u32, read_write> = access %v, 0u
+    %4:u32 = load %3
+    %a:u32 = let %4
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{.workgroup = true};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 
 }  // namespace tint::core::ir::transform
