@@ -36,16 +36,10 @@
 
 namespace dawn {
 namespace {
-
 class SizedBindingArrayTests : public DawnTest {
   public:
     void SetUp() override {
         DawnTest::SetUp();
-
-        // TODO(https://issues.chromium.org/411573959) Fails using WARP but not on real hardware.
-        // WARP 10.0.19031.4355 samples the wrong textures when indexing while WARP 1.0.12.0 fails
-        // pipeline creation.
-        DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsWARP());
     }
 
     // A 1x1 texture with a single value to check the correct binding is used.
@@ -84,10 +78,6 @@ class SizedBindingArrayTests : public DawnTest {
 
 // Test accessing a binding_array with constant values.
 TEST_P(SizedBindingArrayTests, IndexingWithConstants) {
-    // TODO(https://crbug.com/496253718): The OpenGL backend is not passing the correct metadata for
-    // the texture builtin polyfills.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     // Make the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @vertex fn vs() -> @builtin(position) vec4f {
@@ -141,11 +131,6 @@ TEST_P(SizedBindingArrayTests, IndexingWithConstants) {
 TEST_P(SizedBindingArrayTests, IndexingWithDynamicallyUniformValues) {
     // Compat should disallow dynamically uniform indexing of binding_array of textures.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(https://issues.chromium.org/425328998): D3D11 exposes core when FXC cannot support
-    // core's uniform indexing of binding_array<texture*>. We should make D3D11 expose only compat
-    // by default.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11());
 
     // Make the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
@@ -203,10 +188,6 @@ TEST_P(SizedBindingArrayTests, IndexingWithDynamicallyUniformValues) {
 
 // Test accessing a binding_array surrounded with other bindings in the layout.
 TEST_P(SizedBindingArrayTests, ArrayEntryOversizedAndSurrounded) {
-    // TODO(https://crbug.com/496253718): The OpenGL backend is not passing the correct metadata for
-    // the texture builtin polyfills.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     // Create the BGL with an array larger than the declaration in the shader such the trailing
     // binding will be unused.
     wgpu::BindGroupLayout bgl;
@@ -396,11 +377,6 @@ TEST_P(SizedBindingArrayTests, BindingArraySize1CompatibleWithNonArrayedBGL) {
 
 // Test passing sampled textures of binding_array as function arguments.
 TEST_P(SizedBindingArrayTests, BindingArraySampledTextureAsFunctionArgument) {
-    // TODO(https://issues.chromium.org/411573957) OgenGL requires that indices in arrays of sampler
-    // be constants but even after the DirectVariableAccess transform, the index is a function
-    // parameter (that's constant at the callsite) and not a constant.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     // Make the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @vertex fn vs() -> @builtin(position) vec4f {
@@ -456,17 +432,6 @@ TEST_P(SizedBindingArrayTests, BindingArraySampledTextureAsFunctionArgument) {
 
 // Test accessing a binding_array of sampled textures passed as function argument.
 TEST_P(SizedBindingArrayTests, BindingArrayOfSampledTexturesPassedAsArgument) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10 vulkan.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec() && IsVulkan());
-    // Crashes on the Intel Windows Vulkan shader compiler.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsWindows() && IsIntel());
-    // TODO(crbug.com/492539239): Access violation during test teardown.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
-
-    // TODO(https://crbug.com/496253718): The OpenGL backend is not passing the correct metadata for
-    // the texture builtin polyfills.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     // Make the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @vertex fn vs() -> @builtin(position) vec4f {
@@ -583,10 +548,6 @@ TEST_P(SizedBindingArrayTests, TextureAndSamplerCombination) {
 // Test that calling textureNumLevels on an element of a binding_array returns the correct value,
 // this is targeted for the GL backend that has emulation of that builtin with a UBO.
 TEST_P(SizedBindingArrayTests, TextureNumLevels) {
-    // TODO(https://crbug.com/496253718): The OpenGL backend is not passing the correct metadata for
-    // the texture builtin polyfills.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     // Make the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @vertex fn vs() -> @builtin(position) vec4f {
@@ -653,6 +614,5 @@ DAWN_INSTANTIATE_TEST(SizedBindingArrayTests,
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

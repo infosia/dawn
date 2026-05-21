@@ -42,7 +42,6 @@
 
 namespace dawn {
 namespace {
-
 enum class ShaderAtomicOp : uint8_t {
     AtomicAdd,
     AtomicCASFakeAdd,
@@ -212,7 +211,6 @@ TEST_P(ShaderAtomicVec2Tests, StorageBufferAtomicVec2Simple) {
 
     enable atomic_vec2u_min_max;
 
-
 @binding(0) @group(0) var<storage, read_write> atomic_storage_buffer_max : atomic<vec2<u32>>;
 @binding(1) @group(0) var<storage, read_write> atomic_storage_buffer_min : atomic<vec2<u32>>;
 
@@ -346,7 +344,6 @@ TEST_P(ShaderAtomicVec2Tests, StorageBufferAtomicVec2Array) {
 
     enable atomic_vec2u_min_max;
 
-
 @binding(0) @group(0) var<storage, read_write> atomic_storage_buffer_max : array<atomic<vec2<u32>>>;
 @binding(1) @group(0) var<storage, read_write> atomic_storage_buffer_min : array<atomic<vec2<u32>>>;
 
@@ -410,10 +407,6 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
 }
 
 TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
-    // Suppression for Mali gpus.
-    DAWN_SUPPRESS_TEST_IF(IsARM());
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     // Test code only supports up to 256 workgroup size.
     DAWN_ASSERT(GetParam().mWorkgroupSizeParameter <= 256);
     std::string kConditionalArray = GetParam().mShaderAtomicUseArray ? "[0]" : "";
@@ -513,6 +506,5 @@ DAWN_INSTANTIATE_TEST_P(ShaderAtomicVec2Tests,
                          16, 31, 32, 53, 64, 111, 128, 137, 173, 256}, /* workgroup size*/
                         {1, 2, 7, 15}                                  /*dispatch size */
 );
-
 }  // anonymous namespace
 }  // namespace dawn

@@ -902,16 +902,6 @@ TEST_P(SubgroupsShaderInclusiveTest, InclusiveExecution) {
     DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsEnabledInWGSL());
     if (GetParam().mSubgroupOpDataType == SubgroupOpDataType::F16) {
         DAWN_TEST_UNSUPPORTED_IF(!IsShaderF16EnabledInWGSL());
-
-        // TODO(361330160): The f16 implementation does not seem produce correct values in
-        // execution. It is not clear if this is due to something wrong with the polyfill or the
-        // underlying exclusive implementation.
-        // This was observed for D3D12 NVIDIA GeForce GTX 1660
-        DAWN_SUPPRESS_TEST_IF(gpu_info::IsNvidiaTuring(GetParam().adapterProperties.vendorID,
-                                                       GetParam().adapterProperties.deviceID));
-        // TODO(361330160): Also fails on MacBookPro16,1 with AMD Radeon Pro 5300M
-        DAWN_SUPPRESS_TEST_IF(gpu_info::IsAMDRDNA1(GetParam().adapterProperties.vendorID,
-                                                   GetParam().adapterProperties.deviceID));
     }
 
     for (uint32_t workgroupSize : {1, 2, 3, 4, 7, 8, 15, 16, 31, 32, 63, 64, 127, 128, 255, 256}) {

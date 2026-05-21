@@ -41,7 +41,6 @@
 #include "src/utils/compiler.h"
 
 namespace dawn {
-
 VideoViewsTestBackend::PlatformTexture::PlatformTexture(wgpu::Texture&& texture)
     : wgpuTexture(texture) {}
 VideoViewsTestBackend::PlatformTexture::~PlatformTexture() = default;
@@ -57,8 +56,6 @@ void VideoViewsTestsBase::SetUp() {
     DawnTestWithParams<Params>::SetUp();
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
     DAWN_TEST_UNSUPPORTED_IF(!IsMultiPlanarFormatsSupported());
-    // TODO(crbug.com/342213634): Crashes on ChromeOS volteer devices.
-    DAWN_SUPPRESS_TEST_IF(IsChromeOS() && IsVulkan() && IsIntel() && IsBackendValidationEnabled());
 }
 
 std::vector<wgpu::FeatureName> VideoViewsTestsBase::GetRequiredFeatures() {
@@ -536,7 +533,6 @@ class VideoViewsTests : public VideoViewsTestsBase {
 };
 
 namespace {
-
 // Create video texture uninitialized.
 TEST_P(VideoViewsTests, CreateVideoTextureWithoutInitializedData) {
     ASSERT_DEVICE_ERROR(std::unique_ptr<VideoViewsTestBackend::PlatformTexture> platformTexture =
@@ -2151,9 +2147,6 @@ TEST_P(VideoViewsRenderTargetTests, RenderAttachmentSizeValidation) {
 
 // Tests for rendering to a multiplanar video texture through its views.
 TEST_P(VideoViewsRenderTargetTests, RenderToMultiplanarVideoTexture) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 8) {
         RenderToMultiplanarVideoTextures<uint8_t>(/*numOfTextures=*/1, /*hasDepth=*/false);
     } else if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 16) {
@@ -2164,9 +2157,6 @@ TEST_P(VideoViewsRenderTargetTests, RenderToMultiplanarVideoTexture) {
 }
 
 TEST_P(VideoViewsRenderTargetTests, RenderToMultiplanarVideoTextureWithDepth) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 8) {
         RenderToMultiplanarVideoTextures<uint8_t>(/*numOfTextures=*/1, /*hasDepth=*/true);
     } else if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 16) {
@@ -2177,9 +2167,6 @@ TEST_P(VideoViewsRenderTargetTests, RenderToMultiplanarVideoTextureWithDepth) {
 }
 
 TEST_P(VideoViewsRenderTargetTests, RenderToThreeMultiplanarVideoTexture) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 8) {
         RenderToMultiplanarVideoTextures<uint8_t>(/*numOfTextures=*/3, /*hasDepth=*/false);
     } else if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 16) {
@@ -2190,9 +2177,6 @@ TEST_P(VideoViewsRenderTargetTests, RenderToThreeMultiplanarVideoTexture) {
 }
 
 TEST_P(VideoViewsRenderTargetTests, RenderToThreeMultiplanarVideoTextureWithDepth) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 8) {
         RenderToMultiplanarVideoTextures<uint8_t>(/*numOfTextures=*/3, /*hasDepth=*/true);
     } else if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 16) {
@@ -2204,9 +2188,6 @@ TEST_P(VideoViewsRenderTargetTests, RenderToThreeMultiplanarVideoTextureWithDept
 
 // Tests for rendering to one plane while reading from another plane.
 TEST_P(VideoViewsRenderTargetTests, RenderFromLumaToChromaPlane) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 8) {
         RenderFromLumaToChromaPlane<uint8_t>();
     } else if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 16) {
@@ -2422,12 +2403,6 @@ TEST_P(VideoViewsExtendedUsagesTests, CreateTextureFailsWithViewFormats) {
 
 // Tests sampling a YUV multi-planar texture.
 TEST_P(VideoViewsExtendedUsagesTests, SamplingMultiPlanarYUVTexture) {
-    // TODO(crbug.com/dawn/1998): Failure on Intel's Vulkan device.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsIntel());
-
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     auto texture = CreateMultiPlanarTexture(GetFormat(), wgpu::TextureUsage::TextureBinding,
                                             /*isCheckerboard*/ true,
                                             /*initialized*/ true);
@@ -2506,9 +2481,6 @@ TEST_P(VideoViewsExtendedUsagesTests, SamplingMultiPlanarYUVTexture) {
 
 // Tests sampling a YUVA multi-planar texture.
 TEST_P(VideoViewsExtendedUsagesTests, SamplingMultiPlanarYUVATexture) {
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     auto texture = CreateMultiPlanarTexture(GetFormat(), wgpu::TextureUsage::TextureBinding,
                                             /*isCheckerboard*/ true,
                                             /*initialized*/ true);
@@ -2592,9 +2564,6 @@ TEST_P(VideoViewsExtendedUsagesTests, SamplingMultiPlanarYUVATexture) {
 
 // Test copying from multi-planar format per plane to a buffer succeeds.
 TEST_P(VideoViewsExtendedUsagesTests, T2BCopyPlaneAspectsSucceeds) {
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     switch (utils::GetMultiPlaneTextureBitDepth(GetFormat())) {
         case 8:
             RunT2BCopyPlaneAspectsTest<uint8_t>();
@@ -2787,6 +2756,5 @@ DAWN_INSTANTIATE_TEST_B(VideoViewsExtendedUsagesTests,
                          wgpu::TextureFormat::R10X6BG10X6Biplanar422Unorm,
                          wgpu::TextureFormat::R10X6BG10X6Biplanar444Unorm,
                          wgpu::TextureFormat::R8BG8A8Triplanar420Unorm});
-
 }  // anonymous namespace
 }  // namespace dawn
