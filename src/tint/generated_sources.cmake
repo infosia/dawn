@@ -41,6 +41,7 @@ set(TINT_GENERATED_SOURCE_DEPS
   "lang/spirv/spirv.def"
   "cmd/bench/enums_core_bench.cc.tmpl"
   "cmd/bench/enums_wgsl_bench.cc.tmpl"
+  "cmd/fuzz/wgsl/dictionary.txt.tmpl"
   "lang/core/enums.cc.tmpl"
   "lang/core/enums.h.tmpl"
   "lang/core/enums_test.cc.tmpl"
