@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc3ddd4b_bd766905",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-21T21:56:42Z",
+      "side": 1,
+      "message": "This seems unlikely to cause significant regressions so I think we should just submit it? Can always revert if needed.",
+      "revId": "c1ba0c45cc4ebb99c3be3848a6e057faf811c534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
