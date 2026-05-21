@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "79fd5a0b_df4ac518",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T16:08:30Z",
+      "side": 1,
+      "message": "I can remove it.",
+      "parentUuid": "16761521_897bda16",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9d0d217c_4148ba45",
@@ -54,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8d36bc53_349ffd06",
+        "filename": "src/dawn/native/RenderPipeline.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T16:08:30Z",
+      "side": 1,
+      "message": "We do not have an undefined for this enum.",
+      "parentUuid": "1a7155ef_7b6bb39d",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af2b15ff_4da4d594",
         "filename": "src/dawn/native/ResourceTable.h",
         "patchSetId": 9
@@ -65,6 +101,24 @@
       "writtenOn": "2026-05-21T15:45:07Z",
       "side": 1,
       "message": "Does this work?\n\nditto below and for all other typed integers that end up being spelled twice\n```suggestion\n        ResourceTableSlot slot{0};  // Slot index to update\n```",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9bfd90f_da56b399",
+        "filename": "src/dawn/native/ResourceTable.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T16:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af2b15ff_4da4d594",
       "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6745cbf0_b404567b",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T16:08:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbb91adb_0a7e3f5c",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c5ffc84_530ecf90",
@@ -99,6 +171,24 @@
       "writtenOn": "2026-05-21T15:45:07Z",
       "side": 1,
       "message": "Maybe it would be worth having an Undefined for this enum as well.",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af8857c3_f20a3e52",
+        "filename": "src/dawn/native/Surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T16:08:30Z",
+      "side": 1,
+      "message": "I added a undefined.",
+      "parentUuid": "4c5ffc84_530ecf90",
       "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
