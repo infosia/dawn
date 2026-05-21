@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b95b6df2_292c628b",
+        "filename": "tools/src/cmd/gen/build/build.go",
+        "patchSetId": 11
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T19:11:27Z",
+      "side": 1,
+      "message": "```suggestion\n\t// Generate files that contain the inputs and/or outputs of the build-time source generation.\n```",
+      "revId": "131e50e94e4329823b16daec95cfe8ac970d65af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52f54c9d_e764276d",
+        "filename": "tools/src/cmd/gen/build/build.go",
+        "patchSetId": 11
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T19:11:27Z",
+      "side": 1,
+      "message": "wgsl.def?",
+      "revId": "131e50e94e4329823b16daec95cfe8ac970d65af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
