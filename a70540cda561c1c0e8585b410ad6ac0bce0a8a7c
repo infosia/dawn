@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a814008_41b36b29",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T03:08:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70d94cc9_bf579126",
+      "revId": "a70540cda561c1c0e8585b410ad6ac0bce0a8a7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8597ad73_49588240",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-15T03:13:17Z",
       "side": 1,
       "message": "IIRC we used to have this but removed it in favor of usages of `[[maybe_unused]]` (and maybe `(void)`), do we really want to add it back?",
+      "revId": "a70540cda561c1c0e8585b410ad6ac0bce0a8a7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6965cd4e_68fbc9ac",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T03:08:01Z",
+      "side": 1,
+      "message": "I had to make a similar change for DAWN_UNUSED_FUNC.",
+      "parentUuid": "8597ad73_49588240",
       "revId": "a70540cda561c1c0e8585b410ad6ac0bce0a8a7c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
