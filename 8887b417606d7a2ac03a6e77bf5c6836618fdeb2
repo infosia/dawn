@@ -33,6 +33,24 @@
       "message": "LGTM, but moving forwards, could we try to use the `ExecutionQueue`\u0027s `TrackSerialTask` or `RegisterSerialProcessor` APIs to handle these kind of tracking instead of adding another `Tick`-like object to the D3D backends? I intend to eventually go over all of those and update them at some point so it for new stuff it would be nice to just try to use those new APIs if possible to avoid more work in the future. It will make the spontaneous work a lot easier in the future. Thanks!",
       "revId": "8887b417606d7a2ac03a6e77bf5c6836618fdeb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54372b37_400aa74e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-05-21T07:57:20Z",
+      "side": 1,
+      "message": "Hi Loko, I tried using `RegisterSerialProcessor` in the patch set 6 and 7 but it causes lots of flakes on the bots so I reverted back to the patch set 5.\n\nCan we just land the current patch and refactor the code later?",
+      "parentUuid": "52f9d791_9c36271d",
+      "revId": "8887b417606d7a2ac03a6e77bf5c6836618fdeb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
