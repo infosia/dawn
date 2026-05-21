@@ -43,7 +43,6 @@
 
 namespace dawn {
 namespace {
-
 class SurfaceTests : public DawnTest {
   protected:
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
@@ -58,13 +57,7 @@ class SurfaceTests : public DawnTest {
         DawnTest::SetUp();
         DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
-        // TODO(crbug.com/dawn/2531): Failing on newer Linux/Intel driver version.
-        // However, IsIntel() and IsMesa() don't work with the null backend.
-        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNull());
         DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsIntel() && IsMesa("23.2"));
-
-        // Causes flaky X11 resource exhaustion when run with SwiftShader.
-        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsSwiftshader());
 
         glfwSetErrorCallback([](int code, const char* message) {
             ErrorLog() << "GLFW error " << code << " " << message;
@@ -255,10 +248,6 @@ TEST_P(SurfaceTests, ReconfigureBasic) {
 
 // Test reconfiguring the surface after GetCurrentTexture
 TEST_P(SurfaceTests, ReconfigureAfterGetCurrentTexture) {
-    // TODO(crbug.com/500793592): Causes cascading failures on Windows 11/AMD
-    // RX 5500 XT w/ backend validation.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan() && IsBackendValidationEnabled());
-
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
 
@@ -304,14 +293,6 @@ TEST_P(SurfaceTests, ReconfigureAfterUnconfigure) {
 
 // Test unconfiguring after GetCurrentTexture but before the Present
 TEST_P(SurfaceTests, UnconfigureAfterGet) {
-    // TODO(crbug.com/500793592): Causes cascading failures on Windows 11/AMD
-    // RX 5500 XT w/ backend validation.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan() && IsBackendValidationEnabled());
-
-    // TODO(crbug.com/500766623): Fails due to backend validation errors on
-    // Windows 11/AMD RX 5500 XT w/ D3D12.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
     wgpu::SurfaceTexture surfaceTexture;
@@ -324,21 +305,6 @@ TEST_P(SurfaceTests, UnconfigureAfterGet) {
 }
 // Test switching between surfaces that have different present modes.
 TEST_P(SurfaceTests, SwitchPresentMode) {
-    // Fails with "internal drawable creation failed" on the Windows NVIDIA CQ builders but not
-    // locally.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsNvidia());
-
-    // TODO(jiawei.shao@intel.com): find out why this test sometimes hangs on the latest Linux Intel
-    // Vulkan drivers.
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsIntel());
-
-    // crbug.com/358166481
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
-    // TODO(crbug.com/463614521): Flakily causes a device loss on Snapdragon X
-    // Elite SoCs which causes all subsequent tests to fail.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
-
     constexpr wgpu::PresentMode kAllPresentModes[] = {
         wgpu::PresentMode::Immediate,
         wgpu::PresentMode::Fifo,
@@ -387,13 +353,6 @@ TEST_P(SurfaceTests, SwitchPresentMode) {
 
 // Test resizing the surface and without resizing the window.
 TEST_P(SurfaceTests, ResizingSurfaceOnly) {
-    // TODO(crbug.com/468228358): Flaky on Snapdragon X Elite SoCs w/ D3D12.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
-
-    // TODO(crbug.com/500766623): Fails due to backend validation errors on
-    // Windows 11/AMD RX 5500 XT w/ D3D12.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
     wgpu::Surface surface = CreateTestSurface();
 
     for (int i = 0; i < 10; i++) {
@@ -411,15 +370,6 @@ TEST_P(SurfaceTests, ResizingSurfaceOnly) {
 
 // Test resizing the window but not the surface.
 TEST_P(SurfaceTests, ResizingWindowOnly) {
-    // Hangs on NVIDIA GTX 1660
-    DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
-    // TODO(crbug.com/42241486): Crashes on Linux NVIDIA GTX 1660 with 535.183.01 driver
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsNvidia());
-
-    // TODO(crbug.com/500766623): Fails due to backend validation errors on
-    // Windows 11/AMD RX 5500 XT w/ D3D12.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
 
@@ -438,17 +388,6 @@ TEST_P(SurfaceTests, ResizingWindowOnly) {
 
 // Test resizing both the window and the surface at the same time.
 TEST_P(SurfaceTests, ResizingWindowAndSurface) {
-    // TODO(crbug.com/dawn/1205): Currently failing on new NVIDIA GTX 1660s on Linux/Vulkan.
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsNvidia());
-
-    // TODO(crbug.com/465497433): Flakily loses device on Snapdragon X Elite
-    // SoCs.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
-
-    // TODO(crbug.com/500766623): Fails due to backend validation errors on
-    // Windows 11/AMD RX 5500 XT w/ D3D12.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
     wgpu::Surface surface = CreateTestSurface();
 
     for (int i = 0; i < 10; i++) {
@@ -473,15 +412,6 @@ TEST_P(SurfaceTests, ResizingWindowAndSurface) {
 
 // Test switching devices on the same adapter.
 TEST_P(SurfaceTests, SwitchingDevice) {
-    // TODO(https://crbug.com/dawn/2116): VVLs crash because oldSwapchain is from a different
-    // device. The spec says it is ok if it is only the same instance but clarifications yet to be
-    // published by Khronos are that the spec is wrong and should require the swapchain to be from
-    // the same device. Suppress on all Vulkan devices while a proper fix is done.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
-    // TODO(dawn:269): This isn't implemented yet but could be supported in the future.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() || IsD3D12());
-
     wgpu::Device device2 = CreateDevice();
 
     wgpu::Surface surface = CreateTestSurface();
@@ -607,10 +537,6 @@ TEST_P(SurfaceTests, Sampling) {
 
 // Test copying from the surface when it is supported.
 TEST_P(SurfaceTests, CopyFrom) {
-    // TODO(crbug.com/500766623): Fails due to backend validation errors on
-    // Windows 11/AMD RX 5500 XT w/ D3D12.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceCapabilities caps;
     surface.GetCapabilities(adapter, &caps);
@@ -639,10 +565,6 @@ TEST_P(SurfaceTests, CopyFrom) {
 
 // Test copying to the surface when it is supported.
 TEST_P(SurfaceTests, CopyTo) {
-    // TODO(crbug.com/500766623): Fails due to backend validation errors on
-    // Windows 11/AMD RX 5500 XT w/ D3D12.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceCapabilities caps;
     surface.GetCapabilities(adapter, &caps);
@@ -729,6 +651,5 @@ DAWN_INSTANTIATE_TEST(SurfaceTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
