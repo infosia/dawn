@@ -33,6 +33,24 @@
       "message": "Maybe I\u0027m missing something, but none of these blocks are empty?\n\nLooking at the `RemoveBlockParams()` callsites, it looks like the bad scenarios would be:\n- body has parameters, but *initializer* is empty\n- continuing has parameters, but *body* is empty",
       "revId": "d2700eed487bef0830f0162c50df5917288e0c7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bedda765_bca01fca",
+        "filename": "src/tint/lang/core/ir/transform/remove_terminator_args_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-21T17:04:58Z",
+      "side": 1,
+      "message": "Yeah, I agree, I was having a hard time getting a test case and kinda mashed things together. Trying to disentangle this, I am pretty sure that there is an issue with the IR validator letting the initial test case through.",
+      "parentUuid": "cee3ed16_95531716",
+      "revId": "d2700eed487bef0830f0162c50df5917288e0c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
