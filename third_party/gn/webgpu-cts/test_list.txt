@@ -31889,6 +31889,8 @@ webgpu:api,validation,encoding,cmds,render,draw:unused_buffer_bound:smallIndexBu
 webgpu:api,validation,encoding,cmds,render,draw:unused_buffer_bound:smallIndexBuffer=true;smallVertexBuffer=false;smallInstanceBuffer=true
 webgpu:api,validation,encoding,cmds,render,draw:unused_buffer_bound:smallIndexBuffer=true;smallVertexBuffer=true;smallInstanceBuffer=false
 webgpu:api,validation,encoding,cmds,render,draw:unused_buffer_bound:smallIndexBuffer=true;smallVertexBuffer=true;smallInstanceBuffer=true
+webgpu:api,validation,encoding,cmds,render,draw:index_buffer_format:
+webgpu:api,validation,encoding,cmds,render,draw:index_buffer_format_dirtying:
 webgpu:api,validation,encoding,cmds,render,draw:index_buffer_OOB:bufferSizeInElements=10;bindingSizeInElements=10;drawIndexCount=10;drawType="drawIndexed"
 webgpu:api,validation,encoding,cmds,render,draw:index_buffer_OOB:bufferSizeInElements=10;bindingSizeInElements=10;drawIndexCount=10;drawType="drawIndexedIndirect"
 webgpu:api,validation,encoding,cmds,render,draw:index_buffer_OOB:bufferSizeInElements=10;bindingSizeInElements=10;drawIndexCount=11;drawType="drawIndexed"
@@ -267352,6 +267354,13 @@ webgpu:shader,validation,extension,pointer_composite_access:pointer:case="builti
 webgpu:shader,validation,extension,pointer_composite_access:pointer:case="builtin_struct_frexp_via_pointer"
 webgpu:shader,validation,extension,readonly_and_readwrite_storage_textures:var_decl:
 webgpu:shader,validation,extension,readonly_and_readwrite_storage_textures:textureBarrier:
+webgpu:shader,validation,extension,subgroup_size_control:enable_subgroup_size_control_requires_subgroups:enableSubgroups=false
+webgpu:shader,validation,extension,subgroup_size_control:enable_subgroup_size_control_requires_subgroups:enableSubgroups=true
+webgpu:shader,validation,extension,subgroup_size_control:use_subgroup_size_attribute_requires_subgroup_size_control_extension_enabled:enableExtension=false
+webgpu:shader,validation,extension,subgroup_size_control:use_subgroup_size_attribute_requires_subgroup_size_control_extension_enabled:enableExtension=true
+webgpu:shader,validation,extension,subgroup_size_control:subgroup_size_attribute_only_valid_in_compute_stage:stage="compute"
+webgpu:shader,validation,extension,subgroup_size_control:subgroup_size_attribute_only_valid_in_compute_stage:stage="vertex"
+webgpu:shader,validation,extension,subgroup_size_control:subgroup_size_attribute_only_valid_in_compute_stage:stage="fragment"
 webgpu:shader,validation,functions,alias_analysis:two_pointers:address_space="private";aliased=true
 webgpu:shader,validation,functions,alias_analysis:two_pointers:address_space="private";aliased=false
 webgpu:shader,validation,functions,alias_analysis:two_pointers:address_space="function";aliased=true
