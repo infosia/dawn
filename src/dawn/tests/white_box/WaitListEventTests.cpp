@@ -38,7 +38,6 @@
 
 namespace dawn::native {
 namespace {
-
 constexpr uint64_t kZeroDurationNs = 0;
 constexpr uint64_t kShortDurationNs = 1000000;
 constexpr uint64_t kMediumDurationNs = 50000000;
@@ -131,9 +130,6 @@ TEST_P(WaitListEventTests, WaitAsyncAlreadySignaled) {
 
 // Test WaitAsync, signaling the event later
 TEST_P(WaitListEventTests, WaitAsyncThenSignal) {
-    // TODO(crbug.com/469958428): Flaky w/ WARP.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsWARP());
-
     Ref<WaitListEvent> event = AcquireRef(new WaitListEvent());
     EXPECT_FALSE(event->IsSignaled());
 
@@ -376,6 +372,5 @@ DAWN_INSTANTIATE_TEST(WaitListEventTests,
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend());
-
 }  // namespace
 }  // namespace dawn::native

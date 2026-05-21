@@ -36,7 +36,6 @@
 
 namespace dawn {
 namespace {
-
 constexpr uint32_t kRTSize = 1;
 
 class ImmediateDataTests : public DawnTest {
@@ -137,9 +136,6 @@ class ImmediateDataTests : public DawnTest {
 
 // ImmediateData has been uploaded successfully.
 TEST_P(ImmediateDataTests, BasicRenderPipeline) {
-    // TODO(crbug.com/479563279): diagnose failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::RenderPipeline pipeline = CreateRenderPipeline();
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
@@ -162,9 +158,6 @@ TEST_P(ImmediateDataTests, BasicRenderPipeline) {
 
 // Test separately-declared immediate vars of different sizes in frag and vert shaders.
 TEST_P(ImmediateDataTests, FragAndVertSeparateImmediateVars) {
-    // TODO(crbug.com/479563279): diagnose failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     mShaderModule = utils::CreateShaderModule(device, R"(
         var<immediate> v_imm: vec2f;
         var<immediate> f_imm: mat4x4f;
@@ -232,9 +225,6 @@ TEST_P(ImmediateDataTests, FragAndVertSeparateImmediateVars) {
 
 // Test that SetImmediates works in RenderBundle.
 TEST_P(ImmediateDataTests, SetImmediatesInRenderBundle) {
-    // TODO(crbug.com/479563279): diagnose failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::RenderPipeline pipeline = CreateRenderPipeline();
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
@@ -265,9 +255,6 @@ TEST_P(ImmediateDataTests, SetImmediatesInRenderBundle) {
 
 // Test that SetImmediates works after ExecuteBundles.
 TEST_P(ImmediateDataTests, SetImmediatesAfterExecuteBundles) {
-    // TODO(crbug.com/479563279): diagnose failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::RenderPipeline pipeline = CreateRenderPipeline();
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
@@ -326,9 +313,6 @@ TEST_P(ImmediateDataTests, BasicComputePipeline) {
 
 // SetImmediates with offset on immediate data range.
 TEST_P(ImmediateDataTests, SetImmediatesWithRangeOffset) {
-    // TODO(crbug.com/479563279): diagnose failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     constexpr uint32_t kHalfImmediateDataSize = 8;
     // Render Pipeline
     {
@@ -381,9 +365,6 @@ TEST_P(ImmediateDataTests, SetImmediatesWithRangeOffset) {
 // SetImmediates should upload dirtied, latest contents between pipeline switches before draw or
 // dispatch.
 TEST_P(ImmediateDataTests, SetImmediatesMultipleTimes) {
-    // TODO(crbug.com/479563279): diagnose failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     // Render Pipeline
     {
         wgpu::RenderPipeline pipeline = CreateRenderPipeline();
@@ -439,9 +420,6 @@ TEST_P(ImmediateDataTests, SetImmediatesMultipleTimes) {
 // Test that clamp frag depth(supported by internal immediate constants)
 // works fine when shaders have user immediate data
 TEST_P(ImmediateDataTests, UsingImmediateDataDontAffectClampFragDepth) {
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         var<immediate> constants: vec4f;
         @vertex fn vs() -> @builtin(position) vec4f {
@@ -496,8 +474,6 @@ TEST_P(ImmediateDataTests, UsingImmediateDataDontAffectClampFragDepth) {
 // Test that vertex_index (supported by internal immediate constants)
 // works fine when the immediates are unused and optimized out by the driver.
 TEST_P(ImmediateDataTests, VertexIndexOptimizedOut) {
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         fn v(index : u32) -> vec4f {
             return vec4f(0.0, 0.0, 0.0, 1.0);
@@ -639,9 +615,6 @@ TEST_P(ImmediateDataTests, SetImmediatesWithPipelineSwitch) {
 
 // Test that SetImmediates works with multiple ExecuteBundles calls.
 TEST_P(ImmediateDataTests, SetImmediatesInMultipleExecuteBundles) {
-    // TODO(crbug.com/479563279): diagnose failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::RenderPipeline pipeline = CreateRenderPipeline();
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
@@ -686,9 +659,6 @@ TEST_P(ImmediateDataTests, SetImmediatesInMultipleExecuteBundles) {
 // Test that RenderBundle immediate state is not affected by previous SetImmediates state in
 // RenderPass.
 TEST_P(ImmediateDataTests, BundlesDontCarePreviousImmediatesState) {
-    // TODO(crbug.com/479563279): diagnose failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::RenderPipeline pipeline = CreateRenderPipeline();
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
@@ -1034,6 +1004,5 @@ DAWN_INSTANTIATE_TEST(ImmediateDataWithResourceTableTests,
                       D3D12Backend(),
                       MetalBackend(),
                       VulkanBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

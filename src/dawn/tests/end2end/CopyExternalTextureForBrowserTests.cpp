@@ -34,7 +34,6 @@
 
 namespace dawn {
 namespace {
-
 wgpu::Texture Create2DTexture(wgpu::Device device,
                               uint32_t width,
                               uint32_t height,
@@ -311,8 +310,6 @@ class CopyExternalTextureForBrowserTests_Basic
     : public CopyExternalTextureForBrowserTestsBase<CopyTestParams> {};
 
 TEST_P(CopyExternalTextureForBrowserTests_Basic, Copy) {
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
-
     wgpu::CopyTextureForBrowserOptions options = {};
     options.flipY = GetParam().mFlipY;
 
@@ -428,8 +425,6 @@ class CopyExternalTextureForBrowserTests_Aspect : public CopyExternalTextureForB
 };
 
 TEST_P(CopyExternalTextureForBrowserTests_Aspect, Copy) {
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
-
     wgpu::Origin3D srcOrigin = {};
     wgpu::Origin3D dstOrigin = {};
     wgpu::Extent2D naturalSize = {static_cast<uint32_t>(kWidth), static_cast<uint32_t>(kHeight)};
@@ -450,6 +445,5 @@ DAWN_INSTANTIATE_TEST(CopyExternalTextureForBrowserTests_Aspect,
                       VulkanBackend(),
                       VulkanBackend({"vulkan_force_static_samplers_for_external_textures"}),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
