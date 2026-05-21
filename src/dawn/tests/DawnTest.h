@@ -51,6 +51,7 @@
 #include "dawn/tests/AdapterTestConfig.h"
 #include "dawn/tests/MockCallback.h"
 #include "dawn/tests/ParamGenerator.h"
+#include "dawn/tests/TestExpectations.h"
 #include "dawn/tests/ToggleParser.h"
 #include "dawn/utils/ComboLimits.h"
 #include "dawn/utils/TestUtils.h"
@@ -248,6 +249,48 @@ class DawnTestEnvironment : public testing::Environment {
     bool RunSuppressedTests() const;
     bool IsTestLauncherBotMode() const;
 
+    bool HasExpectationsFile() const;
+    // If `outBugs` is non-null, the bug IDs of contributing expectation lines are
+    // appended (in declaration order, possibly with duplicates).
+    TestResultSet GetTestExpectation(const std::string& testName,
+                                     const TestConditions& conditions,
+                                     std::vector<std::string>* outBugs = nullptr);
+    std::vector<std::string> GetUnusedExpectationsMessages() const;
+    std::vector<std::string> GetPlaceholderBugMessages() const;
+
+    // Per-test result recording for --results-file output.
+    struct TestResultEntry {
+        std::string testName;
+        std::string tags;
+        std::string status;
+        double durationSeconds;
+    };
+    void RecordTestResult(TestResultEntry entry);
+
+    // Counters updated by the test event listener when expectations are in effect.
+    void RecordExpectedFailure();
+    void RecordUnexpectedPass();
+    void RecordFlakyFailure();
+    void RecordUnexpectedFailure();
+    uint32_t GetExpectedFailureCount() const;
+    uint32_t GetUnexpectedPassCount() const;
+    uint32_t GetFlakyFailureCount() const;
+    uint32_t GetUnexpectedFailureCount() const;
+
+    // Returns the process exit code, accounting for the expectations file:
+    //   - 0 if there are no unexpected failures and no unexpected passes
+    //   - nonzero otherwise
+    // When no expectations file is loaded, returns gtestResult unchanged.
+    //
+    // This is a static method because GoogleTest deletes registered global test
+    // environments at the end of RUN_ALL_TESTS() (see UnitTestImpl::RunAllTests
+    // in gtest.cc). Callers in main() therefore cannot safely access this
+    // instance after RUN_ALL_TESTS() returns. The counters and a flag for
+    // whether an expectations file was in effect are snapshotted into file-scope
+    // storage during TearDown() (which runs while the instance is still valid)
+    // and read by this static accessor.
+    static int GetSuppressedExitCode(int gtestResult);
+
   protected:
     std::unique_ptr<native::Instance> CreateInstance(platform::Platform* platform = nullptr);
     std::unique_ptr<native::Instance> mInstance;
@@ -279,6 +322,16 @@ class DawnTestEnvironment : public testing::Environment {
     bool mRunSuppressedTests = false;
     bool mIsTestLauncherBotMode = false;
 
+    std::string mExpectationsFile;
+    TestExpectationParser mExpectationParser;
+
+    uint32_t mExpectedFailureCount = 0;
+    uint32_t mUnexpectedPassCount = 0;
+    uint32_t mFlakyFailureCount = 0;
+    uint32_t mUnexpectedFailureCount = 0;
+
+    std::string mResultsFile;
+    std::vector<TestResultEntry> mTestResults;
     ToggleParser mToggleParser;
 
     std::vector<wgpu::AdapterType> mDevicePreferences;

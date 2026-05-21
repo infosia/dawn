@@ -35,7 +35,6 @@
 
 namespace dawn {
 namespace {
-
 class PolyfillBuiltinSimpleTests : public DawnTest {
   public:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
@@ -246,7 +245,6 @@ TEST_P(PolyfillBuiltinSimpleTests, AbsWithBranch) {
 
 TEST_P(PolyfillBuiltinSimpleTests, CaseSwitchToIf) {
     // TODO(crbug.com/459848839): Fails on Win/Snapdragon X Elite.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12() && !IsDXC());
 
     std::string kShaderCode = R"(
@@ -311,7 +309,6 @@ TEST_P(PolyfillBuiltinSimpleTests, CaseSwitchToIf) {
 
 TEST_P(PolyfillBuiltinSimpleTests, CaseSwitchToIfComplex) {
     // TODO(crbug.com/459848839): Fails on Win/Snapdragon X Elite.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12() && !IsDXC());
 
     std::string kShaderCode = R"(
@@ -469,6 +466,5 @@ DAWN_INSTANTIATE_TEST(PolyfillBuiltinSimpleTests,
                       VulkanBackend({"spirv_polyfill_float_negation", "spirv_polyfill_float_abs"}),
                       D3D11Backend({"scalarize_max_min_clamp"}),
                       OpenGLESBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
