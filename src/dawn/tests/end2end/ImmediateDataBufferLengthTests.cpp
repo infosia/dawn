@@ -36,7 +36,6 @@
 
 namespace dawn {
 namespace {
-
 // Storage buffer size in bytes.
 enum class Size { Small = 64u, Medium = 256u, Large = 512u };
 
@@ -649,10 +648,6 @@ TEST_P(ImmediateDataBufferLengthRenderPipelineTest, MultipleImmediateDataUpdates
 
 // Test: Render pipeline with interleaved updates
 TEST_P(ImmediateDataBufferLengthRenderPipelineTest, InterleavedUpdates) {
-    // TODO(crbug.com/366291600): Android bots failed with incorrect arrayLength value in second
-    // dispatch. Should be Size::Medium, Size::Large but got Size::Small, Size::Medium.
-    DAWN_SUPPRESS_TEST_IF(IsAndroid());
-
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
 
     utils::ComboRenderPassDescriptor renderPassDesc({mRenderTargetView});
@@ -683,6 +678,5 @@ DAWN_INSTANTIATE_TEST(ImmediateDataBufferLengthRenderPipelineTest,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
