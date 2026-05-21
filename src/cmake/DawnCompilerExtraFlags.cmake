@@ -46,9 +46,11 @@ function(common_compile_options target)
       PRIVATE
         "-fno-exceptions"
 
-        "-Wno-assume"
-        "-Wno-deprecated-builtins"
-        "-Wno-unknown-warning-option"
+        $<$<CXX_COMPILER_ID:Clang>:
+          "-Wno-assume"
+          "-Wno-deprecated-builtins"
+          "-Wno-unknown-warning-option"
+        >
         "-Wno-switch-default"
         "-Wno-nrvo"
     )
@@ -77,10 +79,12 @@ function(common_compile_options target)
     get_target_property(deps ${target} LINK_LIBRARIES)
     if (deps MATCHES "absl")
       target_compile_options(${target} PUBLIC
-              "-Wno-gcc-compat"
-              "-Wno-unreachable-code-break"
-              "-Wno-nullability-extension"
-              "-Wno-shadow"
+        $<$<CXX_COMPILER_ID:Clang>:
+          "-Wno-gcc-compat"
+          "-Wno-unreachable-code-break"
+          "-Wno-nullability-extension"
+        >
+        "-Wno-shadow"
       )
     endif ()
   endif ()
