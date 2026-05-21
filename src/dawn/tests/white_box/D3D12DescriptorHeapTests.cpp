@@ -44,7 +44,6 @@
 
 namespace dawn::native::d3d12 {
 namespace {
-
 constexpr uint32_t kRTSize = 4;
 
 // Pooling tests are required to advance the GPU completed serial to reuse heaps.
@@ -783,9 +782,6 @@ TEST_P(D3D12DescriptorHeapTests, GrowHeapsInPendingSubmit) {
 // once no longer pending.
 // Switches over many times until |kNumOfPooledHeaps| heaps are pool-allocated.
 TEST_P(D3D12DescriptorHeapTests, GrowAndPoolHeapsInPendingAndMultipleSubmits) {
-    // TODO(crbug.com/463661448): Flaky on Snapdragon X Elite SoCs.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm());
-
     auto* allocator = mD3DDevice->GetSamplerShaderVisibleDescriptorAllocator();
     uint32_t heapSize = allocator->GetShaderVisibleHeapSizeForTesting();
 
@@ -901,7 +897,6 @@ TEST_P(D3D12DescriptorHeapTests, EncodeManyUBO) {
 TEST_P(D3D12DescriptorHeapTests, EncodeUBOOverflowMultipleSubmit) {
     DAWN_TEST_UNSUPPORTED_IF(
         !mD3DDevice->IsToggleEnabled(native::Toggle::UseD3D12SmallShaderVisibleHeapForTesting));
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
 
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
@@ -1701,6 +1696,5 @@ TEST_P(D3D12ResourceTableDescriptorHeapTests, SwitchOverViewHeapTableAndBindGrou
 }
 
 DAWN_INSTANTIATE_TEST(D3D12ResourceTableDescriptorHeapTests, D3D12Backend(), );
-
 }  // anonymous namespace
 }  // namespace dawn::native::d3d12

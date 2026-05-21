@@ -32,5 +32,6 @@ int main(int argc, char** argv) {
     dawn::SubstituteChromiumArgs(argc, argv);
     InitDawnEnd2EndTestEnvironment(argc, argv);
     testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    int gtestResult = RUN_ALL_TESTS();
+    return dawn::DawnTestEnvironment::GetEnvironment()->GetSuppressedExitCode(gtestResult);
 }
