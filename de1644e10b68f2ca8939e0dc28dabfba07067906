@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bea8bfb6_5d3f1830",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T15:02:55Z",
+      "side": 1,
+      "message": "This CL feels like it should be split, there are multiple things it\u0027s doing here.\n\n1. Add the unreachables\n2. Add the constexprs\n3. Fix the cmakefiles\n4. The ityp_array default change",
+      "revId": "de1644e10b68f2ca8939e0dc28dabfba07067906",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6c42b55_8c690671",
+        "filename": "src/dawn/common/ityp_array.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T15:02:55Z",
+      "side": 1,
+      "message": "This seems wrong?",
+      "revId": "de1644e10b68f2ca8939e0dc28dabfba07067906",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
