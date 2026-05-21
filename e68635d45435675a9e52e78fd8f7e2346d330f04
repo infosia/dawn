@@ -16,6 +16,23 @@
       "message": "Done!",
       "revId": "e68635d45435675a9e52e78fd8f7e2346d330f04",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffd7a82c_e449f1ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T08:11:06Z",
+      "side": 1,
+      "message": "LGTM, thank you for the contribution! Antonio PTAL!",
+      "revId": "e68635d45435675a9e52e78fd8f7e2346d330f04",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
