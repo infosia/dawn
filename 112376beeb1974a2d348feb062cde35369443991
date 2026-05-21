@@ -159,6 +159,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15072196_fde21613",
+        "filename": "src/dawn/native/Surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T15:12:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1bb86587_ce7bccc5",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8b35de4_96696e88",
