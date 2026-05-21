@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e6ccab2_53e76d6c",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T15:01:27Z",
+      "side": 1,
+      "message": "```suggestion\n    float x \u003d 0.0f;\n    float y \u003d 0.0f;\n    float width \u003d 0.0f;\n    float height \u003d 0.0f;\n    float minDepth \u003d 0.0f;\n    float maxDepth \u003d 0.0f;\n```",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2dbd5f2_4e84adf6",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T15:01:27Z",
+      "side": 1,
+      "message": "```suggestion\n    uint32_t x \u003d 0;\n    uint32_t y \u003d 0;\n    uint32_t width \u003d 0;\n    uint32_t height \u003d 0;\n```",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1161697_170c01e6",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T15:01:27Z",
+      "side": 1,
+      "message": "```suggestion\n    float a \u003d 0.0f;\n    float b \u003d 0.0f;\n    float c \u003d 0.0f;\n    float d \u003d 0.0f;\n    float e \u003d 0.0f;\n    float f \u003d 0.0f;\n    float g \u003d 0.0f;\n```",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efb7a532_f658d0bd",
+        "filename": "src/dawn/native/Surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T15:01:27Z",
+      "side": 1,
+      "message": "This seems like a weird default?",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8b35de4_96696e88",
+        "filename": "src/tint/utils/reflection/reflection_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T15:01:27Z",
+      "side": 1,
+      "message": "```suggestion\n    int a \u003d 0;\n    int b \u003d 0;\n    int c \u003d 0;\n```",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "898bd3e6_18e38ed5",
+        "filename": "src/tint/utils/reflection/reflection_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T15:01:27Z",
+      "side": 1,
+      "message": "```suggestion\n    int a \u003d 0;\n    int b \u003d 0;\n    int c \u003d 0;\n```",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "448d2bd0_7e97b262",
+        "filename": "src/tint/utils/reflection/reflection_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T15:01:27Z",
+      "side": 1,
+      "message": "```suggestion\n    int a \u003d 0;\n    int b \u003d 0;\n    int c \u003d 0;\n```",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcbdcb02_7ac68891",
+        "filename": "src/tint/utils/reflection/reflection_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T15:01:27Z",
+      "side": 1,
+      "message": "```suggestion\n    int a \u003d 0;\n    int b \u003d 0;\n    int c \u003d 0;\n```",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
