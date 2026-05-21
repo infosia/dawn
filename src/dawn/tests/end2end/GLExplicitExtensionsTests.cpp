@@ -28,7 +28,6 @@
 #include "dawn/tests/DawnTest.h"
 namespace dawn {
 namespace {
-
 class GLExplicitExtensionsTests : public DawnTest {
   protected:
     void SetUp() override {
@@ -53,9 +52,6 @@ TEST_P(GLExplicitExtensionsTests, Features) {
 }
 
 TEST_P(GLExplicitExtensionsTests, Toggles) {
-    // TODO(crbug.com/444741058): Fails on Intel-based brya devices running Android Desktop.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsIntel() && IsAndroid());
-
     // Make sure this toggle is inherited correctly during re-initialization
     EXPECT_EQ(HasToggleEnabled("gl_force_es_31_and_no_extensions"), true);
 
@@ -66,6 +62,5 @@ TEST_P(GLExplicitExtensionsTests, Toggles) {
 DAWN_INSTANTIATE_TEST(GLExplicitExtensionsTests,
                       // Force GLES 3.1 context with fewest extensions requested.
                       OpenGLESBackend({"gl_force_es_31_and_no_extensions"}));
-
 }  // anonymous namespace
 }  // namespace dawn

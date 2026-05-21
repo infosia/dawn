@@ -34,7 +34,6 @@
 
 namespace dawn {
 namespace {
-
 constexpr uint32_t kRTSize = 4;
 constexpr utils::RGBA8 filled(0, 255, 0, 255);
 constexpr utils::RGBA8 notFilled(0, 0, 0, 0);
@@ -139,10 +138,6 @@ TEST_P(MultiDrawIndirectTest, Uint32) {
 
 // The basic triangle draw with various drawCount.
 TEST_P(MultiDrawIndirectTest, DrawCount) {
-    // TODO(crbug.com/356461286): NVIDIA Drivers for Vulkan Linux are drawing more than
-    // maxDrawCount.
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
     wgpu::Buffer drawBuffer =
         utils::CreateBufferFromData<uint32_t>(device, wgpu::BufferUsage::Indirect, {0, 1, 2});
     // Test a draw with drawCount = 0.
@@ -339,6 +334,5 @@ DAWN_INSTANTIATE_TEST(MultiDrawIndirectUsingInstanceIndexTest,
                       VulkanBackend(),
                       D3D12Backend(),
                       MetalBackend());
-
 }  // namespace
 }  // namespace dawn

@@ -32,7 +32,6 @@
 #include "src/utils/compiler.h"
 
 namespace dawn {
-
 std::pair<wgpu::Buffer, void*> BufferHostMappedPointerTestBackend::CreateHostMappedBuffer(
     wgpu::Device device,
     wgpu::BufferUsage usage,
@@ -63,7 +62,6 @@ void BufferHostMappedPointerTests::SetUp() {
 GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(BufferHostMappedPointerTests);
 
 namespace {
-
 class BufferHostMappedPointerNoFeatureTests : public DawnTest {
     void SetUp() override {
         DawnTest::SetUp();
@@ -160,10 +158,6 @@ TEST_P(BufferHostMappedPointerTests, InitialDataAndCopySrc) {
 // Create a host-mapped buffer with CopyDst usage. Test that changes on the GPU
 // are visible to the host.
 TEST_P(BufferHostMappedPointerTests, CopyDst) {
-    // TODO(crbug.com/358296955): Re-enable when this no longer causes
-    // subsequent tests to flakily crash.
-    DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsAMD() && IsMetal());
-
     // Set up expected data.
     uint32_t bufferSize = mRequiredAlignment;
     std::vector<uint32_t> expected(bufferSize / sizeof(uint32_t));
@@ -316,6 +310,5 @@ TEST_P(BufferHostMappedPointerTests, MultithreadedCreation) {
 // TODO(crbug.com/dawn/2018):
 // - Figure out and test error handling. Is / when is the dispose callback
 //   called when there is an error?
-
 }  // anonymous namespace
 }  // namespace dawn

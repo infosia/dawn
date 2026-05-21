@@ -69,7 +69,6 @@ class ImmediateConstantOffsetTest : public DawnTest {
 // Test pipeline change reset dirty bits and update tracked pipeline constants mask.
 // Use Compute pipeline to cover this common path.
 TEST_P(ImmediateConstantOffsetTest, ClampFragDepth) {
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() || IsOpenGL() || IsMetal() || IsD3D11() || IsD3D12());
     ImmediateConstantMask expectedImmediateConstantMask = ImmediateConstantMask(0);
     // Hard coded bits and index.
     expectedImmediateConstantMask |= 1u << (offsetof(RenderImmediateConstants, clampFragDepth) /
@@ -90,6 +89,5 @@ DAWN_INSTANTIATE_TEST(ImmediateConstantOffsetTest,
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend());
-
 }  // anonymous namespace
 }  // namespace dawn::native
