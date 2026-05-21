@@ -37,7 +37,6 @@
 #include "src/utils/compiler.h"
 
 namespace dawn {
-
 void SharedBufferMemoryTests::SetUp() {
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
     DawnTestWithParams<SharedBufferMemoryTestParams>::SetUp();
@@ -98,7 +97,6 @@ wgpu::SharedFence SharedBufferMemoryTestBackend::ImportFenceTo(const wgpu::Devic
 }
 
 namespace {
-
 constexpr uint32_t kBufferData = 0x76543210;
 constexpr uint32_t kBufferData2 = 0x01234567;
 constexpr uint32_t kBufferSize = 4;
@@ -489,9 +487,6 @@ TEST_P(SharedBufferMemoryTests, UninitializedBufferRemainsUninitialized) {
 
 // Read and write a buffer with MapWrite and CopySrc usages.
 TEST_P(SharedBufferMemoryTests, ReadWriteSharedMapWriteBuffer) {
-    // TODO(crbug.com/468353728): Flaky on Snapdragon X Elite w/ D3D12.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
-
     // Create buffer buffer with initialized data.
     wgpu::SharedBufferMemory memory = GetParam().mBackend->CreateSharedBufferMemory(
         device, kMapWriteUsages, kBufferSize, kBufferData);
@@ -520,9 +515,6 @@ TEST_P(SharedBufferMemoryTests, ReadWriteSharedMapWriteBuffer) {
 
 // Read and write a buffer with MapRead and CopyDst usages.
 TEST_P(SharedBufferMemoryTests, ReadWriteSharedMapReadBuffer) {
-    // TODO(crbug.com/468353728): Flaky on Snapdragon X Elite w/ D3D12.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
-
     // Create buffer buffer with initialized data.
     wgpu::SharedBufferMemory memory = GetParam().mBackend->CreateSharedBufferMemory(
         device, kMapReadUsages, kBufferSize, kBufferData);
@@ -731,9 +723,6 @@ TEST_P(SharedBufferMemoryTests, UseInPassEnsureSynchronization) {
 
 // Test to ensure WriteBuffer waits on a fence provided to BeginAccess.
 TEST_P(SharedBufferMemoryTests, WriteBufferEnsureSynchronization) {
-    // TODO(crbug.com/468353728): Flaky on Snapdragon X Elite w/ D3D12.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
-
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapReadUsages, kBufferSize * 2);
     wgpu::SharedBufferMemoryProperties properties;
@@ -838,6 +827,5 @@ TEST_P(SharedBufferMemoryTests, MapAsyncEnsureSynchronization) {
 }
 
 GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(SharedBufferMemoryTests);
-
 }  // anonymous namespace
 }  // namespace dawn

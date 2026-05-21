@@ -45,7 +45,6 @@
 
 namespace dawn {
 namespace {
-
 using TextureFormat = wgpu::TextureFormat;
 DAWN_TEST_PARAM_STRUCT(DepthStencilCopyTestParams, TextureFormat);
 
@@ -111,9 +110,6 @@ class DepthStencilCopyTests : public DawnTestWithParams<DepthStencilCopyTestPara
         DawnTestWithParams<DepthStencilCopyTestParams>::SetUp();
 
         DAWN_TEST_UNSUPPORTED_IF(!mIsFormatSupported);
-
-        // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-        DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
         // Draw a square in the bottom left quarter of the screen.
         mVertexModule = utils::CreateShaderModule(device, R"(
@@ -673,9 +669,6 @@ TEST_P(DepthCopyTests, FromDepthAspectToBufferAtNonZeroOffset) {
 
 // Test copying the non-zero mip, depth-only aspect into a buffer.
 TEST_P(DepthCopyTests, FromNonZeroMipDepthAspect) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     // TODO(477654109): This test fails for this one format on MacOS AMD 550X and 560X
     // though not on AMD Radeon Pro 5300M.
     DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsAMD() &&
@@ -808,7 +801,6 @@ TEST_P(DepthCopyTests, BufferCopySizeEdgeCase) {
 class DepthCopyTests_Compat : public DepthCopyTests {
     void SetUp() override {
         DepthCopyTests::SetUp();
-        DAWN_SUPPRESS_TEST_IF(!IsCompatibilityMode());
     }
 
   public:
@@ -1174,11 +1166,6 @@ class StencilCopyTests : public DepthStencilCopyTests {
 
 // Test copying the stencil-only aspect into a buffer.
 TEST_P(StencilCopyTests, FromStencilAspect) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-    // TODO(42242119): hang/crash on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     constexpr uint32_t kTestLevel = 0;
     constexpr uint32_t kBufferCopyOffset = 0;
     constexpr uint32_t kTestTextureSizes[][2] = {
@@ -1203,11 +1190,6 @@ TEST_P(StencilCopyTests, FromStencilAspect) {
 
 // Test copying the stencil-only aspect into a buffer at a non-zero offset
 TEST_P(StencilCopyTests, FromStencilAspectAtNonZeroOffset) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-    // TODO(42242119): hang/crash on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     constexpr uint32_t kTestLevel = 0;
     constexpr std::array<uint32_t, 2> kBufferCopyOffsets = {4u, 512u};
     constexpr uint32_t kTestTextureSizes[][2] = {
@@ -1234,11 +1216,6 @@ TEST_P(StencilCopyTests, FromStencilAspectAtNonZeroOffset) {
 
 // Test copying the non-zero mip, stencil-only aspect into a buffer.
 TEST_P(StencilCopyTests, FromNonZeroMipStencilAspect) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-    // TODO(42242119): hang/crash on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     constexpr uint32_t kWidth = 9;
     constexpr uint32_t kHeight = 9;
     constexpr uint32_t kBufferCopyOffset = 0;
@@ -1362,16 +1339,12 @@ TEST_P(StencilCopyTests, BufferCopySizeEdgeCase) {
 
 // Test copying to the stencil-aspect of a texture
 TEST_P(StencilCopyTests, ToStencilAspect) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr uint32_t kBufferCopyOffset = 0;
     DoCopyToStencilTest(kBufferCopyOffset);
 }
 
 // Test copying to the stencil-aspect of a texture at non-zero offset
 TEST_P(StencilCopyTests, ToStencilAspectAtNonZeroOffset) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr std::array<uint32_t, 2> kBufferCopyOffsets = {8, 512};
     for (uint32_t offset : kBufferCopyOffsets) {
         DoCopyToStencilTest(offset);
@@ -1421,7 +1394,6 @@ TEST_P(StencilCopyTests, CopyNonzeroMipThenReadWithStencilTest) {
 class StencilCopyTests_Compat : public StencilCopyTests {
     void SetUp() override {
         StencilCopyTests::SetUp();
-        DAWN_SUPPRESS_TEST_IF(!IsCompatibilityMode());
     }
 
   public:
@@ -1429,8 +1401,6 @@ class StencilCopyTests_Compat : public StencilCopyTests {
 };
 
 TEST_P(StencilCopyTests_Compat, FromStencilAspect) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr uint32_t kTestLevel = 0;
     constexpr uint32_t kBufferCopyOffset = 0;
     constexpr uint32_t kTestTextureSizes[][2] = {
@@ -1450,8 +1420,6 @@ TEST_P(StencilCopyTests_Compat, FromStencilAspect) {
 
 // Test copying the stencil-only aspect into a buffer at a non-zero offset
 TEST_P(StencilCopyTests_Compat, FromStencilAspectAtNonZeroOffset) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr uint32_t kTestLevel = 0;
     constexpr std::array<uint32_t, 2> kBufferCopyOffsets = {4u, 512u};
     constexpr uint32_t kTestTextureSizes[][2] = {
@@ -1472,8 +1440,6 @@ TEST_P(StencilCopyTests_Compat, FromStencilAspectAtNonZeroOffset) {
 
 // Test copying the non-zero mip, stencil-only aspect into a buffer.
 TEST_P(StencilCopyTests_Compat, FromNonZeroMipStencilAspect) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr uint32_t kWidth = 9;
     constexpr uint32_t kHeight = 9;
     constexpr uint32_t kBufferCopyOffset = 0;
@@ -1486,9 +1452,6 @@ class DepthStencilCopyTests_RegressionDawn1083 : public DepthStencilCopyTests {}
 // Regression test for crbug.com/dawn/1083. Checks that T2T copies with
 // various mip/layer counts/offsets works.
 TEST_P(DepthStencilCopyTests_RegressionDawn1083, Run) {
-    // TODO(crbug.com/dawn/1648): Diagnose failure on NVIDIA GLES.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsNvidia());
-
     // TODO(crbug.com/dawn/1651): Failing on Mac AMD.
     DAWN_SUPPRESS_TEST_IF(IsAMD() && IsMetal() &&
                           GetParam().mTextureFormat == wgpu::TextureFormat::Depth32FloatStencil8);
@@ -1496,9 +1459,6 @@ TEST_P(DepthStencilCopyTests_RegressionDawn1083, Run) {
     // TODO(crbug.com/dawn/1828): depth16unorm broken on Apple GPUs.
     DAWN_SUPPRESS_TEST_IF(IsApple() &&
                           GetParam().mTextureFormat == wgpu::TextureFormat::Depth16Unorm);
-
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
     // TODO(crbug.com/500766618): Fails on Windows 11/AMD RX 5500 XT w/ Vulkan.
     DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan() &&
@@ -1686,6 +1646,5 @@ DAWN_INSTANTIATE_TEST_P(
     std::vector<wgpu::TextureFormat>{wgpu::TextureFormat::Depth16Unorm,
                                      wgpu::TextureFormat::Depth32FloatStencil8,
                                      wgpu::TextureFormat::Depth24Plus});
-
 }  // anonymous namespace
 }  // namespace dawn

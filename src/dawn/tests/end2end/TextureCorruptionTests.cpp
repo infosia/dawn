@@ -35,7 +35,6 @@
 
 namespace dawn {
 namespace {
-
 // 2D array textures with particular dimensions may corrupt on some devices. This test creates some
 // 2d-array textures with different dimensions, and test them one by one. For each sub-test, the
 // tested texture is written via different methods, then read back from the texture and verify the
@@ -305,7 +304,6 @@ class TextureCorruptionTests : public DawnTestWithParams<TextureCorruptionTestsP
     }
 
     void DoTest() {
-        DAWN_SUPPRESS_TEST_IF(IsWARP());
         // TODO(dawn:1859): Fix it on D3D11 Intel.
         DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntel() && GetParam().mArrayLayerCount > 12);
 
@@ -515,6 +513,5 @@ DAWN_INSTANTIATE_TEST_P(TextureCorruptionTests_WriteType,
                         {WriteType::ClearTexture, WriteType::WriteTexture, WriteType::B2TCopy,
                          WriteType::RenderConstant, WriteType::RenderFromTextureSample,
                          WriteType::RenderFromTextureLoad});
-
 }  // anonymous namespace
 }  // namespace dawn

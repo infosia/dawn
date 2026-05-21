@@ -37,7 +37,6 @@
 
 namespace dawn {
 namespace {
-
 // Vertex format tests all work the same way: the test will render a triangle.
 // Each test will set up a vertex buffer, and the vertex shader will check that
 // the vertex content is the same as what we expected. On success it outputs green,
@@ -995,10 +994,6 @@ TEST_P(VertexFormatTest, Snorm16x4) {
 }
 
 TEST_P(VertexFormatTest, Float16) {
-    // Fails on NVIDIA's Vulkan drivers on CQ but passes locally.
-    // TODO(dawn:1566) Might pass when using rectify_f32?
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
-
     std::vector<uint16_t> vertexData =
         Float32ToFloat16(std::vector<float>({14.8f, 0.0f, -0.0f, 0.0f, -24.8f, 0.0f}));
     std::vector<uint16_t> expectedData =
@@ -1008,10 +1003,6 @@ TEST_P(VertexFormatTest, Float16) {
 }
 
 TEST_P(VertexFormatTest, Float16x2) {
-    // Fails on NVIDIA's Vulkan drivers on CQ but passes locally.
-    // TODO(dawn:1566) Might pass when using rectify_f32?
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
-
     std::vector<uint16_t> vertexData =
         Float32ToFloat16(std::vector<float>({14.8f, -0.0f, 22.5f, 1.3f, +0.0f, -24.8f}));
 
@@ -1019,10 +1010,6 @@ TEST_P(VertexFormatTest, Float16x2) {
 }
 
 TEST_P(VertexFormatTest, Float16x4) {
-    // Fails on NVIDIA's Vulkan drivers on CQ but passes locally.
-    // TODO(dawn:1566) Might pass when using rectify_f32?
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
-
     std::vector<uint16_t> vertexData = Float32ToFloat16(std::vector<float>(
         {+0.0f, -16.8f, 18.2f, -0.0f, 12.5f, 1.3f, 14.8f, -12.4f, 22.5f, -48.8f, 47.4f, -24.8f}));
 
@@ -1041,20 +1028,12 @@ TEST_P(VertexFormatTest, Float32_Plain) {
 }
 
 TEST_P(VertexFormatTest, Float32x2) {
-    // Fails on NVIDIA's Vulkan drivers on CQ but passes locally.
-    // TODO(dawn:1566) This might pass now that we use rectify_f32?
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
-
     std::vector<float> vertexData = {18.23f, -0.0f, +0.0f, +1.0f, 1.3f, -1.0f};
 
     DoVertexFormatTest(wgpu::VertexFormat::Float32x2, vertexData, vertexData);
 }
 
 TEST_P(VertexFormatTest, Float32x3) {
-    // Fails on NVIDIA's Vulkan drivers on CQ but passes locally.
-    // TODO(dawn:1566) This might pass now that we use rectify_f32?
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
-
     std::vector<float> vertexData = {
         +0.0f, -1.0f, -0.0f, 1.0f, 1.3f, 99.45f, 23.6f, -81.2f, 55.0f,
     };
@@ -1103,13 +1082,6 @@ TEST_P(VertexFormatTest, Uint32x4) {
 }
 
 TEST_P(VertexFormatTest, Sint32) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
-    // TODO(crbug.com/459848840): Fails on Win/Snapdragon X Elite when run
-    // with FXC.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12() && !IsDXC());
-
     std::vector<int32_t> vertexData = {std::numeric_limits<int32_t>::max(),
                                        std::numeric_limits<int32_t>::min(),
                                        std::numeric_limits<int8_t>::max()};
@@ -1118,13 +1090,6 @@ TEST_P(VertexFormatTest, Sint32) {
 }
 
 TEST_P(VertexFormatTest, Sint32x2) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
-    // TODO(crbug.com/459848840): Fails on Win/Snapdragon X Elite when run
-    // with FXC.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12() && !IsDXC());
-
     std::vector<int32_t> vertexData = {
         std::numeric_limits<int32_t>::max(), std::numeric_limits<int32_t>::min(),
         std::numeric_limits<int16_t>::max(), std::numeric_limits<int16_t>::min(),
@@ -1134,13 +1099,6 @@ TEST_P(VertexFormatTest, Sint32x2) {
 }
 
 TEST_P(VertexFormatTest, Sint32x3) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
-    // TODO(crbug.com/459848840): Fails on Win/Snapdragon X Elite when run
-    // with FXC.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12() && !IsDXC());
-
     std::vector<int32_t> vertexData = {
         std::numeric_limits<int32_t>::max(), std::numeric_limits<int32_t>::min(), 64,
         std::numeric_limits<int16_t>::max(), std::numeric_limits<int16_t>::min(), 128,
@@ -1150,13 +1108,6 @@ TEST_P(VertexFormatTest, Sint32x3) {
 }
 
 TEST_P(VertexFormatTest, Sint32x4) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
-    // TODO(crbug.com/459848840): Fails on Win/Snapdragon X Elite when run
-    // with FXC.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12() && !IsDXC());
-
     std::vector<int32_t> vertexData = {
         std::numeric_limits<int32_t>::max(), std::numeric_limits<int32_t>::min(), 64,   -5460,
         std::numeric_limits<int16_t>::max(), std::numeric_limits<int16_t>::min(), -128, 0,
@@ -1197,6 +1148,5 @@ DAWN_INSTANTIATE_TEST(VertexFormatTest,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
