@@ -16,6 +16,57 @@
       "message": "PTAAL, there was an issue with original test case should have been rejected by the IR validator, so I have added checks for that. I have left the hardening in the transform for now, if you prefer I can remove it, since it shouldn\u0027t be occuring now, as demonstrated by the unittest needing to bypass the validator.",
       "revId": "f1df12da4d354f5e47fe1e2e90dfd9592279a3ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4085ca1_3ae6b777",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T19:31:26Z",
+      "side": 1,
+      "message": "we check false block !\u003d nullptr above, but then we call it unconditionally here which seems wrong?",
+      "revId": "f1df12da4d354f5e47fe1e2e90dfd9592279a3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "418b572b_d1589e00",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T19:31:26Z",
+      "side": 1,
+      "message": "Do we actually allow multiblock as an if branch? I thought it was loop only?",
+      "revId": "f1df12da4d354f5e47fe1e2e90dfd9592279a3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac5b3431_48cd2fd9",
+        "filename": "src/tint/lang/core/ir/transform/remove_terminator_args.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-21T19:31:26Z",
+      "side": 1,
+      "message": "Should this be an assert? What does it mean if i \u003e\u003d size?",
+      "revId": "f1df12da4d354f5e47fe1e2e90dfd9592279a3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
