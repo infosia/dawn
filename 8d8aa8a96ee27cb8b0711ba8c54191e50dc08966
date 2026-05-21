@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d16880bf_133aca1b",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T16:33:56Z",
+      "side": 1,
+      "message": "I\u0027m just surprised because it seems just different than the other changes, either way seems fine and we can always remove it later if it regresses perf.",
+      "parentUuid": "79fd5a0b_df4ac518",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9d0d217c_4148ba45",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "We do not have an undefined for this enum.",
       "parentUuid": "1a7155ef_7b6bb39d",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d10f5ca0_139a4d37",
+        "filename": "src/dawn/native/RenderPipeline.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T16:33:56Z",
+      "side": 1,
+      "message": "Interesting, thanks for checking!",
+      "parentUuid": "8d36bc53_349ffd06",
       "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -189,6 +225,24 @@
       "side": 1,
       "message": "I added a undefined.",
       "parentUuid": "4c5ffc84_530ecf90",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20f36706_9a5a9851",
+        "filename": "src/dawn/native/Surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T16:33:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af8857c3_f20a3e52",
       "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
