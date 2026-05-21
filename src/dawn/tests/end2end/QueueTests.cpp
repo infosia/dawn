@@ -40,7 +40,6 @@
 
 namespace dawn {
 namespace {
-
 class QueueTests : public DawnTest {};
 
 // Test that GetQueue always returns the same object.
@@ -126,20 +125,6 @@ TEST_P(QueueWriteBufferTests, SmallDataAtOffset) {
 
 // Stress test for many calls to WriteBuffer
 TEST_P(QueueWriteBufferTests, ManyWriteBuffer) {
-    // Note: Increasing the size of the buffer will likely cause timeout issues.
-    // In D3D12, timeout detection occurs when the GPU scheduler tries but cannot preempt the task
-    // executing these commands in-flight. If this takes longer than ~2s, a device reset occurs and
-    // fails the test. Since GPUs may or may not complete by then, this test must be disabled OR
-    // modified to be well-below the timeout limit.
-
-    // TODO(crbug.com/dawn/228): Re-enable once the issue with Metal on 10.14.6 is fixed.
-    DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsIntel() && IsMetal());
-
-    // The Vulkan Validation Layers' memory barrier validation keeps track of every range written
-    // to independently which causes validation of each WriteBuffer to take increasing time, and
-    // this test to take forever. Skip it when VVLs are enabled.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsBackendValidationEnabled());
-
     constexpr uint64_t kSize = 4000 * 1000;
     constexpr uint32_t kElements = 250 * 250;
     wgpu::BufferDescriptor descriptor;
@@ -482,8 +467,6 @@ TEST_P(QueueWriteTextureTests, VaryingTextureOffset) {
 TEST_P(QueueWriteTextureTests, VaryingTextureArrayOffset) {
     // The entire subresource must be copied when the format is a depth/stencil format.
     DAWN_TEST_UNSUPPORTED_IF(utils::IsDepthOrStencilFormat(GetParam().mTextureFormat));
-    // TODO(crbug.com/dawn/2095): Failing on ANGLE + SwiftShader, needs investigation.
-    DAWN_SUPPRESS_TEST_IF(IsANGLESwiftShader());
 
     constexpr uint32_t kWidth = 259;
     constexpr uint32_t kHeight = 127;
@@ -639,15 +622,7 @@ TEST_P(QueueWriteTextureTests, VaryingBytesPerRow) {
 // Test with bytesPerRow greater than needed for cube textures.
 // Made for testing compat behavior.
 TEST_P(QueueWriteTextureTests, VaryingBytesPerRowCube) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     auto format = GetParam().mTextureFormat;
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-    // TODO(crbug.com/444741058): Fails on Intel-based brya devices running Android Desktop.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsIntel() && IsAndroid());
     // TODO(crbug.com/dawn/42241333): diagnose stencil8 failure on Angle Swiftshader
     DAWN_SUPPRESS_TEST_IF(format == wgpu::TextureFormat::Stencil8 && IsANGLESwiftShader());
 
@@ -707,9 +682,6 @@ TEST_P(QueueWriteTextureTests, BytesPerRowWithOneRowCopy) {
 
 // Test with bytesPerRow greater than needed in a write to a texture array.
 TEST_P(QueueWriteTextureTests, VaryingArrayBytesPerRow) {
-    // TODO(crbug.com/dawn/2095): Failing on ANGLE + SwiftShader, needs investigation.
-    DAWN_SUPPRESS_TEST_IF(IsANGLESwiftShader());
-
     // TODO(383779503): reading stencil texture is too slow on D3D11.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && GetParam().mTextureFormat == wgpu::TextureFormat::Stencil8);
 
@@ -863,12 +835,6 @@ TEST_P(QueueWriteTextureSimpleTests, WriteTo64x1TextureFromUnalignedDynamicUploa
 // This tests for a bug in the allocation of internal staging buffer, which incorrectly copied depth
 // stencil data to the internal offset that is not a multiple of 4.
 TEST_P(QueueWriteTextureSimpleTests, WriteStencilAspectWithSourceOffsetUnalignedTo4) {
-    // TODO(crbug.com/dawn/2095): Failing on ANGLE + SwiftShader, needs investigation.
-    DAWN_SUPPRESS_TEST_IF(IsANGLESwiftShader());
-
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     wgpu::TextureDescriptor textureDescriptor;
     textureDescriptor.format = wgpu::TextureFormat::Depth24PlusStencil8;
     textureDescriptor.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
@@ -938,9 +904,6 @@ TEST_P(QueueWriteTextureSimpleTests, WriteStencilAspectWithSourceOffsetUnaligned
 // another texture always works. On some D3D12 backends the buffer offset of buffer-to-texture
 // copies must be a multiple of 512 when the destination texture is a depth stencil texture.
 TEST_P(QueueWriteTextureSimpleTests, WriteDepthAspectAfterOtherQueueWriteTextureCalls) {
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     wgpu::TextureDescriptor textureDescriptor;
     textureDescriptor.format = wgpu::TextureFormat::Depth16Unorm;
     textureDescriptor.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
@@ -974,12 +937,6 @@ TEST_P(QueueWriteTextureSimpleTests, WriteDepthAspectAfterOtherQueueWriteTexture
 // another texture always works. On some D3D12 backends the buffer offset of buffer-to-texture
 // copies must be a multiple of 512 when the destination texture is a depth stencil texture.
 TEST_P(QueueWriteTextureSimpleTests, WriteStencilAspectAfterOtherQueueWriteTextureCalls) {
-    // TODO(crbug.com/dawn/2095): Failing on ANGLE + SwiftShader, needs investigation.
-    DAWN_SUPPRESS_TEST_IF(IsANGLESwiftShader());
-
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     wgpu::TextureDescriptor textureDescriptor;
     textureDescriptor.format = wgpu::TextureFormat::Depth24PlusStencil8;
     textureDescriptor.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
@@ -1018,6 +975,5 @@ DAWN_INSTANTIATE_TEST(QueueWriteTextureSimpleTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

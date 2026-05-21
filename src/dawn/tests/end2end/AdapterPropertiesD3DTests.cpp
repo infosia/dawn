@@ -29,7 +29,6 @@
 
 namespace dawn {
 namespace {
-
 class AdapterPropertiesD3DTest : public DawnTest {};
 
 // TODO(dawn:2257) test that is is invalid to request AdapterPropertiesD3D if the
@@ -37,9 +36,6 @@ class AdapterPropertiesD3DTest : public DawnTest {};
 
 // Test that it is possible to query the d3d properties, and it is populated with a valid data.
 TEST_P(AdapterPropertiesD3DTest, GetD3DProperties) {
-    // TODO(crbug.com/462137660): Implement adapter nextInChain for WebGPUBackend.
-    DAWN_SUPPRESS_TEST_IF(IsWebGPUOnWebGPU());
-
     DAWN_TEST_UNSUPPORTED_IF(!adapter.HasFeature(wgpu::FeatureName::AdapterPropertiesD3D));
     {
         wgpu::AdapterInfo info;
@@ -71,6 +67,5 @@ DAWN_INSTANTIATE_TEST(AdapterPropertiesD3DTest,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
