@@ -28,6 +28,7 @@ import androidx.annotation.RestrictTo
  *
  * This class is backed by a `ParcelFileDescriptor` representing a sync fence.
  */
+@ExperimentalWebGpuApi
 public class GPUSyncFence internal constructor(
     private val parcelFileDescriptor: ParcelFileDescriptor
 ) : AutoCloseable {
@@ -59,6 +60,7 @@ public class GPUSyncFence internal constructor(
          * Creates a GPUSyncFence from a platform SyncFence by extracting its file descriptor.
          */
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+        @JvmStatic
         public fun fromSyncFence(syncFence: SyncFence): GPUSyncFence {
             val pfd = readFileDescriptor(syncFence)
             return GPUSyncFence(pfd)

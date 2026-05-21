@@ -19,6 +19,8 @@ import androidx.webgpu.FeatureName
 import androidx.webgpu.GPUDeviceDescriptor
 import java.util.concurrent.Executor
 import androidx.webgpu.UncapturedErrorCallback
+import androidx.webgpu.ExperimentalWebGpuApi
+import kotlin.OptIn
 
 
 /**
@@ -73,8 +75,6 @@ fun GraphicsSurface(
               },
 
               uncapturedErrorCallbackExecutor = Executor(Runnable::run),
-              dawnTogglesDescriptor =
-                GPUDawnTogglesDescriptor(enabledToggles = arrayOf("allow_unsafe_apis")),
               requiredFeatures = intArrayOf(
                 FeatureName.SharedTextureMemoryAHardwareBuffer,
                 FeatureName.SharedFenceSyncFD,
@@ -82,8 +82,10 @@ fun GraphicsSurface(
                 FeatureName.OpaqueYCbCrAndroidForExternalTexture,
                 FeatureName.OpaqueYCbCrAndroidForExternalTexture
               )
-
-            )
+            ).apply {
+              dawnTogglesDescriptor =
+                GPUDawnTogglesDescriptor(enabledToggles = arrayOf("allow_unsafe_apis"))
+            }
           )
         // Configure the WebGPU surface from the Android surface's dimensions and standard
         // format.
