@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-05-05 07:59:32AM
+# Last rolled: 2026-05-21 05:06:42AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -488,7 +488,6 @@ crbug.com/42240847 [ android qualcomm ] webgpu:api,operation,command_buffer,quer
 
 # Failures due to Windows/NVIDIA driver upgrade
 crbug.com/42241352 [ nvidia-0x2184 nvidia_ge_31.0.15.4601 win10 ] webgpu:api,operation,command_buffer,image_copy:offsets_and_sizes:initMethod="WriteTexture";checkMethod="PartialCopyT2B";* [ Failure ]
-
 
 # Failures due to M2 Macbook OS upgrade
 crbug.com/42241404 [ apple-angle-metal-renderer:-apple-m2 mac ] webgpu:api,operation,resource_init,buffer:copy_texture_to_partial_buffer: [ Failure ]
