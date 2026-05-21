@@ -907,5 +907,93 @@ TEST_F(IR_RemoveTerminatorArgsTest, UndefBlockParams) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_RemoveTerminatorArgsTest, Loop_EmptyBodyWithParams) {
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* loop = b.Loop();
+        loop->Body()->AddParam(b.BlockParam(ty.i32()));
+        // Body is intentionally omitted
+        b.Append(loop->Initializer(), [&] {  //
+            b.NextIteration(loop, 1_i);
+        });
+        b.Append(loop->Continuing(), [&] {  //
+            b.BreakIf(loop, true);
+        });
+        b.Return(func);
+    });
+
+    auto* expect = R"(
+%foo = func():void {
+  $B1: {
+    loop [i: $B2, b: $B3, c: $B4] {  # loop_1
+      $B2: {  # initializer
+        %2:ptr<function, i32, read_write> = var undef
+        store %2, 1i
+        next_iteration  # -> $B3
+      }
+      $B3: {  # body
+        %3:i32 = load %2
+        unreachable
+      }
+      $B4: {  # continuing
+        break_if true  # -> [t: exit_loop loop_1, f: $B3]
+      }
+    }
+    ret
+  }
+}
+)";
+
+    // Manually run the transform, because this is invalid IR
+    EXPECT_EQ(RemoveTerminatorArgs(mod), Success);
+
+    EXPECT_EQ(expect, str());
+    EXPECT_EQ(ir::Validate(mod), Success);
+}
+
+TEST_F(IR_RemoveTerminatorArgsTest, Loop_EmptyContinuingWithParams) {
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* loop = b.Loop();
+        loop->Continuing()->AddParam(b.BlockParam(ty.i32()));
+        b.Append(loop->Initializer(), [&] {  //
+            b.NextIteration(loop);
+        });
+        b.Append(loop->Body(), [&] {  //
+            b.Continue(loop, 1_i);
+        });
+        // Continuing is intentionally omitted
+        b.Return(func);
+    });
+
+    auto* expect = R"(
+%foo = func():void {
+  $B1: {
+    loop [i: $B2, b: $B3, c: $B4] {  # loop_1
+      $B2: {  # initializer
+        next_iteration  # -> $B3
+      }
+      $B3: {  # body
+        %2:ptr<function, i32, read_write> = var undef
+        store %2, 1i
+        continue  # -> $B4
+      }
+      $B4: {  # continuing
+        %3:i32 = load %2
+        next_iteration  # -> $B3
+      }
+    }
+    ret
+  }
+}
+)";
+
+    // Manually run the transform, because this is invalid IR
+    EXPECT_EQ(RemoveTerminatorArgs(mod), Success);
+
+    EXPECT_EQ(expect, str());
+    EXPECT_EQ(ir::Validate(mod), Success);
+}
+
 }  // namespace
 }  // namespace tint::core::ir::transform

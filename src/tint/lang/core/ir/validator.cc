@@ -4693,6 +4693,8 @@ void Validator::CheckIf(const If* if_) {
 
     if (!if_->False()->IsEmpty()) {
         QueueBlock(if_->False());
+    } else if (auto* mb = if_->False()->As<MultiInBlock>(); mb && !mb->Params().IsEmpty()) {
+        AddError(if_) << "if false block has parameters but is empty";
     }
 
     QueueBlock(if_->True());
@@ -4733,6 +4735,8 @@ void Validator::CheckLoop(const Loop* l) {
             CheckLoopContinuing(l);
             BeginBlock(l->Continuing());
         });
+    } else if (!l->Continuing()->Params().IsEmpty()) {
+        AddError(l) << "loop continuing block has parameters but is empty";
     }
 
     tasks_.Push([this, l] {
@@ -4741,6 +4745,8 @@ void Validator::CheckLoop(const Loop* l) {
     });
     if (!l->Initializer()->IsEmpty()) {
         tasks_.Push([this, l] { BeginBlock(l->Initializer()); });
+    } else if (auto* mb = l->Initializer()->As<MultiInBlock>(); mb && !mb->Params().IsEmpty()) {
+        AddError(l) << "loop initializer block has parameters but is empty";
     }
     tasks_.Push([this, l] { control_stack_.Push(l); });
 }
