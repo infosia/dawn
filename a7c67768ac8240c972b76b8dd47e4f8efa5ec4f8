@@ -163,6 +163,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df25b3fb_800ef125",
+        "filename": "src/dawn/native/vulkan/ImmediateConstantsLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-05-21T02:31:46Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ll address this in this CL.",
+      "parentUuid": "f475c38e_88afb705",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bc330c20_bab93ab1",
         "filename": "src/dawn/native/vulkan/ImmediateConstantsLayoutVk.h",
         "patchSetId": 4
