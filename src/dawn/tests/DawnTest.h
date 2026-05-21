@@ -51,6 +51,7 @@
 #include "dawn/tests/AdapterTestConfig.h"
 #include "dawn/tests/MockCallback.h"
 #include "dawn/tests/ParamGenerator.h"
+#include "dawn/tests/TestExpectations.h"
 #include "dawn/tests/ToggleParser.h"
 #include "dawn/utils/ComboLimits.h"
 #include "dawn/utils/TestUtils.h"
@@ -248,6 +249,13 @@ class DawnTestEnvironment : public testing::Environment {
     bool RunSuppressedTests() const;
     bool IsTestLauncherBotMode() const;
 
+    bool HasExpectationsFile() const;
+    TestResultSet GetTestExpectation(const std::string& testName,
+                                     const TestConditions& conditions,
+                                     std::vector<std::string>* outBugs = nullptr);
+    std::vector<std::string> GetUnusedExpectationsMessages() const;
+    std::vector<std::string> GetPlaceholderBugMessages() const;
+
   protected:
     std::unique_ptr<native::Instance> CreateInstance(platform::Platform* platform = nullptr);
     std::unique_ptr<native::Instance> mInstance;
@@ -278,6 +286,9 @@ class DawnTestEnvironment : public testing::Environment {
     std::string mWireTraceDir;
     bool mRunSuppressedTests = false;
     bool mIsTestLauncherBotMode = false;
+
+    std::string mExpectationsFile;
+    TestExpectationParser mExpectationParser;
 
     ToggleParser mToggleParser;
 
