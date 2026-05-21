@@ -122,9 +122,6 @@ function(tint_default_compile_options TARGET)
     -Wno-c2y-extensions
     -Wno-lifetime-safety-intra-tu-suggestions
     -Wno-lifetime-safety-cross-tu-suggestions
-
-    # TODO(513255285): Remove when generated sources are removed from source tree.
-    -Wno-shadow-header
   )
 
   if(COMPILER_IS_GNU)
