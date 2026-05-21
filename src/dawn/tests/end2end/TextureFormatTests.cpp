@@ -41,7 +41,6 @@
 
 namespace dawn {
 namespace {
-
 enum class TextureComponentType {
     Float,
     Sint,
@@ -584,15 +583,11 @@ TEST_P(TextureFormatTest, RG8Unorm) {
 
 // Test the R16Unorm format
 TEST_P(TextureFormatTest, R16Unorm) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     DoUnormTest<uint16_t>({wgpu::TextureFormat::R16Unorm, 2, TextureComponentType::Float, 1});
 }
 
 // Test the RG16Unorm format
 TEST_P(TextureFormatTest, RG16Unorm) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     DoUnormTest<uint16_t>({wgpu::TextureFormat::RG16Unorm, 4, TextureComponentType::Float, 2});
 }
 
@@ -608,13 +603,6 @@ TEST_P(TextureFormatTest, RGBA8Unorm) {
 
 // Test the BGRA8Unorm format
 TEST_P(TextureFormatTest, BGRA8Unorm) {
-    // Intel's implementation of BGRA on ES is broken: it claims to support
-    // GL_EXT_texture_format_BGRA8888, but won't accept GL_BGRA or GL_BGRA8_EXT as internalFormat.
-    DAWN_SUPPRESS_TEST_IF(IsIntel() && IsOpenGLES() && IsLinux());
-
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     uint8_t maxValue = std::numeric_limits<uint8_t>::max();
     std::vector<uint8_t> textureData = {maxValue, 1, 0, maxValue};
     std::vector<float> uncompressedData = {0.0f, 1.0f / maxValue, 1.0f, 1.0f};
@@ -686,25 +674,16 @@ TEST_P(TextureFormatTest, RGBA16Uint) {
 
 // Test the R32Uint format
 TEST_P(TextureFormatTest, R32Uint) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     DoUintTest<uint32_t>({wgpu::TextureFormat::R32Uint, 4, TextureComponentType::Uint, 1});
 }
 
 // Test the RG32Uint format
 TEST_P(TextureFormatTest, RG32Uint) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     DoUintTest<uint32_t>({wgpu::TextureFormat::RG32Uint, 8, TextureComponentType::Uint, 2});
 }
 
 // Test the RGBA32Uint format
 TEST_P(TextureFormatTest, RGBA32Uint) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     DoUintTest<uint32_t>({wgpu::TextureFormat::RGBA32Uint, 16, TextureComponentType::Uint, 4});
 }
 
@@ -740,25 +719,16 @@ TEST_P(TextureFormatTest, RGBA16Sint) {
 
 // Test the R32Sint format
 TEST_P(TextureFormatTest, R32Sint) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     DoSintTest<int32_t>({wgpu::TextureFormat::R32Sint, 4, TextureComponentType::Sint, 1});
 }
 
 // Test the RG32Sint format
 TEST_P(TextureFormatTest, RG32Sint) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     DoSintTest<int32_t>({wgpu::TextureFormat::RG32Sint, 8, TextureComponentType::Sint, 2});
 }
 
 // Test the RGBA32Sint format
 TEST_P(TextureFormatTest, RGBA32Sint) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     DoSintTest<int32_t>({wgpu::TextureFormat::RGBA32Sint, 16, TextureComponentType::Sint, 4});
 }
 
@@ -779,37 +749,21 @@ TEST_P(TextureFormatTest, RGBA32Float) {
 
 // Test the R16Float format
 TEST_P(TextureFormatTest, R16Float) {
-    // TODO(https://crbug.com/swiftshader/147) Rendering INFINITY isn't handled correctly by
-    // swiftshader
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsSwiftshader() || IsANGLE());
-
     DoFloat16Test({wgpu::TextureFormat::R16Float, 2, TextureComponentType::Float, 1});
 }
 
 // Test the RG16Float format
 TEST_P(TextureFormatTest, RG16Float) {
-    // TODO(https://crbug.com/swiftshader/147) Rendering INFINITY isn't handled correctly by
-    // swiftshader
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsSwiftshader() || IsANGLE());
-
     DoFloat16Test({wgpu::TextureFormat::RG16Float, 4, TextureComponentType::Float, 2});
 }
 
 // Test the RGBA16Float format
 TEST_P(TextureFormatTest, RGBA16Float) {
-    // TODO(https://crbug.com/swiftshader/147) Rendering INFINITY isn't handled correctly by
-    // swiftshader
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsSwiftshader() || IsANGLE());
-
     DoFloat16Test({wgpu::TextureFormat::RGBA16Float, 8, TextureComponentType::Float, 4});
 }
 
 // Test the RGBA8Unorm format
 TEST_P(TextureFormatTest, RGBA8UnormSrgb) {
-    // TODO(crbug.com/473890413): [Capture] validation error: attachment state of pipeline not
-    // compatible with pass.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     uint8_t maxValue = std::numeric_limits<uint8_t>::max();
     std::vector<uint8_t> textureData = {0, 1, maxValue, 64, 35, 68, 152, 168};
 
@@ -833,10 +787,6 @@ TEST_P(TextureFormatTest, RGBA8UnormSrgb) {
 TEST_P(TextureFormatTest, BGRA8UnormSrgb) {
     // BGRA8UnormSrgb is unsupported in Compatibility mode
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(crbug.com/473890413): [Capture] validation error: attachment state of pipeline not
-    // compatible with pass.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
     uint8_t maxValue = std::numeric_limits<uint8_t>::max();
     std::vector<uint8_t> textureData = {0, 1, maxValue, 64, 35, 68, 152, 168};
@@ -887,9 +837,6 @@ TEST_P(TextureFormatTest, RGB10A2Uint) {
 
 // Test the RGB10A2Unorm format
 TEST_P(TextureFormatTest, RGB10A2Unorm) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10 for both vulkan and gles.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
-
     auto MakeRGB10A2 = [](uint32_t r, uint32_t g, uint32_t b, uint32_t a) -> uint32_t {
         DAWN_ASSERT((r & 0x3FF) == r);
         DAWN_ASSERT((g & 0x3FF) == g);
@@ -920,8 +867,6 @@ TEST_P(TextureFormatTest, RGB10A2Unorm) {
 TEST_P(TextureFormatTest, RG11B10Ufloat) {
     // sampling test also requires format to be color-renderable
     DAWN_TEST_UNSUPPORTED_IF(!IsRG11B10UfloatRenderableSupported());
-    // TODO(crbug.com/388318201): expected: 0xf87e0000, actual: 0xfffff800
-    DAWN_SUPPRESS_TEST_IF(IsD3D11());
 
     constexpr uint32_t kFloat11Zero = 0;
     constexpr uint32_t kFloat11Infinity = 0x7C0;
@@ -1031,6 +976,5 @@ DAWN_INSTANTIATE_TEST(TextureFormatTest,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

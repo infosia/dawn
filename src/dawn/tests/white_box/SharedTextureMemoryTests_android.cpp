@@ -42,7 +42,6 @@
 
 namespace dawn {
 namespace {
-
 template <typename BackendBase>
 class SharedTextureMemoryTestAndroidBackend : public BackendBase {
   public:
@@ -302,9 +301,6 @@ TEST_P(SharedTextureMemoryTests, GPUWriteThenCPURead) {
 
 // Test writing the memory on the CPU, then sampling on the device.
 TEST_P(SharedTextureMemoryTests, CPUWriteThenGPURead) {
-    // TODO(crbug.com/444741058): Fails on Intel-based brya devices running Android Desktop.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsIntel() && IsAndroid());
-
     AHardwareBuffer_Desc aHardwareBufferDesc = {
         .width = 4,
         .height = 4,
@@ -507,6 +503,5 @@ DAWN_INSTANTIATE_PREFIXED_TEST_P(
     {OpenGLESBackend()},
     {SharedTextureMemoryTestAndroidEGLSyncOpenGLESBackend::GetInstance()},
     {1});
-
 }  // anonymous namespace
 }  // namespace dawn
