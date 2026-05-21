@@ -33,7 +33,6 @@
 
 namespace dawn {
 namespace {
-
 using testing::_;
 using testing::HasSubstr;
 using testing::MockCppCallback;
@@ -44,9 +43,6 @@ class DeviceLifetimeTests : public DawnTest {
   protected:
     void SetUp() override {
         DawnTest::SetUp();
-
-        // TODO(crbug.com/474139502): [Capture] hit device guard on replay.
-        DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
     }
 };
 
@@ -476,6 +472,5 @@ DAWN_INSTANTIATE_TEST(DeviceLifetimeTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
