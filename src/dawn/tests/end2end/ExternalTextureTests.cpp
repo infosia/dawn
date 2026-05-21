@@ -37,7 +37,6 @@
 
 namespace dawn {
 namespace {
-
 wgpu::Texture Create2DTexture(wgpu::Device device,
                               uint32_t width,
                               uint32_t height,
@@ -355,9 +354,6 @@ TEST_P(ExternalTextureTests, CreateExternalTextureSuccess) {
 }
 
 TEST_P(ExternalTextureTests, SampleExternalTexture) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::Texture sampledTexture =
         Create2DTexture(device, kWidth, kHeight, kFormat,
                         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
@@ -471,8 +467,6 @@ TEST_P(ExternalTextureTests, SampleTextureView) {
 // Tests that textureDimensions WGSL built-in function works when a texture view is used for an
 // externalTexture binding.
 TEST_P(ExternalTextureTests, TextureDimensionsWithTextureView) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());  // Flaky on WARP
-
     wgpu::TextureDescriptor descriptor;
     descriptor.size = {kWidth, kHeight, 1};
     descriptor.mipLevelCount = 2;
@@ -578,9 +572,6 @@ TEST_P(ExternalTextureTests, TextureLoadWithTextureView) {
 
 // https://crbug.com/1515439
 TEST_P(ExternalTextureTests, SampleExternalTextureDifferingGroup) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::Texture sampledTexture =
         Create2DTexture(device, kWidth, kHeight, kFormat,
                         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
@@ -649,15 +640,6 @@ TEST_P(ExternalTextureTests, SampleExternalTextureDifferingGroup) {
 }
 
 TEST_P(ExternalTextureTests, SampleMultiplanarExternalTexture) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
-    // TODO(https://crbug.com/468988322): Fails because of precision issues on Mac AMD.
-    DAWN_SUPPRESS_TEST_IF(IsMetal() && IsAMD());
-
-    // TODO(crbug.com/500766620): Fails on Windows 11/AMD RX 5500 XT.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD());
-
     wgpu::Texture sampledTexturePlane0 =
         Create2DTexture(device, kWidth, kHeight, wgpu::TextureFormat::R8Unorm,
                         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
@@ -729,9 +711,6 @@ TEST_P(ExternalTextureTests, SampleMultiplanarExternalTexture) {
 
 TEST_P(ExternalTextureTests, SampleMultiplanarExternalTextureNorm16) {
     DAWN_TEST_UNSUPPORTED_IF(!IsUnorm16TextureFormatsSupported());
-
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
     wgpu::Texture sampledTexturePlane0 =
         Create2DTexture(device, kWidth, kHeight, wgpu::TextureFormat::R16Unorm,
@@ -805,9 +784,6 @@ TEST_P(ExternalTextureTests, SampleMultiplanarExternalTextureNorm16) {
 // square in the lower left and a blue square in the lower right. The image is then sampled as an
 // external texture and rotated 0, 90, 180, and 270 degrees with and without the y-axis flipped.
 TEST_P(ExternalTextureTests, RotateAndOrFlipSampleSinglePlane) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::Texture sourceTexture =
         Create2DTexture(device, kWidth, kHeight, kFormat,
                         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
@@ -937,9 +913,6 @@ TEST_P(ExternalTextureTests, RotateAndOrFlipSampleSinglePlane) {
 // initialization of the ExternalTexture, which could lead to incorrect textureLoad operations when
 // rotating 90 and 270 degrees.
 TEST_P(ExternalTextureTests, RotateAndOrFlipTextureLoadSinglePlaneNotSquare) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::Texture sourceTexture =
         Create2DTexture(device, 2, 16, kFormat,
                         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
@@ -1060,9 +1033,6 @@ TEST_P(ExternalTextureTests, RotateAndOrFlipTextureLoadSinglePlaneNotSquare) {
 // square in the lower left and a blue square in the lower right. The image is then sampled as an
 // external texture and rotated 0, 90, 180, and 270 degrees with and without the y-axis flipped.
 TEST_P(ExternalTextureTests, RotateAndOrFlipSampleMultiplanar) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::Texture sourceTexturePlane0 =
         Create2DTexture(device, kWidth, kHeight, wgpu::TextureFormat::R8Unorm,
                         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
@@ -1199,9 +1169,6 @@ TEST_P(ExternalTextureTests, RotateAndOrFlipSampleMultiplanar) {
 // This test draws a 2x2 multi-colored square surrounded by a 1px black border. We test the external
 // texture crop functionality by cropping to specific ranges inside the texture.
 TEST_P(ExternalTextureTests, CropSinglePlane) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::Texture sourceTexture =
         Create2DTexture(device, kWidth, kHeight, kFormat,
                         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
@@ -1425,15 +1392,6 @@ TEST_P(ExternalTextureTests, ApparentSizeEffect) {
 // This test draws a 2x2 multi-colored square surrounded by a 1px black border. We test the external
 // texture crop functionality by cropping to specific ranges inside the texture.
 TEST_P(ExternalTextureTests, CropMultiplanar) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
-    // TODO(https://crbug.com/468988322): Fails because of precision issues on Mac AMD.
-    DAWN_SUPPRESS_TEST_IF(IsMetal() && IsAMD());
-
-    // TODO(crbug.com/500766620): Fails on Windows 11/AMD RX 5500 XT.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD());
-
     wgpu::Texture sourceTexturePlane0 =
         Create2DTexture(device, kWidth, kHeight, wgpu::TextureFormat::R8Unorm,
                         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
@@ -1576,9 +1534,6 @@ TEST_P(ExternalTextureTests, CropMultiplanar) {
 
 // Test that sampling an external texture with non-one alpha preserves the alpha channel.
 TEST_P(ExternalTextureTests, SampleExternalTextureAlpha) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::Texture sampledTexture =
         Create2DTexture(device, kWidth, kHeight, kFormat,
                         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
@@ -1716,8 +1671,6 @@ TEST_P(ExternalTextureTests, MultipleBindings) {
 //
 // Case with all in the same bindgroup layout.
 TEST_P(ExternalTextureTests, SampleDifferentKindsSameBindGroup) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     // Create our three test external of different kinds as well as the expected data.
     std::vector<wgpu::ExternalTexture> externalTextures;
     std::vector<utils::RGBA8> colors;
@@ -1791,8 +1744,6 @@ TEST_P(ExternalTextureTests, SampleDifferentKindsSameBindGroup) {
 
 // Case with all in different bind group layouts.
 TEST_P(ExternalTextureTests, SampleDifferentKindsDifferentBindGroups) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     // Create our three test external of different kinds as well as the expected data.
     std::vector<wgpu::ExternalTexture> externalTextures;
     std::vector<utils::RGBA8> colors;
@@ -1938,9 +1889,6 @@ TEST_P(ExternalTextureTests, LayoutWithUnusedExternalTexture) {
 // Test that using a dynamic offset works when there is an external texture in the same
 // BindGroupLayout
 TEST_P(ExternalTextureTests, UseExternalTextureWithDynamicOffset) {
-    // TODO(42242119): fail on Qualcomm Adreno X1.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
-
     // Make the two external textures.
     wgpu::ExternalTexture et = utils::MakePassthroughExternalTexture(
         device, MakeTestTexture(wgpu::TextureFormat::RGBA8Unorm, 1, 1,
@@ -2260,9 +2208,6 @@ class ExternalTextureOOBTests : public ExternalTextureTestsBase<DawnTestWithPara
 
 // Test for OOB access
 TEST_P(ExternalTextureOOBTests, ExternalTextureOOB) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     DoTest();
 }
 
@@ -2278,6 +2223,5 @@ DAWN_INSTANTIATE_TEST_P(
     std::vector<Flip>({Flip::None, Flip::Mirrored}),
     std::vector<AccessMode>({AccessMode::Sample, AccessMode::Load}),
     std::vector<OOBAccess>({OOBAccess::BelowBottomLeft, OOBAccess::OverTopRight}));
-
 }  // anonymous namespace
 }  // namespace dawn

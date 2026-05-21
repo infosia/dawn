@@ -36,7 +36,6 @@
 
 namespace dawn {
 namespace {
-
 class BufferViewTest : public DawnTest {
   protected:
     void SetUp() override { DawnTest::SetUp(); }
@@ -661,9 +660,6 @@ class BufferViewTest : public DawnTest {
 };
 
 TEST_P(BufferViewTest, BufferViewArrayLength) {
-    // TODO(crbug.com/tint/512253562): Older WARP gets incorrect results, but newer WARP passes.
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     TestBufferViewArrayLength(128, 0);
     TestBufferViewArrayLength(256, 256);
     TestBufferViewArrayLength(512, 256);

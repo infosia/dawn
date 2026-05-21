@@ -39,7 +39,6 @@
 
 namespace dawn {
 namespace {
-
 // The helper struct to configure the copies between buffers and textures.
 struct CopyConfig {
     wgpu::TextureDescriptor textureDescriptor;
@@ -828,9 +827,6 @@ TEST_P(CompressedTextureFormatTest, Cube) {
 
 // Test copying into a sub-region of a texture works correctly.
 TEST_P(CompressedTextureFormatTest, CopyIntoSubRegion) {
-    // TODO(crbug.com/dawn/976): Failing on Linux Intel OpenGL drivers.
-    DAWN_SUPPRESS_TEST_IF(IsIntel() && IsOpenGL() && IsLinux());
-
     DAWN_TEST_UNSUPPORTED_IF(!IsFormatSupported());
 
     CopyConfig config = GetDefaultSmallConfig();
@@ -861,9 +857,6 @@ TEST_P(CompressedTextureFormatTest, CopyIntoNonZeroArrayLayer) {
 TEST_P(CompressedTextureFormatTest, CopyBufferIntoNonZeroMipmapLevel) {
     DAWN_TEST_UNSUPPORTED_IF(!IsFormatSupported());
 
-    // TODO(crbug.com/dawn/0000): diagnose this failure on QualComm OpenGL ES.
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsOpenGLES() && IsQualcomm());
-
     CopyConfig config = GetDefaultFullConfig();
     // The virtual size of the texture at mipmap level == 2 is not a multiple of the texel
     // dimensions so paddings are required in the copies.
@@ -878,10 +871,6 @@ TEST_P(CompressedTextureFormatTest, CopyWholeTextureSubResourceIntoNonZeroMipmap
 
     // Compatibility mode does not support T2T copies of compressed textures.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(crbug.com/dawn/816): This consistently fails on with the 12th pixel being opaque
-    // black instead of opaque red on Win10 FYI Release (NVIDIA GeForce GTX 1660).
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsNvidia());
 
     CopyConfig config = GetDefaultFullConfig();
     // Add the usage bit for both source and destination textures so that we don't need to
@@ -917,10 +906,6 @@ TEST_P(CompressedTextureFormatTest, CopyIntoSubresourceWithPhysicalSizeNotEqualT
 
     // Compatibility mode does not support T2T copies of compressed textures.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(crbug.com/dawn/817): add workaround on the T2T copies where Extent3D fits in one
-    // subresource and does not fit in another one on OpenGL.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL());
 
     CopyConfig srcConfig = GetDefaultSubresourceConfig();
     srcConfig.textureDescriptor.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
@@ -961,10 +946,6 @@ TEST_P(CompressedTextureFormatTest, CopyFromSubresourceWithPhysicalSizeNotEqualT
     // Compatibility mode does not support T2T copies of compressed textures.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
-    // TODO(crbug.com/dawn/817): add workaround on the T2T copies where Extent3D fits in one
-    // subresource and does not fit in another one on OpenGL.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL());
-
     CopyConfig srcConfig = GetDefaultFullConfig();
     srcConfig.textureDescriptor.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
 
@@ -1004,10 +985,6 @@ TEST_P(CompressedTextureFormatTest, MultipleCopiesWithPhysicalSizeNotEqualToVirt
 
     // Compatibility mode does not support T2T copies of compressed textures.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(crbug.com/dawn/817): add workaround on the T2T copies where Extent3D fits in one
-    // subresource and does not fit in another one on OpenGL.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL());
 
     constexpr uint32_t kTotalCopyCount = 2;
     std::array<CopyConfig, kTotalCopyCount> srcConfigs;
@@ -1069,10 +1046,6 @@ TEST_P(CompressedTextureFormatTest, CopyWithMultipleLayerAndPhysicalSizeNotEqual
 
     // Compatibility mode cannot bind a 2d-array texture as 2d.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(crbug.com/dawn/817): add workaround on the T2T copies where Extent3D fits in one
-    // subresource and does not fit in another one on OpenGL.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL());
 
     constexpr uint32_t kArrayLayerCount = 5;
 
@@ -1223,9 +1196,6 @@ TEST_P(CompressedTextureFormatTest, LargeImageHeight) {
 // copyExtent.depthOrArrayLayers) and copyExtent needs to be clamped.
 TEST_P(CompressedTextureFormatTest, LargeImageHeightAndClampedCopyExtent) {
     DAWN_TEST_UNSUPPORTED_IF(!IsFormatSupported());
-
-    // TODO(crbug.com/dawn/0000): diagnose this failure on QualComm OpenGL ES.
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsOpenGLES() && IsQualcomm());
 
     CopyConfig config = GetDefaultFullConfig();
 
@@ -1386,9 +1356,6 @@ class CompressedTextureWriteTextureTest : public CompressedTextureFormatTest {
 
 // Test WriteTexture to a 2D texture with all parameters non-defaults.
 TEST_P(CompressedTextureWriteTextureTest, Basic) {
-    // TODO(crbug.com/dawn/976): Failing on Linux Intel OpenGL drivers.
-    DAWN_SUPPRESS_TEST_IF(IsIntel() && IsOpenGL() && IsLinux());
-
     constexpr uint32_t kSizeWidthMultiplier = 5;
     constexpr uint32_t kSizeHeightMultiplier = 6;
     constexpr uint32_t kOriginWidthMultiplier = 1;
@@ -1415,12 +1382,6 @@ TEST_P(CompressedTextureWriteTextureTest, Basic) {
 TEST_P(CompressedTextureWriteTextureTest, WriteMultiple2DArrayLayers) {
     // Compatibility mode cannot bind a 2d-array texture as 2d.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(crbug.com/dawn/976): Failing on Linux Intel OpenGL drivers.
-    DAWN_SUPPRESS_TEST_IF(IsIntel() && IsOpenGL() && IsLinux());
-
-    // TODO(crbug.com/459848484): Fails on Win/Snapdragon X Elite.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
 
     // TODO(b/198674734): Width multiplier set to 7 because 5 results in square size for ASTC6x5.
     constexpr uint32_t kSizeWidthMultiplier = 7;
@@ -1449,20 +1410,6 @@ TEST_P(CompressedTextureWriteTextureTest, WriteMultiple2DArrayLayers) {
 // its virtual size.
 TEST_P(CompressedTextureWriteTextureTest,
        WriteIntoSubresourceWithPhysicalSizeNotEqualToVirtualSize) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
-    // TODO(crbug.com/dawn/976): Failing on Linux Intel OpenGL drivers.
-    DAWN_SUPPRESS_TEST_IF(IsIntel() && IsOpenGL() && IsLinux());
-
-    // TODO(crbug.com/dawn/0000): diagnose this failure on QualComm OpenGL ES.
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsOpenGLES() && IsQualcomm());
-
-    // TODO(https://issues.chromium.org/issues/41479545): Triggers some VVL sync error on the
-    // textures used as an attachment when verifying the contents of the compressed texture.
-    // It complains that the CmdPipelineBarrier to attachment doesn't include the previous call
-    // to CmdCopyBufferToTexture in its source, but that texture is never used in such a call!
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsBackendValidationEnabled());
-
     CopyConfig config = GetDefaultFullConfig();
 
     // The virtual size of the texture at mipmap level == 2 is not a multiple of the texel
@@ -1483,6 +1430,5 @@ DAWN_INSTANTIATE_TEST_P(CompressedTextureWriteTextureTest,
                          OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
                         std::vector<wgpu::TextureFormat>(utils::kCompressedFormats.begin(),
                                                          utils::kCompressedFormats.end()));
-
 }  // anonymous namespace
 }  // namespace dawn
