@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16761521_897bda16",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T15:45:07Z",
+      "side": 1,
+      "message": "This might actually be expensive because it\u0027s hot code, and doesn\u0027t match the rest changes. Was it just a drive by addition or something found by clang-tidy?",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d0d217c_4148ba45",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T15:45:07Z",
+      "side": 1,
+      "message": "This was meant to match the WebGPU API that doesn\u0027t have a default for that values specifically. It\u0027s a bit unfortunate. Ditto below.",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a7155ef_7b6bb39d",
+        "filename": "src/dawn/native/RenderPipeline.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T15:45:07Z",
+      "side": 1,
+      "message": "There is no undefined for this enum? I thought we had it for most of them. Or maybe the \"NotUsed\" one?",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af2b15ff_4da4d594",
+        "filename": "src/dawn/native/ResourceTable.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T15:45:07Z",
+      "side": 1,
+      "message": "Does this work?\n\nditto below and for all other typed integers that end up being spelled twice\n```suggestion\n        ResourceTableSlot slot{0};  // Slot index to update\n```",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbb91adb_0a7e3f5c",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T15:45:07Z",
+      "side": 1,
+      "message": "Doesn\u0027t  `{}` work?",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c5ffc84_530ecf90",
+        "filename": "src/dawn/native/Surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T15:45:07Z",
+      "side": 1,
+      "message": "Maybe it would be worth having an Undefined for this enum as well.",
+      "revId": "8d8aa8a96ee27cb8b0711ba8c54191e50dc08966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
