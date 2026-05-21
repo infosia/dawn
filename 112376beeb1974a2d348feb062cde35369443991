@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d576f8df_74fd5639",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T15:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e6ccab2_53e76d6c",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2dbd5f2_4e84adf6",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "253dd6c1_3f19f720",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T15:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2dbd5f2_4e84adf6",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1161697_170c01e6",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-05-21T15:01:27Z",
       "side": 1,
       "message": "```suggestion\n    float a \u003d 0.0f;\n    float b \u003d 0.0f;\n    float c \u003d 0.0f;\n    float d \u003d 0.0f;\n    float e \u003d 0.0f;\n    float f \u003d 0.0f;\n    float g \u003d 0.0f;\n```",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "affccd45_2c4e6e93",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T15:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1161697_170c01e6",
       "revId": "112376beeb1974a2d348feb062cde35369443991",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -71,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1bb86587_ce7bccc5",
+        "filename": "src/dawn/native/Surface.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T15:09:22Z",
+      "side": 1,
+      "message": "It needs to have at least a default. This corresponds to the first one in the list.",
+      "parentUuid": "efb7a532_f658d0bd",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c8b35de4_96696e88",
         "filename": "src/tint/utils/reflection/reflection_test.cc",
         "patchSetId": 7
@@ -82,6 +154,24 @@
       "writtenOn": "2026-05-21T15:01:27Z",
       "side": 1,
       "message": "```suggestion\n    int a \u003d 0;\n    int b \u003d 0;\n    int c \u003d 0;\n```",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40d63be1_178abe5e",
+        "filename": "src/tint/utils/reflection/reflection_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T15:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8b35de4_96696e88",
       "revId": "112376beeb1974a2d348feb062cde35369443991",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -103,6 +193,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7599c67d_80051b74",
+        "filename": "src/tint/utils/reflection/reflection_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T15:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "898bd3e6_18e38ed5",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "448d2bd0_7e97b262",
@@ -120,6 +228,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f15eaa3d_29372fb5",
+        "filename": "src/tint/utils/reflection/reflection_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T15:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "448d2bd0_7e97b262",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dcbdcb02_7ac68891",
@@ -133,6 +259,24 @@
       "writtenOn": "2026-05-21T15:01:27Z",
       "side": 1,
       "message": "```suggestion\n    int a \u003d 0;\n    int b \u003d 0;\n    int c \u003d 0;\n```",
+      "revId": "112376beeb1974a2d348feb062cde35369443991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "316fd05a_d3485695",
+        "filename": "src/tint/utils/reflection/reflection_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-21T15:09:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcbdcb02_7ac68891",
       "revId": "112376beeb1974a2d348feb062cde35369443991",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
