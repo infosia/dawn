@@ -46,7 +46,6 @@
 
 namespace dawn {
 namespace {
-
 // Make an AHB with the YCbCr data, note that Cb and Cr are a quarter the size of Y.
 AHardwareBuffer* MakeY8Cb8Cr8AHB(uint32_t width,
                                  uint32_t height,
@@ -103,9 +102,6 @@ class SharedTextureMemoryYCbCrVulkanSamplersTests : public DawnTest {
 // instance.
 TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests,
        InvalidSharedTextureMemoryAHardwareBufferProperties) {
-    // TODO(crbug.com/444741058): Fails on Intel-based brya devices running Android Desktop.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsIntel() && IsAndroid());
-
     AHardwareBuffer_Desc aHardwareBufferDesc = {
         .width = 4,
         .height = 4,
@@ -138,9 +134,6 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests,
 
 // Test querying YCbCr info from the Device.
 TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, QueryYCbCrInfoFromDevice) {
-    // TODO(crbug.com/444741058): Fails on Intel-based brya devices running Android Desktop.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsIntel() && IsAndroid());
-
     AHardwareBuffer_Desc aHardwareBufferDesc = {
         .width = 4,
         .height = 4,
@@ -203,9 +196,6 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, QueryYCbCrInfoFromDevice) {
 
 // Test querying YCbCr info from the SharedTextureMemory without external format.
 TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, QueryYCbCrInfoWithoutYCbCrFormat) {
-    // TODO(crbug.com/444741058): Fails on Intel-based brya devices running Android Desktop.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsIntel() && IsAndroid());
-
     AHardwareBuffer_Desc aHardwareBufferDesc = {
         .width = 4,
         .height = 4,
@@ -782,10 +772,6 @@ TEST_P(SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture, NoopSampleY8Cb8C
 //
 // Case with all in the same bindgroup layout.
 TEST_P(SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture, SampleDifferentKindsSameBindGroup) {
-    // Using multiple YCbCr samplers in the same VkDescriptorSet seems to make ARM GPUs sample
-    // zeroes for all textures.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsARM());
-
     // Create our three test external of different kinds as well as the expected data.
     std::vector<wgpu::ExternalTexture> externalTextures;
     std::vector<utils::RGBA8> colors;
@@ -957,6 +943,5 @@ TEST_P(SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture,
 //  - Same pipeline check bindgroups get reapplied? Same pipeline check immediates get reapplied.
 
 DAWN_INSTANTIATE_TEST(SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture, VulkanBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
