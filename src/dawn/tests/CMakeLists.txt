@@ -36,6 +36,8 @@ add_library(dawn_test_infra OBJECT
     "DawnTest.h"
     "PartitionAllocSupport.cpp"
     "PartitionAllocSupport.h"
+    "TestExpectations.cpp"
+    "TestExpectations.h"
     "ToggleParser.cpp"
     "ToggleParser.h"
     "mocks/platform/CachingInterfaceMock.cpp"
