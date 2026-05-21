@@ -41,7 +41,6 @@
 
 namespace dawn {
 namespace {
-
 // The number of unique default samplers on D3D12, derived form ResourceTableDefaultResources.
 // These necessarily take up a couple of slots in a resource table.
 constexpr uint32_t kUniqueDefaultSamplers = 2;
@@ -54,12 +53,6 @@ class ResourceTableTests : public DawnTest {
         DawnTest::SetUp();
         DAWN_TEST_UNSUPPORTED_IF(
             !SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable}));
-
-        // Swiftshader doesn't support variable count descriptor sets used in draw operations. In
-        // vk::DescriptorSet::ParseDescriptors it iterates over all the descriptors to prep various
-        // things but iterates over the whole size defined in the vkDescriptorSetLayout instead of
-        // taking into account the variable count.
-        DAWN_SUPPRESS_TEST_IF(IsSwiftshader());
     }
 
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
@@ -1210,9 +1203,6 @@ TEST_P(ResourceTableTests, HasResourceOOBIsFalse) {
 // test (that's for the CTS) but tries to check a few different interesting cases (MS, DS, Cube, 2D
 // array).
 TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
-    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     // Create the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -1303,9 +1293,6 @@ TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
 
 // Test that a resource table texture can be sampled by a resource table sampler.
 TEST_P(ResourceTableTests, Sampler) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-
     // Create a 1x1 texture with a single red pixel.
     wgpu::TextureDescriptor texDesc;
     texDesc.size = {1, 1};
@@ -1368,11 +1355,6 @@ TEST_P(ResourceTableTests, Sampler) {
 
 // Test that a resource table texture can be sampled by multiple resource table samplers.
 TEST_P(ResourceTableTests, MultipleSamplers) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-    // TODO(https://crbug.com/510904606): Fails on LLVMPipe
-    DAWN_SUPPRESS_TEST_IF(IsMesaSoftware());
-
     struct Case {
         size_t tableSize;
         uint32_t samplerIndex0;
@@ -1487,9 +1469,6 @@ TEST_P(ResourceTableTests, MultipleSamplers) {
 
 // Test that default samplers are correctly created, and accessed when an invalid index it provided.
 TEST_P(ResourceTableTests, UseDefaultSamplers) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-
     auto CreateDepthTexture = [&]() {
         wgpu::TextureDescriptor descriptor;
         // descriptor.dimension = wgpu::TextureDimension::e2D;
@@ -1593,11 +1572,6 @@ TEST_P(ResourceTableTests, UseDefaultSamplers) {
 // type (e.g. filterable) works as expected. This ensures, for example, that the metadata buffer
 // gets an updated sampler index on D3D12.
 TEST_P(ResourceTableTests, RemoveThenAddSamplerInSameSlot) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-    // TODO(https://crbug.com/510904606): Fails on LLVMPipe
-    DAWN_SUPPRESS_TEST_IF(IsMesaSoftware());
-
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
 
@@ -1689,9 +1663,6 @@ TEST_P(ResourceTableTests, RemoveThenAddSamplerInSameSlot) {
 // Test that adding and removing samplers in the same slot between draws ensure that
 // backends only see the effective diff (first one added to last one added).
 TEST_P(ResourceTableTests, RemoveThenAddSamplerMultipleInSameSlot) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
 
@@ -1797,9 +1768,6 @@ TEST_P(ResourceTableTests, RemoveThenAddSamplerMultipleInSameSlot) {
 
 // Test what happens when we add more than kD3D12MaxUniqueSamplers unique samplers
 TEST_P(ResourceTableTests, AddUniqueSamplersOverLimit) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-
     wgpu::ComputePipelineDescriptor csDesc;
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -1852,9 +1820,6 @@ TEST_P(ResourceTableTests, AddUniqueSamplersOverLimit) {
 // duplicate sampler is added back. On D3D12, internally this may result in a new sampler index,
 // which should be fine.
 TEST_P(ResourceTableTests, RemoveAddDuplicateSampler) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-
     wgpu::ComputePipelineDescriptor csDesc;
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -1912,9 +1877,6 @@ TEST_P(ResourceTableTests, RemoveAddDuplicateSampler) {
 // are duplicates. We test this by creating a table of size 2*2048, add 2048 unique samplers in the
 // first half of the table, then add the same set of sampers in the second half of the table.
 TEST_P(ResourceTableTests, AddDuplicateSamplersTwice) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-
     wgpu::ComputePipelineDescriptor csDesc;
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -1964,12 +1926,6 @@ TEST_P(ResourceTableTests, AddDuplicateSamplersTwice) {
 // and draws again, making sure this is supported. Effectively, this tests that the resource table
 // correctly handles removal of samplers.
 TEST_P(ResourceTableTests, AddAndRemoveMaxSamplersTwice) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-    // TODO(https://issues.chromium.org/issues/512829734): Fails on Vulkan if
-    // VkPhysicalDeviceLimits::maxSamplerAllocationCount <= 4K
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsWindows() && IsIntel());
-
     wgpu::ComputePipelineDescriptor csDesc;
     csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -2021,9 +1977,6 @@ TEST_P(ResourceTableTests, AddAndRemoveMaxSamplersTwice) {
 
 // Test that removing then adding a texture in a slot works as expected.
 TEST_P(ResourceTableTests, RemoveThenAddTextureInSameSlot) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
 
@@ -2103,9 +2056,6 @@ TEST_P(ResourceTableTests, RemoveThenAddTextureInSameSlot) {
 // Test that adding and removing textures in the same slot between draws ensure that
 // backends only see the effective diff (first one added to last one added).
 TEST_P(ResourceTableTests, RemoveThenAddTextureMultipleInSameSlot) {
-    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
-
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
 
@@ -2192,9 +2142,6 @@ TEST_P(ResourceTableTests, RemoveThenAddTextureMultipleInSameSlot) {
 
 // Check that Pin forces zero-initialization of the resources.
 TEST_P(ResourceTableTests, PinDoesZeroInit) {
-    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     // Create the pipeline reading back from the texture.
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -2400,9 +2347,6 @@ TEST_P(ResourceTableTests, UpdateAfterRemoveRequiresGPUIsFinished_ErrorBindGroup
 
 // Check that Update and InsertBinding make the new binding visible in the resource table.
 TEST_P(ResourceTableTests, UpdateAndInsertBindingMakeBindingVisible) {
-    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     wgpu::ResourceTable table = MakeResourceTable(2);
 
     // Before we do anything, the table has no valid entries.
@@ -2422,9 +2366,6 @@ TEST_P(ResourceTableTests, UpdateAndInsertBindingMakeBindingVisible) {
 // Check that RemoveBinding instantly makes the binding not visible, both for entries added with
 // Update and InsertBinding.
 TEST_P(ResourceTableTests, RemoveBindingMakeBindingInvalid) {
-    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     // Fill a resource table with both Update and InsertBinding.
     wgpu::ResourceTable table = MakeResourceTable(2);
 
@@ -2446,9 +2387,6 @@ TEST_P(ResourceTableTests, RemoveBindingMakeBindingInvalid) {
 
 // Check that removing a binding and adding a different one works.
 TEST_P(ResourceTableTests, ReplaceBinding) {
-    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     // Create the test resource table.
     wgpu::ResourceTable table = MakeResourceTable(1);
     wgpu::BindingResource resource = {.textureView = MakePinnedU8View(19)};
@@ -2469,9 +2407,6 @@ TEST_P(ResourceTableTests, ReplaceBinding) {
 
 // Check that removing a binding and adding it back works.
 TEST_P(ResourceTableTests, ReplaceWithSameBinding) {
-    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     // Create the test resource table.
     wgpu::ResourceTable table = MakeResourceTable(1);
     wgpu::BindingResource resource = {.textureView = MakePinnedU8View(19)};
@@ -2492,9 +2427,6 @@ TEST_P(ResourceTableTests, ReplaceWithSameBinding) {
 // Check that setting multiple resource table, on per dispatch/draw/executebundle, on a single pass
 // works.
 TEST_P(ResourceTableTests, SinglePassMultipleResourceTables) {
-    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     std::vector<wgpu::BindingResource> resources;
 
     wgpu::ResourceTable table0 = MakeResourceTable(2);
@@ -2640,6 +2572,5 @@ TEST_P(ResourceTableTests, SwitchUseResourceTableAndNot) {
 //   - bind-less unfilterable texture, BGL has filtering sampler, swap sampler
 
 DAWN_INSTANTIATE_TEST(ResourceTableTests, D3D12Backend(), MetalBackend(), VulkanBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
