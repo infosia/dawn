@@ -44,7 +44,6 @@
 
 namespace dawn {
 namespace {
-
 class StorageTextureTests : public DawnTest {
   protected:
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
@@ -918,8 +917,6 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
 
 // Test that write-only storage textures are supported in compute shader.
 TEST_P(StorageTextureTests, WriteonlyStorageTextureInComputeShader) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     for (wgpu::TextureFormat format : utils::kAllTextureFormats) {
         if (!utils::TextureFormatSupportsStorageTexture(device, format)) {
             continue;
@@ -946,11 +943,6 @@ TEST_P(StorageTextureTests, WriteonlyStorageTextureInComputeShader) {
 
 // Test that write-only storage textures are supported in fragment shader.
 TEST_P(StorageTextureTests, WriteonlyStorageTextureInFragmentShader) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageTexturesInFragmentStage < 1);
 
     for (wgpu::TextureFormat format : utils::kAllTextureFormats) {
@@ -986,8 +978,6 @@ TEST_P(StorageTextureTests, WriteonlyStorageTextureInFragmentShader) {
 
 // Verify 2D array and 3D write-only storage textures work correctly.
 TEST_P(StorageTextureTests, Writeonly2DArrayOr3DStorageTexture) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr uint32_t kSliceCount = 3u;
 
     constexpr wgpu::TextureFormat kTextureFormat = wgpu::TextureFormat::R32Uint;
@@ -1017,8 +1007,6 @@ TEST_P(StorageTextureTests, Writeonly2DArrayOr3DStorageTexture) {
 
 // Verify 1D write-only storage textures work correctly.
 TEST_P(StorageTextureTests, Writeonly1DStorageTexture) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr wgpu::TextureFormat kTextureFormat = wgpu::TextureFormat::R32Uint;
 
     // Prepare the write-only storage texture.
@@ -1039,8 +1027,6 @@ TEST_P(StorageTextureTests, Writeonly1DStorageTexture) {
 // Test that multiple dispatches to increment values by ping-ponging between a sampled texture and
 // a write-only storage texture are synchronized in one pass.
 TEST_P(StorageTextureTests, SampledAndWriteonlyStorageTexturePingPong) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr wgpu::TextureFormat kTextureFormat = wgpu::TextureFormat::R32Uint;
     wgpu::Texture storageTexture1 =
         CreateTexture(kTextureFormat,
@@ -1235,8 +1221,6 @@ fn doTest() -> bool {
 // Verify that the texture is correctly cleared to 0 before its first usage as a write-only storage
 // storage texture in a render pass.
 TEST_P(StorageTextureZeroInitTests, WriteonlyStorageTextureClearsToZeroInRenderPass) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageTexturesInFragmentStage < 1);
 
     // Prepare the write-only storage texture.
@@ -1254,8 +1238,6 @@ TEST_P(StorageTextureZeroInitTests, WriteonlyStorageTextureClearsToZeroInRenderP
 // Verify that the texture is correctly cleared to 0 before its first usage as a write-only storage
 // texture in a compute pass.
 TEST_P(StorageTextureZeroInitTests, WriteonlyStorageTextureClearsToZeroInComputePass) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     // Prepare the write-only storage texture.
     wgpu::Texture writeonlyStorageTexture = CreateTexture(
         wgpu::TextureFormat::R32Uint,
@@ -1349,15 +1331,11 @@ fn main(@builtin(local_invocation_id) local_id: vec3<u32>) {
 
 // Verify read-write storage texture can work correctly in compute shaders.
 TEST_P(ReadWriteStorageTextureTests, ReadWriteStorageTextureInComputeShader) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     RunReadWriteStorageTextureTest(wgpu::TextureFormat::R32Uint);
 }
 
 // Verify read-write storage texture can work correctly in fragment shaders.
 TEST_P(ReadWriteStorageTextureTests, ReadWriteStorageTextureInFragmentShader) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageTexturesInFragmentStage < 1);
 
     std::array<uint32_t, kWidth * kHeight> inputData;
@@ -1426,8 +1404,6 @@ TEST_P(ReadWriteStorageTextureTests, ReadWriteStorageTextureInFragmentShader) {
 
 // Verify read-only storage texture can work correctly in compute shaders.
 TEST_P(ReadWriteStorageTextureTests, ReadOnlyStorageTextureInComputeShader) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr wgpu::TextureFormat kStorageTextureFormat = wgpu::TextureFormat::R32Uint;
     const std::vector<uint8_t> kInitialTextureData = GetExpectedData(kStorageTextureFormat);
     wgpu::Texture readonlyStorageTexture = CreateTextureWithTestData(
@@ -1480,8 +1456,6 @@ fn main() {
 
 // Verify read-only storage texture can work correctly in vertex shaders.
 TEST_P(ReadWriteStorageTextureTests, ReadOnlyStorageTextureInVertexShader) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageTexturesInVertexStage < 1);
 
     constexpr wgpu::TextureFormat kStorageTextureFormat = wgpu::TextureFormat::R32Uint;
@@ -1530,8 +1504,6 @@ struct FragmentInput {
 
 // Verify read-only storage texture can work correctly in fragment shaders.
 TEST_P(ReadWriteStorageTextureTests, ReadOnlyStorageTextureInFragmentShader) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageTexturesInFragmentStage < 1);
 
     constexpr wgpu::TextureFormat kStorageTextureFormat = wgpu::TextureFormat::R32Uint;
@@ -1564,8 +1536,6 @@ TEST_P(ReadWriteStorageTextureTests, ReadOnlyStorageTextureInFragmentShader) {
 // Verify using read-write storage texture access in pipeline layout is compatible with write-only
 // storage texture access in shader.
 TEST_P(ReadWriteStorageTextureTests, ReadWriteInPipelineLayoutAndWriteOnlyInShader) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     constexpr wgpu::TextureFormat kStorageTextureFormat = wgpu::TextureFormat::R32Uint;
     std::array<uint32_t, kWidth * kHeight> expectedData;
     for (size_t i = 0; i < expectedData.size(); ++i) {
@@ -1619,9 +1589,6 @@ fn main(
 // backend where the first usage sets TEXTURE_BASE_LEVEL and TEXTURE_MAX_LEVEL on the texture
 // and they end up affecting the 2nd usage.
 TEST_P(ReadWriteStorageTextureTests, ReadMipLevel0WriteMipLevel1) {
-    // https://crbug.com/392121637
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     wgpu::ShaderModule csModule = utils::CreateShaderModule(device, R"(
         @binding(0) @group(0) var<storage, read_write> buf : array<f32>;
         @binding(1) @group(0) var t_in: texture_2d<f32>;
@@ -2054,8 +2021,6 @@ fn main(@builtin(global_invocation_id) gid: vec3<u32>) {
 // This ensures that we insert a memory fence in between writes and reads to a read-write storage
 // texture to prevent reordering of memory operations within an invocation.
 TEST_P(ReadWriteStorageTextureTests, ReadWriteStorageTexture_ReadAfterWriteHazard) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
     // The texture dimensions need to be fairly large in order to reliably trigger a failure when
     // no fence is present.
     constexpr uint32_t kWidth = 1024;
@@ -2163,9 +2128,6 @@ TEST_P(Tier1StorageValidationTests, WriteonlyStorageTextureInFragmentShader) {
 // Test that kTier1AdditionalStorageFormats formats have the "read-only" GPUStorageTextureAccess
 //  capability if 'texture-formats-tier1' is enabled.
 TEST_P(Tier1StorageValidationTests, ReadOnlyStorageTextureInFragmentShader) {
-    // TODO(crbug.com/500766627): Fails on Windows 11/AMD RX 5500 XT w/ Vulkan.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
-
     for (const auto format : utils::kTier1AdditionalStorageFormats) {
         SCOPED_TRACE(
             absl::StrFormat("Test format: %s", utils::GetWGSLImageFormatQualifier(format)));

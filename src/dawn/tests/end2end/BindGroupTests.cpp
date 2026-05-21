@@ -42,7 +42,6 @@
 
 namespace dawn {
 namespace {
-
 constexpr static uint32_t kRTSize = 8;
 
 class BindGroupTests : public DawnTest {
@@ -888,11 +887,6 @@ TEST_P(BindGroupTests, DynamicBufferInOneStageNotAppliedToOtherStage1) {
 // processed.
 TEST_P(BindGroupTests, DynamicBufferInOneStageNotAppliedToOtherStage2) {
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 2);
-    // TODO(crbug.com/40287156): Remove when test is no longer flaky on Pixel 6
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsQualcomm());
-
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
 
     wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, R"(
         @group(0) @binding(0) var<storage, read> my_storage: array<f32>; // Visible to both vertex and fragment shaders
@@ -1144,8 +1138,6 @@ TEST_P(BindGroupTests, BindGroupsPersistAfterPipelineChange) {
 // Do a successful draw. Then, change the pipeline and one bind group.
 // Draw to check that the all bind groups are set.
 TEST_P(BindGroupTests, DrawThenChangePipelineAndBindGroup) {
-    // TODO(anglebug.com/3032): fix failure in ANGLE/D3D11
-    DAWN_SUPPRESS_TEST_IF(IsANGLE() && IsWindows());
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
 
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
@@ -1436,8 +1428,6 @@ TEST_P(BindGroupTests, DynamicOffsetOrder) {
 // conflict. This can happen if the backend treats dynamic bindings separately from non-dynamic
 // bindings.
 TEST_P(BindGroupTests, DynamicAndNonDynamicBindingsDoNotConflictAfterRemapping) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     auto RunTestWith = [&](bool dynamicBufferFirst) {
         uint32_t dynamicBufferBindingNumber = dynamicBufferFirst ? 0 : 1;
         uint32_t bufferBindingNumber = dynamicBufferFirst ? 1 : 0;
@@ -1601,8 +1591,6 @@ TEST_P(BindGroupTests, DynamicBindingNoneVisibility) {
 
 // Test that bind group bindings may have unbounded and arbitrary binding numbers
 TEST_P(BindGroupTests, ArbitraryBindingNumbers) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
     wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, R"(
@@ -2088,11 +2076,6 @@ void DoMaxBindingsPerBindGroupTest(const wgpu::Device& device,
 
 // Test with storage buffers as buffers take the most space in the frontend BindGroup.
 TEST_P(BindGroupTests, MaxBindingsPerBindGroupVisibility_StorageBuffer) {
-    // TODO(https://issues.chromium.org/491082532): Fails on OpenGL, likely because the buffers with
-    // visibility none are still being bound in the GL backend, causing a GL_INVALID_VALUE because
-    // the index is too large in glBindBufferRange.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     wgpu::BindGroupLayoutEntry bglEntry = {
         .binding = 0,
         .visibility = wgpu::ShaderStage::None,
@@ -2119,11 +2102,6 @@ TEST_P(BindGroupTests, MaxBindingsPerBindGroupVisibility_StorageBuffer) {
 }
 // Test with external textures as they expand to take multiple entries in the frontend bindgroup.
 TEST_P(BindGroupTests, MaxBindingsPerBindGroupVisibility_ExternalTexture) {
-    // TODO(https://issues.chromium.org/491082532): Fails on OpenGL, likely because the buffers with
-    // visibility none are still being bound in the GL backend, causing a GL_INVALID_VALUE because
-    // the index is too large in glBindBufferRange.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     wgpu::ExternalTextureBindingLayout etLayout = {};
     wgpu::BindGroupLayoutEntry bglEntry = {
         .nextInChain = &etLayout,
@@ -2179,6 +2157,5 @@ DAWN_INSTANTIATE_TEST(BindGroupTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // namespace
 }  // namespace dawn
