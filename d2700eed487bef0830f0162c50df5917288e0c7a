@@ -51,6 +51,24 @@
       "parentUuid": "cee3ed16_95531716",
       "revId": "d2700eed487bef0830f0162c50df5917288e0c7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "260d51b0_c0c9f3c1",
+        "filename": "src/tint/lang/core/ir/transform/remove_terminator_args_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-21T18:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bedda765_bca01fca",
+      "revId": "d2700eed487bef0830f0162c50df5917288e0c7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

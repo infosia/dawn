@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4c5c0b0_191f041d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-21T18:12:39Z",
+      "side": 1,
+      "message": "PTAAL, there was an issue with original test case should have been rejected by the IR validator, so I have added checks for that. I have left the hardening in the transform for now, if you prefer I can remove it, since it shouldn\u0027t be occuring now, as demonstrated by the unittest needing to bypass the validator.",
+      "revId": "f1df12da4d354f5e47fe1e2e90dfd9592279a3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
