@@ -1778,6 +1778,7 @@
         ]
     },
     "external texture": {
+        "tags": ["dawn", "art_experimental"],
         "category": "object",
         "methods": [
             {
@@ -1789,15 +1790,15 @@
             },
             {
                 "name": "destroy",
-                "tags": ["dawn", "art_experimental"]
+                "tags": ["dawn"]
             },
             {
                 "name": "expire",
-                "tags": ["dawn", "art_experimental"]
+                "tags": ["dawn"]
             },
             {
                 "name": "refresh",
-                "tags": ["dawn", "art_experimental"]
+                "tags": ["dawn"]
             }
         ]
     },

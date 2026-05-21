@@ -33,9 +33,12 @@ import androidx.webgpu.helper.GPUAndroidHardwareBufferUtil
 import androidx.webgpu.GPUHardwareBufferExternalTexture
 import androidx.webgpu.helper.asString
 import java.util.concurrent.atomic.AtomicReference
+import androidx.webgpu.ExperimentalWebGpuApi
+import kotlin.OptIn
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
+@OptIn(ExperimentalWebGpuApi::class)
 fun ZeroCopyVideoYuv(modifier: Modifier, options: Options) {
   val context = LocalContext.current
   val assets = context.assets
@@ -210,8 +213,7 @@ fun ZeroCopyVideoYuv(modifier: Modifier, options: Options) {
           yCbCrMatrix = ColorSpaceYCbCrMatrixDawn.Rec709
         ),
         dstColorSpace = PredefinedColorSpace.SRGB,
-        rotation = ExternalTextureRotation.Rotate90Degrees,
-      )
+      ).apply { rotation = ExternalTextureRotation.Rotate90Degrees }
 
       var activeYuvWrapper: GPUHardwareBufferExternalTexture? = null
       var activeYuvImage: Image? = null
@@ -275,10 +277,9 @@ fun ZeroCopyVideoYuv(modifier: Modifier, options: Options) {
                   GPUBindGroupEntry(binding = 0, sampler = sampler),
                   GPUBindGroupEntry(
                     binding = 1,
-                    externalTextureBindingEntry = GPUExternalTextureBindingEntry(
-                      activeYuvWrapper!!.externalTexture
-                    )
-                  )
+                  ).apply { externalTextureBindingEntry = GPUExternalTextureBindingEntry(
+                    activeYuvWrapper!!.externalTexture
+                  ) }
                 )
               )
             )

@@ -1654,11 +1654,11 @@ class MultiGeneratorFromDawnJSON(Generator):
         imported_templates = []
 
         params_dawn = parse_json(loaded_json,
-                                 enabled_tags=['dawn', 'native', 'deprecated'])
 
+                                 enabled_tags=['dawn', 'native', 'deprecated', 'art_experimental'])
         params_all = parse_json(
             loaded_json,
-            enabled_tags=['dawn', 'emscripten', 'native', 'deprecated'])
+            enabled_tags=['dawn', 'emscripten', 'native', 'deprecated', 'art_experimental'])
 
         metadata = params_dawn['metadata']
         RENDER_PARAMS_BASE = make_base_render_params(metadata)
@@ -2084,6 +2084,11 @@ class MultiGeneratorFromDawnJSON(Generator):
                            'java/' + kt_file_path + '/GPUSyncFence.kt',
                            [RENDER_PARAMS_BASE, params_kotlin]))
 
+            renders.append(
+                FileRender(
+                    'art/api_kotlin_experimental_annotation.kt',
+                    'java/' + kt_file_path + '/ExperimentalWebGpuApi.kt',
+                    [RENDER_PARAMS_BASE, params_kotlin]))
         if "jni" in targets:
             params_kotlin = compute_kotlin_params(loaded_json, kotlin_json,
                                                   webgpu_kt_docs_data,
