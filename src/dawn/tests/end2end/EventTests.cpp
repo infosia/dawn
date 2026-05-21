@@ -43,8 +43,6 @@
 
 namespace dawn {
 namespace {
-
-
 wgpu::Device CreateExtraDevice(utils::WireHelper* wireHelper, wgpu::Instance instance) {
     // IMPORTANT: DawnTest overrides RequestAdapter and RequestDevice and mixes
     // up the two instances. We use these to bypass the override.
@@ -374,9 +372,6 @@ TEST_P(EventCompletionTests, WorkDoneSimple) {
 
 // WorkDone event before device loss, wait afterward.
 TEST_P(EventCompletionTests, WorkDoneAcrossDeviceLoss) {
-    // TODO(crbug.com/469831341): Flaky on Snapdragon X Elite devices w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
-
     TrivialSubmit();
     TrackForTest(OnSubmittedWorkDone(wgpu::QueueWorkDoneStatus::Success));
     TestWaitAll();
@@ -397,9 +392,6 @@ TEST_P(EventCompletionTests, WorkDoneTwice) {
                           GetParam().mWaitTypeAndCallbackMode ==
                               WaitTypeAndCallbackMode::Spin_AllowSpontaneous);
 
-    // TODO(crbug.com/469831341): Flaky on Snapdragon X Elite devices w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
-
     TrivialSubmit();
     TrackForTest(OnSubmittedWorkDone(wgpu::QueueWorkDoneStatus::Success));
     TrackForTest(OnSubmittedWorkDone(wgpu::QueueWorkDoneStatus::Success));
@@ -417,9 +409,6 @@ TEST_P(EventCompletionTests, WorkDoneNoWork) {
 
 // WorkDone event after all work has completed already.
 TEST_P(EventCompletionTests, WorkDoneAlreadyCompleted) {
-    // TODO(crbug.com/469831341): Flaky on Snapdragon X Elite devices w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
-
     TrivialSubmit();
     TrackForTest(OnSubmittedWorkDone(wgpu::QueueWorkDoneStatus::Success));
     TestWaitAll();
@@ -514,9 +503,6 @@ TEST_P(WaitAnyTests, UnsupportedTimeout) {
 }
 
 TEST_P(WaitAnyTests, UnsupportedCount) {
-    // TODO(crbug.com/474391710): Flaky on Snapdragon X Elite w/ D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
-
     for (uint64_t timeout : {uint64_t(0), uint64_t(1)}) {
         // We don't support values higher than the default (64), and if you ask for lower than 64
         // you still get 64. DawnTest doesn't request anything (so requests 0) so gets 64.
@@ -676,6 +662,5 @@ DAWN_INSTANTIATE_TEST(FutureTests,
                       VulkanBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend());
-
 }  // anonymous namespace
 }  // namespace dawn
