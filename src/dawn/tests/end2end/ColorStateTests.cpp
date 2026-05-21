@@ -39,7 +39,6 @@
 
 namespace dawn {
 namespace {
-
 constexpr static unsigned int kRTSize = 64;
 
 class ColorStateTest : public DawnTest {
@@ -338,8 +337,6 @@ TEST_P(ColorStateTest, Basic) {
 
 // The following tests check test that the blend operation works
 TEST_P(ColorStateTest, BlendOperationAdd) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<utils::RGBA8, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -348,8 +345,6 @@ TEST_P(ColorStateTest, BlendOperationAdd) {
 }
 
 TEST_P(ColorStateTest, BlendOperationSubtract) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<utils::RGBA8, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -358,8 +353,6 @@ TEST_P(ColorStateTest, BlendOperationSubtract) {
 }
 
 TEST_P(ColorStateTest, BlendOperationReverseSubtract) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<utils::RGBA8, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -368,8 +361,6 @@ TEST_P(ColorStateTest, BlendOperationReverseSubtract) {
 }
 
 TEST_P(ColorStateTest, BlendOperationMin) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<utils::RGBA8, utils::RGBA8>> tests;
     std::transform(
@@ -379,8 +370,6 @@ TEST_P(ColorStateTest, BlendOperationMin) {
 }
 
 TEST_P(ColorStateTest, BlendOperationMax) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<utils::RGBA8, utils::RGBA8>> tests;
     std::transform(
@@ -391,8 +380,6 @@ TEST_P(ColorStateTest, BlendOperationMax) {
 
 // The following tests check that the Source blend factor works
 TEST_P(ColorStateTest, SrcBlendFactorZero) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(
@@ -402,8 +389,6 @@ TEST_P(ColorStateTest, SrcBlendFactorZero) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorOne) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -414,8 +399,6 @@ TEST_P(ColorStateTest, SrcBlendFactorOne) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorSrc) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -429,8 +412,6 @@ TEST_P(ColorStateTest, SrcBlendFactorSrc) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorOneMinusSrc) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -444,8 +425,6 @@ TEST_P(ColorStateTest, SrcBlendFactorOneMinusSrc) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorSrcAlpha) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -458,8 +437,6 @@ TEST_P(ColorStateTest, SrcBlendFactorSrcAlpha) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorOneMinusSrcAlpha) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(
@@ -474,8 +451,6 @@ TEST_P(ColorStateTest, SrcBlendFactorOneMinusSrcAlpha) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorDst) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -489,8 +464,6 @@ TEST_P(ColorStateTest, SrcBlendFactorDst) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorOneMinusDst) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -504,8 +477,6 @@ TEST_P(ColorStateTest, SrcBlendFactorOneMinusDst) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorDstAlpha) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -518,8 +489,6 @@ TEST_P(ColorStateTest, SrcBlendFactorDstAlpha) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorOneMinusDstAlpha) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(
@@ -534,8 +503,6 @@ TEST_P(ColorStateTest, SrcBlendFactorOneMinusDstAlpha) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorSrcAlphaSaturated) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -550,8 +517,6 @@ TEST_P(ColorStateTest, SrcBlendFactorSrcAlphaSaturated) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorConstant) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -565,8 +530,6 @@ TEST_P(ColorStateTest, SrcBlendFactorConstant) {
 }
 
 TEST_P(ColorStateTest, SrcBlendFactorOneMinusConstant) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -582,8 +545,6 @@ TEST_P(ColorStateTest, SrcBlendFactorOneMinusConstant) {
 
 // The following tests check that the Destination blend factor works
 TEST_P(ColorStateTest, DstBlendFactorZero) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(
@@ -593,8 +554,6 @@ TEST_P(ColorStateTest, DstBlendFactorZero) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorOne) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -605,8 +564,6 @@ TEST_P(ColorStateTest, DstBlendFactorOne) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorSrc) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -620,8 +577,6 @@ TEST_P(ColorStateTest, DstBlendFactorSrc) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorOneMinusSrc) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -635,8 +590,6 @@ TEST_P(ColorStateTest, DstBlendFactorOneMinusSrc) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorSrcAlpha) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -649,8 +602,6 @@ TEST_P(ColorStateTest, DstBlendFactorSrcAlpha) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorOneMinusSrcAlpha) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(
@@ -665,8 +616,6 @@ TEST_P(ColorStateTest, DstBlendFactorOneMinusSrcAlpha) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorDst) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -680,8 +629,6 @@ TEST_P(ColorStateTest, DstBlendFactorDst) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorOneMinusDst) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -695,8 +642,6 @@ TEST_P(ColorStateTest, DstBlendFactorOneMinusDst) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorDstAlpha) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -709,8 +654,6 @@ TEST_P(ColorStateTest, DstBlendFactorDstAlpha) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorOneMinusDstAlpha) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(
@@ -725,8 +668,6 @@ TEST_P(ColorStateTest, DstBlendFactorOneMinusDstAlpha) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorSrcAlphaSaturated) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -741,8 +682,6 @@ TEST_P(ColorStateTest, DstBlendFactorSrcAlphaSaturated) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorConstant) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -756,8 +695,6 @@ TEST_P(ColorStateTest, DstBlendFactorConstant) {
 }
 
 TEST_P(ColorStateTest, DstBlendFactorOneMinusConstant) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -773,8 +710,6 @@ TEST_P(ColorStateTest, DstBlendFactorOneMinusConstant) {
 
 // Check that the color write mask works
 TEST_P(ColorStateTest, ColorWriteMask) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     wgpu::BlendComponent blendComponent;
     blendComponent.operation = wgpu::BlendOperation::Add;
     blendComponent.srcFactor = wgpu::BlendFactor::One;
@@ -859,8 +794,6 @@ TEST_P(ColorStateTest, ColorWriteMaskBlendingDisabled) {
 
 // Test that independent color states on render targets works
 TEST_P(ColorStateTest, IndependentColorState) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     // Compatibility mode doesn't support per-draw-buffer blending
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
@@ -1011,8 +944,6 @@ TEST_P(ColorStateTest, IndependentColorState) {
 
 // Test that the default blend color is correctly set at the beginning of every subpass
 TEST_P(ColorStateTest, DefaultBlendColor) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     wgpu::ShaderModule fsModule = utils::CreateShaderModule(device, R"(
         struct MyBlock {
             color : vec4f
@@ -1263,8 +1194,6 @@ TEST_P(ColorStateTest, SparseAttachmentsDifferentColorMask) {
 // This is a regression test against an Intel driver issue about using DstAlpha as
 // SrcBlendFactor for both color and alpha blend factors.
 TEST_P(ColorStateTest, SrcBlendFactorDstAlphaDstBlendFactorZero) {
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     utils::RGBA8 base(32, 64, 128, 192);
     std::vector<std::pair<TriangleSpec, utils::RGBA8>> tests;
     std::transform(kColors.begin(), kColors.end(), std::back_inserter(tests),
@@ -1288,6 +1217,5 @@ DAWN_INSTANTIATE_TEST(
     VulkanBackend({"vulkan_use_create_render_pass_2"}, {"vulkan_use_dynamic_rendering"}),
     VulkanBackend({}, {"vulkan_use_create_render_pass_2", "vulkan_use_dynamic_rendering"}),
     WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

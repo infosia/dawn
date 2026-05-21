@@ -34,7 +34,6 @@
 
 namespace dawn {
 namespace {
-
 constexpr uint32_t kRTSize = 16;
 constexpr wgpu::TextureFormat kFormat = wgpu::TextureFormat::RGBA8Unorm;
 
@@ -284,14 +283,6 @@ TEST_P(RenderPassTest, ClearR8UnormDepthSlice) {
 // Test that clearing a depth16unorm texture with multiple subresources works. This is a regression
 // test for dawn:1389 where Intel Metal devices fail to do that correctly, requiring a workaround.
 TEST_P(RenderPassTest, ClearMultisubresourceAfterWriteDepth16Unorm) {
-    // TODO(dawn:1705): fix this test for Intel D3D11.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11());
-
-    // TODO(crbug.com/dawn/1989): Failed on Intel Gen12 GPUs because of Windows Vulkan driver issue,
-    // when copying to a D16_UNORM depth texture and clearing one subresource, other subresources
-    // will have incorrect values. Remove this suppression once the issue is fixed.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsWindows() && IsIntelGen12());
-
     // Test all combinatons of multi-mip, multi-layer
     for (uint32_t mipLevelCount : {1, 5}) {
         for (uint32_t arrayLayerCount : {1, 7}) {
@@ -536,6 +527,5 @@ TEST_P(RenderPassRenderAreaTest, ClipsClearNonAligned) {
 DAWN_INSTANTIATE_TEST(RenderPassRenderAreaTest,
                       VulkanBackend({"vulkan_use_dynamic_rendering"}, {}),
                       VulkanBackend({}, {"vulkan_use_dynamic_rendering"}));
-
 }  // anonymous namespace
 }  // namespace dawn
