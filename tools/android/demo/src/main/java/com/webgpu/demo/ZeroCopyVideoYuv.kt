@@ -210,8 +210,7 @@ fun ZeroCopyVideoYuv(modifier: Modifier, options: Options) {
           yCbCrMatrix = ColorSpaceYCbCrMatrixDawn.Rec709
         ),
         dstColorSpace = PredefinedColorSpace.SRGB,
-        rotation = ExternalTextureRotation.Rotate90Degrees,
-      )
+      ).apply { rotation = ExternalTextureRotation.Rotate90Degrees }
 
       var activeYuvWrapper: GPUHardwareBufferExternalTexture? = null
       var activeYuvImage: Image? = null
@@ -275,10 +274,9 @@ fun ZeroCopyVideoYuv(modifier: Modifier, options: Options) {
                   GPUBindGroupEntry(binding = 0, sampler = sampler),
                   GPUBindGroupEntry(
                     binding = 1,
-                    externalTextureBindingEntry = GPUExternalTextureBindingEntry(
-                      activeYuvWrapper!!.externalTexture
-                    )
-                  )
+                  ).apply { externalTextureBindingEntry = GPUExternalTextureBindingEntry(
+                    activeYuvWrapper!!.externalTexture
+                  ) }
                 )
               )
             )
