@@ -181,6 +181,7 @@ VkAttachmentLoadOp VulkanAttachmentLoadOp(wgpu::LoadOp op) {
             DAWN_UNREACHABLE();
             return VK_ATTACHMENT_LOAD_OP_DONT_CARE;
     }
+    DAWN_UNREACHABLE();
 }
 
 VkAttachmentStoreOp VulkanAttachmentStoreOp(wgpu::StoreOp op) {
@@ -195,6 +196,7 @@ VkAttachmentStoreOp VulkanAttachmentStoreOp(wgpu::StoreOp op) {
             DAWN_UNREACHABLE();
             return VK_ATTACHMENT_STORE_OP_DONT_CARE;
     }
+    DAWN_UNREACHABLE();
 }
 
 // Vulkan SPEC requires the source/destination region specified by each element of
