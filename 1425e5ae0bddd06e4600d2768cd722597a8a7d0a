@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70e3ab06_39ee2ab7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-05-21T15:31:35Z",
+      "side": 1,
+      "message": "Thanks for your review!",
+      "revId": "1425e5ae0bddd06e4600d2768cd722597a8a7d0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9c074ae_9fec5a00",
@@ -48,6 +65,24 @@
       "writtenOn": "2026-05-21T08:32:30Z",
       "side": 1,
       "message": "nit: that should never be the case as that\u0027s a guaranteed limit from the compat spec.",
+      "revId": "1425e5ae0bddd06e4600d2768cd722597a8a7d0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "512e4ff4_f10356e0",
+        "filename": "src/dawn/tests/end2end/OpArrayLengthTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-05-21T15:31:35Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "f9c074ae_9fec5a00",
       "revId": "1425e5ae0bddd06e4600d2768cd722597a8a7d0a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +104,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7266e13_a4f24058",
+        "filename": "src/dawn/tests/end2end/OpArrayLengthTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-05-21T15:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9f9553_f827f7e8",
+      "revId": "1425e5ae0bddd06e4600d2768cd722597a8a7d0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec91ff1f_2ff23f03",
@@ -82,6 +135,24 @@
       "writtenOn": "2026-05-21T08:32:30Z",
       "side": 1,
       "message": "nit: the auto layout (with `nullptr`) would work here, and then you can use `primePipeline.GetBindGroupLayout(0)` to get the BGL.",
+      "revId": "1425e5ae0bddd06e4600d2768cd722597a8a7d0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55ccbb13_7757ddbf",
+        "filename": "src/dawn/tests/end2end/OpArrayLengthTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-05-21T15:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec91ff1f_2ff23f03",
       "revId": "1425e5ae0bddd06e4600d2768cd722597a8a7d0a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
