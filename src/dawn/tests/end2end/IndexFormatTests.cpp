@@ -32,7 +32,6 @@
 
 namespace dawn {
 namespace {
-
 constexpr uint32_t kRTSize = 400;
 
 class IndexFormatTest : public DawnTest {
@@ -434,9 +433,6 @@ TEST_P(LineStripPrimitiveRestartTests, Uint32PrimitiveRestart) {
 // Same as the above test, but uses an OOB index to emulate primitive restart being disabled,
 // causing point A to be written to.
 TEST_P(LineStripPrimitiveRestartTests, Uint32WithoutPrimitiveRestart) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-
     wgpu::RenderPipeline pipeline =
         MakeTestPipeline(wgpu::IndexFormat::Uint32, wgpu::PrimitiveTopology::LineStrip);
 
@@ -514,6 +510,5 @@ DAWN_INSTANTIATE_TEST(LineStripPrimitiveRestartTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

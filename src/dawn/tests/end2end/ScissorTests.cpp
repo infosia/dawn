@@ -31,7 +31,6 @@
 
 namespace dawn {
 namespace {
-
 class ScissorTest : public DawnTest {
   protected:
     wgpu::RenderPipeline CreateQuadPipeline(wgpu::TextureFormat format) {
@@ -141,9 +140,6 @@ TEST_P(ScissorTest, EmptyRect) {
 // Test setting an all zero scissor with point-list and draw twice.
 // The 1st draw without scissor, the 2nd with. The 2nd should not draw.
 TEST_P(ScissorTest, ZeroRectPointList2Draws) {
-    // TODO(464436694): Zero size scissor fails on Intel Mac for this case.
-    DAWN_SUPPRESS_TEST_IF(IsMetal() && IsIntel());
-
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
 
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
@@ -223,6 +219,5 @@ DAWN_INSTANTIATE_TEST(ScissorTest,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

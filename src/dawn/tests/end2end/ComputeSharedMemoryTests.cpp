@@ -34,7 +34,6 @@
 
 namespace dawn {
 namespace {
-
 class ComputeSharedMemoryTests : public DawnTest {
   public:
     static constexpr uint32_t kInstances = 11;
@@ -142,7 +141,6 @@ TEST_P(ComputeSharedMemoryTests, AssortedTypes) {
 
         @compute @workgroup_size(4,1,1)
         fn main(@builtin(local_invocation_id) LocalInvocationID : vec3u) {
-
             let i = 4u * LocalInvocationID.x;
             if (LocalInvocationID.x == 0u) {
                 wg_struct.m = mat2x2<f32>(
@@ -226,8 +224,6 @@ TEST_P(ComputeSharedMemoryTests, ComplexZeroInit) {
             DAWN_SUPPRESS_TEST_IF(std::stoi(year) < 23);
         }
     }
-    // TODO(459881440): The generated HLSL fails compilation with FXC.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() || (IsD3D12() && !IsDXC()));
 
     wgpu::ComputePipelineDescriptor fillPipelineDesc;
     fillPipelineDesc.compute.module = utils::CreateShaderModule(device, R"(
@@ -344,6 +340,5 @@ DAWN_INSTANTIATE_TEST(ComputeSharedMemoryTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       VulkanBackend({}, {"use_vulkan_zero_initialize_workgroup_memory_extension"}));
-
 }  // anonymous namespace
 }  // namespace dawn

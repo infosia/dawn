@@ -32,7 +32,6 @@
 
 namespace dawn {
 namespace {
-
 using ClipDistancesSize = int32_t;
 DAWN_TEST_PARAM_STRUCT(ClipDistancesTestParams, ClipDistancesSize);
 
@@ -50,9 +49,6 @@ class ClipDistancesTest : public DawnTestWithParams<ClipDistancesTestParams> {
 // Verify that the feature "clip-distances" works correctly.
 TEST_P(ClipDistancesTest, UseClipDistances) {
     DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::ClipDistances));
-
-    // TODO(chromium:358408571): Investigate why the tests fail on Vulkan Android Pixel 4 bot
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsAndroid() && IsQualcomm());
 
     // Draw a square with two triangles (top-right and bottom left), whose vertices have different
     // clip distances values. (Top Left: -1, Bottom Right: 1 Top Right & Bottom Left: 0)
@@ -124,6 +120,5 @@ DAWN_INSTANTIATE_TEST_P(ClipDistancesTest,
                         {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
                          OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
                         {1, 2, 3, 4, 5, 6, 7, 8});
-
 }  // anonymous namespace
 }  // namespace dawn
