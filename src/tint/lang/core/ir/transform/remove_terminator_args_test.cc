@@ -907,5 +907,70 @@ TEST_F(IR_RemoveTerminatorArgsTest, UndefBlockParams) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_RemoveTerminatorArgsTest, Loop_EmptyBodyWithParams) {
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* loop = b.Loop();
+        loop->Body()->AddParam(b.BlockParam(ty.i32()));
+        b.Append(loop->Initializer(), [&] {  //
+            b.NextIteration(loop, 1_i);
+        });
+        b.Append(loop->Body(), [&] {  //
+            b.Continue(loop);
+        });
+        b.Append(loop->Continuing(), [&] {  //
+            b.BreakIf(loop, true, Vector{b.Constant(2_i)}, tint::Empty);
+        });
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%foo = func():void {
+  $B1: {
+    loop [i: $B2, b: $B3, c: $B4] {  # loop_1
+      $B2: {  # initializer
+        next_iteration 1i  # -> $B3
+      }
+      $B3 (%2:i32): {  # body
+        continue  # -> $B4
+      }
+      $B4: {  # continuing
+        break_if true next_iteration: [ 2i ]  # -> [t: exit_loop loop_1, f: $B3]
+      }
+    }
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func():void {
+  $B1: {
+    loop [i: $B2, b: $B3, c: $B4] {  # loop_1
+      $B2: {  # initializer
+        %2:ptr<function, i32, read_write> = var undef
+        store %2, 1i
+        next_iteration  # -> $B3
+      }
+      $B3: {  # body
+        %3:i32 = load %2
+        continue  # -> $B4
+      }
+      $B4: {  # continuing
+        store %2, 2i
+        break_if true  # -> [t: exit_loop loop_1, f: $B3]
+      }
+    }
+    ret
+  }
+}
+)";
+
+    Run(RemoveTerminatorArgs);
+
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::core::ir::transform

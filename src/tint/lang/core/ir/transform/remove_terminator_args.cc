@@ -130,7 +130,11 @@ struct State {
 
             // Create a variable to hold the parameter value, and insert it in the parent block.
             auto* var = b.Var(ty.ptr<function>(param->Type()));
-            var->InsertBefore(var_insertion_point);
+            if (var_insertion_point) {
+                var->InsertBefore(var_insertion_point);
+            } else {
+                var->InsertBefore(block->Parent());
+            }
 
             // Store to the variable before each branch.
             for (auto* branch : block->InboundSiblingBranches()) {
@@ -148,7 +152,12 @@ struct State {
 
             // Replace the original result with a load from the variable that we created above.
             auto* load = b.Load(var);
-            load->InsertBefore(block->Front());
+            if (auto* front = block->Front()) {
+                load->InsertBefore(front);
+            } else {
+                block->Append(load);
+                block->Append(b.Unreachable());
+            }
             param->ReplaceAllUsesWith(load->Result());
         }
 
