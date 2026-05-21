@@ -37,7 +37,6 @@
 
 namespace dawn {
 namespace {
-
 class OpArrayLengthTest : public DawnTest {
   protected:
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
@@ -341,12 +340,6 @@ class MaxArrayLengthTest : public DawnTestWithParams<MaxArrayLengthTestParams> {
         DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode() || IsSwiftshader() || IsANGLESwiftShader() ||
                               IsOpenGLES());
 
-        // Warp runs into memory issues.
-        DAWN_SUPPRESS_TEST_IF(IsWARP());
-
-        // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
-        DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
         // x86 has issues with OpArrayLength.
         DAWN_SUPPRESS_TEST_IF(IsX86());
 
@@ -431,6 +424,5 @@ DAWN_INSTANTIATE_TEST_P(MaxArrayLengthTest,
                          OpenGLESBackend(), OpenGLESBackend({"gl_use_array_length_from_uniform"}),
                          VulkanBackend(), WebGPUBackend()},
                         {TieredLimits::No, TieredLimits::Yes});
-
 }  // anonymous namespace
 }  // namespace dawn
