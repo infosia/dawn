@@ -49,7 +49,6 @@
 
 namespace dawn {
 namespace {
-
 class CaptureAndReplayTests : public DawnTest {
   public:
     void SetUp() override {
@@ -57,13 +56,6 @@ class CaptureAndReplayTests : public DawnTest {
 
         // This test is already testing capture and replay, we don't need to wrap it and test again.
         DAWN_TEST_UNSUPPORTED_IF(IsCaptureReplayCheckingEnabled());
-
-        // StartCapture/EndCapture are dawn::native APIs that require a native
-        // WGPUDevice. When the wire is enabled, device.Get() returns a wire
-        // client device which cannot be cast to a native device, causing a crash.
-        // TODO(crbug.com/452924800): Remove once these tests work properly with
-        // the WebGPU on WebGPU backend with wire.
-        DAWN_SUPPRESS_TEST_IF(UsesWire());
     }
 
     class Recorder {
@@ -2270,10 +2262,6 @@ TEST_P(CaptureAndReplayTests, MappedBufferDestroyed) {
 // put values in it via render pass. Then capture it in an empty render pass.
 // On replay we read the values via a compute shader.
 TEST_P(CaptureAndReplayTests, CaptureDepth24Plus) {
-    // TODO(477645283): This fails only on WARP and after it fails, all following tests
-    // fail to create a device.
-    DAWN_SUPPRESS_TEST_IF(IsWARP());
-
     constexpr uint32_t kNumLayers = 6;
     auto [cPipeline, commands] = [&]() {
         wgpu::Texture texture = CreateTexture(
@@ -2764,13 +2752,7 @@ class CaptureAndReplaySurfaceTests : public CaptureAndReplayTests {
     void SetUp() override {
         CaptureAndReplayTests::SetUp();
 
-        // TODO(crbug.com/dawn/2531): Failing on newer Linux/Intel driver version.
-        // However, IsIntel() and IsMesa() don't work with the null backend.
-        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNull());
         DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsIntel() && IsMesa("23.2"));
-
-        // Causes flaky X11 resource exhaustion when run with SwiftShader.
-        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsSwiftshader());
 
         DAWN_TEST_UNSUPPORTED_IF(!glfwInit());
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -2885,6 +2867,5 @@ TEST_P(CaptureAndReplaySurfaceTests, MultiFrame) {
 
 DAWN_INSTANTIATE_TEST(CaptureAndReplaySurfaceTests, WebGPUBackend());
 #endif
-
 }  // anonymous namespace
 }  // namespace dawn

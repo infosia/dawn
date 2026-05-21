@@ -37,7 +37,6 @@
 
 namespace dawn {
 namespace {
-
 using TextureFormat = wgpu::TextureFormat;
 DAWN_TEST_PARAM_STRUCT(DepthStencilSamplingTestParams, TextureFormat);
 
@@ -644,12 +643,6 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
 
 // Repro test for crbug.com/dawn/1187 where sampling a depth texture returns values not in [0, 1]
 TEST_P(DepthStencilSamplingTest, CheckDepthTextureRange) {
-    // TODO(crbug.com/444741058): Fails on Intel-based brya devices running Android Desktop.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsIntel() && IsAndroid());
-
-    // TODO(crbug.com/40238674): Fails on Pixel 10.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec());
-
     constexpr uint32_t kWidth = 16;
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         const kWidth = 16.0;
@@ -782,12 +775,6 @@ TEST_P(DepthStencilSamplingTest, CheckDepthTextureRange) {
 // Test that sampling a depth/stencil texture at components 1, 2, and 3 yield 0, 0, and 1
 // respectively
 TEST_P(DepthStencilSamplingTest, SampleExtraComponents) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
 
     wgpu::TextureFormat format = GetParam().mTextureFormat;
@@ -803,9 +790,6 @@ TEST_P(DepthStencilSamplingTest, SampleExtraComponents) {
 TEST_P(DepthStencilSamplingTest, SampleDepthAndStencilRender) {
     // In compat, you can't have different views of the same texture in the same draw command.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
     wgpu::TextureFormat format = GetParam().mTextureFormat;
 
@@ -942,12 +926,6 @@ TEST_P(DepthSamplingTest, SampleDepthOnly) {
     // textureLoad with texture_depth_xxx is not supported in compat mode.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
-    // TODO(crbug.com/dawn/2552): diagnose this flake on Pixel 6 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     wgpu::TextureFormat format = GetParam().mTextureFormat;
 
     // ULP for Depth16Unorm is 1 / (2 ^ 16 - 1). Similarly Depth24PlusStencil8 could be mapped to a
@@ -976,15 +954,6 @@ TEST_P(DepthSamplingTest, SampleDepthOnly) {
 
 // Test that sampling in a render pipeline with all of the compare functions works.
 TEST_P(DepthSamplingTest, CompareFunctionsRender) {
-    // Initialization via renderPass loadOp doesn't work on Mac Intel.
-    DAWN_SUPPRESS_TEST_IF(IsMetal() && IsIntel());
-
-    // TODO(dawn:1549) Fails on Qualcomm-based Android devices.
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsQualcomm());
-
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
-
     wgpu::TextureFormat format = GetParam().mTextureFormat;
     wgpu::RenderPipeline pipeline = CreateComparisonRenderPipeline();
 
@@ -1008,12 +977,7 @@ class StencilSamplingTest : public DepthStencilSamplingTest {};
 
 // Test that sampling a stencil texture with a render/compute pipeline works
 TEST_P(StencilSamplingTest, SampleStencilOnly) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
-
-    // TODO(crbug.com/473870505): [Capture] support depth/stencil and multi-planar textures.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
     wgpu::TextureFormat format = GetParam().mTextureFormat;
 
@@ -1048,6 +1012,5 @@ DAWN_INSTANTIATE_TEST_P(StencilSamplingTest,
                          OpenGLBackend(), OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
                         std::vector<wgpu::TextureFormat>(utils::kStencilFormats.begin(),
                                                          utils::kStencilFormats.end()));
-
 }  // anonymous namespace
 }  // namespace dawn
