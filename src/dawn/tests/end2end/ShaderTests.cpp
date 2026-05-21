@@ -37,7 +37,6 @@
 
 namespace dawn {
 namespace {
-
 class ShaderTests : public DawnTest {
   protected:
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
@@ -2273,9 +2272,6 @@ TEST_P(ShaderTests, UniformAcrossStagesSameBindingPointCollideMixedStructDef) {
 
 // Test that the `w` component of fragment builtin position behaves correctly.
 TEST_P(ShaderTests, FragmentPositionW) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, R"(
 @vertex fn main(@builtin(vertex_index) vertex_index : u32) -> @builtin(position) vec4f {
   let pos = array(
@@ -2446,7 +2442,6 @@ fn sum(f : ptr<function, i32>,
        w : ptr<workgroup, atomic<i32>>,
        p : ptr<private, i32>,
        u : ptr<uniform, vec4i>) -> vec4i {
-
   return vec4(*f + atomicLoad(w) + *p) + *u;
 }
 
@@ -3566,6 +3561,5 @@ DAWN_INSTANTIATE_TEST(ShaderTests,
                       OpenGLESBackend({"gl_use_array_length_from_uniform"}),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

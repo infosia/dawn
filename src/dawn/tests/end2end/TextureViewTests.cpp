@@ -40,7 +40,6 @@
 
 namespace dawn {
 namespace {
-
 constexpr static unsigned int kRTSize = 64;
 constexpr wgpu::TextureFormat kDefaultFormat = wgpu::TextureFormat::RGBA8Unorm;
 constexpr uint32_t kBytesPerTexel = 4;
@@ -399,9 +398,6 @@ class TextureViewSamplingTest : public TextureViewTestBase {
 
 // Test drawing a rect with a 2D array texture.
 TEST_P(TextureViewSamplingTest, Default2DArrayTexture) {
-    // TODO(cwallez@chromium.org) understand what the issue is
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
-
     constexpr uint32_t kLayers = 3;
     constexpr uint32_t kMipLevels = 1;
     InitTexture(kLayers, kMipLevels);
@@ -431,8 +427,6 @@ TEST_P(TextureViewSamplingTest, Default2DArrayTexture) {
 
 // Test sampling a 2D array with negative signed array index.
 TEST_P(TextureViewSamplingTest, 2DArrayTextureSignedNegativeIndex) {
-    // TODO(cwallez@chromium.org) understand what the issue is
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
     constexpr int32_t kIntentionalInvalidNegativeIndex = -1;
     constexpr uint32_t kLayers = 3;
     for (int32_t array_idx = kIntentionalInvalidNegativeIndex;
@@ -467,8 +461,6 @@ TEST_P(TextureViewSamplingTest, 2DArrayTextureSignedNegativeIndex) {
 
 // Test sampling cube array with negative signed array index.
 TEST_P(TextureViewSamplingTest, CubeArrayTextureSignedNegativeIndex) {
-    // TODO(cwallez@chromium.org) understand what the issue is
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
     // Cube map arrays are unsupported in Compatbility mode.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
     constexpr bool kIsCubeMapArray = true;
@@ -655,8 +647,6 @@ TEST_P(TextureViewSamplingTest, TextureCubeMapOnWholeTexture) {
 // Test sampling from a cube map texture view that covers a sub part of a 2D array texture.
 TEST_P(TextureViewSamplingTest, TextureCubeMapViewOnPartOfTexture) {
     DAWN_TEST_UNSUPPORTED_IF(!HasFlexibleTextureViews());
-    // TODO(dawn:1935): Total layers have to be at least 12 on Intel D3D11 Gen12.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12());
 
     TextureCubeMapTest(10, 2, 6, false);
 }
@@ -664,9 +654,6 @@ TEST_P(TextureViewSamplingTest, TextureCubeMapViewOnPartOfTexture) {
 // Test sampling from a cube map texture view that covers the last layer of a 2D array texture.
 TEST_P(TextureViewSamplingTest, TextureCubeMapViewCoveringLastLayer) {
     DAWN_TEST_UNSUPPORTED_IF(!HasFlexibleTextureViews());
-
-    // TODO(dawn:1812): the test fails with DXGI_ERROR_DEVICE_HUNG on Intel D3D11 driver.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntel());
 
     constexpr uint32_t kTotalLayers = 10;
     constexpr uint32_t kBaseLayer = 4;
@@ -826,9 +813,6 @@ TEST_P(TextureViewRenderingTest, Texture2DViewOnALevelOfRectangular2DTextureAsCo
 
 // Test rendering into a 2D texture view created on a layer of a 2D array texture.
 TEST_P(TextureViewRenderingTest, Texture2DViewOnALayerOf2DArrayTextureAsColorAttachment) {
-    // TODO(dawn:1812): the test fails with DXGI_ERROR_DEVICE_HUNG on Intel D3D11 driver.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntel());
-
     constexpr uint32_t kMipLevels = 1;
     constexpr uint32_t kBaseLevel = 0;
     constexpr uint32_t kLayers = 10;
@@ -871,9 +855,6 @@ TEST_P(TextureViewRenderingTest, Texture2DArrayViewOnALevelOf2DTextureAsColorAtt
 
 // Test rendering into a 1-layer 2D array texture view created on a layer of a 2D array texture.
 TEST_P(TextureViewRenderingTest, Texture2DArrayViewOnALayerOf2DArrayTextureAsColorAttachment) {
-    // TODO(dawn:1812): the test fails with DXGI_ERROR_DEVICE_HUNG on Intel D3D11 driver.
-    DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntel());
-
     constexpr uint32_t kMipLevels = 1;
     constexpr uint32_t kBaseLevel = 0;
     constexpr uint32_t kLayers = 10;
@@ -898,10 +879,6 @@ TEST_P(TextureViewRenderingTest, Texture2DArrayViewOnALayerOf2DArrayTextureAsCol
 TEST_P(TextureViewRenderingTest, SRGBReinterpretationRenderAttachment) {
     // View format reinterpretation is unsupported in Compatibility mode.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(crbug.com/473890413): [Capture] validation error: attachment state of pipeline not
-    // compatible with pass.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
     // Test will render into an SRGB view
     wgpu::TextureViewDescriptor viewDesc = {};
@@ -1008,16 +985,6 @@ TEST_P(TextureViewRenderingTest, SRGBReinterpretationRenderAttachment) {
 TEST_P(TextureViewRenderingTest, SRGBReinterpretionResolveAttachment) {
     // View format reinterpretation is unsupported in Compatibility mode.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(crbug.com/468047552): Fails on Win11/NVIDIA GTX 1660.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
-
-    // TODO(crbug.com/468047552): Fails on Win11/AMD RX 5500 XT.
-    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
-
-    // TODO(crbug.com/473890413): [Capture] validation error: attachment state of pipeline not
-    // compatible with pass.
-    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
     // Test will resolve into an SRGB view
     wgpu::TextureViewDescriptor viewDesc = {};
@@ -1278,6 +1245,5 @@ DAWN_INSTANTIATE_TEST(TextureView1DTest,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
-
 }  // anonymous namespace
 }  // namespace dawn

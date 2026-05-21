@@ -299,6 +299,7 @@ dawn_test("dawn_unittests") {
     "unittests/StringsTests.cpp",
     "unittests/SubresourceStorageTests.cpp",
     "unittests/SystemUtilsTests.cpp",
+    "unittests/TestExpectationsTests.cpp",
     "unittests/ToBackendTests.cpp",
     "unittests/ToggleTests.cpp",
     "unittests/TypedIntegerTests.cpp",
@@ -480,6 +481,7 @@ source_set("test_infra_sources") {
     "MockCallback.h",
     "ParamGenerator.h",
     "StringViewMatchers.h",
+    "TestExpectations.h",
     "ToggleParser.h",
   ]
   public_deps = [
@@ -498,6 +500,7 @@ source_set("test_infra_sources") {
   sources = [
     "AdapterTestConfig.cpp",
     "DawnTest.cpp",
+    "TestExpectations.cpp",
     "ToggleParser.cpp",
   ]
 }
@@ -877,6 +880,12 @@ source_set("white_box_tests_sources") {
   }
 }
 
+copy("copy_expectations_file") {
+  testonly = true
+  sources = [ "dawn_end2end_tests_expectations.txt" ]
+  outputs = [ "$root_build_dir/dawn_end2end_tests_expectations.txt" ]
+}
+
 dawn_test("dawn_end2end_tests") {
   deps = [
     ":end2end_tests_sources",
@@ -884,6 +893,16 @@ dawn_test("dawn_end2end_tests") {
     ":white_box_tests_sources",
     "${dawn_root}/src/utils/chromium_test_compat",
   ]
+
+  data = [ "dawn_end2end_tests_expectations.txt" ]
+
+  # Copy the expectations file next to the test binary so auto-discovery always
+  # finds it, regardless of whether the binary runs from the out dir, a
+  # swarming isolate root, or any other layout.
+  if (!defined(data_deps)) {
+    data_deps = []
+  }
+  data_deps += [ ":copy_expectations_file" ]
 
   sources = []
   libs = []
