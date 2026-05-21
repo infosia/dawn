@@ -88,7 +88,9 @@ tint_fuzzer_test("{{$.Directory.Name}}") {
 {{-   end}}
 {{- end}}
 {{- range $Path := $.GeneratedSourcePaths.List}}
+{{-   if not (HasSuffix $Path ".txt")}}
     "${root_gen_dir}/src/tint/{{$Path}}",
+{{-   end}}
 {{- end}}
   ]
   deps = [

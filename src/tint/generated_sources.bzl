@@ -36,6 +36,7 @@
 tint_generated_sources = [
     "gen/src/tint/cmd/bench/enums_core_bench.cc",
     "gen/src/tint/cmd/bench/enums_wgsl_bench.cc",
+    "gen/src/tint/cmd/fuzz/wgsl/dictionary.txt",
     "gen/src/tint/lang/core/enums.cc",
     "gen/src/tint/lang/core/enums.h",
     "gen/src/tint/lang/core/enums_test.cc",
@@ -75,6 +76,7 @@ tint_generation_dependencies = [
     "//src/tint/lang/wgsl:wgsl.def",
     "//src/tint/cmd/bench:enums_core_bench.cc.tmpl",
     "//src/tint/cmd/bench:enums_wgsl_bench.cc.tmpl",
+    "//src/tint/cmd/fuzz/wgsl:dictionary.txt.tmpl",
     "//src/tint/lang/core:enums.cc.tmpl",
     "//src/tint/lang/core:enums.h.tmpl",
     "//src/tint/lang/core:enums_test.cc.tmpl",

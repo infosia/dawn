@@ -38,6 +38,7 @@ import("tint.gni")
 tint_generated_sources = [
   "${root_gen_dir}/src/tint/cmd/bench/enums_core_bench.cc",
   "${root_gen_dir}/src/tint/cmd/bench/enums_wgsl_bench.cc",
+  "${root_gen_dir}/src/tint/cmd/fuzz/wgsl/dictionary.txt",
   "${root_gen_dir}/src/tint/lang/core/enums.cc",
   "${root_gen_dir}/src/tint/lang/core/enums.h",
   "${root_gen_dir}/src/tint/lang/core/enums_test.cc",
@@ -77,6 +78,7 @@ tint_generation_dependencies = [
   "lang/wgsl/wgsl.def",
   "cmd/bench/enums_core_bench.cc.tmpl",
   "cmd/bench/enums_wgsl_bench.cc.tmpl",
+  "cmd/fuzz/wgsl/dictionary.txt.tmpl",
   "lang/core/enums.cc.tmpl",
   "lang/core/enums.h.tmpl",
   "lang/core/enums_test.cc.tmpl",

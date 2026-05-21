@@ -42,6 +42,7 @@ if(TINT_BUILD_WGSL_READER)
 ################################################################################
 tint_add_target(tint_cmd_fuzz_wgsl_fuzz_cmd fuzz_cmd
   cmd/fuzz/wgsl/main_fuzz.cc
+  "${PROJECT_BINARY_DIR}/gen/src/tint/cmd/fuzz/wgsl/dictionary.txt"
 )
 
 tint_target_add_dependencies(tint_cmd_fuzz_wgsl_fuzz_cmd fuzz_cmd
