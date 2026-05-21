@@ -217,7 +217,8 @@ template("tint_fuzzer_test") {
     is_fuzztest_compatible = false
 
     if (target_name == "wgsl") {
-      dict = "dictionary.txt"
+      dict = "${root_gen_dir}/src/tint/cmd/fuzz/wgsl/dictionary.txt"
+      dict_deps = [ "${tint_src_dir}:generate_sources" ]
       libfuzzer_options = [
         # TODO(crbug.com/tint/2223): Remove this to fuzz unicode?
         "only_ascii=1",

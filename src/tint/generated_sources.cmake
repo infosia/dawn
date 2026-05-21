@@ -36,6 +36,7 @@
 set(TINT_GENERATED_SOURCES
   "${PROJECT_BINARY_DIR}/gen/src/tint/cmd/bench/enums_core_bench.cc"
   "${PROJECT_BINARY_DIR}/gen/src/tint/cmd/bench/enums_wgsl_bench.cc"
+  "${PROJECT_BINARY_DIR}/gen/src/tint/cmd/fuzz/wgsl/dictionary.txt"
   "${PROJECT_BINARY_DIR}/gen/src/tint/lang/core/enums.cc"
   "${PROJECT_BINARY_DIR}/gen/src/tint/lang/core/enums.h"
   "${PROJECT_BINARY_DIR}/gen/src/tint/lang/core/enums_test.cc"
@@ -75,6 +76,7 @@ set(TINT_GENERATED_SOURCE_DEPS
   "lang/wgsl/wgsl.def"
   "cmd/bench/enums_core_bench.cc.tmpl"
   "cmd/bench/enums_wgsl_bench.cc.tmpl"
+  "cmd/fuzz/wgsl/dictionary.txt.tmpl"
   "lang/core/enums.cc.tmpl"
   "lang/core/enums.h.tmpl"
   "lang/core/enums_test.cc.tmpl"
