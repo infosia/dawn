@@ -16,6 +16,24 @@
       "message": "PTAL. This will fail one of the CQ bots but I\u0027ll submit it No-Try once it passes the rest.",
       "revId": "6b49a5e317a0add7fca8a3a63a13b9e037a9f8ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3a9f7b0_a8076782",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-21T05:55:49Z",
+      "side": 1,
+      "message": "It passed! Apparently the CQ bot is fixed, or just flaky.",
+      "parentUuid": "4642c44c_d89a33c3",
+      "revId": "6b49a5e317a0add7fca8a3a63a13b9e037a9f8ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
