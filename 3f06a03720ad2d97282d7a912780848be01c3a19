@@ -68,6 +68,24 @@
       "message": "Just notice this, shall we land this now?",
       "revId": "3f06a03720ad2d97282d7a912780848be01c3a19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c100f88_a0b6d79a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-21T07:49:34Z",
+      "side": 1,
+      "message": "Discussed offline, we can\u0027t land before the killswitch is removed, because otherwise using the killswitch will break other features in Dawn. Let\u0027s revisit in a couple months!",
+      "parentUuid": "e365b2aa_55a8bdfd",
+      "revId": "3f06a03720ad2d97282d7a912780848be01c3a19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
