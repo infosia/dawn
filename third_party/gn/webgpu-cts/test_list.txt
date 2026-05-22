@@ -27214,6 +27214,8 @@ webgpu:api,validation,createTexture:viewFormats:formatFeature="texture-compressi
 webgpu:api,validation,createTexture:viewFormats:formatFeature="texture-compression-astc";viewFormatFeature="texture-compression-bc"
 webgpu:api,validation,createTexture:viewFormats:formatFeature="texture-compression-astc";viewFormatFeature="texture-compression-etc2"
 webgpu:api,validation,createTexture:viewFormats:formatFeature="texture-compression-astc";viewFormatFeature="texture-compression-astc"
+webgpu:api,validation,createTexture:transient_viewFormats:format="rgba8unorm"
+webgpu:api,validation,createTexture:transient_viewFormats:format="rgba8unorm-srgb"
 webgpu:api,validation,createView:format:textureFormatFeature="_undef_";viewFormatFeature="_undef_"
 webgpu:api,validation,createView:format:textureFormatFeature="_undef_";viewFormatFeature="texture-formats-tier1"
 webgpu:api,validation,createView:format:textureFormatFeature="_undef_";viewFormatFeature="depth32float-stencil8"
