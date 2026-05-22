@@ -76,7 +76,7 @@ class array : private ::std::array<Value, Size> {
     constexpr Index size() const { return Index(static_cast<I>(Base::size())); }
 
     constexpr bool operator==(const array<Index, Value, Size>& other) const {
-        return *this == other;
+        return std::equal(begin(), end(), other.begin(), other.end());
     }
 };
 
