@@ -37,7 +37,7 @@
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/Log.h"
-#include "dawn/common/Numeric.h"
+#include "utils/numeric.h"
 
 #ifndef __EMSCRIPTEN__
 #include "dawn/common/ExternalTextureParams.h"
