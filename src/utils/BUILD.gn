@@ -56,7 +56,10 @@ source_set("unittests") {
 
   deps = [ ":gmock_and_gtest" ]
 
-  sources = [ "underlying_type_tests.cpp" ]
+  sources = [
+    "numeric_tests.cpp",
+    "underlying_type_tests.cpp",
+  ]
 }
 
 ###############################################################################
