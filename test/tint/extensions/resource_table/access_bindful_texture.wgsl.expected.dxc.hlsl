@@ -10,7 +10,6 @@ SamplerState tint_resource_table_array_2[] : register(s51, space46);
 ByteAddressBuffer tint_resource_table_metadata : register(t52, space42);
 float4 fs_inner() {
   uint v = uint(int(0));
-  uint texture_kind = 6u;
   bool v_1 = false;
   if ((v < tint_resource_table_metadata.Load(0u))) {
     uint2 v_2 = uint2((tint_resource_table_metadata.Load((4u + (v * 4u)))).xx);
@@ -36,27 +35,27 @@ float4 fs_inner() {
   bool v_7 = false;
   if ((sampler_kind == 40u)) {
     bool v_8 = false;
-    if ((texture_kind == 1u)) {
+    if ((6u == 1u)) {
       v_8 = true;
     } else {
       bool v_9 = false;
-      if ((texture_kind == 6u)) {
+      if ((6u == 6u)) {
         v_9 = true;
       } else {
         bool v_10 = false;
-        if ((texture_kind == 11u)) {
+        if ((6u == 11u)) {
           v_10 = true;
         } else {
           bool v_11 = false;
-          if ((texture_kind == 16u)) {
+          if ((6u == 16u)) {
             v_11 = true;
           } else {
             bool v_12 = false;
-            if ((texture_kind == 21u)) {
+            if ((6u == 21u)) {
               v_12 = true;
             } else {
               bool v_13 = false;
-              if ((texture_kind == 26u)) {
+              if ((6u == 26u)) {
                 v_13 = true;
               } else {
                 v_13 = false;
