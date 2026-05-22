@@ -16,6 +16,24 @@
       "message": "I\u0027m surprised that this is needed, I don\u0027t see any tint headers included from `include/dawn/native` is it new to this stack? Tint is supposed to be an internal detail of Dawn and not exposed through its API.",
       "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1784f9f0_826e8993",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-22T12:08:30Z",
+      "side": 1,
+      "message": "Hmm, the errors came from the whitebox tests which directly include other Dawn native headers:\nhttps://logs.chromium.org/logs/dawn/buildbucket/cr-buildbucket/8681345104391124545/+/u/CMake_build_default_targets/Compile_default_targets/stdout\n\nMaybe we need to change the whitebox tests to avoid directly using Dawn native instead? Is that even possible given the nature of those tests?",
+      "parentUuid": "e6df966c_2fb63b23",
+      "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
