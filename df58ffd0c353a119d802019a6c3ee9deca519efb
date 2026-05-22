@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "df58ffd0c353a119d802019a6c3ee9deca519efb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98ef22e1_8d30975f",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-22T19:05:29Z",
+      "side": 1,
+      "message": "b.Constant() does\u0027t make instruction so doesn\u0027t need to be called inside an insertion helper.\n\n```suggestion\n        return b.Constant(u32(iter-\u003esecond));\n```",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 19
+      },
+      "revId": "df58ffd0c353a119d802019a6c3ee9deca519efb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
