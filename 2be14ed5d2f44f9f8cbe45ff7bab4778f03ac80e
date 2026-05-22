@@ -34,6 +34,24 @@
       "parentUuid": "e6df966c_2fb63b23",
       "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec1a23a5_ae02c827",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-22T12:13:43Z",
+      "side": 1,
+      "message": "Or since it\u0027s just the whitebox tests AFAICT, we could just add a dep on Tint from that test target with a note about why?",
+      "parentUuid": "1784f9f0_826e8993",
+      "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
