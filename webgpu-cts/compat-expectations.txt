@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-05-21 08:22:58AM
+# Last rolled: 2026-05-22 08:34:20AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -3243,6 +3243,12 @@ crbug.com/0000 [ android-pixel-6 android-t ] webgpu:api,validation,capability_ch
 crbug.com/0000 [ android-pixel-6 android-t ] webgpu:api,validation,capability_checks,limits,maxSamplersPerShaderStage:createBindGroupLayout,at_over:limitTest="atDefault";testValueName="overLimit";visibility=4;order="shiftByHalf" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=true;bindingCombination="vertexAndFragmentWithPossibleVertexStageOverflow" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=true;bindingCombination="compute";access="write-only" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,createTexture:transient_viewFormats:format="rgba8unorm" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,validation,createTexture:transient_viewFormats:format="rgba8unorm" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,createTexture:transient_viewFormats:format="rgba8unorm" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,createTexture:transient_viewFormats:format="rgba8unorm-srgb" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,validation,createTexture:transient_viewFormats:format="rgba8unorm-srgb" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,createTexture:transient_viewFormats:format="rgba8unorm-srgb" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,createView:texture_view_usage_of_multiple_usages:usage1=16;usage2=32 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,createView:texture_view_usage_of_multiple_usages:usage1=16;usage2=32 [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,createView:texture_view_usage_of_multiple_usages:usage1=16;usage2=32 [ Failure ]
