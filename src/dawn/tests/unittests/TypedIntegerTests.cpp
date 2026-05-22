@@ -28,8 +28,8 @@
 #include <limits>
 
 #include "dawn/common/TypedInteger.h"
-#include "dawn/common/UnderlyingType.h"
 #include "gtest/gtest.h"
+#include "utils/underlying_type.h"
 
 namespace dawn {
 namespace {

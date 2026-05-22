@@ -32,7 +32,7 @@
 
 #include "absl/container/inlined_vector.h"
 #include "dawn/common/Numeric.h"
-#include "dawn/common/UnderlyingType.h"
+#include "utils/underlying_type.h"
 
 namespace dawn::ityp {
 
@@ -41,7 +41,7 @@ class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
     using I = UnderlyingType<Index>;
     using Base = absl::InlinedVector<Value, StaticCapacity>;
 
-    static_assert(UnsignedUnderlyingType<Index>, "Index type must be unsigned");
+    static_assert(IsUnsignedUnderlyingType<Index>, "Index type must be unsigned");
     static_assert(StaticCapacity <= std::numeric_limits<I>::max());
 
   public:
