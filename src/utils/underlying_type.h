@@ -25,8 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_DAWN_COMMON_UNDERLYINGTYPE_H_
-#define SRC_DAWN_COMMON_UNDERLYINGTYPE_H_
+#ifndef SRC_UTILS_UNDERLYING_TYPE_H_
+#define SRC_UTILS_UNDERLYING_TYPE_H_
 
 #include <concepts>
 #include <type_traits>
@@ -67,8 +67,8 @@ template <typename T>
 using UnderlyingType = typename detail::UnderlyingTypeImpl<T>::type;
 
 template <typename T>
-concept UnsignedUnderlyingType = std::unsigned_integral<UnderlyingType<T>>;
+concept IsUnsignedUnderlyingType = std::unsigned_integral<UnderlyingType<T>>;
 
 }  // namespace dawn
 
-#endif  // SRC_DAWN_COMMON_UNDERLYINGTYPE_H_
+#endif  // SRC_UTILS_UNDERLYING_TYPE_H_

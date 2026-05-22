@@ -33,7 +33,7 @@
 #include <span>
 
 #include "dawn/common/Numeric.h"
-#include "dawn/common/UnderlyingType.h"
+#include "utils/underlying_type.h"
 
 namespace dawn::ityp {
 
@@ -44,7 +44,7 @@ class span : private ::std::span<Value> {
     using I = UnderlyingType<Index>;
     using Base = ::std::span<Value>;
 
-    static_assert(UnsignedUnderlyingType<Index>, "Index type must be unsigned");
+    static_assert(IsUnsignedUnderlyingType<Index>, "Index type must be unsigned");
 
   public:
     constexpr span() = default;
