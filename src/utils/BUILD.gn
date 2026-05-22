@@ -40,7 +40,8 @@ static_library("utils") {
     "compiler.h",
     "numeric.h",
     "placeholder.cc",
-    "underlying_type.h"
+    "platform.h",
+    "underlying_type.h",
   ]
 
   public_configs = [ ":internal_config" ]
