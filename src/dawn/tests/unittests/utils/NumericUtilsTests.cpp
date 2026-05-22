@@ -132,7 +132,7 @@ TEST(NumericTest, IsDoubleValueRepresentableAsF16) {
     ASSERT_TRUE(IsDoubleValueRepresentableAsF16(max));
     ASSERT_FALSE(IsDoubleValueRepresentableAsF16(std::nexttoward(max, kInfinity)));
 
-    double min = - max;
+    double min = -max;
     ASSERT_TRUE(IsDoubleValueRepresentableAsF16(min));
     ASSERT_FALSE(IsDoubleValueRepresentableAsF16(std::nexttoward(min, -kInfinity)));
 }
