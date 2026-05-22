@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6df966c_2fb63b23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-22T08:13:34Z",
+      "side": 1,
+      "message": "I\u0027m surprised that this is needed, I don\u0027t see any tint headers included from `include/dawn/native` is it new to this stack? Tint is supposed to be an internal detail of Dawn and not exposed through its API.",
+      "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
