@@ -29,9 +29,9 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Log.h"
-#include "dawn/common/Numeric.h"
 #include "dawn/wire/BufferConsumer_impl.h"
 #include "dawn/wire/Wire.h"
+#include "utils/numeric.h"
 
 #include <algorithm>
 #include <cstring>

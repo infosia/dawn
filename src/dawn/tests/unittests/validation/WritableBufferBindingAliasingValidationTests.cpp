@@ -30,10 +30,10 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
-#include "dawn/common/Numeric.h"
 #include "dawn/tests/unittests/validation/ValidationTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "utils/numeric.h"
 
 namespace dawn {
 namespace {

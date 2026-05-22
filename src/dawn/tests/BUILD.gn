@@ -396,6 +396,7 @@ dawn_test("dawn_unittests") {
     "unittests/native/ObjectContentHasherTests.cpp",
     "unittests/native/SkipValidationTests.cpp",
     "unittests/native/StreamTests.cpp",
+    "unittests/utils/NumericUtilsTests.cpp",
     "unittests/utils/UnderlyingTypeTests.cpp",
     "unittests/validation/BindGroupValidationTests.cpp",
     "unittests/validation/BufferValidationTests.cpp",
