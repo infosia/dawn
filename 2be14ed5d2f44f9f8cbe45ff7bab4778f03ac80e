@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d6274f3e_3c887cae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-22T18:09:53Z",
+      "side": 1,
+      "message": "I believe the latest patchset does what you suggested, PTAL.",
+      "parentUuid": "5ea024d4_767212df",
+      "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "298392a2_2a98b77b",
         "filename": "src/dawn/native/CMakeLists.txt",
         "patchSetId": 10
