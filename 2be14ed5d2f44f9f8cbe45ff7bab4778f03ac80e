@@ -52,6 +52,41 @@
       "parentUuid": "1784f9f0_826e8993",
       "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ea024d4_767212df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-22T13:08:04Z",
+      "side": 1,
+      "message": "That makes sense, whitebox tests are specifically the tests that call dawn::native internals directly. What we could do [1]",
+      "parentUuid": "ec1a23a5_ae02c827",
+      "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "298392a2_2a98b77b",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-22T13:08:04Z",
+      "side": 1,
+      "message": "[1] put these in the public dependencies as they will be needed for `dawn_native` or `libwebgpu_dawn`. But then make sure that `dawn_native_objects` is a private dependency of them.",
+      "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
