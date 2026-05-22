@@ -93,6 +93,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae28065c_b62024e8",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-05-22T08:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1a3e6e6_04d84802",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 1
+      },
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97fb7355_ae81b4c6",
@@ -106,6 +130,24 @@
       "writtenOn": "2026-05-20T12:21:02Z",
       "side": 1,
       "message": "ditto",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7d3ce40_b1d6cef6",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-05-22T08:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97fb7355_ae81b4c6",
       "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -127,6 +169,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c470f48a_da1fe7c5",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-05-22T08:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03d3d2e1_95a6ec9a",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13145fd3_cfdadba6",
@@ -140,6 +200,24 @@
       "writtenOn": "2026-05-20T12:21:02Z",
       "side": 1,
       "message": "u-nit: that comment seems more confusing than helpful?",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d8217a6_b212d6a8",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-05-22T08:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13145fd3_cfdadba6",
       "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -179,6 +257,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87c20b5d_9da2c053",
+        "filename": "src/dawn/native/vulkan/ImmediateConstantsLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-05-22T08:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df25b3fb_800ef125",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc330c20_bab93ab1",
@@ -192,6 +288,24 @@
       "writtenOn": "2026-05-20T12:21:02Z",
       "side": 1,
       "message": "nit: comments can be wrapped to 100 characters per line. Ditto in other places.",
+      "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f97f3699_15a9a060",
+        "filename": "src/dawn/native/vulkan/ImmediateConstantsLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-05-22T08:52:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc330c20_bab93ab1",
       "revId": "a7c67768ac8240c972b76b8dd47e4f8efa5ec4f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
