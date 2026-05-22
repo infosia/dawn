@@ -30,6 +30,7 @@ set(private_headers
     "force_crash.h"
     "numeric.h"
     "platform.h"
+    "span.h"
     "underlying_type.h"
 )
 
