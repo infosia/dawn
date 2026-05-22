@@ -95,6 +95,7 @@ static_library("utils") {
     "numeric.h",
     "placeholder.cc",
     "platform.h",
+    "span.h",
     "typed_integer.h",
     "underlying_type.h",
   ]
@@ -123,11 +124,13 @@ source_set("unittests") {
     ":gmock_and_gtest",
     ":nocompile_sources",
     ":utils",
+    "${dawn_root}/src/dawn/partition_alloc:raw_ptr",
   ]
 
   sources = [
     "assert_test.cc",
     "numeric_test.cc",
+    "span_tests.cc",
     "typed_integer_tests.cc",
     "underlying_type_tests.cc",
   ]
