@@ -50,6 +50,33 @@ inline constexpr uint32_t u32_alignof() {
     return uint32_t(alignof(T));
 }
 
+template <std::integral Dst, std::integral Src>
+inline constexpr bool IsValueInRangeForNumericType(Src src) {
+    if constexpr (std::is_unsigned_v<Src>) {
+        // If Src is unsigned we only need one check.
+
+        // Construct the max Dst value (as unsigned if needed) to compare against.
+        constexpr auto kDstMaxAsUnsigned =
+            static_cast<std::make_unsigned_t<Dst>>(std::numeric_limits<Dst>::max());
+
+        // Comparison happens in the wider of the two unsigned types.
+        return src <= kDstMaxAsUnsigned;
+    } else if constexpr (std::is_signed_v<Src> && std::is_unsigned_v<Dst>) {
+        // When casting from signed to unsigned, we must take into account the fact that there
+        // may be no single type in which the bounds can be checked.
+        if (src < 0) {
+            return false;
+        }
+        auto srcAsUnsigned = static_cast<std::make_unsigned_t<Src>>(src);
+        // Comparison happens in the wider of the two unsigned types.
+        return srcAsUnsigned <= std::numeric_limits<Dst>::max();
+    } else {
+        // Both are signed.
+        // Comparison happens in the wider of the two signed types.
+        return std::numeric_limits<Dst>::min() <= src && src <= std::numeric_limits<Dst>::max();
+    }
+}
+
 }  // namespace detail
 
 template <typename T>
@@ -62,15 +89,17 @@ inline constexpr uint32_t u32_alignof = detail::u32_alignof<T>();
 // by ityp: integers, TypedIntegers, and enum classes). This is only defined for unsigned types
 // because that is all that is needed at the time of writing, however eventually we will want to use
 // this more widely, and we'll need to upgrade it (and the tests) to allow signed types.
-template <typename Dst, typename Src>
-    requires UnsignedUnderlyingType<Src> && UnsignedUnderlyingType<Dst>
+template <HasUnderlyingType Dst, HasUnderlyingType Src>
 constexpr inline Dst checked_cast(const Src& value) {
     using ISrc = UnderlyingType<Src>;
     using IDst = UnderlyingType<Dst>;
     // The compiler seems to be able to optimize away this CHECK, for Src/Dst pairs that can never
     // fail (verified in Compiler Explorer with plain integers and enum classes).
+    //
+    // Note, we could disallow checked_cast for casts that are always safe, guiding authors toward
+    // statically-safe casts. However when used with things like size_t, this can differ by bitness.
     ISrc valueISrc = static_cast<ISrc>(value);
-    DAWN_CHECK(valueISrc <= std::numeric_limits<IDst>::max());
+    DAWN_CHECK(detail::IsValueInRangeForNumericType<IDst>(valueISrc));
     return Dst{static_cast<IDst>(valueISrc)};
 }
 
