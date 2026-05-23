@@ -38,7 +38,7 @@
 namespace dawn::native::d3d12 {
 
 ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDevice) {
-    D3D12DeviceInfo info = {};
+    D3D12DeviceInfo info;
 
     // Newer builds replace D3D_FEATURE_DATA_ARCHITECTURE with
     // D3D_FEATURE_DATA_ARCHITECTURE1. However, D3D_FEATURE_DATA_ARCHITECTURE can be used
