@@ -45,11 +45,11 @@ TEST_F(TypedIntegerTest, ConstructionAndCast) {
     Signed svalue(2);
     EXPECT_EQ(static_cast<int32_t>(svalue), 2);
 
-    Unsigned uvalue(7);
+    Unsigned uvalue(7u);
     EXPECT_EQ(static_cast<uint32_t>(uvalue), 7u);
 
     static_assert(static_cast<int32_t>(Signed(3)) == 3);
-    static_assert(static_cast<uint32_t>(Unsigned(28)) == 28);
+    static_assert(static_cast<uint32_t>(Unsigned(28u)) == 28);
 }
 
 // Test that typed integers can be explicitly cast to other integral types
@@ -104,27 +104,27 @@ TEST_F(TypedIntegerTest, CastToOther) {
 
 // Test typed integer comparison operators
 TEST_F(TypedIntegerTest, Comparison) {
-    Unsigned value(8);
+    Unsigned value(8u);
 
     // Truthy usages of comparison operators
-    EXPECT_TRUE(value < Unsigned(9));
-    EXPECT_TRUE(value <= Unsigned(9));
-    EXPECT_TRUE(value <= Unsigned(8));
-    EXPECT_TRUE(value == Unsigned(8));
-    EXPECT_TRUE(value >= Unsigned(8));
-    EXPECT_TRUE(value >= Unsigned(7));
-    EXPECT_TRUE(value > Unsigned(7));
-    EXPECT_TRUE(value != Unsigned(7));
+    EXPECT_TRUE(value < Unsigned(9u));
+    EXPECT_TRUE(value <= Unsigned(9u));
+    EXPECT_TRUE(value <= Unsigned(8u));
+    EXPECT_TRUE(value == Unsigned(8u));
+    EXPECT_TRUE(value >= Unsigned(8u));
+    EXPECT_TRUE(value >= Unsigned(7u));
+    EXPECT_TRUE(value > Unsigned(7u));
+    EXPECT_TRUE(value != Unsigned(7u));
 
     // Falsy usages of comparison operators
-    EXPECT_FALSE(value >= Unsigned(9));
-    EXPECT_FALSE(value > Unsigned(9));
-    EXPECT_FALSE(value > Unsigned(8));
-    EXPECT_FALSE(value != Unsigned(8));
-    EXPECT_FALSE(value < Unsigned(8));
-    EXPECT_FALSE(value < Unsigned(7));
-    EXPECT_FALSE(value <= Unsigned(7));
-    EXPECT_FALSE(value == Unsigned(7));
+    EXPECT_FALSE(value >= Unsigned(9u));
+    EXPECT_FALSE(value > Unsigned(9u));
+    EXPECT_FALSE(value > Unsigned(8u));
+    EXPECT_FALSE(value != Unsigned(8u));
+    EXPECT_FALSE(value < Unsigned(8u));
+    EXPECT_FALSE(value < Unsigned(7u));
+    EXPECT_FALSE(value <= Unsigned(7u));
+    EXPECT_FALSE(value == Unsigned(7u));
 }
 
 TEST_F(TypedIntegerTest, Arithmetic) {
@@ -178,22 +178,22 @@ TEST_F(TypedIntegerTest, Arithmetic) {
 
     // Unsigned addition
     {
-        Unsigned a(9);
-        Unsigned b(3);
+        Unsigned a(9u);
+        Unsigned b(3u);
         Unsigned c = a + b;
-        EXPECT_EQ(a, Unsigned(9));
-        EXPECT_EQ(b, Unsigned(3));
-        EXPECT_EQ(c, Unsigned(12));
+        EXPECT_EQ(a, Unsigned(9u));
+        EXPECT_EQ(b, Unsigned(3u));
+        EXPECT_EQ(c, Unsigned(12u));
     }
 
     // Unsigned subtraction
     {
-        Unsigned a(9);
-        Unsigned b(2);
+        Unsigned a(9u);
+        Unsigned b(2u);
         Unsigned c = a - b;
-        EXPECT_EQ(a, Unsigned(9));
-        EXPECT_EQ(b, Unsigned(2));
-        EXPECT_EQ(c, Unsigned(7));
+        EXPECT_EQ(a, Unsigned(9u));
+        EXPECT_EQ(b, Unsigned(2u));
+        EXPECT_EQ(c, Unsigned(7u));
     }
 
     // Negation
@@ -216,12 +216,12 @@ TEST_F(TypedIntegerTest, Arithmetic) {
 
     // Unsigned multiplication
     {
-        Unsigned a(9);
-        Unsigned b(3);
+        Unsigned a(9u);
+        Unsigned b(3u);
         Unsigned c = a * b;
-        EXPECT_EQ(a, Unsigned(9));
-        EXPECT_EQ(b, Unsigned(3));
-        EXPECT_EQ(c, Unsigned(27));
+        EXPECT_EQ(a, Unsigned(9u));
+        EXPECT_EQ(b, Unsigned(3u));
+        EXPECT_EQ(c, Unsigned(27u));
     }
 
     // Signed division
@@ -236,12 +236,12 @@ TEST_F(TypedIntegerTest, Arithmetic) {
 
     // Unsigned division
     {
-        Unsigned a(12);
-        Unsigned b(3);
+        Unsigned a(12u);
+        Unsigned b(3u);
         Unsigned c = a / b;
-        EXPECT_EQ(a, Unsigned(12));
-        EXPECT_EQ(b, Unsigned(3));
-        EXPECT_EQ(c, Unsigned(4));
+        EXPECT_EQ(a, Unsigned(12u));
+        EXPECT_EQ(b, Unsigned(3u));
+        EXPECT_EQ(c, Unsigned(4u));
     }
 
     // Signed modulo
@@ -256,12 +256,12 @@ TEST_F(TypedIntegerTest, Arithmetic) {
 
     // Unsigned modulo
     {
-        Unsigned a(12);
-        Unsigned b(5);
+        Unsigned a(12u);
+        Unsigned b(5u);
         Unsigned c = a % b;
-        EXPECT_EQ(a, Unsigned(12));
-        EXPECT_EQ(b, Unsigned(5));
-        EXPECT_EQ(c, Unsigned(2));
+        EXPECT_EQ(a, Unsigned(12u));
+        EXPECT_EQ(b, Unsigned(5u));
+        EXPECT_EQ(c, Unsigned(2u));
     }
 }
 
@@ -286,20 +286,20 @@ TEST_F(TypedIntegerTest, ArithmeticAssignment) {
 
     // Unsigned addition assignment
     {
-        Unsigned a(9);
-        Unsigned b(3);
+        Unsigned a(9u);
+        Unsigned b(3u);
         a += b;
-        EXPECT_EQ(a, Unsigned(12));
-        EXPECT_EQ(b, Unsigned(3));
+        EXPECT_EQ(a, Unsigned(12u));
+        EXPECT_EQ(b, Unsigned(3u));
     }
 
     // Unsigned subtraction assignment
     {
-        Unsigned a(9);
-        Unsigned b(2);
+        Unsigned a(9u);
+        Unsigned b(2u);
         a -= b;
-        EXPECT_EQ(a, Unsigned(7));
-        EXPECT_EQ(b, Unsigned(2));
+        EXPECT_EQ(a, Unsigned(7u));
+        EXPECT_EQ(b, Unsigned(2u));
     }
 
     // Signed multiplication assignment
@@ -313,11 +313,11 @@ TEST_F(TypedIntegerTest, ArithmeticAssignment) {
 
     // Unsigned multiplication assignment
     {
-        Unsigned a(9);
-        Unsigned b(3);
+        Unsigned a(9u);
+        Unsigned b(3u);
         a *= b;
-        EXPECT_EQ(a, Unsigned(27));
-        EXPECT_EQ(b, Unsigned(3));
+        EXPECT_EQ(a, Unsigned(27u));
+        EXPECT_EQ(b, Unsigned(3u));
     }
 
     // Signed division assignment
@@ -331,11 +331,11 @@ TEST_F(TypedIntegerTest, ArithmeticAssignment) {
 
     // Unsigned division assignment
     {
-        Unsigned a(12);
-        Unsigned b(3);
+        Unsigned a(12u);
+        Unsigned b(3u);
         a /= b;
-        EXPECT_EQ(a, Unsigned(4));
-        EXPECT_EQ(b, Unsigned(3));
+        EXPECT_EQ(a, Unsigned(4u));
+        EXPECT_EQ(b, Unsigned(3u));
     }
 
     // Signed modulo assignment
@@ -349,11 +349,11 @@ TEST_F(TypedIntegerTest, ArithmeticAssignment) {
 
     // Unsigned modulo assignment
     {
-        Unsigned a(12);
-        Unsigned b(5);
+        Unsigned a(12u);
+        Unsigned b(5u);
         a %= b;
-        EXPECT_EQ(a, Unsigned(2));
-        EXPECT_EQ(b, Unsigned(5));
+        EXPECT_EQ(a, Unsigned(2u));
+        EXPECT_EQ(b, Unsigned(5u));
     }
 }
 
@@ -362,6 +362,11 @@ TEST_F(TypedIntegerTest, NumericLimits) {
     EXPECT_EQ(std::numeric_limits<Unsigned>::min(), Unsigned(std::numeric_limits<uint32_t>::min()));
     EXPECT_EQ(std::numeric_limits<Signed>::max(), Signed(std::numeric_limits<int32_t>::max()));
     EXPECT_EQ(std::numeric_limits<Signed>::min(), Signed(std::numeric_limits<int32_t>::min()));
+}
+
+TEST_F(TypedIntegerTest, NotIntegral) {
+    static_assert(!std::is_integral_v<Unsigned>);
+    static_assert(!std::is_integral_v<Signed>);
 }
 
 TEST_F(TypedIntegerTest, UnderlyingType) {
@@ -429,9 +434,9 @@ TEST_F(TypedIntegerDeathTest, DecrementSignedUnderflow) {
 TEST_F(TypedIntegerDeathTest, UnsignedAdditionOverflow) {
     Unsigned value(std::numeric_limits<uint32_t>::max() - 1);
 
-    value + Unsigned(1);                     // Doesn't overflow.
-    EXPECT_DEATH(value + Unsigned(2), "");   // Overflows.
-    EXPECT_DEATH(value += Unsigned(2), "");  // Overflows.
+    value + Unsigned(1u);                     // Doesn't overflow.
+    EXPECT_DEATH(value + Unsigned(2u), "");   // Overflows.
+    EXPECT_DEATH(value += Unsigned(2u), "");  // Overflows.
 }
 
 TEST_F(TypedIntegerDeathTest, SignedAdditionOverflow) {
@@ -451,11 +456,11 @@ TEST_F(TypedIntegerDeathTest, SignedAdditionUnderflow) {
 }
 
 TEST_F(TypedIntegerDeathTest, UnsignedSubtractionUnderflow) {
-    Unsigned value(1);
+    Unsigned value(1u);
 
-    value - Unsigned(1);                     // Doesn't underflow.
-    EXPECT_DEATH(value - Unsigned(2), "");   // Underflows.
-    EXPECT_DEATH(value -= Unsigned(2), "");  // Underflows.
+    value - Unsigned(1u);                     // Doesn't underflow.
+    EXPECT_DEATH(value - Unsigned(2u), "");   // Underflows.
+    EXPECT_DEATH(value -= Unsigned(2u), "");  // Underflows.
 }
 
 TEST_F(TypedIntegerDeathTest, SignedSubtractionOverflow) {
@@ -477,9 +482,9 @@ TEST_F(TypedIntegerDeathTest, SignedSubtractionUnderflow) {
 TEST_F(TypedIntegerDeathTest, UnsignedMultiplicationOverflow) {
     Unsigned value(std::numeric_limits<uint32_t>::max() / 2);
 
-    value* Unsigned(2);                      // Doesn't overflow.
-    EXPECT_DEATH(value * Unsigned(3), "");   // Overflows.
-    EXPECT_DEATH(value *= Unsigned(3), "");  // Overflows.
+    value* Unsigned(2u);                      // Doesn't overflow.
+    EXPECT_DEATH(value * Unsigned(3u), "");   // Overflows.
+    EXPECT_DEATH(value *= Unsigned(3u), "");  // Overflows.
 }
 
 TEST_F(TypedIntegerDeathTest, SignedMultiplicationOverflow) {
@@ -499,11 +504,11 @@ TEST_F(TypedIntegerDeathTest, SignedMultiplicationUnderflow) {
 }
 
 TEST_F(TypedIntegerDeathTest, UnsignedDivisionByZero) {
-    Unsigned value(1);
+    Unsigned value(1u);
 
-    value / Unsigned(1);                     // Doesn't underflow.
-    EXPECT_DEATH(value / Unsigned(0), "");   // DBZ.
-    EXPECT_DEATH(value /= Unsigned(0), "");  // DBZ.
+    value / Unsigned(1u);                     // Doesn't underflow.
+    EXPECT_DEATH(value / Unsigned(0u), "");   // DBZ.
+    EXPECT_DEATH(value /= Unsigned(0u), "");  // DBZ.
 }
 
 TEST_F(TypedIntegerDeathTest, SignedDivisionByZero) {
@@ -526,11 +531,11 @@ TEST_F(TypedIntegerDeathTest, SignedDivisionOverflow) {
 }
 
 TEST_F(TypedIntegerDeathTest, UnsignedModuloByZero) {
-    Unsigned value(1);
+    Unsigned value(1u);
 
-    value % Unsigned(1);                     // Doesn't underflow.
-    EXPECT_DEATH(value % Unsigned(0), "");   // DBZ.
-    EXPECT_DEATH(value %= Unsigned(0), "");  // DBZ.
+    value % Unsigned(1u);                     // Doesn't underflow.
+    EXPECT_DEATH(value % Unsigned(0u), "");   // DBZ.
+    EXPECT_DEATH(value %= Unsigned(0u), "");  // DBZ.
 }
 
 TEST_F(TypedIntegerDeathTest, SignedModuloByZero) {
