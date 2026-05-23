@@ -16,6 +16,23 @@
       "message": "Comment removed by: dan sinclair; Reason: spam",
       "revId": "40c8a225d9a78a8ca8140977ad665863671e6d89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a12e7f0_e6cb1f75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4807745
+      },
+      "writtenOn": "2026-05-23T06:49:06Z",
+      "side": 1,
+      "message": ".",
+      "revId": "40c8a225d9a78a8ca8140977ad665863671e6d89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
