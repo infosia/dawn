@@ -95,24 +95,24 @@ class alignas(T) TypedIntegerImpl {
     }
 
     // Construction from non-narrowing integral types.
-    // TODO(425911085): Consider allowing construction from narrowing types, but assert
-    // that it doesn't truncate.
-    template <typename I>
-        requires std::integral<I> && std::unsigned_integral<T>
-    explicit constexpr TypedIntegerImpl(I rhs) : mValue(static_cast<T>(rhs)) {
-        DAWN_ASSERT(rhs >= 0);
-        static_assert(static_cast<uint64_t>(std::numeric_limits<I>::max()) <=
-                      static_cast<uint64_t>(std::numeric_limits<T>::max()));
+    // TODO(crbug.com/515794394): This currently allows unsafe signed->unsigned casts.
+    // Make that invalid and require the use of checked_cast instead.
+    template <typename Src>
+        requires std::integral<Src> && std::unsigned_integral<T> &&
+                 (static_cast<uintmax_t>(std::numeric_limits<Src>::max()) <=
+                  static_cast<uintmax_t>(std::numeric_limits<T>::max()))
+    explicit constexpr TypedIntegerImpl(Src src) : mValue(static_cast<T>(src)) {
+        DAWN_ASSERT(src >= 0);
     }
-    template <typename I>
-        requires std::integral<I> && std::signed_integral<T>
-    explicit constexpr TypedIntegerImpl(I rhs) : mValue(static_cast<T>(rhs)) {
-        static_assert(std::numeric_limits<I>::max() <= std::numeric_limits<T>::max());
-        static_assert(std::numeric_limits<I>::min() >= std::numeric_limits<T>::min());
-    }
+    template <typename Src>
+        requires std::integral<Src> && std::signed_integral<T> &&
+                 (std::numeric_limits<Src>::max() <= std::numeric_limits<T>::max()) &&
+                 (std::numeric_limits<Src>::min() >= std::numeric_limits<T>::min())
+    explicit constexpr TypedIntegerImpl(Src src) : mValue(static_cast<T>(src)) {}
 
     // Allow explicit casts to any integral type. If the type is smaller than T,
     // we assert that no truncation occurs.
+    // TODO(crbug.com/515794394): Make that invalid and require the use of checked_cast instead.
     template <typename I>
         requires std::integral<I>
     explicit constexpr operator I() const {
