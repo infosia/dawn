@@ -29,6 +29,7 @@
 #define SRC_DAWN_COMMON_ASSERT_H_
 
 #include <cstdlib>
+#include <type_traits>
 
 #include "dawn/common/Compiler.h"
 

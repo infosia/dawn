@@ -32,34 +32,39 @@ namespace dawn {
 using MyI32 = TypedInteger<struct MyI32T, int32_t>;
 using MyU32 = TypedInteger<struct MyU32T, uint32_t>;
 
-using MyOtherI32 = TypedInteger<struct MyOtherI32T, int32_t>;
+static uint8_t v = 3;
 
 void TestConstruction() {
+
     // Cannot be converted using operator=
-    { [[maybe_unused]] MyI32 x = MyI32{3}; }
-    { [[maybe_unused]] MyI32 x = int32_t{3}; }  // expected-error {{no viable conversion from}}
+    { [[maybe_unused]] MyI32 x = MyI32{v}; }
+    { [[maybe_unused]] MyI32 x = int32_t{v}; }  // expected-error {{no viable conversion from}}
 
     // Cannot be constructed from a distinct but otherwise identical type
-    (void) MyI32{MyI32{3}};
-    (void) MyI32{MyOtherI32{3}};  // expected-error {{no matching constructor for initialization of}}
-
-    // Cannot construct from wider types
-    (void) MyI32{int32_t{3}};
-    (void) MyI32{int64_t{3}};   // expected-error {{no matching constructor for initialization of}}
-    (void) MyI32{uint32_t{3}};  // expected-error {{no matching constructor for initialization of}}
-    (void) MyU32{uint64_t{3}};  // expected-error {{no matching constructor for initialization of}}
-    // TODO(crbug.com/515794394): Can currently construct from same-size different-sign types, should disallow
-    (void) MyU32{int16_t{3}};
-    (void) MyU32{int32_t{3}};
+    using MyOtherI32 = TypedInteger<struct MyOtherI32T, int32_t>;
+    (void) MyI32{MyI32{v}};
+    (void) MyI32{MyOtherI32{v}};  // expected-error {{no matching constructor for initialization of}}
 }
 
-void TestCastToPrimitive() {
-    // TODO(crbug.com/515794394): Can currently cast to any primitive, should allow only safe casts
-    // (or remove the cast and make it a method - possible if we do crbug.com/503420432).
-    (void) int32_t{MyI32{3}};
-    (void) int16_t{MyI32{3}};
-    (void) uint32_t{MyI32{3}};
-    (void) int32_t{MyU32{3}};
+void TestNarrowingConstructionFromPrimitive() {
+    // Cannot convert to narower types
+    (void) MyI32{int32_t{v}};
+    (void) MyI32{int64_t{v}};   // expected-error {{is not a constant expression}}
+    (void) MyI32{uint32_t{v}};  // expected-error {{is not a constant expression}}
+    (void) MyU32{uint64_t{v}};  // expected-error {{is not a constant expression}}
+    (void) MyU32{int16_t{v}};   // expected-error {{is not a constant expression}}
+    (void) MyU32{int32_t{v}};   // expected-error {{is not a constant expression}}
+}
+
+void TestNarrowingCastToPrimitive() {
+    MyI32 i{3};
+    MyU32 u{3};
+
+    // Cannot convert to narower types
+    (void) int32_t{i};
+    (void) int16_t{i};   // expected-error {{is not a constant expression}}
+    (void) uint32_t{i};  // expected-error {{is not a constant expression}}
+    (void) int32_t{u};   // expected-error {{is not a constant expression}}
 }
 
 }
