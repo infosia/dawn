@@ -49,22 +49,22 @@ void TestConstruction() {
 void TestNarrowingConstructionFromPrimitive() {
     // Cannot convert to narower types
     (void) MyI32{int32_t{v}};
-    (void) MyI32{int64_t{v}};   // expected-error {{is not a constant expression}}
-    (void) MyI32{uint32_t{v}};  // expected-error {{is not a constant expression}}
-    (void) MyU32{uint64_t{v}};  // expected-error {{is not a constant expression}}
-    (void) MyU32{int16_t{v}};   // expected-error {{is not a constant expression}}
-    (void) MyU32{int32_t{v}};   // expected-error {{is not a constant expression}}
+    (void) MyI32{int64_t{v}};   // expected-error {{no matching constructor for initialization of}}
+    (void) MyI32{uint32_t{v}};  // expected-error {{no matching constructor for initialization of}}
+    (void) MyU32{uint64_t{v}};  // expected-error {{no matching constructor for initialization of}}
+    (void) MyU32{int16_t{v}};   // expected-error {{no matching constructor for initialization of}}
+    (void) MyU32{int32_t{v}};   // expected-error {{no matching constructor for initialization of}}
 }
 
 void TestNarrowingCastToPrimitive() {
     MyI32 i{3};
-    MyU32 u{3};
+    MyU32 u{3u};
 
     // Cannot convert to narower types
     (void) int32_t{i};
-    (void) int16_t{i};   // expected-error {{is not a constant expression}}
-    (void) uint32_t{i};  // expected-error {{is not a constant expression}}
-    (void) int32_t{u};   // expected-error {{is not a constant expression}}
+    (void) int16_t{i};   // expected-error {{no viable conversion from}}
+    (void) uint32_t{i};  // expected-error {{no viable conversion from}}
+    (void) int32_t{u};   // expected-error {{no viable conversion from}}
 }
 
 }
