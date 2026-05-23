@@ -28,6 +28,7 @@
 import("../../../scripts/dawn_overrides_with_defaults.gni")
 import("../../../scripts/tint_overrides_with_defaults.gni")
 
+import("//build/nocompile.gni")
 import("//testing/test.gni")
 import("${dawn_root}/generator/dawn_generator.gni")
 import("${dawn_root}/scripts/dawn_features.gni")
@@ -87,7 +88,8 @@ if (!build_with_chromium) {
     ]
     if (dawn_standalone && is_clang) {
       cflags = [
-        # gmock emits deprecated-copy-dtor warnings when using ::testing::Combine
+        # gmock emits deprecated-copy-dtor warnings when using
+        # ::testing::Combine
         "-Wno-deprecated-copy-dtor",
       ]
     }
@@ -287,6 +289,19 @@ source_set("native_mocks_sources") {
   ]
 }
 
+# Build these tests only when we know we are using Clang at the pinned version.
+if (dawn_standalone && is_clang) {
+  nocompile_source_set("nocompile_sources") {
+    sources = [
+      "unittests/nocompile/Basic.nc",
+      "unittests/nocompile/Numeric.nc",
+      "unittests/nocompile/TypedInteger.nc",
+    ]
+    deps = [ "${dawn_root}/src/dawn/common" ]
+    configs = [ "${dawn_root}/src/dawn/common:internal_config" ]
+  }
+}
+
 dawn_test("dawn_unittests") {
   deps = [
     ":gmock_and_gtest",
@@ -308,6 +323,11 @@ dawn_test("dawn_unittests") {
     "${dawn_root}/src/dawn/wire:static",
     "${dawn_root}/src/utils/chromium_test_compat",
   ]
+  if (dawn_standalone && is_clang) {
+    # Also do nocompile tests, which happen during build. It produces empty
+    # object files to "link".
+    deps += [ ":nocompile_sources" ]
+  }
 
   # Add internal dawn native config for internal unittests.
   configs = [ "${dawn_root}/src/dawn/native:internal" ]
@@ -831,7 +851,8 @@ source_set("white_box_tests_sources") {
     "${dawn_root}/src/dawn/common",
     "${dawn_root}/src/dawn/partition_alloc:raw_ptr",
 
-    # Statically linked and with sources because the end2end white_box tests use Dawn internals.
+    # Statically linked and with sources because the end2end white_box tests use
+    # Dawn internals.
     "${dawn_root}/src/dawn/native:sources",
     "${dawn_root}/src/dawn/native:static",
     "${dawn_root}/src/dawn/utils:system_utils",
