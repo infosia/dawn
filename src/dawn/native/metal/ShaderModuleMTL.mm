@@ -219,6 +219,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     SingleShaderStage stage,
     const PipelineLayout* layout,
     uint32_t sampleMask,
+    bool applySampleMaskPolyfill,
     const RenderPipeline* renderPipeline,
     const BindingInfoArray& moduleBindingInfo,
     bool useStrictMath,
@@ -320,6 +321,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.tintOptions.disable_integer_range_analysis =
         !device->IsToggleEnabled(Toggle::EnableIntegerRangeAnalysisInRobustness);
 
+    req.tintOptions.polyfill_sample_mask = applySampleMaskPolyfill;
     req.tintOptions.fixed_sample_mask = sampleMask;
     req.tintOptions.emit_vertex_point_size =
         stage == SingleShaderStage::Vertex &&
@@ -465,6 +467,7 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
                                         const ImmediateConstantMask& pipelineImmediateMask,
                                         ShaderModule::MetalFunctionData* out,
                                         uint32_t sampleMask,
+                                        bool applySampleMaskPolyfill,
                                         const RenderPipeline* renderPipeline) {
     TRACE_EVENT1(GetDevice()->GetPlatform(), General, "metal::ShaderModule::CreateFunction",
                  "label", utils::GetLabelForTrace(GetLabel()));
@@ -482,7 +485,8 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     CacheResult<MslCompilation> mslCompilation;
     DAWN_TRY_ASSIGN(mslCompilation,
                     TranslateToMSL(GetDevice(), programmableStage, stage, layout, sampleMask,
-                                   renderPipeline, GetEntryPoint(entryPointName).bindings,
+                                   applySampleMaskPolyfill, renderPipeline,
+                                   GetEntryPoint(entryPointName).bindings,
                                    GetStrictMath().value_or(false), pipelineImmediateMask));
 
     out->needsStorageBufferLength = mslCompilation->needsStorageBufferLength;
