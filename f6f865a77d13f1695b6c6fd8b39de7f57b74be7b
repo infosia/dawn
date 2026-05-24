@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f3968b1_664dfd45",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-24T15:20:57Z",
+      "side": 1,
+      "message": "I am assuming we need to mask with current sample mask.\nThis assumption is based on the idea that we even get a shader invocation for a sample  (which is a bit strange since the sample is disabled)",
+      "range": {
+        "startLine": 653,
+        "startChar": 12,
+        "endLine": 653,
+        "endChar": 48
+      },
+      "revId": "f6f865a77d13f1695b6c6fd8b39de7f57b74be7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
