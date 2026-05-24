@@ -71,6 +71,8 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     std::optional<uint32_t> subgroup_size_index;
     std::optional<uint32_t> num_subgroups_index;
     std::optional<uint32_t> num_workgroups_index;
+    std::optional<uint32_t> sample_mask_index;
+    std::optional<uint32_t> sample_index_index;
     std::optional<uint32_t> local_invocation_index_index;
     std::optional<uint32_t> first_clip_distance_index;
     std::optional<uint32_t> second_clip_distance_index;
@@ -262,6 +264,11 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             RequireBuiltinInput(core::BuiltinValue::kGlobalInvocationId, ty.vec3u(),
                                 "global_invocation_id");
         }
+        if (config.polyfill_sample_mask &&
+            func->Stage() == core::ir::Function::PipelineStage::kFragment &&
+            HasBuiltinInput(core::BuiltinValue::kSampleMask)) {
+            RequireBuiltinInput(core::BuiltinValue::kSampleIndex, ty.u32(), "sample_index");
+        }
 
         Vector<MemberInfo, 4> input_data;
         bool has_vertex_or_instance_index = false;
@@ -280,6 +287,10 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                     num_subgroups_index = i;
                 } else if (*builtin == core::BuiltinValue::kNumWorkgroups) {
                     num_workgroups_index = i;
+                } else if (*builtin == core::BuiltinValue::kSampleMask) {
+                    sample_mask_index = i;
+                } else if (*builtin == core::BuiltinValue::kSampleIndex) {
+                    sample_index_index = i;
                 } else if (*builtin == core::BuiltinValue::kLocalInvocationIndex) {
                     local_invocation_index_index = i;
                 } else if (*builtin == core::BuiltinValue::kVertexIndex) {
@@ -625,6 +636,17 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         auto index = input_indices[idx];
 
         core::ir::Value* v = builder.Access(inputs[idx].type, input_param, u32(index))->Result();
+
+        if (config.polyfill_sample_mask && sample_mask_index == idx) {
+            // In Sample Shading mode only the sample for the fragment should be set in the sample
+            // mask. The behavior of HLSL is to include the full raster sample mask. This is not in
+            // line with WGSL spec and so we remove this additional information via a bitwise and.
+            TINT_IR_ASSERT(ir, sample_index_index.has_value());
+            auto* sample_index = GetInput(builder, sample_index_index.value());
+            auto* mask = builder.ShiftLeft(1_u, sample_index);
+            auto* masked = builder.And(v, mask);
+            v = masked->Result();
+        }
 
         if (inputs[idx].attributes.builtin == core::BuiltinValue::kPosition) {
             // If this is an input position builtin we need to invert the 'w' component of the
