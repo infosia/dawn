@@ -1458,7 +1458,7 @@ TEST_F(SpirvWriter_ShaderIOTest, ForcePixelCenters_SampleIndex) {
     auto* expect = R"(
 $B1: {  # root
   %foo_position_Input:ptr<__in, vec4<f32>, read> = var undef @builtin(position)
-  %foo_sample_index_Input:ptr<__in, u32, read> = var undef @interpolate(flat) @builtin(sample_index)
+  %foo_sample_index_Input:ptr<__in, u32, read> = var undef @builtin(sample_index)
   %foo_loc0_Input:ptr<__in, vec4<f32>, read> = var undef @location(0) @interpolate(perspective, center)
 }
 
@@ -1695,7 +1695,7 @@ MyStruct = struct @align(4) {
 
 $B1: {  # root
   %foo_position_Input:ptr<__in, vec4<f32>, read> = var undef @builtin(position)
-  %foo_sample_index_Input:ptr<__in, u32, read> = var undef @interpolate(flat) @builtin(sample_index)
+  %foo_sample_index_Input:ptr<__in, u32, read> = var undef @builtin(sample_index)
   %foo_loc0_Input:ptr<__in, vec4<f32>, read> = var undef @location(0) @interpolate(perspective, center)
 }
 
