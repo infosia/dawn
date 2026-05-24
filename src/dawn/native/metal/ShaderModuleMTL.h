@@ -69,6 +69,7 @@ class ShaderModule final : public ShaderModuleBase {
                               const ImmediateConstantMask& pipelineImmediateMask,
                               MetalFunctionData* out,
                               uint32_t sampleMask = 0xFFFFFFFF,
+                              bool applySampleMaskPolyfill = false,
                               const RenderPipeline* renderPipeline = nullptr);
 
   private:
