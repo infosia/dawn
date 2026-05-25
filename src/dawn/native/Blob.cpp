@@ -45,6 +45,26 @@ Blob CreateBlob(size_t size) {
 }
 
 // static
+<<<<<<< HEAD   (39662e337c4f9271543cb315a98cc8a7a1b617eb [M148] [native][vulkan] Wrap BindGroupLayout cache with a mu)
+||||||| BASE   (f629bb2bf26ba63b8d30a579c835e6a8b04121ed [native] Initialize all members of apply clear color value k)
+Blob Blob::Create(Blob&& original, size_t offset) {
+    Blob result(original.mData.subspan(offset), std::move(original.mDeleter));
+    original.mData = {};
+    original.mDeleter = nullptr;
+    return result;
+}
+
+// static
+=======
+Blob Blob::Create(Blob&& original, size_t offset, size_t extent) {
+    Blob result(original.mData.subspan(offset, extent), std::move(original.mDeleter));
+    original.mData = {};
+    original.mDeleter = nullptr;
+    return result;
+}
+
+// static
+>>>>>>> CHANGE (e7eb019e0d8237395c80b6df7790085d09591105 Trim data returned for VkPipelineCache)
 Blob Blob::UnsafeCreateWithDeleter(uint8_t* data, size_t size, std::function<void()> deleter) {
     return Blob(data, size, deleter);
 }

@@ -43,6 +43,49 @@ namespace dawn::native {
 // ownership of the container and release its memory on destruction.
 class Blob {
   public:
+<<<<<<< HEAD   (39662e337c4f9271543cb315a98cc8a7a1b617eb [M148] [native][vulkan] Wrap BindGroupLayout cache with a mu)
+||||||| BASE   (f629bb2bf26ba63b8d30a579c835e6a8b04121ed [native] Initialize all members of apply clear color value k)
+    // Creates a blob of the given size.
+    static Blob Create(size_t size);
+
+    // Takes ownership of the original blob, creating a new one that offsets the data by |offset|.
+    static Blob Create(Blob&& original, size_t offset);
+
+    template <typename T>
+    static Blob Create(std::vector<T> vec)
+        requires(std::is_fundamental_v<T> || std::is_same_v<T, std::byte>)
+    {
+        // Move the vector into a new allocation so we can destruct it in the deleter.
+        auto* wrapped_vec = new std::vector<T>(std::move(vec));
+
+        uint8_t* data = reinterpret_cast<uint8_t*>(wrapped_vec->data());
+        size_t size = wrapped_vec->size() * sizeof(T);
+
+        return Blob::UnsafeCreateWithDeleter(data, size, [wrapped_vec] { delete wrapped_vec; });
+    }
+
+=======
+    // Creates a blob of the given size.
+    static Blob Create(size_t size);
+
+    // Takes ownership of the original blob, creating a new one with subspan of the original using
+    // `offset` and optionally `extent`.
+    static Blob Create(Blob&& original, size_t offset, size_t extent = std::dynamic_extent);
+
+    template <typename T>
+    static Blob Create(std::vector<T> vec)
+        requires(std::is_fundamental_v<T> || std::is_same_v<T, std::byte>)
+    {
+        // Move the vector into a new allocation so we can destruct it in the deleter.
+        auto* wrapped_vec = new std::vector<T>(std::move(vec));
+
+        uint8_t* data = reinterpret_cast<uint8_t*>(wrapped_vec->data());
+        size_t size = wrapped_vec->size() * sizeof(T);
+
+        return Blob::UnsafeCreateWithDeleter(data, size, [wrapped_vec] { delete wrapped_vec; });
+    }
+
+>>>>>>> CHANGE (e7eb019e0d8237395c80b6df7790085d09591105 Trim data returned for VkPipelineCache)
     // This function is used to create Blob with actual data.
     // Make sure the creation and deleter handles the data ownership and lifetime correctly.
     static Blob UnsafeCreateWithDeleter(uint8_t* data, size_t size, std::function<void()> deleter);
