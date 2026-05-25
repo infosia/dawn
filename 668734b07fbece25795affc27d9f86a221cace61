@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bac30fae_adb39e7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-05-25T02:26:22Z",
+      "side": 1,
+      "message": "Rebase flushed previous +2. PTAL again, thanks!",
+      "revId": "668734b07fbece25795affc27d9f86a221cace61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
