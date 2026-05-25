@@ -16,6 +16,24 @@
       "message": "PTAL Loko. The Blob changes are written from scratch here since Blob implementation changed in M150.",
       "revId": "68ee80ecbe382f4b0195a739b54721733b1dcc1c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b35949a_35ec0763",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-25T19:09:41Z",
+      "side": 1,
+      "message": "Looks like Loko is out for a bit. Antonio can you take a look at this merge?",
+      "parentUuid": "7201c0c5_82be1a1e",
+      "revId": "68ee80ecbe382f4b0195a739b54721733b1dcc1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
