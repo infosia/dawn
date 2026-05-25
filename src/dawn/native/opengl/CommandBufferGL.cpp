@@ -1139,12 +1139,13 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                 WriteBufferCmd* write = mCommands.NextCommand<WriteBufferCmd>();
                 uint64_t offset = write->offset;
                 uint64_t size = write->size;
+                uint8_t* data = mCommands.NextData<uint8_t>(size);
+
                 if (size == 0) {
                     continue;
                 }
 
                 Buffer* dstBuffer = ToBackend(write->buffer.Get());
-                uint8_t* data = mCommands.NextData<uint8_t>(size);
                 DAWN_TRY(dstBuffer->EnsureDataInitializedAsDestination(offset, size));
 
                 DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, dstBuffer->GetHandle()));
