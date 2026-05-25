@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "708d639f_a2323a08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-25T20:38:44Z",
+      "side": 1,
+      "message": "PTAAL",
+      "revId": "f1df12da4d354f5e47fe1e2e90dfd9592279a3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4085ca1_3ae6b777",
@@ -52,6 +69,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eab7660d_4b5f51c2",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-25T20:38:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e4085ca1_3ae6b777",
+      "revId": "f1df12da4d354f5e47fe1e2e90dfd9592279a3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb10c7a4_512e1cac",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-25T20:38:44Z",
+      "side": 1,
+      "message": "I don\u0027t think this is allowed, though it might help with printing some invalid IR. I don\u0027t think this is needed for printing the original example, so I am going to drop it.",
+      "parentUuid": "418b572b_d1589e00",
+      "revId": "f1df12da4d354f5e47fe1e2e90dfd9592279a3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac5b3431_48cd2fd9",
@@ -65,6 +118,24 @@
       "writtenOn": "2026-05-21T19:31:26Z",
       "side": 1,
       "message": "Should this be an assert? What does it mean if i \u003e\u003d size?",
+      "revId": "f1df12da4d354f5e47fe1e2e90dfd9592279a3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dad2e80c_0a57698e",
+        "filename": "src/tint/lang/core/ir/transform/remove_terminator_args.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-25T20:38:44Z",
+      "side": 1,
+      "message": "So this (and below) can occur if an empty body is provided, like in the original examples.\n\nThis is invalid IR, and the other part of this CL adds in validator checks to prevent it. I originally was treating this as a backend bug, which is why this fix is here, before I realized it was a validation issue. Given the validator prevents this from occuring, it isn\u0027t needed anymore.",
+      "parentUuid": "ac5b3431_48cd2fd9",
       "revId": "f1df12da4d354f5e47fe1e2e90dfd9592279a3ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
