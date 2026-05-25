@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15b82b35_c80e852b",
+        "filename": "src/tint/lang/wgsl/reader/parser/parser.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-25T15:00:13Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like you used this?\nWere you going to refactor the common code for between `core_lhs_expression` and `primary_expression`?",
+      "revId": "35d592a83f334974d94b4bd071989a8af70842ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
