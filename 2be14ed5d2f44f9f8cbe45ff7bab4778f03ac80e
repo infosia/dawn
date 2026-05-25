@@ -123,6 +123,24 @@
       "message": "[1] put these in the public dependencies as they will be needed for `dawn_native` or `libwebgpu_dawn`. But then make sure that `dawn_native_objects` is a private dependency of them.",
       "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dd167d2_acde7099",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-25T12:08:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "298392a2_2a98b77b",
+      "revId": "2be14ed5d2f44f9f8cbe45ff7bab4778f03ac80e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
