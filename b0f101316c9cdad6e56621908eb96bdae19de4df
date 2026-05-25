@@ -16,6 +16,24 @@
       "message": "This needs to be clarified as discussed.",
       "revId": "b0f101316c9cdad6e56621908eb96bdae19de4df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dac4032_4cf9eced",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-25T18:14:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab380f5f_6442567f",
+      "revId": "b0f101316c9cdad6e56621908eb96bdae19de4df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
