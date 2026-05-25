@@ -342,7 +342,7 @@ struct ClearBufferCmd {
 };
 
 struct InsertDebugMarkerCmd {
-    uint32_t length;
+    size_t length;
 };
 
 struct PixelLocalStorageBarrierCmd {};
@@ -350,7 +350,7 @@ struct PixelLocalStorageBarrierCmd {};
 struct PopDebugGroupCmd {};
 
 struct PushDebugGroupCmd {
-    uint32_t length;
+    size_t length;
 };
 
 struct ResolveQuerySetCmd {
@@ -465,7 +465,7 @@ void FreeCommands(CommandIterator* commands);
 void SkipCommand(CommandIterator* commands, Command type);
 
 // Helper function to copy a wgpu::StringView into a safely null-terminated C-string in commands.
-const char* AddNullTerminatedString(CommandAllocator* allocator, StringView s, uint32_t* length);
+const char* AddNullTerminatedString(CommandAllocator* allocator, StringView s, size_t* length);
 
 }  // namespace dawn::native
 
