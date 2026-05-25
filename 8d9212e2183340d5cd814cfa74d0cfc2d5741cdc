@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7df0ef2_1b5c8209",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-25T19:53:55Z",
+      "side": 1,
+      "message": "I think one thing missing from this function parameter handling. If we get a resource and then pass it to a function call, and then use that texture. We need to get the right information through which we don\u0027t do.\n\nAll the checks will be the same as the above I believe, just may want to note how it flows through the function param.",
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
