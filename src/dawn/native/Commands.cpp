@@ -422,9 +422,7 @@ void SkipCommand(CommandIterator* commands, Command type) {
 
         case Command::WriteBuffer: {
             auto cmd = commands->NextCommand<WriteBufferCmd>();
-            if (cmd->size > 0) {
-                commands->NextData<uint8_t>(cmd->size);
-            }
+            commands->NextData<uint8_t>(cmd->size);
             break;
         }
 
