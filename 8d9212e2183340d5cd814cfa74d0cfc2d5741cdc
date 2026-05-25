@@ -20,6 +20,121 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "44060148_46a852e6",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-25T20:36:37Z",
+      "side": 1,
+      "message": "Nit: After reading the rest of the paragraph I see that `getResource` here refers to a `getResource` call that returns a texture, but that wasn\u0027t immediately clear since getResource can return either a texture or a sampler (likewise it\u0027s swapped in number `6` where `getResource` now refers to a sampler).\n\nIn my mind I\u0027m using the phrases \"resource texture\", \"resource sampler\", \"bindful texture\", and \"bindful sampler\" to keep track of what is coming from where. But also \"resource texture\" is kind vague. Maybe \"resource table texture\", but that\u0027s kinda long...",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 55
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bf1479f_99ec969e",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-25T20:36:37Z",
+      "side": 1,
+      "message": "Does \"this\" mean just the filtering+unfilterable check in the previous sentence, or also the metadata checks in the sentence before that? I assume we only do the swap for the filtering+unfilterable mismatch, but then it\u0027s not explained what we do when the metadata doesn\u0027t match.\n\nMaybe it\u0027s worth separating out the metadata checks to say what happens when those don\u0027t match, since it\u0027s sort of independent from the filtering+unfilterable checks. That might make this all easier to follow.",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 11
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a4b8c40_db962b2f",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-25T20:36:37Z",
+      "side": 1,
+      "message": "Nit: Not immediately obvious that this part of the validation is performed by Dawn.",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 78,
+        "endChar": 68
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9559bfd8_25cf18c2",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-25T20:36:37Z",
+      "side": 1,
+      "message": "Don\u0027t the defaults always exist?\n\nThe API validation ensures that when a filtering bindful sampler is used, then the sample type of the resource table texture will always be a float.",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 74
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cac152be_3c7c2b8e",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-25T20:36:37Z",
+      "side": 1,
+      "message": "Is valid in what sense here?",
+      "range": {
+        "startLine": 95,
+        "startChar": 97,
+        "endLine": 96,
+        "endChar": 9
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f7df0ef2_1b5c8209",
         "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
         "patchSetId": 1
