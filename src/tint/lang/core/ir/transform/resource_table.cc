@@ -42,6 +42,61 @@ namespace {
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
 
+/// Th resource_table transform handles the removal of the `getResource` and `hasResource` calls and
+/// replaces them with accesses into backend specific arrays. The backend specific parts are handled
+/// by the `ResourceTableHelper` which is attached to the transform.
+///
+/// There are a number of cases this transform handles, and it makes assumptions based on the
+/// information provided to it from the API. There is a bi-directional relationship in the
+/// validation for the combined texture/sampler calls with the API.
+///
+/// We have to handle several cases in here:
+///
+/// 1. `hasResource` -- this is just changed to a validation check that the type in the WGSL
+///    template (e.g. `hasResource<texture_2d<f32>>(n)`) matches the ResourceType that Dawn has
+///    stored into the metadata table for the slot `n`.
+///
+/// 2. `getResource` with no usages -- this just gets removed, we don't use the value returned so we
+///    don't actually need to do anything.
+///
+/// 3. `getResource` used without an associated sampler -- In this case we just need to check that
+///    the type in `getResources` matches the type in slot `n` of the metadata table. The WGSL
+///    validation would already have verified that the type from `getResource` is valid for the
+///    `texture*` call it's being used in.
+///
+/// 4. `getResource` used with a resource table sampler -- In this case we need to validate that the
+///    `getResource<texture_2d<f32>>(t)` for the texture is correct against metadata slot `t`, and
+///    the `getResource<sampler>(s)` is correct against the metadata slot `s`. Additionally we need
+///    to validate if the `sampler` is `filtering` then the `texture` is a `filterable` texture. If
+///    this does not hold, then we swap the `sampler` for a `non-filtering` sampler.
+///
+/// 5. `getResource` used with a bindful sampler -- This case requires more co-ordination with the
+///    API to handle correctly. Assume the sampler is bound at `0, 0`. For each usage of the sampler
+///    we will reflect the texture type it is used with back to the API (e.g. `texture_2d<f32>`,
+///    `texture_2d<i32>`). When validating the bindings for the given bind group, if any of the
+///    textures _must_ be unfilterable (e.g. `u32` or `i32` texture) then the sampler is _required_
+///    to be `non-filtering` otherwise a validation error is raised. If the sampler is allowed to be
+///    `filtering` then it _must_ only be used against a texture type which has a `filterable`
+///    variant (e.g. an `f32` texture).
+///
+///    In the shader we then validate the `getResource` texture against the metadata table for slot
+///    `n`. The API will then provide us that binding `0, 0` has a ResourceType of filtering or
+///    non-filtering. If the type is `filtering` we need to validate that the texture is also
+///    filterable. If the texture is not filterable, then we get the default filterable texture for
+///    that type (which we know exists because of the API validation above).
+///
+/// 6. `getResource` used with a bindful texture -- In this case we will validate that the
+///    ResourceType of the element at slot `n` is a sampler. We then get the `ResourceType` for the
+///    bindful texture as reported by the API side. If the sampler is a `filtering` simpler we then
+///    validate that the texture is `filterable`. If the texture is not filterable, then we swap the
+///    sampler for a `non-filtering` sampler.
+///
+/// When validating if a texture is `filterable` we only have to check against one ResourceType. The
+/// WGSL would already have been validated, so we know the texture type used in the texture call is
+/// valid. We have also already validated that the resource returned from the slot matches the type
+/// in the texture call. So, we just need to check to see if the texture is the `filterable` variant
+/// of the texture used in the call.
+
 /// PIMPL state for the transform.
 struct State {
     /// The configuration.
