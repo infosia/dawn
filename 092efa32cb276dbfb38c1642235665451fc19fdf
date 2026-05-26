@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ac3dede_a1826d39",
+        "filename": "src/tint/lang/core/ir/validator_access_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-26T20:05:46Z",
+      "side": 0,
+      "message": "Why remove this assert?",
+      "revId": "092efa32cb276dbfb38c1642235665451fc19fdf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
