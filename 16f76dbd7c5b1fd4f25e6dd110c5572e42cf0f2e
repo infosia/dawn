@@ -96,6 +96,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e1e31a8_94bcda79",
+        "filename": "DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-26T15:45:22Z",
+      "side": 1,
+      "message": "Resolving. Very soon, we\u0027ll use the CIPD package instead, and I\u0027ll add the arm64 config.",
+      "parentUuid": "b04eab50_45b35186",
+      "range": {
+        "startLine": 845,
+        "startChar": 55,
+        "endLine": 845,
+        "endChar": 77
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4fc6087_5b087e65",
@@ -774,6 +798,30 @@
       "side": 1,
       "message": "Thanks for your updates! In some bots(e.g. win-dawn-rel\n), the Agility SDK seems not downloaded, so __has_include will fall back to the Windows SDK\u0027s \u003cd3d12.h\u003e.\nSince D3D_SHADER_MODEL_6_10 is only available in the Agility SDK, I will keep this #ifdef for now.",
       "parentUuid": "a5c1dd75_f1ef1c06",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "714a1cff_d0415a3c",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-26T15:45:22Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8cd62f3d_e161c13c",
       "range": {
         "startLine": 34,
         "startChar": 0,
