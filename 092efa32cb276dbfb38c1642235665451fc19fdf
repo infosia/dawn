@@ -16,6 +16,24 @@
       "message": "Why remove this assert?",
       "revId": "092efa32cb276dbfb38c1642235665451fc19fdf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc9cf60e_28f4826d",
+        "filename": "src/tint/lang/core/ir/validator_access_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-26T20:14:30Z",
+      "side": 0,
+      "message": "Probably killed the line instead of yanking... Added it back",
+      "parentUuid": "5ac3dede_a1826d39",
+      "revId": "092efa32cb276dbfb38c1642235665451fc19fdf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
