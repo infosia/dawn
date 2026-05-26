@@ -47,6 +47,10 @@ namespace tint::core::ir {
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
 
+namespace {
+using IR_ValidatorAccessIndexTypeTest = IRTestParamHelper<std::tuple<bool, TypeBuilderFn>>;
+}  // namespace
+
 TEST_F(IR_ValidatorTest, Access_NoOperands) {
     auto* f = b.Function("my_func", ty.void_());
     auto* obj = b.FunctionParam(ty.vec3f());
@@ -1459,12 +1463,51 @@ TEST_F(IR_ValidatorTest, Swizzle_OOBIndex) {
     });
 
     auto res = ir::Validate(mod);
-    ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:20 error: swizzle: invalid index value
     %4:vec4<f32> = swizzle %3, wyyx
                    ^^^^^^^
 )")) << res.Failure();
 }
+
+TEST_P(IR_ValidatorAccessIndexTypeTest, IndexType) {
+    auto expected_success = std::get<0>(GetParam());
+    auto* index_ty = std::get<1>(GetParam())(ty);
+
+    auto* f = b.Function("my_func", ty.void_());
+    auto* obj = b.FunctionParam(ty.ptr<private_, array<f32, 4>>());
+    auto* idx = b.FunctionParam(index_ty);
+    f->SetParams({obj, idx});
+
+    b.Append(f->Block(), [&] {
+        b.Access(ty.ptr<private_, f32>(), obj, idx);
+        b.Return(f);
+    });
+
+    Capabilities caps;
+    caps.Add(Capability::kAllow8BitIntegers);
+    caps.Add(Capability::kAllow16BitIntegers);
+    caps.Add(Capability::kAllow64BitIntegers);
+
+    auto res = ir::Validate(mod, caps);
+    if (expected_success) {
+        EXPECT_EQ(res, Success) << res.Failure();
+    } else {
+        EXPECT_NE(res, Success);
+        EXPECT_THAT(
+            res.Failure().reason,
+            testing::HasSubstr("index type '" + index_ty->FriendlyName() + "' must be i32 or u32"));
+    }
+}
+
+INSTANTIATE_TEST_SUITE_P(IR_ValidatorTest,
+                         IR_ValidatorAccessIndexTypeTest,
+                         testing::Values(std::make_tuple(true, TypeBuilder<i32>),
+                                         std::make_tuple(true, TypeBuilder<u32>),
+                                         std::make_tuple(false, TypeBuilder<f32>),
+                                         std::make_tuple(false, TypeBuilder<u64>),
+                                         std::make_tuple(false, TypeBuilder<f16>),
+                                         std::make_tuple(false, TypeBuilder<i8>),
+                                         std::make_tuple(false, TypeBuilder<u8>)));
 
 }  // namespace tint::core::ir
