@@ -65,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbc3d530_9c64dca3",
+        "filename": "src/tint/lang/hlsl/writer/writer_fuzz.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-26T18:40:37Z",
+      "side": 1,
+      "message": "Sorry my bad",
+      "parentUuid": "7b2cee0e_280d6b92",
+      "revId": "b40b97eab7292a2eefeae0c0e5c10f6e0aed8efc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "53877762_34841129",
