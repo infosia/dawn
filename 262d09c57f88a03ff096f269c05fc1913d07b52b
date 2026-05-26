@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc58216d_4bdf201b",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-26T20:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0f196a5_156785be",
+      "range": {
+        "startLine": 781,
+        "startChar": 0,
+        "endLine": 784,
+        "endChar": 21
+      },
+      "revId": "262d09c57f88a03ff096f269c05fc1913d07b52b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62bb1bb4_db411819",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dd46a41_efa35eab",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4704,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-26T20:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62bb1bb4_db411819",
+      "revId": "262d09c57f88a03ff096f269c05fc1913d07b52b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74c32dcb_f0031607",
@@ -54,6 +96,24 @@
       "writtenOn": "2026-05-26T02:16:34Z",
       "side": 1,
       "message": "Like with `if`, it is not valid for a loop initializer to be a `MultiInBlock` at all, although we don\u0027t have an existing check for this AFAICT.",
+      "revId": "262d09c57f88a03ff096f269c05fc1913d07b52b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2eff32f_74cac488",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4756,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-26T20:37:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74c32dcb_f0031607",
       "revId": "262d09c57f88a03ff096f269c05fc1913d07b52b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
