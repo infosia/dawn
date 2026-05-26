@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62bb1bb4_db411819",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4704,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-26T02:16:34Z",
+      "side": 1,
+      "message": "Similar to previous comments, I don\u0027t think this is necessary since we check for and reject `MultiInBlock` above?",
+      "revId": "262d09c57f88a03ff096f269c05fc1913d07b52b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74c32dcb_f0031607",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4756,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-26T02:16:34Z",
+      "side": 1,
+      "message": "Like with `if`, it is not valid for a loop initializer to be a `MultiInBlock` at all, although we don\u0027t have an existing check for this AFAICT.",
+      "revId": "262d09c57f88a03ff096f269c05fc1913d07b52b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
