@@ -87,6 +87,14 @@ void Register(const IRFuzzer& fuzzer) {
                 return;
             }
 
+            // Skip this fuzzer case if the component being fuzzed does not support one of the
+            // properties used by the module.
+            for (auto prop : fuzzer.unsupported_properties) {
+                if (ir.Get().properties.Contains(prop)) {
+                    return;
+                }
+            }
+
             // Validate the IR against the fuzzer's preconditions before running.
             // We don't consider validation failure here to be an issue, as it only signals that
             // there is a bug somewhere in the components run above. Those components have their own
@@ -151,6 +159,14 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
         }
         auto mod = acquire_module();
         mod.dump_ir_when_validating = context.options.dump_ir_when_validating;
+
+        // Skip this fuzzer case if the component being fuzzed does not support one of the
+        // properties used by the module.
+        for (auto prop : fuzzer.unsupported_properties) {
+            if (mod.properties.Contains(prop)) {
+                return;
+            }
+        }
 
         if (!context.options.disable_ir_validator) {
             if (tint::core::ir::Validate(mod, fuzzer.pre_capabilities,
