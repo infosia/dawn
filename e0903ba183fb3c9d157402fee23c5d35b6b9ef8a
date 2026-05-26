@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "883d8ba9_6a571fb1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T21:12:06Z",
+      "side": 1,
+      "message": "do we _really_ need a `dawn::Span`? Seems quite painful and we\u0027re going to have to decide whether to use it in `webgpu_cpp.h` too.\n\nI\u0027d prefer to have some config file that somehow tells the plugin some extra symbols to consider unsafe (like `::std::span::span(ptr, size)`)",
+      "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d13a92b_1cf50ea3",
+        "filename": "src/utils/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T21:12:06Z",
+      "side": 1,
+      "message": "We already have `ityp::span` and you can set its index type to `size_t` for a \"regular\" span. Can we use that (and of course fix it so it has the appropriate unsafe buffers annotations)?",
+      "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08561505_3ac8ec88",
+        "filename": "src/utils/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T21:12:06Z",
+      "side": 1,
+      "message": "Do we _really_ need a `dawn::Span`? Seems quite painful and we\u0027re going to have to decide whether to use it in `webgpu_cpp.h` too.\n\nI\u0027d prefer to have some config file that somehow tells the plugin some extra symbols to consider unsafe (like `::std::span::span(ptr, size)`)",
+      "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
