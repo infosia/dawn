@@ -28,6 +28,7 @@
 import("../../../scripts/dawn_overrides_with_defaults.gni")
 import("../../../scripts/tint_overrides_with_defaults.gni")
 
+import("//build/nocompile.gni")
 import("//testing/test.gni")
 import("${dawn_root}/generator/dawn_generator.gni")
 import("${dawn_root}/scripts/dawn_features.gni")
@@ -213,6 +214,19 @@ source_set("native_mocks_sources") {
   ]
 }
 
+# Build these tests only when we know we are using Clang at the pinned version.
+if (dawn_standalone && is_clang) {
+  nocompile_source_set("nocompile_sources") {
+    sources = [
+      "unittests/nocompile/Basic.nc",
+      "unittests/nocompile/Numeric.nc",
+      "unittests/nocompile/TypedInteger.nc",
+    ]
+    deps = [ "${dawn_root}/src/dawn/common" ]
+    configs = [ "${dawn_root}/src/dawn/common:internal_config" ]
+  }
+}
+
 dawn_test("dawn_unittests") {
   deps = [
     ":mock_webgpu_gen",
@@ -234,6 +248,11 @@ dawn_test("dawn_unittests") {
     "${dawn_root}/src/utils:gmock_and_gtest",
     "${dawn_root}/src/utils/chromium_test_compat",
   ]
+  if (dawn_standalone && is_clang) {
+    # Also do nocompile tests, which happen during build. It produces empty
+    # object files to "link".
+    deps += [ ":nocompile_sources" ]
+  }
 
   # Add internal dawn native config for internal unittests.
   configs = [ "${dawn_root}/src/dawn/native:internal" ]
