@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f3e7450_cccd5255",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-26T02:36:34Z",
+      "side": 1,
+      "message": "PTAL, I assume this was supposed to be deleted in this CL:\nhttps://dawn-review.git.corp.google.com/c/dawn/+/309515",
+      "revId": "1b68c1c316c2fcfde94e437392a390e6686bd2db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
