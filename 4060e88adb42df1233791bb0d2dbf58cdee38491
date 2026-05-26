@@ -39,6 +39,30 @@
       },
       "revId": "4060e88adb42df1233791bb0d2dbf58cdee38491",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdc687aa_cd9c64d6",
+        "filename": "src/utils/underlying_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T21:59:41Z",
+      "side": 1,
+      "message": "I have split this out into its own change to simplify the merge conflict situation between our two patch stacks: https://dawn-review.googlesource.com/c/dawn/+/311275",
+      "parentUuid": "130a9275_aad6a3ed",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 10
+      },
+      "revId": "4060e88adb42df1233791bb0d2dbf58cdee38491",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
