@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "130a9275_aad6a3ed",
+        "filename": "src/utils/underlying_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T20:59:30Z",
+      "side": 1,
+      "message": "nit: Should be `Has`.\n\n(Sorry for the bad naming here, my fault. I actually was going to drive-by fix it to `Has` during some other changes)",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 10
+      },
+      "revId": "4060e88adb42df1233791bb0d2dbf58cdee38491",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
