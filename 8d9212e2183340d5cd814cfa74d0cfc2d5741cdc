@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "677fec28_63ab6be7",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-26T12:24:12Z",
+      "side": 1,
+      "message": "```suggestion\n/// 3. `getResource` of a texture used without an associated sampler -- In this case we just need to check that\n```\n\nDitto in the various cases below as it makes it more clear what we validate against what.",
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44060148_46a852e6",
         "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
         "patchSetId": 1
@@ -66,6 +83,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "89f3832d_7bea9ea7",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-26T12:24:12Z",
+      "side": 1,
+      "message": "Agreed, and IMHO we should replace the texture with the default filterable texture instead of the sampler as it makes the error more visible. Ditto in all other cases.",
+      "parentUuid": "1bf1479f_99ec969e",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 11
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a4b8c40_db962b2f",
         "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
         "patchSetId": 1
@@ -77,6 +118,30 @@
       "writtenOn": "2026-05-25T20:36:37Z",
       "side": 1,
       "message": "Nit: Not immediately obvious that this part of the validation is performed by Dawn.",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 78,
+        "endChar": 68
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5008ea7_d8f97af1",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-26T12:24:12Z",
+      "side": 1,
+      "message": "Is that a part that is still TODO? IMHO we should still make this a dynamic error instead of a pipeline compilation error, as it will improve reusability of bindless code. It also makes the function parameter handling simpler for the mixed bindful / bindless case.",
+      "parentUuid": "4a4b8c40_db962b2f",
       "range": {
         "startLine": 76,
         "startChar": 27,
