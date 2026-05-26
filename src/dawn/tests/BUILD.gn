@@ -28,6 +28,7 @@
 import("../../../scripts/dawn_overrides_with_defaults.gni")
 import("../../../scripts/tint_overrides_with_defaults.gni")
 
+import("//build/nocompile.gni")
 import("//testing/test.gni")
 import("${dawn_root}/generator/dawn_generator.gni")
 import("${dawn_root}/scripts/dawn_features.gni")
@@ -151,6 +152,27 @@ template("dawn_test") {
   }
 }
 
+# Creates a source set containing negative compile tests.
+# The tests run during build, then produce empty object files to "link" with.
+# They run only when the build is configured to use Dawn's own copy of Clang
+# that's pinned at a known revision. Otherwise, the source set is a no-op.
+template("dawn_nocompile_source_set") {
+  nocompile_source_set(target_name) {
+    # These should be built only when using our own copy of Dawn that's pinned
+    # at a known revision. Otherwise this source set is a no-op.
+    if (dawn_standalone && is_clang) {
+      configs = []
+
+      forward_variables_from(invoker, "*", [ "configs" ])
+      if (defined(invoker.configs)) {
+        configs += invoker.configs
+      }
+
+      configs += [ "${dawn_root}/src/dawn/common:internal_config" ]
+    }
+  }
+}
+
 ###############################################################################
 # Dawn unittests
 ###############################################################################
@@ -213,10 +235,19 @@ source_set("native_mocks_sources") {
   ]
 }
 
+dawn_nocompile_source_set("nocompile_sources") {
+  sources = [
+    "unittests/nocompile/Numeric.nc",
+    "unittests/nocompile/TypedInteger.nc",
+  ]
+  deps = [ "${dawn_root}/src/dawn/common" ]
+}
+
 dawn_test("dawn_unittests") {
   deps = [
     ":mock_webgpu_gen",
     ":native_mocks_sources",
+    ":nocompile_sources",
     ":partition_alloc_support",
     ":platform_mocks_sources",
     ":test_infra_sources",
