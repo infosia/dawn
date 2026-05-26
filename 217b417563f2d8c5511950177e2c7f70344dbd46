@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e2f1fda5_43a140dd",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T18:56:02Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "30fc8f41_cd72c6db",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1fb1885_c0d30d00",
         "filename": "generator/templates/api_cpp.ixx",
         "patchSetId": 2
@@ -71,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df46c83e_16722c34",
+        "filename": "src/cmake/DawnCompilerChecks.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T18:56:02Z",
+      "side": 1,
+      "message": "Do you mean, if we want to use `webgpu_cpp.ixx` internally? We don\u0027t need to worry about that until we start trying to use it (at which point it will be tested by our test bots).",
+      "parentUuid": "29c9eb83_68b6cb68",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "58e9de4c_e0636e5b",
         "filename": "src/cmake/DawnCompilerChecks.cmake",
         "patchSetId": 2
@@ -88,6 +124,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9f1ab302_7b7c73b5",
+        "filename": "src/cmake/DawnCompilerChecks.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T18:56:02Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "58e9de4c_e0636e5b",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac7f0650_0e25174b",
         "filename": "src/dawn/CMakeLists.txt",
         "patchSetId": 2
@@ -99,6 +153,24 @@
       "writtenOn": "2026-05-20T20:04:25Z",
       "side": 1,
       "message": "Why does this need a special cmake check? Would be better to just bump of the top level min required version instead of special checks",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "601ae7a6_f9c33132",
+        "filename": "src/dawn/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T18:56:02Z",
+      "side": 1,
+      "message": "I think we follow \u003chttps://opensource.google/documentation/policies/cplusplus-support#build_systems\u003e\n\nSo based on \u003chttps://pkgs.org/download/cmake\u003e it seems we are safe to upgrade the top level requirement as high as 3.30. So let\u0027s just do that and go to 3.30.",
+      "parentUuid": "ac7f0650_0e25174b",
       "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

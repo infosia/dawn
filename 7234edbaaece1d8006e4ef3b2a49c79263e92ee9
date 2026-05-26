@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10762c07_18c8e52e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T18:56:02Z",
+      "side": 1,
+      "message": "Happy to review but I\u0027ll wait until the open comments are addressed.",
+      "revId": "7234edbaaece1d8006e4ef3b2a49c79263e92ee9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
