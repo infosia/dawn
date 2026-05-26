@@ -69,6 +69,24 @@
       "parentUuid": "9ad956d0_8ae3e851",
       "revId": "c63c92587f2d2c3a80660dc15e8804d814b6dd36",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1dcdad2_fc3d838e",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-26T14:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d693c341_018258e4",
+      "revId": "c63c92587f2d2c3a80660dc15e8804d814b6dd36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
