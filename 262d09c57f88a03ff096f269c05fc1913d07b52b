@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0f196a5_156785be",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-26T13:28:34Z",
+      "side": 1,
+      "message": "Have I mentioned how much i dislike this syntax, heh. The storage cost of 1-2 newlines is not that great.\n\n```suggestion\n        auto* mb \u003d b-\u003eAs\u003cMultiInBlock\u003e()\n        return (mb \u0026\u0026 !mb-\u003eParams().IsEmpty());\n```",
+      "range": {
+        "startLine": 781,
+        "startChar": 0,
+        "endLine": 784,
+        "endChar": 21
+      },
+      "revId": "262d09c57f88a03ff096f269c05fc1913d07b52b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62bb1bb4_db411819",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 3
