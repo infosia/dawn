@@ -71,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d96c4877_c3a752cc",
+        "filename": "src/dawn/native/d3d11/RenderPipelineD3D11.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-26T17:49:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9db2f9c4_7ccd6234",
+      "range": {
+        "startLine": 554,
+        "startChar": 47,
+        "endLine": 554,
+        "endChar": 85
+      },
+      "revId": "6792c145136af25af87a0a482653a3e87ec99f2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee76aae2_2be57190",
