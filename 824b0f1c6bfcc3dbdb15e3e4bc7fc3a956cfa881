@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "a50aaf09_eb9edbe8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T18:30:23Z",
+      "side": 1,
+      "message": "We can\u0027t use size_t in the wire format: https://crbug.com/462227575\nWe could use it in the command definitions but only if the generators actually lower it to uint64_t. (Which would be nice because we could avoid manual checking.)\n\nHistorically I though we avoided using it because we tentatively wanted the format to be somewhat architecture independent. But also by happy accident it allowed WebGPU to work in mixed-bitness WebView.\n\nI noticed that SetImmediate uses size_t and that probably means it will break webgpu on mixed-bitness? Whoops. I should have put in checks for size_t when I was working on the mixed-bitness bug.",
+      "revId": "824b0f1c6bfcc3dbdb15e3e4bc7fc3a956cfa881",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b30e63d5_f8468f67",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T18:30:23Z",
+      "side": 1,
+      "message": "\u0027went\u0027",
+      "range": {
+        "startLine": 9,
+        "startChar": 52,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "824b0f1c6bfcc3dbdb15e3e4bc7fc3a956cfa881",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "5b280604_fabb791c",
