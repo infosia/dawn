@@ -16,6 +16,52 @@
       "message": "PTAL!",
       "revId": "55d002720ed580cc9af4c67722d5f4b1fec311bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d1e95b6_d57b24a6",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T18:06:55Z",
+      "side": 1,
+      "message": "Signaled",
+      "range": {
+        "startLine": 241,
+        "startChar": 49,
+        "endLine": 241,
+        "endChar": 56
+      },
+      "revId": "55d002720ed580cc9af4c67722d5f4b1fec311bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5198e53_3b67dbb9",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T18:06:55Z",
+      "side": 1,
+      "message": "Signaled\n\nAlso this test is failing",
+      "range": {
+        "startLine": 1292,
+        "startChar": 50,
+        "endLine": 1292,
+        "endChar": 57
+      },
+      "revId": "55d002720ed580cc9af4c67722d5f4b1fec311bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
