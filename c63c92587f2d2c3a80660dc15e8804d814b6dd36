@@ -33,6 +33,24 @@
       "message": "It\u0027s weird the file exists in src/utils but the tests exist over in dawn/unittests. Should we put these in src/utils/underlying_type_tests.cc and make a utils unit test suite?",
       "revId": "c63c92587f2d2c3a80660dc15e8804d814b6dd36",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ad956d0_8ae3e851",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-26T12:10:40Z",
+      "side": 1,
+      "message": "I was hoping to avoid the proliferation of test suites because it requires adding it to the infra, and having a new \"main\" file that lives in Chromium as well. Though it could live in `src/utils`, just use GTest and be a dep of `dawn_unittests`.",
+      "parentUuid": "5f05b29a_1b29198e",
+      "revId": "c63c92587f2d2c3a80660dc15e8804d814b6dd36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
