@@ -556,7 +556,7 @@ TEST_P(SharedTextureMemoryVulkanYCbCrParamsTests, SampleY8Cb8Cr8AHB) {
 
     // Create the BindGroupLayout with a static YCbCr sampler, and the BindGroup.
     wgpu::SamplerDescriptor samplerDesc;
-    samplerDesc.nextInChain = &yCbCrDesc;
+    utils::MakeYcbcrSamplerDesc(samplerDesc, yCbCrDesc);
 
     wgpu::StaticSamplerBindingLayout staticSamplerBinding{};
     staticSamplerBinding.sampler = device.CreateSampler(&samplerDesc);

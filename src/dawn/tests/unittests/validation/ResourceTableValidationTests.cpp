@@ -1947,7 +1947,7 @@ TEST_F(ResourceTableStaticSamplerValidationTest, MutatorSamplerMustNotBeYCbCr) {
 
     wgpu::YCbCrVkDescriptor yCbCrDesc = {};
     yCbCrDesc.externalFormat = 1;
-    samplerDesc.nextInChain = &yCbCrDesc;
+    utils::MakeYcbcrSamplerDesc(samplerDesc, yCbCrDesc);
     wgpu::Sampler samplerYCbCr = device.CreateSampler(&samplerDesc);
 
     for (auto mutator : {Mutator::Update, Mutator::InsertBinding}) {

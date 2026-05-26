@@ -233,6 +233,10 @@ int16_t ConvertFloatToSnorm16(float value);
 
 uint16_t ConvertFloatToUnorm16(float value);
 
+// Makes `samplerDesc` into a descriptor for a YCbCr sampler. This chains the YCbCrVkDescriptor and
+// updates parameters to be correctly for a YCbCr sampler.
+void MakeYcbcrSamplerDesc(wgpu::SamplerDescriptor& samplerDesc, wgpu::YCbCrVkDescriptor& ycbcrDesc);
+
 }  // namespace dawn::utils
 
 #endif  // SRC_DAWN_UTILS_WGPUHELPERS_H_

@@ -531,7 +531,7 @@ TEST_F(ObjectCachingTest, SamplerDeduplication) {
     wgpu::SamplerDescriptor otherSamplerDescYCbCrSampling;
     wgpu::YCbCrVkDescriptor yCbCrDesc;
     yCbCrDesc.externalFormat = 1;
-    otherSamplerDescYCbCrSampling.nextInChain = &yCbCrDesc;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescYCbCrSampling, yCbCrDesc);
     wgpu::Sampler otherSamplerYCbCrSampling = device.CreateSampler(&otherSamplerDescYCbCrSampling);
 
     EXPECT_NE(sampler.Get(), otherSamplerAddressModeU.Get());
@@ -552,85 +552,85 @@ TEST_F(ObjectCachingTest, YCbCrSamplerDeduplication) {
     wgpu::SamplerDescriptor samplerDesc;
     wgpu::YCbCrVkDescriptor yCbCrDesc = {};
     yCbCrDesc.externalFormat = 1;
-    samplerDesc.nextInChain = &yCbCrDesc;
+    utils::MakeYcbcrSamplerDesc(samplerDesc, yCbCrDesc);
     wgpu::Sampler sampler = device.CreateSampler(&samplerDesc);
 
     wgpu::SamplerDescriptor sameSamplerDesc;
     wgpu::YCbCrVkDescriptor sameYCbCrDesc = yCbCrDesc;
-    sameSamplerDesc.nextInChain = &sameYCbCrDesc;
+    utils::MakeYcbcrSamplerDesc(sameSamplerDesc, sameYCbCrDesc);
     wgpu::Sampler sameSampler = device.CreateSampler(&sameSamplerDesc);
 
     wgpu::SamplerDescriptor otherSamplerDescVkFormat;
     wgpu::YCbCrVkDescriptor otherYCbCrDescVkFormat = yCbCrDesc;
     otherYCbCrDescVkFormat.vkFormat = 42;
-    otherSamplerDescVkFormat.nextInChain = &otherYCbCrDescVkFormat;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescVkFormat, otherYCbCrDescVkFormat);
     wgpu::Sampler otherSamplerVkFormat = device.CreateSampler(&otherSamplerDescVkFormat);
 
     wgpu::SamplerDescriptor otherSamplerDescModel;
     wgpu::YCbCrVkDescriptor otherYCbCrDescModel = yCbCrDesc;
     otherYCbCrDescModel.vkYCbCrModel = 3;
-    otherSamplerDescModel.nextInChain = &otherYCbCrDescModel;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescModel, otherYCbCrDescModel);
     wgpu::Sampler otherSamplerModel = device.CreateSampler(&otherSamplerDescModel);
 
     wgpu::SamplerDescriptor otherSamplerDescRange;
     wgpu::YCbCrVkDescriptor otherYCbCrDescRange = yCbCrDesc;
     otherYCbCrDescRange.vkYCbCrRange = 3;
-    otherSamplerDescRange.nextInChain = &otherYCbCrDescRange;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescRange, otherYCbCrDescRange);
     wgpu::Sampler otherSamplerRange = device.CreateSampler(&otherSamplerDescRange);
 
     wgpu::SamplerDescriptor otherSamplerDescRed;
     wgpu::YCbCrVkDescriptor otherYCbCrDescRed = yCbCrDesc;
     otherYCbCrDescRed.vkComponentSwizzleRed = 3;
-    otherSamplerDescRed.nextInChain = &otherYCbCrDescRed;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescRed, otherYCbCrDescRed);
     wgpu::Sampler otherSamplerRed = device.CreateSampler(&otherSamplerDescRed);
 
     wgpu::SamplerDescriptor otherSamplerDescGreen;
     wgpu::YCbCrVkDescriptor otherYCbCrDescGreen = yCbCrDesc;
     otherYCbCrDescGreen.vkComponentSwizzleGreen = 3;
-    otherSamplerDescGreen.nextInChain = &otherYCbCrDescGreen;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescGreen, otherYCbCrDescGreen);
     wgpu::Sampler otherSamplerGreen = device.CreateSampler(&otherSamplerDescGreen);
 
     wgpu::SamplerDescriptor otherSamplerDescBlue;
     wgpu::YCbCrVkDescriptor otherYCbCrDescBlue = yCbCrDesc;
     otherYCbCrDescBlue.vkComponentSwizzleBlue = 3;
-    otherSamplerDescBlue.nextInChain = &otherYCbCrDescBlue;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescBlue, otherYCbCrDescBlue);
     wgpu::Sampler otherSamplerBlue = device.CreateSampler(&otherSamplerDescBlue);
 
     wgpu::SamplerDescriptor otherSamplerDescAlpha;
     wgpu::YCbCrVkDescriptor otherYCbCrDescAlpha = yCbCrDesc;
     otherYCbCrDescAlpha.vkComponentSwizzleAlpha = 3;
-    otherSamplerDescAlpha.nextInChain = &otherYCbCrDescAlpha;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescAlpha, otherYCbCrDescAlpha);
     wgpu::Sampler otherSamplerAlpha = device.CreateSampler(&otherSamplerDescAlpha);
 
     wgpu::SamplerDescriptor otherSamplerDescXChromaOffset;
     wgpu::YCbCrVkDescriptor otherYCbCrDescXChromaOffset = yCbCrDesc;
     otherYCbCrDescXChromaOffset.vkXChromaOffset = 3;
-    otherSamplerDescXChromaOffset.nextInChain = &otherYCbCrDescXChromaOffset;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescXChromaOffset, otherYCbCrDescXChromaOffset);
     wgpu::Sampler otherSamplerXChromaOffset = device.CreateSampler(&otherSamplerDescXChromaOffset);
 
     wgpu::SamplerDescriptor otherSamplerDescYChromaOffset;
     wgpu::YCbCrVkDescriptor otherYCbCrDescYChromaOffset = yCbCrDesc;
     otherYCbCrDescYChromaOffset.vkYChromaOffset = 3;
-    otherSamplerDescYChromaOffset.nextInChain = &otherYCbCrDescYChromaOffset;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescYChromaOffset, otherYCbCrDescYChromaOffset);
     wgpu::Sampler otherSamplerYChromaOffset = device.CreateSampler(&otherSamplerDescYChromaOffset);
 
     wgpu::SamplerDescriptor otherSamplerDescChromaFilter;
     wgpu::YCbCrVkDescriptor otherYCbCrDescChromaFilter = yCbCrDesc;
     otherYCbCrDescChromaFilter.vkChromaFilter = wgpu::FilterMode::Linear;
-    otherSamplerDescChromaFilter.nextInChain = &otherYCbCrDescChromaFilter;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescChromaFilter, otherYCbCrDescChromaFilter);
     wgpu::Sampler otherSamplerChromaFilter = device.CreateSampler(&otherSamplerDescChromaFilter);
 
     wgpu::SamplerDescriptor otherSamplerDescReconstruction;
     wgpu::YCbCrVkDescriptor otherYCbCrDescReconstruction = yCbCrDesc;
     otherYCbCrDescReconstruction.forceExplicitReconstruction = true;
-    otherSamplerDescReconstruction.nextInChain = &otherYCbCrDescReconstruction;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescReconstruction, otherYCbCrDescReconstruction);
     wgpu::Sampler otherSamplerReconstruction =
         device.CreateSampler(&otherSamplerDescReconstruction);
 
     wgpu::SamplerDescriptor otherSamplerDescExternalFormat;
     wgpu::YCbCrVkDescriptor otherYCbCrDescExternalFormat = yCbCrDesc;
     otherYCbCrDescExternalFormat.externalFormat = 42;
-    otherSamplerDescExternalFormat.nextInChain = &otherYCbCrDescExternalFormat;
+    utils::MakeYcbcrSamplerDesc(otherSamplerDescExternalFormat, otherYCbCrDescExternalFormat);
     wgpu::Sampler otherSamplerExternalFormat =
         device.CreateSampler(&otherSamplerDescExternalFormat);
 
