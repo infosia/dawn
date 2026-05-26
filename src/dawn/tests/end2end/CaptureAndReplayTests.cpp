@@ -2800,7 +2800,6 @@ TEST_P(CaptureAndReplaySurfaceTests, TestSurface) {
 
     // --- capture ---
     auto recorder = Recorder::CreateAndStart(device);
-    recorder->SetSurfaces({surface});
 
     surface.Configure(&config);
 
@@ -2820,9 +2819,15 @@ TEST_P(CaptureAndReplaySurfaceTests, TestSurface) {
     EXPECT_EQ(surfaceInfos[0].width, 1u);
     EXPECT_EQ(surfaceInfos[0].height, 1u);
 
-    auto replay = recorder->Replay(device);
+    wgpu::Surface replaySurface = wgpu::glfw::CreateSurfaceForWindow(instance, mWindow.get());
+    wgpu::SurfaceConfiguration replayConfig = config;
+    replayConfig.device = device;
+    replaySurface.Configure(&replayConfig);
 
-    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Texture>("backbuffer") != nullptr);
+    recorder->SetSurfaces({replaySurface});
+    auto replay = recorder->CreateReplay(device);
+
+    EXPECT_EQ(replay->PlayFrame(), dawn::replay::ReplayStatus::Continuing);
 
     // Explicitly reset the recorder object to release all replayed resources (like Surface)
     // before the test ends and the device count check is performed.
@@ -2843,7 +2848,6 @@ TEST_P(CaptureAndReplaySurfaceTests, MultiFrame) {
 
     // --- capture ---
     auto recorder = Recorder::CreateAndStart(device);
-    recorder->SetSurfaces({surface});
 
     surface.Configure(&config);
 
@@ -2852,6 +2856,7 @@ TEST_P(CaptureAndReplaySurfaceTests, MultiFrame) {
         wgpu::SurfaceTexture surfaceTexture;
         surface.GetCurrentTexture(&surfaceTexture);
         surfaceTexture.texture.SetLabel("backbuffer1");
+
         surface.Present();
     }
 
@@ -2860,10 +2865,19 @@ TEST_P(CaptureAndReplaySurfaceTests, MultiFrame) {
         wgpu::SurfaceTexture surfaceTexture;
         surface.GetCurrentTexture(&surfaceTexture);
         surfaceTexture.texture.SetLabel("backbuffer2");
+
         surface.Present();
     }
 
     // --- replay ---
+    recorder->EndCapture();
+
+    wgpu::Surface replaySurface = wgpu::glfw::CreateSurfaceForWindow(instance, mWindow.get());
+    wgpu::SurfaceConfiguration replayConfig = config;
+    replayConfig.device = device;
+    replaySurface.Configure(&replayConfig);
+
+    recorder->SetSurfaces({replaySurface});
     auto replay = recorder->CreateReplay(device);
 
     // Replay Frame 1
