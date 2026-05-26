@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7982ce5f_ca745444",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-26T02:59:51Z",
+      "side": 1,
+      "message": "At some point we will probably have a proper DCE pass (crbug.com/379872389), which would make this unnecessary. But this seems like a reasonable workaround in the meantime.",
+      "revId": "81ad3fa7ee2436f8c9f3a1421550b0197cac0ebc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
