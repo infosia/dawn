@@ -16,6 +16,76 @@
       "message": "PTAL.",
       "revId": "828b0d78d39610e53306f325d1e124e3328ab2d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfcac56c_bebc2204",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-26T02:11:08Z",
+      "side": 1,
+      "message": "now",
+      "fixSuggestions": [
+        {
+          "fixId": "ee346db7_3f515984",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/resource_table.cc",
+              "range": {
+                "startLine": 200,
+                "startChar": 0,
+                "endLine": 201,
+                "endChar": 0
+              },
+              "replacement": "        // now replace all the sampled calls.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "828b0d78d39610e53306f325d1e124e3328ab2d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03fb4d05_20f393db",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-26T02:11:08Z",
+      "side": 1,
+      "message": "matches",
+      "fixSuggestions": [
+        {
+          "fixId": "75673858_12e56cf1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/resource_table.cc",
+              "range": {
+                "startLine": 400,
+                "startChar": 0,
+                "endLine": 401,
+                "endChar": 0
+              },
+              "replacement": "    // We have a bind-less texture/sampler, we need to verify the ResourceKind matches what we need\n"
+            }
+          ]
+        }
+      ],
+      "revId": "828b0d78d39610e53306f325d1e124e3328ab2d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
