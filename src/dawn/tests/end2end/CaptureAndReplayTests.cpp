@@ -2800,7 +2800,6 @@ TEST_P(CaptureAndReplaySurfaceTests, TestSurface) {
 
     // --- capture ---
     auto recorder = Recorder::CreateAndStart(device);
-    recorder->SetSurfaces({surface});
 
     surface.Configure(&config);
 
@@ -2819,6 +2818,10 @@ TEST_P(CaptureAndReplaySurfaceTests, TestSurface) {
     EXPECT_EQ(surfaceInfos.size(), 1u);
     EXPECT_EQ(surfaceInfos[0].width, 1u);
     EXPECT_EQ(surfaceInfos[0].height, 1u);
+
+    wgpu::Surface replaySurface = wgpu::glfw::CreateSurfaceForWindow(instance, mWindow.get());
+
+    recorder->SetSurfaces({replaySurface});
 
     auto replay = recorder->Replay(device);
 
@@ -2843,7 +2846,6 @@ TEST_P(CaptureAndReplaySurfaceTests, MultiFrame) {
 
     // --- capture ---
     auto recorder = Recorder::CreateAndStart(device);
-    recorder->SetSurfaces({surface});
 
     surface.Configure(&config);
 
@@ -2864,6 +2866,11 @@ TEST_P(CaptureAndReplaySurfaceTests, MultiFrame) {
     }
 
     // --- replay ---
+    recorder->EndCapture();
+
+    wgpu::Surface replaySurface = wgpu::glfw::CreateSurfaceForWindow(instance, mWindow.get());
+
+    recorder->SetSurfaces({replaySurface});
     auto replay = recorder->CreateReplay(device);
 
     // Replay Frame 1
