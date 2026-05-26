@@ -33,6 +33,10 @@ void TestCheckedCast() {
     // TODO(crbug.com/515563577): improve error message for DAWN_CHECK failures in consteval
     { [[maybe_unused]] constexpr uint32_t x = checked_cast<uint32_t>(uint64_t{0x0'FFFF'FFFF}); }
     { [[maybe_unused]] constexpr uint32_t x = checked_cast<uint32_t>(uint64_t{0x1'0000'0000}); }  // expected-error {{must be initialized by a constant expression}}
+    { [[maybe_unused]] constexpr uint32_t x = checked_cast<uint32_t>(int16_t{-1}); }  // expected-error {{must be initialized by a constant expression}}
+
+    { [[maybe_unused]] constexpr uint32_t x = checked_cast<uint32_t>(int64_t{0x0'FFFF'FFFF}); }
+    { [[maybe_unused]] constexpr uint32_t x = checked_cast<uint32_t>(int64_t{0x1'0000'0000}); }  // expected-error {{must be initialized by a constant expression}}
 }
 
 }
