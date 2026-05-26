@@ -154,6 +154,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "64cdfccb_6d896e70",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-26T13:10:45Z",
+      "side": 1,
+      "message": "Yes it\u0027s still a TODO as far as I know.\n\nThe motivation for validating this out in Dawn is that otherwise we have conditionalize the sample call in the Tint transform for that scenario, which may negatively impact performance. If Tint can assume that Dawn rejects that particular combination at pipeline-creation time then we don\u0027t need to check the sampler kind at all.\n\nIf we don\u0027t think conditionalizing the call will be performance impacting then we can certainly leave it as a dynamic error.",
+      "parentUuid": "c5008ea7_d8f97af1",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 78,
+        "endChar": 68
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9559bfd8_25cf18c2",
         "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
         "patchSetId": 1
