@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "050fde36_a52b2c4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-26T13:49:50Z",
+      "side": 1,
+      "message": "Funnily the nothrow in CommandAllocator is from before the opensourcing of Dawn.",
+      "revId": "0c4a377c4fc309cac2bf3bc70c7577654d68a277",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
