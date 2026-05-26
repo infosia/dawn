@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d30ccd1d_9901ea18",
+        "filename": "src/dawn/common/ityp_heap_array.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T22:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f64a3a8_0119978f",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 25
+      },
+      "revId": "a8c261cde9ae23812da09997b8224607ab04f4d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15750d45_cc5d2d7f",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-04-29T13:47:30Z",
       "side": 1,
       "message": "if this cast fails, it should fail the allocation rather than crash",
+      "range": {
+        "startLine": 164,
+        "startChar": 60,
+        "endLine": 164,
+        "endChar": 72
+      },
+      "revId": "a8c261cde9ae23812da09997b8224607ab04f4d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27604876_3df65a94",
+        "filename": "src/dawn/common/ityp_heap_array.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T22:07:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15750d45_cc5d2d7f",
       "range": {
         "startLine": 164,
         "startChar": 60,
