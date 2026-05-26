@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69b444b9_eb2aee67",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-26T20:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "677fec28_63ab6be7",
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44060148_46a852e6",
@@ -48,6 +66,30 @@
       "writtenOn": "2026-05-25T20:36:37Z",
       "side": 1,
       "message": "Nit: After reading the rest of the paragraph I see that `getResource` here refers to a `getResource` call that returns a texture, but that wasn\u0027t immediately clear since getResource can return either a texture or a sampler (likewise it\u0027s swapped in number `6` where `getResource` now refers to a sampler).\n\nIn my mind I\u0027m using the phrases \"resource texture\", \"resource sampler\", \"bindful texture\", and \"bindful sampler\" to keep track of what is coming from where. But also \"resource texture\" is kind vague. Maybe \"resource table texture\", but that\u0027s kinda long...",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 55
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cba1a02_25ab71cb",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-26T20:10:56Z",
+      "side": 1,
+      "message": "I made them all explicit `getResource\u003ctexture_*\u003e` or `getResource\u003csampler\u003e`",
+      "parentUuid": "44060148_46a852e6",
       "range": {
         "startLine": 67,
         "startChar": 8,
@@ -119,6 +161,30 @@
       "side": 1,
       "message": "We can only replace the texture with a filterable one if there is one. What happens if we end up with `texture_2d\u003cu32\u003e, sampler` where the sampler is filtering? We have to swap the sampler for the non_filtering variant because there is no filterable u32 texture.",
       "parentUuid": "89f3832d_7bea9ea7",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 11
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4359b4f9_98f76319",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-26T20:10:56Z",
+      "side": 1,
+      "message": "Re-worked so we return a default 0 value instead of trying to swap texture/sampler.",
+      "parentUuid": "e2f99b43_fa4c12a2",
       "range": {
         "startLine": 71,
         "startChar": 7,
@@ -224,6 +290,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa4878bf_53b2086a",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-26T20:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f2dce8_fe891b07",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 78,
+        "endChar": 68
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9559bfd8_25cf18c2",
@@ -261,6 +351,30 @@
       "side": 1,
       "message": "I _think_ it currently always binds all the defaults but it doesn\u0027t actually need too. It just needs to bind defaults for things that are used.",
       "parentUuid": "9559bfd8_25cf18c2",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 74
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "583664b5_c4d9b3f5",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-26T20:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf0403da_3fc0ad6f",
       "range": {
         "startLine": 86,
         "startChar": 18,
@@ -318,6 +432,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3952e227_ec0f05b4",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-26T20:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c316c152_072ce961",
+      "range": {
+        "startLine": 95,
+        "startChar": 97,
+        "endLine": 96,
+        "endChar": 9
+      },
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f7df0ef2_1b5c8209",
@@ -331,6 +469,24 @@
       "writtenOn": "2026-05-25T19:53:55Z",
       "side": 1,
       "message": "I think one thing missing from this function parameter handling. If we get a resource and then pass it to a function call, and then use that texture. We need to get the right information through which we don\u0027t do.\n\nAll the checks will be the same as the above I believe, just may want to note how it flows through the function param.",
+      "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e599c503_0e4e3c71",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-26T20:10:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f7df0ef2_1b5c8209",
       "revId": "8d9212e2183340d5cd814cfa74d0cfc2d5741cdc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
