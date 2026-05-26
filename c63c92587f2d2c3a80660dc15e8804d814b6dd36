@@ -51,6 +51,24 @@
       "parentUuid": "5f05b29a_1b29198e",
       "revId": "c63c92587f2d2c3a80660dc15e8804d814b6dd36",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d693c341_018258e4",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-26T13:24:34Z",
+      "side": 1,
+      "message": "yea, having it built into dawn_unittests is fine, I just prefer if it lived beside the source files (makes it a lot easier to find tests).",
+      "parentUuid": "9ad956d0_8ae3e851",
+      "revId": "c63c92587f2d2c3a80660dc15e8804d814b6dd36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
