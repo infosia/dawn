@@ -392,13 +392,13 @@ TEST(SerializeTests, StdUnorderedSet) {
 // Test that ByteVectorSink serializes ityp::array as expected.
 TEST(SerializeTests, ItypArray) {
     const ityp::array<TypedIntegerForTest, TypedIntegerForTest, 4> input = {
-        TypedIntegerForTest(99), TypedIntegerForTest(4), TypedIntegerForTest(6),
-        TypedIntegerForTest(1)};
+        TypedIntegerForTest(99u), TypedIntegerForTest(4u), TypedIntegerForTest(6u),
+        TypedIntegerForTest(1u)};
 
     // Expect all values.
     ByteVectorSink expected;
-    StreamIn(&expected, TypedIntegerForTest(99), TypedIntegerForTest(4), TypedIntegerForTest(6),
-             TypedIntegerForTest(1));
+    StreamIn(&expected, TypedIntegerForTest(99u), TypedIntegerForTest(4u), TypedIntegerForTest(6u),
+             TypedIntegerForTest(1u));
 
     EXPECT_CACHE_KEY_EQ(input, expected);
 }
@@ -657,7 +657,7 @@ static auto kStreamValueVectorParams = std::make_tuple(
     // Test pairs.
     std::vector<std::pair<int, float>>{{1, 3.}, {6, 4.}},
     // Test TypedIntegers
-    std::vector<TypedIntegerForTest>{TypedIntegerForTest(42), TypedIntegerForTest(13)},
+    std::vector<TypedIntegerForTest>{TypedIntegerForTest(42u), TypedIntegerForTest(13u)},
     // Test enums
     std::vector<wgpu::TextureUsage>{wgpu::TextureUsage::CopyDst,
                                     wgpu::TextureUsage::RenderAttachment},
