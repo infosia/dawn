@@ -87,6 +87,14 @@ void Register(const IRFuzzer& fuzzer) {
                 return;
             }
 
+            // Skip this fuzzer case if the component being fuzzed does not support any of the
+            // properties used by the module.
+            for (auto prop : fuzzer.unsupported_properties) {
+                if (ir.Get().properties.Contains(prop)) {
+                    return;
+                }
+            }
+
             // Validate the IR against the fuzzer's preconditions before running.
             // We don't consider validation failure here to be an issue, as it only signals that
             // there is a bug somewhere in the components run above. Those components have their own
