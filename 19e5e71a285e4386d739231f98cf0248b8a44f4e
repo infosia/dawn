@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "058fdbe5_f1b14452",
+        "filename": "src/dawn/native/Sampler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-26T20:15:20Z",
+      "side": 1,
+      "message": "Added a test. PTAL.",
+      "parentUuid": "c29706cb_00f160d0",
+      "revId": "19e5e71a285e4386d739231f98cf0248b8a44f4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3009487c_02cc75c8",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-05-17T18:39:55Z",
       "side": 1,
       "message": "Must be 1 most likely: see the default and CQ failures\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/dawn.json;drc\u003d9162c191dc179b9fb1d92a6e195d1416f9bfb523;l\u003d3752",
+      "revId": "19e5e71a285e4386d739231f98cf0248b8a44f4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6f44abb_bee49b67",
+        "filename": "src/dawn/native/Sampler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-26T20:15:20Z",
+      "side": 1,
+      "message": "Oh right that should be \u003e 1 here!",
+      "parentUuid": "3009487c_02cc75c8",
       "revId": "19e5e71a285e4386d739231f98cf0248b8a44f4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
