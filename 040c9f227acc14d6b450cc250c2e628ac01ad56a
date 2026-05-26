@@ -33,6 +33,92 @@
       "message": "Is CacheKey actually string-like? I know string_view is technically fine for any string of chars but it could be confusing if it contained a `\\0` for example. Might make more sense to just use a span.",
       "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b72e01a9_c65b5d16",
+        "filename": "src/dawn/native/CacheKey.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-26T14:25:17Z",
+      "side": 1,
+      "message": "It\u0027s not string-like and contains null terminators. I agree we should treat them both as a span.",
+      "parentUuid": "f576bb67_4e62622f",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65212fe9_d6ef4436",
+        "filename": "src/dawn/tests/unittests/native/BlobCacheTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-26T14:25:17Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be included in new code.",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90375568_b8aa23d4",
+        "filename": "src/dawn/tests/unittests/native/BlobCacheTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-26T14:25:17Z",
+      "side": 1,
+      "message": "const",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64b2e8cd_5b47bfa1",
+        "filename": "src/dawn/tests/unittests/native/BlobCacheTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-26T14:25:17Z",
+      "side": 1,
+      "message": "The test copies into `storedData` and then out of it again. That verifies the test is written properly but nothing about the BlobCache. You should be able to just copy from `value` here instead?",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54e5501b_8393bd88",
+        "filename": "src/dawn/tests/unittests/native/BlobCacheTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-05-26T14:25:17Z",
+      "side": 1,
+      "message": "Use std::ranges::equal() instead",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
