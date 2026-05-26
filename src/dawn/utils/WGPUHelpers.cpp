@@ -509,4 +509,15 @@ uint16_t ConvertFloatToUnorm16(float value) {
     return static_cast<uint16_t>(clampedValue);
 }
 
+#ifndef __EMSCRIPTEN__
+void MakeYcbcrSamplerDesc(wgpu::SamplerDescriptor& samplerDesc,
+                          wgpu::YCbCrVkDescriptor& ycbcrDesc) {
+    samplerDesc.addressModeU = wgpu::AddressMode::ClampToEdge;
+    samplerDesc.addressModeV = wgpu::AddressMode::ClampToEdge;
+    samplerDesc.addressModeW = wgpu::AddressMode::ClampToEdge;
+    samplerDesc.maxAnisotropy = 0;
+    samplerDesc.nextInChain = &ycbcrDesc;
+}
+#endif  // __EMSCRIPTEN__
+
 }  // namespace dawn::utils

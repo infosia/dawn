@@ -59,7 +59,7 @@ class YCbCrVulkanSamplersWithoutFeatureTest : public ValidationTest {
 TEST_F(YCbCrVulkanSamplersWithoutFeatureTest, YCbCrSamplerNotSupported) {
     wgpu::SamplerDescriptor samplerDesc = {};
     wgpu::YCbCrVkDescriptor yCbCrDesc = {};
-    samplerDesc.nextInChain = &yCbCrDesc;
+    utils::MakeYcbcrSamplerDesc(samplerDesc, yCbCrDesc);
 
     ASSERT_DEVICE_ERROR(device.CreateSampler(&samplerDesc));
 }
@@ -106,7 +106,7 @@ class YCbCrVulkanSamplersTest : public ValidationTest {
 TEST_F(YCbCrVulkanSamplersTest, YCbCrSamplerRequiresVkOrExternalFormat) {
     wgpu::SamplerDescriptor samplerDesc = {};
     wgpu::YCbCrVkDescriptor yCbCrDesc = {};
-    samplerDesc.nextInChain = &yCbCrDesc;
+    utils::MakeYcbcrSamplerDesc(samplerDesc, yCbCrDesc);
 
     // Error case: no VkFormat nor ExternalFormat specified.
     ASSERT_DEVICE_ERROR(device.CreateSampler(&samplerDesc));
@@ -701,7 +701,7 @@ TEST_F(BothYCbCrExtensionTest, CreateBindGroupWithYCbCrView) {
 
     // Set up the BGL with the static YCbCr sampler.
     wgpu::SamplerDescriptor sDesc = {};
-    sDesc.nextInChain = &ycbcrDesc;
+    utils::MakeYcbcrSamplerDesc(sDesc, ycbcrDesc);
     wgpu::Sampler ycbcrSampler = device.CreateSampler(&sDesc);
 
     std::vector<wgpu::BindGroupLayoutEntry> entries;
