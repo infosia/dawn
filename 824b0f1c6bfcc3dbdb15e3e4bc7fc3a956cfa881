@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc525376_e8b605f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T19:03:34Z",
+      "side": 1,
+      "message": "Sorry, I missed that\u0027s already done (it\u0027s point 3).",
+      "parentUuid": "a50aaf09_eb9edbe8",
+      "revId": "824b0f1c6bfcc3dbdb15e3e4bc7fc3a956cfa881",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b30e63d5_f8468f67",
@@ -54,6 +72,23 @@
       "writtenOn": "2026-05-26T12:57:16Z",
       "side": 1,
       "message": "PTAL!",
+      "revId": "824b0f1c6bfcc3dbdb15e3e4bc7fc3a956cfa881",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e8d528c_1bc261b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-26T19:03:34Z",
+      "side": 1,
+      "message": "LGTM. Loko is out one more day but I think feel free to land.",
       "revId": "824b0f1c6bfcc3dbdb15e3e4bc7fc3a956cfa881",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
