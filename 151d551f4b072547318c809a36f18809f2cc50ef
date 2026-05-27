@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e5188f6_b8ccd7cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T09:08:48Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "151d551f4b072547318c809a36f18809f2cc50ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf6f2c2a_159651fb",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T09:08:48Z",
+      "side": 1,
+      "message": "does this work? It would allow avoiding type_traits\n```suggestion\n            static_cast\u003cunsigned Dst\u003e(std::numeric_limits\u003cDst\u003e::max());\n```",
+      "range": {
+        "startLine": 60,
+        "startChar": 24,
+        "endLine": 60,
+        "endChar": 49
+      },
+      "revId": "151d551f4b072547318c809a36f18809f2cc50ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
