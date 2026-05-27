@@ -68,6 +68,24 @@
       "message": "Do we _really_ need a `dawn::Span`? Seems quite painful and we\u0027re going to have to decide whether to use it in `webgpu_cpp.h` too.\n\nI\u0027d prefer to have some config file that somehow tells the plugin some extra symbols to consider unsafe (like `::std::span::span(ptr, size)`)",
       "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d967aef_134ef16e",
+        "filename": "src/utils/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T06:07:31Z",
+      "side": 1,
+      "message": "Actually `-Wunsafe-buffer-usage-in-container` _does_ catch this (my IDE shows it even though the build does not have that enabled). Maybe we can do that instead. Enabling it is tracked in https://crbug.com/515525491 but I just tried briefly to enable it, and while it does seem to _work_ it\u0027s failing silently [similar to described here](https://source.chromium.org/chromium/chromium/src/+/main:build/config/clang/BUILD.gn;l\u003d125-132;drc\u003d72229319c4bc83a6cad7d1cc2b325b58418ff12a). Possibly there\u0027s an issue where the unsafe-buffers plugin and the clang builtin support are in conflict...?",
+      "parentUuid": "08561505_3ac8ec88",
+      "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
