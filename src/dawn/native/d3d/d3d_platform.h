@@ -31,12 +31,12 @@
 // Pre-emptively include windows.h but remove its macros so that they aren't set when declaring the
 // COM interfaces. Otherwise ID3D12InfoQueue::GetMessage would be either GetMessageA or GetMessageW
 // which causes compilation errors.
-#include "dawn/common/windows_with_undefs.h"
-
 #include <d3d11_4.h>
 #include <dxcapi.h>
 #include <dxgi1_6.h>
 #include <wrl.h>
+
+#include "src/dawn/common/windows_with_undefs.h"
 
 // DXProgrammableCapture.h takes a dependency on other platform header
 // files, so it must be defined after them.
