@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18476721_e042e59e",
+        "filename": "src/dawn/common/Assert.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T09:17:24Z",
+      "side": 1,
+      "message": "?",
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be415e09_eb3e93bf",
+        "filename": "src/dawn/native/BlitBufferToDepthStencil.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T09:17:24Z",
+      "side": 1,
+      "message": "This is a bit unfortunate and comes from a decision that we made to have `TexelCount` be a uint64_t so that we could multiply them to be a texel volume and keep the same time. That might be useful to revisit later somehow both to avoid the casts added in this CL, but also because when we\u0027ll want to type the input API of Dawn, the size change would cause API incompatibility.",
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
