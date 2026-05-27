@@ -67,6 +67,24 @@
       "message": "Dan was asking to put tests next to the files in `src/utils`, what do you think of having this be `src/utils/numeric.nc`? Or do we want a subdirectory of sorts?",
       "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b939851_cb30c02f",
+        "filename": "src/dawn/tests/unittests/nocompile/Numeric.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-27T11:49:10Z",
+      "side": 1,
+      "message": "My preference would be beside the file under test. If it becomes untenable we can always move them in the future. The reason begin, it\u0027s a lot easier to find a `numerics_test.nc` file right beside the `numerics.cc` then to have to grep around to find where it lives.",
+      "parentUuid": "a57db2a8_d15fbd71",
+      "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
