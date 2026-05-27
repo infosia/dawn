@@ -30,8 +30,8 @@
 #include <string>
 #include <utility>
 
-#include "dawn/native/D3DBackend.h"
 #include "dawn/platform/DawnPlatform.h"
+#include "src/dawn/native/D3DBackend.h"
 #include "src/dawn/native/d3d/D3DError.h"
 #include "src/dawn/native/d3d11/BufferD3D11.h"
 #include "src/dawn/native/d3d11/DeviceD3D11.h"
