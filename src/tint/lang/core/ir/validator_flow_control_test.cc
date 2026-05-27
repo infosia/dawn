@@ -58,7 +58,7 @@ TEST_F(IR_ValidatorTest, Discard_TooManyOperands) {
         b.Return(ep);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: discard: expected exactly 0 operands, got 1
@@ -81,7 +81,7 @@ TEST_F(IR_ValidatorTest, Discard_TooManyResults) {
         b.Return(ep);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: discard: expected exactly 0 results, got 1
@@ -93,7 +93,7 @@ TEST_F(IR_ValidatorTest, Discard_TooManyResults) {
 TEST_F(IR_ValidatorTest, Discard_RootBlock) {
     mod.root_block->Append(b.Discard());
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -117,7 +117,7 @@ TEST_F(IR_ValidatorTest, Discard_NotInFragmentViaFunction) {
         b.Return(ep);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: discard: cannot be used in a compute shader
@@ -134,7 +134,7 @@ TEST_F(IR_ValidatorTest, Discard_NotInFragmentViaEntryPoint) {
         b.Return(ep);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: discard: cannot be used in a compute shader
@@ -157,7 +157,7 @@ TEST_F(IR_ValidatorTest, FragmentOnlyBuiltin_NotInFragment) {
         b.Return(ep);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:14 error: dpdx: cannot be used in a compute shader
@@ -179,7 +179,7 @@ TEST_F(IR_ValidatorTest, ComputeOnlyBuiltin_NotInCompute) {
         b.Return(ep);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -194,7 +194,7 @@ TEST_F(IR_ValidatorTest, Terminate_RootBlock) {
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     mod.root_block->Append(b.TerminateInvocation());
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -212,7 +212,7 @@ TEST_F(IR_ValidatorTest, Terminate_MissingResult) {
         r->SetResults(Vector{b.InstructionResult(ty.i32())});
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -230,7 +230,7 @@ TEST_F(IR_ValidatorTest, Block_TerminatorInMiddle) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: return: must be the last instruction in the block
@@ -244,7 +244,8 @@ TEST_F(IR_ValidatorTest, If_RootBlock) {
     if_->True()->Append(b.Unreachable());
     mod.root_block->Append(if_);
 
-    auto res = ir::Validate(mod, core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -263,7 +264,7 @@ TEST_F(IR_ValidatorTest, If_EmptyFalse) {
     f->Block()->Append(if_);
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -277,7 +278,7 @@ TEST_F(IR_ValidatorTest, If_TrueMultiInBlock) {
     f->Block()->Append(if_);
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: if: if true block must be a block
@@ -297,7 +298,7 @@ TEST_F(IR_ValidatorTest, If_FalseMultiInBlock) {
     f->Block()->Append(if_);
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: if: if false block must be a block
@@ -314,7 +315,7 @@ TEST_F(IR_ValidatorTest, If_EmptyTrue) {
     f->Block()->Append(if_);
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:4:7 error: block does not end in a terminator instruction
@@ -333,7 +334,7 @@ TEST_F(IR_ValidatorTest, If_ConditionIsBool) {
     f->Block()->Append(if_);
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:8 error: if: condition type must be 'bool'
@@ -352,7 +353,7 @@ TEST_F(IR_ValidatorTest, If_ConditionIsNullptr) {
     f->Block()->Append(if_);
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:3:8 error: if: operand is undefined
     if undef [t: $B2, f: $B3] {  # if_1
@@ -372,7 +373,7 @@ TEST_F(IR_ValidatorTest, If_NullResult) {
     f->Block()->Append(if_);
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:3:5 error: if: result is undefined
     undef = if true [t: $B2, f: $B3] {  # if_1
@@ -385,7 +386,8 @@ TEST_F(IR_ValidatorTest, Loop_RootBlock) {
     l->Body()->Append(b.ExitLoop(l));
     mod.root_block->Append(l);
 
-    auto res = ir::Validate(mod, core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -406,7 +408,7 @@ TEST_F(IR_ValidatorTest, Loop_InitializerNotTerminatedWithNextIteration) {
     sb.Append(l);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -423,7 +425,7 @@ TEST_F(IR_ValidatorTest, Loop_OnlyBody) {
     sb.Append(l);
     sb.Return(f);
 
-    EXPECT_EQ(ir::Validate(mod), Success);
+    EXPECT_EQ(ir::Validate(mod, ErrorSource::kIr), Success);
 }
 
 TEST_F(IR_ValidatorTest, Loop_EmptyBody) {
@@ -433,7 +435,7 @@ TEST_F(IR_ValidatorTest, Loop_EmptyBody) {
     sb.Append(b.Loop());
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:4:7 error: block does not end in a terminator instruction
@@ -453,7 +455,7 @@ TEST_F(IR_ValidatorTest, Loop_NullResult) {
     f->Block()->Append(loop);
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:3:5 error: loop: result is undefined
     undef = loop [b: $B2] {  # loop_1
@@ -470,7 +472,7 @@ TEST_F(IR_ValidatorTest, Loop_VoidResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: loop: result type cannot be void
@@ -488,7 +490,7 @@ TEST_F(IR_ValidatorTest, Loop_PtrResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: loop: result type cannot be a pointer
@@ -506,7 +508,7 @@ TEST_F(IR_ValidatorTest, Loop_ContinuingEmptyWithParams) {
     f->Block()->Append(loop);
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -523,7 +525,7 @@ TEST_F(IR_ValidatorTest, Loop_BodyEmptyWithParams) {
     f->Block()->Append(loop);
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     // Empty blocks are not allowed for the loop body, so the IR is rejected before the params check
     EXPECT_THAT(res.Failure().reason,
@@ -542,7 +544,7 @@ TEST_F(IR_ValidatorTest, Loop_TooManyOperands) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: loop: expected exactly 0 operands, got 1
@@ -557,7 +559,8 @@ TEST_F(IR_ValidatorTest, Switch_RootBlock) {
     def->Append(b.ExitSwitch(switch_));
     mod.root_block->Append(switch_);
 
-    auto res = ir::Validate(mod, core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -576,7 +579,7 @@ TEST_F(IR_ValidatorTest, ExitIf) {
     sb.Append(if_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -589,7 +592,7 @@ TEST_F(IR_ValidatorTest, ExitIf_NullIf) {
     sb.Append(if_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:9 error: exit_if: has no parent control instruction
@@ -611,7 +614,7 @@ TEST_F(IR_ValidatorTest, ExitIf_LessOperandsThenIfParams) {
     sb.Append(if_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -634,7 +637,7 @@ TEST_F(IR_ValidatorTest, ExitIf_MoreOperandsThenIfParams) {
     sb.Append(if_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -657,7 +660,7 @@ TEST_F(IR_ValidatorTest, ExitIf_WithResult) {
     sb.Append(if_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -674,7 +677,7 @@ TEST_F(IR_ValidatorTest, ExitIf_IncorrectResultType) {
     sb.Append(if_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -695,7 +698,7 @@ TEST_F(IR_ValidatorTest, ExitIf_NotInParentIf) {
     sb.Append(if_);
     sb.ExitIf(if_);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:8:5 error: exit_if: found outside all control instructions
@@ -722,7 +725,7 @@ TEST_F(IR_ValidatorTest, ExitIf_InvalidJumpsOverIf) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -751,7 +754,7 @@ TEST_F(IR_ValidatorTest, ExitIf_InvalidJumpOverSwitch) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -779,7 +782,7 @@ TEST_F(IR_ValidatorTest, ExitIf_InvalidJumpOverLoop) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -800,7 +803,7 @@ TEST_F(IR_ValidatorTest, ExitSwitch) {
     sb.Append(switch_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -815,7 +818,7 @@ TEST_F(IR_ValidatorTest, ExitSwitch_NullSwitch) {
     sb.Append(switch_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:9 error: exit_switch: has no parent control instruction
@@ -839,7 +842,7 @@ TEST_F(IR_ValidatorTest, ExitSwitch_LessOperandsThenSwitchParams) {
     sb.Append(switch_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -863,7 +866,7 @@ TEST_F(IR_ValidatorTest, ExitSwitch_MoreOperandsThenSwitchParams) {
     sb.Append(switch_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -887,7 +890,7 @@ TEST_F(IR_ValidatorTest, ExitSwitch_WithResult) {
     sb.Append(switch_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -905,7 +908,7 @@ TEST_F(IR_ValidatorTest, ExitSwitch_IncorrectResultType) {
     sb.Append(switch_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -931,7 +934,7 @@ TEST_F(IR_ValidatorTest, ExitSwitch_NotInParentSwitch) {
     b.Append(if_->True(), [&] { b.ExitSwitch(switch_); });
     sb.Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -970,7 +973,7 @@ TEST_F(IR_ValidatorTest, ExitSwitch_JumpsOverIfs) {
     sb.Append(switch_);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -993,7 +996,7 @@ TEST_F(IR_ValidatorTest, ExitSwitch_InvalidJumpOverSwitch) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1028,7 +1031,7 @@ TEST_F(IR_ValidatorTest, ExitSwitch_InvalidJumpOverLoop) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1054,7 +1057,7 @@ TEST_F(IR_ValidatorTest, Continue_OutsideOfLoop) {
         b.Continue(loop);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:8:5 error: continue: called outside of associated loop
@@ -1076,7 +1079,7 @@ TEST_F(IR_ValidatorTest, Continue_InLoopInit) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:7:13 error: continue: must only be called from loop body
@@ -1093,7 +1096,7 @@ TEST_F(IR_ValidatorTest, Continue_InLoopBody) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1110,7 +1113,7 @@ TEST_F(IR_ValidatorTest, Continue_InLoopContinuing) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:10:13 error: continue: must only be called from loop body
@@ -1128,7 +1131,7 @@ TEST_F(IR_ValidatorTest, Continue_UnexpectedValues) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1148,7 +1151,7 @@ TEST_F(IR_ValidatorTest, Continue_MissingValues) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1169,7 +1172,7 @@ TEST_F(IR_ValidatorTest, Continue_MismatchedInt) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1191,7 +1194,7 @@ TEST_F(IR_ValidatorTest, Continue_MismatchedFloat) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1213,7 +1216,7 @@ TEST_F(IR_ValidatorTest, Continue_MatchedTypes) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success);
 }
 
@@ -1225,7 +1228,7 @@ TEST_F(IR_ValidatorTest, NextIteration_OutsideOfLoop) {
         b.NextIteration(loop);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:8:5 error: next_iteration: called outside of associated loop
@@ -1243,7 +1246,7 @@ TEST_F(IR_ValidatorTest, NextIteration_InLoopInit) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1255,7 +1258,7 @@ TEST_F(IR_ValidatorTest, NextIteration_InLoopBody) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1275,7 +1278,7 @@ TEST_F(IR_ValidatorTest, NextIteration_InLoopContinuing) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1288,7 +1291,7 @@ TEST_F(IR_ValidatorTest, NextIteration_UnexpectedValues) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1309,7 +1312,7 @@ TEST_F(IR_ValidatorTest, NextIteration_MissingValues) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1331,7 +1334,7 @@ TEST_F(IR_ValidatorTest, NextIteration_MismatchedInt) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1353,7 +1356,7 @@ TEST_F(IR_ValidatorTest, NextIteration_MismatchedFloat) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1375,7 +1378,7 @@ TEST_F(IR_ValidatorTest, NextIteration_MatchedTypes) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1388,7 +1391,7 @@ TEST_F(IR_ValidatorTest, LoopBodyParamsWithoutInitializer) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1415,7 +1418,7 @@ TEST_F(IR_ValidatorTest, ContinuingUseValueBeforeContinue) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1436,7 +1439,7 @@ TEST_F(IR_ValidatorTest, ContinuingUseValueAfterContinue) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1460,7 +1463,7 @@ TEST_F(IR_ValidatorTest, ContinuingBadTerminator) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1479,7 +1482,7 @@ TEST_F(IR_ValidatorTest, BreakIf_UndefCondition) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1498,7 +1501,7 @@ TEST_F(IR_ValidatorTest, BreakIf_NonBoolCondition) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:8:9 error: break_if: condition must be a 'bool'
@@ -1516,7 +1519,7 @@ TEST_F(IR_ValidatorTest, BreakIf_NextIterUnexpectedValues) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1537,7 +1540,7 @@ TEST_F(IR_ValidatorTest, BreakIf_NextIterMissingValues) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1562,7 +1565,7 @@ TEST_F(IR_ValidatorTest, BreakIf_NextIterMismatchedInt) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1587,7 +1590,7 @@ TEST_F(IR_ValidatorTest, BreakIf_NextIterMismatchedFloat) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1612,7 +1615,7 @@ TEST_F(IR_ValidatorTest, BreakIf_NextIterMatchedTypes) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1625,7 +1628,7 @@ TEST_F(IR_ValidatorTest, BreakIf_ExitUnexpectedValues) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1645,7 +1648,7 @@ TEST_F(IR_ValidatorTest, BreakIf_ExitMissingValues) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1667,7 +1670,7 @@ TEST_F(IR_ValidatorTest, BreakIf_ExitMismatchedInt) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1690,7 +1693,7 @@ TEST_F(IR_ValidatorTest, BreakIf_ExitMismatchedTypes) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1713,7 +1716,7 @@ TEST_F(IR_ValidatorTest, BreakIf_ExitMatchedTypes) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1727,7 +1730,7 @@ TEST_F(IR_ValidatorTest, ExitLoop) {
     sb.Append(loop);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1741,7 +1744,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_NullLoop) {
     sb.Append(loop);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:9 error: exit_loop: has no parent control instruction
@@ -1764,7 +1767,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_LessOperandsThenLoopParams) {
     sb.Append(loop);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1788,7 +1791,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_MoreOperandsThenLoopParams) {
     sb.Append(loop);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1812,7 +1815,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_WithResult) {
     sb.Append(loop);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1830,7 +1833,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_IncorrectResultType) {
     sb.Append(loop);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1855,7 +1858,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_NotInParentLoop) {
     b.Append(if_->True(), [&] { b.ExitLoop(loop); });
     sb.Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1893,7 +1896,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_JumpsOverIfs) {
     sb.Append(loop);
     sb.Return(f);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1916,7 +1919,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_InvalidJumpOverSwitch) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1944,7 +1947,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_InvalidJumpOverLoop) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1972,7 +1975,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_InvalidInsideContinuing) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2001,7 +2004,7 @@ TEST_F(IR_ValidatorTest, ExitLoop_InvalidInsideInitializer) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2017,7 +2020,7 @@ TEST_F(IR_ValidatorTest, Return) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -2027,7 +2030,7 @@ TEST_F(IR_ValidatorTest, Return_WithValue) {
         b.Return(f, 42_i);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -2038,7 +2041,7 @@ TEST_F(IR_ValidatorTest, Return_UnexpectedResult) {
         r->SetResults(Vector{b.InstructionResult(ty.i32())});
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: return: expected exactly 0 results, got 1
@@ -2059,7 +2062,7 @@ TEST_F(IR_ValidatorTest, BreakIf_NullLoop) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr("error: break_if: has no associated loop"))
         << res.Failure();
@@ -2074,7 +2077,7 @@ TEST_F(IR_ValidatorTest, BreakIf_NotInContinuing) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2093,7 +2096,7 @@ TEST_F(IR_ValidatorTest, Continue_NullLoop) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr("error: continue: has no associated loop"))
         << res.Failure();
@@ -2111,7 +2114,7 @@ TEST_F(IR_ValidatorTest, NextIteration_NullLoop) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: next_iteration: has no associated loop"))
@@ -2126,7 +2129,7 @@ TEST_F(IR_ValidatorTest, Return_NotFunction) {
         r->SetOperand(0, var->Result());
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:4:5 error: return: expected function for first operand
@@ -2142,7 +2145,7 @@ TEST_F(IR_ValidatorTest, Return_MissingFunction) {
         r->ClearOperands();
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: return: expected between 1 and 2 operands, got 0
@@ -2162,7 +2165,7 @@ TEST_F(IR_ValidatorTest, Return_WrongFunction) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -2178,7 +2181,7 @@ TEST_F(IR_ValidatorTest, Return_UnexpectedValue) {
         b.Return(f, 42_i);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: return: unexpected return value
@@ -2193,7 +2196,7 @@ TEST_F(IR_ValidatorTest, Return_UnexpectedValue_NullValue_WithVoid) {
         b.Return(f, nullptr);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: return: unexpected return value
@@ -2208,7 +2211,7 @@ TEST_F(IR_ValidatorTest, Return_MissingValue) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: return: expected return value
@@ -2223,7 +2226,7 @@ TEST_F(IR_ValidatorTest, Return_WrongValueType) {
         b.Return(f, 42_f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2239,7 +2242,7 @@ TEST_F(IR_ValidatorTest, Return_RootBlock) {
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     mod.root_block->Append(b.Return(f));
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -2256,7 +2259,7 @@ TEST_F(IR_ValidatorTest, Return_MissingResult) {
         r->SetResults(Vector{b.InstructionResult(ty.i32())});
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: return: expected exactly 0 results, got 1
@@ -2272,7 +2275,7 @@ TEST_F(IR_ValidatorTest, Unreachable_UnexpectedResult) {
         u->SetResults(Vector{b.InstructionResult(ty.i32())});
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: unreachable: expected exactly 0 results, got 1
@@ -2288,7 +2291,7 @@ TEST_F(IR_ValidatorTest, Unreachable_UnexpectedOperand) {
         u->SetOperands(Vector{b.Value(0_i)});
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: unreachable: expected exactly 0 operands, got 1
@@ -2302,7 +2305,7 @@ TEST_F(IR_ValidatorTest, Unreachable_RootBlock) {
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     mod.root_block->Append(b.Unreachable());
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2320,7 +2323,7 @@ TEST_F(IR_ValidatorTest, Unreachable_MissingResult) {
         r->SetResults(Vector{b.InstructionResult(ty.i32())});
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: unreachable: expected exactly 0 results, got 1
     unreachable
@@ -2339,7 +2342,7 @@ TEST_F(IR_ValidatorTest, Switch_ExternalTextureResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: switch: result type must be constructable"))
@@ -2355,7 +2358,7 @@ TEST_F(IR_ValidatorTest, Switch_ConditionPointer) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2372,7 +2375,7 @@ TEST_F(IR_ValidatorTest, Switch_NoCases) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: switch: missing default case for switch
@@ -2390,7 +2393,7 @@ TEST_F(IR_ValidatorTest, Switch_NoDefaultCase) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: switch: missing default case for switch
@@ -2408,7 +2411,7 @@ TEST_F(IR_ValidatorTest, Switch_InvalidCaseSelectorType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2426,7 +2429,7 @@ TEST_F(IR_ValidatorTest, Switch_MultipleDefaultCases) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: switch: multiple default selectors in switch"));
@@ -2440,7 +2443,7 @@ TEST_F(IR_ValidatorTest, Switch_NoCondition) {
     b.Append(b.DefaultCase(s), [&] { b.ExitSwitch(s); });
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(error: switch: expected exactly 1 operands, got 0
@@ -2458,7 +2461,7 @@ TEST_F(IR_ValidatorTest, Switch_NullResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(error: switch: result is undefined
     undef = switch 1u [c: (default, $B2)] {  # switch_1
@@ -2479,7 +2482,7 @@ TEST_F(IR_ValidatorTest, Switch_CaseMultiBlock) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: switch: case block must be a block
@@ -2506,7 +2509,7 @@ TEST_F(IR_ValidatorTest, Switch_CaseNoSelectors) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: switch: case does not have any selectors
@@ -2524,7 +2527,7 @@ TEST_F(IR_ValidatorTest, Switch_CaseSelectorTypeMismatchesConditionType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: switch: case selector type 'i32' must match the switch "

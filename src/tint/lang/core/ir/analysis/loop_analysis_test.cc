@@ -219,7 +219,7 @@ TEST_P(IR_LoopAnalysisBoundTest, Bound) {
         b.Return(func);
     });
 
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -426,7 +426,7 @@ TEST_F(IR_LoopAnalysisTest, Finite_IndexLessThanConstant_OnePlusIndex) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -489,7 +489,7 @@ TEST_F(IR_LoopAnalysisTest, Finite_IndexLessThanConstant_DecByOne) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -552,7 +552,7 @@ TEST_F(IR_LoopAnalysisTest, Finite_NonZeroInit) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -621,7 +621,7 @@ TEST_F(IR_LoopAnalysisTest, Finite_BreakInFalse) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -706,7 +706,7 @@ TEST_F(IR_LoopAnalysisTest, Finite_MultipleLoads) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -779,7 +779,7 @@ TEST_F(IR_LoopAnalysisTest, Finite_Bitcasts) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -878,7 +878,7 @@ TEST_F(IR_LoopAnalysisTest, Finite_MultipleVars) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -940,7 +940,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_MissingInc) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1003,7 +1003,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_IncByZero) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1066,7 +1066,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_IncByTwo) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1131,7 +1131,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_IncByNonConstant) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1197,7 +1197,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_EndBoundIsLetInBody) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1260,7 +1260,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_OneMinusIndex) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1323,7 +1323,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_NotAddOrSub) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1386,7 +1386,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_NonInteger) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1448,7 +1448,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_MissingStore) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1520,7 +1520,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_ContinueBeforeBreak) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1584,7 +1584,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_IncThenDec) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1649,7 +1649,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_AnotherStoreInBody) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1714,7 +1714,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_MultipleStoresInContinuing) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1787,7 +1787,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_ConditionalStore) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1868,7 +1868,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_ConditionalAdd) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -1947,7 +1947,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_PassVarPointerToFunction) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -2028,7 +2028,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_PassVarPointerToFunction_ViaLet) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -2086,7 +2086,7 @@ TEST_F(IR_LoopAnalysisTest, MaybeInfinite_VarOutsideInit) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
     auto* info = analysis.GetInfo(*loop);
@@ -2277,7 +2277,7 @@ TEST_F(IR_LoopAnalysisTest, MultipleLoops) {
 }
 )";
     EXPECT_EQ(src, str());
-    EXPECT_EQ(Validate(mod), Success);
+    EXPECT_EQ(Validate(mod, ErrorSource::kIr), Success);
 
     LoopAnalysis analysis(*func);
 

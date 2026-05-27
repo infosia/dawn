@@ -57,7 +57,7 @@ TEST_F(IR_ValidatorTest, CallToFunctionOutsideModule) {
     });
     b.Append(g->Block(), [&] { b.Return(g); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:20 error: call: %g is not part of the module
@@ -76,7 +76,7 @@ TEST_F(IR_ValidatorTest, CallToEntryPointFunction) {
     });
     b.Append(g->Block(), [&] { b.Return(g); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:20 error: call: call target must not have a pipeline stage
@@ -96,7 +96,7 @@ TEST_F(IR_ValidatorTest, CallToFunctionTooFewArguments) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -117,7 +117,7 @@ TEST_F(IR_ValidatorTest, CallToFunctionTooManyArguments) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -138,7 +138,7 @@ TEST_F(IR_ValidatorTest, CallToFunctionWrongArgType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -160,7 +160,7 @@ TEST_F(IR_ValidatorTest, CallToFunctionNullArg) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:8:24 error: call: operand is undefined
     %4:void = call %g, undef
@@ -179,7 +179,7 @@ TEST_F(IR_ValidatorTest, CallToNullFunction) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:8:20 error: call: operand is undefined
     %3:void = call undef
@@ -198,7 +198,7 @@ TEST_F(IR_ValidatorTest, CallToFunctionNoResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:8:13 error: call: expected exactly 1 results, got 0
@@ -217,7 +217,7 @@ TEST_F(IR_ValidatorTest, CallToFunction_ResultTypeMismatch) {
         b.Return(main);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -238,7 +238,7 @@ TEST_F(IR_ValidatorTest, CallToFunctionNoOperands) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:8:15 error: call: expected at least 1 operands, got 0
@@ -259,7 +259,7 @@ TEST_F(IR_ValidatorTest, CallToNonFunctionTarget) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:20 error: call: target not defined or not a function
@@ -276,7 +276,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_MissingResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:3:5 error: abs: result is undefined
     undef = abs 1.0f
@@ -292,7 +292,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_MismatchResultType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -314,7 +314,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_MissingArg) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:5:18 error: abs: operand is undefined
     %4:f32 = abs undef
@@ -334,7 +334,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_OutOfScopeArg) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:5:18 error: abs: %5 is not in scope
     %4:f32 = abs %5
@@ -353,7 +353,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_TooFewResults) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:13 error: abs: expected exactly 1 results, got 0
@@ -373,7 +373,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_TooManyResults) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:22 error: abs: expected exactly 1 results, got 2
@@ -393,7 +393,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_TooFewArgs) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:14 error: abs: no matching call to 'abs()')"))
@@ -411,7 +411,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_TooManyArgs) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:14 error: abs: no matching call to 'abs(f32, f32)')"))
@@ -434,7 +434,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_Frexp_UserDeclaredResultStruct) {
         b.Return(f, b.Access<f32>(c, 0_u));
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -461,7 +461,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_Modf_UserDeclaredResultStruct) {
         b.Return(f, b.Access<vec4f>(c, 0_u));
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -491,7 +491,7 @@ TEST_F(IR_ValidatorTest, CallToBuiltin_AtomicCompareExchange_UserDeclaredResultS
         b.Return(f, b.Access<u32>(c, 0_u));
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -525,7 +525,7 @@ TEST_F(IR_ValidatorTest, CallBuiltinFn_Component_TooSmall) {
         b.Return(func);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:11:34 error: textureGather: -2 outside range of [0, 3]
@@ -557,7 +557,7 @@ TEST_F(IR_ValidatorTest, CallBuiltinFn_Component_TooBig) {
         b.Return(func);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:11:34 error: textureGather: 6 outside range of [0, 3]
@@ -591,7 +591,7 @@ TEST_F(IR_ValidatorTest, CallBuiltinFn_Offset_TooSmall) {
         b.Return(func);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -626,7 +626,7 @@ TEST_F(IR_ValidatorTest, CallBuiltinFn_Offset_TooBig) {
         b.Return(func);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:11:54 error: textureGather: 8 outside range of [-8, 7]
@@ -643,7 +643,7 @@ TEST_F(IR_ValidatorTest, CallBuiltinFn_QuadBroadcast_NonConstId) {
         b.Return(func);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -662,7 +662,7 @@ TEST_F(IR_ValidatorTest, CallBuiltinFn_SubgroupBroadcast_NonConstId) {
         b.Return(func);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,

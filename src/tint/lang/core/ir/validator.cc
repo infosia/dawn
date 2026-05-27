@@ -997,8 +997,9 @@ class Validator {
   public:
     /// Create a core validator
     /// @param mod the module to be validated
+    /// @param err_source where source information for errors comes from
     /// @param capabilities the optional capabilities that are allowed
-    explicit Validator(const Module& mod, Capabilities capabilities);
+    explicit Validator(const Module& mod, ErrorSource err_source, Capabilities capabilities);
 
     /// Destructor
     ~Validator();
@@ -1626,6 +1627,7 @@ class Validator {
 
     const Module& mod_;
     Capabilities capabilities_;
+    [[maybe_unused]] ErrorSource err_source_;
     std::optional<ir::Disassembler> disassembler_;  // Use Disassemble()
     diag::List diagnostics_;
     Hashset<const Function*, 4> all_functions_;
@@ -1646,8 +1648,11 @@ class Validator {
     Hashset<ValidatedType, 16> validated_types_{};
 };
 
-Validator::Validator(const Module& mod, Capabilities capabilities)
-    : mod_(mod), capabilities_(capabilities), referenced_module_vars_(mod) {}
+Validator::Validator(const Module& mod, ErrorSource err_source, Capabilities capabilities)
+    : mod_(mod),
+      capabilities_(capabilities),
+      err_source_(err_source),
+      referenced_module_vars_(mod) {}
 
 Validator::~Validator() = default;
 
@@ -5358,9 +5363,12 @@ const core::type::Type* Validator::GetVectorPtrElementType(const Instruction* in
 
 }  // namespace
 
-Result<SuccessType> Validate(const Module& mod, Capabilities capabilities, std::string_view msg) {
+Result<SuccessType> Validate(const Module& mod,
+                             ErrorSource err_source,
+                             Capabilities capabilities,
+                             std::string_view msg) {
     DumpIRIfEnabled(mod, msg);
-    Validator v(mod, capabilities);
+    Validator v(mod, err_source, capabilities);
     return v.Run();
 }
 
@@ -5371,7 +5379,7 @@ void AssertValid(const Module& mod,
 
 #if TINT_ENABLE_IR_VALIDATION_ASSERTS
     if (mod.enable_validation_asserts) {
-        Validator v(mod, capabilities);
+        Validator v(mod, ErrorSource::kIr, capabilities);
         auto result = v.Run();
         if (result != Success) {
             TINT_ICE() << "\n========================================================="

@@ -55,7 +55,7 @@ TEST_F(IR_ValidatorTest, Function) {
     f->SetParams({b.FunctionParam(ty.i32()), b.FunctionParam(ty.f32())});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -69,7 +69,7 @@ TEST_F(IR_ValidatorTest, Function_NoType) {
     mod.functions.Push(invalid);
     invalid->Block()->Append(b.Return(invalid));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:1 error: functions must have type '<function>'
@@ -86,7 +86,7 @@ TEST_F(IR_ValidatorTest, Function_Duplicate) {
     f->SetParams({b.FunctionParam(ty.i32()), b.FunctionParam(ty.f32())});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: function %my_func added to module multiple times
@@ -102,9 +102,10 @@ TEST_F(IR_ValidatorTest, Function_MultipleEntryPoints_WithCapability) {
     auto* ep2 = ComputeEntryPoint("ep2");
     ep2->Block()->Append(b.Return(ep2));
 
-    auto res = ir::Validate(mod, Capabilities{
-                                     Capability::kAllowMultipleEntryPoints,
-                                 });
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{
+                                Capability::kAllowMultipleEntryPoints,
+                            });
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -115,7 +116,7 @@ TEST_F(IR_ValidatorTest, Function_MultipleEntryPoints_WithoutCapability) {
     auto* ep2 = ComputeEntryPoint("ep2");
     ep2->Block()->Append(b.Return(ep2));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -133,9 +134,10 @@ TEST_F(IR_ValidatorTest, Function_DuplicateEntryPointNames) {
     auto* f = FragmentEntryPoint("dup");
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod, Capabilities{
-                                     Capability::kAllowMultipleEntryPoints,
-                                 });
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{
+                                Capability::kAllowMultipleEntryPoints,
+                            });
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:1 error: entry point name 'dup' is not unique
@@ -149,7 +151,7 @@ TEST_F(IR_ValidatorTest, Function_MultinBlock) {
     f->SetBlock(b.MultiInBlock());
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: root block for function cannot be a multi-in block
@@ -166,7 +168,7 @@ TEST_F(IR_ValidatorTest, Function_DeadParameter) {
 
     p->Destroy();
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -184,7 +186,7 @@ TEST_F(IR_ValidatorTest, Function_ParameterWithNullFunction) {
 
     p->SetFunction(nullptr);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:17 error: function parameter has nullptr parent function
@@ -202,7 +204,7 @@ TEST_F(IR_ValidatorTest, Function_ParameterUsedInMultipleFunctions) {
     f1->Block()->Append(b.Return(f1));
     f2->Block()->Append(b.Return(f2));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:18 error: function parameter has incorrect parent function
@@ -217,7 +219,7 @@ TEST_F(IR_ValidatorTest, Function_ParameterWithNullType) {
     f->SetParams({p});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:17 error: function parameter has nullptr type
@@ -232,7 +234,7 @@ TEST_F(IR_ValidatorTest, Function_ParameterDuplicated) {
     f->SetParams({p, p});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:17 error: function parameter is not unique
@@ -251,7 +253,7 @@ TEST_F(IR_ValidatorTest, Function_Param_MultipleIOAnnotations) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -277,7 +279,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Struct_MultipleIOAnnotations) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -296,7 +298,7 @@ TEST_F(IR_ValidatorTest, Function_Param_MissingIOAnnotations) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -319,7 +321,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Struct_MissingIOAnnotations) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -344,7 +346,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Struct_DuplicateAnnotations) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -363,7 +365,8 @@ TEST_F(IR_ValidatorTest, Function_Param_WorkgroupPlusOtherIOAnnotation) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kMslAllowEntryPointInterface});
+    auto res =
+        ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kMslAllowEntryPointInterface});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -387,7 +390,8 @@ TEST_F(IR_ValidatorTest, Function_Param_Struct_WorkgroupPlusOtherIOAnnotations) 
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kMslAllowEntryPointInterface});
+    auto res =
+        ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kMslAllowEntryPointInterface});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -407,7 +411,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Location_InvalidType) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -432,7 +436,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Struct_Location_InvalidType) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -455,7 +459,8 @@ TEST_F(IR_ValidatorTest, Function_Param_Location_Struct_WithCapability) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowLocationForNumericElements});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{Capability::kAllowLocationForNumericElements});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -471,7 +476,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Location_Struct_WithoutCapability) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -490,7 +495,7 @@ TEST_F(IR_ValidatorTest, ValidateShaderIOAnnotations_Location_NonNumeric) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: input param with a location attribute must be a numeric "
@@ -509,7 +514,7 @@ TEST_F(IR_ValidatorTest, ValidateShaderIOAnnotations_StructMember_Location_NonNu
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: input param struct member with a location attribute "
@@ -528,7 +533,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_InputLocation_Duplicate_InParams) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:51 error: duplicate location(0) on entry point input
@@ -557,7 +562,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_InputLocation_Duplicate_InParamAndMSV) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:2:29 error: var: duplicate location(0) on entry point input
@@ -584,7 +589,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_OutputLocation_Duplicate_InReturnAndMSV) {
         b.Return(f, 1.0_f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:2:36 error: var: duplicate location(0) on entry point output
@@ -611,7 +616,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_OutputLocation_Duplicate_InReturnStruct) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:1 error: duplicate location(0) on entry point output
@@ -633,7 +638,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_Compute_InputLocation_InParam) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -655,7 +660,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_Compute_InputLocation_InMSV) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -676,7 +681,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_Workgroup_NotCompute) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -698,7 +703,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_PixelLocal_NotFragment) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -719,7 +724,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_In_Compute) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -742,7 +747,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_SameLocation_InputAndOutput) {
 
     b.Append(f->Block(), [&] { b.Return(f, 1.0_f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -759,7 +764,8 @@ TEST_F(IR_ValidatorTest, EntryPoint_SameLocation_DifferentEntryPoints) {
     f2->SetParams({p2});
     b.Append(f2->Block(), [&] { b.Return(f2); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowMultipleEntryPoints});
+    auto res =
+        ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowMultipleEntryPoints});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -783,7 +789,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_Valid) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -811,7 +817,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_TooManyLocations) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -843,7 +849,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_Input) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -873,7 +879,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_NotFragment) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -896,7 +902,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_WrongMemberCount) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -927,7 +933,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_WrongLocation) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -956,7 +962,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_MissingLocation) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -986,7 +992,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_DifferentMemberTypes) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1016,7 +1022,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_InvalidMemberType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1042,7 +1048,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_MissingBlendSrc0) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1069,7 +1075,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_MissingBlendSrc1) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1100,7 +1106,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_InvalidBlendSrcValue) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:1 error: blend_src value must be 0 or 1
@@ -1129,7 +1135,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_DuplicateBlendSrcValue) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1163,7 +1169,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_DuplicateLocation_Unused) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1194,7 +1200,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_DuplicateLocation_Used) {
         b.Unreachable();
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1229,7 +1235,8 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_ArrayOfStructs) {
 
     // Need to add Capability::kAllowUnannotatedModuleIOVariables to prevent earlier checks
     // rejecting the shader
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowUnannotatedModuleIOVariables});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{Capability::kAllowUnannotatedModuleIOVariables});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1261,7 +1268,8 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_NestedStruct) {
     auto* f = FragmentEntryPoint("my_func");
     b.Append(f->Block(), [&] { b.Store(v, b.Zero(outer_struct_ty)); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowUnannotatedModuleIOVariables});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{Capability::kAllowUnannotatedModuleIOVariables});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1286,7 +1294,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_PartialStruct) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1326,7 +1334,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_PartialStructAndMSV) {
         b.Unreachable();
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1355,7 +1363,7 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_NonMember_WithoutCapability) {
         b.Store(var1, 1_f);
         b.Return(f);
     });
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1383,9 +1391,10 @@ TEST_F(IR_ValidatorTest, EntryPoint_BlendSrc_NonMember_WithCapability) {
         b.Store(var1, 1_f);
         b.Return(f);
     });
-    auto res = ir::Validate(mod, Capabilities{
-                                     Capability::kLoosenValidationForShaderIO,
-                                 });
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{
+                                Capability::kLoosenValidationForShaderIO,
+                            });
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1400,7 +1409,7 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_WithLocation) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1414,7 +1423,7 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_WithoutLocation) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1434,7 +1443,8 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_WithoutLocation_LoosenValidation) 
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kLoosenValidationForShaderIO});
+    auto res =
+        ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kLoosenValidationForShaderIO});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1459,7 +1469,7 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_Struct_WithLocation) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1476,7 +1486,7 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_Struct_WithoutLocation) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1500,7 +1510,8 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_Struct_LocationOnStruct_WithCapabi
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowLocationForNumericElements});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{Capability::kAllowLocationForNumericElements});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1518,7 +1529,7 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_Struct_LocationOnStruct_WithoutCap
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1542,7 +1553,7 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_Struct_WithoutCapability) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1570,7 +1581,8 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_Struct_LocationOnAllMembers_WithCa
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowLocationForNumericElements});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{Capability::kAllowLocationForNumericElements});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1591,7 +1603,7 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_Struct_LocationOnAllMembers_Withou
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1618,7 +1630,8 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_Struct_LocationOnSomeMembers_WithC
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowLocationForNumericElements});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{Capability::kAllowLocationForNumericElements});
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1639,7 +1652,8 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_WithBuiltin_WithCapability) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kLoosenValidationForShaderIO});
+    auto res =
+        ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kLoosenValidationForShaderIO});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1654,7 +1668,7 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_WithBuiltin_WithoutCapability) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1674,7 +1688,7 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_Integral_NotFlat) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1697,7 +1711,7 @@ TEST_P(IR_ValidatorInterpolationComboValidTest, Combinations) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1730,7 +1744,7 @@ TEST_P(IR_ValidatorInterpolationComboInvalidTest, Combinations) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(expected_error)) << res.Failure();
 }
@@ -1775,7 +1789,7 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_IntegralVector_NotFlat) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1794,7 +1808,7 @@ TEST_F(IR_ValidatorTest, Function_Location_Integral_WithoutInterpolation_VertexI
 
     b.Append(f->Block(), [&] { b.Return(f, b.Zero<vec4f>()); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1810,7 +1824,7 @@ TEST_F(IR_ValidatorTest, Function_Location_Integral_WithoutInterpolation_VertexO
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1830,7 +1844,7 @@ TEST_F(IR_ValidatorTest, Function_Location_Integral_WithoutInterpolation_Fragmen
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1850,7 +1864,7 @@ TEST_F(IR_ValidatorTest, Function_Location_IntegralArray_WithoutInterpolation_Fr
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1868,7 +1882,7 @@ TEST_F(IR_ValidatorTest, Function_Location_Integral_WithoutInterpolation_Fragmen
 
     b.Append(f->Block(), [&] { b.Return(f, 0_u); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1889,7 +1903,7 @@ TEST_F(IR_ValidatorTest, Function_IntegralBuiltin_InStructWithLocationMember) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1899,7 +1913,7 @@ TEST_F(IR_ValidatorTest, Function_ParameterWithConstructibleType) {
     f->SetParams({p});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1909,7 +1923,7 @@ TEST_F(IR_ValidatorTest, Function_ParameterWithPointerType) {
     f->SetParams({p});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1919,7 +1933,7 @@ TEST_F(IR_ValidatorTest, Function_ParameterWithTextureType) {
     f->SetParams({p});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1929,7 +1943,7 @@ TEST_F(IR_ValidatorTest, Function_ParameterWithSamplerType) {
     f->SetParams({p});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1939,7 +1953,7 @@ TEST_F(IR_ValidatorTest, Function_ParameterWithVoidType) {
     f->SetParams({p});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1956,7 +1970,7 @@ TEST_F(IR_ValidatorTest, Function_EntryPointParameterWithPointerType) {
     f->SetParams({p});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:1:27 error: entry point parameters cannot be pointers
@@ -1975,7 +1989,7 @@ TEST_F(IR_ValidatorTest, Function_Param_InvariantWithPosition) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1987,7 +2001,7 @@ TEST_F(IR_ValidatorTest, Function_Param_InvariantWithoutPosition) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2013,7 +2027,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Struct_InvariantWithPosition) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -2032,7 +2046,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Struct_InvariantWithoutPosition) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2058,7 +2072,7 @@ TEST_F(IR_ValidatorTest, Function_Param_StructNested_InvariantWithoutPosition) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2077,7 +2091,7 @@ TEST_F(IR_ValidatorTest, Function_Param_BindingPointWithoutCapability) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -2095,7 +2109,7 @@ TEST_F(IR_ValidatorTest, Function_EntryPointParam_BindingPointWithoutCapability)
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -2113,7 +2127,8 @@ TEST_F(IR_ValidatorTest, Function_EntryPointParam_BindingPointWithCapability) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kMslAllowEntryPointInterface});
+    auto res =
+        ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kMslAllowEntryPointInterface});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -2125,7 +2140,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Color_F16) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowNonCoreTypes});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowNonCoreTypes});
     EXPECT_EQ(res, Success);
 }
 
@@ -2137,7 +2152,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Color_NonFragment) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2163,7 +2178,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Struct_Color_NonFragment) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2186,7 +2201,7 @@ TEST_F(IR_ValidatorTest, Function_MSV_Color_Input_Fragment) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -2208,7 +2223,7 @@ TEST_F(IR_ValidatorTest, Function_MSV_Struct_Color_Input_Fragment) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -2224,7 +2239,7 @@ TEST_F(IR_ValidatorTest, Function_MSV_Color_Input_NonFragment) {
         b.Return(f, b.Zero(ty.vec4f()));
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2252,7 +2267,7 @@ TEST_F(IR_ValidatorTest, Function_MSV_Struct_Color_Input_NonFragment) {
         b.Return(f, b.Zero(ty.vec4f()));
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2273,7 +2288,7 @@ TEST_F(IR_ValidatorTest, Function_Return_Color) {
 
     b.Append(f->Block(), [&] { b.Return(f, b.Zero(ty.vec4f())); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2298,7 +2313,7 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_Color) {
 
     b.Append(f->Block(), [&] { b.Return(f, b.Zero(str_ty)); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2321,7 +2336,7 @@ TEST_F(IR_ValidatorTest, Function_MSV_Color_Output) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2348,7 +2363,7 @@ TEST_F(IR_ValidatorTest, Function_MSV_Struct_Color_Output) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2368,7 +2383,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Color_InvalidType) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:1:27 error: color must be a numeric scalar or vector
@@ -2385,7 +2400,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Color_Bool) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:1:27 error: color must be a numeric scalar or vector
@@ -2405,7 +2420,7 @@ TEST_F(IR_ValidatorTest, Function_Param_InputIndexAttachment) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2426,7 +2441,7 @@ TEST_F(IR_ValidatorTest, Function_Return_InputIndexAttachment) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2443,7 +2458,7 @@ TEST_F(IR_ValidatorTest, Function_Return_MultipleIOAnnotations) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2465,7 +2480,7 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_MultipleIOAnnotations) {
     auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2482,7 +2497,7 @@ TEST_F(IR_ValidatorTest, Function_Return_Location_InvalidType) {
     f->SetReturnLocation(0);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2503,7 +2518,7 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_Location_InvalidType) {
     auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kFragment);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2519,7 +2534,7 @@ TEST_F(IR_ValidatorTest, Function_Return_Void_IOAnnotation) {
     f->SetReturnLocation(0);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2534,7 +2549,7 @@ TEST_F(IR_ValidatorTest, Function_Return_NonVoid_MissingIOAnnotations) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2553,7 +2568,7 @@ TEST_F(IR_ValidatorTest, Function_Return_NonVoid_Struct_MissingIOAnnotations) {
     auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kFragment);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2571,7 +2586,7 @@ TEST_F(IR_ValidatorTest, Function_Return_InvariantWithPosition) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -2581,7 +2596,7 @@ TEST_F(IR_ValidatorTest, Function_Return_InvariantWithoutPosition) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2606,7 +2621,7 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_InvariantWithPosition) {
     f->SetReturnAttributes({});
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -2628,7 +2643,7 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_InvariantWithoutPosition_ViaMSV)
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2652,7 +2667,7 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_InvariantWithoutPosition) {
     f->SetReturnType(str_ty);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2675,7 +2690,7 @@ TEST_F(IR_ValidatorTest, Function_Return_InvariantWithoutPosition_ViaMSV) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2692,7 +2707,7 @@ TEST_F(IR_ValidatorTest, Function_UnnamedEntryPoint) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:1:1 error: entry points must have names
 %1 = @compute @workgroup_size(1u, 1u, 1u) func():void {
@@ -2707,7 +2722,7 @@ TEST_F(IR_ValidatorTest, Function_NonConstructibleReturnType_ExternalTexture) {
     auto* f = b.Function(ty.external_texture());
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: function return type must be constructible
@@ -2720,7 +2735,7 @@ TEST_F(IR_ValidatorTest, Function_NonConstructibleReturnType_Sampler) {
     auto* f = b.Function(ty.sampler());
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: function return type must be constructible
@@ -2733,7 +2748,7 @@ TEST_F(IR_ValidatorTest, Function_NonConstructibleReturnType_RuntimeArray) {
     auto* f = b.Function(ty.runtime_array(ty.f32()));
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: function return type must be constructible
@@ -2746,7 +2761,7 @@ TEST_F(IR_ValidatorTest, Function_NonConstructibleReturnType_Ptr) {
     auto* f = b.Function(ty.ptr<function, i32>());
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: function return type must be constructible
@@ -2759,7 +2774,7 @@ TEST_F(IR_ValidatorTest, Function_NonConstructibleReturnType_Ref) {
     auto* f = b.Function(ty.ref<function, u32>());
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: function return type must be constructible
@@ -2775,7 +2790,7 @@ TEST_F(IR_ValidatorTest, Function_Compute_NonVoidReturn) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -2789,7 +2804,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_MissingOnCompute) {
     auto* f = b.Function("f", ty.void_(), Function::PipelineStage::kCompute);
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: compute entry point requires @workgroup_size
@@ -2804,7 +2819,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_NonCompute) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: @workgroup_size only valid on compute entry point
@@ -2819,7 +2834,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamUndefined) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2835,7 +2850,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_InstructionNotDefined) {
     ep->SetWorkgroupSize({res_val, b.Constant(1_u), b.Constant(1_u)});
     b.Append(ep->Block(), [&] { b.Return(ep); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: instruction for @workgroup_size param is not defined"))
@@ -2848,7 +2863,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamWrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -2864,7 +2879,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamsSameType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2879,7 +2894,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_InvalidValue) {
     ep->SetWorkgroupSize({b.FunctionParam(ty.u32()), b.Constant(1_u), b.Constant(1_u)});
     b.Append(ep->Block(), [&] { b.Return(ep); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2893,7 +2908,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_InvalidValueKind) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2909,7 +2924,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamsTooSmall) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: @workgroup_size params must be greater than 0
@@ -2924,7 +2939,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamZero) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: @workgroup_size params must be greater than 0
@@ -2939,7 +2954,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamsTooLarge) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: workgroup grid size cannot exceed 0xffffffff
@@ -2957,7 +2972,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamsTooLarge_U64Overflow) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: workgroup grid size cannot exceed 0xffffffff
@@ -2973,7 +2988,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_OverrideWithoutAllowOverrides) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -2993,7 +3008,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_NonRootBlockOverride) {
     });
     f->SetWorkgroupSize({o->Result(), o->Result(), o->Result()});
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3016,7 +3031,7 @@ TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ModuleScopeRuntimeExpression) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3033,7 +3048,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_NonCompute) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: @subgroup_size only valid on compute entry point
@@ -3049,7 +3064,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_Nullptr) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:1:1 error: a @subgroup_size param must have a value
@@ -3065,7 +3080,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_MissingType) {
     ep->SetSubgroupSize(val);
     b.Append(ep->Block(), [&] { b.Return(ep); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: a @subgroup_size param is missing a type"))
@@ -3078,7 +3093,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_InstructionNotDefined) {
     ep->SetSubgroupSize(res_val);
     b.Append(ep->Block(), [&] { b.Return(ep); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: instruction for @subgroup_size param is not defined"))
@@ -3092,7 +3107,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamWrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -3109,7 +3124,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamTooSmall) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: @subgroup_size param must be greater than 0
@@ -3125,7 +3140,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamZero) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: @subgroup_size param must be greater than 0
@@ -3139,7 +3154,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_InvalidValue) {
     ep->SetSubgroupSize(b.FunctionParam(ty.u32()));
     b.Append(ep->Block(), [&] { b.Return(ep); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3154,7 +3169,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamNonPowerOfTwo) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: @subgroup_size param must be a power of 2
@@ -3170,7 +3185,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_ParamPowerOfTwo) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success);
 }
 
@@ -3183,7 +3198,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_OverrideWithoutAllowOverrides) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3207,7 +3222,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_NonRootBlockOverride) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowOverrides});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3228,7 +3243,7 @@ TEST_F(IR_ValidatorTest, Function_SubgroupSize_RootBlockOverride) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowOverrides});
     ASSERT_EQ(res, Success);
 }
 
@@ -3237,7 +3252,7 @@ TEST_F(IR_ValidatorTest, Function_Vertex_BasicPosition) {
     f->SetReturnBuiltin(BuiltinValue::kPosition);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -3254,7 +3269,7 @@ TEST_F(IR_ValidatorTest, Function_Vertex_StructPosition) {
     auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -3276,7 +3291,7 @@ TEST_F(IR_ValidatorTest, Function_Vertex_StructPositionAndClipDistances) {
     auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -3293,7 +3308,7 @@ TEST_F(IR_ValidatorTest, Function_Vertex_StructOnlyClipDistances) {
     auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3309,7 +3324,7 @@ TEST_F(IR_ValidatorTest, Function_Vertex_MissingPosition) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3326,7 +3341,7 @@ TEST_F(IR_ValidatorTest, Function_NonFragment_BoolInput) {
     f->AppendParam(p);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -3343,7 +3358,7 @@ TEST_F(IR_ValidatorTest, Function_NonFragment_BoolOutput) {
     AddReturn(f, "invalid", ty.bool_(), attr);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:1 error: entry point returns can not be 'bool'
@@ -3359,7 +3374,7 @@ TEST_F(IR_ValidatorTest, Function_Fragment_BoolInputWithoutFrontFacing) {
     f->AppendParam(p);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3377,7 +3392,7 @@ TEST_F(IR_ValidatorTest, Function_Fragment_BoolOutput) {
     AddReturn(f, "invalid", ty.bool_(), attr);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: entry point returns can not be 'bool'
@@ -3398,7 +3413,7 @@ TEST_F(IR_ValidatorTest, Function_BoolOutput_via_MSV) {
         b.Unreachable();
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3423,7 +3438,7 @@ TEST_F(IR_ValidatorTest, Function_BoolInputWithoutFrontFacing_via_MSV) {
         b.Unreachable();
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3441,7 +3456,7 @@ TEST_F(IR_ValidatorTest, Function_EntryPoint_PtrToWorkgroup) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -3459,7 +3474,7 @@ TEST_F(IR_ValidatorTest, Function_DirectRecursion) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: recursive function calls are not allowed
@@ -3486,7 +3501,7 @@ TEST_F(IR_ValidatorTest, Function_IndirectRecursion) {
         b.Return(f3);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:1 error: recursive function calls are not allowed
@@ -3502,7 +3517,7 @@ TEST_F(IR_ValidatorTest, Function_ParamPixelLocal) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:1:21 error: pixel_local param must be of type struct

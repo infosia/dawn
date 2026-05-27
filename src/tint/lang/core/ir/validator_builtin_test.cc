@@ -56,7 +56,7 @@ TEST_F(IR_ValidatorTest, Builtin_DuplicateOnNonEntryPoint_Allowed) {
     auto* main = ComputeEntryPoint("main");
     b.Append(main->Block(), [&] { b.Return(main); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -70,7 +70,7 @@ TEST_F(IR_ValidatorTest, Builtin_OnNonEntryPoint_AnyStageAllowed) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -84,7 +84,7 @@ TEST_F(IR_ValidatorTest, Builtin_OnNonEntryPoint_StructuralTypeCheckStillApplies
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr("vertex_index must be an u32"))
         << res.Failure();
@@ -97,7 +97,7 @@ TEST_F(IR_ValidatorTest, Builtin_DuplicateInput) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -125,7 +125,7 @@ TEST_F(IR_ValidatorTest, Builtin_DuplicateOutput) {
         b.Unreachable();
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -149,7 +149,7 @@ TEST_F(IR_ValidatorTest, Builtin_InputOutput) {
         b.Unreachable();
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success);
 }
 
@@ -171,7 +171,7 @@ TEST_F(IR_ValidatorTest, Builtin_ClipDistance_Duplicate) {
         b.Unreachable();
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -200,7 +200,8 @@ TEST_F(IR_ValidatorTest, Builtin_ClipDistance_Duplicate_WithCapability) {
         b.Unreachable();
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowClipDistancesOnF32ScalarAndVector});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{Capability::kAllowClipDistancesOnF32ScalarAndVector});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -225,7 +226,8 @@ TEST_F(IR_ValidatorTest, Builtin_ClipDistance_Triple_WithCapability) {
         b.Unreachable();
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowClipDistancesOnF32ScalarAndVector});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{Capability::kAllowClipDistancesOnF32ScalarAndVector});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -242,7 +244,7 @@ TEST_F(IR_ValidatorTest, Builtin_PointSize_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -266,7 +268,7 @@ TEST_F(IR_ValidatorTest, Builtin_OnStructReturn_BuiltinChecker) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:5:1 error: __point_size must be a f32
 %f = @vertex func():OutputStruct [@__point_size] {
@@ -288,7 +290,7 @@ TEST_F(IR_ValidatorTest, Builtin_OnStructReturn_Position) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:1 error: position must be an vec4<f32>
@@ -310,7 +312,7 @@ TEST_F(IR_ValidatorTest, Builtin_OnStructReturn_SampleMask) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:5:1 error: sample_mask must be an u32
 %f = @fragment func():OutputStruct [@sample_mask] {
@@ -332,7 +334,7 @@ TEST_F(IR_ValidatorTest, Builtin_OnStructReturn_ClipDistances) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -348,7 +350,7 @@ TEST_F(IR_ValidatorTest, Builtin_PointSize_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -365,7 +367,7 @@ TEST_F(IR_ValidatorTest, Builtin_PointSize_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:6:1 error: __point_size must be a f32
 %f = @vertex func():OutputStruct {
@@ -379,7 +381,7 @@ TEST_F(IR_ValidatorTest, Builtin_ClipDistances_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -396,7 +398,7 @@ TEST_F(IR_ValidatorTest, Builtin_ClipDistances_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -413,7 +415,7 @@ TEST_F(IR_ValidatorTest, Builtin_ClipDistances_WrongType_Vec) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -429,7 +431,7 @@ TEST_F(IR_ValidatorTest, Builtin_ClipDistances_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -445,7 +447,7 @@ TEST_F(IR_ValidatorTest, Builtin_FragDepth_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -462,7 +464,7 @@ TEST_F(IR_ValidatorTest, Builtin_FragDepth_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -479,7 +481,7 @@ TEST_F(IR_ValidatorTest, Builtin_FragDepth_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:1:1 error: frag_depth must be a f32
 %f = @fragment func():u32 [@frag_depth] {
@@ -493,7 +495,7 @@ TEST_F(IR_ValidatorTest, Builtin_NonFragDepth_NonUndefinedDepthMode) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -511,7 +513,7 @@ TEST_F(IR_ValidatorTest, MissingBuiltin_WithFragDepth) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:1:1 error: cannot have a depth_mode without a builtin
@@ -527,7 +529,7 @@ TEST_F(IR_ValidatorTest, Builtin_FragDepth_UndefinedDepthMode) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success);
 }
 
@@ -538,7 +540,7 @@ TEST_F(IR_ValidatorTest, Builtin_FragDepth_AnyDepthMode) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -549,7 +551,7 @@ TEST_F(IR_ValidatorTest, Builtin_FragDepth_GreaterDepthMode) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -560,7 +562,7 @@ TEST_F(IR_ValidatorTest, Builtin_FragDepth_LessDepthMode) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -570,7 +572,7 @@ TEST_F(IR_ValidatorTest, Builtin_FrontFacing_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -587,7 +589,7 @@ TEST_F(IR_ValidatorTest, Builtin_FrontFacing_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -604,7 +606,7 @@ TEST_F(IR_ValidatorTest, Builtin_FrontFacing_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:1:21 error: front_facing must be a bool
 %f = @fragment func(%facing:u32 [@front_facing]):void {
@@ -618,7 +620,7 @@ TEST_F(IR_ValidatorTest, Builtin_GlobalInvocationId_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -636,7 +638,7 @@ TEST_F(IR_ValidatorTest, Builtin_GlobalInvocationId_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -653,7 +655,7 @@ TEST_F(IR_ValidatorTest, Builtin_GlobalInvocationId_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:1:48 error: global_invocation_id must be an vec3<u32>
@@ -668,7 +670,7 @@ TEST_F(IR_ValidatorTest, Builtin_GlobalInvocationId_WrongType_i32) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:1:48 error: global_invocation_id must be an vec3<u32>
@@ -683,7 +685,7 @@ TEST_F(IR_ValidatorTest, Builtin_InstanceIndex_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -700,7 +702,7 @@ TEST_F(IR_ValidatorTest, Builtin_InstanceIndex_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -717,7 +719,7 @@ TEST_F(IR_ValidatorTest, Builtin_InstanceIndex_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:19 error: instance_index must be an u32
@@ -732,7 +734,7 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationId_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -750,7 +752,7 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationId_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -767,7 +769,7 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationId_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:48 error: local_invocation_id must be an vec3<u32>
@@ -782,7 +784,7 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationId_WrongType_i32) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:48 error: local_invocation_id must be an vec3<u32>
@@ -797,7 +799,7 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationIndex_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -815,7 +817,7 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationIndex_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -832,7 +834,7 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationIndex_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:48 error: local_invocation_index must be an u32
@@ -847,7 +849,7 @@ TEST_F(IR_ValidatorTest, Builtin_NumWorkgroups_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -865,7 +867,7 @@ TEST_F(IR_ValidatorTest, Builtin_NumWorkgroups_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -882,7 +884,7 @@ TEST_F(IR_ValidatorTest, Builtin_NumWorkgroups_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:48 error: num_workgroups must be an vec3<u32>
@@ -897,7 +899,7 @@ TEST_F(IR_ValidatorTest, Builtin_NumWorkgroups_WrongType_i32) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:48 error: num_workgroups must be an vec3<u32>
@@ -912,7 +914,7 @@ TEST_F(IR_ValidatorTest, Builtin_SampleIndex_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -929,7 +931,7 @@ TEST_F(IR_ValidatorTest, Builtin_SampleIndex_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -946,7 +948,7 @@ TEST_F(IR_ValidatorTest, Builtin_SampleIndex_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:1:21 error: sample_index must be an u32
 %f = @fragment func(%index:f32 [@sample_index]):void {
@@ -960,7 +962,7 @@ TEST_F(IR_ValidatorTest, Builtin_VertexIndex_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -977,7 +979,7 @@ TEST_F(IR_ValidatorTest, Builtin_VertexIndex_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -994,7 +996,7 @@ TEST_F(IR_ValidatorTest, Builtin_VertexIndex_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:1:19 error: vertex_index must be an u32
 %f = @vertex func(%index:f32 [@vertex_index]):vec4<f32> [@position] {
@@ -1008,7 +1010,7 @@ TEST_F(IR_ValidatorTest, Builtin_WorkgroupId_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1026,7 +1028,7 @@ TEST_F(IR_ValidatorTest, Builtin_WorkgroupId_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1043,7 +1045,7 @@ TEST_F(IR_ValidatorTest, Builtin_WorkgroupId_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:48 error: workgroup_id must be an vec3<u32>
@@ -1058,7 +1060,7 @@ TEST_F(IR_ValidatorTest, Builtin_WorkgroupId_WrongType_i32) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:48 error: workgroup_id must be an vec3<u32>
@@ -1073,7 +1075,7 @@ TEST_F(IR_ValidatorTest, Builtin_Position_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1090,7 +1092,7 @@ TEST_F(IR_ValidatorTest, Builtin_Position_WrongIODirectionForVertex) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1107,7 +1109,7 @@ TEST_F(IR_ValidatorTest, Builtin_Position_WrongIODirectionForFragment) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1124,7 +1126,7 @@ TEST_F(IR_ValidatorTest, Builtin_Position_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:21 error: position must be an vec4<f32>
@@ -1139,7 +1141,7 @@ TEST_F(IR_ValidatorTest, Builtin_Position_WrongType_f16) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:21 error: position must be an vec4<f32>
@@ -1154,7 +1156,7 @@ TEST_F(IR_ValidatorTest, Builtin_BarycentricCoord_WrongType_f16) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:21 error: barycentric_coord must be an vec3<f32>
@@ -1169,7 +1171,7 @@ TEST_F(IR_ValidatorTest, Builtin_SampleMask_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1186,7 +1188,7 @@ TEST_F(IR_ValidatorTest, Builtin_SampleMask_InputValid) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1196,7 +1198,7 @@ TEST_F(IR_ValidatorTest, Builtin_SampleMask_OutputValid) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1206,7 +1208,7 @@ TEST_F(IR_ValidatorTest, Builtin_SampleMask_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:1:21 error: sample_mask must be an u32
 %f = @fragment func(%mask:f32 [@sample_mask]):void {
@@ -1220,7 +1222,7 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupId_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1237,7 +1239,7 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupId_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1254,7 +1256,7 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupId_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:1:48 error: subgroup_id must be an u32
 %f = @compute @workgroup_size(1u, 1u, 1u) func(%id:i32 [@subgroup_id]):void {
@@ -1268,7 +1270,7 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupSize_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1285,7 +1287,7 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupSize_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1302,7 +1304,7 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupSize_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:48 error: subgroup_size must be an u32
@@ -1317,7 +1319,7 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupInvocationId_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1334,7 +1336,7 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupInvocationId_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1351,7 +1353,7 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupInvocationId_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:48 error: subgroup_invocation_id must be an u32
@@ -1366,7 +1368,7 @@ TEST_F(IR_ValidatorTest, Builtin_NumSubgroups_WrongStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1383,7 +1385,7 @@ TEST_F(IR_ValidatorTest, Builtin_NumSubgroups_WrongIODirection) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1400,7 +1402,7 @@ TEST_F(IR_ValidatorTest, Builtin_NumSubgroups_WrongType) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:1:48 error: num_subgroups must be an u32
@@ -1426,7 +1428,7 @@ TEST_F(IR_ValidatorTest, Builtin_PointSize_WithoutCapability) {
         b.Return(f, b.Zero(str_ty));
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1453,7 +1455,8 @@ TEST_F(IR_ValidatorTest, Builtin_PointSize_WithCapability) {
         b.Return(f, b.Zero(str_ty));
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowPointSizeBuiltin});
+    auto res =
+        ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowPointSizeBuiltin});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1463,7 +1466,7 @@ TEST_F(IR_ValidatorTest, Builtin_NoStage) {
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(builtins can only be decorated on entry point params
@@ -1478,7 +1481,7 @@ TEST_F(IR_ValidatorTest, InputAttachmentIndex_NonEntryPoint_InvalidIOKind) {
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1503,7 +1506,7 @@ TEST_P(BitcastTypeTest, Check) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     if (bitcast_allowed) {
         ASSERT_EQ(res, Success) << "Bitcast should be defined for '" << src_ty->FriendlyName()
                                 << "' -> '" << dest_ty->FriendlyName() << "': " << res.Failure();
