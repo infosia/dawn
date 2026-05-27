@@ -74,7 +74,7 @@ TEST_F(IR_SpirvBinaryTest, MatchOverloadFromDialect) {
     });
 
     core::ir::Capabilities caps;
-    auto res = core::ir::Validate(mod, caps);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr, caps);
     EXPECT_EQ(res, Success) << res.Failure();
 }
 

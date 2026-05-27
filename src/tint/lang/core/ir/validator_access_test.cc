@@ -58,7 +58,7 @@ TEST_F(IR_ValidatorTest, Access_NoOperands) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:14 error: access: expected at least 2 operands, got 0
@@ -77,7 +77,7 @@ TEST_F(IR_ValidatorTest, Access_NoIndices) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:14 error: access: expected at least 2 operands, got 1
@@ -97,7 +97,7 @@ TEST_F(IR_ValidatorTest, Access_NoResults) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:13 error: access: expected exactly 1 results, got 0
@@ -113,7 +113,7 @@ TEST_F(IR_ValidatorTest, Access_NullObject) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:21 error: access: operand is undefined
@@ -132,7 +132,7 @@ TEST_F(IR_ValidatorTest, Access_NullIndex) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:25 error: access: operand is undefined
@@ -151,7 +151,7 @@ TEST_F(IR_ValidatorTest, Access_NegativeIndex) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:25 error: access: constant index must be positive, got -1
@@ -170,7 +170,7 @@ TEST_F(IR_ValidatorTest, Access_OOB_Index_Value) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:29 error: access: index out of bounds for type 'vec2<f32>'
@@ -189,7 +189,7 @@ TEST_F(IR_ValidatorTest, Access_OOB_Index_Ptr) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -218,7 +218,7 @@ TEST_F(IR_ValidatorTest, Access_StaticallyUnindexableType_Value) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:25 error: access: type 'f32' cannot be indexed
@@ -237,7 +237,7 @@ TEST_F(IR_ValidatorTest, Access_StaticallyUnindexableType_Ptr) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -263,7 +263,7 @@ TEST_F(IR_ValidatorTest, Access_DynamicallyUnindexableType_Value) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -289,7 +289,7 @@ TEST_F(IR_ValidatorTest, Access_DynamicallyUnindexableType_Ptr) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -310,7 +310,7 @@ TEST_F(IR_ValidatorTest, Access_Incorrect_Type_Value_Value) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -331,7 +331,7 @@ TEST_F(IR_ValidatorTest, Access_Incorrect_Type_Ptr_Ptr) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -352,7 +352,7 @@ TEST_F(IR_ValidatorTest, Access_Incorrect_Type_Ptr_Value) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -373,7 +373,7 @@ TEST_F(IR_ValidatorTest, Access_IndexVectorPtr) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:25 error: access: cannot obtain address of vector element
@@ -392,7 +392,8 @@ TEST_F(IR_ValidatorTest, Access_IndexVectorPtr_WithCapability) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowVectorElementPointer});
+    auto res =
+        ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowVectorElementPointer});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -406,7 +407,7 @@ TEST_F(IR_ValidatorTest, Access_IndexVectorPtr_ViaMatrixPtr) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:29 error: access: cannot obtain address of vector element
@@ -425,7 +426,8 @@ TEST_F(IR_ValidatorTest, Access_IndexVectorPtr_ViaMatrixPtr_WithCapability) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowVectorElementPointer});
+    auto res =
+        ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowVectorElementPointer});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -439,7 +441,7 @@ TEST_F(IR_ValidatorTest, Access_Incorrect_Ptr_AddressSpace) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -460,7 +462,7 @@ TEST_F(IR_ValidatorTest, Access_Incorrect_Ptr_Access) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -481,7 +483,7 @@ TEST_F(IR_ValidatorTest, Access_IndexVector) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -495,7 +497,7 @@ TEST_F(IR_ValidatorTest, Access_IndexVector_ViaMatrix) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -514,7 +516,8 @@ TEST_F(IR_ValidatorTest, Access_ExtractPointerFromStruct) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kMslAllowEntryPointInterface});
+    auto res =
+        ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kMslAllowEntryPointInterface});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -526,7 +529,7 @@ TEST_F(IR_ValidatorTest, Load_NullFrom) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:3:19 error: load: operand is undefined
     %2:i32 = load undef
@@ -543,7 +546,7 @@ TEST_F(IR_ValidatorTest, Load_SourceNotMemoryView) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -562,7 +565,7 @@ TEST_F(IR_ValidatorTest, Load_TypeMismatch) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -583,7 +586,7 @@ TEST_F(IR_ValidatorTest, Load_MissingResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:4:13 error: load: expected exactly 1 results, got 0
@@ -601,7 +604,7 @@ TEST_F(IR_ValidatorTest, Load_NonReadableSource) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -624,7 +627,7 @@ TEST_F(IR_ValidatorTest, Load_RuntimeSizedArray) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:7:26 error: load: type 'array<u32>' cannot be loaded
@@ -648,7 +651,7 @@ TEST_F(IR_ValidatorTest, Load_RuntimeSizedArray_InStruct) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:11:24 error: load: type 'MyStruct' cannot be loaded
@@ -669,7 +672,7 @@ TEST_F(IR_ValidatorTest, Load_Atomic) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:7:27 error: load: type 'atomic<u32>' cannot be loaded
@@ -693,7 +696,7 @@ TEST_F(IR_ValidatorTest, Load_Atomic_InStruct) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
                                           R"(:11:24 error: load: type 'MyStruct' cannot be loaded
@@ -710,7 +713,7 @@ TEST_F(IR_ValidatorTest, Store_NullTo) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:3:11 error: store: operand is undefined
     store undef, 42i
@@ -727,7 +730,7 @@ TEST_F(IR_ValidatorTest, Store_NullFrom) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:4:15 error: store: operand is undefined
     store %2, undef
@@ -746,7 +749,7 @@ TEST_F(IR_ValidatorTest, Store_NonEmptyResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:4:5 error: store: expected exactly 0 results, got 1
@@ -764,7 +767,7 @@ TEST_F(IR_ValidatorTest, Store_TargetNotMemoryView) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -783,7 +786,7 @@ TEST_F(IR_ValidatorTest, Store_TypeMismatch) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -803,7 +806,7 @@ TEST_F(IR_ValidatorTest, Store_NoStoreType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:11 error: store: operand type is undefined
@@ -824,7 +827,7 @@ TEST_F(IR_ValidatorTest, Store_NoValueType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:15 error: store: operand type is undefined
@@ -842,7 +845,7 @@ TEST_F(IR_ValidatorTest, Store_NonWriteableTarget) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -867,7 +870,7 @@ TEST_F(IR_ValidatorTest, Store_NonConstructible) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -887,7 +890,7 @@ TEST_F(IR_ValidatorTest, LoadVectorElement_NullResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:4:5 error: load_vector_element: result is undefined
@@ -905,7 +908,7 @@ TEST_F(IR_ValidatorTest, LoadVectorElement_NullFrom) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:34 error: load_vector_element: operand is undefined
@@ -924,7 +927,7 @@ TEST_F(IR_ValidatorTest, LoadVectorElement_NullIndex) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:4:38 error: load_vector_element: operand is undefined
@@ -943,7 +946,7 @@ TEST_F(IR_ValidatorTest, LoadVectorElement_MissingResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -963,7 +966,7 @@ TEST_F(IR_ValidatorTest, LoadVectorElement_MissingOperands) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -982,7 +985,7 @@ TEST_F(IR_ValidatorTest, LoadVectorElement_InvalidIndexType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1005,7 +1008,7 @@ TEST_F(IR_ValidatorTest, LoadVectorElement_InvalidFromType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1025,7 +1028,7 @@ TEST_F(IR_ValidatorTest, LoadVectorElement_ConstantIndexOutOfRange) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1045,7 +1048,7 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_NullTo) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:26 error: store_vector_element: operand is undefined
@@ -1064,7 +1067,7 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_NullIndex) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:4:30 error: store_vector_element: operand is undefined
@@ -1083,7 +1086,7 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_NullValue) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:4:34 error: store_vector_element: operand is undefined
@@ -1102,7 +1105,7 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_MissingOperands) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1122,7 +1125,7 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_UnexpectedResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1141,7 +1144,7 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_InvalidIndexType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1164,7 +1167,7 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_InvalidFromType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1184,7 +1187,7 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_ConstantIndexOutOfRange) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1206,7 +1209,7 @@ TEST_F(IR_ValidatorTest, LoadVectorElement_MismatchedResultType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: load_vector_element: result type 'i32' does not match "
@@ -1224,7 +1227,7 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_MismatchedValueType) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: store_vector_element: value type 'i32' does not match "
@@ -1242,7 +1245,7 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_NonWriteableTarget) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("error: store_vector_element: store_vector_element target "
@@ -1259,7 +1262,7 @@ TEST_F(IR_ValidatorTest, Swizzle_MissingValue) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:20 error: swizzle: expected exactly 1 operands, got 0
@@ -1277,7 +1280,7 @@ TEST_F(IR_ValidatorTest, Swizzle_NullValue) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(error: swizzle: operand is undefined
 )")) << res.Failure();
@@ -1292,7 +1295,7 @@ TEST_F(IR_ValidatorTest, Swizzle_MissingResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:13 error: swizzle: expected exactly 1 results, got 0
@@ -1310,7 +1313,7 @@ TEST_F(IR_ValidatorTest, Swizzle_NullResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:5:5 error: swizzle: result is undefined
     undef = swizzle %3, wzyx
@@ -1328,7 +1331,7 @@ TEST_F(IR_ValidatorTest, Swizzle_NoIndices) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:20 error: swizzle: expected at least 1 indices
@@ -1347,7 +1350,7 @@ TEST_F(IR_ValidatorTest, Swizzle_TooManyIndices) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:20 error: swizzle: expected at most 4 indices
@@ -1366,7 +1369,7 @@ TEST_F(IR_ValidatorTest, Swizzle_InvalidIndices) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:20 error: swizzle: invalid index value
@@ -1383,7 +1386,7 @@ TEST_F(IR_ValidatorTest, Swizzle_NotVector) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1401,7 +1404,7 @@ TEST_F(IR_ValidatorTest, Swizzle_TooSmallResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1420,7 +1423,7 @@ TEST_F(IR_ValidatorTest, Swizzle_TooLargeResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1439,7 +1442,7 @@ TEST_F(IR_ValidatorTest, Swizzle_WrongTypeResult) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1458,7 +1461,7 @@ TEST_F(IR_ValidatorTest, Swizzle_OOBIndex) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:5:20 error: swizzle: invalid index value

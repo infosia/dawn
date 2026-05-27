@@ -57,7 +57,7 @@ class TransformTestBase : public BASE {
         }
 
         // Validate the output IR.
-        EXPECT_EQ(ir::Validate(mod, capabilities, "after transform"), Success);
+        EXPECT_EQ(ir::Validate(mod, ErrorSource::kIr, capabilities, "after transform"), Success);
     }
 
     /// Calls the `transform` but return the result instead of validating.

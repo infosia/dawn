@@ -182,7 +182,7 @@ tint::Result<tint::core::ir::Module> GenerateIrModule(const tint::Program& progr
 
     TINT_CHECK_RESULT_UNWRAP(ir, tint::wgsl::reader::ProgramToLoweredIR(program));
 
-    TINT_CHECK_RESULT(tint::core::ir::Validate(ir));
+    TINT_CHECK_RESULT(tint::core::ir::Validate(ir, tint::core::ir::ErrorSource::kIr));
 
     return ir;
 }

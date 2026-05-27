@@ -110,7 +110,7 @@ TEST_F(IR_ValidatorTest, AbstractFloat_Scalar) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: var: abstracts are not permitted
@@ -126,7 +126,7 @@ TEST_F(IR_ValidatorTest, AbstractInt_Scalar) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: var: abstracts are not permitted
@@ -142,7 +142,7 @@ TEST_F(IR_ValidatorTest, AbstractFloat_Vector) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: var: abstracts are not permitted
@@ -158,7 +158,7 @@ TEST_F(IR_ValidatorTest, AbstractInt_Vector) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(3:5 error: var: abstracts are not permitted
@@ -174,7 +174,7 @@ TEST_F(IR_ValidatorTest, AbstractFloat_Matrix) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: var: abstracts are not permitted
@@ -190,7 +190,7 @@ TEST_F(IR_ValidatorTest, AbstractInt_Matrix) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: var: abstracts are not permitted
@@ -207,7 +207,7 @@ TEST_F(IR_ValidatorTest, AbstractFloat_Struct) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:3 error: var: abstracts are not permitted
@@ -224,7 +224,7 @@ TEST_F(IR_ValidatorTest, AbstractInt_Struct) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:3 error: var: abstracts are not permitted
@@ -239,7 +239,7 @@ TEST_F(IR_ValidatorTest, AbstractFloat_FunctionParam) {
     f->SetParams({b.FunctionParam(ty.AFloat())});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:1:17 error: abstracts are not permitted
 %my_func = func(%2:abstract-float):void {
@@ -253,7 +253,7 @@ TEST_F(IR_ValidatorTest, AbstractInt_FunctionParam) {
     f->SetParams({b.FunctionParam(ty.AInt())});
     f->Block()->Append(b.Return(f));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(R"(:1:17 error: abstracts are not permitted
 %my_func = func(%2:abstract-int):void {
@@ -269,7 +269,7 @@ TEST_F(IR_ValidatorTest, StructMember_Void) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:3 error: var: struct member 0 cannot have void type
@@ -289,7 +289,7 @@ TEST_F(IR_ValidatorTest, StructMember_AlignZero) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:3 error: var: struct member must not have an alignment of 0
@@ -309,7 +309,7 @@ TEST_F(IR_ValidatorTest, StructMember_AlignNotPowerOfTwo) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:3 error: var: struct member alignment must be a power of 2
@@ -329,7 +329,7 @@ TEST_F(IR_ValidatorTest, StructMember_AlignNotDivisibleByTypeAlignment) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -352,7 +352,7 @@ TEST_F(IR_ValidatorTest, StructMember_TypeAlignZero) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowNonCoreTypes});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowNonCoreTypes});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -374,7 +374,7 @@ TEST_F(IR_ValidatorTest, StructMember_TypeAlignNotPowerOfTwo) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowNonCoreTypes});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowNonCoreTypes});
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -397,7 +397,7 @@ TEST_F(IR_ValidatorTest, Structure_MemberAlignmentCausesSizeOverflow) {
     auto* fn = b.Function("F", ty.void_());
     b.Append(fn->Block(), [&] { b.Return(fn); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -417,7 +417,7 @@ TEST_F(IR_ValidatorTest, StructureMember_SizeTooSmall) {
     auto* fn = b.Function("F", ty.void_());
     b.Append(fn->Block(), [&] { b.Return(fn); });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -439,7 +439,7 @@ TEST_F(IR_ValidatorTest, StructMember_RuntimeArrayNotLast) {
     v->SetBindingPoint(0, 0);
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -463,7 +463,7 @@ TEST_F(IR_ValidatorTest, StructMember_RuntimeArrayIsLast) {
     v->SetBindingPoint(0, 0);
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -480,7 +480,7 @@ TEST_F(IR_ValidatorTest, StructMember_MultipleRuntimeArrays) {
     v->SetBindingPoint(0, 0);
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -502,7 +502,7 @@ TEST_F(IR_ValidatorTest, StructMember_RowMajor_WithoutCapability) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -520,7 +520,7 @@ TEST_F(IR_ValidatorTest, StructMember_Pointer) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -541,7 +541,7 @@ TEST_F(IR_ValidatorTest, StructMember_Pointer_WithCapability) {
     Capabilities caps;
     caps.Add(Capability::kMslAllowEntryPointInterface);
 
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     ASSERT_EQ(res, Success);
 }
 
@@ -554,7 +554,7 @@ TEST_F(IR_ValidatorTest, StructMember_Texture) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:3 error: var: struct member 0 cannot be a texture type
@@ -575,7 +575,7 @@ TEST_F(IR_ValidatorTest, StructMember_Texture_WithCapability) {
     Capabilities caps;
     caps.Add(Capability::kMslAllowEntryPointInterface);
 
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     ASSERT_EQ(res, Success);
 }
 
@@ -587,7 +587,7 @@ TEST_F(IR_ValidatorTest, StructMember_Sampler) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:6:3 error: var: struct member 0 cannot be a sampler type
@@ -609,7 +609,7 @@ TEST_F(IR_ValidatorTest, StructMember_InvalidBuiltinType_Unused) {
 
     mod.root_block->Append(b.Var("v", ty.ptr<uniform, read>(s)));
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr("primitive_index must be an u32"));
 }
@@ -625,7 +625,7 @@ TEST_F(IR_ValidatorTest, StructMember_Sampler_WithCapability) {
     Capabilities caps;
     caps.Add(Capability::kMslAllowEntryPointInterface);
 
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     ASSERT_EQ(res, Success);
 }
 
@@ -640,7 +640,8 @@ TEST_F(IR_ValidatorTest, StructMember_RowMajor_WithCapability) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowStructMatrixDecorations});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{Capability::kAllowStructMatrixDecorations});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -655,7 +656,7 @@ TEST_F(IR_ValidatorTest, StructMember_MatrixStride_WithoutCapability) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -675,7 +676,8 @@ TEST_F(IR_ValidatorTest, StructMember_MatrixStride_WithCapability) {
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowStructMatrixDecorations});
+    auto res = ir::Validate(mod, ErrorSource::kIr,
+                            Capabilities{Capability::kAllowStructMatrixDecorations});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -687,7 +689,7 @@ TEST_F(IR_ValidatorTest, FunctionParam_InvalidAddressSpaceForHandleType) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -703,7 +705,7 @@ TEST_F(IR_ValidatorTest, FunctionParam_InvalidTypeForHandleAddressSpace) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("the 'handle' address space can only be used for handle types"))
@@ -719,7 +721,7 @@ TEST_F(IR_ValidatorTest, FunctionParam_InvalidHandlePointer) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("function parameter type, 'ptr<handle, texture_1d<f32>, read>', "
@@ -734,7 +736,7 @@ TEST_F(IR_ValidatorTest, NonCoreType) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr("non-core types not allowed in core IR"))
         << res.Failure();
@@ -756,10 +758,10 @@ TEST_P(Type_ArrayElements, Test) {
     });
 
     if (allowed) {
-        auto res = ir::Validate(mod);
+        auto res = ir::Validate(mod, ErrorSource::kIr);
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
-        auto res = ir::Validate(mod);
+        auto res = ir::Validate(mod, ErrorSource::kIr);
         ASSERT_NE(res, Success) << res.Failure();
         EXPECT_THAT(res.Failure().reason,
                     testing::HasSubstr(R"(:3:5 error: var: array elements, ')" +
@@ -796,7 +798,7 @@ TEST_F(IR_ValidatorTest, LargeArrays) {
                       {mod.symbols.New("a8"), ty.array<u32, (1ull << 32ull) - 32u>(), {}},
                   });
     mod.root_block->Append(b.Var(ty.ptr<workgroup>(str_ty)));
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -807,7 +809,7 @@ TEST_F(IR_ValidatorTest, Array_ZeroSize) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("3:5 error: var: array requires a constant array size > 0"))
@@ -828,7 +830,7 @@ TEST_P(Type_VectorElements, Test) {
             b.Return(f);
         });
 
-        auto res = ir::Validate(mod);
+        auto res = ir::Validate(mod, ErrorSource::kIr);
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
         auto* f = b.Function("my_func", ty.void_());
@@ -837,7 +839,7 @@ TEST_P(Type_VectorElements, Test) {
             b.Return(f);
         });
 
-        auto res = ir::Validate(mod);
+        auto res = ir::Validate(mod, ErrorSource::kIr);
         ASSERT_NE(res, Success) << res.Failure();
         EXPECT_THAT(res.Failure().reason,
                     testing::HasSubstr(R"(:3:5 error: var: vector elements, ')" +
@@ -875,7 +877,7 @@ TEST_P(Type_MatrixElements, Test) {
             b.Return(f);
         });
 
-        auto res = ir::Validate(mod);
+        auto res = ir::Validate(mod, ErrorSource::kIr);
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
         auto* f = b.Function("my_func", ty.void_());
@@ -884,7 +886,7 @@ TEST_P(Type_MatrixElements, Test) {
             b.Return(f);
         });
 
-        auto res = ir::Validate(mod);
+        auto res = ir::Validate(mod, ErrorSource::kIr);
         ASSERT_NE(res, Success) << res.Failure();
         EXPECT_THAT(res.Failure().reason,
                     testing::HasSubstr(R"(:3:5 error: var: matrix elements, ')" +
@@ -911,7 +913,7 @@ TEST_P(Type_AtomicSubType, Test) {
         b.Var("v", AddressSpace::kWorkgroup, ty.atomic(type));
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     if (allowed) {
         EXPECT_EQ(res, Success) << res.Failure();
     } else {
@@ -942,7 +944,7 @@ TEST_P(Type_SubgroupMatrixComponentType, Test) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllow8BitIntegers});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllow8BitIntegers});
     if (allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -976,7 +978,7 @@ TEST_P(Type_SubgroupMatrixInvalidAddressSpace, Test) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("3:5 error: var: invalid address space for subgroup matrix : " +
@@ -1005,7 +1007,7 @@ TEST_P(Type_SampledTextureSampledType, Test) {
         var->SetBindingPoint(0, 0);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     if (allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1034,7 +1036,7 @@ TEST_F(IR_ValidatorTest, BindingArray) {
         var->SetBindingPoint(0, 0);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_EQ(res, Success);
 }
 
@@ -1047,7 +1049,7 @@ TEST_F(IR_ValidatorTest, BindingArrayRuntimeCount) {
         var->SetBindingPoint(0, 0);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1062,7 +1064,7 @@ TEST_F(IR_ValidatorTest, BindingArrayNonSampledTexture) {
         var->SetBindingPoint(0, 0);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(
@@ -1077,7 +1079,7 @@ TEST_F(IR_ValidatorTest, BindingArray_AllowedNonSampledTextureWithCapability) {
         var->SetBindingPoint(0, 0);
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowNonCoreTypes});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowNonCoreTypes});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1090,7 +1092,7 @@ TEST_F(IR_ValidatorTest, BindingArray_ZeroSize) {
         var->SetBindingPoint(0, 0);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
@@ -1112,7 +1114,7 @@ TEST_P(Type_BindingArrayInvalidAddressSpace, Test) {
         b.Append(mod.root_block, [&] { b.Var("m", addr, ty.binding_array(ty.u32(), 4)); });
     }
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllowNonCoreTypes});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllowNonCoreTypes});
     ASSERT_NE(res, Success);
     if (addr == AddressSpace::kFunction) {
         EXPECT_THAT(res.Failure().reason,
@@ -1140,8 +1142,9 @@ TEST_P(Type_BindingArrayInvalidAddressSpace, AllowedWithCapability) {
         b.Append(mod.root_block, [&] { b.Var("m", addr, ty.binding_array(ty.u32(), 4)); });
     }
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kMslAllowEntryPointInterface,
-                                              Capability::kAllowNonCoreTypes});
+    auto res = ir::Validate(
+        mod, ErrorSource::kIr,
+        Capabilities{Capability::kMslAllowEntryPointInterface, Capability::kAllowNonCoreTypes});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1175,7 +1178,7 @@ TEST_P(Type_MultisampledTextureTypeAndDimension, Test) {
         var->SetBindingPoint(0, 0);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     if (allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1230,10 +1233,10 @@ TEST_P(Type_StorageTextureDimension, Test) {
     mod.root_block->Append(v);
 
     if (allowed) {
-        auto res = ir::Validate(mod);
+        auto res = ir::Validate(mod, ErrorSource::kIr);
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
-        auto res = ir::Validate(mod);
+        auto res = ir::Validate(mod, ErrorSource::kIr);
         ASSERT_NE(res, Success) << res.Failure();
         EXPECT_THAT(res.Failure().reason,
                     testing::HasSubstr(
@@ -1263,7 +1266,7 @@ TEST_P(Type_InputAttachmentComponentType, Test) {
         var->SetBindingPoint(0, 0);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     if (allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1309,7 +1312,7 @@ TEST_P(IR_ValidatorRefTypeTest, Var) {
     if (refs_allowed) {
         caps.Add(Capability::kAllowRefTypes);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (!holds_ref || refs_allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1333,7 +1336,7 @@ TEST_P(IR_ValidatorRefTypeTest, FnParam) {
     if (refs_allowed) {
         caps.Add(Capability::kAllowRefTypes);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (!holds_ref) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1355,7 +1358,7 @@ TEST_P(IR_ValidatorRefTypeTest, FnRet) {
     if (refs_allowed) {
         caps.Add(Capability::kAllowRefTypes);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (!holds_ref) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1387,7 +1390,7 @@ TEST_P(IR_ValidatorRefTypeTest, BlockParam) {
     if (refs_allowed) {
         caps.Add(Capability::kAllowRefTypes);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (!holds_ref) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1424,7 +1427,7 @@ TEST_F(IR_ValidatorTest, PointerToPointer) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr("pointers to pointers are not allowed"))
         << res.Failure();
@@ -1438,7 +1441,7 @@ TEST_F(IR_ValidatorTest, PointerToVoid) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr("pointers to void are not permitted"))
         << res.Failure();
@@ -1455,7 +1458,7 @@ TEST_F(IR_ValidatorTest, ReferenceToReference) {
     Capabilities caps;
     caps.Add(Capability::kAllowRefTypes);
 
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("nested reference types are not permitted"))
@@ -1473,7 +1476,7 @@ TEST_F(IR_ValidatorTest, ReferenceToVoid) {
     Capabilities caps;
     caps.Add(Capability::kAllowRefTypes);
 
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr("references to void are not permitted"))
         << res.Failure();
@@ -1497,7 +1500,7 @@ TEST_P(IR_Validator8BitIntTypeTest, Var) {
     if (int8_allowed) {
         caps.Add(Capability::kAllow8BitIntegers);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (int8_allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1520,7 +1523,7 @@ TEST_P(IR_Validator8BitIntTypeTest, FnParam) {
     if (int8_allowed) {
         caps.Add(Capability::kAllow8BitIntegers);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (int8_allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1542,7 +1545,7 @@ TEST_P(IR_Validator8BitIntTypeTest, FnRet) {
     if (int8_allowed) {
         caps.Add(Capability::kAllow8BitIntegers);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (int8_allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1574,7 +1577,7 @@ TEST_P(IR_Validator8BitIntTypeTest, BlockParam) {
     if (int8_allowed) {
         caps.Add(Capability::kAllow8BitIntegers);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (int8_allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1602,7 +1605,7 @@ TEST_F(IR_ValidatorTest, Int8Type_InstructionOperand_NotAllowed) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: let: 8-bit integer types are not permitted
@@ -1618,7 +1621,7 @@ TEST_F(IR_ValidatorTest, Int8Type_InstructionOperand_AllowedWithCapability) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllow8BitIntegers});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllow8BitIntegers});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1629,7 +1632,7 @@ TEST_F(IR_ValidatorTest, Int16Type_NotAllowed) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr("3:5 error: var: 16-bit integer types are not permitted"))
@@ -1643,7 +1646,7 @@ TEST_F(IR_ValidatorTest, Int16Type_AllowedWithCapability) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllow16BitIntegers});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllow16BitIntegers});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1665,7 +1668,7 @@ TEST_P(IR_Validator64BitIntTypeTest, Var) {
     if (int64_allowed) {
         caps.Add(Capability::kAllow64BitIntegers);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (int64_allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1688,7 +1691,7 @@ TEST_P(IR_Validator64BitIntTypeTest, FnParam) {
     if (int64_allowed) {
         caps.Add(Capability::kAllow64BitIntegers);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (int64_allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1710,7 +1713,7 @@ TEST_P(IR_Validator64BitIntTypeTest, FnRet) {
     if (int64_allowed) {
         caps.Add(Capability::kAllow64BitIntegers);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (int64_allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1742,7 +1745,7 @@ TEST_P(IR_Validator64BitIntTypeTest, BlockParam) {
     if (int64_allowed) {
         caps.Add(Capability::kAllow64BitIntegers);
     }
-    auto res = ir::Validate(mod, caps);
+    auto res = ir::Validate(mod, ErrorSource::kIr, caps);
     if (int64_allowed) {
         ASSERT_EQ(res, Success) << res.Failure();
     } else {
@@ -1769,7 +1772,7 @@ TEST_F(IR_ValidatorTest, Int64Type_InstructionOperand_NotAllowed) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
                 testing::HasSubstr(R"(:3:5 error: let: 64-bit integer types are not permitted
@@ -1785,7 +1788,7 @@ TEST_F(IR_ValidatorTest, Int64Type_InstructionOperand_AllowedWithCapability) {
         b.Return(fn);
     });
 
-    auto res = ir::Validate(mod, Capabilities{Capability::kAllow64BitIntegers});
+    auto res = ir::Validate(mod, ErrorSource::kIr, Capabilities{Capability::kAllow64BitIntegers});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1844,7 +1847,7 @@ TEST_P(AddressSpace_AccessMode, Test) {
         default:
             break;
     }
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, ErrorSource::kIr);
     if (expected_error == nullptr) {
         ASSERT_EQ(res, Success);
     } else {

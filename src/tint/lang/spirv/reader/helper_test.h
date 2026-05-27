@@ -67,7 +67,7 @@ class SpirvReaderTestHelperBase : public BASE {
         TINT_CHECK_RESULT_UNWRAP(parsed, ReadIR(binary, options));
 
         // Validate the IR module against the capabilities supported by the core dialect.
-        TINT_CHECK_RESULT(core::ir::Validate(parsed,
+        TINT_CHECK_RESULT(core::ir::Validate(parsed, core::ir::ErrorSource::kIr,
                                              core::ir::Capabilities{
                                                  core::ir::Capability::kAllowMultipleEntryPoints,
                                              },

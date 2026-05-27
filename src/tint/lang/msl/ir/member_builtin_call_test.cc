@@ -96,7 +96,7 @@ TEST_F(IR_MslMemberBuiltinCallTest, DoesNotMatchNonMemberFunction) {
         b.Return(func, result);
     });
 
-    auto res = core::ir::Validate(mod);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_EQ(
         res.Failure().reason,
@@ -128,7 +128,7 @@ TEST_F(IR_MslMemberBuiltinCallTest, Valid) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr);
     ASSERT_EQ(res, Success);
 }
 
@@ -142,7 +142,7 @@ TEST_F(IR_MslMemberBuiltinCallTest, MissingResults) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason,
               R"(:3:16 error: get_width: expected exactly 1 results, got 0
@@ -172,7 +172,7 @@ TEST_F(IR_MslMemberBuiltinCallTest, TooFewArgs) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason,
               R"(:3:17 error: get_width: no matching call to 'get_width(texture_2d<f32>)'
@@ -228,7 +228,7 @@ TEST_F(IR_MslMemberBuiltinCallTest, TooManyArgs) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_EQ(
         res.Failure().reason,

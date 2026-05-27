@@ -92,8 +92,9 @@ void Register(const IRFuzzer& fuzzer) {
             // there is a bug somewhere in the components run above. Those components have their own
             // IR fuzzers.
             if (!context.options.disable_ir_validator) {
-                if (auto val = core::ir::Validate(ir.Get(), pre_capabilities,
-                                                  "finish " + std::string(fuzzer.name));
+                if (auto val =
+                        core::ir::Validate(ir.Get(), core::ir::ErrorSource::kIr, pre_capabilities,
+                                           "finish " + std::string(fuzzer.name));
                     val != Success) {
                     if (context.options.verbose) {
                         std::cout << "   Failed to validate against fuzzer capabilities before "
@@ -153,7 +154,7 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
         mod.dump_ir_when_validating = context.options.dump_ir_when_validating;
 
         if (!context.options.disable_ir_validator) {
-            if (tint::core::ir::Validate(mod, fuzzer.pre_capabilities,
+            if (tint::core::ir::Validate(mod, core::ir::ErrorSource::kIr, fuzzer.pre_capabilities,
                                          "start " + std::string(currently_running)) !=
                 tint::Success) {
                 // Failing before running indicates that this input violates the pre-conditions
@@ -177,7 +178,8 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
         }
 
         if (!context.options.disable_ir_validator) {
-            if (auto result = tint::core::ir::Validate(mod, fuzzer.post_capabilities,
+            if (auto result = tint::core::ir::Validate(mod, core::ir::ErrorSource::kIr,
+                                                       fuzzer.post_capabilities,
                                                        "finish " + std::string(currently_running));
                 result != Success) {
                 // Failing after running indicates the pass is doing something unexpected and
