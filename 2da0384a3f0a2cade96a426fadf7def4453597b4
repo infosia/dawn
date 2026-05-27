@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "525dd30d_f2a18ab5",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-27T20:13:25Z",
+      "side": 1,
+      "message": "I think we are going to grab a default texture and use that for non-sampling builtins instead of conditionalizing, per offline discussion.",
+      "range": {
+        "startLine": 64,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "2da0384a3f0a2cade96a426fadf7def4453597b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
