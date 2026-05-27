@@ -56,6 +56,7 @@
 #include "src/tint/lang/core/ir/exit_switch.h"
 #include "src/tint/lang/core/ir/function.h"
 #include "src/tint/lang/core/ir/function_param.h"
+#include "src/tint/lang/core/ir/functional_validator.h"
 #include "src/tint/lang/core/ir/if.h"
 #include "src/tint/lang/core/ir/instruction.h"
 #include "src/tint/lang/core/ir/instruction_result.h"
@@ -68,11 +69,11 @@
 #include "src/tint/lang/core/ir/next_iteration.h"
 #include "src/tint/lang/core/ir/override.h"
 #include "src/tint/lang/core/ir/phony.h"
-#include "src/tint/lang/core/ir/referenced_functions.h"
 #include "src/tint/lang/core/ir/referenced_module_vars.h"
 #include "src/tint/lang/core/ir/return.h"
 #include "src/tint/lang/core/ir/store.h"
 #include "src/tint/lang/core/ir/store_vector_element.h"
+#include "src/tint/lang/core/ir/structural_validator.h"
 #include "src/tint/lang/core/ir/switch.h"
 #include "src/tint/lang/core/ir/swizzle.h"
 #include "src/tint/lang/core/ir/terminate_invocation.h"
@@ -1014,10 +1015,6 @@ class Validator {
     /// sound and sets up data structures for later checks.
     void RunStructuralSoundnessChecks();
 
-    /// Checks that there is no direct or indirect recursion.
-    /// Depends on CheckStructuralSoundness() having previously been run.
-    void CheckForRecursion();
-
     /// Checks that there are no orphaned instructions
     /// Depends on CheckStructuralSoundness() having previously been run
     void CheckForOrphanedInstructions();
@@ -1666,31 +1663,24 @@ Disassembler& Validator::Disassemble() {
 Result<SuccessType> Validator::Run() {
     RunStructuralSoundnessChecks();
 
-    CheckForRecursion();
+    validator::Structural s(mod_, diagnostics_);
+    s.validate();
+
     CheckForOrphanedInstructions();
     CheckStageRestrictedInstructions();
 
+    // Only run the functional validation if we are structurally valid
+    if (!diagnostics_.ContainsErrors()) {
+        validator::Functional f(mod_, diagnostics_);
+        f.validate();
+    }
+
     if (diagnostics_.ContainsErrors()) {
-        diagnostics_.AddNote(Source{}) << "# Disassembly\n" << Disassemble().Text();
+        const StyledText disassembly = Disassemble().Text();
+        diagnostics_.AddNote(Source{}) << "# Disassembly\n" << disassembly;
         return Failure{diagnostics_.Str()};
     }
     return Success;
-}
-
-void Validator::CheckForRecursion() {
-    if (diagnostics_.ContainsErrors()) {
-        return;
-    }
-
-    ReferencedFunctions<const Module> referenced_functions(mod_);
-    for (auto& func : mod_.functions) {
-        auto& refs = referenced_functions.TransitiveReferences(func);
-        if (refs.Contains(func)) {
-            // TODO(434684891): Consider improving this error with more information.
-            AddError(func) << "recursive function calls are not allowed";
-            return;
-        }
-    }
 }
 
 void Validator::CheckForOrphanedInstructions() {
