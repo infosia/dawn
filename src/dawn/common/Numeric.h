@@ -78,9 +78,23 @@ constexpr inline Dst checked_cast(const Src& value) {
     return Dst{static_cast<IDst>(valueISrc)};
 }
 
+template <HasUnderlyingType Dst, HasUnderlyingType Src>
+constexpr inline Dst dchecked_cast(const Src& value) {
+    using ISrc = UnderlyingType<Src>;
+    using IDst = UnderlyingType<Dst>;
+    ISrc valueISrc = static_cast<ISrc>(value);
+    DAWN_ASSERT(std::in_range<IDst>(valueISrc));
+    return Dst{static_cast<IDst>(valueISrc)};
+}
+
+template <std::integral From, std::integral To>
+static consteval bool CastIsAlwaysInRange() {
+    return std::in_range<To>(std::numeric_limits<From>::lowest()) &&
+           std::in_range<To>(std::numeric_limits<From>::max());
+}
+
 // Returns if two inclusive integral ranges [x0, x1] and [y0, y1] have overlap.
-template <typename T>
-    requires std::integral<T>
+template <std::integral T>
 bool RangesOverlap(T x0, T x1, T y0, T y1) {
     DAWN_ASSERT(x0 <= x1 && y0 <= y1);
     // Two ranges DON'T have overlap if and only if:
