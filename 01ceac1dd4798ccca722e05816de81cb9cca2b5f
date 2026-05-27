@@ -33,6 +33,24 @@
       "message": "`src/utils` needs updating as well.",
       "revId": "01ceac1dd4798ccca722e05816de81cb9cca2b5f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5969a988_c924df3a",
+        "filename": "src/dawn/glfw/utils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-27T20:36:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bb2cc93_3858dd77",
+      "revId": "01ceac1dd4798ccca722e05816de81cb9cca2b5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
