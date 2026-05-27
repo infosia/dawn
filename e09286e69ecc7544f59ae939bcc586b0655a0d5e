@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "722c05f9_92a87852",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:46:08Z",
+      "side": 1,
+      "message": "```suggestion\nAdd amaiorano as owners on dawn/native and dawn/native/vulkan\n```",
+      "revId": "e09286e69ecc7544f59ae939bcc586b0655a0d5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d046bb9_7632fc8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:46:08Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "e09286e69ecc7544f59ae939bcc586b0655a0d5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
