@@ -69,6 +69,8 @@ struct State {
     /// Map from original type to a new type with atomic types rewritten.
     Hashmap<const core::type::Type*, const core::type::Type*, 4> rewritten_types{};
 
+    tint::Vector<core::ir::CoreBuiltinCall*, 4> bitcasts_to_cleanup;
+
     /// Process the module.
     void Process() {
         // Find storage buffers that contain atomic types that need to be converted.
@@ -100,6 +102,14 @@ struct State {
                 }
             }
         }
+
+
+        for (auto&& each : bitcasts_to_cleanup) {
+            printf("number usages =%d" , (int) each->Result()->NumUsages());
+            TINT_ASSERT(each->Result()->NumUsages() == 0u);
+            each->Destroy();
+        }
+
     }
 
     void Replace(core::ir::Instruction* inst) {
@@ -159,6 +169,7 @@ struct State {
                     }
 
                     auto* ptr_atomic = call->Args()[0];
+                    // This should come from the bitcast. (See asserts below)
                     auto* param_u64 = call->Args()[1];
 
                     auto as_ptr = ptr_atomic->Type()->As<core::type::Pointer>();
@@ -174,9 +185,13 @@ struct State {
                     auto* as_bitcast = as_inst->As<core::ir::CoreBuiltinCall>();
                     TINT_ASSERT(as_bitcast);
                     TINT_ASSERT(as_bitcast->Func() == core::BuiltinFn::kBitcast);
-                    TINT_ASSERT(as_bitcast->Result()->NumUsages() == 1);
+                    TINT_ASSERT(as_bitcast->Result()->NumUsages() >= 1);
+                    printf(" Current num usages = %d\n" , (int) as_bitcast->Result()->NumUsages());
                     param_u64 = as_bitcast->Args()[0];
-                    as_bitcast->Destroy();
+
+
+                    // These can have multiple usages we need to clean them up last.
+                    bitcasts_to_cleanup.Push(as_bitcast);
 
                     wgsl::BuiltinFn wgsl_fn = call->Func() == core::BuiltinFn::kAtomicStoreMax
                                                   ? wgsl::BuiltinFn::kAtomicStoreMax
