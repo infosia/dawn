@@ -340,6 +340,22 @@ VkStencilOp VulkanStencilOp(wgpu::StencilOperation op) {
     DAWN_UNREACHABLE();
 }
 
+bool UsesSampleShading(const RenderPipeline* pipeline) {
+    if (pipeline->GetSampleCount() <= 1) {
+        return false;
+    }
+    const EntryPointMetadata& metadata = pipeline->GetStage(SingleShaderStage::Fragment).metadata;
+    if (metadata.usesSampleIndex) {
+        return true;
+    }
+    for (const auto& variable : metadata.interStageVariables) {
+        if (variable.interpolationSampling == InterpolationSampling::Sample) {
+            return true;
+        }
+    }
+    return false;
+}
+
 }  // anonymous namespace
 
 // static
@@ -352,6 +368,7 @@ Ref<RenderPipeline> RenderPipeline::CreateUninitialized(
 MaybeError RenderPipeline::InitializeImpl() {
     Device* device = ToBackend(GetDevice());
     PipelineLayout* layout = ToBackend(GetLayout());
+    const CombinedLimits& limits = device->GetLimits();
 
     // The cache key is only used for storing VkPipelineCache objects in BlobStore. That's not
     // done with the monolithic pipeline cache so it's unnecessary work and memory usage.
@@ -368,6 +385,15 @@ MaybeError RenderPipeline::InitializeImpl() {
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
 
+    bool hasFragment = GetStageMask() & wgpu::ShaderStage::Fragment;
+    bool polyfillPosition =
+        hasFragment && UsesSampleShading(this) &&
+        GetStage(SingleShaderStage::Fragment).metadata.usesPosition;
+    if (polyfillPosition) {
+        mImmediateMask |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, viewportDepth), sizeof(ViewportDepthArgs));
+    }
+
     // There are at most 2 shader stages in render pipeline, i.e. vertex and fragment
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
     uint32_t stageCount = 0;
@@ -376,9 +402,11 @@ MaybeError RenderPipeline::InitializeImpl() {
                               bool emitPointSize) -> MaybeError {
         const ProgrammableStage& programmableStage = GetStage(stage);
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
-        DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
-                                            ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, GetImmediateMask()));
+        DAWN_TRY_ASSIGN(moduleAndSpirv,
+                        ToBackend(programmableStage.module)
+                            ->GetHandleAndSpirv(
+                                stage, programmableStage, layout, emitPointSize, GetImmediateMask(),
+                                polyfillPosition, limits.v1.maxInterStageShaderVariables));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.

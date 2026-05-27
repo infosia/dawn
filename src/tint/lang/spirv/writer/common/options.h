@@ -137,6 +137,11 @@ struct Options {
     /// Set to `true` to scalarize max min and clamp builtins.
     bool scalarize_max_min_clamp = false;
 
+    /// Set to `true` to generate a polyfill for the built-in position in fragment shaders.
+    bool polyfill_builtin_position = false;
+    /// The location to use for the polyfilled position variable
+    uint32_t polyfill_builtin_position_location = 0;
+
     /// Set to `true` if the Vulkan Memory Model should be used
     bool use_vulkan_memory_model = false;
 
@@ -146,8 +151,11 @@ struct Options {
     /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
     bool decompose_uniform_buffers = true;
 
-    /// Offsets of the minDepth and maxDepth push constants.
+    /// Offsets of the minDepth and maxDepth push constants for depth clamping.
     std::optional<RangeOffsets> depth_range_offsets = std::nullopt;
+
+    /// Offsets of the minDepth and maxDepth push constants for viewport remapping.
+    std::optional<RangeOffsets> viewport_depth_offsets = std::nullopt;
 
     /// SPIR-V binary version.
     SpvVersion spirv_version = SpvVersion::kSpv13;
@@ -182,10 +190,13 @@ struct Options {
                  polyfill_subgroup_broadcast_f16,
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
+                 polyfill_builtin_position,
+                 polyfill_builtin_position_location,
                  use_vulkan_memory_model,
                  dva_transform_handle,
                  decompose_uniform_buffers,
                  depth_range_offsets,
+                 viewport_depth_offsets,
                  spirv_version,
                  resource_binding,
                  substitute_overrides_config);

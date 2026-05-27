@@ -118,6 +118,14 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
                                                        module.symbols.New("tint_frag_depth_max"),
                                                        module.Types().f32());
     }
+    if (options.viewport_depth_offsets) {
+        immediate_data_config.AddInternalImmediateData(options.viewport_depth_offsets.value().min,
+                                                       module.symbols.New("tint_viewport_depth_min"),
+                                                       module.Types().f32());
+        immediate_data_config.AddInternalImmediateData(options.viewport_depth_offsets.value().max,
+                                                       module.symbols.New("tint_viewport_depth_max"),
+                                                       module.Types().f32());
+    }
     auto immediate_data_layout =
         core::ir::transform::PrepareImmediateData(module, immediate_data_config);
     if (immediate_data_layout != Success) {
@@ -232,7 +240,11 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(
         raise::ShaderIO, module,
         raise::ShaderIOConfig{immediate_data_layout.Get(), options.emit_vertex_point_size,
-                              !options.use_storage_input_output_16, options.depth_range_offsets});
+                              !options.use_storage_input_output_16,
+                              options.polyfill_builtin_position,
+                              options.polyfill_builtin_position_location,
+                              options.depth_range_offsets,
+                              options.viewport_depth_offsets});
 
     // ForkExplicitLayoutTypes must come after DecomposeUniformAccess, since it rewrites
     // host-shareable array types to use the explicitly laid array type defined by the SPIR-V

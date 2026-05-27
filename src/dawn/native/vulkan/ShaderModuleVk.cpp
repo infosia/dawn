@@ -124,7 +124,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const ProgrammableStage& programmableStage,
     const PipelineLayout* layout,
     bool emitPointSize,
-    const ImmediateConstantMask& pipelineImmediateMask) {
+    const ImmediateConstantMask& pipelineImmediateMask,
+    bool polyfillPosition,
+    uint32_t polyfillPositionLocation) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
 #if TINT_BUILD_SPV_WRITER
@@ -249,6 +251,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.tintOptions.spirv_version = GetDevice()->IsToggleEnabled(Toggle::UseSpirv14)
                                         ? tint::spirv::writer::SpvVersion::kSpv14
                                         : tint::spirv::writer::SpvVersion::kSpv13;
+    req.tintOptions.polyfill_builtin_position = polyfillPosition;
+    req.tintOptions.polyfill_builtin_position_location = polyfillPositionLocation;
     req.tintOptions.decompose_uniform_buffers =
         GetDevice()->IsToggleEnabled(Toggle::DecomposeUniformBuffers);
     req.tintOptions.dva_transform_handle =
@@ -264,6 +268,13 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         uint32_t offsetStartBytes = GetImmediateByteOffsetInPipeline(
             &RenderImmediateConstants::clampFragDepth, pipelineImmediateMask);
         req.tintOptions.depth_range_offsets = {
+            offsetStartBytes, offsetStartBytes + kImmediateConstantElementByteSize};
+    }
+
+    if (HasImmediateConstants(&RenderImmediateConstants::viewportDepth, pipelineImmediateMask)) {
+        uint32_t offsetStartBytes = GetImmediateByteOffsetInPipeline(
+            &RenderImmediateConstants::viewportDepth, pipelineImmediateMask);
+        req.tintOptions.viewport_depth_offsets = {
             offsetStartBytes, offsetStartBytes + kImmediateConstantElementByteSize};
     }
 

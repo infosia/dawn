@@ -51,6 +51,8 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     Vector<core::ir::Var*, 4> input_vars;
     /// The output variables.
     Vector<core::ir::Var*, 4> output_vars;
+    /// The polyfilled position variable (fragment input or vertex output).
+    core::ir::Var* polyfilled_position_var = nullptr;
 
     /// The configuration options.
     const ShaderIOConfig& config;
@@ -114,6 +116,30 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             ir.root_block->Append(var);
             vars.Push(var);
         }
+
+        // Add a polyfilled position variable if necessary.
+        if (config.polyfill_builtin_position) {
+            bool has_position = false;
+            for (auto io : entries) {
+                if (io.attributes.builtin == core::BuiltinValue::kPosition) {
+                    has_position = true;
+                    break;
+                }
+            }
+
+            if (has_position) {
+                core::IOAttributes attributes;
+                attributes.location = config.polyfill_builtin_position_location;
+                attributes.interpolation =
+                    core::Interpolation{core::InterpolationType::kLinear,
+                                        core::InterpolationSampling::kCenter};
+
+                auto* ptr = ty.ptr(addrspace, ty.vec4<f32>(), access);
+                polyfilled_position_var = b.Var(ir.NameOf(func).Name() + "_pos_polyfill", ptr);
+                polyfilled_position_var->SetAttributes(attributes);
+                ir.root_block->Append(polyfilled_position_var);
+            }
+        }
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
@@ -140,6 +166,45 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
 
         auto* value = builder.Load(from)->Result();
+
+        // Polyfill the position builtin if necessary.
+        if (config.polyfill_builtin_position &&
+            inputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            polyfilled_position_var) {
+            auto* polyfill = builder.Load(polyfilled_position_var);
+            auto* x = builder.Access<f32>(value, 0_u);
+            auto* y = builder.Access<f32>(value, 1_u);
+            auto* centered_x =
+                builder.Binary(core::BinaryOp::kAdd, builder.Call<f32>(core::BuiltinFn::kFloor, x),
+                               b.Constant(0.5_f));
+            auto* centered_y =
+                builder.Binary(core::BinaryOp::kAdd, builder.Call<f32>(core::BuiltinFn::kFloor, y),
+                               b.Constant(0.5_f));
+            auto* centered_z = builder.Access<f32>(polyfill, 2_u);
+            if (config.viewport_depth_offsets) {
+                auto* immediate_data = config.immediate_data_layout.var;
+                auto min_idx =
+                    u32(config.immediate_data_layout.IndexOf(config.viewport_depth_offsets->min));
+                auto max_idx =
+                    u32(config.immediate_data_layout.IndexOf(config.viewport_depth_offsets->max));
+                auto* min =
+                    builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, min_idx));
+                auto* max =
+                    builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, max_idx));
+                centered_z =
+                    builder
+                        .Binary(core::BinaryOp::kAdd,
+                                builder.Binary(core::BinaryOp::kMul, centered_z,
+                                               builder.Binary(core::BinaryOp::kSub, max, min)),
+                                min)
+                        ->Result();
+            }
+
+            auto* centered_w = builder.Access<f32>(polyfill, 3_u);
+
+            value = builder.Construct(ty.vec4<f32>(), centered_x, centered_y, centered_z, centered_w)
+                        ->Result();
+        }
 
         // Convert f32 values to f16 values if needed.
         if (config.polyfill_f16_io && inputs[idx].type->DeepestElement()->Is<core::type::F16>()) {
@@ -171,6 +236,18 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
 
         builder.Store(to, value);
+
+        // Store the polyfilled position value if necessary.
+        if (config.polyfill_builtin_position &&
+            outputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            polyfilled_position_var) {
+            auto* inv_w = builder.Binary(core::BinaryOp::kDiv, b.Constant(1_f),
+                                         builder.Access<f32>(value, 3_u));
+            auto* xyz = builder.Swizzle(ty.vec3<f32>(), value, {0, 1, 2});
+            auto* proj_xyz = builder.Binary(core::BinaryOp::kMul, xyz, inv_w);
+            auto* polyfill = builder.Construct(ty.vec4<f32>(), proj_xyz, inv_w);
+            builder.Store(polyfilled_position_var, polyfill);
+        }
     }
 
     /// Clamp a frag_depth builtin value if necessary.

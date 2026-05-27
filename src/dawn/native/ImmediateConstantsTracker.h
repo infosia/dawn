@@ -126,6 +126,7 @@ class RenderImmediateConstantsTrackerBase
   public:
     RenderImmediateConstantsTrackerBase() = default;
     void SetClampFragDepth(float minClampFragDepth, float maxClampFragDepth);
+    void SetViewportDepth(float minDepth, float maxDepth);
     void SetFirstIndexOffset(uint32_t firstVertex, uint32_t firstInstance);
     void SetFirstVertex(uint32_t firstVertex);
     void SetFirstInstance(uint32_t firstInstance);

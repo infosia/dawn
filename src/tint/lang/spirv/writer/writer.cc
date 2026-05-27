@@ -131,6 +131,18 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         }
     }
 
+    if (options.viewport_depth_offsets) {
+        std::vector<core::ir::ImmediateInfo> immediates = {
+            {options.viewport_depth_offsets->max, 4u},
+            {options.viewport_depth_offsets->min, 4u},
+        };
+        if (auto res =
+                core::ir::ValidateInternalImmediateOffset(0x1000, user_immediate_size, immediates);
+            res != Success) {
+            return res.Failure();
+        }
+    }
+
     {
         auto res = ValidateBindingOptions(options);
         if (res != Success) {

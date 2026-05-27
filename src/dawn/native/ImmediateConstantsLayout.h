@@ -50,12 +50,19 @@ struct ClampFragDepthArgs {
     float maxClampFragDepth;
 };
 
+// 8 bytes of immediate data to be used by the position polyfill for viewport depth remapping.
+struct ViewportDepthArgs {
+    float minDepth;
+    float maxDepth;
+};
+
 // Define render pipeline immediate data layout. Append members to
 // expand the layout.
 struct RenderImmediateConstants {
     UserImmediateConstants userConstants;
 
     ClampFragDepthArgs clampFragDepth;
+    ViewportDepthArgs viewportDepth;
 
     // first index offset
     uint32_t firstVertex;

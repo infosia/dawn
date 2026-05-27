@@ -58,8 +58,14 @@ struct ShaderIOConfig {
     bool emit_vertex_point_size = false;
     /// true if f16 IO types should be replaced with f32 types and converted
     bool polyfill_f16_io = false;
+    /// true if the built-in position should be polyfilled in fragment shaders
+    bool polyfill_builtin_position = false;
+    /// the location to use for the polyfilled position variable
+    uint32_t polyfill_builtin_position_location = 0;
     /// offsets for clamping frag depth
     std::optional<Options::RangeOffsets> depth_range_offsets{};
+    /// offsets for viewport depth remapping
+    std::optional<Options::RangeOffsets> viewport_depth_offsets{};
 };
 
 /// ShaderIO is a transform that moves each entry point function's parameters and return value to

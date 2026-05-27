@@ -325,6 +325,7 @@ using OverridesMap = absl::flat_hash_map<std::string, Override>;
     X(bool, usesNumWorkgroups)                                                                    \
     X(bool, usesSampleMaskOutput)                                                                 \
     X(bool, usesSampleIndex)                                                                      \
+    X(bool, usesPosition)                                                                         \
     X(bool, usesVertexIndex)                                                                      \
     X(bool, usesTextureLoadWithDepthTexture)                                                      \
     X(bool, usesDepthTextureWithNonComparisonSampler)                                             \
