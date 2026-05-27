@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13527d83_edee5674",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-27T17:25:02Z",
+      "side": 1,
+      "message": "Looks like my test case was already known to CF, the issue just hadn\u0027t been triaged yet, so it is de-duping my test case.",
+      "revId": "2e4c9bd2c0a14325569f391330b2abff05f75c2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
