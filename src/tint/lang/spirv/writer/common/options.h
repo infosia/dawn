@@ -146,6 +146,12 @@ struct Options {
     /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
     bool decompose_uniform_buffers = true;
 
+    /// Set to `true` to polyfill `@builtin(position)` for Vulkan multi-sampling.
+    bool polyfill_builtin_position = false;
+
+    /// The location to use for the position polyfill variable.
+    uint32_t position_polyfill_location = 0;
+
     /// Offsets of the minDepth and maxDepth push constants.
     std::optional<RangeOffsets> depth_range_offsets = std::nullopt;
 

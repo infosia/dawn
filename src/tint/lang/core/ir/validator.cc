@@ -446,15 +446,36 @@ constexpr BuiltInChecker kNumWorkgroupsChecker{
     /* type_error */ "num_workgroups must be an vec3<u32>",
 };
 
-constexpr BuiltInChecker kPositionChecker{
-    /* valid_usages */ EnumSet<IOAttributeUsage>{IOAttributeUsage::kVertexOutputUsage,
-                                                 IOAttributeUsage::kFragmentInputUsage},
-    /* type_check */
-    [](const core::type::Type* ty) -> bool {
-        return ty->IsFloatVector() && ty->Elements().count == 4;
-    },
     /* type_error */ "position must be an vec4<f32>",
 };
+
+/// @returns a function that validates interpolation on a value
+template <typename MSG_ANCHOR>
+auto CheckInterpolate(const MSG_ANCHOR* msg_anchor,
+                      const core::type::Type* ty,
+                      const IOAttributes& attr,
+                      const Capabilities& capabilities) {
+    if (attr.interpolation && attr.builtin == BuiltinValue::kPosition &&
+        capabilities.Contains(Capability::kLoosenValidationForShaderIO)) {
+        return;
+    }
+
+    if (attr.interpolation) {
+        if (attr.builtin.has_value()) {
+            // position doesn't have its interpolation checked here, but it’s the only builtin
+            // that can have interpolation, and it’s only allowed with
+            // kLoosenValidationForShaderIO.
+            // TODO(42251016): this should probably be more robust.
+            msg_anchor->diag() << "interpolation cannot be used with a builtin";
+            return;
+        }
+
+        if (ty->UnwrapPtrOrRef()->IsIntegerScalarOrVector() &&
+            attr.interpolation->type != core::InterpolationType::kFlat) {
+            msg_anchor->diag() << "interpolation type must be 'flat' for integral types";
+        }
+    }
+}
 
 constexpr BuiltInChecker kSampleIndexChecker{
     /* valid_usages */ EnumSet<IOAttributeUsage>{IOAttributeUsage::kFragmentInputUsage},
@@ -1042,6 +1063,14 @@ class Validator {
             AddError(msg_anchor)
                 << "invariant can only decorate a value if it is also decorated with position";
         }
+    }
+
+    /// Checks spec rules for interpolate attributes
+    template <typename MSG_ANCHOR>
+    void CheckInterpolate(const MSG_ANCHOR* msg_anchor,
+                          const core::type::Type* ty,
+                          const IOAttributes& attr) {
+        tint::core::ir::CheckInterpolate(msg_anchor, ty, attr, capabilities_);
     }
 
     /// Validates the given instruction
@@ -2420,6 +2449,7 @@ void Validator::CheckFunction(const Function* func) {
                 CheckColorFunctionParam("")(p, a, t);
                 if (!t->Is<core::type::Struct>()) {
                     CheckInvariant(p, a);
+                    CheckInterpolate(p, t, a);
                 }
             });
 
@@ -2497,6 +2527,7 @@ void Validator::CheckFunction(const Function* func) {
                            CheckBuiltinFunctionReturn("")(f, a, t);
                            if (!t->Is<core::type::Struct>()) {
                                CheckInvariant(f, a);
+                               CheckInterpolate(f, t, a);
                            }
                        });
     // void needs to be filtered out, since it isn't constructible, but used in the IR when no
@@ -2560,6 +2591,7 @@ void Validator::CheckFunction(const Function* func) {
                 [this](const core::type::Type* t, const IOAttributes& a, const Var* v) {
                     if (!t->Is<core::type::Struct>()) {
                         CheckInvariant(v, a);
+                        CheckInterpolate(v, t, a);
                     }
                 });
 
@@ -2764,6 +2796,7 @@ void Validator::CheckVertexEntryPoint(const Function* ep) {
                            [this](const core::type::Type* t, const IOAttributes& a, const Var* v) {
                                if (!t->Is<core::type::Struct>()) {
                                    CheckInvariant(v, a);
+                                   CheckInterpolate(v, t, a);
                                }
                            });
         // Builtin rules are not checked on module-scope variables, because they are often generated

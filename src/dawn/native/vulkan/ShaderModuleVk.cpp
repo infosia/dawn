@@ -124,7 +124,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const ProgrammableStage& programmableStage,
     const PipelineLayout* layout,
     bool emitPointSize,
-    const ImmediateConstantMask& pipelineImmediateMask) {
+    const ImmediateConstantMask& pipelineImmediateMask,
+    bool polyfillBuiltinPosition,
+    uint32_t polyfillBuiltinPositionLocation) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
 #if TINT_BUILD_SPV_WRITER
@@ -207,6 +209,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         std::move(staticallyPairedTextureBindingPoints);
     req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
     req.tintOptions.emit_vertex_point_size = emitPointSize;
+    req.tintOptions.polyfill_builtin_position = polyfillBuiltinPosition;
+    req.tintOptions.position_polyfill_location = polyfillBuiltinPositionLocation;
 
     req.tintOptions.substitute_overrides_config = {
         .map = BuildSubstituteOverridesTransformConfig(programmableStage),

@@ -55,6 +55,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// The configuration options.
     const ShaderIOConfig& config;
 
+    /// The index of the position polyfill variable.
+    uint32_t position_polyfill_index = 0xFFFFFFFF;
+
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
         : ShaderIOBackendState(mod, f), config(cfg) {}
@@ -118,12 +121,46 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
+        if (config.polyfill_builtin_position && func->IsFragment()) {
+            for (uint32_t i = 0; i < inputs.Length(); i++) {
+                if (inputs[i].attributes.builtin == core::BuiltinValue::kPosition) {
+                    position_polyfill_index =
+                        AddInput(ir.symbols.New("tint_position_center"), inputs[i].type,
+                                 core::IOAttributes{
+                                     .location = config.position_polyfill_location,
+                                     .interpolation =
+                                         core::Interpolation{
+                                             core::InterpolationType::kLinear,
+                                             core::InterpolationSampling::kCenter,
+                                         },
+                                 });
+                    break;
+                }
+            }
+        }
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
         return tint::Empty;
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeOutputs
     const core::type::Type* FinalizeOutputs() override {
+        if (config.polyfill_builtin_position && func->IsVertex()) {
+            for (uint32_t i = 0; i < outputs.Length(); i++) {
+                if (outputs[i].attributes.builtin == core::BuiltinValue::kPosition) {
+                    position_polyfill_index =
+                        AddOutput(ir.symbols.New("tint_position_center"), outputs[i].type,
+                                  core::IOAttributes{
+                                      .location = config.position_polyfill_location,
+                                      .interpolation =
+                                          core::Interpolation{
+                                              core::InterpolationType::kLinear,
+                                              core::InterpolationSampling::kCenter,
+                                          },
+                                  });
+                    break;
+                }
+            }
+        }
         MakeVars(output_vars, outputs, core::AddressSpace::kOut, core::Access::kWrite, "_Output");
         return ty.void_();
     }
@@ -144,6 +181,46 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         // Convert f32 values to f16 values if needed.
         if (config.polyfill_f16_io && inputs[idx].type->DeepestElement()->Is<core::type::F16>()) {
             value = builder.Convert(inputs[idx].type, value)->Result();
+        }
+
+        if (config.polyfill_builtin_position && func->IsFragment() &&
+            inputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            position_polyfill_index != 0xFFFFFFFF) {
+            auto* pos = value;
+            auto* center_poly = builder.Load(input_vars[position_polyfill_index])->Result();
+
+            // x/y = floor(pos.xy) + 0.5
+            auto* pos_xy = builder.Swizzle(ty.vec2<f32>(), pos, {0, 1})->Result();
+            auto* floor_xy = builder.Call<vec2<f32>>(core::BuiltinFn::kFloor, pos_xy)->Result();
+            auto* reconstructed_xy =
+                builder.Add(ty.vec2<f32>(), floor_xy,
+                            builder.Construct(ty.vec2<f32>(), 0.5_f, 0.5_f)->Result())
+                    ->Result();
+
+            // z/w from center_poly
+            auto* z = builder.Swizzle(ty.f32(), center_poly, {2})->Result();
+            if (config.depth_range_offsets) {
+                // Remap z from NDC [0, 1] to viewport [min, max]
+                // z = z * (max - min) + min
+                auto min_idx =
+                    u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->min));
+                auto max_idx =
+                    u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->max));
+                auto* immediate_data = config.immediate_data_layout.var;
+                auto* min =
+                    builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, min_idx))
+                        ->Result();
+                auto* max =
+                    builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, max_idx))
+                        ->Result();
+                z = builder.Add(ty.f32(),
+                                builder.Multiply(ty.f32(), z, builder.Subtract(ty.f32(), max, min)),
+                                min)
+                        ->Result();
+            }
+
+            auto* w = builder.Swizzle(ty.f32(), center_poly, {3})->Result();
+            value = builder.Construct(ty.vec4<f32>(), reconstructed_xy, z, w)->Result();
         }
 
         return value;
@@ -171,6 +248,19 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
 
         builder.Store(to, value);
+
+        if (config.polyfill_builtin_position && func->IsVertex() &&
+            outputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            position_polyfill_index != 0xFFFFFFFF) {
+            auto* pos = value;  // clip space position
+            auto* inv_w =
+                builder.Divide(ty.f32(), 1_f, builder.Swizzle(ty.f32(), pos, {3}))->Result();
+            auto* xyz = builder.Swizzle(ty.vec3<f32>(), pos, {0, 1, 2})->Result();
+            auto* ndc_xyz = builder.Multiply(ty.vec3<f32>(), xyz, inv_w)->Result();
+
+            auto* polyfill_val = builder.Construct(ty.vec4<f32>(), ndc_xyz, inv_w)->Result();
+            builder.Store(output_vars[position_polyfill_index], polyfill_val);
+        }
     }
 
     /// Clamp a frag_depth builtin value if necessary.

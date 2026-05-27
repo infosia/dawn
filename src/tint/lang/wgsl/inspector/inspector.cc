@@ -326,6 +326,8 @@ EntryPoint Inspector::GetEntryPoint(const tint::ast::Function* func) {
             core::BuiltinValue::kFrontFacing, param->Type(), param->Declaration()->attributes);
         entry_point.sample_index_used |= ContainsBuiltin(
             core::BuiltinValue::kSampleIndex, param->Type(), param->Declaration()->attributes);
+        entry_point.position_used |= ContainsBuiltin(
+            core::BuiltinValue::kPosition, param->Type(), param->Declaration()->attributes);
         entry_point.input_sample_mask_used |= ContainsBuiltin(
             core::BuiltinValue::kSampleMask, param->Type(), param->Declaration()->attributes);
         entry_point.num_workgroups_used |= ContainsBuiltin(
@@ -345,6 +347,8 @@ EntryPoint Inspector::GetEntryPoint(const tint::ast::Function* func) {
             core::BuiltinValue::kSampleMask, sem->ReturnType(), func->return_type_attributes);
         entry_point.frag_depth_used = ContainsBuiltin(
             core::BuiltinValue::kFragDepth, sem->ReturnType(), func->return_type_attributes);
+        entry_point.position_used |= ContainsBuiltin(
+            core::BuiltinValue::kPosition, sem->ReturnType(), func->return_type_attributes);
         entry_point.clip_distances_size = GetClipDistancesBuiltinSize(sem->ReturnType());
     }
 

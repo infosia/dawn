@@ -68,7 +68,9 @@ class ShaderModule final : public ShaderModuleBase {
                                                     const ProgrammableStage& programmableStage,
                                                     const PipelineLayout* layout,
                                                     bool emitPointSize,
-                                                    const ImmediateConstantMask& pipelineMask);
+                                                    const ImmediateConstantMask& pipelineMask,
+                                                    bool polyfillBuiltinPosition = false,
+                                                    uint32_t polyfillBuiltinPositionLocation = 0);
 
   private:
     ShaderModule(Device* device,

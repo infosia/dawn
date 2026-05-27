@@ -190,6 +190,8 @@ struct EntryPoint {
     bool front_facing_used = false;
     /// Does the entry point use the sample_index builtin
     bool sample_index_used = false;
+    /// Does the entry point use the position builtin
+    bool position_used = false;
     /// Does the entry point use the num_workgroups builtin
     bool num_workgroups_used = false;
     /// Does the entry point use the frag_depth builtin
