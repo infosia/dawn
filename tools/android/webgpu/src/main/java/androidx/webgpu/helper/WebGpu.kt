@@ -17,8 +17,6 @@
 
 package androidx.webgpu.helper
 
-import android.os.Handler
-import android.os.Looper
 import android.view.Surface
 import androidx.webgpu.GPUAdapter
 import androidx.webgpu.BackendType
@@ -45,16 +43,65 @@ import androidx.webgpu.GPU.createInstance
 import androidx.webgpu.WebGpuRuntimeException
 import androidx.webgpu.helper.Util.windowFromSurface
 import java.util.concurrent.Executor
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.currentCoroutineContext
+import java.util.concurrent.Executors
+import kotlinx.coroutines.ExecutorCoroutineDispatcher
 
-private const val POLLING_DELAY_MS = 100L
+private val isWebGpuThread = ThreadLocal.withInitial { false }
+
+/**
+ * Single-threaded [CoroutineDispatcher] dedicated to running all WebGPU/Dawn JNI operations.
+ *
+ * The native Dawn engine is not thread-safe for concurrent access. To prevent race conditions
+ * and segmentation faults, all WebGPU operations (including initialization, processEvents polling,
+ * queue submission, and teardown/cleanup) must be executed sequentially on this dispatcher thread.
+ */
+private val defaultWebGpuDispatcher: CoroutineDispatcher by lazy {
+    Executors.newSingleThreadExecutor { runnable ->
+        Thread(runnable, "WebGPU-Thread").apply { isDaemon = true }
+    }.asCoroutineDispatcher()
+}
+
+private const val POLLING_DELAY_MS = 16L // 60 FPS polling
 
 public abstract class WebGpu : AutoCloseable {
     public abstract val instance: GPUInstance
-    public abstract val webgpuSurface: GPUSurface
+    public abstract val adapter: GPUAdapter
     public abstract val device: GPUDevice
+    public abstract val webgpuSurface: GPUSurface
+    public abstract val dispatcher: CoroutineDispatcher
+
+    public suspend fun <T> execute(block: suspend () -> T): T {
+        return withContext(dispatcher) {
+            val original = isWebGpuThread.get()
+            isWebGpuThread.set(true)
+            try {
+                block()
+            } finally {
+                isWebGpuThread.set(original)
+            }
+        }
+    }
+
+    public suspend fun processEventsLoop() {
+        withContext(dispatcher) {
+            while (currentCoroutineContext().isActive) {
+                instance.processEvents()
+                delay(POLLING_DELAY_MS)
+            }
+        }
+    }
+
 }
 
 public suspend fun createWebGpu(
+    dispatcher: CoroutineDispatcher = defaultWebGpuDispatcher,
     surface: Surface? = null,
     instanceDescriptor: GPUInstanceDescriptor = GPUInstanceDescriptor(),
     requestAdapterOptions: GPURequestAdapterOptions = GPURequestAdapterOptions(),
@@ -81,33 +128,28 @@ public suspend fun createWebGpu(
     val adapter = requestAdapter(instance, requestAdapterOptions)
     val device = requestDevice(adapter, deviceDescriptor)
 
-    var isClosing = false
-    // Long-running event poller for async methods. Can be removed when
-    // https://issues.chromium.org/issues/323983633 is fixed.
-    val handler = Handler(Looper.getMainLooper())
-    fun nextProcess() {
-        handler.postDelayed({
-            if (isClosing) {
-                return@postDelayed
-            }
-            instance.processEvents()
-            nextProcess()
-        }, POLLING_DELAY_MS)
-    }
-    nextProcess()
-
     return object : WebGpu() {
         override val instance = instance
+        override val adapter = adapter
         override val webgpuSurface
             get() = checkNotNull(webgpuSurface)
         override val device = device
+        override val dispatcher = dispatcher
 
         override fun close() {
-            isClosing = true
             //device.close() // TODO(b/428866400): Uncomment when fixed.
-            webgpuSurface?.close()
-            instance.close()
-            adapter.close()
+            val cleanup = {
+                webgpuSurface?.close()
+                instance.close()
+                adapter.close()
+            }
+            if (isWebGpuThread.get() == true) {
+                cleanup()
+            } else {
+                runBlocking(dispatcher) {
+                    cleanup()
+                }
+            }
         }
     }
 }
