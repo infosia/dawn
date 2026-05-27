@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2e6a932_b0cc70ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T09:20:37Z",
+      "side": 1,
+      "message": "Let\u0027s wait a bit for this until we have src/utils/span.h maybe.",
+      "revId": "3292f4699ac73b0b16d66f0c576d56cb23b34846",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
