@@ -86,6 +86,42 @@
       "parentUuid": "08561505_3ac8ec88",
       "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae6319d1_ca4782c3",
+        "filename": "src/utils/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T10:10:31Z",
+      "side": 1,
+      "message": "There\u0027s a lot of helpers added to `base::span` in Chromium to keep operations safe and reduce the number of `UNSAFE_BUFFFER` annotations needed, I\u0027m hoping to do that as well, and it requires making our own version of span.",
+      "parentUuid": "1d967aef_134ef16e",
+      "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0cdd9db_0eab58c1",
+        "filename": "src/utils/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T10:10:31Z",
+      "side": 1,
+      "message": "This is meant to replace `ityp::span` but I haven\u0027t done it yet in this WIP.",
+      "parentUuid": "7d13a92b_1cf50ea3",
+      "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
