@@ -1111,6 +1111,16 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::SubgroupShuffleClamped, true);
     }
 
+#if DAWN_PLATFORM_IS(WINDOWS)
+    // Collapse redundant subgroup min and max operations to workaround a driver crash on some AMD
+    // GPUs.  Should only affect AMD Windows Driver versions < 31.0.22000.0, but because this is a
+    // harmless "optimizing" workaround go ahead enable for all versions. See:
+    // https://crbug.com/508265321.
+    if (gpu_info::IsAMD(GetVendorId())) {
+        deviceToggles->Default(Toggle::CollapseSubgroupMinMax, true);
+    }
+#endif
+
     if (IsIntelMesa() && gpu_info::IsIntelGen12LP(GetVendorId(), GetDeviceId())) {
         // dawn:1688: Intel Mesa driver has a bug about reusing the VkDeviceMemory that was
         // previously bound to a 2D VkImage. To work around that bug we have to disable the resource
