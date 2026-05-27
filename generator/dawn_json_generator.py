@@ -114,6 +114,7 @@ def validate_and_get_tags(json_data):
         'native',
         'deprecated',
         'art',
+        'art_experimental',
     }
 
     tags = json_data.get('tags')
@@ -153,7 +154,7 @@ class EnumType(Type):
         self.allowConflict = False
         lastValue = None
         for m in self.json_data['values']:
-            if not is_enabled(m):
+            if not is_enabled(m, parent_name=name):
                 continue
             value = m['value']
             value_name = m['name']
@@ -217,7 +218,8 @@ class BitmaskType(Type):
         Type.__init__(self, name, json_data)
         self.values = [
             BitmaskValue(Name(m['name']), m['value'], m)
-            for m in self.json_data['values'] if is_enabled(m)
+            for m in self.json_data['values']
+            if is_enabled(m, parent_name=name)
         ]
         self.full_mask = 0
         for value in self.values:
@@ -330,7 +332,8 @@ class ObjectType(Type):
         json_data_override = {'methods': []}
         if 'methods' in json_data:
             json_data_override['methods'] = [
-                m for m in json_data['methods'] if is_enabled(m)
+                m for m in json_data['methods']
+                if is_enabled(m, parent_name=name)
             ]
         Type.__init__(self, name, dict(json_data, **json_data_override))
 
@@ -376,7 +379,8 @@ class StructureType(Record, Type):
         json_data_override = {}
         if 'members' in json_data:
             json_data_override['members'] = [
-                m for m in json_data['members'] if is_enabled(m)
+                m for m in json_data['members']
+                if is_enabled(m, parent_name=name)
             ]
         Type.__init__(self, name, dict(json_data, **json_data_override))
         self.out = json_data.get('out', False)
@@ -671,10 +675,10 @@ def topo_sort_object(objects):
     return result
 
 
-def parse_json(json, enabled_tags, disabled_tags=None):
-    is_enabled = lambda json_data: item_is_enabled(
-        enabled_tags, json_data) and not item_is_disabled(
-            disabled_tags, json_data)
+def parse_json(json, enabled_tags, disabled_tags=None, match_names=None):
+    is_enabled = lambda json_data, item_name=None, parent_name=None: item_is_enabled(
+        enabled_tags, json_data, item_name=item_name, parent_name=parent_name, match_names=match_names) \
+        and not item_is_disabled(disabled_tags, json_data)
     category_to_parser = {
         'bitmask': BitmaskType,
         'callback function': CallbackFunctionType,
@@ -696,7 +700,7 @@ def parse_json(json, enabled_tags, disabled_tags=None):
         by_category[name] = []
 
     for (name, json_data) in json.items():
-        if name[0] == '_' or not is_enabled(json_data):
+        if name[0] == '_' or not is_enabled(json_data, name):
             continue
         category = json_data['category']
         parsed = category_to_parser[category](is_enabled, name, json_data)
@@ -944,7 +948,9 @@ def compute_kotlin_params(loaded_json,
                           kotlin_json,
                           webgpu_kt_docs_data=None,
                           doc_warn_log_file_path=None):
-    params_kotlin = parse_json(loaded_json, enabled_tags=['art'])
+
+    params_kotlin = parse_json(loaded_json,
+                               enabled_tags=['art', 'art_experimental'])
     params_kotlin['kotlin_package'] = kotlin_json['kotlin_package']
     params_kotlin['jni_primitives'] = kotlin_json['jni_primitives']
     params_kotlin['jni_signatures'] = kotlin_json['jni_signatures']
@@ -955,12 +961,13 @@ def compute_kotlin_params(loaded_json,
     customize_enums = customize_api["enums"]
     customize_callback = customize_api["function pointer"]
 
-    def kotlin_record_members(members):
+    def kotlin_record_members(members, structure_name=None):
         # Members are sorted in the following order.
         # 1. members with no default value (except callbacks).
         # 2. members with default values.
         # 3. callbacks.
-        for member in sorted(kotlin_record_members_unsorted(members),
+        for member in sorted(kotlin_record_members_unsorted(
+                members, structure_name),
                              key=lambda arg: kotlin_default(arg) is not None):
             yield member
 
@@ -976,7 +983,7 @@ def compute_kotlin_params(loaded_json,
                         yield function_member
                     continue
 
-    def kotlin_record_members_unsorted(members):
+    def kotlin_record_members_unsorted(members, structure_name=None):
         for member in members:
             # length parameters are omitted because Kotlin containers have 'length'.
             if member in [m.length for m in members]:
@@ -1000,7 +1007,34 @@ def compute_kotlin_params(loaded_json,
                          {'category': 'kotlin type'}), None, {})
                 continue
 
+            if structure_name:
+                struct_config = customize_structures.get(structure_name, {})
+                exclude_members = struct_config.get('exclude_members', [])
+                if member.name.get(
+                ) in exclude_members or member.name.camelCase(
+                ) in exclude_members:
+                    continue
+
             yield member
+
+        if structure_name:
+            struct_config = customize_structures.get(structure_name, {})
+            for added_member in struct_config.get('additional_members', []):
+                name = Name(added_member['name'])
+                # Default to native for simple types if not specified
+                category = added_member.get('category', 'native')
+                type_name = added_member['type']
+                if type_name in params_kotlin['types']:
+                    typ = params_kotlin['types'][type_name]
+                else:
+                    typ = Type(type_name, {'category': category})
+                yield RecordMember(
+                    name,
+                    typ,
+                    added_member.get('annotation', 'value'), {},
+                    optional=added_member.get('optional', False),
+                    default_value=added_member.get('default_value', None),
+                    skip_serialize=True)
 
     # Calculate if we should, and can, provide a Kotlin default value for a given argument.
     # This will affect its order in the method parameter and structure field lists.
@@ -1012,8 +1046,10 @@ def compute_kotlin_params(loaded_json,
             if arg.type.category in [
                     'callback function', 'callback info', 'function pointer',
                     'object', 'structure'
-            ]:
+            ] or arg.type.name.get() == 'char':
                 return 'arrayOf()'
+            if arg.type.name.get() == 'float':
+                return 'floatArrayOf()'
             return 'intArrayOf()'
 
         # All other optional types default to 'null'.
@@ -1342,9 +1378,47 @@ def annotate(typ, arg, *, make_const_member=False, with_nullability=False):
     return result
 
 
-def item_is_enabled(enabled_tags, json_data):
+def item_matches_names(json_data,
+                       item_name=None,
+                       parent_name=None,
+                       match_names=None):
+    """
+    Returns True if the item's specific name or parent's name is manually forced
+    via `match_names`.
+    (e.g., if parent_name="external texture" is forced, all its inner methods
+    are implicitly generated).
+
+    Note: This helper is currently primarily used for Kotlin generator
+    customizations where specific experimental/custom API elements need to be forced.
+    """
+    if not match_names:
+        return False
+    name_to_check = item_name or json_data.get('name')
+    if name_to_check and name_to_check in match_names:
+        return True
+    if parent_name and parent_name in match_names:
+        return True
+    return False
+
+
+def item_is_enabled(enabled_tags,
+                    json_data,
+                    item_name=None,
+                    parent_name=None,
+                    match_names=None):
+    if item_matches_names(json_data, item_name, parent_name, match_names):
+        return True
+
     tags = validate_and_get_tags(json_data)
     if tags is None: return True
+
+    # Strip 'art_experimental' for non-Art targets so it doesn't cause
+    # the item to be excluded from C++/Emscripten builds.
+    if not ('art_experimental' in enabled_tags):
+        tags = [tag for tag in tags if tag not in ('art_experimental')]
+        if not tags:
+            return True
+
     return any(tag in enabled_tags for tag in tags)
 
 
