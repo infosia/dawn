@@ -32,6 +32,7 @@ import("${dawn_root}/generator/dawn_generator.gni")
 dawn_json_generator("jni_gen") {
   target = "jni"
   outputs = [
+    "cpp/GPUImportedAHB.cpp",
     "cpp/JNIClasses.cpp",
     "cpp/JNIClasses.h",
     "cpp/methods.cpp",
@@ -116,6 +117,9 @@ dawn_json_generator("kotlin_gen") {
     "java/androidx/webgpu/GPUExternalTextureBindingLayout.kt",
     "java/androidx/webgpu/GPUExternalTextureDescriptor.kt",
     "java/androidx/webgpu/GPUFragmentState.kt",
+    "java/androidx/webgpu/GPUHardwareBufferExternalTexture.kt",
+    "java/androidx/webgpu/GPUHardwareBufferTexture.kt",
+    "java/androidx/webgpu/GPUHardwareBufferWrapper.kt",
     "java/androidx/webgpu/GPUInstance.kt",
     "java/androidx/webgpu/GPUInstanceDescriptor.kt",
     "java/androidx/webgpu/GPUInstanceLimits.kt",
@@ -164,6 +168,7 @@ dawn_json_generator("kotlin_gen") {
     "java/androidx/webgpu/GPUSurfaceDescriptor.kt",
     "java/androidx/webgpu/GPUSurfaceSourceAndroidNativeWindow.kt",
     "java/androidx/webgpu/GPUSurfaceTexture.kt",
+    "java/androidx/webgpu/GPUSyncFence.kt",
     "java/androidx/webgpu/GPUTexelCopyBufferInfo.kt",
     "java/androidx/webgpu/GPUTexelCopyBufferLayout.kt",
     "java/androidx/webgpu/GPUTexelCopyTextureInfo.kt",
