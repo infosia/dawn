@@ -41,11 +41,17 @@ static_library("utils") {
   sources = [
     "compiler.h",
     "force_crash.h",
+    "non_copyable.h",
+    "non_movable.h",
     "numeric.h",
     "placeholder.cc",
     "platform.h",
     "underlying_type.h",
   ]
+
+  if (is_win) {
+    sources += [ "windows_with_undefs.h" ]
+  }
 
   public_configs = [ ":internal_config" ]
 }

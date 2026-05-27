@@ -345,8 +345,6 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       "Mutex.h",
       "MutexProtected.h",
       "NSRef.h",
-      "NonCopyable.h",
-      "NonMovable.h",
       "Numeric.h",
       "PlacementAllocated.h",
       "Preprocessor.h",
@@ -429,7 +427,6 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       sources += [
         "WindowsUtils.cpp",
         "WindowsUtils.h",
-        "windows_with_undefs.h",
       ]
     }
     if (dawn_enable_vulkan) {

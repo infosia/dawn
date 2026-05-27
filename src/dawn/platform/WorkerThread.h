@@ -36,10 +36,10 @@
 #include <vector>
 
 #include "dawn/common/MutexProtected.h"
-#include "dawn/common/NonCopyable.h"
 #include "dawn/common/RefCounted.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/non_copyable.h"
 
 namespace dawn::platform {
 
