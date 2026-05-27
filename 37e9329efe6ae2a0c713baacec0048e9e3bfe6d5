@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e31db8f6_eeda702f",
+        "filename": "src/dawn/utils/TerribleCommandBuffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T06:52:58Z",
+      "side": 1,
+      "message": "```suggestion\n    return std::span\u003cconst char\u003e(\u0026mBuffer[startOffset], endOffset - startOffset);\n```",
+      "revId": "37e9329efe6ae2a0c713baacec0048e9e3bfe6d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
