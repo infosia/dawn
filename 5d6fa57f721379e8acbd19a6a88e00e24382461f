@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a38faf16_636aeb1d",
+        "filename": "src/cmake/DawnCompilerExtraFlags.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T17:22:57Z",
+      "side": 1,
+      "message": "I\u0027ve posted the 2 variations of the warning in the referenced bug.\nApparently it\u0027s caused by the decltype in this template:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/Result.h;drc\u003dabafe9d426e2c6aa49b2bf979e99f49a993de5ae;l\u003d102",
+      "parentUuid": "56496946_da46123f",
+      "revId": "5d6fa57f721379e8acbd19a6a88e00e24382461f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2ac6933_5fe06465",
