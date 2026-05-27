@@ -19,6 +19,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import androidx.webgpu.helper.createWebGpu
 import java.util.concurrent.Executor
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,6 +31,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 class FeaturesTest {
+    private val dispatcher : CoroutineDispatcher = Dispatchers.Default.limitedParallelism(1)
+    private val testScope = CoroutineScope(dispatcher)
+
     /**
      * Test that the features requested match the features in the adapter are present on the device.
      */
@@ -35,6 +43,7 @@ class FeaturesTest {
         runBlocking {
             val webGpu =
                 createWebGpu(
+                    dispatcher = dispatcher,
                     deviceDescriptor = GPUDeviceDescriptor(
                         requiredFeatures = requiredFeatures,
                         deviceLostCallback = null,
@@ -44,9 +53,20 @@ class FeaturesTest {
                     )
                 )
             val device = webGpu.device
-            val deviceFeatures = device.getFeatures().features
-            requiredFeatures.forEach {
-                assert(deviceFeatures.contains(it)) { "Requested feature $it available on device" }
+            val job = testScope.launch {
+                webGpu.processEventsLoop()
+            }
+            try {
+                webGpu.execute {
+                    val deviceFeatures = device.getFeatures().features
+                    requiredFeatures.forEach {
+                        assert(deviceFeatures.contains(it)) { "Requested feature $it available on device" }
+                    }
+                }
+            } finally {
+                runCatching { device.destroy() }
+                webGpu.close()
+                job.cancel()
             }
         }
     }
