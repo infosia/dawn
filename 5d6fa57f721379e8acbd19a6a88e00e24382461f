@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dd282fb_8ee5fe63",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:11:50Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "5d6fa57f721379e8acbd19a6a88e00e24382461f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efdaa804_6880b089",
+        "filename": "src/cmake/DawnCompilerExtraFlags.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:11:50Z",
+      "side": 1,
+      "message": "nit: can we split to a condition on `COMPILER_IS_CLANG` instead of generator expressions? Generator expressions are a more complex hammer that we don\u0027t need here.",
+      "revId": "5d6fa57f721379e8acbd19a6a88e00e24382461f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2ac6933_5fe06465",
+        "filename": "src/cmake/DawnCompilerExtraFlags.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:11:50Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5d6fa57f721379e8acbd19a6a88e00e24382461f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
