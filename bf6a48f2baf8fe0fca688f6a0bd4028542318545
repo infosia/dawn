@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ebc9f032_fbd5eb35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T22:00:19Z",
+      "side": 1,
+      "message": "Sure, here: https://godbolt.org/z/YsYY78YY5\n\nI did that from memory so didn\u0027t double check that\u0027s the same error I saw in the CL, but pretty sure it is.",
+      "parentUuid": "fd389ac8_a13dec9c",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "18476721_e042e59e",
         "filename": "src/dawn/common/Assert.h",
         "patchSetId": 8
@@ -37,6 +61,24 @@
       "writtenOn": "2026-05-27T09:17:24Z",
       "side": 1,
       "message": "?",
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6b71b92_36685be8",
+        "filename": "src/dawn/common/Assert.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T22:00:19Z",
+      "side": 1,
+      "message": "this was part of https://dawn-review.googlesource.com/c/dawn/+/310655, not sure how it ended up in here but it\u0027s gone now that I\u0027ve rebased",
+      "parentUuid": "18476721_e042e59e",
       "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -100,6 +142,24 @@
       "writtenOn": "2026-05-27T09:17:24Z",
       "side": 1,
       "message": "This is a bit unfortunate and comes from a decision that we made to have `TexelCount` be a uint64_t so that we could multiply them to be a texel volume and keep the same time. That might be useful to revisit later somehow both to avoid the casts added in this CL, but also because when we\u0027ll want to type the input API of Dawn, the size change would cause API incompatibility.",
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40627cf9_569a6835",
+        "filename": "src/dawn/native/BlitBufferToDepthStencil.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T22:00:19Z",
+      "side": 1,
+      "message": "agree, my plan was to not worry about it for now (this CL basically just renames static_cast to dchecked_cast, the behavior is the same) and this would be part of bug 424536624",
+      "parentUuid": "be415e09_eb3e93bf",
       "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
