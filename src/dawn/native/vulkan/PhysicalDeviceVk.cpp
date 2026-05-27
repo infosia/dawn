@@ -809,17 +809,20 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
         std::min(vkLimits.maxVertexInputBindingStride - 1, vkLimits.maxVertexInputAttributeOffset) +
         1;
 
-    // Reserve 4 components for the SPIR-V builtin `position`. WebGPU SPEC requires the minimum
-    // value of `maxInterStageShaderVariables` be 16. According to Vulkan SPEC, "the Location value
-    // specifies an interface slot comprised of a 32-bit four-component vector conveyed between
-    // stages". So on any WebGPU Vulkan backend `maxVertexOutputComponents` must be no less than
-    // 68 = (16 * 4 + 4).
+    // Reserve 4 components for the SPIR-V builtin `position`, and another 4 components for the
+    // polyfill for `position` in fragment shaders for Vulkan sampled shading. WebGPU SPEC
+    // requires the minimum value of `maxInterStageShaderVariables` be 16. According to Vulkan SPEC,
+    // "the Location value specifies an interface slot comprised of a 32-bit four-component vector
+    // conveyed between stages".
+    // 
+    // To support the polyfill on devices that only have enough components for 16 variables and
+    // the position builtin (68 components), we allow the reported limit to drop to 15.
     if (vkLimits.maxVertexOutputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 4 ||
         vkLimits.maxFragmentInputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 4) {
         return DAWN_INTERNAL_ERROR("Insufficient Vulkan limits for maxInterStageShaderVariables");
     }
     limits->v1.maxInterStageShaderVariables =
-        std::min(vkLimits.maxVertexOutputComponents, vkLimits.maxFragmentInputComponents) / 4 - 1;
+        std::min(vkLimits.maxVertexOutputComponents, vkLimits.maxFragmentInputComponents) / 4 - 2;
 
     CHECK_AND_SET_V1_MAX_LIMIT(maxComputeSharedMemorySize, maxComputeWorkgroupStorageSize);
     CHECK_AND_SET_V1_MAX_LIMIT(maxComputeWorkGroupInvocations, maxComputeInvocationsPerWorkgroup);
