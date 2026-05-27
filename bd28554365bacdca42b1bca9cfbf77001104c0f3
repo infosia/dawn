@@ -34,6 +34,24 @@
       "parentUuid": "b6439d1d_56d10390",
       "revId": "bd28554365bacdca42b1bca9cfbf77001104c0f3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6df54dec_9b27ba6e",
+        "filename": "src/dawn/native/d3d11/BackendD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-27T23:40:43Z",
+      "side": 1,
+      "message": "Yes, there are 2 cases where things are not prefixed.\n\n1. They live in `include/` which is what this case is\n2. They live in `gen/` in the build folder (like the GPUInfo_autogen) file.\n\nFor the 2nd case I\u0027d like to try to get those prefixed with `gen/` so it\u0027s obvious where it comes from, but for now they end up being un-prefixed. The include ones will never be prefixed I think.",
+      "parentUuid": "f3c92177_40132e25",
+      "revId": "bd28554365bacdca42b1bca9cfbf77001104c0f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
