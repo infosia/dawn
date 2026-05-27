@@ -56,10 +56,13 @@ namespace tint::core::ir {
 /// The IR validator will reject use of any non-core IR functionality when the module does not
 /// contain the corresponding property.
 enum class Property : uint8_t {
+    /// Allows binding points to be non-unique. Used after BindingRemapper in some backends.
+    kAllowDuplicateBindings,
     /// Allows multiple entry points in the module.
     kAllowMultipleEntryPoints,
     /// Allow overrides
     kAllowOverrides,
+
 };
 
 /// Properties is a set of Property values.
@@ -76,6 +79,7 @@ auto& operator<<(STREAM& out, Property p) {
     case Property::k##p: \
         return out << #p
     switch (p) {  //
+        CASE(AllowDuplicateBindings);
         CASE(AllowMultipleEntryPoints);
         CASE(AllowOverrides);
     }
