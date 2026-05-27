@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9911d1f2_17f586f1",
+        "filename": ".yapfignore",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T08:03:08Z",
+      "side": 1,
+      "message": "Can\u0027t we just format the file?",
+      "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fefdc17_8dc9fba2",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T08:03:08Z",
+      "side": 1,
+      "message": "Can we have a `dawn_nocompile_source_set` template that\u0027s a noop when not available?",
+      "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3000baa2_b72f5251",
+        "filename": "src/dawn/tests/unittests/nocompile/Basic.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T08:03:08Z",
+      "side": 1,
+      "message": "nit: likely not needed since we have other nc files in this CL already?",
+      "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a57db2a8_d15fbd71",
+        "filename": "src/dawn/tests/unittests/nocompile/Numeric.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T08:03:08Z",
+      "side": 1,
+      "message": "Dan was asking to put tests next to the files in `src/utils`, what do you think of having this be `src/utils/numeric.nc`? Or do we want a subdirectory of sorts?",
+      "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
