@@ -373,12 +373,14 @@ MaybeError RenderPipeline::InitializeImpl() {
     uint32_t stageCount = 0;
 
     auto AddShaderStage = [&](SingleShaderStage stage, VkShaderStageFlagBits vkStage,
-                              bool emitPointSize) -> MaybeError {
+                              bool emitPointSize, bool polyfillFragmentPosition) -> MaybeError {
         const ProgrammableStage& programmableStage = GetStage(stage);
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
         DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
                                             ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, GetImmediateMask()));
+                                                                emitPointSize,
+                                                                polyfillFragmentPosition,
+                                                                GetImmediateMask()));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.
@@ -399,14 +401,34 @@ MaybeError RenderPipeline::InitializeImpl() {
         return {};
     };
 
+    bool polyfillFragmentPosition = false;
+    if (GetSampleCount() > 1 && HasStage(SingleShaderStage::Fragment)) {
+        const EntryPointMetadata& fragmentMetadata = *GetStage(SingleShaderStage::Fragment).metadata;
+        if (fragmentMetadata.usesPosition) {
+            bool sampleShadingEnabled = fragmentMetadata.usesSampleIndex;
+            if (!sampleShadingEnabled) {
+                for (size_t i = 0; i < fragmentMetadata.interStageVariables.size(); ++i) {
+                    if (fragmentMetadata.usedInterStageVariables[i] &&
+                        fragmentMetadata.interStageVariables[i].interpolationSampling ==
+                            InterpolationSampling::Sample) {
+                        sampleShadingEnabled = true;
+                        break;
+                    }
+                }
+            }
+            polyfillFragmentPosition = sampleShadingEnabled;
+        }
+    }
+
     // Add the vertex stage that's always present.
     DAWN_TRY(AddShaderStage(SingleShaderStage::Vertex, VK_SHADER_STAGE_VERTEX_BIT,
-                            GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList));
+                            GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList,
+                            polyfillFragmentPosition));
 
     // Add the fragment stage if present.
     if (GetStageMask() & wgpu::ShaderStage::Fragment) {
         DAWN_TRY(AddShaderStage(SingleShaderStage::Fragment, VK_SHADER_STAGE_FRAGMENT_BIT,
-                                /*emitPointSize*/ false));
+                                /*emitPointSize*/ false, polyfillFragmentPosition));
     }
 
     PipelineVertexInputStateCreateInfoTemporaryAllocations tempAllocations;

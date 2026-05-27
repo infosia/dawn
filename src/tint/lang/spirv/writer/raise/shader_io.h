@@ -58,6 +58,10 @@ struct ShaderIOConfig {
     bool emit_vertex_point_size = false;
     /// true if f16 IO types should be replaced with f32 types and converted
     bool polyfill_f16_io = false;
+    /// true if @builtin(position) in fragment shaders should be polyfilled
+    bool polyfill_fragment_position = false;
+    /// the maximum number of inter-stage shader variables
+    uint32_t max_inter_stage_shader_variables = 0;
     /// offsets for clamping frag depth
     std::optional<Options::RangeOffsets> depth_range_offsets{};
 };

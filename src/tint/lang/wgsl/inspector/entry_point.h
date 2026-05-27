@@ -198,6 +198,8 @@ struct EntryPoint {
     bool vertex_index_used = false;
     /// Does the entry point use the instance_index builtin
     bool instance_index_used = false;
+    /// Does the entry point use the position builtin
+    bool position_used = false;
     /// Does the entry point have a textureLoad call with a texture_depth??? texture
     bool has_texture_load_with_depth_texture = false;
     /// Does the entry point use texture_depth??? with a non-comparison sampler.

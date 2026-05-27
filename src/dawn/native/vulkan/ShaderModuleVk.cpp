@@ -124,6 +124,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const ProgrammableStage& programmableStage,
     const PipelineLayout* layout,
     bool emitPointSize,
+    bool polyfillFragmentPosition,
     const ImmediateConstantMask& pipelineImmediateMask) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
@@ -207,6 +208,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         std::move(staticallyPairedTextureBindingPoints);
     req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
     req.tintOptions.emit_vertex_point_size = emitPointSize;
+    req.tintOptions.polyfill_fragment_position = polyfillFragmentPosition;
+    req.tintOptions.max_inter_stage_shader_variables =
+        GetDevice()->GetLimits().v1.maxInterStageShaderVariables;
 
     req.tintOptions.substitute_overrides_config = {
         .map = BuildSubstituteOverridesTransformConfig(programmableStage),

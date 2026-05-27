@@ -232,7 +232,10 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(
         raise::ShaderIO, module,
         raise::ShaderIOConfig{immediate_data_layout.Get(), options.emit_vertex_point_size,
-                              !options.use_storage_input_output_16, options.depth_range_offsets});
+                              !options.use_storage_input_output_16,
+                              options.polyfill_fragment_position,
+                              options.max_inter_stage_shader_variables,
+                              options.depth_range_offsets});
 
     // ForkExplicitLayoutTypes must come after DecomposeUniformAccess, since it rewrites
     // host-shareable array types to use the explicitly laid array type defined by the SPIR-V

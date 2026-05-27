@@ -146,6 +146,12 @@ struct Options {
     /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
     bool decompose_uniform_buffers = true;
 
+    /// Set to `true` to polyfill @builtin(position) for fragment shaders.
+    bool polyfill_fragment_position = false;
+
+    /// The maximum number of inter-stage shader variables.
+    uint32_t max_inter_stage_shader_variables = 0;
+
     /// Offsets of the minDepth and maxDepth push constants.
     std::optional<RangeOffsets> depth_range_offsets = std::nullopt;
 
@@ -185,6 +191,8 @@ struct Options {
                  use_vulkan_memory_model,
                  dva_transform_handle,
                  decompose_uniform_buffers,
+                 polyfill_fragment_position,
+                 max_inter_stage_shader_variables,
                  depth_range_offsets,
                  spirv_version,
                  resource_binding,
