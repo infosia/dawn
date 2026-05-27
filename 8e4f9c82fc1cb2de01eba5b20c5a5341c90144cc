@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5acef477_6b15fc6a",
+        "filename": "generator/templates/api_cpp.ixx",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:17:52Z",
+      "side": 1,
+      "message": "Any chance to have a comment why this is needed? Should we just replace with `inline constexpr`?",
+      "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27ec7d8b_a97f301c",
+        "filename": "generator/templates/api_cpp.ixx",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:17:52Z",
+      "side": 1,
+      "message": "That\u0027s just a small subset of what https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/include/webgpu/webgpu_enum_class_bitmasks.h;l\u003d29?q\u003dwebgpu_enum\u0026sq\u003d exposes. How do we make sure to expose all of it?",
+      "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab446604_9a6accd2",
+        "filename": "src/dawn/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:17:52Z",
+      "side": 1,
+      "message": "Can you explain why this target dependency dance is needed? Is there a reference that you used to set up C++ modules in CMake?",
+      "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

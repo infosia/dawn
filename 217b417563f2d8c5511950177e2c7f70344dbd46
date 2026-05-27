@@ -267,6 +267,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "002e1170_f4604e6c",
+        "filename": "src/dawn/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:17:52Z",
+      "side": 1,
+      "message": "Let\u0027s change the root CMakeLists.txt to require 3.30 and remove the check here",
+      "parentUuid": "986dd36c_7c2ce991",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c63ecd0c_d0c6e109",
         "filename": "src/dawn/CMakeLists.txt",
         "patchSetId": 2
