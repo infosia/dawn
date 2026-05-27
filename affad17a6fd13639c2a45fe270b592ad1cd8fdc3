@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "420f7158_8294be15",
+        "filename": "DEPS",
+        "patchSetId": 26
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T18:56:36Z",
+      "side": 1,
+      "message": "This file will be removed once rebased on https://dawn-review.git.corp.google.com/c/dawn/+/311615. Also, we will always download the latest SDK from CIPD (on standalone + windows), regardless of whether we use it or not. This is normally how we do things.",
+      "parentUuid": "71762da3_44717265",
+      "range": {
+        "startLine": 861,
+        "startChar": 13,
+        "endLine": 861,
+        "endChar": 30
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84bcf38d_55b78e5b",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-05-27T00:26:13Z",
       "side": 1,
       "message": "`_agility_sdk_dir` is declared twice. \n\nSince `dawn_use_agility_sdk` requires `dawn_enable_d3d12` to be useful, hoist `_agility_sdk_dir` to a single, unconditional definition (a small declare_args-adjacent block) and drop the !defined defensive code.",
+      "range": {
+        "startLine": 162,
+        "startChar": 15,
+        "endLine": 162,
+        "endChar": 16
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcded9ab_c6f119c5",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T18:56:36Z",
+      "side": 1,
+      "message": "No longer applicable after rebasing onto https://dawn-review.git.corp.google.com/c/dawn/+/311615",
+      "parentUuid": "84bcf38d_55b78e5b",
       "range": {
         "startLine": 162,
         "startChar": 15,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1663795d_b1c8250b",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T18:56:36Z",
+      "side": 1,
+      "message": "Yes, we shouldn\u0027t need to suppress these warnings in d3d12_platform.h. I\u0027ll add a comment there instead, as the changes in this file should no longer be needed after rebasing on top of https://dawn-review.git.corp.google.com/c/dawn/+/311615.",
+      "parentUuid": "f1eadcae_4d50c2a8",
+      "range": {
+        "startLine": 167,
+        "startChar": 44,
+        "endLine": 168,
+        "endChar": 70
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e55dffbd_3b7a4efc",
@@ -100,6 +172,30 @@
       "writtenOn": "2026-05-27T00:26:13Z",
       "side": 1,
       "message": "Why do we need to link with d3d12.lib?",
+      "range": {
+        "startLine": 616,
+        "startChar": 6,
+        "endLine": 616,
+        "endChar": 18
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dabebba8_07ea8ac3",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T18:56:36Z",
+      "side": 1,
+      "message": "N/A",
+      "parentUuid": "e55dffbd_3b7a4efc",
       "range": {
         "startLine": 616,
         "startChar": 6,
@@ -146,6 +242,30 @@
       "writtenOn": "2026-05-27T00:26:13Z",
       "side": 1,
       "message": "Shouldn\u0027t device creation in `CreateD3DDevice` be governed by the toggle? I see the toggle set in PhysicalDeviceD3D12.cpp but not used anywhere.",
+      "range": {
+        "startLine": 91,
+        "startChar": 18,
+        "endLine": 91,
+        "endChar": 30
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e02ad51b_822d32b1",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T18:56:36Z",
+      "side": 1,
+      "message": "I suggest we remove the `use_agility_sdk` toggle altogether and simplify this CL. Resolving this comment.",
+      "parentUuid": "d8d82705_ee1d35e4",
       "range": {
         "startLine": 91,
         "startChar": 18,
@@ -330,6 +450,30 @@
       "writtenOn": "2026-05-27T00:26:13Z",
       "side": 1,
       "message": "Nit: Other code in Chromium Python files use `urllib.request.urlretrieve` or `shutil.copyfileobject` to retrieve files. You can set a progress callback on urlretrieve if you want to printf progress.  \n\nAI wrote the following for me. I have not debugged it. \n\nThe urlretrieve way:\n\n```\n import tempfile\n \n def _progress(block_num, block_size, total_size):\n     downloaded \u003d block_num * block_size\n     if total_size \u003e 0:\n         pct \u003d min(downloaded * 100 // total_size, 100)\n         print(f\"\\r  {downloaded // 1024}KB / {total_size // 1024}KB ({pct}%)\",\n               end\u003d\"\", flush\u003dTrue)\n     else:\n         print(f\"\\r  {downloaded // 1024}KB downloaded\", end\u003d\"\", flush\u003dTrue)\n \n with tempfile.NamedTemporaryFile(suffix\u003d\".nupkg\", delete\u003dFalse) as tmp:\n     tmp_path \u003d tmp.name\n try:\n     urllib.request.urlretrieve(nuget_url, tmp_path, reporthook\u003d_progress)\n     print()\n     with zipfile.ZipFile(tmp_path, \"r\") as zip_ref:\n         zip_ref.extractall(output_path)\n finally:\n     os.unlink(tmp_path)\n```\n\nThe copyfileobj way\n```\n with urllib.request.urlopen(nuget_url, timeout\u003d120) as response:\n     package_bytes \u003d io.BytesIO()\n     shutil.copyfileobj(response, package_bytes)\n     package_bytes.seek(0)\n```",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 36
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "927a6c72_001d16ee",
+        "filename": "tools/fetch_agility_sdk.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T18:56:36Z",
+      "side": 1,
+      "message": "As this file should be deleted after rebasing onto https://dawn-review.git.corp.google.com/c/dawn/+/311615, am resolving this.",
+      "parentUuid": "001cdf9f_45e0b725",
       "range": {
         "startLine": 68,
         "startChar": 13,

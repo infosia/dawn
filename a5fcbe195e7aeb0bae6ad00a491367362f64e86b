@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b465a019_eb4a885d",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T18:56:36Z",
+      "side": 1,
+      "message": "Let\u0027s not add this toggle as part of this CL. For now, we will assume that if `use_agility_sdk` GN arg is enabled (and thus `USE_AGILITY_SDK` is defined), we want to use it at runtime. We can always add such a toggle in the future if needed.",
+      "range": {
+        "startLine": 218,
+        "startChar": 4,
+        "endLine": 218,
+        "endChar": 17
+      },
+      "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e05bf1c4_27ad2da9",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T18:56:36Z",
+      "side": 1,
+      "message": "As Rafael pointed out in another comment, we shouldn\u0027t need these since we add the header include with `-imsvc`",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
