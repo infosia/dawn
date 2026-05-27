@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "01ceac1dd4798ccca722e05816de81cb9cca2b5f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bb2cc93_3858dd77",
+        "filename": "src/dawn/glfw/utils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T16:08:16Z",
+      "side": 1,
+      "message": "`src/utils` needs updating as well.",
+      "revId": "01ceac1dd4798ccca722e05816de81cb9cca2b5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
