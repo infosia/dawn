@@ -140,6 +140,24 @@
       "parentUuid": "ae6319d1_ca4782c3",
       "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e88e0c51_5d1bbd4b",
+        "filename": "src/utils/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T23:38:40Z",
+      "side": 1,
+      "message": "We could still save a lot of code by basing `dawn::Span` on top of `std::span` (like we already do with `ityp::span`).\n\nIs it really important that they match layout? I would prefer to reduce complexity even if it prevents us from doing a tiny optimization.",
+      "parentUuid": "a9214388_088d2643",
+      "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
