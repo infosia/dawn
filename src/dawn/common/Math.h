@@ -36,8 +36,8 @@
 #include <limits>
 #include <optional>
 
-#include "dawn/common/Assert.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/dawn/common/Assert.h"
 #include "utils/platform.h"
 
 #if DAWN_COMPILER_IS(MSVC)

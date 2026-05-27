@@ -32,7 +32,7 @@
 #include <limits>
 #include <span>
 
-#include "dawn/common/Numeric.h"
+#include "src/dawn/common/Numeric.h"
 #include "utils/underlying_type.h"
 
 namespace dawn::ityp {

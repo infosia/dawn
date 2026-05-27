@@ -149,7 +149,7 @@ const HandleType* AsVkArray(const detail::VkHandle<Tag, HandleType>* handle) {
 #ifndef VK_USE_PLATFORM_WIN32_KHR
 #define VK_USE_PLATFORM_WIN32_KHR
 #endif
-#include "dawn/common/windows_with_undefs.h"
+#include "src/dawn/common/windows_with_undefs.h"
 #endif  // DAWN_PLATFORM_IS(WINDOWS)
 
 #if defined(DAWN_USE_X11)
@@ -159,7 +159,7 @@ const HandleType* AsVkArray(const detail::VkHandle<Tag, HandleType>* handle) {
 #ifndef VK_USE_PLATFORM_XCB_KHR
 #define VK_USE_PLATFORM_XCB_KHR
 #endif
-#include "dawn/common/xlib_with_undefs.h"
+#include "src/dawn/common/xlib_with_undefs.h"
 #endif  // defined(DAWN_USE_X11)
 
 #if defined(DAWN_USE_WAYLAND)

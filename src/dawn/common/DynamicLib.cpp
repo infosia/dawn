@@ -25,7 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "dawn/common/DynamicLib.h"
+#include "src/dawn/common/DynamicLib.h"
 
 #include <span>
 #include <utility>
@@ -33,9 +33,9 @@
 #include "utils/platform.h"
 
 #if DAWN_PLATFORM_IS(WINDOWS)
-#include "dawn/common/windows_with_undefs.h"
+#include "src/dawn/common/windows_with_undefs.h"
 #if DAWN_PLATFORM_IS(WINUWP)
-#include "dawn/common/WindowsUtils.h"
+#include "src/dawn/common/WindowsUtils.h"
 #endif
 #elif DAWN_PLATFORM_IS(POSIX)
 #include <dlfcn.h>

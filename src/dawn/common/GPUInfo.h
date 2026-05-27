@@ -32,7 +32,7 @@
 #include <string>
 
 #include "absl/container/inlined_vector.h"
-#include "dawn/common/GPUInfo_autogen.h"
+#include "src/dawn/common/GPUInfo_autogen.h"
 
 namespace dawn::gpu_info {
 
