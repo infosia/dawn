@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34c80f69_8f23b2e0",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T05:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2f1fda5_43a140dd",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1fb1885_c0d30d00",
@@ -66,6 +84,24 @@
       "writtenOn": "2026-05-20T20:04:25Z",
       "side": 1,
       "message": "```suggestion\n// Copyright 2026 The Dawn \u0026 Tint Authors\n```",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c44f7ceb_fd93b337",
+        "filename": "generator/templates/api_cpp.ixx",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T05:21:42Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "d1fb1885_c0d30d00",
       "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +141,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ce58009_e77b9af2",
+        "filename": "src/cmake/DawnCompilerChecks.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T05:21:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "df46c83e_16722c34",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58e9de4c_e0636e5b",
@@ -135,6 +189,24 @@
       "writtenOn": "2026-05-26T18:56:02Z",
       "side": 1,
       "message": "+1",
+      "parentUuid": "58e9de4c_e0636e5b",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e35a355b_766d3bbf",
+        "filename": "src/cmake/DawnCompilerChecks.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T05:21:42Z",
+      "side": 1,
+      "message": "Acknowledged",
       "parentUuid": "58e9de4c_e0636e5b",
       "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
@@ -177,6 +249,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "986dd36c_7c2ce991",
+        "filename": "src/dawn/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T05:21:42Z",
+      "side": 1,
+      "message": "So do you feel safe removing the check or should we leave it there until cmake_minimum_required(VERSION 3.30) ?",
+      "parentUuid": "ac7f0650_0e25174b",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c63ecd0c_d0c6e109",
         "filename": "src/dawn/CMakeLists.txt",
         "patchSetId": 2
@@ -188,6 +278,24 @@
       "writtenOn": "2026-05-20T20:04:25Z",
       "side": 1,
       "message": "Isn\u0027t this always defined in DawnCompilerChecks above?",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4886ae8d_197183a9",
+        "filename": "src/dawn/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T05:21:42Z",
+      "side": 1,
+      "message": "CMAKE_CXX_STANDARD and CMAKE_CXX_EXTENSIONS aren\u0027t guaranteed to be defined after project() in which case the set effectively becomes an unset. I moved the check/defaults to DawnCompilerChecks though.",
+      "parentUuid": "c63ecd0c_d0c6e109",
       "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -209,6 +317,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7285a13e_1756366a",
+        "filename": "src/dawn/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T05:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a2c4855_e363e072",
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc0e05e0_ae816d44",
@@ -222,6 +348,30 @@
       "writtenOn": "2026-05-20T20:04:25Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 2
+      },
+      "revId": "217b417563f2d8c5511950177e2c7f70344dbd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb77df2e_d40b862a",
+        "filename": "src/dawn/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T05:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc0e05e0_ae816d44",
       "range": {
         "startLine": 109,
         "startChar": 0,
