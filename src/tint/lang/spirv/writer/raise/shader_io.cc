@@ -55,6 +55,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// The configuration options.
     const ShaderIOConfig& config;
 
+    /// The index of the sampled position polyfill variable.
+    std::optional<uint32_t> sampled_position_index;
+
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
         : ShaderIOBackendState(mod, f), config(cfg) {}
@@ -118,18 +121,55 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
+        if (config.polyfill_vulkan_sampled_position && func->IsFragment()) {
+            for (auto& input : inputs) {
+                if (input.attributes.builtin == core::BuiltinValue::kPosition) {
+                    sampled_position_index = inputs.Length();
+                    AddInput(ir.symbols.New("tint_sampled_position"), ty.vec4<f32>(),
+                             core::IOAttributes{
+                                 .location = config.polyfill_vulkan_sampled_position_location,
+                                 .interpolation =
+                                     core::Interpolation{
+                                         core::InterpolationType::kLinear,
+                                         core::InterpolationSampling::kCenter,
+                                     },
+                             });
+                    break;
+                }
+            }
+        }
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
         return tint::Empty;
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeOutputs
     const core::type::Type* FinalizeOutputs() override {
+        if (config.polyfill_vulkan_sampled_position && func->IsVertex()) {
+            for (auto& output : outputs) {
+                if (output.attributes.builtin == core::BuiltinValue::kPosition) {
+                    sampled_position_index = outputs.Length();
+                    AddOutput(ir.symbols.New("tint_sampled_position"), ty.vec4<f32>(),
+                              core::IOAttributes{
+                                  .location = config.polyfill_vulkan_sampled_position_location,
+                                  .interpolation =
+                                      core::Interpolation{
+                                          core::InterpolationType::kLinear,
+                                          core::InterpolationSampling::kCenter,
+                                      },
+                              });
+                    break;
+                }
+            }
+        }
         MakeVars(output_vars, outputs, core::AddressSpace::kOut, core::Access::kWrite, "_Output");
         return ty.void_();
     }
 
-    /// @copydoc ShaderIO::BackendState::GetInput
-    core::ir::Value* GetInput(core::ir::Builder& builder, uint32_t idx) override {
+    /// Load an input from its global variable.
+    /// @param builder the builder to use for new instructions
+    /// @param idx the index of the input
+    /// @returns the loaded value
+    core::ir::Value* LoadInput(core::ir::Builder& builder, uint32_t idx) {
         // Load the input from the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kIn, inputs[idx].type, core::Access::kRead);
         auto* from = input_vars[idx]->Result();
@@ -149,8 +189,11 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         return value;
     }
 
-    /// @copydoc ShaderIO::BackendState::SetOutput
-    void SetOutput(core::ir::Builder& builder, uint32_t idx, core::ir::Value* value) override {
+    /// Store an output to its global variable.
+    /// @param builder the builder to use for new instructions
+    /// @param idx the index of the output
+    /// @param value the value to store
+    void StoreOutput(core::ir::Builder& builder, uint32_t idx, core::ir::Value* value) {
         // Store the output to the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kOut, outputs[idx].type, core::Access::kWrite);
         auto* to = output_vars[idx]->Result();
@@ -171,6 +214,69 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
 
         builder.Store(to, value);
+    }
+
+    /// @copydoc ShaderIO::BackendState::GetInput
+    core::ir::Value* GetInput(core::ir::Builder& builder, uint32_t idx) override {
+        if (config.polyfill_vulkan_sampled_position &&
+            inputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            sampled_position_index) {
+            return ReconstructSampledPosition(builder, idx);
+        }
+
+        return LoadInput(builder, idx);
+    }
+
+    /// @copydoc ShaderIO::BackendState::SetOutput
+    void SetOutput(core::ir::Builder& builder, uint32_t idx, core::ir::Value* value) override {
+        if (config.polyfill_vulkan_sampled_position &&
+            outputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            sampled_position_index) {
+            auto* xyz = builder.Swizzle(ty.vec3<f32>(), value, {0, 1, 2})->Result();
+            auto* w = builder.Swizzle(ty.f32(), value, {3})->Result();
+            auto* inv_w = builder.Divide(ty.f32(), 1_f, w)->Result();
+            auto* xyz_over_w = builder.Multiply(ty.vec3<f32>(), xyz, inv_w)->Result();
+            auto* polyfill_value = builder.Construct(ty.vec4<f32>(), xyz_over_w, inv_w)->Result();
+            StoreOutput(builder, *sampled_position_index, polyfill_value);
+        }
+
+        StoreOutput(builder, idx, value);
+    }
+
+    /// Reconstruct the sampled position from the polyfill inter-stage variable.
+    /// @param builder the builder to use for new instructions
+    /// @param idx the index of the position builtin input
+    /// @returns the reconstructed position value
+    core::ir::Value* ReconstructSampledPosition(core::ir::Builder& builder, uint32_t idx) {
+        auto* position = LoadInput(builder, idx);
+        auto* polyfill = LoadInput(builder, *sampled_position_index);
+
+        auto* xy = builder.Swizzle(ty.vec2<f32>(), position, {0, 1})->Result();
+        auto* xy_centered =
+            builder
+                .Add(ty.vec2<f32>(), builder.Call(ty.vec2<f32>(), core::BuiltinFn::kFloor, xy),
+                     builder.Splat(ty.vec2<f32>(), 0.5_f))
+                ->Result();
+
+        auto* center_zw = builder.Swizzle(ty.vec2<f32>(), polyfill, {2, 3})->Result();
+        auto* center_z_over_w = builder.Swizzle(ty.f32(), center_zw, {0})->Result();
+        auto* center_inv_w = builder.Swizzle(ty.f32(), center_zw, {1})->Result();
+
+        auto* z = builder.Divide(ty.f32(), center_z_over_w, center_inv_w)->Result();
+        if (config.depth_range_offsets) {
+            auto* immediate_data = config.immediate_data_layout.var;
+            auto min_idx = u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->min));
+            auto max_idx = u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->max));
+            auto* min = builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, min_idx))
+                            ->Result();
+            auto* max = builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, max_idx))
+                            ->Result();
+            auto* range = builder.Subtract(ty.f32(), max, min)->Result();
+            z = builder.Add(ty.f32(), builder.Multiply(ty.f32(), z, range)->Result(), min)
+                    ->Result();
+        }
+
+        return builder.Construct(ty.vec4<f32>(), xy_centered, z, center_inv_w)->Result();
     }
 
     /// Clamp a frag_depth builtin value if necessary.

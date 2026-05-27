@@ -977,6 +977,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
         metadata->usesVertexIndex = entryPoint.vertex_index_used;
         metadata->usesInstanceIndex = entryPoint.instance_index_used;
+        metadata->usesPosition = entryPoint.position_used;
     }
 
     // Fragment shader specific reflection.
@@ -1023,6 +1024,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
             ++totalInterStageShaderVariables;
         }
         metadata->usesFragDepth = entryPoint.frag_depth_used;
+        metadata->usesPosition = entryPoint.position_used;
 
         metadata->totalInterStageShaderVariables = totalInterStageShaderVariables;
         if (metadata->totalInterStageShaderVariables > maxInterStageShaderVariables) {

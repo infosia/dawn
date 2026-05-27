@@ -140,6 +140,14 @@ struct Options {
     /// Set to `true` if the Vulkan Memory Model should be used
     bool use_vulkan_memory_model = false;
 
+    /// Set to `true` to generate a polyfill for the @builtin(position) in fragment shaders for
+    /// Vulkan.
+    bool polyfill_vulkan_sampled_position = false;
+
+    /// The location to use for the polyfill for the @builtin(position) in fragment shaders for
+    /// Vulkan.
+    uint32_t polyfill_vulkan_sampled_position_location = 0;
+
     /// Set to `true` if handles should be transformed by direct variable access.
     bool dva_transform_handle = false;
 
@@ -183,6 +191,8 @@ struct Options {
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
                  use_vulkan_memory_model,
+                 polyfill_vulkan_sampled_position,
+                 polyfill_vulkan_sampled_position_location,
                  dva_transform_handle,
                  decompose_uniform_buffers,
                  depth_range_offsets,

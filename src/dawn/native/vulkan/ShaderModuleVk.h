@@ -68,6 +68,7 @@ class ShaderModule final : public ShaderModuleBase {
                                                     const ProgrammableStage& programmableStage,
                                                     const PipelineLayout* layout,
                                                     bool emitPointSize,
+                                                    bool polyfillVulkanSampledPosition,
                                                     const ImmediateConstantMask& pipelineMask);
 
   private:

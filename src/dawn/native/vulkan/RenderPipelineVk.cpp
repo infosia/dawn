@@ -362,8 +362,25 @@ MaybeError RenderPipeline::InitializeImpl() {
         StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
     }
 
+    // Determine if sample shading and the `@builtin(position)` polyfill are required.
+    bool usesSampleShading = false;
+    bool polyfillVulkanSampledPosition = false;
+    if (GetSampleCount() > 1 && HasStage(SingleShaderStage::Fragment)) {
+        const EntryPointMetadata& fragmentMetadata = GetStage(SingleShaderStage::Fragment).metadata;
+        usesSampleShading = fragmentMetadata.usesSampleIndex;
+        if (!usesSampleShading) {
+            for (const auto& variable : fragmentMetadata.interStageVariables) {
+                if (variable.interpolationSampling == InterpolationSampling::Sample) {
+                    usesSampleShading = true;
+                    break;
+                }
+            }
+        }
+        polyfillVulkanSampledPosition = usesSampleShading && fragmentMetadata.usesPosition;
+    }
+
     // Gather list of internal immediate constants used by this pipeline
-    if (UsesFragDepth() && !HasUnclippedDepth()) {
+    if ((UsesFragDepth() && !HasUnclippedDepth()) || polyfillVulkanSampledPosition) {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
@@ -378,7 +395,9 @@ MaybeError RenderPipeline::InitializeImpl() {
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
         DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
                                             ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, GetImmediateMask()));
+                                                                emitPointSize,
+                                                                polyfillVulkanSampledPosition,
+                                                                GetImmediateMask()));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.
@@ -464,8 +483,8 @@ MaybeError RenderPipeline::InitializeImpl() {
     multisample.pNext = nullptr;
     multisample.flags = 0;
     multisample.rasterizationSamples = VulkanSampleCount(GetSampleCount());
-    multisample.sampleShadingEnable = VK_FALSE;
-    multisample.minSampleShading = 0.0f;
+    multisample.sampleShadingEnable = usesSampleShading ? VK_TRUE : VK_FALSE;
+    multisample.minSampleShading = 1.0f;
     // VkPipelineMultisampleStateCreateInfo.pSampleMask is an array of length
     // ceil(rasterizationSamples / 32) and since we're passing a single uint32_t
     // we have to assert that this length is indeed 1.
