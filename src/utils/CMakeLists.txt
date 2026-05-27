@@ -28,7 +28,6 @@
 set(private_headers
     "compiler.h"
     "numeric.h"
-    "underlying_type.h"
 )
 
 set(sources

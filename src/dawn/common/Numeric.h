@@ -33,7 +33,7 @@
 #include <limits>
 
 #include "dawn/common/Assert.h"
-#include "utils/underlying_type.h"
+#include "dawn/common/UnderlyingType.h"
 
 namespace dawn {
 namespace detail {

@@ -33,7 +33,6 @@ cc_library(
   hdrs = [
     "compiler.h",
     "numeric.h",
-    "underlying_type.h",
   ],
   srcs = [
     "placeholder.cc",
