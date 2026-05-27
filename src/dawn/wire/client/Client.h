@@ -36,7 +36,6 @@
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/FutureUtils.h"
 #include "dawn/common/LinkedList.h"
-#include "dawn/common/NonCopyable.h"
 #include "dawn/wire/ChunkedCommandSerializer.h"
 #include "dawn/wire/Wire.h"
 #include "dawn/wire/WireClient.h"
@@ -47,6 +46,7 @@
 #include "dawn/wire/client/EventManager.h"
 #include "dawn/wire/client/ObjectStore.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/non_copyable.h"
 
 namespace dawn::wire::client {
 
