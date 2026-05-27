@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e27e7d9_61fd78a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-27T20:00:39Z",
+      "side": 1,
+      "message": "PTAL! I think this should unblock the Dawn-\u003eChromium roller.",
+      "revId": "9ef6ae229d9dec8c197fc2253fad31965b3e3dac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
