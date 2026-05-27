@@ -485,5 +485,70 @@ TEST_F(AtomicVec2uToFromU64Test, AtomicStoreMin_NoBinding) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(AtomicVec2uToFromU64Test, DoubleUse_PossibleFromU64) {
+    auto* sb_rw0 = b.Var("sb_rw0", ty.ptr(storage, ty.array(ty.atomic<u64>(), 4)));
+    sb_rw0->SetBindingPoint(0, 0);
+    auto* sb_rw1 = b.Var("sb_rw1", ty.ptr(storage, ty.runtime_array(ty.atomic<u64>())));
+    sb_rw1->SetBindingPoint(0, 1);
+    mod.root_block->Append(sb_rw0);
+    mod.root_block->Append(sb_rw1);
+
+    auto* f = b.Function("sb_rw0_1", ty.void_());
+    f->SetStage(core::ir::Function::PipelineStage::kCompute);
+    f->SetWorkgroupSize({b.Constant(1_u), b.Constant(1_u), b.Constant(1_u)});
+    b.Append(f->Block(), [&] {
+        auto* access_0 = b.Access(ty.ptr<storage, atomic<u64>>(), sb_rw0, 0_i);
+        auto* val_vec2u = b.Construct(ty.vec2u(), 1_u);
+        auto* val_u64 = b.Bitcast(ty.u64(), val_vec2u);
+        b.Call(ty.void_(), core::BuiltinFn::kAtomicStoreMin, access_0, val_u64);
+        auto* access_1 = b.Access(ty.ptr<storage, atomic<u64>>(), sb_rw1, 1_i);
+
+        b.Call(ty.void_(), core::BuiltinFn::kAtomicStoreMin, access_1, val_u64);
+        b.Return(f);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %sb_rw0:ptr<storage, array<atomic<u64>, 4>, read_write> = var undef @binding_point(0, 0)
+  %sb_rw1:ptr<storage, array<atomic<u64>>, read_write> = var undef @binding_point(0, 1)
+}
+
+%sb_rw0_1 = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:ptr<storage, atomic<u64>, read_write> = access %sb_rw0, 0i
+    %5:vec2<u32> = construct 1u
+    %6:u64 = bitcast<u64> %5
+    %7:void = atomicStoreMin %4, %6
+    %8:ptr<storage, atomic<u64>, read_write> = access %sb_rw1, 1i
+    %9:void = atomicStoreMin %8, %6
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %sb_rw0:ptr<storage, array<atomic<vec2<u32>>, 4>, read_write> = var undef @binding_point(0, 0)
+  %sb_rw1:ptr<storage, array<atomic<vec2<u32>>>, read_write> = var undef @binding_point(0, 1)
+}
+
+%sb_rw0_1 = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:ptr<storage, atomic<vec2<u32>>, read_write> = access %sb_rw0, 0i
+    %5:vec2<u32> = construct 1u
+    %6:void = wgsl.atomicStoreMin %4, %5
+    %7:ptr<storage, atomic<vec2<u32>>, read_write> = access %sb_rw1, 1i
+    %8:void = wgsl.atomicStoreMin %7, %5
+    ret
+  }
+}
+)";
+
+    Run([](auto& mod2) { return AtomicVec2uToFromU64(mod2, AtomicVec2uU64Direction::kFromU64); });
+
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::wgsl::ir::transform
