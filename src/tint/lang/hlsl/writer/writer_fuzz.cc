@@ -64,6 +64,7 @@ struct FuzzedOptions {
     std::vector<BindingPoint> ignored_by_robustness_transform;
     SubstituteOverridesConfig substitute_overrides_config;
     bool d3d12_decompose_workgroup_access;
+    bool collapse_subgroup_min_max;
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -85,7 +86,8 @@ struct FuzzedOptions {
                  num_workgroups_start_offset,
                  ignored_by_robustness_transform,
                  substitute_overrides_config,
-                 d3d12_decompose_workgroup_access);
+                 d3d12_decompose_workgroup_access,
+                 collapse_subgroup_min_max);
 };
 
 Result<SuccessType> IRFuzzer(core::ir::Module& module,
@@ -127,6 +129,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
         fuzzed_options.polyfill_subgroup_broadcast_f16;
     options.workarounds.d3d12_decompose_workgroup_access =
         fuzzed_options.d3d12_decompose_workgroup_access;
+    options.workarounds.collapse_subgroup_min_max = fuzzed_options.collapse_subgroup_min_max;
     options.extensions.polyfill_dot_4x8_packed = fuzzed_options.polyfill_dot_4x8_packed;
     options.extensions.polyfill_pack_unpack_4x8 = fuzzed_options.polyfill_pack_unpack_4x8;
     options.compiler = fuzzed_options.compiler;
