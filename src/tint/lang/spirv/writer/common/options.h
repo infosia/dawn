@@ -142,6 +142,12 @@ struct Options {
 
     /// Set to `true` if handles should be transformed by direct variable access.
     bool dva_transform_handle = false;
+    /// Set to `true` to polyfill sample mask to be an array
+    bool polyfill_sample_mask = false;
+    /// Set to `true` to polyfill fragment shader position builtin for sample shading
+    bool polyfill_sample_shading_position = false;
+    /// The location to use for the sample shading position polyfill
+    uint32_t sample_shading_position_location = 0;
 
     /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
     bool decompose_uniform_buffers = true;
@@ -184,6 +190,9 @@ struct Options {
                  scalarize_max_min_clamp,
                  use_vulkan_memory_model,
                  dva_transform_handle,
+                 polyfill_sample_mask,
+                 polyfill_sample_shading_position,
+                 sample_shading_position_location,
                  decompose_uniform_buffers,
                  depth_range_offsets,
                  spirv_version,

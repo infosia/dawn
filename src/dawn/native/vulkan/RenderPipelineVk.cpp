@@ -362,8 +362,18 @@ MaybeError RenderPipeline::InitializeImpl() {
         StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
     }
 
+    bool polyfillSampleShadingPosition = false;
+    if (GetStageMask() & wgpu::ShaderStage::Fragment) {
+        const EntryPointMetadata& fragmentMetadata = *GetStage(SingleShaderStage::Fragment).metadata;
+        if (GetSampleCount() > 1 && fragmentMetadata.usesPosition &&
+            (fragmentMetadata.usesSampleIndex || fragmentMetadata.usesSampleMaskInput ||
+             fragmentMetadata.hasSampleInterpolation)) {
+            polyfillSampleShadingPosition = true;
+        }
+    }
+
     // Gather list of internal immediate constants used by this pipeline
-    if (UsesFragDepth() && !HasUnclippedDepth()) {
+    if ((UsesFragDepth() && !HasUnclippedDepth()) || polyfillSampleShadingPosition) {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
@@ -373,12 +383,13 @@ MaybeError RenderPipeline::InitializeImpl() {
     uint32_t stageCount = 0;
 
     auto AddShaderStage = [&](SingleShaderStage stage, VkShaderStageFlagBits vkStage,
-                              bool emitPointSize) -> MaybeError {
+                              bool emitPointSize, bool polyfillSampleShadingPosition) -> MaybeError {
         const ProgrammableStage& programmableStage = GetStage(stage);
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
         DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
-                                            ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, GetImmediateMask()));
+                                            ->GetHandleAndSpirv(
+                                                stage, programmableStage, layout, emitPointSize,
+                                                polyfillSampleShadingPosition, GetImmediateMask()));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.
@@ -399,14 +410,17 @@ MaybeError RenderPipeline::InitializeImpl() {
         return {};
     };
 
+
+
     // Add the vertex stage that's always present.
     DAWN_TRY(AddShaderStage(SingleShaderStage::Vertex, VK_SHADER_STAGE_VERTEX_BIT,
-                            GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList));
+                            GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList,
+                            polyfillSampleShadingPosition));
 
     // Add the fragment stage if present.
     if (GetStageMask() & wgpu::ShaderStage::Fragment) {
         DAWN_TRY(AddShaderStage(SingleShaderStage::Fragment, VK_SHADER_STAGE_FRAGMENT_BIT,
-                                /*emitPointSize*/ false));
+                                /*emitPointSize*/ false, polyfillSampleShadingPosition));
     }
 
     PipelineVertexInputStateCreateInfoTemporaryAllocations tempAllocations;
