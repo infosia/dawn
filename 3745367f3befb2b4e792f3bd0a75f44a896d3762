@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c3184f9_52f82df1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-27T22:03:22Z",
+      "side": 1,
+      "message": "PTAL, open to feedback on this new mechanism.\n\nI think the later CLs in this chain to a better job of showing the benefits of this compared to capabilities (e.g. the AllowDuplicateBindings CL).",
+      "revId": "3745367f3befb2b4e792f3bd0a75f44a896d3762",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
