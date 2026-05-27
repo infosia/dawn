@@ -30,8 +30,8 @@
 
 #include <string>
 
-#include "dawn/native/opengl/OpenGLFunctionsBase_autogen.h"
-#include "dawn/native/opengl/OpenGLVersion.h"
+#include "src/dawn/native/opengl/OpenGLFunctionsBase_autogen.h"
+#include "src/dawn/native/opengl/OpenGLVersion.h"
 
 namespace dawn::native::opengl {
 

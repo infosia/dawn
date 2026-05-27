@@ -28,7 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_OPENGLVERSION_H_
 #define SRC_DAWN_NATIVE_OPENGL_OPENGLVERSION_H_
 
-#include "dawn/native/opengl/OpenGLFunctionsBase_autogen.h"
+#include "src/dawn/native/opengl/OpenGLFunctionsBase_autogen.h"
 
 namespace dawn::native::opengl {
 
