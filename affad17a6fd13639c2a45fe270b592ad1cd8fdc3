@@ -16,6 +16,328 @@
       "message": "LGTM! Thanks.",
       "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71762da3_44717265",
+        "filename": "DEPS",
+        "patchSetId": 26
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "Consider having a \"checkout_agility_sdk\" that\u0027s gated on `dawn_use_agility_sdk` to avoid having people download the SDK even when they don\u0027t need to.",
+      "range": {
+        "startLine": 861,
+        "startChar": 13,
+        "endLine": 861,
+        "endChar": 30
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84bcf38d_55b78e5b",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "`_agility_sdk_dir` is declared twice. \n\nSince `dawn_use_agility_sdk` requires `dawn_enable_d3d12` to be useful, hoist `_agility_sdk_dir` to a single, unconditional definition (a small declare_args-adjacent block) and drop the !defined defensive code.",
+      "range": {
+        "startLine": 162,
+        "startChar": 15,
+        "endLine": 162,
+        "endChar": 16
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1eadcae_4d50c2a8",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "If this is supposed to suppresses warnings, why do we need to suppress them again in `d3d12_platform.h`?",
+      "range": {
+        "startLine": 167,
+        "startChar": 44,
+        "endLine": 168,
+        "endChar": 70
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e55dffbd_3b7a4efc",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "Why do we need to link with d3d12.lib?",
+      "range": {
+        "startLine": 616,
+        "startChar": 6,
+        "endLine": 616,
+        "endChar": 18
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0e24d7d_793f2ef4",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "`kAgilitySDKVersion` is no longer used in the CL. We can delete this header file.",
+      "range": {
+        "startLine": 44,
+        "startChar": 26,
+        "endLine": 44,
+        "endChar": 45
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8d82705_ee1d35e4",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t device creation in `CreateD3DDevice` be governed by the toggle? I see the toggle set in PhysicalDeviceD3D12.cpp but not used anywhere.",
+      "range": {
+        "startLine": 91,
+        "startChar": 18,
+        "endLine": 91,
+        "endChar": 30
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76dc37df_bbc22de9",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "```suggestion\n#ifdef DAWN_USE_AGILITY_SDK\n```",
+      "range": {
+        "startLine": 141,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "147b987d_52fdce81",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "We need to rework this code for the agility SDK.  \n\nIf you\u0027re using the agility SDK, you need to use `SerializeVersionedRootSignature` and `CreateVersionedRootSignatureDeserializer` methods from `ID3D12DeviceConfiguration`. The exports from the DLL in System32 are not guaranteed to return compatible objects.\n\nLike creating the device, I recommend you have helper methods (CreateDevice, SerializeVersionedRootSignature and CreateVersionedRootSignatureDeserializer) exposed from PlatformFunctions and have PlatformFunctions take care of doing the right thing.",
+      "range": {
+        "startLine": 65,
+        "startChar": 9,
+        "endLine": 65,
+        "endChar": 58
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba40e853_15481ac2",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "Similar to my previous comment, since `EnsureAgilitySDKDeviceFactory` is called only once during Initialize, there will not be \"subsequent calls\" and thus no reason for this if check. In fact, you should be able to DAWN_CHECK `deviceFactory` is nullptr.",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 5
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "329e8fea_44e2231f",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "Since `EnsureAgilitySDKDeviceFactory` is only called when `DAWN_USE_AGILITY_SDK` is defined, you should `DAWN_CHECK` these always return S_OK.",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 112,
+        "endChar": 2
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcfac67b_03befb0b",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "Please `DAWN_CHECK` that `SetFlags` always returns S_OK.",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 39
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6be55c6_9dc2d000",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "Since `EnsureAgilitySDKDeviceFactory` is only called one time, from Initialize, there will never be \"subsequent calls\".",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 73
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acb57179_a6deb400",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "`EnsureAgilitySDKDeviceFactory` is only called inside of PlatformFunctions. Please make it a private function.",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "001cdf9f_45e0b725",
+        "filename": "tools/fetch_agility_sdk.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T00:26:13Z",
+      "side": 1,
+      "message": "Nit: Other code in Chromium Python files use `urllib.request.urlretrieve` or `shutil.copyfileobject` to retrieve files. You can set a progress callback on urlretrieve if you want to printf progress.  \n\nAI wrote the following for me. I have not debugged it. \n\nThe urlretrieve way:\n\n```\n import tempfile\n \n def _progress(block_num, block_size, total_size):\n     downloaded \u003d block_num * block_size\n     if total_size \u003e 0:\n         pct \u003d min(downloaded * 100 // total_size, 100)\n         print(f\"\\r  {downloaded // 1024}KB / {total_size // 1024}KB ({pct}%)\",\n               end\u003d\"\", flush\u003dTrue)\n     else:\n         print(f\"\\r  {downloaded // 1024}KB downloaded\", end\u003d\"\", flush\u003dTrue)\n \n with tempfile.NamedTemporaryFile(suffix\u003d\".nupkg\", delete\u003dFalse) as tmp:\n     tmp_path \u003d tmp.name\n try:\n     urllib.request.urlretrieve(nuget_url, tmp_path, reporthook\u003d_progress)\n     print()\n     with zipfile.ZipFile(tmp_path, \"r\") as zip_ref:\n         zip_ref.extractall(output_path)\n finally:\n     os.unlink(tmp_path)\n```\n\nThe copyfileobj way\n```\n with urllib.request.urlopen(nuget_url, timeout\u003d120) as response:\n     package_bytes \u003d io.BytesIO()\n     shutil.copyfileobj(response, package_bytes)\n     package_bytes.seek(0)\n```",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 36
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
