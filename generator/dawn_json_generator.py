@@ -2043,7 +2043,6 @@ class MultiGeneratorFromDawnJSON(Generator):
                 FileRender('art/api_kotlin_exceptions.kt',
                            'java/' + kt_file_path + '/Exceptions.kt',
                            [RENDER_PARAMS_BASE, params_kotlin]))
-
             renders.append(
                 FileRender('art/api_kotlin_functions.kt',
                            'java/' + kt_file_path + '/Functions.kt',
@@ -2084,6 +2083,7 @@ class MultiGeneratorFromDawnJSON(Generator):
             renders.append(
                 FileRender('art/structures.h', 'cpp/structures.h',
                            [RENDER_PARAMS_BASE, params_kotlin]))
+
             renders.append(
                 FileRender('art/structures.cpp', 'cpp/structures.cpp',
                            [RENDER_PARAMS_BASE, params_kotlin]))
