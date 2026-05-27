@@ -21,6 +21,11 @@ import androidx.webgpu.helper.createWebGpu
 import java.nio.ByteOrder
 import java.util.concurrent.Executor
 import junit.framework.TestCase
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -38,10 +43,14 @@ class QuerySetTest {
 
   @get:Rule
   val apiSkipRule = ApiLevelSkipRule()
+  private val dispatcher : CoroutineDispatcher = Dispatchers.Default.limitedParallelism(1)
+  private val testScope = CoroutineScope(dispatcher)
+
 
   @Before
-  fun setup() = runBlocking {
+  fun setup(): Unit = runBlocking {
     val gpu = createWebGpu(
+      dispatcher,
       deviceDescriptor = GPUDeviceDescriptor(
         requiredFeatures = intArrayOf(FeatureName.TimestampQuery),
         deviceLostCallbackExecutor = Executor(Runnable::run),
@@ -52,12 +61,16 @@ class QuerySetTest {
     )  // Request timestamp feature if available.
     webGpu = gpu
     device = gpu.device
+    testScope.launch {
+      webGpu.processEventsLoop()
+    }
   }
 
   @After
   fun teardown() {
     runCatching { device.destroy() }
     webGpu.close()
+    testScope.cancel()
   }
 
   companion object {
@@ -104,12 +117,18 @@ class QuerySetTest {
 
   @Test
   fun testCreateQuerySetWithNegativeCountFails() {
-    // Attempting to create a QuerySet with count -1 should fail validation.
-    device.pushErrorScope(ErrorFilter.Validation)
-    val unusedQuerySet =
-      device.createQuerySet(GPUQuerySetDescriptor(type = QueryType.Occlusion, count = -1))
-    assertThrows(ValidationException::class.java) {
-      runBlocking { device.popErrorScope() }
+    runBlocking {
+      webGpu.execute {
+        // Attempting to create a QuerySet with count -1 should fail validation.
+        device.pushErrorScope(ErrorFilter.Validation)
+        val unusedQuerySet =
+          device.createQuerySet(GPUQuerySetDescriptor(type = QueryType.Occlusion, count = -1))
+        assertThrows(ValidationException::class.java) {
+          runBlocking {
+            device.popErrorScope()
+          }
+        }
+      }
     }
   }
 
@@ -246,7 +265,7 @@ class QuerySetTest {
    * @param drawAction A lambda to execute drawing commands within the render pass.
    * @param expectedResult The expected long value (sample count) after resolving the query.
    */
-  private fun executeQueryResolveTest(
+  private suspend fun executeQueryResolveTest(
     drawAction: (GPURenderPassEncoder) -> Unit,
     expectedResult: Long,
   ) {
@@ -378,10 +397,8 @@ class QuerySetTest {
     val commandBuffer = encoder.finish()
     device.queue.submit(arrayOf(commandBuffer))
 
-    runBlocking {
-      device.queue.onSubmittedWorkDone()
-      readbackBuffer.mapAndAwait(MapMode.Read, 0, resolveBufferSize)
-    }
+    device.queue.onSubmittedWorkDone()
+    readbackBuffer.mapAndAwait(MapMode.Read, 0, resolveBufferSize)
 
     val mappedBuffer = readbackBuffer.getConstMappedRange(size = resolveBufferSize)
     // WebGPU resolves query data as a little-endian unsigned 64-bit integer.
@@ -405,10 +422,14 @@ class QuerySetTest {
   @Test
   @ApiRequirement(minApi = 35, onlySkipOnEmulator = true)
   fun testResolveQuerySetAndReadback() {
-    executeQueryResolveTest(
-      drawAction = { passEncoder -> passEncoder.draw(3) },
-      expectedResult = 1L
-    )
+    runBlocking {
+      webGpu.execute {
+        executeQueryResolveTest(
+          drawAction = { passEncoder -> passEncoder.draw(3) },
+          expectedResult = 1L
+        )
+      }
+    }
   }
 
   /**
@@ -417,9 +438,13 @@ class QuerySetTest {
   @Test
   @ApiRequirement(minApi = 35, onlySkipOnEmulator = true)
   fun testResolveQuerySetWithZeroResult() {
-    executeQueryResolveTest(
-      drawAction = { },
-      expectedResult = 0L
-    )
+    runBlocking {
+      webGpu.execute {
+        executeQueryResolveTest(
+          drawAction = { },
+          expectedResult = 0L
+        )
+      }
+    }
   }
 }

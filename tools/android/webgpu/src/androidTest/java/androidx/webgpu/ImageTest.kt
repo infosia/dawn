@@ -24,6 +24,11 @@ import androidx.webgpu.helper.asString
 import androidx.webgpu.helper.createBitmap
 import androidx.webgpu.helper.createWebGpu
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
@@ -33,6 +38,8 @@ import org.junit.runner.RunWith
 class ImageTest {
     private val appContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val storage = StorageFactory.createStore(appContext)
+    private val dispatcher : CoroutineDispatcher = Dispatchers.Default.limitedParallelism(1)
+    private val testScope = CoroutineScope(dispatcher)
     @get:Rule
     val apiSkipRule = ApiLevelSkipRule()
 
@@ -52,82 +59,92 @@ class ImageTest {
 
     private fun triangleTest(color: GPUColor, imageName: String) {
         runBlocking {
-            val webGpu = createWebGpu()
+            val webGpu = createWebGpu(dispatcher)
             val device = webGpu.device
-
-            val shaderModule = device.createShaderModule(
-                GPUShaderModuleDescriptor(
-                    shaderSourceWGSL = GPUShaderSourceWGSL(
-                        code = appContext.assets.open("triangle/shader.wgsl").asString()
-                    )
-                )
-            )
-
-            val testTexture = device.createTexture(
-                GPUTextureDescriptor(
-                    size = GPUExtent3D(256, 256),
-                    format = TextureFormat.RGBA8Unorm,
-                    usage = TextureUsage.CopySrc or TextureUsage.RenderAttachment
-                )
-            )
-
-            with(device.queue) {
-                submit(device.createCommandEncoder().use {
-                    with(
-                        it.beginRenderPass(
-                            GPURenderPassDescriptor(
-                                colorAttachments = arrayOf(
-                                    GPURenderPassColorAttachment(
-                                        loadOp = LoadOp.Clear,
-                                        storeOp = StoreOp.Store,
-                                        clearValue = color,
-                                        view = testTexture.createView()
-                                    )
-                                )
+            val job = testScope.launch {
+                webGpu.processEventsLoop()
+            }
+            try {
+                webGpu.execute {
+                    val shaderModule = device.createShaderModule(
+                        GPUShaderModuleDescriptor(
+                            shaderSourceWGSL = GPUShaderSourceWGSL(
+                                code = appContext.assets.open("triangle/shader.wgsl").asString()
                             )
                         )
-                    ) {
-                        setPipeline(
-                            device.createRenderPipeline(
-                                GPURenderPipelineDescriptor(
-                                    vertex = GPUVertexState(module = shaderModule),
-                                    primitive = GPUPrimitiveState(
-                                        topology = PrimitiveTopology.TriangleList
-                                    ),
-                                    fragment = GPUFragmentState(
-                                        module = shaderModule,
-                                        targets = arrayOf(
-                                            GPUColorTargetState(
-                                                format = TextureFormat.RGBA8Unorm
+                    )
+
+                    val testTexture = device.createTexture(
+                        GPUTextureDescriptor(
+                            size = GPUExtent3D(256, 256),
+                            format = TextureFormat.RGBA8Unorm,
+                            usage = TextureUsage.CopySrc or TextureUsage.RenderAttachment
+                        )
+                    )
+
+                    with(device.queue) {
+                        submit(device.createCommandEncoder().use {
+                            with(
+                                it.beginRenderPass(
+                                    GPURenderPassDescriptor(
+                                        colorAttachments = arrayOf(
+                                            GPURenderPassColorAttachment(
+                                                loadOp = LoadOp.Clear,
+                                                storeOp = StoreOp.Store,
+                                                clearValue = color,
+                                                view = testTexture.createView()
                                             )
                                         )
                                     )
                                 )
-                            )
-                        )
-                        draw(3)
-                        end()
+                            ) {
+                                setPipeline(
+                                    device.createRenderPipeline(
+                                        GPURenderPipelineDescriptor(
+                                            vertex = GPUVertexState(module = shaderModule),
+                                            primitive = GPUPrimitiveState(
+                                                topology = PrimitiveTopology.TriangleList
+                                            ),
+                                            fragment = GPUFragmentState(
+                                                module = shaderModule,
+                                                targets = arrayOf(
+                                                    GPUColorTargetState(
+                                                        format = TextureFormat.RGBA8Unorm
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                                draw(3)
+                                end()
+                            }
+
+                            arrayOf(it.finish())
+                        })
                     }
 
-                    arrayOf(it.finish())
-                })
+                    val bitmap = testTexture.createBitmap(device)
+
+                    // Write the generated bitmap to test storage for inspection in the event of test
+                    // failures.
+                    storage.writeImage("generated_image.png", bitmap)
+
+                    val testAssets = appContext.assets
+                    val matched = testAssets.list("compare")!!.filter {
+                        imageSimilarity(
+                            bitmap,
+                            BitmapFactory.decodeStream(testAssets.open("compare/$it"))
+                        ) > 0.99
+                    }
+
+                    assertEquals(listOf(imageName), matched)
+                }
+            } finally {
+                runCatching { device.destroy() }
+                webGpu.close()
+                job.cancel()
             }
-
-            val bitmap = testTexture.createBitmap(device)
-
-            // Write the generated bitmap to test storage for inspection in the event of test
-            // failures.
-            storage.writeImage("generated_image.png", bitmap)
-
-            val testAssets = appContext.assets
-            val matched = testAssets.list("compare")!!.filter {
-                imageSimilarity(
-                    bitmap,
-                    BitmapFactory.decodeStream(testAssets.open("compare/$it"))
-                ) > 0.99
-            }
-
-            assertEquals(listOf(imageName), matched)
         }
     }
 }
