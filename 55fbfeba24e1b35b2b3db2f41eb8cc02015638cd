@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c1cde720_13d01e5a",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-27T20:55:03Z",
+      "side": 1,
+      "message": "This CL is a good first start.\n\nSince we\u0027re always going to pull the Agility SDK into Windows builds via DEPS, consider simplifying the code to always build with the header files. Whether the code actually _uses_ the AgilitySDK should be governed by a Dawn toggle or a #define that\u0027s checked in one, central place.",
+      "range": {
+        "startLine": 153,
+        "startChar": 22,
+        "endLine": 153,
+        "endChar": 45
+      },
+      "revId": "55fbfeba24e1b35b2b3db2f41eb8cc02015638cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "70c2d2fe_e6ec79f9",
         "filename": "third_party/agility-sdk/OWNERS",
         "patchSetId": 1
