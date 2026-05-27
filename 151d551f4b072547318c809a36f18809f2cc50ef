@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a232de0_1d5d0b5c",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T18:07:00Z",
+      "side": 1,
+      "message": "I was wondering if this already exists inthe standard library, and it looks like this was added in 20: https://en.cppreference.com/cpp/utility/in_range\nCan we use that? (related: https://en.cppreference.com/cpp/utility/intcmp)",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 50
+      },
+      "revId": "151d551f4b072547318c809a36f18809f2cc50ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bf6f2c2a_159651fb",
         "filename": "src/dawn/common/Numeric.h",
         "patchSetId": 5
