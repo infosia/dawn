@@ -1318,6 +1318,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
         // Apply default frag depth
         immediates.SetClampFragDepth(0.0, 1.0);
+        immediates.SetViewportDepth(0.0, 1.0);
     }
 
     DescriptorSetTracker descriptorSets = {};
@@ -1607,6 +1608,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                     viewport.x = 0;
                     viewport.width = 1;
                 }
+                immediates.SetViewportDepth(cmd->minDepth, cmd->maxDepth);
 
                 device->fn.CmdSetViewport(commands, 0, 1, &viewport);
 

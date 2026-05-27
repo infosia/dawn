@@ -39,6 +39,15 @@ void RenderImmediateConstantsTrackerBase::SetClampFragDepth(float minClampFragDe
     UpdateImmediateConstants(offsetof(RenderImmediateConstants, clampFragDepth), fragDepthArgs);
 }
 
+void RenderImmediateConstantsTrackerBase::SetViewportDepth(float minDepth, float maxDepth) {
+    // Put the data in the right layout to match the RenderImmediateConstants struct
+    ViewportDepthArgs viewportDepthArgs;
+    viewportDepthArgs.minDepth = minDepth;
+    viewportDepthArgs.maxDepth = maxDepth;
+
+    UpdateImmediateConstants(offsetof(RenderImmediateConstants, viewportDepth), viewportDepthArgs);
+}
+
 void RenderImmediateConstantsTrackerBase::SetFirstIndexOffset(uint32_t firstVertex,
                                                               uint32_t firstInstance) {
     this->SetFirstVertex(firstVertex);
