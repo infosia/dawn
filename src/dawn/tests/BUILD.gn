@@ -31,6 +31,7 @@ import("../../../scripts/tint_overrides_with_defaults.gni")
 import("//testing/test.gni")
 import("${dawn_root}/generator/dawn_generator.gni")
 import("${dawn_root}/scripts/dawn_features.gni")
+import("${dawn_root}/scripts/dawn_nocompile.gni")
 
 # When embedded by Chrome, partition_alloc and the dangling pointer detector
 # are already initialized. Dawn shouldn't attempt to initialize them again. This
@@ -213,10 +214,20 @@ source_set("native_mocks_sources") {
   ]
 }
 
+dawn_nocompile_source_set("nocompile_sources") {
+  configs = [ "${dawn_root}/src/dawn/common:internal_config" ]
+  deps = [ "${dawn_root}/src/dawn/common" ]
+  sources = [
+    "unittests/nocompile/Numeric.nc",
+    "unittests/nocompile/TypedInteger.nc",
+  ]
+}
+
 dawn_test("dawn_unittests") {
   deps = [
     ":mock_webgpu_gen",
     ":native_mocks_sources",
+    ":nocompile_sources",
     ":partition_alloc_support",
     ":platform_mocks_sources",
     ":test_infra_sources",
