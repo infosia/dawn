@@ -58,6 +58,10 @@ struct ShaderIOConfig {
     bool emit_vertex_point_size = false;
     /// true if f16 IO types should be replaced with f32 types and converted
     bool polyfill_f16_io = false;
+    /// true if fragment shader position builtin should be polyfilled for sample shading
+    bool polyfill_sample_shading_position = false;
+    /// location to use for the sample shading position polyfill
+    uint32_t sample_shading_position_location = 0;
     /// offsets for clamping frag depth
     std::optional<Options::RangeOffsets> depth_range_offsets{};
 };

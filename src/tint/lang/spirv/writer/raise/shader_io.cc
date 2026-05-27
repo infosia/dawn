@@ -118,18 +118,116 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
+        if (config.polyfill_sample_shading_position && func->IsFragment()) {
+            for (auto& input : inputs) {
+                if (input.attributes.builtin == core::BuiltinValue::kPosition) {
+                    inputs.Push(core::type::Manager::StructMemberDesc{
+                        ir.symbols.New("tint_sample_shading_position_poly"),
+                        ty.vec4<f32>(),
+                        core::IOAttributes{
+                            /* location */ config.sample_shading_position_location,
+                            /* index */ std::nullopt,
+                            /* color */ std::nullopt,
+                            /* builtin */ std::nullopt,
+                            /* interpolation */
+                            core::Interpolation{core::InterpolationType::kLinear,
+                                                core::InterpolationSampling::kCenter},
+                            /* invariant */ false,
+                        },
+                    });
+                    break;
+                }
+            }
+        }
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
         return tint::Empty;
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeOutputs
     const core::type::Type* FinalizeOutputs() override {
+        if (config.polyfill_sample_shading_position && func->IsVertex()) {
+            for (auto& output : outputs) {
+                if (output.attributes.builtin == core::BuiltinValue::kPosition) {
+                    outputs.Push(core::type::Manager::StructMemberDesc{
+                        ir.symbols.New("tint_sample_shading_position_poly"),
+                        ty.vec4<f32>(),
+                        core::IOAttributes{
+                            /* location */ config.sample_shading_position_location,
+                            /* index */ std::nullopt,
+                            /* color */ std::nullopt,
+                            /* builtin */ std::nullopt,
+                            /* interpolation */
+                            core::Interpolation{core::InterpolationType::kLinear,
+                                                core::InterpolationSampling::kCenter},
+                            /* invariant */ false,
+                        },
+                    });
+                    break;
+                }
+            }
+        }
         MakeVars(output_vars, outputs, core::AddressSpace::kOut, core::Access::kWrite, "_Output");
         return ty.void_();
     }
 
     /// @copydoc ShaderIO::BackendState::GetInput
     core::ir::Value* GetInput(core::ir::Builder& builder, uint32_t idx) override {
+        auto* value = LoadInput(builder, idx);
+
+        if (config.polyfill_sample_shading_position && func->IsFragment() &&
+            inputs[idx].attributes.builtin == core::BuiltinValue::kPosition) {
+            core::ir::Var* poly_var = nullptr;
+            for (auto* var : input_vars) {
+                if (var->Attributes().location == config.sample_shading_position_location) {
+                    poly_var = var;
+                    break;
+                }
+            }
+            if (poly_var) {
+                auto* poly_val = builder.Load(poly_var)->Result();
+
+                // Reconstruction of pixel-centered position:
+                // x/y = floor(position.xy) + 0.5
+                auto* old_xy = builder.Swizzle(ty.vec2<f32>(), value, {0, 1})->Result();
+                auto* floor_xy =
+                    builder.Call(ty.vec2<f32>(), core::BuiltinFn::kFloor, old_xy)->Result();
+                auto* new_xy =
+                    builder.Add(ty.vec2<f32>(), floor_xy, builder.Splat(ty.vec2<f32>(), 0.5_f))
+                        ->Result();
+
+                // w_win = w_clip = 1.0 / (interpolated 1/w_clip)
+                auto* inv_w = builder.Access(ty.f32(), poly_val, 3_u)->Result();
+                auto* new_w = builder.Div(ty.f32(), 1.0_f, inv_w)->Result();
+
+                // z_win = (interpolated z_clip/w_clip) * scale + offset
+                auto* new_z = builder.Access(ty.f32(), poly_val, 2_u)->Result();
+
+                if (config.depth_range_offsets) {
+                    auto* immediate_data = config.immediate_data_layout.var;
+                    auto min_idx =
+                        u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->min));
+                    auto max_idx =
+                        u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->max));
+                    auto* min =
+                        builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, min_idx));
+                    auto* max =
+                        builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, max_idx));
+                    auto* range = builder.Sub(ty.f32(), max, min)->Result();
+                    new_z = builder.Add(ty.f32(), builder.Mul(ty.f32(), new_z, range), min)->Result();
+                }
+
+                return builder.Construct(ty.vec4<f32>(), Vector{new_xy, new_z, new_w})->Result();
+            }
+        }
+
+        return value;
+    }
+
+    /// Load an input from its global variable.
+    /// @param builder the builder to use
+    /// @param idx the index of the input
+    /// @returns the loaded value
+    core::ir::Value* LoadInput(core::ir::Builder& builder, uint32_t idx) {
         // Load the input from the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kIn, inputs[idx].type, core::Access::kRead);
         auto* from = input_vars[idx]->Result();
@@ -151,6 +249,25 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::SetOutput
     void SetOutput(core::ir::Builder& builder, uint32_t idx, core::ir::Value* value) override {
+        if (config.polyfill_sample_shading_position && func->IsVertex() &&
+            outputs[idx].attributes.builtin == core::BuiltinValue::kPosition) {
+            core::ir::Var* poly_var = nullptr;
+            for (auto* var : output_vars) {
+                if (var->Attributes().location == config.sample_shading_position_location) {
+                    poly_var = var;
+                    break;
+                }
+            }
+            if (poly_var) {
+                auto* w = builder.Access(ty.f32(), value, 3_u)->Result();
+                auto* inv_w = builder.Div(ty.f32(), 1.0_f, w)->Result();
+                auto* xyz = builder.Swizzle(ty.vec3<f32>(), value, {0, 1, 2})->Result();
+                auto* ndc_xyz = builder.Mul(ty.vec3<f32>(), xyz, inv_w)->Result();
+                auto* poly_val = builder.Construct(ty.vec4<f32>(), Vector{ndc_xyz, inv_w})->Result();
+                builder.Store(poly_var, poly_val);
+            }
+        }
+
         // Store the output to the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kOut, outputs[idx].type, core::Access::kWrite);
         auto* to = output_vars[idx]->Result();
