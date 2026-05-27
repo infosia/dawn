@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1490ec80_8e0cb8c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-27T15:14:10Z",
+      "side": 1,
+      "message": "PTAL\n\nI sent the original input up to CF to minimize and file an issue, but that is still running. I will update the description with the bug number once it is available.\n\n(I should have manually created a bug and told CF to update that, instead of having it file a new issue)",
+      "revId": "c69c24c15ec10fec1d8e3bc77006e5a57b592b7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
