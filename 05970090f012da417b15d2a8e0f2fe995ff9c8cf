@@ -16,6 +16,24 @@
       "message": "This is the line that changed from the last commit.\n\nThe `run.py` script always sets the current working directory to be the root of the Dawn checkout, so we need to use a relative path from there.",
       "revId": "05970090f012da417b15d2a8e0f2fe995ff9c8cf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c11b9c67_5a0dac66",
+        "filename": "src/tint/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-27T01:28:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "88b77962_35d6d161",
+      "revId": "05970090f012da417b15d2a8e0f2fe995ff9c8cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
