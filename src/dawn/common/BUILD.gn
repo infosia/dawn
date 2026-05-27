@@ -103,7 +103,10 @@ clang_plugin("raw_ptr_check") {
 
 config("internal_config") {
   configs = []
-  include_dirs = [ "${target_gen_dir}/../../../src" ]
+  include_dirs = [
+    "${target_gen_dir}/../../../src",
+    "${dawn_root}/src",
+  ]
 
   defines = []
   if (dawn_always_assert || dcheck_always_on || is_debug ||
@@ -342,8 +345,6 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       "Mutex.h",
       "MutexProtected.h",
       "NSRef.h",
-      "NonCopyable.h",
-      "NonMovable.h",
       "Numeric.h",
       "PlacementAllocated.h",
       "Preprocessor.h",
@@ -426,7 +427,6 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       sources += [
         "WindowsUtils.cpp",
         "WindowsUtils.h",
-        "windows_with_undefs.h",
       ]
     }
     if (dawn_enable_vulkan) {

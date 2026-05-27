@@ -33,10 +33,17 @@ cc_library(
   hdrs = [
     "compiler.h",
     "force_crash.h",
+    "non_copyable.h",
+    "non_movable.h",
     "numeric.h",
     "platform.h",
     "underlying_type.h",
-  ],
+  ] + select({
+    ":tint_build_is_win": [
+      "windows_with_undefs.h",
+    ],
+    "//conditions:default": [],
+  }),
   srcs = [
     "placeholder.cc",
   ],

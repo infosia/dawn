@@ -31,7 +31,7 @@
 
 #include <concepts>
 
-#include "src/dawn/common/NonMovable.h"
+#include "src/utils/non_movable.h"
 
 namespace dawn::utils {
 
