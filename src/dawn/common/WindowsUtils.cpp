@@ -25,11 +25,11 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "dawn/common/WindowsUtils.h"
-
-#include "dawn/common/windows_with_undefs.h"
+#include "src/dawn/common/WindowsUtils.h"
 
 #include <memory>
+
+#include "src/dawn/common/windows_with_undefs.h"
 
 namespace dawn {
 
