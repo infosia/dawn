@@ -55,6 +55,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// The configuration options.
     const ShaderIOConfig& config;
 
+    /// The index of the input/output for the sample-mask-aware position polyfill.
+    std::optional<uint32_t> sample_mask_aware_position_idx;
+
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
         : ShaderIOBackendState(mod, f), config(cfg) {}
@@ -118,12 +121,45 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
+        if (config.polyfill_sample_mask_aware_position && func->IsFragment()) {
+            for (auto& input : inputs) {
+                if (input.attributes.builtin == core::BuiltinValue::kPosition) {
+                    sample_mask_aware_position_idx = AddInput(
+                        ir.symbols.New("tint_sample_mask_aware_position"), ty.vec4f(),
+                        core::IOAttributes{
+                            .location = config.sample_mask_aware_position_location,
+                            .interpolation =
+                                core::Interpolation{core::InterpolationType::kLinear,
+                                                    core::InterpolationSampling::kCenter},
+                            .invariant = input.attributes.invariant,
+                        });
+                    break;
+                }
+            }
+        }
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
         return tint::Empty;
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeOutputs
     const core::type::Type* FinalizeOutputs() override {
+        if (config.polyfill_sample_mask_aware_position && func->IsVertex()) {
+            bool is_invariant = false;
+            for (auto& output : outputs) {
+                if (output.attributes.builtin == core::BuiltinValue::kPosition) {
+                    is_invariant = output.attributes.invariant;
+                    break;
+                }
+            }
+            sample_mask_aware_position_idx = AddOutput(
+                ir.symbols.New("tint_sample_mask_aware_position"), ty.vec4f(),
+                core::IOAttributes{
+                    .location = config.sample_mask_aware_position_location,
+                    .interpolation = core::Interpolation{core::InterpolationType::kLinear,
+                                                        core::InterpolationSampling::kCenter},
+                    .invariant = is_invariant,
+                });
+        }
         MakeVars(output_vars, outputs, core::AddressSpace::kOut, core::Access::kWrite, "_Output");
         return ty.void_();
     }
@@ -140,6 +176,32 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
 
         auto* value = builder.Load(from)->Result();
+
+        if (inputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            sample_mask_aware_position_idx.has_value()) {
+            // Reconstruct pixel-centered position.
+            auto* center_pos = GetInput(builder, sample_mask_aware_position_idx.value());
+            auto* vec2f = ty.vec2f();
+            auto* xy = builder.Swizzle(vec2f, value, {0, 1});
+            auto* floor_xy = builder.Call(vec2f, core::BuiltinFn::kFloor, xy);
+            auto* centered_xy = builder.Add(vec2f, floor_xy, builder.Splat(vec2f, 0.5_f));
+            auto* z = builder.Access(ty.f32(), center_pos, 2_u)->Result();
+            if (config.depth_range_offsets) {
+                auto* immediate_data = config.immediate_data_layout.var;
+                auto min_idx =
+                    u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->min));
+                auto max_idx =
+                    u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->max));
+                auto* min =
+                    builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, min_idx));
+                auto* max =
+                    builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, max_idx));
+                auto* range = builder.Subtract(ty.f32(), max, min);
+                z = builder.Add(ty.f32(), builder.Multiply(ty.f32(), z, range), min)->Result();
+            }
+            auto* w = builder.Access(ty.f32(), center_pos, 3_u);
+            value = builder.Construct(ty.vec4f(), centered_xy, z, w)->Result();
+        }
 
         // Convert f32 values to f16 values if needed.
         if (config.polyfill_f16_io && inputs[idx].type->DeepestElement()->Is<core::type::F16>()) {
@@ -171,6 +233,16 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
 
         builder.Store(to, value);
+
+        if (outputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            sample_mask_aware_position_idx.has_value()) {
+            auto* pos_w = builder.Access(ty.f32(), value, 3_u);
+            auto* inv_w = builder.Divide(ty.f32(), 1.0_f, pos_w);
+            auto* pos_xyz = builder.Swizzle(ty.vec3f(), value, {0, 1, 2});
+            auto* xyz_div_w = builder.Multiply(ty.vec3f(), pos_xyz, builder.Splat(ty.vec3f(), inv_w));
+            auto* center_pos = builder.Construct(ty.vec4f(), xyz_div_w, inv_w);
+            SetOutput(builder, sample_mask_aware_position_idx.value(), center_pos->Result());
+        }
     }
 
     /// Clamp a frag_depth builtin value if necessary.

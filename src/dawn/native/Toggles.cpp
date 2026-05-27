@@ -574,6 +574,11 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
      {"vulkan_polyfill_switch_with_if",
       "Polyfill switch statements with if/else statements on Vulkan.",
       "https://crbug.com/443906252", ToggleStage::Device}},
+    {Toggle::VulkanPolyfillSampleMaskAwarePosition,
+     {"vulkan_polyfill_sample_mask_aware_position",
+      "Polyfill @builtin(position) in fragment shaders to always report pixel-centered coordinates "
+      "on Vulkan when per-sample shading is enabled.",
+      "https://crbug.com/42241457", ToggleStage::Device}},
     {Toggle::ExposeWGSLTestingFeatures,
      {"expose_wgsl_testing_features",
       "Make the Instance expose the ChromiumTesting* features for testing of "

@@ -186,6 +186,8 @@ struct EntryPoint {
     /// Does the entry point use the sample_mask builtin as an output builtin
     /// variable.
     bool output_sample_mask_used = false;
+    /// Does the entry point use the position builtin
+    bool position_used = false;
     /// Does the entry point use the front_facing builtin
     bool front_facing_used = false;
     /// Does the entry point use the sample_index builtin

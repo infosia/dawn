@@ -124,7 +124,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const ProgrammableStage& programmableStage,
     const PipelineLayout* layout,
     bool emitPointSize,
-    const ImmediateConstantMask& pipelineImmediateMask) {
+    const ImmediateConstantMask& pipelineImmediateMask,
+    bool polyfillPosition) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
 #if TINT_BUILD_SPV_WRITER
@@ -244,6 +245,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::ScalarizeMaxMinClamp);
     req.tintOptions.subgroup_shuffle_clamped =
         GetDevice()->IsToggleEnabled(Toggle::SubgroupShuffleClamped);
+    req.tintOptions.polyfill_sample_mask_aware_position = polyfillPosition;
+    req.tintOptions.sample_mask_aware_position_location =
+        GetDevice()->GetLimits().v1.maxInterStageShaderVariables;
     req.tintOptions.use_vulkan_memory_model =
         GetDevice()->IsToggleEnabled(Toggle::UseVulkanMemoryModel);
     req.tintOptions.spirv_version = GetDevice()->IsToggleEnabled(Toggle::UseSpirv14)

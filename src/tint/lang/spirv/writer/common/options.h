@@ -137,6 +137,11 @@ struct Options {
     /// Set to `true` to scalarize max min and clamp builtins.
     bool scalarize_max_min_clamp = false;
 
+    /// Set to `true` to generate a polyfill for sample-mask-aware position.
+    bool polyfill_sample_mask_aware_position = false;
+    /// The location to use for the sample-mask-aware position polyfill.
+    uint32_t sample_mask_aware_position_location = 0;
+
     /// Set to `true` if the Vulkan Memory Model should be used
     bool use_vulkan_memory_model = false;
 
@@ -182,6 +187,8 @@ struct Options {
                  polyfill_subgroup_broadcast_f16,
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
+                 polyfill_sample_mask_aware_position,
+                 sample_mask_aware_position_location,
                  use_vulkan_memory_model,
                  dva_transform_handle,
                  decompose_uniform_buffers,

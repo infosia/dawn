@@ -362,8 +362,17 @@ MaybeError RenderPipeline::InitializeImpl() {
         StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
     }
 
+    bool polyfillPosition = false;
+    if (device->IsToggleEnabled(Toggle::VulkanPolyfillSampleMaskAwarePosition) &&
+        GetSampleCount() > 1 && HasStage(SingleShaderStage::Fragment)) {
+        const EntryPointMetadata& fragmentMetadata = *GetStage(SingleShaderStage::Fragment).metadata;
+        if (fragmentMetadata.usesPosition && fragmentMetadata.UsesSampleShading()) {
+            polyfillPosition = true;
+        }
+    }
+
     // Gather list of internal immediate constants used by this pipeline
-    if (UsesFragDepth() && !HasUnclippedDepth()) {
+    if ((UsesFragDepth() && !HasUnclippedDepth()) || polyfillPosition) {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
@@ -378,7 +387,8 @@ MaybeError RenderPipeline::InitializeImpl() {
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
         DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
                                             ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, GetImmediateMask()));
+                                                                emitPointSize, GetImmediateMask(),
+                                                                polyfillPosition));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.

@@ -977,6 +977,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
         metadata->usesVertexIndex = entryPoint.vertex_index_used;
         metadata->usesInstanceIndex = entryPoint.instance_index_used;
+        metadata->usesPosition = entryPoint.position_used;
     }
 
     // Fragment shader specific reflection.
@@ -1018,6 +1019,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
         // Other fragment metadata
         metadata->usesSampleMaskOutput = entryPoint.output_sample_mask_used;
         metadata->usesSampleIndex = entryPoint.sample_index_used;
+        metadata->usesPosition = entryPoint.position_used;
         if (entryPoint.front_facing_used || entryPoint.input_sample_mask_used ||
             entryPoint.sample_index_used) {
             ++totalInterStageShaderVariables;
@@ -1736,6 +1738,18 @@ MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
 }
 
 // ShaderModuleBase
+bool EntryPointMetadata::UsesSampleShading() const {
+    if (usesSampleIndex) {
+        return true;
+    }
+    for (const auto& it : interStageVariables) {
+        if (it.interpolationSampling == InterpolationSampling::Sample) {
+            return true;
+        }
+    }
+    return false;
+}
+
 ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
                                    const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
                                    std::vector<tint::wgsl::Extension> internalExtensions,

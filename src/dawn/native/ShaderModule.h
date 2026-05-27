@@ -321,6 +321,7 @@ using OverridesMap = absl::flat_hash_map<std::string, Override>;
     X(size_t, pixelLocalBlockSize)                                                                \
     X(std::vector<PixelLocalMemberType>, pixelLocalMembers)                                       \
     X(bool, usesFragDepth)                                                                        \
+    X(bool, usesPosition)                                                                        \
     X(bool, usesInstanceIndex)                                                                    \
     X(bool, usesNumWorkgroups)                                                                    \
     X(bool, usesSampleMaskOutput)                                                                 \
@@ -332,6 +333,8 @@ using OverridesMap = absl::flat_hash_map<std::string, Override>;
     /* Immediate Data block byte size */                                                          \
     X(uint32_t, immediateDataRangeByteSize)
 DAWN_SERIALIZABLE(struct, EntryPointMetadata, ENTRY_POINT_METADATA_MEMBER) {
+    bool UsesSampleShading() const;
+
     using SamplerTexturePair = detail::SamplerTexturePair;
     // TODO(crbug.com/409438000): Remove the hack of sampler placeholders for non-sampler texture.
     static constexpr const BindingSlot nonSamplerBindingPoint{

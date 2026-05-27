@@ -58,6 +58,10 @@ struct ShaderIOConfig {
     bool emit_vertex_point_size = false;
     /// true if f16 IO types should be replaced with f32 types and converted
     bool polyfill_f16_io = false;
+    /// true if the sample-mask-aware position polyfill should be enabled
+    bool polyfill_sample_mask_aware_position = false;
+    /// the location to use for the sample-mask-aware position polyfill
+    uint32_t sample_mask_aware_position_location = 0;
     /// offsets for clamping frag depth
     std::optional<Options::RangeOffsets> depth_range_offsets{};
 };

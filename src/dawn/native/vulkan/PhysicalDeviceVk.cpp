@@ -809,17 +809,18 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
         std::min(vkLimits.maxVertexInputBindingStride - 1, vkLimits.maxVertexInputAttributeOffset) +
         1;
 
-    // Reserve 4 components for the SPIR-V builtin `position`. WebGPU SPEC requires the minimum
-    // value of `maxInterStageShaderVariables` be 16. According to Vulkan SPEC, "the Location value
+    // Reserve 12 components for the SPIR-V builtin `position`, its polyfill and other builtins
+    // (front_facing, sample_index, sample_mask). WebGPU SPEC requires the minimum value of
+    // `maxInterStageShaderVariables` be 16. According to Vulkan SPEC, "the Location value
     // specifies an interface slot comprised of a 32-bit four-component vector conveyed between
     // stages". So on any WebGPU Vulkan backend `maxVertexOutputComponents` must be no less than
-    // 68 = (16 * 4 + 4).
-    if (vkLimits.maxVertexOutputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 4 ||
-        vkLimits.maxFragmentInputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 4) {
+    // 76 = (16 * 4 + 12).
+    if (vkLimits.maxVertexOutputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 12 ||
+        vkLimits.maxFragmentInputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 12) {
         return DAWN_INTERNAL_ERROR("Insufficient Vulkan limits for maxInterStageShaderVariables");
     }
     limits->v1.maxInterStageShaderVariables =
-        std::min(vkLimits.maxVertexOutputComponents, vkLimits.maxFragmentInputComponents) / 4 - 1;
+        std::min(vkLimits.maxVertexOutputComponents, vkLimits.maxFragmentInputComponents) / 4 - 3;
 
     CHECK_AND_SET_V1_MAX_LIMIT(maxComputeSharedMemorySize, maxComputeWorkgroupStorageSize);
     CHECK_AND_SET_V1_MAX_LIMIT(maxComputeWorkGroupInvocations, maxComputeInvocationsPerWorkgroup);
@@ -952,6 +953,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // TODO(crbug.com/dawn/857): tighten this workaround when this issue is fixed in both
     // Vulkan SPEC and drivers.
     deviceToggles->Default(Toggle::UseTemporaryBufferInCompressedTextureToTextureCopy, true);
+    deviceToggles->Default(Toggle::VulkanPolyfillSampleMaskAwarePosition, true);
 
     if (IsAndroidQualcomm()) {
         // dawn:1564, dawn:1897: Recording a compute pass after a render pass in the same command
