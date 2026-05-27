@@ -179,6 +179,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "63e3dc0d_182284b8",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T22:57:17Z",
+      "side": 1,
+      "message": "maybe `CastIsAlwaysInRange`?",
+      "parentUuid": "08b73916_b2e3adf2",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 43
+      },
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be415e09_eb3e93bf",
         "filename": "src/dawn/native/BlitBufferToDepthStencil.cpp",
         "patchSetId": 8
