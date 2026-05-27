@@ -64,11 +64,14 @@ class ShaderModule final : public ShaderModuleBase {
         const std::vector<tint::wgsl::Extension>& internalExtensions);
 
     // Caller is responsible for destroying the `VkShaderModule` returned.
-    ResultOrError<ModuleAndSpirv> GetHandleAndSpirv(SingleShaderStage stage,
-                                                    const ProgrammableStage& programmableStage,
-                                                    const PipelineLayout* layout,
-                                                    bool emitPointSize,
-                                                    const ImmediateConstantMask& pipelineMask);
+    ResultOrError<ModuleAndSpirv> GetHandleAndSpirv(
+        SingleShaderStage stage,
+        const ProgrammableStage& programmableStage,
+        const PipelineLayout* layout,
+        bool emitPointSize,
+        const ImmediateConstantMask& pipelineMask,
+        bool polyfillBuiltinPosition = false,
+        uint32_t polyfillBuiltinPositionLocation = 0);
 
   private:
     ShaderModule(Device* device,

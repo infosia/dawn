@@ -124,7 +124,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const ProgrammableStage& programmableStage,
     const PipelineLayout* layout,
     bool emitPointSize,
-    const ImmediateConstantMask& pipelineImmediateMask) {
+    const ImmediateConstantMask& pipelineImmediateMask,
+    bool polyfillBuiltinPosition,
+    uint32_t polyfillBuiltinPositionLocation) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
 #if TINT_BUILD_SPV_WRITER
@@ -249,6 +251,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.tintOptions.spirv_version = GetDevice()->IsToggleEnabled(Toggle::UseSpirv14)
                                         ? tint::spirv::writer::SpvVersion::kSpv14
                                         : tint::spirv::writer::SpvVersion::kSpv13;
+    req.tintOptions.polyfill_builtin_position = polyfillBuiltinPosition;
+    req.tintOptions.polyfill_builtin_position_location = polyfillBuiltinPositionLocation;
     req.tintOptions.decompose_uniform_buffers =
         GetDevice()->IsToggleEnabled(Toggle::DecomposeUniformBuffers);
     req.tintOptions.dva_transform_handle =

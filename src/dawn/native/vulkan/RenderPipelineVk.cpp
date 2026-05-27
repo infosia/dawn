@@ -361,24 +361,46 @@ MaybeError RenderPipeline::InitializeImpl() {
         // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
         StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
     }
-
-    // Gather list of internal immediate constants used by this pipeline
-    if (UsesFragDepth() && !HasUnclippedDepth()) {
-        mImmediateMask |= GetImmediateConstantBlockBits(
-            offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
-    }
-
     // There are at most 2 shader stages in render pipeline, i.e. vertex and fragment
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
     uint32_t stageCount = 0;
+
+    // Determine if the polyfill for `@builtin(position)` is needed for Vulkan multi-sampling.
+    bool polyfillBuiltinPosition = false;
+    uint32_t polyfillBuiltinPositionLocation = 0;
+    if (GetStageMask() & wgpu::ShaderStage::Fragment) {
+        const EntryPointMetadata& fragmentMetadata = GetStage(SingleShaderStage::Fragment).metadata;
+        bool fragmentUsesSampleShading = fragmentMetadata.usesSampleIndex;
+        if (!fragmentUsesSampleShading) {
+            for (const auto& variable : fragmentMetadata.interStageVariables) {
+                if (variable.interpolationSampling == InterpolationSampling::Sample) {
+                    fragmentUsesSampleShading = true;
+                    break;
+                }
+            }
+        }
+        polyfillBuiltinPosition = GetMultiSampleCount() > 1 && fragmentMetadata.usesPosition &&
+                                  fragmentUsesSampleShading;
+        if (polyfillBuiltinPosition) {
+            polyfillBuiltinPositionLocation = device->GetLimits().v1.maxInterStageShaderVariables;
+        }
+    }
+
+    // Gather list of internal immediate constants used by this pipeline
+    if ((UsesFragDepth() && !HasUnclippedDepth()) || polyfillBuiltinPosition) {
+        mImmediateMask |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
+    }
 
     auto AddShaderStage = [&](SingleShaderStage stage, VkShaderStageFlagBits vkStage,
                               bool emitPointSize) -> MaybeError {
         const ProgrammableStage& programmableStage = GetStage(stage);
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
         DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
-                                            ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, GetImmediateMask()));
+                                            ->GetHandleAndSpirv(
+                                                stage, programmableStage, layout, emitPointSize,
+                                                GetImmediateMask(), polyfillBuiltinPosition,
+                                                polyfillBuiltinPositionLocation));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.

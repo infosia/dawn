@@ -51,6 +51,8 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     Vector<core::ir::Var*, 4> input_vars;
     /// The output variables.
     Vector<core::ir::Var*, 4> output_vars;
+    /// The polyfill position variable.
+    core::ir::Var* polyfill_position_var = nullptr;
 
     /// The configuration options.
     const ShaderIOConfig& config;
@@ -119,17 +121,89 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
+        if (config.polyfill_builtin_position && func->IsFragment()) {
+            for (auto& io : inputs) {
+                if (io.attributes.builtin == core::BuiltinValue::kPosition) {
+                    auto* ptr = ty.ptr(core::AddressSpace::kIn, ty.vec4<f32>(), core::Access::kRead);
+                    polyfill_position_var =
+                        b.Var(ir.NameOf(func).Name() + "_PositionPolyfill_Input", ptr);
+                    polyfill_position_var->SetAttributes(core::IOAttributes{
+                        .location = config.polyfill_builtin_position_location,
+                        .interpolation = core::Interpolation{core::InterpolationType::kLinear,
+                                                             core::InterpolationSampling::kCenter},
+                    });
+                    ir.root_block->Append(polyfill_position_var);
+                    break;
+                }
+            }
+        }
         return tint::Empty;
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeOutputs
     const core::type::Type* FinalizeOutputs() override {
         MakeVars(output_vars, outputs, core::AddressSpace::kOut, core::Access::kWrite, "_Output");
+        if (config.polyfill_builtin_position && func->IsVertex()) {
+            for (auto& io : outputs) {
+                if (io.attributes.builtin == core::BuiltinValue::kPosition) {
+                    auto* ptr = ty.ptr(core::AddressSpace::kOut, ty.vec4<f32>(), core::Access::kWrite);
+                    polyfill_position_var =
+                        b.Var(ir.NameOf(func).Name() + "_PositionPolyfill_Output", ptr);
+                    polyfill_position_var->SetAttributes(core::IOAttributes{
+                        .location = config.polyfill_builtin_position_location,
+                        .interpolation = core::Interpolation{core::InterpolationType::kLinear,
+                                                             core::InterpolationSampling::kCenter},
+                    });
+                    ir.root_block->Append(polyfill_position_var);
+                    break;
+                }
+            }
+        }
         return ty.void_();
     }
 
     /// @copydoc ShaderIO::BackendState::GetInput
     core::ir::Value* GetInput(core::ir::Builder& builder, uint32_t idx) override {
+        if (config.polyfill_builtin_position && func->IsFragment() &&
+            inputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            polyfill_position_var) {
+            // Reconstruct the pixel-centered position.
+            // x and y are reconstructed from the original builtin position.
+            // z and w are reconstructed from the polyfill variable.
+            auto* raw_pos = builder.Load(input_vars[idx])->Result();
+            auto* polyfill_val = builder.Load(polyfill_position_var)->Result();
+
+            auto* xy = builder.Swizzle(ty.vec2<f32>(), raw_pos, {0, 1})->Result();
+            auto* centered_xy = builder.Call(ty.vec2<f32>(), core::BuiltinFn::kFloor, xy)->Result();
+            centered_xy =
+                builder.Add(ty.vec2<f32>(), centered_xy, builder.Splat(ty.vec2<f32>(), 0.5_f))
+                    ->Result();
+
+            auto* z_over_w = builder.Access(ty.f32(), polyfill_val, 0_u)->Result();
+            auto* inv_w = builder.Access(ty.f32(), polyfill_val, 1_u)->Result();
+
+            auto* z = z_over_w;
+
+            if (config.depth_range_offsets) {
+                auto* immediate_data = config.immediate_data_layout.var;
+                auto min_idx =
+                    u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->min));
+                auto max_idx =
+                    u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->max));
+                auto* min =
+                    builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, min_idx));
+                auto* max =
+                    builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, max_idx));
+                z = builder.Add(builder.Mul(z, builder.Sub(max, min)), min)->Result();
+            }
+
+            return builder
+                .Composite(ty.vec4<f32>(),
+                           Vector{builder.Access(ty.f32(), centered_xy, 0_u)->Result(),
+                                  builder.Access(ty.f32(), centered_xy, 1_u)->Result(), z, inv_w})
+                ->Result();
+        }
+
         // Load the input from the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kIn, inputs[idx].type, core::Access::kRead);
         auto* from = input_vars[idx]->Result();
@@ -151,6 +225,18 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::SetOutput
     void SetOutput(core::ir::Builder& builder, uint32_t idx, core::ir::Value* value) override {
+        if (config.polyfill_builtin_position && func->IsVertex() &&
+            outputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            polyfill_position_var) {
+            auto* z = builder.Access(ty.f32(), value, 2_u)->Result();
+            auto* w = builder.Access(ty.f32(), value, 3_u)->Result();
+            auto* inv_w = builder.Div(ty.f32(), 1.0_f, w)->Result();
+            auto* z_div_w = builder.Mul(ty.f32(), z, inv_w)->Result();
+            auto* polyfill_val =
+                builder.Composite(ty.vec4<f32>(), Vector{z_div_w, inv_w, 0.0_f, 1.0_f})->Result();
+            builder.Store(polyfill_position_var, polyfill_val);
+        }
+
         // Store the output to the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kOut, outputs[idx].type, core::Access::kWrite);
         auto* to = output_vars[idx]->Result();
