@@ -28,13 +28,13 @@
 // D3D11Backend.cpp: contains the definition of symbols exported by D3D11Backend.h so that they
 // can be compiled twice: once export (shared library), once not exported (static library)
 
-#include "dawn/native/D3D11Backend.h"
+#include "src/dawn/native/D3D11Backend.h"
 
 #include <utility>
 
-#include "dawn/native/d3d/d3d_platform.h"
-#include "dawn/native/d3d11/DeviceD3D11.h"
-#include "dawn/native/d3d11/Forward.h"
+#include "src/dawn/native/d3d/d3d_platform.h"
+#include "src/dawn/native/d3d11/DeviceD3D11.h"
+#include "src/dawn/native/d3d11/Forward.h"
 
 namespace dawn::native::d3d11 {
 
