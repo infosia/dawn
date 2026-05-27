@@ -957,6 +957,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
         }
 
         // Other vertex metadata.
+        metadata->usesPosition = entryPoint.position_used;
         metadata->totalInterStageShaderVariables =
             entryPoint.output_variables.size() + clipDistancesSlots;
         if (metadata->totalInterStageShaderVariables > maxInterStageShaderVariables) {
@@ -1016,8 +1017,10 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
         uint32_t totalInterStageShaderVariables = entryPoint.input_variables.size();
 
         // Other fragment metadata
+        metadata->usesSampleMaskInput = entryPoint.input_sample_mask_used;
         metadata->usesSampleMaskOutput = entryPoint.output_sample_mask_used;
         metadata->usesSampleIndex = entryPoint.sample_index_used;
+        metadata->usesPosition = entryPoint.position_used;
         if (entryPoint.front_facing_used || entryPoint.input_sample_mask_used ||
             entryPoint.sample_index_used) {
             ++totalInterStageShaderVariables;

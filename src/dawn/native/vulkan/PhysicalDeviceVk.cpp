@@ -809,17 +809,17 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
         std::min(vkLimits.maxVertexInputBindingStride - 1, vkLimits.maxVertexInputAttributeOffset) +
         1;
 
-    // Reserve 4 components for the SPIR-V builtin `position`. WebGPU SPEC requires the minimum
-    // value of `maxInterStageShaderVariables` be 16. According to Vulkan SPEC, "the Location value
-    // specifies an interface slot comprised of a 32-bit four-component vector conveyed between
-    // stages". So on any WebGPU Vulkan backend `maxVertexOutputComponents` must be no less than
-    // 68 = (16 * 4 + 4).
-    if (vkLimits.maxVertexOutputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 4 ||
-        vkLimits.maxFragmentInputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 4) {
+    // Reserve 8 components (2 slots) for the SPIR-V builtin `position` and our polyfill. WebGPU
+    // SPEC requires the minimum value of `maxInterStageShaderVariables` be 16. According to Vulkan
+    // SPEC, "the Location value specifies an interface slot comprised of a 32-bit four-component
+    // vector conveyed between stages". So on any WebGPU Vulkan backend
+    // `maxVertexOutputComponents` must be no less than 72 = (16 * 4 + 8).
+    if (vkLimits.maxVertexOutputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 8 ||
+        vkLimits.maxFragmentInputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 8) {
         return DAWN_INTERNAL_ERROR("Insufficient Vulkan limits for maxInterStageShaderVariables");
     }
     limits->v1.maxInterStageShaderVariables =
-        std::min(vkLimits.maxVertexOutputComponents, vkLimits.maxFragmentInputComponents) / 4 - 1;
+        std::min(vkLimits.maxVertexOutputComponents, vkLimits.maxFragmentInputComponents) / 4 - 2;
 
     CHECK_AND_SET_V1_MAX_LIMIT(maxComputeSharedMemorySize, maxComputeWorkgroupStorageSize);
     CHECK_AND_SET_V1_MAX_LIMIT(maxComputeWorkGroupInvocations, maxComputeInvocationsPerWorkgroup);
@@ -1163,6 +1163,14 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
                                platform->IsFeatureEnabled(platform::Features::kWebGPUUseSpirv14));
     } else {
         deviceToggles->ForceSet(Toggle::UseSpirv14, false);
+    }
+ 
+    // The polyfill for @builtin(position) on Vulkan is needed when per-sample shading is enabled
+    // because @builtin(position) may report sample-specific coordinates instead of pixel centers.
+    // This causes CTS test failures on many Vulkan devices (Pixel 6, Intel, NVIDIA).
+    if (gpu_info::IsIntel(mVendorId) || gpu_info::IsNvidia(mVendorId) ||
+        gpu_info::IsARM(mVendorId)) {
+        deviceToggles->Default(Toggle::VulkanSampleMaskPositionInterpolationInconsistent, true);
     }
 }
 

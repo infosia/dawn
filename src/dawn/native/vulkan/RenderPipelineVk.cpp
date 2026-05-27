@@ -362,8 +362,28 @@ MaybeError RenderPipeline::InitializeImpl() {
         StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
     }
 
+    bool polyfillVulkanSampleMask = false;
+    if (device->GetTogglesState().IsEnabled(
+            Toggle::VulkanSampleMaskPositionInterpolationInconsistent) &&
+        GetStageMask() & wgpu::ShaderStage::Fragment) {
+        const EntryPointMetadata& fragmentMetadata = GetStage(SingleShaderStage::Fragment).metadata;
+        if (fragmentMetadata.usesPosition) {
+            bool usesSampleShading =
+                fragmentMetadata.usesSampleIndex || fragmentMetadata.usesSampleMaskInput;
+            for (const auto& variable : fragmentMetadata.interStageVariables) {
+                if (variable.interpolationSampling == InterpolationSampling::Sample) {
+                    usesSampleShading = true;
+                    break;
+                }
+            }
+            if (usesSampleShading && GetSampleCount() > 1) {
+                polyfillVulkanSampleMask = true;
+            }
+        }
+    }
+
     // Gather list of internal immediate constants used by this pipeline
-    if (UsesFragDepth() && !HasUnclippedDepth()) {
+    if ((UsesFragDepth() && !HasUnclippedDepth()) || polyfillVulkanSampleMask) {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
@@ -373,12 +393,13 @@ MaybeError RenderPipeline::InitializeImpl() {
     uint32_t stageCount = 0;
 
     auto AddShaderStage = [&](SingleShaderStage stage, VkShaderStageFlagBits vkStage,
-                              bool emitPointSize) -> MaybeError {
+                              bool emitPointSize, bool polyfillVulkanSampleMask) -> MaybeError {
         const ProgrammableStage& programmableStage = GetStage(stage);
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
         DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
                                             ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, GetImmediateMask()));
+                                                                 emitPointSize, GetImmediateMask(),
+                                                                 polyfillVulkanSampleMask));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.
@@ -401,12 +422,13 @@ MaybeError RenderPipeline::InitializeImpl() {
 
     // Add the vertex stage that's always present.
     DAWN_TRY(AddShaderStage(SingleShaderStage::Vertex, VK_SHADER_STAGE_VERTEX_BIT,
-                            GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList));
+                            GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList,
+                            polyfillVulkanSampleMask));
 
     // Add the fragment stage if present.
     if (GetStageMask() & wgpu::ShaderStage::Fragment) {
         DAWN_TRY(AddShaderStage(SingleShaderStage::Fragment, VK_SHADER_STAGE_FRAGMENT_BIT,
-                                /*emitPointSize*/ false));
+                                /*emitPointSize*/ false, polyfillVulkanSampleMask));
     }
 
     PipelineVertexInputStateCreateInfoTemporaryAllocations tempAllocations;

@@ -768,6 +768,11 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "
       "Some drivers report the wrong size.",
       "https://crbug.com/333424893", ToggleStage::Device}},
+    {Toggle::VulkanSampleMaskPositionInterpolationInconsistent,
+     {"vulkan_sample_mask_position_interpolation_inconsistent",
+      "Vulkan's builtin(position) reports sample-specific coordinates when per-sample shading is "
+      "enabled. WebGPU expects pixel-centered coordinates.",
+      "https://crbug.com/42240974", ToggleStage::Device}},
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};
 

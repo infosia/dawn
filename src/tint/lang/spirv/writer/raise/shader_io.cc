@@ -55,6 +55,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// The configuration options.
     const ShaderIOConfig& config;
 
+    /// True if the @builtin(position) polyfill is required.
+    bool needs_position_polyfill = false;
+
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
         : ShaderIOBackendState(mod, f), config(cfg) {}
@@ -116,20 +119,114 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
     }
 
+    /// @returns true if the entry point uses any sample shading features
+    bool UsesSampleShading() const {
+        for (const auto& input : inputs) {
+            if (input.attributes.builtin == core::BuiltinValue::kSampleIndex ||
+                input.attributes.builtin == core::BuiltinValue::kSampleMask) {
+                return true;
+            }
+            if (input.attributes.interpolation &&
+                input.attributes.interpolation->sampling == core::InterpolationSampling::kSample) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
+        if (config.polyfill_vulkan_sample_mask && func->IsFragment() && UsesSampleShading()) {
+            for (const auto& input : inputs) {
+                if (input.attributes.builtin == core::BuiltinValue::kPosition) {
+                    needs_position_polyfill = true;
+                    break;
+                }
+            }
+        }
+
+        if (needs_position_polyfill) {
+            AddInput(ir.symbols.New("tint_sample_shading_polyfill"), ty.vec4<f32>(),
+                     core::IOAttributes{
+                         .location = config.polyfill_vulkan_sample_mask_location,
+                         .interpolation = core::Interpolation{core::InterpolationType::kLinear,
+                                                              core::InterpolationSampling::kCenter},
+                     });
+        }
+
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
         return tint::Empty;
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeOutputs
     const core::type::Type* FinalizeOutputs() override {
+        if (config.polyfill_vulkan_sample_mask && func->IsVertex()) {
+            for (const auto& output : outputs) {
+                if (output.attributes.builtin == core::BuiltinValue::kPosition) {
+                    needs_position_polyfill = true;
+                    break;
+                }
+            }
+        }
+
+        if (needs_position_polyfill) {
+            AddOutput(ir.symbols.New("tint_sample_shading_polyfill"), ty.vec4<f32>(),
+                      core::IOAttributes{
+                          .location = config.polyfill_vulkan_sample_mask_location,
+                          .interpolation = core::Interpolation{core::InterpolationType::kLinear,
+                                                               core::InterpolationSampling::kCenter},
+                      });
+        }
+
         MakeVars(output_vars, outputs, core::AddressSpace::kOut, core::Access::kWrite, "_Output");
         return ty.void_();
     }
 
     /// @copydoc ShaderIO::BackendState::GetInput
     core::ir::Value* GetInput(core::ir::Builder& builder, uint32_t idx) override {
+        if (needs_position_polyfill && inputs[idx].attributes.builtin == core::BuiltinValue::kPosition) {
+            uint32_t polyfill_idx = uint32_t(inputs.Length() - 1);
+
+            auto* pos = LoadInput(builder, idx);
+            auto* center_pos = LoadInput(builder, polyfill_idx);
+
+            auto* x = builder.Access<f32>(pos, 0_u)->Result();
+            auto* y = builder.Access<f32>(pos, 1_u)->Result();
+            x = builder.Add<f32>(builder.Call<f32>(core::BuiltinFn::kFloor, x)->Result(), 0.5_f)
+                    ->Result();
+            y = builder.Add<f32>(builder.Call<f32>(core::BuiltinFn::kFloor, y)->Result(), 0.5_f)
+                    ->Result();
+
+            auto* z = builder.Access<f32>(center_pos, 2_u)->Result();
+            auto* w = builder.Access<f32>(center_pos, 3_u)->Result();
+
+            // Viewport depth remapping for z
+            if (config.depth_range_offsets) {
+                auto* immediate_data = config.immediate_data_layout.var;
+                auto min_idx =
+                    u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->min));
+                auto max_idx =
+                    u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->max));
+                auto* min = builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, min_idx))
+                                ->Result();
+                auto* max = builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, max_idx))
+                                ->Result();
+                // z_frag = min + z_ndc * (max - min)
+                z = builder.Add<f32>(min, builder.Mul<f32>(z, builder.Sub<f32>(max, min)->Result())
+                                              ->Result())
+                        ->Result();
+            }
+
+            return builder.Construct(ty.vec4<f32>(), x, y, z, w)->Result();
+        }
+        return LoadInput(builder, idx);
+    }
+
+    /// Load the input at index @p idx
+    /// @param builder the IR builder for new instructions
+    /// @param idx the index of the input
+    /// @returns the value of the input
+    core::ir::Value* LoadInput(core::ir::Builder& builder, uint32_t idx) {
         // Load the input from the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kIn, inputs[idx].type, core::Access::kRead);
         auto* from = input_vars[idx]->Result();
@@ -151,6 +248,29 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::SetOutput
     void SetOutput(core::ir::Builder& builder, uint32_t idx, core::ir::Value* value) override {
+        if (needs_position_polyfill &&
+            outputs[idx].attributes.builtin == core::BuiltinValue::kPosition) {
+            uint32_t polyfill_idx = uint32_t(outputs.Length() - 1);
+
+            auto* x = builder.Access<f32>(value, 0_u)->Result();
+            auto* y = builder.Access<f32>(value, 1_u)->Result();
+            auto* z = builder.Access<f32>(value, 2_u)->Result();
+            auto* w = builder.Access<f32>(value, 3_u)->Result();
+
+            auto* inv_w = builder.Div<f32>(1.0_f, w)->Result();
+            auto* poly_val = builder.Construct(
+                ty.vec4<f32>(), builder.Mul<f32>(x, inv_w)->Result(),
+                builder.Mul<f32>(y, inv_w)->Result(), builder.Mul<f32>(z, inv_w)->Result(), inv_w);
+            StoreOutput(builder, polyfill_idx, poly_val->Result());
+        }
+        StoreOutput(builder, idx, value);
+    }
+
+    /// Store the output at index @p idx
+    /// @param builder the IR builder for new instructions
+    /// @param idx the index of the output
+    /// @param value the value to set
+    void StoreOutput(core::ir::Builder& builder, uint32_t idx, core::ir::Value* value) {
         // Store the output to the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kOut, outputs[idx].type, core::Access::kWrite);
         auto* to = output_vars[idx]->Result();

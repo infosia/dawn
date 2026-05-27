@@ -60,6 +60,10 @@ struct ShaderIOConfig {
     bool polyfill_f16_io = false;
     /// offsets for clamping frag depth
     std::optional<Options::RangeOffsets> depth_range_offsets{};
+    /// true if the @builtin(position) polyfill for Vulkan multi-sampling should be enabled
+    bool polyfill_vulkan_sample_mask = false;
+    /// The location to use for the polyfill variable.
+    uint32_t polyfill_vulkan_sample_mask_location = 0;
 };
 
 /// ShaderIO is a transform that moves each entry point function's parameters and return value to
