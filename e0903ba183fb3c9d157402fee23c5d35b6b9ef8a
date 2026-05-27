@@ -158,6 +158,24 @@
       "parentUuid": "a9214388_088d2643",
       "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd8ce587_84656091",
+        "filename": "src/utils/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T23:43:26Z",
+      "side": 1,
+      "message": "Oops sorry I missed this comment. (other comment still valid though.)\n\nSo I guess in other words you\u0027re rewriting `ityp::span` from scratch so it\u0027s no longer based on std::span? (and maybe renaming)",
+      "parentUuid": "a0cdd9db_0eab58c1",
+      "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
