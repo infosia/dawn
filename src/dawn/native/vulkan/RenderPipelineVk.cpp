@@ -372,13 +372,31 @@ MaybeError RenderPipeline::InitializeImpl() {
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
     uint32_t stageCount = 0;
 
+    bool polyfillBuiltinPosition = false;
+    if (GetSampleCount() > 1 && HasStage(SingleShaderStage::Fragment)) {
+        const EntryPointMetadata& fragMetadata = GetStage(SingleShaderStage::Fragment).metadata;
+        if (fragMetadata.usesPosition) {
+            if (fragMetadata.usesSampleIndex) {
+                polyfillBuiltinPosition = true;
+            } else {
+                for (const auto& var : fragMetadata.interStageVariables) {
+                    if (var.interpolationSampling == InterpolationSampling::Sample) {
+                        polyfillBuiltinPosition = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     auto AddShaderStage = [&](SingleShaderStage stage, VkShaderStageFlagBits vkStage,
                               bool emitPointSize) -> MaybeError {
         const ProgrammableStage& programmableStage = GetStage(stage);
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
         DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
                                             ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, GetImmediateMask()));
+                                                                emitPointSize, GetImmediateMask(),
+                                                                polyfillBuiltinPosition));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.

@@ -145,6 +145,9 @@ struct Options {
 
     /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
     bool decompose_uniform_buffers = true;
+    /// Set to `true` to generate a polyfill for the @builtin(position) in fragment shaders
+    /// for multi-sampling on Vulkan.
+    bool polyfill_builtin_position_for_sample_shading = false;
 
     /// Offsets of the minDepth and maxDepth push constants.
     std::optional<RangeOffsets> depth_range_offsets = std::nullopt;

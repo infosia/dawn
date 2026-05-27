@@ -58,6 +58,8 @@ struct ShaderIOConfig {
     bool emit_vertex_point_size = false;
     /// true if f16 IO types should be replaced with f32 types and converted
     bool polyfill_f16_io = false;
+    /// true if @builtin(position) should be polyfilled for multi-sampling on Vulkan
+    bool polyfill_builtin_position = false;
     /// offsets for clamping frag depth
     std::optional<Options::RangeOffsets> depth_range_offsets{};
 };
