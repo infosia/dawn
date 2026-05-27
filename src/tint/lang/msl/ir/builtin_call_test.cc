@@ -85,7 +85,7 @@ TEST_F(IR_MslBuiltinCallTest, DoesNotMatchMemberFunction) {
         b.Return(func, result);
     });
 
-    auto res = core::ir::Validate(mod);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_EQ(
         res.Failure().reason,

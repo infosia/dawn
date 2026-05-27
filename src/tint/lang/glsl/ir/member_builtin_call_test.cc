@@ -102,7 +102,7 @@ TEST_F(IR_GlslMemberBuiltinCallTest, DoesNotMatchIncorrectType) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason,
               R"(:12:17 error: length: no matching call to 'length(ptr<storage, u32, read_write>)'
@@ -152,7 +152,7 @@ TEST_F(IR_GlslMemberBuiltinCallTest, Valid) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr);
     ASSERT_EQ(res, Success);
 }
 
@@ -172,7 +172,7 @@ TEST_F(IR_GlslMemberBuiltinCallTest, MissingResult) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason,
               R"(:12:16 error: length: expected exactly 1 results, got 0
@@ -217,7 +217,7 @@ TEST_F(IR_GlslMemberBuiltinCallTest, TooManyArgs) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod);
+    auto res = core::ir::Validate(mod, core::ir::ErrorSource::kIr);
     ASSERT_NE(res, Success);
     EXPECT_EQ(
         res.Failure().reason,

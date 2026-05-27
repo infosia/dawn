@@ -99,12 +99,19 @@ enum class Capability : uint8_t {
 /// Capabilities is a set of Capability
 using Capabilities = EnumSet<Capability>;
 
+/// Where to pull source information from for errors
+enum class ErrorSource : uint8_t {
+    kWgsl,
+    kIr,
+};
+
 /// Validates the module @p ir is correctly formed
 /// @param mod the module to validate
 /// @param capabilities the optional capabilities that are allowed
 /// @param msg the msg to accompany the output
 /// @returns success or failure
 Result<SuccessType> Validate(const Module& mod,
+                             ErrorSource err_source,
                              Capabilities capabilities = {},
                              std::string_view msg = "");
 
