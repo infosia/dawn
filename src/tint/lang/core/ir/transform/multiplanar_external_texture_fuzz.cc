@@ -42,7 +42,13 @@ Result<SuccessType> MultiplanarExternalTextureFuzzer(Module& ir,
     for (const auto& iter : input_map) {
         multiplanar_map.emplace(iter.first, iter.second);
     }
-    return MultiplanarExternalTexture(ir, multiplanar_map);
+    TINT_CHECK_RESULT(MultiplanarExternalTexture(ir, multiplanar_map));
+
+    // The fuzzer may produce options that cause bindings conflicts. We are not interested in these
+    // issues so we add the property to allow those conflicts to pass validation.
+    ir.properties.Add(Property::kAllowDuplicateBindings);
+
+    return Success;
 }
 
 }  // namespace
