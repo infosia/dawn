@@ -34,6 +34,24 @@
       "parentUuid": "853052d4_d823634b",
       "revId": "451650607b50dbe022e792ff6bbaa9be870a5324",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57b19277_9f7e3188",
+        "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2830,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-27T16:43:45Z",
+      "side": 1,
+      "message": "Ack. Adding callback for play control sounds like good idea. Again this is Play control API refine and will be after milestone 1. Will do in a future CL.",
+      "parentUuid": "330a7bad_b2f247bf",
+      "revId": "451650607b50dbe022e792ff6bbaa9be870a5324",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
