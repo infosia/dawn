@@ -202,6 +202,10 @@ struct EntryPoint {
     bool has_texture_load_with_depth_texture = false;
     /// Does the entry point use texture_depth??? with a non-comparison sampler.
     bool has_depth_texture_with_non_comparison_sampler = false;
+    /// Does the entry point use the position builtin
+    bool position_used = false;
+    /// Does the entry point have any input variable with sample interpolation
+    bool has_sample_interpolation = false;
     /// Does the entry point use a subgroup matrix type?
     bool uses_subgroup_matrix = false;
     /// The array length of the clip_distances builtin. Holding no value means the clip_distances
