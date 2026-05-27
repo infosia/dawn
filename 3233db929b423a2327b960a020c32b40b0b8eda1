@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cba5571_35b4fc20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T22:17:22Z",
+      "side": 1,
+      "message": "@amaiorano@google.com I\u0027ll add more explanation here when I reupload. Removing the consteval overloads means they never get selected, instead it just fails to select an overload at all, which prevents the weird lambda thing.\n\nConsteval is really hard to work with (as I learned when I spent a bunch of time learning it when I tried to do shader string whitespace removal in consteval) because basically any error in the consteval code results in a failure to substitute instead of a hard error. Which I get, but Clang doesn\u0027t do a good job explaining why it failed to substitute.",
+      "revId": "3233db929b423a2327b960a020c32b40b0b8eda1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
