@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3189808_a760ff0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T18:27:33Z",
+      "side": 1,
+      "message": "LGTM! Very nice!",
+      "revId": "55fbfeba24e1b35b2b3db2f41eb8cc02015638cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70c2d2fe_e6ec79f9",
+        "filename": "third_party/agility-sdk/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T18:27:33Z",
+      "side": 1,
+      "message": "Maybe Rafael as well?",
+      "revId": "55fbfeba24e1b35b2b3db2f41eb8cc02015638cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
