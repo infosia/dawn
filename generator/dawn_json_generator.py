@@ -2094,6 +2094,25 @@ class MultiGeneratorFromDawnJSON(Generator):
                 FileRender('art/api_kotlin_constants.kt',
                            'java/' + kt_file_path + '/Constants.kt',
                            [RENDER_PARAMS_BASE, params_kotlin]))
+            renders.append(
+                FileRender(
+                    'art/GPUHardwareBufferExternalTexture.kt', 'java/' +
+                    kt_file_path + '/GPUHardwareBufferExternalTexture.kt',
+                    [RENDER_PARAMS_BASE, params_kotlin]))
+            renders.append(
+                FileRender(
+                    'art/GPUHardwareBufferTexture.kt',
+                    'java/' + kt_file_path + '/GPUHardwareBufferTexture.kt',
+                    [RENDER_PARAMS_BASE, params_kotlin]))
+            renders.append(
+                FileRender(
+                    'art/GPUHardwareBufferWrapper.kt',
+                    'java/' + kt_file_path + '/GPUHardwareBufferWrapper.kt',
+                    [RENDER_PARAMS_BASE, params_kotlin]))
+            renders.append(
+                FileRender('art/api_kotlin_sync_fence.kt',
+                           'java/' + kt_file_path + '/GPUSyncFence.kt',
+                           [RENDER_PARAMS_BASE, params_kotlin]))
 
         if "jni" in targets:
             params_kotlin = compute_kotlin_params(loaded_json, kotlin_json,
@@ -2107,6 +2126,9 @@ class MultiGeneratorFromDawnJSON(Generator):
 
             renders.append(
                 FileRender('art/structures.h', 'cpp/structures.h',
+                           [RENDER_PARAMS_BASE, params_kotlin]))
+            renders.append(
+                FileRender('art/GPUImportedAHB.cpp', 'cpp/GPUImportedAHB.cpp',
                            [RENDER_PARAMS_BASE, params_kotlin]))
             renders.append(
                 FileRender('art/structures.cpp', 'cpp/structures.cpp',
