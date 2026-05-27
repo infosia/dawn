@@ -17,8 +17,6 @@
 
 package androidx.webgpu.helper
 
-import android.os.Handler
-import android.os.Looper
 import android.view.Surface
 import androidx.webgpu.GPUAdapter
 import androidx.webgpu.BackendType
@@ -26,44 +24,133 @@ import androidx.webgpu.GPUDevice
 import androidx.webgpu.GPUDeviceDescriptor
 import androidx.webgpu.DeviceLostCallback
 import androidx.webgpu.DeviceLostException
-import androidx.webgpu.DeviceLostReason
-import androidx.webgpu.ErrorType
 import androidx.webgpu.GPUInstance
 import androidx.webgpu.GPUInstanceDescriptor
-import androidx.webgpu.InternalException
-import androidx.webgpu.OutOfMemoryException
 import androidx.webgpu.GPURequestAdapterOptions
-import androidx.webgpu.RequestAdapterStatus
 import androidx.webgpu.GPUSurface
-import androidx.webgpu.RequestDeviceStatus
 import androidx.webgpu.GPUSurfaceDescriptor
 import androidx.webgpu.GPUSurfaceSourceAndroidNativeWindow
 import androidx.webgpu.UncapturedErrorCallback
-import androidx.webgpu.UnknownException
-import androidx.webgpu.ValidationException
 import androidx.webgpu.GPU.createInstance
 import androidx.webgpu.WebGpuRuntimeException
 import androidx.webgpu.helper.Util.windowFromSurface
 import java.util.concurrent.Executor
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.currentCoroutineContext
+import java.util.concurrent.Executors
+import kotlinx.coroutines.ExecutorCoroutineDispatcher
+import kotlin.jvm.Volatile
 
-private const val POLLING_DELAY_MS = 100L
+private val activeDispatcher = ThreadLocal<CoroutineDispatcher?>()
+
+/**
+ * Single-threaded [CoroutineDispatcher] dedicated to running all WebGPU/Dawn JNI operations.
+ *
+ * The native Dawn engine is not thread-safe for concurrent access. To prevent race conditions
+ * and segmentation faults, all WebGPU operations (including initialization, processEvents polling,
+ * queue submission, and teardown/cleanup) must be executed sequentially on this dispatcher thread.
+ */
+private fun createDefaultWebGpuDispatcher(): CoroutineDispatcher {
+    val holder = object {
+        @Volatile var dispatcher: CoroutineDispatcher? = null
+    }
+    val dispatcher = Executors.newSingleThreadExecutor { runnable ->
+        Thread({
+            activeDispatcher.set(holder.dispatcher)
+            runnable.run()
+        }, "WebGPU-Thread").apply { isDaemon = true }
+    }.asCoroutineDispatcher()
+    holder.dispatcher = dispatcher
+    return dispatcher
+}
+
+private const val POLLING_DELAY_MS = 16L // 60 FPS polling
 
 public abstract class WebGpu : AutoCloseable {
     public abstract val instance: GPUInstance
-    public abstract val webgpuSurface: GPUSurface
+    public abstract val adapter: GPUAdapter
     public abstract val device: GPUDevice
+    public abstract val webgpuSurface: GPUSurface
+    public abstract val dispatcher: CoroutineDispatcher
+
+    public suspend fun <T> execute(block: suspend () -> T): T {
+        return withContext(dispatcher) {
+            val original = activeDispatcher.get()
+            activeDispatcher.set(dispatcher)
+            try {
+                block()
+            } finally {
+                activeDispatcher.set(original)
+            }
+        }
+    }
+
+    public suspend fun processEventsLoop() {
+        withContext(dispatcher) {
+            val original = activeDispatcher.get()
+            activeDispatcher.set(dispatcher)
+            try {
+                while (currentCoroutineContext().isActive) {
+                    instance.processEvents()
+                    delay(POLLING_DELAY_MS)
+                }
+            } finally {
+                activeDispatcher.set(original)
+            }
+        }
+    }
+
 }
+
+private val defaultDeviceDescriptor
+    get() = GPUDeviceDescriptor(
+        deviceLostCallback = defaultDeviceLostCallback,
+        deviceLostCallbackExecutor = Executor(Runnable::run),
+        uncapturedErrorCallback = defaultUncapturedErrorCallback,
+        uncapturedErrorCallbackExecutor = Executor(Runnable::run)
+    )
 
 public suspend fun createWebGpu(
     surface: Surface? = null,
     instanceDescriptor: GPUInstanceDescriptor = GPUInstanceDescriptor(),
     requestAdapterOptions: GPURequestAdapterOptions = GPURequestAdapterOptions(),
-    deviceDescriptor: GPUDeviceDescriptor = GPUDeviceDescriptor(
-        deviceLostCallback = defaultDeviceLostCallback,
-        deviceLostCallbackExecutor = Executor(Runnable::run),
-        uncapturedErrorCallback = defaultUncapturedErrorCallback,
-        uncapturedErrorCallbackExecutor = Executor(Runnable::run)
-    ),
+    deviceDescriptor: GPUDeviceDescriptor = defaultDeviceDescriptor
+): WebGpu = createWebGpuInternal(
+    dispatcher = createDefaultWebGpuDispatcher(),
+    isDispatcherOwned = true,
+    surface = surface,
+    instanceDescriptor = instanceDescriptor,
+    requestAdapterOptions = requestAdapterOptions,
+    deviceDescriptor = deviceDescriptor
+)
+
+public suspend fun createWebGpu(
+    dispatcher: CoroutineDispatcher,
+    surface: Surface? = null,
+    instanceDescriptor: GPUInstanceDescriptor = GPUInstanceDescriptor(),
+    requestAdapterOptions: GPURequestAdapterOptions = GPURequestAdapterOptions(),
+    deviceDescriptor: GPUDeviceDescriptor = defaultDeviceDescriptor
+): WebGpu = createWebGpuInternal(
+    dispatcher = dispatcher,
+    isDispatcherOwned = false,
+    surface = surface,
+    instanceDescriptor = instanceDescriptor,
+    requestAdapterOptions = requestAdapterOptions,
+    deviceDescriptor = deviceDescriptor
+)
+
+private suspend fun createWebGpuInternal(
+    dispatcher: CoroutineDispatcher,
+    isDispatcherOwned: Boolean,
+    surface: Surface?,
+    instanceDescriptor: GPUInstanceDescriptor,
+    requestAdapterOptions: GPURequestAdapterOptions,
+    deviceDescriptor: GPUDeviceDescriptor,
 ): WebGpu {
     initLibrary()
 
@@ -81,33 +168,31 @@ public suspend fun createWebGpu(
     val adapter = requestAdapter(instance, requestAdapterOptions)
     val device = requestDevice(adapter, deviceDescriptor)
 
-    var isClosing = false
-    // Long-running event poller for async methods. Can be removed when
-    // https://issues.chromium.org/issues/323983633 is fixed.
-    val handler = Handler(Looper.getMainLooper())
-    fun nextProcess() {
-        handler.postDelayed({
-            if (isClosing) {
-                return@postDelayed
-            }
-            instance.processEvents()
-            nextProcess()
-        }, POLLING_DELAY_MS)
-    }
-    nextProcess()
-
     return object : WebGpu() {
         override val instance = instance
+        override val adapter = adapter
         override val webgpuSurface
             get() = checkNotNull(webgpuSurface)
         override val device = device
+        override val dispatcher = dispatcher
 
         override fun close() {
-            isClosing = true
             //device.close() // TODO(b/428866400): Uncomment when fixed.
-            webgpuSurface?.close()
-            instance.close()
-            adapter.close()
+            val cleanup = {
+                webgpuSurface?.close()
+                instance.close()
+                adapter.close()
+                if (isDispatcherOwned) {
+                    (dispatcher as? ExecutorCoroutineDispatcher)?.close()
+                }
+            }
+            if (activeDispatcher.get() == dispatcher) {
+                cleanup()
+            } else {
+                runBlocking(dispatcher) {
+                    cleanup()
+                }
+            }
         }
     }
 }
