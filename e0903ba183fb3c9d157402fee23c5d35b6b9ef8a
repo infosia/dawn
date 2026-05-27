@@ -122,6 +122,24 @@
       "parentUuid": "7d13a92b_1cf50ea3",
       "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9214388_088d2643",
+        "filename": "src/utils/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T14:47:15Z",
+      "side": 1,
+      "message": "Ah and more importantly, the goal is to match the layout `size_t` *then* pointer so we can use `Span` in `dawn_plaftorm.h` transparently.",
+      "parentUuid": "ae6319d1_ca4782c3",
+      "revId": "e0903ba183fb3c9d157402fee23c5d35b6b9ef8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
