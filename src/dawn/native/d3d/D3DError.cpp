@@ -31,7 +31,7 @@
 #include <sstream>
 #include <string>
 
-#include "src/dawn/common/windows_with_undefs.h"
+#include "src/utils/windows_with_undefs.h"
 
 namespace dawn::native::d3d {
 const char* HRESULTAsString(HRESULT result) {

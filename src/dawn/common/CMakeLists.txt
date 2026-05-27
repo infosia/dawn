@@ -68,8 +68,6 @@ set(private_headers
     "Math.h"
     "Mutex.h"
     "MutexProtected.h"
-    "NonCopyable.h"
-    "NonMovable.h"
     "NSRef.h"
     "Numeric.h"
     "PlacementAllocated.h"
@@ -124,7 +122,6 @@ set(conditional_private_depends)
 
 if (WIN32)
     list(APPEND private_headers
-        "windows_with_undefs.h"
         "WindowsUtils.h"
     )
     list(APPEND sources

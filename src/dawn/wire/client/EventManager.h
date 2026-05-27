@@ -40,11 +40,11 @@
 
 #include "dawn/common/FutureUtils.h"
 #include "dawn/common/MutexProtected.h"
-#include "dawn/common/NonMovable.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/RefCounted.h"
 #include "dawn/wire/WireResult.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/non_movable.h"
 
 namespace dawn::wire::client {
 

@@ -33,9 +33,9 @@
 
 #include "src/dawn/common/MutexProtected.h"
 #include "src/dawn/common/SerialMap.h"
-#include "src/dawn/common/windows_with_undefs.h"
 #include "src/dawn/native/Queue.h"
 #include "src/dawn/native/SystemEvent.h"
+#include "src/utils/windows_with_undefs.h"
 
 namespace dawn::native::d3d {
 

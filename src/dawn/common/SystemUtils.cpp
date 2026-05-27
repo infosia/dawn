@@ -34,7 +34,7 @@
 #if DAWN_PLATFORM_IS(WINDOWS)
 #include <vector>
 
-#include "src/dawn/common/windows_with_undefs.h"
+#include "src/utils/windows_with_undefs.h"
 #elif DAWN_PLATFORM_IS(LINUX)
 #include <dlfcn.h>
 #include <limits.h>

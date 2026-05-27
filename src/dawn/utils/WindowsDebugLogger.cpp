@@ -25,8 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "dawn/common/windows_with_undefs.h"
-
 #include <array>
 #include <cstdio>
 #include <thread>
@@ -34,6 +32,7 @@
 #include "dawn/common/Assert.h"
 #include "dawn/utils/PlatformDebugLogger.h"
 #include "dawn/utils/SystemHandle.h"
+#include "src/utils/windows_with_undefs.h"
 
 namespace dawn::utils {
 
