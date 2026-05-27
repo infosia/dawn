@@ -106,6 +106,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aadd23ac_2fd13bd7",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T22:36:45Z",
+      "side": 1,
+      "message": "we can just use checked_cast, I did this so it was easy to see there wasn\u0027t actually a DAWN_CHECK being added here but that is kind of silly.",
+      "parentUuid": "4272dbfc_deddacb6",
+      "range": {
+        "startLine": 107,
+        "startChar": 21,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a0dec11_2b0cebef",
@@ -119,6 +143,30 @@
       "writtenOn": "2026-05-27T19:06:41Z",
       "side": 1,
       "message": "Maybe `IntegerCastIsInRange`? Or simpler: `CastInRange`?",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 43
+      },
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08b73916_b2e3adf2",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T22:36:45Z",
+      "side": 1,
+      "message": "I like the verbosity for something that\u0027s rarely used, and I couldn\u0027t think of a clearer name than \"lossless\" to distinguish the name from something like `std::in_range` that takes type+value instead of two types.",
+      "parentUuid": "7a0dec11_2b0cebef",
       "range": {
         "startLine": 121,
         "startChar": 22,
