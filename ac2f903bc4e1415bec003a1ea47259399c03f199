@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7544f64_9fe8ce87",
+        "filename": ".yapfignore",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T19:46:01Z",
+      "side": 1,
+      "message": "Sure, I was thinking it would be nice to see the diff, but it\u0027s such a small file it\u0027s basically never changed. I previously copied a second much larger script but it turned out to be unused.",
+      "parentUuid": "9911d1f2_17f586f1",
+      "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0fefdc17_8dc9fba2",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03e7ceb2_9894454e",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T19:46:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fefdc17_8dc9fba2",
+      "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3000baa2_b72f5251",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-05-27T08:03:08Z",
       "side": 1,
       "message": "nit: likely not needed since we have other nc files in this CL already?",
+      "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c8373fc_bb96c757",
+        "filename": "src/dawn/tests/unittests/nocompile/Basic.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T19:46:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3000baa2_b72f5251",
       "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -83,6 +137,24 @@
       "side": 1,
       "message": "My preference would be beside the file under test. If it becomes untenable we can always move them in the future. The reason begin, it\u0027s a lot easier to find a `numerics_test.nc` file right beside the `numerics.cc` then to have to grep around to find where it lives.",
       "parentUuid": "a57db2a8_d15fbd71",
+      "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cb5e133_3c03f566",
+        "filename": "src/dawn/tests/unittests/nocompile/Numeric.nc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T19:46:01Z",
+      "side": 1,
+      "message": "Good with me, I\u0027ll do `_nocompile.nc` to be consistent with `base`:\n- `//base/containers/span.h`\n- `//base/containers/span_nocompile.nc`\n\nI\u0027ve just switched the initial tests to test something in `utils` so this CL doesn\u0027t conflict with any `common`-\u003e`utils` moves. Can deal with those in subsequent CLs.",
+      "parentUuid": "8b939851_cb30c02f",
       "revId": "ac2f903bc4e1415bec003a1ea47259399c03f199",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
