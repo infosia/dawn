@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "420f96c5_afd33877",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T20:36:10Z",
+      "side": 1,
+      "message": "wow good catch, I should have thought to look that up!",
+      "parentUuid": "9a232de0_1d5d0b5c",
+      "range": {
+        "startLine": 54,
+        "startChar": 22,
+        "endLine": 54,
+        "endChar": 50
+      },
+      "revId": "151d551f4b072547318c809a36f18809f2cc50ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf6f2c2a_159651fb",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-05-27T09:08:48Z",
       "side": 1,
       "message": "does this work? It would allow avoiding type_traits\n```suggestion\n            static_cast\u003cunsigned Dst\u003e(std::numeric_limits\u003cDst\u003e::max());\n```",
+      "range": {
+        "startLine": 60,
+        "startChar": 24,
+        "endLine": 60,
+        "endChar": 49
+      },
+      "revId": "151d551f4b072547318c809a36f18809f2cc50ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9292600_9f2cee3e",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-27T20:36:10Z",
+      "side": 1,
+      "message": "unfortunately no, it doesn\u0027t parse. Anyway, removing this code :)",
+      "parentUuid": "bf6f2c2a_159651fb",
       "range": {
         "startLine": 60,
         "startChar": 24,
