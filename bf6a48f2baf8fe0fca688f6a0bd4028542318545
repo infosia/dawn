@@ -20,6 +20,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4272dbfc_deddacb6",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T19:06:41Z",
+      "side": 1,
+      "message": "Do we need this, or can we not just use `checked_cast`?",
+      "range": {
+        "startLine": 107,
+        "startChar": 21,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a0dec11_2b0cebef",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T19:06:41Z",
+      "side": 1,
+      "message": "Maybe `IntegerCastIsInRange`? Or simpler: `CastInRange`?",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 43
+      },
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be415e09_eb3e93bf",
         "filename": "src/dawn/native/BlitBufferToDepthStencil.cpp",
         "patchSetId": 8
