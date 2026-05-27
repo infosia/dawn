@@ -30,7 +30,7 @@
 #include <utility>
 
 #include "GLFW/glfw3.h"
-#include "dawn/common/Log.h"
+#include "src/dawn/common/Log.h"
 #include "utils/platform.h"
 #include "webgpu/webgpu_glfw.h"
 
