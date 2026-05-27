@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "853052d4_d823634b",
+        "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2830,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-27T00:41:30Z",
+      "side": 1,
+      "message": "Unfortunately it seems we cannot expect pixel value of the replayed surface texture because we don\u0027t have play control to play before surface.Present(). (After Present, they are destroyed). So this test won\u0027t gate the change. Here just changing to use new surface for replay.\n\nLet me know if you have better ideas for tests (whitebox tests?) or if current situation is acceptable.",
+      "revId": "451650607b50dbe022e792ff6bbaa9be870a5324",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
