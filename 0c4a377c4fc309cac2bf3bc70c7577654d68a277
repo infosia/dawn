@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87d59445_d37eb31b",
+        "filename": "src/dawn/native/CommandAllocator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:31:23Z",
+      "side": 1,
+      "message": "That was to make that clear but yeah it\u0027s redundant. Removed.",
+      "parentUuid": "8a021538_538a4eff",
+      "revId": "0c4a377c4fc309cac2bf3bc70c7577654d68a277",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae92ef73_5df0d8e7",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-05-26T18:18:42Z",
       "side": 1,
       "message": "same",
+      "revId": "0c4a377c4fc309cac2bf3bc70c7577654d68a277",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a49457a4_b08ff0dc",
+        "filename": "src/dawn/wire/ChunkedCommandSerializer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-27T07:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae92ef73_5df0d8e7",
       "revId": "0c4a377c4fc309cac2bf3bc70c7577654d68a277",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
