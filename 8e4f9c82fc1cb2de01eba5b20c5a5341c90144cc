@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "217633ae_6f85fb61",
+        "filename": "generator/templates/api_cpp.ixx",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T20:11:42Z",
+      "side": 1,
+      "message": "If the static-ness isn\u0027t a requirement we can just use inline. Those macros just avoid altering linkage behavior when not included from this file",
+      "parentUuid": "5acef477_6b15fc6a",
+      "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27ec7d8b_a97f301c",
         "filename": "generator/templates/api_cpp.ixx",
         "patchSetId": 5
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b95c1cf4_8006c76b",
+        "filename": "generator/templates/api_cpp.ixx",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T20:11:42Z",
+      "side": 1,
+      "message": "Using `WGPU_IMPORT_BITMASK_OPERATORS` instead here should cover the missing operators.",
+      "parentUuid": "27ec7d8b_a97f301c",
+      "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab446604_9a6accd2",
         "filename": "src/dawn/CMakeLists.txt",
         "patchSetId": 5
@@ -48,6 +84,24 @@
       "writtenOn": "2026-05-27T07:17:52Z",
       "side": 1,
       "message": "Can you explain why this target dependency dance is needed? Is there a reference that you used to set up C++ modules in CMake?",
+      "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eb4b1aa_27858d86",
+        "filename": "src/dawn/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T20:11:42Z",
+      "side": 1,
+      "message": "Not strictly needed. Adding the required include directories instead works too. The second link could be removed to leave this as an opt-in target if not desired.\n\nReferences:\nhttps://www.kitware.com/import-cmake-the-experiment-is-over/\nhttps://cmake.org/cmake/help/git-master/command/target_sources.html#file-sets",
+      "parentUuid": "ab446604_9a6accd2",
       "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
