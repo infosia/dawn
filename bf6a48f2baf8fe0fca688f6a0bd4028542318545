@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fd389ac8_a13dec9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-27T19:09:23Z",
+      "side": 1,
+      "message": "Is there a way to see what this looks like, maybe in a godbolt if easy enough? If not, let me know how I can reproduce it locally. I\u0027m curious about this as the next CL on the stack is related to this, and I don\u0027t fully understand what\u0027s going on.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "18476721_e042e59e",
         "filename": "src/dawn/common/Assert.h",
         "patchSetId": 8
