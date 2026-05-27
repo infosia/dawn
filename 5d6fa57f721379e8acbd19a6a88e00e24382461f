@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c9fcb61f_7019d48c",
+        "filename": "src/cmake/DawnCompilerExtraFlags.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T16:50:25Z",
+      "side": 1,
+      "message": "I\u0027ve also added an additional flag which filters \u003e100 sfinae warnings with gcc 16 if this is ok.",
+      "parentUuid": "efdaa804_6880b089",
+      "revId": "5d6fa57f721379e8acbd19a6a88e00e24382461f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e2ac6933_5fe06465",
         "filename": "src/cmake/DawnCompilerExtraFlags.cmake",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2026-05-27T07:11:50Z",
       "side": 1,
       "message": "ditto",
+      "revId": "5d6fa57f721379e8acbd19a6a88e00e24382461f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99013567_613c80f3",
+        "filename": "src/cmake/DawnCompilerExtraFlags.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-05-27T16:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2ac6933_5fe06465",
       "revId": "5d6fa57f721379e8acbd19a6a88e00e24382461f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
