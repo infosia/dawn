@@ -35,7 +35,7 @@
 #include <cstring>
 #include <tuple>
 
-#include "dawn/common/Assert.h"
+#include "src/dawn/common/Assert.h"
 
 #if defined(__GNUC__) || defined(__clang__)
 // error: 'offsetof' within non-standard-layout type '{{namespace}}::XXX' is conditionally-supported
