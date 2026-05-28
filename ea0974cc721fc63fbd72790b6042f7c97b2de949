@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "420b821d_85021e57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-28T13:22:08Z",
+      "side": 1,
+      "message": "Thought about this some more. Might change this to only add the property if multiple entry points are actually used, to be consistent with protobuf decoding. Same for overrides in the next CL.",
+      "revId": "ea0974cc721fc63fbd72790b6042f7c97b2de949",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
