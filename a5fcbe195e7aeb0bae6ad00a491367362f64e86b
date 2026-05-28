@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53bf34ab_bc73210a",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b465a019_eb4a885d",
+      "range": {
+        "startLine": 218,
+        "startChar": 4,
+        "endLine": 218,
+        "endChar": 17
+      },
+      "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e05bf1c4_27ad2da9",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-05-27T18:56:36Z",
       "side": 1,
       "message": "As Rafael pointed out in another comment, we shouldn\u0027t need these since we add the header include with `-imsvc`",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc6819bc_5feddc03",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "-imsvc only suppresses warnings for headers resolved via angle-bracket includes (#include \u003c...\u003e). Here we use a quoted include with the full relative path so that __has_include can reliably detect the Agility SDK header regardless of include-path ordering. The compiler does not treat quoted-path includes as system headers, so the #pragma is still necessary.\n\nCould you please suggest if there is a more recommended or cleaner way to handle this case?",
+      "parentUuid": "e05bf1c4_27ad2da9",
       "range": {
         "startLine": 38,
         "startChar": 0,

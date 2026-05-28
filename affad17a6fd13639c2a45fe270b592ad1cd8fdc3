@@ -112,6 +112,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc245a10_9b319d18",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84bcf38d_55b78e5b",
+      "range": {
+        "startLine": 162,
+        "startChar": 15,
+        "endLine": 162,
+        "endChar": 16
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1eadcae_4d50c2a8",
@@ -229,6 +253,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2964b74d_0f5af6e7",
+        "filename": "src/dawn/native/d3d12/AgilitySDK.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e24d7d_793f2ef4",
+      "range": {
+        "startLine": 44,
+        "startChar": 26,
+        "endLine": 44,
+        "endChar": 45
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8d82705_ee1d35e4",
@@ -299,6 +347,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e98648a2_f67615ec",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76dc37df_bbc22de9",
+      "range": {
+        "startLine": 141,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "147b987d_52fdce81",
@@ -312,6 +384,30 @@
       "writtenOn": "2026-05-27T00:26:13Z",
       "side": 1,
       "message": "We need to rework this code for the agility SDK.  \n\nIf you\u0027re using the agility SDK, you need to use `SerializeVersionedRootSignature` and `CreateVersionedRootSignatureDeserializer` methods from `ID3D12DeviceConfiguration`. The exports from the DLL in System32 are not guaranteed to return compatible objects.\n\nLike creating the device, I recommend you have helper methods (CreateDevice, SerializeVersionedRootSignature and CreateVersionedRootSignatureDeserializer) exposed from PlatformFunctions and have PlatformFunctions take care of doing the right thing.",
+      "range": {
+        "startLine": 65,
+        "startChar": 9,
+        "endLine": 65,
+        "endChar": 58
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "722c9668_34858a92",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "147b987d_52fdce81",
       "range": {
         "startLine": 65,
         "startChar": 9,
@@ -345,6 +441,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "754ec59f_8b76da5d",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba40e853_15481ac2",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 5
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "329e8fea_44e2231f",
@@ -358,6 +478,30 @@
       "writtenOn": "2026-05-27T00:26:13Z",
       "side": 1,
       "message": "Since `EnsureAgilitySDKDeviceFactory` is only called when `DAWN_USE_AGILITY_SDK` is defined, you should `DAWN_CHECK` these always return S_OK.",
+      "range": {
+        "startLine": 109,
+        "startChar": 1,
+        "endLine": 112,
+        "endChar": 2
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47dc23a1_3482fc98",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "329e8fea_44e2231f",
       "range": {
         "startLine": 109,
         "startChar": 1,
@@ -391,6 +535,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbc64783_c528da91",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcfac67b_03befb0b",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 39
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6be55c6_9dc2d000",
@@ -414,6 +582,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d643a43_23fb7a5d",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6be55c6_9dc2d000",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 73
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "acb57179_a6deb400",
@@ -427,6 +619,30 @@
       "writtenOn": "2026-05-27T00:26:13Z",
       "side": 1,
       "message": "`EnsureAgilitySDKDeviceFactory` is only called inside of PlatformFunctions. Please make it a private function.",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c88ed74d_0bcbfecc",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb57179_a6deb400",
       "range": {
         "startLine": 53,
         "startChar": 15,
@@ -473,6 +689,30 @@
       "writtenOn": "2026-05-27T18:56:36Z",
       "side": 1,
       "message": "As this file should be deleted after rebasing onto https://dawn-review.git.corp.google.com/c/dawn/+/311615, am resolving this.",
+      "parentUuid": "001cdf9f_45e0b725",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 36
+      },
+      "revId": "affad17a6fd13639c2a45fe270b592ad1cd8fdc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "753869c7_5274494f",
+        "filename": "tools/fetch_agility_sdk.py",
+        "patchSetId": 26
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "001cdf9f_45e0b725",
       "range": {
         "startLine": 68,

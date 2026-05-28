@@ -436,6 +436,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c404da3_777d2d33",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T05:33:38Z",
+      "side": 1,
+      "message": "I think this comment is now no longer valid.",
+      "parentUuid": "2b32079f_f92c247e",
+      "range": {
+        "startLine": 96,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "d07444f094d6c939dcf289167242c2e19808f923",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f40d642_c4e5db0a",
