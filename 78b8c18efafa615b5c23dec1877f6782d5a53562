@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a18e4708_25bb0169",
+        "filename": "src/dawn/utils/ComboRenderBundleEncoderDescriptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-28T03:54:49Z",
+      "side": 1,
+      "message": "I didn\u0027t realize src/utils could include from src/dawn/common. Does that mean we don\u0027t actually need to move things to utils in order to start using them elsewhere (even if we should)",
+      "revId": "78b8c18efafa615b5c23dec1877f6782d5a53562",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
