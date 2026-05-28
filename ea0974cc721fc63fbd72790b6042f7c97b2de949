@@ -16,6 +16,24 @@
       "message": "Thought about this some more. Might change this to only add the property if multiple entry points are actually used, to be consistent with protobuf decoding. Same for overrides in the next CL.",
       "revId": "ea0974cc721fc63fbd72790b6042f7c97b2de949",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ec384a4_0cd8c221",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-28T13:56:19Z",
+      "side": 1,
+      "message": "I agree, but might want to rename it to something like \u0027HasMultipleEntryPoints\u0027, so it is clear that is representing what the module actually is vs what the module could be.",
+      "parentUuid": "420b821d_85021e57",
+      "revId": "ea0974cc721fc63fbd72790b6042f7c97b2de949",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
