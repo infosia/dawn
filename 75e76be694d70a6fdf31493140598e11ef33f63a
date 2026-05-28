@@ -16,6 +16,24 @@
       "message": "hm, should this have been a comparison sampler?",
       "revId": "75e76be694d70a6fdf31493140598e11ef33f63a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5b12540_3d3ae2b4",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-28T17:21:34Z",
+      "side": 0,
+      "message": "The `kind` will be `comparison` if it is. We don\u0027t need to check the kind, we can just pass it through (which is what we were doing in both branches anyway).",
+      "parentUuid": "fd4025d0_f8f93102",
+      "revId": "75e76be694d70a6fdf31493140598e11ef33f63a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
