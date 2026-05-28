@@ -31,12 +31,12 @@
 #include <utility>
 #include <vector>
 
-#include "dawn/common/MutexProtected.h"
-#include "dawn/common/Ref.h"
-#include "dawn/common/RefCounted.h"
-#include "dawn/common/Time.h"
-#include "dawn/utils/SystemUtils.h"
 #include "gtest/gtest.h"
+#include "src/dawn/common/MutexProtected.h"
+#include "src/dawn/common/Ref.h"
+#include "src/dawn/common/RefCounted.h"
+#include "src/dawn/common/Time.h"
+#include "src/dawn/utils/SystemUtils.h"
 
 namespace dawn {
 namespace {
