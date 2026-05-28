@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7b2f423_85766f92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-28T13:24:42Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "1ff464dd852e0e403c710181e37ff207fe010fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1ae33a5_e926271c",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-28T13:24:42Z",
+      "side": 1,
+      "message": "Could you move this to `//third_party/dawn/scripts/dawn_overrides_with_defaults.gni` which is the script that gathers all the defaulting of values that are overridable with `dawn.gni`?",
+      "revId": "1ff464dd852e0e403c710181e37ff207fe010fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
