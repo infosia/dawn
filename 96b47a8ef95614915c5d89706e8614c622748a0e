@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08471999_44efb89a",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-28T11:39:29Z",
+      "side": 1,
+      "message": "Do we need this conditionalization here?",
+      "revId": "96b47a8ef95614915c5d89706e8614c622748a0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e46a8254_cc936eb1",
+        "filename": "src/tint/lang/core/ir/transform/collapse_subgroup_min_max_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-28T11:39:29Z",
+      "side": 1,
+      "message": "Since we\u0027re erasing the outer call and replacing usages with the inner, can you update one of these tests to use the result of the outer so we can se it\u0027s changed to %3?",
+      "revId": "96b47a8ef95614915c5d89706e8614c622748a0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
