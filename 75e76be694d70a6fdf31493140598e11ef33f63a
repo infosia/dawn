@@ -34,6 +34,24 @@
       "parentUuid": "fd4025d0_f8f93102",
       "revId": "75e76be694d70a6fdf31493140598e11ef33f63a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a48e6f6_14edb282",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-28T17:25:56Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "e5b12540_3d3ae2b4",
+      "revId": "75e76be694d70a6fdf31493140598e11ef33f63a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
