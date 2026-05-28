@@ -32,6 +32,12 @@ import("//testing/test.gni")
 import("${dawn_root}/generator/dawn_generator.gni")
 import("${dawn_root}/scripts/dawn_features.gni")
 
+declare_args() {
+  if (!defined(dawn_use_static_angle)) {
+    dawn_use_static_angle = false
+  }
+}
+
 # When embedded by Chrome, partition_alloc and the dangling pointer detector
 # are already initialized. Dawn shouldn't attempt to initialize them again. This
 # variable is useful to avoid double initialization of the library.
@@ -120,7 +126,8 @@ template("dawn_test") {
 
     configs += [ "${dawn_root}/src/dawn/common:internal_config" ]
 
-    if (dawn_tests_use_angle && defined(dawn_angle_dir)) {
+    if (dawn_tests_use_angle && defined(dawn_angle_dir) &&
+        !dawn_use_static_angle) {
       if (!defined(data_deps)) {
         data_deps = []
       }
