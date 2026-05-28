@@ -28,7 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_OPENGL_PLATFORM_H_
 #define SRC_DAWN_NATIVE_OPENGL_OPENGL_PLATFORM_H_
 
-#include "dawn/native/opengl/opengl_platform_autogen.h"
+#include "src/dawn/native/opengl/opengl_platform_autogen.h"
 
 typedef void* EGLDisplay;
 typedef void* EGLImage;
