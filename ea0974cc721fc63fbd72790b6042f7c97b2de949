@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8ea50389_aa3cc720",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-28T19:35:25Z",
+      "side": 1,
+      "message": "I\u0027ve left the name for now but made a note to revisit later. I\u0027m still a little on the fence about the names and the \"module has this\" vs \"module /can/ have this\" difference, since my originally plan was to only really capture the latter. The only reason I\u0027m being more precise in IR decode and WGSL ProgramToIR step is to avoid rejecting fuzzers cases for fuzzers that don\u0027t support these properties.\n\nWill see how things look as we port the rest of the capabilities over and then revisit.",
+      "parentUuid": "6ec384a4_0cd8c221",
+      "revId": "ea0974cc721fc63fbd72790b6042f7c97b2de949",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "2528149a_82e093de",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
