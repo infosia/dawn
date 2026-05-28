@@ -34,7 +34,6 @@
 #include <utility>
 #include <vector>
 
-#include "dawn/utils/ComboLimits.h"
 #include "src/dawn/node/binding/Converter.h"
 #include "src/dawn/node/binding/Errors.h"
 #include "src/dawn/node/binding/Flags.h"
@@ -43,6 +42,7 @@
 #include "src/dawn/node/binding/GPUSupportedFeatures.h"
 #include "src/dawn/node/binding/GPUSupportedLimits.h"
 #include "src/dawn/node/binding/TogglesLoader.h"
+#include "src/dawn/utils/ComboLimits.h"
 
 #define FOR_EACH_LIMIT(X)                        \
     X(maxTextureDimension1D)                     \
