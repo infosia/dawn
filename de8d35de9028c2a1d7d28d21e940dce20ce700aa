@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0aa44b85_7cd7f697",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-28T17:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c67fe1d_aa2e0504",
+      "revId": "de8d35de9028c2a1d7d28d21e940dce20ce700aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef8be31c_e18516bc",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-05-28T14:11:48Z",
       "side": 1,
       "message": "ditto",
+      "revId": "de8d35de9028c2a1d7d28d21e940dce20ce700aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3b0ebb1_249571d1",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-28T17:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef8be31c_e18516bc",
       "revId": "de8d35de9028c2a1d7d28d21e940dce20ce700aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
