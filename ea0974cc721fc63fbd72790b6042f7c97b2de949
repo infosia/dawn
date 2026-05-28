@@ -86,6 +86,24 @@
       "parentUuid": "03c59d81_6fe99fae",
       "revId": "ea0974cc721fc63fbd72790b6042f7c97b2de949",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba6842e0_275f509c",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform_fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-28T17:05:38Z",
+      "side": 1,
+      "message": "I made the handling generic for the fuzzers in the next CL, as you saw.\n\nIn this CL I added an `AssertNoUnsupportedProperties()` helper which the printers now use. This one produces an ICE, as opposed to the fuzzer checks which are graceful failures.",
+      "parentUuid": "a86acc1a_cd430de1",
+      "revId": "ea0974cc721fc63fbd72790b6042f7c97b2de949",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
