@@ -16,6 +16,24 @@
       "message": "src/utils also has a BUILD.bazel file that needs to be updated",
       "revId": "1d9259e81ed0ce728e362a368812835797e8d5c8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "102eaddc_77db36da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-28T01:55:56Z",
+      "side": 1,
+      "message": "ah great. Is that tested on bots or do I need to go figure out how to verify it? Right now I\u0027m totally guessing.",
+      "parentUuid": "28873657_73681286",
+      "revId": "1d9259e81ed0ce728e362a368812835797e8d5c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
