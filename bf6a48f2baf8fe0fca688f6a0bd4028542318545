@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "816eaff1_9b103f8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-28T14:35:43Z",
+      "side": 1,
+      "message": "Thank you, that example demonstrates the problem perfectly.\n\nOne interesting thing to note is that if you make the lambda explicitly `consteval`, the compiler gives a slightly different error message: `call to immediate function ...` becomes `call to consteval function ...`. If you look up `immediate` on https://en.cppreference.com/cpp/language/lambda, you\u0027ll see that adding `consteval` to a lambda makes it an immediate function. There\u0027s also a bunch more on immediate functions on https://en.cppreference.com/cpp/language/consteval. I guess Clang is distinguishing between the lambda being implicitly immediate vs explicitly (consteval).\n\nAnyway, I think you\u0027re making the right call with using `constexpr` only in the next change, and forcing us to pass in unsigned values.",
+      "parentUuid": "ebc9f032_fbd5eb35",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 49
+      },
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "18476721_e042e59e",
         "filename": "src/dawn/common/Assert.h",
         "patchSetId": 8
@@ -191,6 +215,30 @@
       "side": 1,
       "message": "maybe `CastIsAlwaysInRange`?",
       "parentUuid": "08b73916_b2e3adf2",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 43
+      },
+      "revId": "bf6a48f2baf8fe0fca688f6a0bd4028542318545",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fc88cab_739e37ab",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-28T14:35:43Z",
+      "side": 1,
+      "message": "Sure, or Corentin\u0027s suggestion on line 91",
+      "parentUuid": "63e3dc0d_182284b8",
       "range": {
         "startLine": 121,
         "startChar": 22,
