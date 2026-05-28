@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1a47367_07fd9bc0",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-28T16:01:06Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: misc-override-with-different-visibility\n\nvisibility of function \u0027SetUp\u0027 i...\n\ncheck: misc-override-with-different-visibility\n\nvisibility of function \u0027SetUp\u0027 is changed from protected in class \u0027Test\u0027 to public (https://clang.llvm.org/extra/clang-tidy/checks/misc/override-with-different-visibility.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-override-with-different-visibility` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel` or `mac-clang-tidy-rel`)",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "21b91885f8eb464a44d1d8f5d1aceeadfbb0c886",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
