@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "111992e7_f521f3c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-05-28T20:30:54Z",
+      "side": 1,
+      "message": "Might want to expand this:\n* error if, stride is less than (col_major ? rows : cols)\n* error if (stride - 1) * (col_major ? cols : rows) + (col_major ? rows : cols) + offset \u003c arrayLength (fixed size only)\n  * use 0 for stride/offset if non-const",
+      "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
