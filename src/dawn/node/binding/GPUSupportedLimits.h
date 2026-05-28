@@ -31,9 +31,9 @@
 #include <webgpu/webgpu_cpp.h>
 
 #include "dawn/native/DawnNative.h"
-#include "dawn/utils/ComboLimits.h"
 #include "src/dawn/node/interop/NodeAPI.h"
 #include "src/dawn/node/interop/WebGPU.h"
+#include "src/dawn/utils/ComboLimits.h"
 
 namespace wgpu::binding {
 
