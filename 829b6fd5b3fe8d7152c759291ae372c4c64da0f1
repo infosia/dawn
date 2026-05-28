@@ -33,6 +33,24 @@
       "message": "oops, this order is wrong, you need to update the rule in .clang-format since the include path has changed (and also I need to account for this in my CL too)\n\nbest would be to do this at the very top of the stack and then `git cl format` everything subsequently",
       "revId": "829b6fd5b3fe8d7152c759291ae372c4c64da0f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2728ccbe_16c06986",
+        "filename": "src/dawn/tests/end2end/BufferHostMappedPointerTests_win.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-28T04:53:22Z",
+      "side": 1,
+      "message": "I\u0027ve taken care of this.",
+      "parentUuid": "6bb7af95_66127681",
+      "revId": "829b6fd5b3fe8d7152c759291ae372c4c64da0f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
