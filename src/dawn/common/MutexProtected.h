@@ -251,10 +251,11 @@ class CondVarGuard : public NonMovable, StackAllocated {
         }
     };
 
-    NotifyScope<NotifyT> mNotifyScope;
-    // Note that this class needs to hold a Guard member instead of extending it because we want the
-    // lock to be released before we notify.
+    // Note that the Guard must be before the NotifyScope so that the C++ member destruction order
+    // signals the condition variable before unlocking the mutex. This keeps all uses of the
+    // condition variable guarded by the mutex.
     Guard<T, Traits> mGuard;
+    NotifyScope<NotifyT> mNotifyScope;
 };
 
 }  // namespace detail
