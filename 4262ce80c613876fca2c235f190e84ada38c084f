@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "150c0254_e41465d4",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-28T20:25:49Z",
+      "side": 1,
+      "message": "On old versions of Windows, the D3D12.dll in System32 will not have a D3D12GetInterface function exported because it doesn\u0027t exist. Even when DAWN_USE_AGILITY_SDK is defined, we want avoid crashing here. \n\nPrefer to re-structure as follows: \n```\nMaybeError PlatformFunctions::LoadD3D12() {\n  ...\n  std::string error;\n  if (mD3D12Lib.OpenSystemLibrary(L\"d3d12.dll\", \u0026error)) {\n    bool useAgilitySDK \u003d false;\n#ifdef DAWN_USE_AGILITY_SDK\n    useAgilitySDK \u003d mD3D12Lib.GetProc(..., \"D3D12GetInterface\", ...);\n#endif    \n    if (!useAgilitySDK) {\n      // Load all of the function pointers from D3D12.dll\n    }\n  }\n}\n```\n\nThen, functions like `CreateDevice`, `SerializeVersionedRootSignature` and `CreateVersionedRootSignatureDeserializer` can be like the following.\n\n```\nHRESULT PlatformFunctions::CreateDevice(...) {\n#ifdef DAWN_USE_AGILITY_SDK\n  if(mDeviceConfiguration) {\n    return mDeviceConfiguration-\u003eCreateDevice(...);\n  }\n#endif  \n  return d3d12CreateDevice(...);\n}\n```",
+      "range": {
+        "startLine": 107,
+        "startChar": 11,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "4262ce80c613876fca2c235f190e84ada38c084f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b30da44_912cfe88",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-28T20:25:49Z",
+      "side": 1,
+      "message": "Now that you\u0027ve added `CreateDevice`, `SerializeVersionedRootSignature` and `CreateVersionedRootSignatureDeserializer` as methods of `PlatformFunctions`, please move `d3d12CreateDevice`, `d3d12SerializeRootSignature` and `d3d12CreateVersionedRootSignatureDeserializer` to the private section.  \n\nMakes it clearer to users of the class what the right way is to perform these operations.",
+      "range": {
+        "startLine": 64,
+        "startChar": 28,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "4262ce80c613876fca2c235f190e84ada38c084f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
