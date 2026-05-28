@@ -34,6 +34,40 @@
       "parentUuid": "420b821d_85021e57",
       "revId": "ea0974cc721fc63fbd72790b6042f7c97b2de949",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2528149a_82e093de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-28T14:08:55Z",
+      "side": 1,
+      "message": "Overall lgtm, modulo needing to the change to only setting the property when multiple entry points occur as you mentioned",
+      "revId": "ea0974cc721fc63fbd72790b6042f7c97b2de949",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03c59d81_6fe99fae",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform_fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-28T14:08:55Z",
+      "side": 1,
+      "message": "nit: This pattern of checking the unsupported properties appears multiple times though out the change. EnumSet supports a fast intersetion operation `\u0026`, so this could be changed to something like\n```\nif (auto matched \u003d module.properties \u0026 kUnsupportedProperties; !matched.Empty()) {\n   // for (auto m : matched) {\n   //    Build string of unsupported properties\n   // }\n   // return error with all of the unsupported properies\n\n   // or just return an error with matched[0]\n}\n \n```\n\nGiven this pattern appears multiple times in the CL, it might be worth having a common implementation of it, possibly that just returns all of the matched unsupported properties, so the callsite can do the error message construction?",
+      "revId": "ea0974cc721fc63fbd72790b6042f7c97b2de949",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
