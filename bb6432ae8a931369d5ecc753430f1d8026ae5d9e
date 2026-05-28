@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6ec6450_54d3a561",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-28T16:39:28Z",
+      "side": 1,
+      "message": "LGTM, good fix :D!",
+      "revId": "bb6432ae8a931369d5ecc753430f1d8026ae5d9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a96e804_6f2d3d36",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-28T16:39:28Z",
+      "side": 1,
+      "message": "nit: we don\u0027t need to wrap in struct anymore!\n\n```suggestion\n            @group(0) @binding(0) var\u003cuniform\u003e u0 : vec4f;\n```",
+      "revId": "bb6432ae8a931369d5ecc753430f1d8026ae5d9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
