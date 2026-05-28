@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fde2aa8_f61542f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-28T14:11:48Z",
+      "side": 1,
+      "message": "lgtm, this is the type of generalization I was thinking of in the previous CL.",
+      "revId": "de8d35de9028c2a1d7d28d21e940dce20ce700aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c67fe1d_aa2e0504",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-28T14:11:48Z",
+      "side": 1,
+      "message": "nit: You can use `\u0026` here\n`if (!(ir.Get().properties \u0026 fuzzer.unsupported_properties).Empty())`",
+      "revId": "de8d35de9028c2a1d7d28d21e940dce20ce700aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef8be31c_e18516bc",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-28T14:11:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "de8d35de9028c2a1d7d28d21e940dce20ce700aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
