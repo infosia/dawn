@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd4025d0_f8f93102",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-28T17:17:08Z",
+      "side": 0,
+      "message": "hm, should this have been a comparison sampler?",
+      "revId": "75e76be694d70a6fdf31493140598e11ef33f63a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

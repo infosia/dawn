@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f584d922_e19eb219",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-28T17:17:08Z",
+      "side": 1,
+      "message": "should we assert idx \u003c values_.size?",
+      "revId": "a11e871578e9ddf8b43d275d3f7c5fc82abd1453",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
