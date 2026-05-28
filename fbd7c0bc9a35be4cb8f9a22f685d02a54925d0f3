@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91ac24d9_6166c36f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 36
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-28T06:44:57Z",
+      "side": 1,
+      "message": "I temporarily removed ARM64 support because it causes build errors in SwiftShader/LLVM for ARM64",
+      "revId": "fbd7c0bc9a35be4cb8f9a22f685d02a54925d0f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
