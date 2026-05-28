@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5fcbaf2d_9ed54b67",
+        "filename": "generator/templates/api_cpp.ixx",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-28T06:58:50Z",
+      "side": 1,
+      "message": "Yeah I think it would be ok to just use inline here, this would allow getting rid of the macro?",
+      "parentUuid": "217633ae_6f85fb61",
+      "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27ec7d8b_a97f301c",
         "filename": "generator/templates/api_cpp.ixx",
         "patchSetId": 5
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Using `WGPU_IMPORT_BITMASK_OPERATORS` instead here should cover the missing operators.",
       "parentUuid": "27ec7d8b_a97f301c",
+      "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c9a3c53_9f2b6040",
+        "filename": "generator/templates/api_cpp.ixx",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-28T06:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b95c1cf4_8006c76b",
       "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -102,6 +138,24 @@
       "side": 1,
       "message": "Not strictly needed. Adding the required include directories instead works too. The second link could be removed to leave this as an opt-in target if not desired.\n\nReferences:\nhttps://www.kitware.com/import-cmake-the-experiment-is-over/\nhttps://cmake.org/cmake/help/git-master/command/target_sources.html#file-sets",
       "parentUuid": "ab446604_9a6accd2",
+      "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7414f67_e791022c",
+        "filename": "src/dawn/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-28T06:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb4b1aa_27858d86",
       "revId": "8e4f9c82fc1cb2de01eba5b20c5a5341c90144cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
