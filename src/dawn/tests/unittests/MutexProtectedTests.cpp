@@ -32,13 +32,27 @@
 #include <utility>
 #include <vector>
 
+<<<<<<< PATCH SET (63035089a9291d8cbb3a0f10bca08e6c304b2b60 Update dawn/tests includes)
+||||||| BASE      (a50dbdb865a63a0c27e04e9740543f3bc948d51a Update dawn/samples includes)
+#include "dawn/common/MutexProtected.h"
+#include "dawn/common/Ref.h"
+#include "dawn/common/RefCounted.h"
+#include "dawn/common/Time.h"
+#include "dawn/utils/SystemUtils.h"
+=======
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/Range.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/RefCounted.h"
 #include "dawn/common/Time.h"
 #include "dawn/utils/SystemUtils.h"
+>>>>>>> BASE      (a2cff62294d3d3bfc9aaaab047dff2ef0f06c9e9 [dawn][common] Signal the CondVar before unlocking the mutex)
 #include "gtest/gtest.h"
+#include "src/dawn/common/MutexProtected.h"
+#include "src/dawn/common/Ref.h"
+#include "src/dawn/common/RefCounted.h"
+#include "src/dawn/common/Time.h"
+#include "src/dawn/utils/SystemUtils.h"
 
 namespace dawn {
 namespace {
