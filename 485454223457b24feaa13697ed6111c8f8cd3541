@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "198d251c_d4fa93eb",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 36
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-28T07:08:58Z",
+      "side": 0,
+      "message": "There is no obvious reason that this be related to the Swiftshader compilation failure on ARM64. Unless we have a good explanation, let\u0027s add it back? It looks like something else is broken on ARM64.",
+      "revId": "485454223457b24feaa13697ed6111c8f8cd3541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
