@@ -93,6 +93,30 @@
       },
       "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94203d38_c0c4f5d4",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-28T13:53:07Z",
+      "side": 1,
+      "message": "Ah, now I understand the issue. Let\u0027s revert all changes to this file. We don\u0027t need this conditional inclusion logic here. The `#include \u003cd3d12.h\u003e` will do the right thing: include from Agility SDK or from the Windows SDK as appropriate.",
+      "parentUuid": "cc6819bc_5feddc03",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
