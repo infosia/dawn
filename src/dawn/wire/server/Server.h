@@ -31,10 +31,10 @@
 #include <memory>
 #include <utility>
 
-#include "dawn/common/MutexProtected.h"
-#include "dawn/wire/ChunkedCommandSerializer.h"
-#include "dawn/wire/server/ServerBase_autogen.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/dawn/common/MutexProtected.h"
+#include "src/dawn/wire/ChunkedCommandSerializer.h"
+#include "src/dawn/wire/server/ServerBase_autogen.h"
 
 namespace dawn::wire::server {
 
@@ -290,7 +290,7 @@ class Server : public ServerBase {
     //      being called because it never interacts with the object store.
     void OnLogging(ObjectHandle device, WGPULoggingType type, WGPUStringView message);
 
-#include "dawn/wire/server/ServerPrototypes_autogen.inc"
+#include "src/dawn/wire/server/ServerPrototypes_autogen.inc"
 
     MutexProtected<ChunkedCommandSerializer> mSerializer;
     std::unique_ptr<MemoryTransferService> mOwnedMemoryTransferService = nullptr;
