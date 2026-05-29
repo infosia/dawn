@@ -72,6 +72,65 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca346974_cf9eaa70",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-29T17:34:06Z",
+      "side": 1,
+      "message": "Okay, but for landing this CL, let\u0027s land as-is. I\u0027ve created https://issues.chromium.org/issues/517940507 to consider adding this fallback behaviour.",
+      "parentUuid": "e86c19f4_2fe1ed84",
+      "range": {
+        "startLine": 107,
+        "startChar": 11,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "4262ce80c613876fca2c235f190e84ada38c084f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9173d885_8c6a2c07",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-29T17:34:06Z",
+      "side": 1,
+      "message": "Insert:\n\n```\nTODO(crbug.com/517940507): Gracefully handle when D3D12GetInterface is not available.",
+      "fixSuggestions": [
+        {
+          "fixId": "3a8dea69_0307bd3c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "    // TODO(crbug.com/517940507): Gracefully handle when D3D12GetInterface is not available.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4262ce80c613876fca2c235f190e84ada38c084f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b30da44_912cfe88",
