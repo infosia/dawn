@@ -16,6 +16,24 @@
       "message": "Looks like this is causing Skia roll/Bazel failures (https://task-driver.skia.org/td/h5wJHKFUHqILlO9Haz1G):\n\n```\nERROR: /home/chrome-bot/bazel_cache/fad6a03523779d107a9909859a99c37d/external/+cpp_modules+dawn/src/utils/BUILD.bazel:31:11: @@+cpp_modules+dawn//src/utils:tint_build_is_win is not a valid select() condition for @@+cpp_modules+dawn//src/utils:utils.\nTo inspect the select(), run: bazel query --output\u003dbuild @@+cpp_modules+dawn//src/utils:utils.\n\n```\n\nMissing a `tint_build_is_win` alias?",
       "revId": "23a05af69c4d8a53bde357eb16480d012b00d78b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80ff8c5a_2da30e8b",
+        "filename": "src/utils/BUILD.bazel",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-05-29T20:46:41Z",
+      "side": 1,
+      "message": "`//src/tint:tint_build_is_win_true` works locally",
+      "parentUuid": "c02c75d7_ea7345e4",
+      "revId": "23a05af69c4d8a53bde357eb16480d012b00d78b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
