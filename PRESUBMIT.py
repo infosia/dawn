@@ -490,6 +490,23 @@ def _CheckCopyright(input_api, output_api):
     return errors
 
 
+def CheckPresubmitTests(input_api, output_api):
+    """Runs Python unit tests in the root directory if PRESUBMIT.py is updated."""
+    # Only run the presubmit tests if PRESUBMIT.py itself was updated.
+    presubmit_file_filter = lambda f: f.LocalPath().replace('\\', '/'
+                                                            ) == 'PRESUBMIT.py'
+    if not input_api.AffectedFiles(include_deletes=False,
+                                   file_filter=presubmit_file_filter):
+        return []
+
+    return input_api.RunTests(
+        input_api.canned_checks.GetUnitTestsInDirectory(
+            input_api,
+            output_api,
+            input_api.PresubmitLocalPath(),
+            files_to_check=[r'^PRESUBMIT_test\.py$']))
+
+
 def CheckChange(input_api, output_api):
     results = []
     results.extend(
