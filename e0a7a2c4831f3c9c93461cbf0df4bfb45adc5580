@@ -16,6 +16,23 @@
       "message": "LGTM, Kai PTAL",
       "revId": "e0a7a2c4831f3c9c93461cbf0df4bfb45adc5580",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a858ed95_3b2d12ea",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-29T19:35:03Z",
+      "side": 1,
+      "message": "oh _this_ is the link I was looking for, this one says we support the oldest still-supported LTS, rather than saying we support the newest LTS like the other link. Well, still fine, we can easily fix it afterward if anyone complains.",
+      "revId": "e0a7a2c4831f3c9c93461cbf0df4bfb45adc5580",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
