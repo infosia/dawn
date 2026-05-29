@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3577c87_5a42a97c",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-05-29T15:02:12Z",
+      "side": 1,
+      "message": "Hi! I noticed root PRESUBMIT.py runs all checks sequentially inside CheckChange, while you could uses separate public Check... functions which depot_tools can run in parallel.\n\nI added a public CheckPresubmitTests() to allow parallel execution, but this might not be consistent.\n\nShould I:\n1. Keep CheckPresubmitTests public for parallelization?\n2. Make it private to match root\u0027s current sequential style?\n3. Modernize the rest of root PRESUBMIT.py to use public parallel checks?  (In follow-ups)",
+      "range": {
+        "startLine": 506,
+        "startChar": 4,
+        "endLine": 506,
+        "endChar": 15
+      },
+      "revId": "8237689cda4e19ac477b847bfd6fdb16321cf780",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
