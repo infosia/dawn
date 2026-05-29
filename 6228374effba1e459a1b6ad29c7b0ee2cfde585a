@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "713c77dd_17a8aee5",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-29T19:46:45Z",
+      "side": 1,
+      "message": "Is this copied from somewhere? If yes, put a link to where we got it (even if just forked from presubmit_canned_checks).\n\nI would prefer to link an existing implementation, is there really none that handles UNSAFE_TODO properly? (Is the upstream intent that we _want_ a warning on lines that change a DAWN_UNSAFE_TODO without removing it?)",
+      "revId": "6228374effba1e459a1b6ad29c7b0ee2cfde585a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4666446f_e51f930f",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-29T19:46:45Z",
+      "side": 1,
+      "message": "This will ignore lines that have both TODO and DAWN_UNSAFE_TODO. Probably won\u0027t happen, but could the regex just use a word boundary marker `\\bTODO`?",
+      "revId": "6228374effba1e459a1b6ad29c7b0ee2cfde585a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
