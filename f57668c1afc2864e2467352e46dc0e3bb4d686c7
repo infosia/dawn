@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41f291f4_d702e4b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4871462
+      },
+      "writtenOn": "2026-05-29T00:18:38Z",
+      "side": 1,
+      "message": "I don\u0027t think the reland actually broke the CrOS roll! None of the current \"uprev\" CLs are failing due to this, they\u0027re failing due to an unrelated issue.\n\nPlease keep this in until we can confirm that it is breaking the build :)",
+      "revId": "f57668c1afc2864e2467352e46dc0e3bb4d686c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
