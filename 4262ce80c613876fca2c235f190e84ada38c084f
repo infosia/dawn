@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e86c19f4_2fe1ed84",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-29T17:16:35Z",
+      "side": 1,
+      "message": "Yes but, unfortunately, it only goes back so far. See [OS With Agility SDK Support](https://devblogs.microsoft.com/directx/gettingstarted-dx12agility/#os-with-agility-sdk-support).",
+      "parentUuid": "d021da81_2e1a3e86",
+      "range": {
+        "startLine": 107,
+        "startChar": 11,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "4262ce80c613876fca2c235f190e84ada38c084f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0b30da44_912cfe88",
         "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.h",
         "patchSetId": 37
