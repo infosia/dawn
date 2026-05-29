@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c5a5a10_0fd2dfc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-05-29T00:35:19Z",
+      "side": 1,
+      "message": "Dawn should probably switch over to using the GCS-provided Clang dependencies at some point. This is what Chromium uses and ANGLE recently switched to this approach in [this CL](https://crrev.com/c/7852874).\n\nNo reason to block this on that migration, though.",
+      "revId": "a2f7ad11c207f3bccf098b9ba3b1e7a2ffbf5776",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
