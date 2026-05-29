@@ -507,6 +507,36 @@ def CheckPresubmitTests(input_api, output_api):
             files_to_check=[r'^PRESUBMIT_test\.py$']))
 
 
+def _CheckChangeTodoHasOwner(input_api, output_api):
+    """Checks that TODO comments have the issue number, ignoring DAWN_UNSAFE_TODO."""
+    legacyTODO = '\\s*\\(.+\\)\\s*:'
+    modernTODO = ':\\s*[^\\s]+\\s*\\-'
+    unowned_todo = input_api.re.compile('TODO(?!(%s|%s))' %
+                                        (legacyTODO, modernTODO))
+
+    # Skip PRESUBMIT files to avoid false positives from regexes and tests.
+    def FileFilter(affected_file):
+        filename = affected_file.LocalPath().replace('\\', '/')
+        if filename in ('PRESUBMIT.py', 'PRESUBMIT_test.py'):
+            return False
+        return input_api.FilterSourceFile(affected_file)
+
+    errors = []
+    for f in input_api.AffectedFiles(include_deletes=False,
+                                     file_filter=FileFilter):
+        for line_num, line in f.ChangedContents():
+            if 'DAWN_UNSAFE_TODO' in line:
+                continue
+            if unowned_todo.search(line):
+                errors.append(
+                    f'Found TODO with no issue number in {f.LocalPath()}:{line_num}'
+                )
+
+    if errors:
+        return [output_api.PresubmitPromptWarning('\n'.join(errors))]
+    return []
+
+
 def CheckChange(input_api, output_api):
     results = []
     results.extend(
@@ -527,8 +557,7 @@ def CheckChange(input_api, output_api):
             input_api, output_api))
     results.extend(
         input_api.canned_checks.CheckChangeHasNoTabs(input_api, output_api))
-    results.extend(
-        input_api.canned_checks.CheckChangeTodoHasOwner(input_api, output_api))
+    results.extend(_CheckChangeTodoHasOwner(input_api, output_api))
     results.extend(
         input_api.canned_checks.CheckChangeHasNoStrayWhitespace(
             input_api,
