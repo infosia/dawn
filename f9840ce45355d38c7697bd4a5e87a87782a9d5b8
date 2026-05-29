@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b690e409_df9ef78c",
+        "filename": "tools/run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-29T19:09:07Z",
+      "side": 1,
+      "message": "This is the bit that changed since the revert.",
+      "revId": "f9840ce45355d38c7697bd4a5e87a87782a9d5b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
