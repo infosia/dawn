@@ -81,6 +81,9 @@ struct State {
     /// A hash of access instructions to the vector index they were accessing
     Hashmap<core::ir::Value*, core::ir::Value*, 8> access_to_vector_index{};
 
+    /// Access results that point to row-major matrix or array storage
+    Hashset<core::ir::Value*, 8> row_major_accesses{};
+
     /// A list of instructions to remove
     Vector<core::ir::Instruction*, 8> instructions_to_remove_if_unused{};
 
@@ -161,9 +164,7 @@ struct State {
             [&](core::ir::Var*) {
                 // Nothing to do as we already substituted the type.
             },
-            [&](core::ir::Let*) {
-                // Nothing to do as we already substituted the type.
-            },
+            [&](core::ir::Let* let) { ReplaceLet(let); },
 
             [&](core::ir::Load* ld) { ReplaceLoad(ld); },
             [&](core::ir::Store* store) { ReplaceStore(store); },
@@ -180,12 +181,14 @@ struct State {
             return;
         }
 
+        auto* orig_struct = struct_to_original.GetOr(struct_type, nullptr);
         b.InsertBefore(construct, [&] {
             Vector<core::ir::Value*, 8> new_operands;
             for (uint32_t i = 0; i < construct->Operands().Length(); i++) {
                 auto* operand = construct->Operands()[i];
                 auto* member_type = struct_type->Members()[i]->Type();
-                if (member_type != operand->Type()) {
+                auto* orig_member = orig_struct ? orig_struct->Members()[i] : nullptr;
+                if (member_type != operand->Type() || (orig_member && orig_member->RowMajor())) {
                     tint::Switch(
                         member_type,
                         [&](const core::type::Matrix*) {
@@ -206,20 +209,48 @@ struct State {
         });
     }
 
+    // Propagate row-major and column-index provenance through let aliases.
+    void ReplaceLet(core::ir::Let* let) {
+        auto* value = let->Value();
+        if (!value) {
+            return;
+        }
+
+        bool enqueue = false;
+        if (let->Result()->Type() != value->Type()) {
+            let->Result()->SetType(value->Type());
+            enqueue = true;
+        }
+
+        if (row_major_accesses.Contains(value)) {
+            row_major_accesses.Add(let->Result());
+            enqueue = true;
+        }
+
+        if (auto idx = access_to_vector_index.Get(value)) {
+            access_to_vector_index.Add(let->Result(), *idx);
+            enqueue = true;
+        }
+
+        if (enqueue) {
+            results_to_update.Push(let->Result());
+        }
+    }
+
     // This is a store vector element that is going to a matrix which we've transposed the size of.
     // So, we need to swap the index on this store with the last index of the source access.
     void ReplaceStoreVectorElement(core::ir::StoreVectorElement* sve) {
         auto* src_to = sve->To()->As<core::ir::InstructionResult>();
         TINT_ASSERT(src_to);
 
-        auto* src_access = src_to->Instruction()->As<core::ir::Access>();
-        TINT_ASSERT(src_access);
+        auto* src_inst = src_to->Instruction();
+        TINT_ASSERT(src_inst);
 
         auto access_idx = access_to_vector_index.Get(sve->To());
         TINT_ASSERT(access_idx);
 
         core::ir::Access* new_access = nullptr;
-        b.InsertAfter(src_access, [&] {
+        b.InsertAfter(src_inst, [&] {
             auto* src_ty = src_to->Type()->As<core::type::Pointer>();
             TINT_ASSERT(src_ty);
 
@@ -228,14 +259,14 @@ struct State {
 
             auto* new_ptr =
                 ty.ptr(src_ty->AddressSpace(), ty.vec(src_mat->Type(), src_mat->Rows()));
-            new_access = b.Access(new_ptr, src_access, Vector{sve->Index()});
+            new_access = b.Access(new_ptr, src_to, Vector{sve->Index()});
 
             b.InsertAfter(sve,
                           [&] { b.StoreVectorElement(new_access, *access_idx, sve->Value()); });
             sve->Destroy();
         });
 
-        instructions_to_remove_if_unused.Push(src_access);
+        instructions_to_remove_if_unused.Push(src_inst);
     }
 
     // This is a load vector element that is coming from a matrix which we've transposed the size
@@ -244,14 +275,14 @@ struct State {
         auto* src_result = lve->From()->As<core::ir::InstructionResult>();
         TINT_ASSERT(src_result);
 
-        auto* src_access = src_result->Instruction()->As<core::ir::Access>();
-        TINT_ASSERT(src_access);
+        auto* src_inst = src_result->Instruction();
+        TINT_ASSERT(src_inst);
 
         auto access_idx = access_to_vector_index.Get(lve->From());
         TINT_ASSERT(access_idx);
 
         core::ir::Access* new_access = nullptr;
-        b.InsertAfter(src_access, [&] {
+        b.InsertAfter(src_inst, [&] {
             auto* src_ty = src_result->Type()->As<core::type::Pointer>();
             TINT_ASSERT(src_ty);
 
@@ -260,7 +291,7 @@ struct State {
 
             auto* new_ptr =
                 ty.ptr(src_ty->AddressSpace(), ty.vec(src_mat->Type(), src_mat->Rows()));
-            new_access = b.Access(new_ptr, src_access, Vector{lve->Index()});
+            new_access = b.Access(new_ptr, src_result, Vector{lve->Index()});
 
             b.InsertAfter(lve, [&] {
                 b.LoadVectorElementWithResult(lve->DetachResult(), new_access, *access_idx);
@@ -268,11 +299,11 @@ struct State {
             lve->Destroy();
         });
 
-        instructions_to_remove_if_unused.Push(src_access);
+        instructions_to_remove_if_unused.Push(src_inst);
     }
 
     void ReplaceAccess(core::ir::Access* access) {
-        bool indexed_through_row_major = false;
+        bool indexed_through_row_major = row_major_accesses.Contains(access->Object());
 
         auto* cur_ty = access->Object()->Type()->UnwrapPtr();
         const core::type::Type* parent_ty = nullptr;
@@ -315,20 +346,22 @@ struct State {
         // The matrix is in an array and we're dealing with the array. We'll need to handle the
         // array when we load/store it, so add the access to the results to update.
         if (cur_ty->Is<core::type::Array>()) {
-            ReplacePointerAccess(access, parent_ty, cur_ty);
-            results_to_update.Push(access->Result());
+            ReplacePointerAccess(access, parent_ty, cur_ty, indexed_through_row_major);
             return;
         }
 
         // The thing we're accessing has changed, so we need to change.
         if (!indexed_through_row_major && cur_ty != access->Result()->Type()->UnwrapPtr()) {
-            ReplacePointerAccess(access, parent_ty, cur_ty);
+            ReplacePointerAccess(access, parent_ty, cur_ty, indexed_through_row_major);
             return;
         }
 
         // If we don't have a matrix index we need to update, then we've updated the `var` type
         // we're accessing but we're accessing another member of the struct, so we're done.
         if (matrix_index == -1) {
+            if (indexed_through_row_major && access->Object()->Type()->Is<core::type::Pointer>()) {
+                ReplacePointerAccess(access, parent_ty, cur_ty, indexed_through_row_major);
+            }
             return;
         }
 
@@ -338,7 +371,7 @@ struct State {
         }
 
         if (access->Object()->Type()->Is<core::type::Pointer>()) {
-            ReplacePointerAccess(access, parent_ty, cur_ty);
+            ReplacePointerAccess(access, parent_ty, cur_ty, indexed_through_row_major);
             return;
         }
 
@@ -365,15 +398,22 @@ struct State {
 
     void ReplacePointerAccess(core::ir::Access* access,
                               const core::type::Type* parent_ty,
-                              const core::type::Type* cur_ty) {
-        // We've accessed the matrix itself, or an array containing the matrix. We need to update
-        // the access result type, and if changed, update the uses of this access
+                              const core::type::Type* cur_ty,
+                              bool indexed_through_row_major) {
+        // We've accessed the matrix itself, or an array containing the matrix. Update the access
+        // result type and visit its uses.
+        //
+        // For square row-major matrices the physical type is unchanged, but whole-matrix loads and
+        // stores still need semantic transposes.
         if (cur_ty->Is<core::type::Matrix>() || cur_ty->Is<core::type::Array>()) {
             auto* new_access_ty = RewriteType(access->Result()->Type(), true);
             if (new_access_ty != access->Result()->Type()) {
                 access->Result()->SetType(new_access_ty);
-                results_to_update.Push(access->Result());
             }
+            if (indexed_through_row_major) {
+                row_major_accesses.Add(access->Result());
+            }
+            results_to_update.Push(access->Result());
             return;
         }
 
@@ -384,7 +424,19 @@ struct State {
             TINT_ASSERT(parent_ty != nullptr);
             auto* idx = access->PopLastIndex();
 
-            /// The access now returns the transposed matrix
+            if (access->Indices().empty()) {
+                b.InsertBefore(access, [&] {
+                    // Access needs at least one index; use a let to carry the column index while
+                    // preserving the base matrix value.
+                    auto* let = b.Let(access->Object());
+                    access_to_vector_index.Add(let->Result(), idx);
+                    results_to_update.Push(let->Result());
+                    access->Result()->ReplaceAllUsesWith(let->Result());
+                });
+                access->Destroy();
+                return;
+            }
+
             auto* new_access_ty = access->Result()->Type();
             if (auto* access_ptr = access->Result()->Type()->As<core::type::Pointer>()) {
                 new_access_ty = ty.ptr(access_ptr->AddressSpace(), parent_ty, access_ptr->Access());
@@ -684,7 +736,7 @@ struct State {
                                                  bool is_row_major) {
         auto* orig_type = constant->Type();
         auto* new_type = RewriteType(orig_type, is_row_major);
-        if (new_type == orig_type) {
+        if (new_type == orig_type && !is_row_major) {
             return constant;
         }
 
@@ -741,7 +793,7 @@ struct State {
                     auto* value = constant->Index(i);
 
                     auto* new_member_type = new_mem->Type();
-                    if (new_member_type != value->Type()) {
+                    if (new_member_type != value->Type() || orig_mem->RowMajor()) {
                         elements.Push(RewriteConstant(value, orig_mem->RowMajor()));
                     } else {
                         elements.Push(value);
