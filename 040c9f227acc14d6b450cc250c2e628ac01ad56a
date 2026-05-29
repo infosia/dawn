@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64d324db_84c24014",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-29T22:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18aad409_700e94d1",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f576bb67_4e62622f",
@@ -53,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9328bb7c_481dc58f",
+        "filename": "src/dawn/native/CacheKey.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-29T22:52:39Z",
+      "side": 1,
+      "message": "Changed them to use std::byte now. I initially used `string_view` because on the Chromium side, they actually use `base::string_view` (or whatever it\u0027s called), so I tried to match them for easier integration, but to make our API more clear, `std::byte` is probably the right way to go.",
+      "parentUuid": "b72e01a9_c65b5d16",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65212fe9_d6ef4436",
@@ -66,6 +102,24 @@
       "writtenOn": "2026-05-26T14:25:17Z",
       "side": 1,
       "message": "This shouldn\u0027t be included in new code.",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5350b316_f0bc8018",
+        "filename": "src/dawn/tests/unittests/native/BlobCacheTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-29T22:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65212fe9_d6ef4436",
       "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -87,6 +141,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "248f2fee_5bbec972",
+        "filename": "src/dawn/tests/unittests/native/BlobCacheTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-29T22:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90375568_b8aa23d4",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64b2e8cd_5b47bfa1",
@@ -104,6 +176,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "705deef4_6a77151c",
+        "filename": "src/dawn/tests/unittests/native/BlobCacheTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-29T22:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64b2e8cd_5b47bfa1",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54e5501b_8393bd88",
@@ -117,6 +207,24 @@
       "writtenOn": "2026-05-26T14:25:17Z",
       "side": 1,
       "message": "Use std::ranges::equal() instead",
+      "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f602c218_bd2b1753",
+        "filename": "src/dawn/tests/unittests/native/BlobCacheTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-29T22:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54e5501b_8393bd88",
       "revId": "040c9f227acc14d6b450cc250c2e628ac01ad56a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
