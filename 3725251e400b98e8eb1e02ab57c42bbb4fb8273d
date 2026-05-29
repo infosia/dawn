@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e9c8a1c_3b6e4fa7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-29T20:56:20Z",
+      "side": 1,
+      "message": "LGTM.\n\nWe should maybe move this flag out of src/tint at some point since it\u0027s used outside of the Tint Bazel files now.",
+      "revId": "3725251e400b98e8eb1e02ab57c42bbb4fb8273d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
