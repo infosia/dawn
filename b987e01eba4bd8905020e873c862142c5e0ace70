@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6126eb98_11fcab45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000202
+      },
+      "writtenOn": "2026-05-29T20:50:09Z",
+      "side": 1,
+      "message": "Speculative fix for Skia rolls (e.g. https://task-driver.skia.org/td/CeFEvY8n5uOhE6vDnV0e?ifNotFound\u003dhttps%3A%2F%2Fchromium-swarm.appspot.com%2Ftask%3Fid%3D788bb2cf7de65010).",
+      "revId": "b987e01eba4bd8905020e873c862142c5e0ace70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
