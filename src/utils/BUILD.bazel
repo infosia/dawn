@@ -51,3 +51,8 @@ cc_library(
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
+
+alias(
+  name = "tint_build_is_win",
+  actual = "//src/tint:tint_build_is_win_true",
+)
