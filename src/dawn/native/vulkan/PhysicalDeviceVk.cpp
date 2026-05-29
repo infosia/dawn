@@ -1080,6 +1080,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // instructions as matrix elements instead of a source/dest pointee elements.
         // See crbug.com/460209126
         deviceToggles->Default(Toggle::VulkanCooperativeMatrixStrideIsMatrixElements, true);
+
+        // dawn:500417361
+        deviceToggles->Default(Toggle::VulkanSleepAfterLostDeviceWait, true);
     }
 
     if (IsAndroidSamsung() || IsAndroidQualcomm() || IsAndroidHuawei()) {

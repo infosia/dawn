@@ -792,6 +792,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::D3D12UseHLSL2021,
      {"d3d12_use_hlsl_2021", "Use HLSL 2021 when targeting DXC.", "https://crbug.com/508342536",
       ToggleStage::Device}},
+    {Toggle::VulkanSleepAfterLostDeviceWait,
+     {"vulkan_sleep_after_lost_device_wait",
+      "Insert an arbitrary sleep after WaitIdle functions on device loss.",
+      "https://crbug.com/500417361", ToggleStage::Device}},
     {Toggle::WaitIsThreadSafe,
      {"wait_is_thread_safe",
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "
