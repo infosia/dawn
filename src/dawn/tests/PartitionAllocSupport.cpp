@@ -35,7 +35,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wgnu-statement-expression-from-macro-expansion"
 #pragma GCC diagnostic ignored "-Wzero-length-array"
-#include "partition_alloc/shim/allocator_shim.h"  // nogncheck
+#include "partition_alloc/shim/allocator_shim.h"                                      // nogncheck
 #include "partition_alloc/shim/allocator_shim_default_dispatch_to_partition_alloc.h"  // nogncheck
 #pragma GCC diagnostic pop
 #endif
