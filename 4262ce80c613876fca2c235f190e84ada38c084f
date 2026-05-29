@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d021da81_2e1a3e86",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-29T12:29:57Z",
+      "side": 1,
+      "message": "I\u0027m confused by this. Isn\u0027t the point of the Agility SDK to make sure you have access to the latest D3D12 API?",
+      "parentUuid": "150c0254_e41465d4",
+      "range": {
+        "startLine": 107,
+        "startChar": 11,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "4262ce80c613876fca2c235f190e84ada38c084f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0b30da44_912cfe88",
         "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.h",
         "patchSetId": 37
