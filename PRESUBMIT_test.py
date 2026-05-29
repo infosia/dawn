@@ -79,8 +79,8 @@ class CheckChangeTodoHasOwnerTest(unittest.TestCase):
                 '}',
             ])
         ]
-        errors = PRESUBMIT._CheckChangeTodoHasOwner(
-            mock_input_api, MockOutputApi())
+        errors = PRESUBMIT._CheckChangeTodoHasOwner(mock_input_api,
+                                                    MockOutputApi())
         self.assertEqual(0, len(errors))
 
     def testValidTodo(self):
@@ -91,8 +91,8 @@ class CheckChangeTodoHasOwnerTest(unittest.TestCase):
                 '// TODO: owner - fix this',
             ])
         ]
-        errors = PRESUBMIT._CheckChangeTodoHasOwner(
-            mock_input_api, MockOutputApi())
+        errors = PRESUBMIT._CheckChangeTodoHasOwner(mock_input_api,
+                                                    MockOutputApi())
         self.assertEqual(0, len(errors))
 
     def testInvalidTodo(self):
@@ -102,8 +102,8 @@ class CheckChangeTodoHasOwnerTest(unittest.TestCase):
                 '// TODO: fix this',
             ])
         ]
-        errors = PRESUBMIT._CheckChangeTodoHasOwner(
-            mock_input_api, MockOutputApi())
+        errors = PRESUBMIT._CheckChangeTodoHasOwner(mock_input_api,
+                                                    MockOutputApi())
         self.assertEqual(1, len(errors))
         self.assertIn('Found TODO with no issue number', errors[0].message)
 
@@ -114,8 +114,8 @@ class CheckChangeTodoHasOwnerTest(unittest.TestCase):
                 'DAWN_UNSAFE_TODO(ptr[0] = 0);',
             ])
         ]
-        errors = PRESUBMIT._CheckChangeTodoHasOwner(
-            mock_input_api, MockOutputApi())
+        errors = PRESUBMIT._CheckChangeTodoHasOwner(mock_input_api,
+                                                    MockOutputApi())
         self.assertEqual(0, len(errors))
 
     def testMixedTodos(self):
@@ -126,8 +126,8 @@ class CheckChangeTodoHasOwnerTest(unittest.TestCase):
                 'DAWN_UNSAFE_TODO(ptr[0] = 0);',
             ])
         ]
-        errors = PRESUBMIT._CheckChangeTodoHasOwner(
-            mock_input_api, MockOutputApi())
+        errors = PRESUBMIT._CheckChangeTodoHasOwner(mock_input_api,
+                                                    MockOutputApi())
         self.assertEqual(1, len(errors))
         self.assertIn('src/dawn/Foo.cpp:1', errors[0].message)
         self.assertNotIn('src/dawn/Foo.cpp:2', errors[0].message)
@@ -144,7 +144,133 @@ class CheckChangeTodoHasOwnerTest(unittest.TestCase):
                 'DAWN_UNSAFE_TODO(ptr[0] = 0);',
             ])
         ]
-        errors = PRESUBMIT._CheckChangeTodoHasOwner(
+        errors = PRESUBMIT._CheckChangeTodoHasOwner(mock_input_api,
+                                                    MockOutputApi())
+        self.assertEqual(0, len(errors))
+
+
+class CheckUnsafeBuffersSafetyCommentsTest(unittest.TestCase):
+
+    def testNoUsage(self):
+        mock_input_api = MockInputApi()
+        mock_input_api.files = [
+            MockAffectedFile('src/dawn/Foo.cpp', [
+                'void Foo() {',
+                '    int x = 0;',
+                '}',
+            ])
+        ]
+        errors = PRESUBMIT._CheckUnsafeBuffersSafetyComments(
+            mock_input_api, MockOutputApi())
+        self.assertEqual(0, len(errors))
+
+    def testValidUsageSameLine(self):
+        mock_input_api = MockInputApi()
+        mock_input_api.files = [
+            MockAffectedFile('src/dawn/Foo.cpp', [
+                'void Foo() {',
+                '    DAWN_UNSAFE_BUFFERS(ptr[0] = 0); // SAFETY: safe',
+                '}',
+            ])
+        ]
+        errors = PRESUBMIT._CheckUnsafeBuffersSafetyComments(
+            mock_input_api, MockOutputApi())
+        self.assertEqual(0, len(errors))
+
+    def testValidUsagePrecedingLine(self):
+        mock_input_api = MockInputApi()
+        mock_input_api.files = [
+            MockAffectedFile('src/dawn/Foo.cpp', [
+                'void Foo() {',
+                '    // SAFETY: safe',
+                '    DAWN_UNSAFE_BUFFERS(ptr[0] = 0);',
+                '}',
+            ])
+        ]
+        errors = PRESUBMIT._CheckUnsafeBuffersSafetyComments(
+            mock_input_api, MockOutputApi())
+        self.assertEqual(0, len(errors))
+
+    def testValidUsagePrecedingLineWithOtherComments(self):
+        mock_input_api = MockInputApi()
+        mock_input_api.files = [
+            MockAffectedFile('src/dawn/Foo.cpp', [
+                'void Foo() {',
+                '    // SAFETY: safe',
+                '    // some other info',
+                '    DAWN_UNSAFE_BUFFERS(ptr[0] = 0);',
+                '}',
+            ])
+        ]
+        errors = PRESUBMIT._CheckUnsafeBuffersSafetyComments(
+            mock_input_api, MockOutputApi())
+        self.assertEqual(0, len(errors))
+
+    def testInvalidUsageNoComment(self):
+        mock_input_api = MockInputApi()
+        mock_input_api.files = [
+            MockAffectedFile('src/dawn/Foo.cpp', [
+                'void Foo() {',
+                '    DAWN_UNSAFE_BUFFERS(ptr[0] = 0);',
+                '}',
+            ])
+        ]
+        errors = PRESUBMIT._CheckUnsafeBuffersSafetyComments(
+            mock_input_api, MockOutputApi())
+        self.assertEqual(1, len(errors))
+        self.assertIn('DAWN_UNSAFE_BUFFERS usage must be accompanied',
+                      errors[0].items[0])
+
+    def testInvalidUsageCommentNotSafety(self):
+        mock_input_api = MockInputApi()
+        mock_input_api.files = [
+            MockAffectedFile('src/dawn/Foo.cpp', [
+                'void Foo() {',
+                '    // this is a comment but not safety',
+                '    DAWN_UNSAFE_BUFFERS(ptr[0] = 0);',
+                '}',
+            ])
+        ]
+        errors = PRESUBMIT._CheckUnsafeBuffersSafetyComments(
+            mock_input_api, MockOutputApi())
+        self.assertEqual(1, len(errors))
+
+    def testInvalidUsageCommentSeparatedByCode(self):
+        mock_input_api = MockInputApi()
+        mock_input_api.files = [
+            MockAffectedFile('src/dawn/Foo.cpp', [
+                'void Foo() {',
+                '    // SAFETY: safe',
+                '    int x = 0;',
+                '    DAWN_UNSAFE_BUFFERS(ptr[0] = 0);',
+                '}',
+            ])
+        ]
+        errors = PRESUBMIT._CheckUnsafeBuffersSafetyComments(
+            mock_input_api, MockOutputApi())
+        self.assertEqual(1, len(errors))
+
+    def testIgnoreCommentedUsage(self):
+        mock_input_api = MockInputApi()
+        mock_input_api.files = [
+            MockAffectedFile('src/dawn/Foo.cpp', [
+                'void Foo() {',
+                '    // DAWN_UNSAFE_BUFFERS(ptr[0] = 0);',
+                '}',
+            ])
+        ]
+        errors = PRESUBMIT._CheckUnsafeBuffersSafetyComments(
+            mock_input_api, MockOutputApi())
+        self.assertEqual(0, len(errors))
+
+    def testNonCppFilesIgnored(self):
+        mock_input_api = MockInputApi()
+        mock_input_api.files = [
+            MockAffectedFile('src/dawn/Foo.txt', [
+                'DAWN_UNSAFE_BUFFERS(ptr[0] = 0);',
+            ])
+        ]
+        errors = PRESUBMIT._CheckUnsafeBuffersSafetyComments(
             mock_input_api, MockOutputApi())
         self.assertEqual(0, len(errors))
 
