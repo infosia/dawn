@@ -596,6 +596,61 @@ def _CheckChangeTodoHasOwner(input_api, output_api):
     return []
 
 
+def _CheckBannedPatterns(input_api, output_api):
+    """Checks for banned patterns in affected files."""
+    cpp_filter = lambda f: f.LocalPath().endswith(('.h', '.cc', '.cpp', '.mm'))
+
+    BANNED_PATTERNS = [{
+        'regex': re.compile(r'\bDAWN_UNSAFE_TODO\b'),
+        'message':
+        'DAWN_UNSAFE_TODO is deprecated. Use DAWN_UNSAFE_BUFFERS with a // SAFETY: comment instead, or rewrite to be safe.',
+        'severity': 'warning',
+        'file_filter': cpp_filter,
+    }, {
+        'regex': re.compile(r'#pragma\s+allow_unsafe_buffers\b'),
+        'message':
+        '#pragma allow_unsafe_buffers is discouraged. Prefer using DAWN_UNSAFE_BUFFERS with a // SAFETY: comment for specific blocks, or rewrite to be safe.',
+        'severity': 'warning',
+        'file_filter': cpp_filter,
+    }]
+
+    warnings = []
+    errors = []
+
+    for f in input_api.AffectedFiles(include_deletes=False):
+        matching_patterns = []
+        for p in BANNED_PATTERNS:
+            file_filter = p.get('file_filter', lambda _: True)
+            if file_filter(f):
+                matching_patterns.append(p)
+
+        if not matching_patterns:
+            continue
+
+        for line_num, line in f.ChangedContents():
+            if line.strip().startswith('//'):
+                continue
+            for p in matching_patterns:
+                if p['regex'].search(line):
+                    err_msg = f"{f.LocalPath()}:{line_num}: {p['message']}"
+                    if p['severity'] == 'error':
+                        errors.append(err_msg)
+                    else:
+                        warnings.append(err_msg)
+
+    results = []
+    if errors:
+        results.append(
+            output_api.PresubmitError("Banned patterns detected (errors):",
+                                      items=errors))
+    if warnings:
+        results.append(
+            output_api.PresubmitPromptWarning(
+                "Banned patterns detected (warnings). Please avoid introducing new instances if possible:",
+                items=warnings))
+    return results
+
+
 def CheckChange(input_api, output_api):
     results = []
     results.extend(
@@ -630,6 +685,7 @@ def CheckChange(input_api, output_api):
         input_api.canned_checks.CheckDoNotSubmit(input_api, output_api))
     results.extend(_CheckCopyright(input_api, output_api))
     results.extend(_CheckUnsafeBuffersSafetyComments(input_api, output_api))
+    results.extend(_CheckBannedPatterns(input_api, output_api))
     # Note, the verbose_level here should match what is set in tools/lint so
     # the same set of lint errors are reported on the CQ and Kokoro bots.
     results.extend(
