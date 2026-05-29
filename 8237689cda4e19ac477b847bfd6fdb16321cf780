@@ -22,6 +22,30 @@
       },
       "revId": "8237689cda4e19ac477b847bfd6fdb16321cf780",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4669c53b_5b3fb364",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-29T19:39:14Z",
+      "side": 1,
+      "message": "Parallelization would be great! I\u0027m sure there\u0027s no particular reason we ended up with it sequential, it\u0027s just historical because we don\u0027t know much about how presubmit scripts work.",
+      "parentUuid": "b3577c87_5a42a97c",
+      "range": {
+        "startLine": 506,
+        "startChar": 4,
+        "endLine": 506,
+        "endChar": 15
+      },
+      "revId": "8237689cda4e19ac477b847bfd6fdb16321cf780",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
