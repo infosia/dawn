@@ -27,7 +27,7 @@
 
 #include <gtest/gtest.h>
 
-#include "src/dawn/native/ObjectBase.h"
+#include "dawn/native/ObjectBase.h"
 
 namespace dawn::native {
 namespace {

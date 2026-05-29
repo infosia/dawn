@@ -29,7 +29,7 @@
 
 #include <cstdint>
 
-#include "src/dawn/common/Assert.h"
+#include "dawn/common/Assert.h"
 
 namespace dawn {
 namespace {

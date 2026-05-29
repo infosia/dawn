@@ -30,8 +30,8 @@
 #include <string>
 #include <vector>
 
-#include "src/dawn/tests/DawnTest.h"
-#include "src/dawn/utils/WGPUHelpers.h"
+#include "dawn/tests/DawnTest.h"
+#include "dawn/utils/WGPUHelpers.h"
 #include "src/utils/compiler.h"
 
 namespace dawn {

@@ -27,7 +27,7 @@
 
 #include <limits>
 
-#include "src/dawn/tests/DawnTest.h"
+#include "dawn/tests/DawnTest.h"
 
 namespace dawn {
 namespace {

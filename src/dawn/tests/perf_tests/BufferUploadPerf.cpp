@@ -32,8 +32,8 @@
 
 #include <vector>
 
-#include "src/dawn/tests/perf_tests/DawnPerfTest.h"
-#include "src/dawn/utils/WGPUHelpers.h"
+#include "dawn/tests/perf_tests/DawnPerfTest.h"
+#include "dawn/utils/WGPUHelpers.h"
 
 namespace dawn {
 namespace {

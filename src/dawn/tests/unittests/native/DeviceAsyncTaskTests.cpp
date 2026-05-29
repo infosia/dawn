@@ -33,11 +33,12 @@
 #include <thread>
 #include <utility>
 
-#include "src/dawn/native/AsyncTask.h"
-#include "src/dawn/tests/unittests/native/mocks/DawnMockTest.h"
+#include "dawn/native/AsyncTask.h"
+#include "mocks/DawnMockTest.h"
 
 namespace dawn::native {
 namespace {
+
 
 class DeviceAsyncTaskTests : public DawnMockTest {};
 

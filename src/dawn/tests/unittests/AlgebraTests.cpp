@@ -27,7 +27,7 @@
 
 #include <gtest/gtest.h>
 
-#include "src/dawn/common/Algebra.h"
+#include "dawn/common/Algebra.h"
 
 namespace dawn::math {
 namespace {

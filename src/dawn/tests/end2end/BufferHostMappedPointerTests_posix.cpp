@@ -31,9 +31,9 @@
 #include <utility>
 #include <vector>
 
-#include "src/dawn/common/MutexProtected.h"
-#include "src/dawn/tests/MockCallback.h"
-#include "src/dawn/tests/end2end/BufferHostMappedPointerTests.h"
+#include "dawn/common/MutexProtected.h"
+#include "dawn/tests/MockCallback.h"
+#include "dawn/tests/end2end/BufferHostMappedPointerTests.h"
 
 namespace dawn {
 namespace {
