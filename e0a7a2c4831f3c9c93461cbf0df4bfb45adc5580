@@ -33,6 +33,40 @@
       "message": "oh _this_ is the link I was looking for, this one says we support the oldest still-supported LTS, rather than saying we support the newest LTS like the other link. Well, still fine, we can easily fix it afterward if anyone complains.",
       "revId": "e0a7a2c4831f3c9c93461cbf0df4bfb45adc5580",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "982e4726_5a4e82a4",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-29T20:00:25Z",
+      "side": 1,
+      "message": "ah... turns out our bots are running 3.23:\n\n```\n  CMake 3.30 or higher is required.  You are running version 3.23.3\n```\n\nSo guess we\u0027ll need to revert this change. Sorry about that!",
+      "revId": "e0a7a2c4831f3c9c93461cbf0df4bfb45adc5580",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad317fe7_57e6649c",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-29T20:00:25Z",
+      "side": 1,
+      "message": "Oops need to add this as an output in the build file:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/include/dawn/BUILD.gn\n\n(IIRC cmake doesn\u0027t need this.)",
+      "revId": "e0a7a2c4831f3c9c93461cbf0df4bfb45adc5580",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
