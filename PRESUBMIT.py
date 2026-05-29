@@ -505,6 +505,55 @@ def CheckPresubmitTests(input_api, output_api):
             files_to_check=[r'^PRESUBMIT_test\.py$']))
 
 
+def _CheckChangeTodoHasOwner(input_api, output_api):
+    """Wrapper for CheckChangeTodoHasOwner that ignores DAWN_UNSAFE_TODO."""
+
+    def FileFilter(affected_file):
+        filename = affected_file.LocalPath().replace('\\', '/')
+        if filename in ('PRESUBMIT.py', 'PRESUBMIT_test.py'):
+            return False
+        return input_api.FilterSourceFile(affected_file)
+
+    results = input_api.canned_checks.CheckChangeTodoHasOwner(
+        input_api, output_api, source_file_filter=FileFilter)
+    if not results:
+        return []
+
+    warning = results[0]
+    message = getattr(warning, 'message', getattr(warning, '_message', ''))
+    lines = message.split('\n')
+
+    filtered_errors = []
+    for line in lines:
+        match = re.match(r'Found TODO with no issue number in (.*):(\d+)',
+                         line)
+        if not match:
+            filtered_errors.append(line)
+            continue
+
+        filename = match.group(1)
+        line_num = int(match.group(2))
+
+        try:
+            abs_filename = input_api.os_path.join(
+                input_api.change.RepositoryRoot(), filename)
+            file_content = input_api.ReadFile(abs_filename)
+            file_lines = file_content.splitlines()
+            if 0 < line_num <= len(file_lines):
+                line_content = file_lines[line_num - 1]
+                if 'DAWN_UNSAFE_TODO' in line_content:
+                    continue
+        except Exception:
+            pass
+
+        filtered_errors.append(line)
+
+    if filtered_errors:
+        return [output_api.PresubmitPromptWarning('\n'.join(filtered_errors))]
+
+    return []
+
+
 def CheckChange(input_api, output_api):
     results = []
     results.extend(
@@ -525,8 +574,7 @@ def CheckChange(input_api, output_api):
             input_api, output_api))
     results.extend(
         input_api.canned_checks.CheckChangeHasNoTabs(input_api, output_api))
-    results.extend(
-        input_api.canned_checks.CheckChangeTodoHasOwner(input_api, output_api))
+    results.extend(_CheckChangeTodoHasOwner(input_api, output_api))
     results.extend(
         input_api.canned_checks.CheckChangeHasNoStrayWhitespace(
             input_api,
