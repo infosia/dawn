@@ -34,6 +34,24 @@
       "parentUuid": "c02c75d7_ea7345e4",
       "revId": "23a05af69c4d8a53bde357eb16480d012b00d78b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f72be2e3_62c37428",
+        "filename": "src/utils/BUILD.bazel",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-05-29T20:49:53Z",
+      "side": 1,
+      "message": "https://dawn-review.git.corp.google.com/c/dawn/+/312456",
+      "parentUuid": "80ff8c5a_2da30e8b",
+      "revId": "23a05af69c4d8a53bde357eb16480d012b00d78b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
