@@ -16,6 +16,40 @@
       "message": "Hello,\nCould you please take a look?",
       "revId": "ada821a9f7ded74d1a848193deac0d7d2f512986",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d4c7bc1_36ec17fa",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-29T19:55:13Z",
+      "side": 1,
+      "message": "nit: if this is copied from somewhere, link to it in a comment for reference",
+      "revId": "ada821a9f7ded74d1a848193deac0d7d2f512986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb12d1ee_d081665d",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-29T19:55:13Z",
+      "side": 1,
+      "message": "nit: Same as the others, it would be nice if this came from some upstream repository, but less important",
+      "revId": "ada821a9f7ded74d1a848193deac0d7d2f512986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
