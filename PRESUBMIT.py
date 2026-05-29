@@ -86,6 +86,33 @@ NONINCLUSIVE_LANGUAGE_REGEXES = [
 
 LINT_FILTERS = []
 
+_CPP_EXTS = ('.h', '.cc', '.cpp', '.mm')
+_CPP_FILTER = lambda f: f.LocalPath().endswith(_CPP_EXTS)
+
+# Configuration for banned patterns checks.
+# Each tuple is: (regex_str, message, severity, file_filter)
+BANNED_PATTERNS = [
+    # DAWN_UNSAFE_TODO (Warning)
+    (
+        r'\bDAWN_UNSAFE_TODO\b',
+        'Do not introduce new instances of DAWN_UNSAFE_TODO. '
+        'Use DAWN_UNSAFE_BUFFERS with a // SAFETY: comment instead, '
+        'or rewrite to be safe.',
+        'warning',
+        _CPP_FILTER,
+    ),
+
+    # #pragma allow_unsafe_buffers (Warning)
+    (
+        r'#pragma\s+allow_unsafe_buffers\b',
+        '#pragma allow_unsafe_buffers is discouraged. Prefer using '
+        'DAWN_UNSAFE_BUFFERS with a // SAFETY: comment for specific blocks, '
+        'or rewrite to be safe.',
+        'warning',
+        _CPP_FILTER,
+    ),
+]
+
 EXPECTED_LICENSE_TEXT = {
     "//": [
         "//",
@@ -578,6 +605,47 @@ def CheckChangeTodoHasOwner(input_api, output_api):
     if errors:
         return [output_api.PresubmitPromptWarning('\n'.join(errors))]
     return []
+
+
+def CheckBannedPatterns(input_api, output_api):
+    """Checks for banned patterns in affected files."""
+
+    warnings = []
+    errors = []
+
+    for f in input_api.AffectedFiles(include_deletes=False):
+        active_patterns = []
+        for pattern_str, message, severity, file_filter in BANNED_PATTERNS:
+            if not file_filter or file_filter(f):
+                active_patterns.append(
+                    (re.compile(pattern_str), message, severity))
+
+        if not active_patterns:
+            continue
+
+        for line_num, line in f.ChangedContents():
+            if line.strip().startswith('//'):
+                continue
+            for pattern, message, severity in active_patterns:
+                if pattern.search(line):
+                    err_msg = f"{f.LocalPath()}:{line_num}: {message}"
+                    if severity == 'error':
+                        errors.append(err_msg)
+                    else:
+                        warnings.append(err_msg)
+
+    results = []
+    if errors:
+        results.append(
+            output_api.PresubmitError("Banned patterns detected (errors):",
+                                      items=errors))
+    if warnings:
+        results.append(
+            output_api.PresubmitPromptWarning(
+                "Banned patterns detected (warnings). Please avoid introducing "
+                "new instances if possible:",
+                items=warnings))
+    return results
 
 
 def CheckChange(input_api, output_api):
