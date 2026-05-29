@@ -16,6 +16,98 @@
       "message": "Might want to expand this:\n* error if, stride is less than (col_major ? rows : cols)\n* error if (stride - 1) * (col_major ? cols : rows) + (col_major ? rows : cols) + offset \u003c arrayLength (fixed size only)\n  * use 0 for stride/offset if non-const",
       "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96645760_c44562ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-29T18:42:27Z",
+      "side": 1,
+      "message": "Agree, but I think it\u0027s fine to handle that separately as part of crbug.com/419083612\n\nAlso we need to remember to update the W3C proposal with all of these changes.",
+      "parentUuid": "111992e7_f521f3c0",
+      "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9f22b95_50f511d7",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4294,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-29T18:42:27Z",
+      "side": 1,
+      "message": "Nit: Could `TINT_ASSERT` these two, since we don\u0027t have other overloads and we\u0027d need to update this code if we ever do.",
+      "range": {
+        "startLine": 4286,
+        "startChar": 0,
+        "endLine": 4294,
+        "endChar": 5
+      },
+      "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67681189_10ebd30b",
+        "filename": "src/tint/lang/core/ir/validator_builtin_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-29T18:42:27Z",
+      "side": 1,
+      "message": "Worth adding a unit test for the negative i32 case too",
+      "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd11582c_b0b1025a",
+        "filename": "src/tint/lang/wgsl/resolver/subgroup_matrix_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-29T18:42:27Z",
+      "side": 1,
+      "message": "Worth adding a unit test for the negative i32 case too",
+      "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77698879_7fa84a36",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3696,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-29T18:42:27Z",
+      "side": 1,
+      "message": "The offset parameter is currently specified in elements of the matrix component type, which may differ from that array element type. Specifically, you can load/store a `i8`/u8` matrix from a `i32`/`u32` array. In this scenario we\u0027d need to adjust either the offset or array count by a factor of 4 to compensate.\n\nThis is likely why the E2E tests are failing on CQ.",
+      "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
