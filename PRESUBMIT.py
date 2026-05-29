@@ -505,6 +505,53 @@ def CheckPresubmitTests(input_api, output_api):
             files_to_check=[r'^PRESUBMIT_test\.py$']))
 
 
+def _CheckUnsafeBuffersSafetyComments(input_api, output_api):
+    """Checks that DAWN_UNSAFE_BUFFERS is accompanied by a // SAFETY: comment."""
+    # We only check C++ source files.
+    file_filter = lambda f: f.LocalPath().endswith(
+        ('.h', '.cc', '.cpp', '.mm'))
+
+    unsafe_buffers_regex = re.compile(r'\bDAWN_UNSAFE_BUFFERS\b')
+    safety_comment_regex = re.compile(r'//.*\bSAFETY\b')
+
+    problems = []
+
+    for f in input_api.AffectedFiles(include_deletes=False,
+                                     file_filter=file_filter):
+        lines = f.NewContents()
+        for line_num, line in enumerate(lines, start=1):
+            if line.strip().startswith('//'):
+                continue
+            if unsafe_buffers_regex.search(line):
+                # Check if safety comment is on the same line.
+                if safety_comment_regex.search(line):
+                    continue
+
+                # Check preceding lines for a SAFETY comment.
+                has_safety = False
+                for check_line_num in range(line_num - 1, 0, -1):
+                    check_line = lines[check_line_num - 1].strip()
+                    if not check_line.startswith('//'):
+                        # Not a comment line, stop searching.
+                        break
+                    if safety_comment_regex.search(check_line):
+                        has_safety = True
+                        break
+
+                if not has_safety:
+                    problems.append(
+                        f"{f.LocalPath()}:{line_num}: DAWN_UNSAFE_BUFFERS usage must be accompanied by a // SAFETY: comment."
+                    )
+
+    if problems:
+        return [
+            output_api.PresubmitError(
+                "DAWN_UNSAFE_BUFFERS usages must be accompanied by a // SAFETY: comment explaining why they are safe.",
+                items=problems)
+        ]
+    return []
+
+
 def _CheckChangeTodoHasOwner(input_api, output_api):
     """Wrapper for CheckChangeTodoHasOwner that ignores DAWN_UNSAFE_TODO."""
 
@@ -587,6 +634,7 @@ def CheckChange(input_api, output_api):
     results.extend(
         input_api.canned_checks.CheckDoNotSubmit(input_api, output_api))
     results.extend(_CheckCopyright(input_api, output_api))
+    results.extend(_CheckUnsafeBuffersSafetyComments(input_api, output_api))
     # Note, the verbose_level here should match what is set in tools/lint so
     # the same set of lint errors are reported on the CQ and Kokoro bots.
     results.extend(
