@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-05-21 08:22:58AM
+# Last rolled: 2026-05-29 07:31:34AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -2558,6 +2558,7 @@ crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:api,operation,rendering,3d_texture_
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgba8unorm-srgb";mipLevel=0;depthSlice=0 [ Failure ]
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgba8unorm-srgb";mipLevel=1;depthSlice=0 [ Failure ]
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgba8unorm-srgb";mipLevel=1;depthSlice=1 [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgba8unorm-srgb";mipLevel=2;depthSlice=0 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgba8unorm-srgb";mipLevel=2;depthSlice=1 [ Failure ]
 crbug.com/0000 [ intel-0x9bc5 linux renderer-skia-gl ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="astc-10x10-unorm";func="textureGather" [ Failure ]
 crbug.com/0000 [ intel-0x9bc5 linux renderer-skia-gl ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="astc-10x10-unorm";func="textureLoad" [ Failure ]
@@ -3241,6 +3242,7 @@ crbug.com/0000 [ android-pixel-6 android-t ] webgpu:api,validation,capability_ch
 crbug.com/0000 [ android-pixel-6 android-t ] webgpu:api,validation,capability_checks,limits,maxSampledTexturesPerShaderStage:createPipelineLayout,at_over:limitTest="underDefault";testValueName="atLimit";visibility=1;order="shiftByHalf" [ Failure ]
 crbug.com/0000 [ android-pixel-6 android-t ] webgpu:api,validation,capability_checks,limits,maxSampledTexturesPerShaderStage:createPipelineLayout,at_over:limitTest="underDefault";testValueName="overLimit";visibility=6;order="shiftByHalf" [ Failure ]
 crbug.com/0000 [ android-pixel-6 android-t ] webgpu:api,validation,capability_checks,limits,maxSamplersPerShaderStage:createBindGroupLayout,at_over:limitTest="atDefault";testValueName="overLimit";visibility=4;order="shiftByHalf" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="atDefault";testValueName="atLimit";async=false;bindingCombination="vertexAndFragmentWithPossibleVertexStageOverflow" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=true;bindingCombination="vertexAndFragmentWithPossibleVertexStageOverflow" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=true;bindingCombination="compute";access="write-only" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,createView:texture_view_usage_of_multiple_usages:usage1=16;usage2=32 [ Failure ]
