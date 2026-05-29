@@ -490,6 +490,18 @@ def _CheckCopyright(input_api, output_api):
     return errors
 
 
+def CheckPresubmitTests(input_api, output_api):
+    """Test PRESUBMIT.py during presubmit."""
+    # TODO - consider running the tests only when PRESUBMIT.py has been modified.
+    # For now, this is very cheap, so it doesn't matter.
+    return input_api.RunTests(
+        input_api.canned_checks.GetUnitTestsInDirectory(
+            input_api,
+            output_api,
+            input_api.PresubmitLocalPath(),
+            files_to_check=[r'^PRESUBMIT_test\.py$']))
+
+
 def CheckChange(input_api, output_api):
     results = []
     results.extend(
