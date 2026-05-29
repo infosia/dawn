@@ -490,6 +490,16 @@ def _CheckCopyright(input_api, output_api):
     return errors
 
 
+def CheckPythonTests(input_api, output_api):
+    """Runs Python unit tests in the root directory."""
+    return input_api.RunTests(
+        input_api.canned_checks.GetUnitTestsInDirectory(
+            input_api,
+            output_api,
+            input_api.PresubmitLocalPath(),
+            files_to_check=[r'.+_(?:unit)?test\.py$']))
+
+
 def CheckChange(input_api, output_api):
     results = []
     results.extend(
