@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cf159c2_8071e226",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-29T17:49:58Z",
+      "side": 1,
+      "message": "PTAL, the go.mod version was last bumped here:\nhttps://dawn-review.git.corp.google.com/c/dawn/+/305636",
+      "revId": "f80d267ed6811c0a4665f96791a87856f1ddd836",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
