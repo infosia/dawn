@@ -2071,6 +2071,11 @@ class MultiGeneratorFromDawnJSON(Generator):
                            'java/' + kt_file_path + '/Constants.kt',
                            [RENDER_PARAMS_BASE, params_kotlin]))
 
+            renders.append(
+                FileRender(
+                    'art/api_kotlin_experimental_annotation.kt',
+                    'java/' + kt_file_path + '/ExperimentalWebGpuApi.kt',
+                    [RENDER_PARAMS_BASE, params_kotlin]))
         if "jni" in targets:
             params_kotlin = compute_kotlin_params(loaded_json, kotlin_json,
                                                   webgpu_kt_docs_data,
