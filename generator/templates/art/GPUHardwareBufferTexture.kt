@@ -1,5 +1,6 @@
 package {{ kotlin_package }}
 
+@ExperimentalWebGpuApi
 public class GPUHardwareBufferTexture(
     handle: Long,
     public val texture: GPUTexture,
