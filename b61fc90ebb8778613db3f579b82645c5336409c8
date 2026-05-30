@@ -16,6 +16,24 @@
       "message": "LGTM. This kind of skipped lazy-clear seems like a common security vulnerability surface. Shrek recently landed a fix for something similar in https://dawn-review.git.corp.google.com/c/dawn/+/309588. I wonder if there\u0027s a way for us to make this kinda of bug less likely going forwards.",
       "revId": "b61fc90ebb8778613db3f579b82645c5336409c8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "008903ca_8041519e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-30T14:01:20Z",
+      "side": 1,
+      "message": "I think we need better test coverage.",
+      "parentUuid": "e53c39cf_c0fdb654",
+      "revId": "b61fc90ebb8778613db3f579b82645c5336409c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
