@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58c4e9a6_911d88e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4866099
+      },
+      "writtenOn": "2026-05-30T05:37:48Z",
+      "side": 1,
+      "message": "I\u0027m adding Wayland window surface support to ANGLE\u0027s WGPU backend (cr bug: angle/7885810). Currently build_overrides/dawn.gni can\u0027t set dawn_use_wayland because declare_args() blocks overrides from imported files when the values differ. This change switches to if (!defined()) guards, consistent with how dawn_overrides_with_defaults.gni handles every other config variable.\n\nAlso changed the default from false to is_linux \u0026\u0026 !is_chromeos so that standalone Linux builds get both X11 and Wayland surface support by default, matching dawn_use_x11.\n\nCould I also get CQ dryrun access? I\u0027d like to be able to trigger trybots for future Dawn changes related to ANGLE integration.",
+      "revId": "aafd6aee90997adf1fe11f12d4b553811253e3a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
