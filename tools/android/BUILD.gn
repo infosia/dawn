@@ -70,6 +70,7 @@ dawn_json_generator("kotlin_gen") {
     "java/androidx/webgpu/ErrorFilter.kt",
     "java/androidx/webgpu/ErrorType.kt",
     "java/androidx/webgpu/Exceptions.kt",
+    "java/androidx/webgpu/ExperimentalWebGpuApi.kt",
     "java/androidx/webgpu/ExternalTextureRotation.kt",
     "java/androidx/webgpu/FeatureLevel.kt",
     "java/androidx/webgpu/FeatureName.kt",

@@ -45,6 +45,7 @@ import androidx.webgpu.GPU.createInstance
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
+@OptIn(ExperimentalWebGpuApi::class)
 class GPUHardwareBufferTest {
 
     private lateinit var webGpu: WebGpu
