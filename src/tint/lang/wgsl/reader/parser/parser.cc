@@ -2740,12 +2740,17 @@ Maybe<const ast::Expression*> Parser::core_lhs_expression() {
                                               Token::Type::kTemplateArgsRight);
             });
             ident = builder_.Ident(source(), t.to_str(), std::move(tmpl_args.value));
+
+            auto params = expect_argument_expression_list("function call");
+            if (params.errored) {
+                return Failure::kErrored;
+            }
+
+            return builder_.Call(source(), ident, std::move(params.value));
         }
 
         if (peek_is(Token::Type::kParenLeft)) {
-            if (!ident) {
-                ident = builder_.Ident(source(), t.to_str());
-            }
+            ident = builder_.Ident(source(), t.to_str());
 
             auto params = expect_argument_expression_list("function call");
             if (params.errored) {
@@ -2778,7 +2783,6 @@ Maybe<const ast::Expression*> Parser::core_lhs_expression() {
 //   : core_lhs_expression component_or_swizzle_specifier ?
 //   | AND lhs_expression
 //   | STAR lhs_expression
-//   | call_expression
 Maybe<const ast::Expression*> Parser::lhs_expression() {
     // Gather up all the `*`, `&` and `&&` tokens into a list and create all of the unary ops at
     // once instead of recursing. This handles the case where the fuzzer decides >8k `*`s would be
