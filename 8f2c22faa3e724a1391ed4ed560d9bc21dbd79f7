@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5557036_6e5179e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-05-31T15:38:38Z",
+      "side": 1,
+      "message": "Apologies for the large CL size. The bulk of the diff is just indentation updates for nested brackets in the test files. The core logic changes are isolated to webgpu.kt.",
+      "revId": "8f2c22faa3e724a1391ed4ed560d9bc21dbd79f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
