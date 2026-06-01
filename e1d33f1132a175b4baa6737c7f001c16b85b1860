@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32135cf3_7de27baa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-01T20:19:38Z",
+      "side": 1,
+      "message": "First failing build in May 7:\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-win-x64-nvidia-gtx1660-exp-rel/1105/overview",
+      "revId": "e1d33f1132a175b4baa6737c7f001c16b85b1860",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
