@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2aca0ff8_cd530bcb",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-01T17:47:18Z",
+      "side": 1,
+      "message": "What does it mean if there is no original struct?",
+      "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5a2b021b_58eb58c0",
         "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
         "patchSetId": 5
