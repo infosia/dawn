@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c08728a_f5f5062d",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-01T15:51:32Z",
+      "side": 1,
+      "message": "Should we do it this way with an `IsWindowsAMD`?",
+      "revId": "a32b18955d7a1bc50bcde701bdd50648081f4191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
