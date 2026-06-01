@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08865cc6_6fa0369b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-01T17:42:19Z",
+      "side": 1,
+      "message": "Just trying to understand how this works at a high level at the moment, added a few initial comments.\n\nI wonder if this would be better if the conversion where we insert the `transpose` did change the type, the change is to drop the row major marker on the member since it\u0027s no longer row major. Then if the type changes, how much of this goes away?",
+      "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a2b021b_58eb58c0",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-01T17:42:19Z",
+      "side": 1,
+      "message": "Why was the cast removed here and in ReplaceLoadVectorElement?",
+      "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b226bb5_bff36cfb",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-01T17:42:19Z",
+      "side": 1,
+      "message": "How did the access end up emtpy?",
+      "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
