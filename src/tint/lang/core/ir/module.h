@@ -78,6 +78,8 @@ enum class Property : uint8_t {
     kAllowStructMatrixDecorations,
     /// Allows access instructions to create pointers to vector elements.
     kAllowVectorElementPointer,
+    /// Allows MSL specific entry point interface variance.
+    kMslAllowEntryPointInterface,
 
     /// Disallow use of the min/max/clamp builtins with vector types.
     kDisallowVectorMinMaxClamp,
@@ -108,6 +110,7 @@ auto& operator<<(STREAM& out, Property p) {
         CASE(AllowPointerToHandle);
         CASE(AllowStructMatrixDecorations);
         CASE(AllowVectorElementPointer);
+        CASE(MslAllowEntryPointInterface);
         CASE(DisallowVectorMinMaxClamp);
     }
 #undef CASE
