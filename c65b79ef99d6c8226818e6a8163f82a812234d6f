@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "322c33a2_79b87c63",
+        "filename": "src/tint/lang/core/ir/module.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-01T17:25:41Z",
+      "side": 1,
+      "message": "This comment seems weird. Should be it `added after BindingRemapper` ? The `Used after` seems not right. Even just dropping the 2nd sentence would be better I think.",
+      "revId": "c65b79ef99d6c8226818e6a8163f82a812234d6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4755a3c_67b7500c",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture_fuzz.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-01T17:25:41Z",
+      "side": 1,
+      "message": "Hm, this feels weird to allow a capability just because the fuzzer does something bad? Should we fix the fuzzer to not do this instead?",
+      "revId": "c65b79ef99d6c8226818e6a8163f82a812234d6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
