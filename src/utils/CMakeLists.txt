@@ -26,8 +26,12 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 set(private_headers
+    "assert.cc"
+    "assert.h"
     "compiler.h"
     "force_crash.h"
+    "log.cc"
+    "log.h"
     "non_copyable.h"
     "non_movable.h"
     "numeric.h"
