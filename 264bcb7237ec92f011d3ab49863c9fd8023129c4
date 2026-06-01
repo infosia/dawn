@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "67e933a8_e207dff0",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-06-01T21:06:06Z",
+      "side": 1,
+      "message": "Perhaps we can land this now, and make the suggested improvement in a followup?",
+      "parentUuid": "0d0fcdf1_1f45ed41",
+      "revId": "264bcb7237ec92f011d3ab49863c9fd8023129c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6b6449ee_b3c8bd65",
         "filename": "src/dawn/tests/unittests/validation/InternalUsageValidationTests.cpp",
         "patchSetId": 1
