@@ -31,8 +31,10 @@ load("//src/tint:flags.bzl", "COPTS")
 cc_library(
   name = "utils",
   hdrs = [
+    "assert.h",
     "compiler.h",
     "force_crash.h",
+    "log.h",
     "non_copyable.h",
     "non_movable.h",
     "numeric.h",
@@ -45,6 +47,8 @@ cc_library(
     "//conditions:default": [],
   }),
   srcs = [
+    "assert.cc",
+    "log.cc",
     "placeholder.cc",
   ],
   deps = [],
