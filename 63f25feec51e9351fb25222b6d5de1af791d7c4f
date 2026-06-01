@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63254e16_409d7886",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-01T19:32:51Z",
+      "side": 1,
+      "message": "sorry, copy-pasted this from another file without testing, I have no idea how to set up a bazel build!",
+      "revId": "63f25feec51e9351fb25222b6d5de1af791d7c4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
