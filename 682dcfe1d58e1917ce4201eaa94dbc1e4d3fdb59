@@ -16,6 +16,24 @@
       "message": "```suggestion\nThe ShaderIO transform in the SPIR-V reader lower removes the\n```",
       "revId": "682dcfe1d58e1917ce4201eaa94dbc1e4d3fdb59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "993a5a47_d293b097",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-01T18:11:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be226357_eb926c77",
+      "revId": "682dcfe1d58e1917ce4201eaa94dbc1e4d3fdb59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
