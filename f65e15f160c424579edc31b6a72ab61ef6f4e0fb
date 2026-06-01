@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3cadc95_8a593dac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-01T19:53:20Z",
+      "side": 1,
+      "message": "I\u0027m not too familiar with the threading mechanisms of kotlin, but I assume that it\u0027s more idiomatic for this type of dedicated thread usage (kinda like Chromium), over just a simple mutex?\n\nAssuming that\u0027s the case, the general use seems fine. I do wonder if it would be easy to change this should the Dawn native APIs become more multithreadable in the future.",
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
