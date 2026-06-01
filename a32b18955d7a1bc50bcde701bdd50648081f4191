@@ -16,6 +16,24 @@
       "message": "Should we do it this way with an `IsWindowsAMD`?",
       "revId": "a32b18955d7a1bc50bcde701bdd50648081f4191",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1890b01e_a59323d3",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-01T17:11:25Z",
+      "side": 1,
+      "message": "Oh yeah, good call, much better. (Think I\u0027m gonna follow up with factoring out IsAndroid/IsWindows as a cleanup...)",
+      "parentUuid": "2c08728a_f5f5062d",
+      "revId": "a32b18955d7a1bc50bcde701bdd50648081f4191",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
