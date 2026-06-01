@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "64f695e0_5851d3e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-01T20:13:45Z",
+      "side": 1,
+      "message": "Could you explain why we want this? Currently `build_overrides/dawn.gni` only sets dependency paths, we are not using it for any type of build configuration flags (though I guess there are a small number of build configs that `dawn_overrides_with_defaults.gni` will take from there).\n\nIt seems that currently, Dawn sets its flags depending on the Chromium `//build` flags that are set (e.g. `dawn_use_x11 \u003d ozone_platform_x11`). Why do we want this one to go the other way (Chromium overrides the Dawn flag)?",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "aafd6aee90997adf1fe11f12d4b553811253e3a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "58c4e9a6_911d88e6",
