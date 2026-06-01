@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67987f63_c36397e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-01T11:35:45Z",
+      "side": 1,
+      "message": "Can you please file a bug and link here? Why is this being done, they type would still be the same, is it just to use `transpose`? Is it faster?",
+      "revId": "33a306ec80761f6a44970faa00846b1b870e7e40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
