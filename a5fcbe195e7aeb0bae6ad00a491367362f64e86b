@@ -141,6 +141,30 @@
       },
       "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3751c507_cfeffd25",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-01T13:56:22Z",
+      "side": 1,
+      "message": "Hmm, when I built this locally, it worked fine removing this explicit include. I don\u0027t understand how this is not working, since the GN build file you modified ensures the include path comes first. Can you provide more details of how you reproduced this?",
+      "parentUuid": "7d8e6ad4_6e7b5f0a",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
