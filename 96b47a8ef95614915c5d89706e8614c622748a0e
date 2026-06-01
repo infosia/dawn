@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f629ba43_5f5b03d3",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-01T15:20:34Z",
+      "side": 1,
+      "message": "It wouldn\u0027t be any harm to remove it, but we don\u0027t need to enable this workaround on Linux Vulkan (Mesa drivers are separate and don\u0027t have this bug), so I think it makes sense to gate it on Windows where it\u0027s needed.",
+      "parentUuid": "08471999_44efb89a",
+      "revId": "96b47a8ef95614915c5d89706e8614c622748a0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e46a8254_cc936eb1",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-28T11:39:29Z",
       "side": 1,
       "message": "Since we\u0027re erasing the outer call and replacing usages with the inner, can you update one of these tests to use the result of the outer so we can se it\u0027s changed to %3?",
+      "revId": "96b47a8ef95614915c5d89706e8614c622748a0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71cf84e9_be1da0f6",
+        "filename": "src/tint/lang/core/ir/transform/collapse_subgroup_min_max_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-01T15:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e46a8254_cc936eb1",
       "revId": "96b47a8ef95614915c5d89706e8614c622748a0e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
