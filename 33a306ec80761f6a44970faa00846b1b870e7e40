@@ -16,6 +16,24 @@
       "message": "Can you please file a bug and link here? Why is this being done, they type would still be the same, is it just to use `transpose`? Is it faster?",
       "revId": "33a306ec80761f6a44970faa00846b1b870e7e40",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c604249a_359c2ef7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4864227
+      },
+      "writtenOn": "2026-06-01T13:02:17Z",
+      "side": 1,
+      "message": "Sorry, my bad. While I was about to file a bug, I found that this was already tracked as crbug.com/512509727, so I just linked that one now.\n\nThe intent here is to preserve the logical matrix value after lowering a SPIR-V `RowMajor` member to WGSL. For square matrices the WGSL type does stay as `mat4x4\u003cf32\u003e`, but `transpose(mat4x4\u003cf32\u003e)` still changes the value unless the matrix is symmetric.\n\nThe previous lowering seemed to rely on the rewritten type changing as the signal to revisit uses. That works for non-square matrices, where the physical WGSL type changes, but it misses square matrices because the physical type is unchanged. As a result, whole-matrix loads/stores and some aliases/construction/constant paths could skip the row-major conversion.\n\nI didn\u0027t benchmark my changes, so I can\u0027t tell if speed is affected.",
+      "parentUuid": "67987f63_c36397e4",
+      "revId": "33a306ec80761f6a44970faa00846b1b870e7e40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
