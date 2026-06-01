@@ -131,6 +131,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c8df9b5_1b4e76fc",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-06-01T08:16:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9173d885_8c6a2c07",
+      "revId": "4262ce80c613876fca2c235f190e84ada38c084f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b30da44_912cfe88",
@@ -144,6 +162,30 @@
       "writtenOn": "2026-05-28T20:25:49Z",
       "side": 1,
       "message": "Now that you\u0027ve added `CreateDevice`, `SerializeVersionedRootSignature` and `CreateVersionedRootSignatureDeserializer` as methods of `PlatformFunctions`, please move `d3d12CreateDevice`, `d3d12SerializeRootSignature` and `d3d12CreateVersionedRootSignatureDeserializer` to the private section.  \n\nMakes it clearer to users of the class what the right way is to perform these operations.",
+      "range": {
+        "startLine": 64,
+        "startChar": 28,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "4262ce80c613876fca2c235f190e84ada38c084f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e34d3d20_c5bbecf9",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-06-01T08:16:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b30da44_912cfe88",
       "range": {
         "startLine": 64,
         "startChar": 28,
