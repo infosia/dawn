@@ -16,6 +16,23 @@
       "message": "Corentin resolved the comments in patch 2.",
       "revId": "efdf4464002178eb9c980d8bee4b17636dd515e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1702367f_013eed2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-01T21:35:32Z",
+      "side": 1,
+      "message": "Thanks for the reminder! I had forgotten to actually CQ+2 ^^\u0027",
+      "revId": "efdf4464002178eb9c980d8bee4b17636dd515e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
