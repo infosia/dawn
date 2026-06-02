@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5756bdd_77c85f0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4887071
+      },
+      "writtenOn": "2026-06-02T17:01:32Z",
+      "side": 1,
+      "message": "Thanks for taking care so fast about this. Are you going to add the other two platforms to the build? Rapsberry pi (AARCH64) with Wayland support and tvos (darwin), so that I do not have to take care about parallel builds?",
+      "revId": "feb671da7e38310e2dd484f832114bc628bd3df9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
