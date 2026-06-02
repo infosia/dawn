@@ -303,6 +303,131 @@ DAWN_INSTANTIATE_TEST(OpArrayLengthTest,
                       VulkanBackend(),
                       WebGPUBackend());
 
+// Regression test for missing stage-visibility filter in
+// GenerateArrayLengthFromuniformData (ShaderModuleGL.cpp). A storage buffer in
+// the layout that is *not* visible to the stage being compiled is given an
+// entry in Tint's bindpoint_to_size_index but no corresponding entry in
+// remapper_data (because GenerateBindingRemapping skips it). In raise.cc the
+// fallback path then writes a pre-remap key into size_indices that can collide
+// with the post-remap key of a *visible* buffer. ArrayLengthFromUniform then
+// loads the wrong UBO slot for arrayLength(), defeating Robustness clamping.
+class OpArrayLengthVisibilityCollisionTest : public DawnTest {
+  protected:
+    void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                           dawn::utils::ComboLimits& required) override {
+        supported.UnlinkedCopyTo(&required);
+    }
+};
+
+TEST_P(OpArrayLengthVisibilityCollisionTest, ComputeWithFragmentOnlyBufferInLayout) {
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+
+    // Buffer A: large, bound at full size to a FRAGMENT-only storage slot.
+    constexpr uint32_t kBufASize = 1u << 20;  // 1 MiB → arrayLength<u32> = 262144
+    wgpu::BufferDescriptor descA;
+    descA.size = kBufASize;
+    descA.usage = wgpu::BufferUsage::Storage;
+    wgpu::Buffer bufA = device.CreateBuffer(&descA);
+
+    // Buffer B: large allocation, but only a 64-byte sub-range will be bound to
+    // the COMPUTE-visible storage slot. With the collision the shader receives
+    // A's bound size as B's arrayLength, so the Robustness clamp on B[idx]
+    // permits writes far past the 64-byte bound range.
+    constexpr uint32_t kBufBSize = 16384;  // 16 KiB underlying allocation
+    constexpr uint32_t kBufBBound = 64;    // 64 bytes bound → arrayLength = 16
+    constexpr uint32_t kOobIndex = 1000;   // Target B[1000] (byte 4000) – OOB
+    constexpr uint32_t kOobMarker = 0xDEAD4A11u;
+    std::vector<uint32_t> initB(kBufBSize / 4, 0u);
+    wgpu::Buffer bufB = utils::CreateBufferFromData(
+        device, initB.data(), kBufBSize,
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst);
+
+    // PipelineLayoutGL assigns ssboIndex by iterating groups in order, so:
+    //   group 0 (A, FRAGMENT-only) → ssboIndex 0
+    //   group 1 (B, COMPUTE)       → ssboIndex 1  → glIndex_B = 1
+    // Choose A's WGSL @binding == glIndex_B (= 1) so that A's pre-remap key
+    // {0,1} equals B's post-remap key {0, glIndex_B}.
+    //
+    // The unordered_map iteration order in raise.cc decides which value wins
+    // for size_indices[{0,1}]. With libc++ the second-inserted entry (B) goes
+    // to the head of the iteration list, so A's stale entry is iterated last
+    // and wins for every M; we sweep a few values for robustness.
+    for (uint32_t M = 0; M < 4; ++M) {
+        wgpu::BindGroupLayout bglA = utils::MakeBindGroupLayout(
+            device, {{1, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::ReadOnlyStorage}});
+        wgpu::BindGroupLayout bglB = utils::MakeBindGroupLayout(
+            device, {{M, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage}});
+
+        wgpu::BindGroupLayout bgls[] = {bglA, bglB};
+        wgpu::PipelineLayoutDescriptor plDesc;
+        plDesc.bindGroupLayoutCount = 2;
+        plDesc.bindGroupLayouts = bgls;
+        wgpu::PipelineLayout pl = device.CreatePipelineLayout(&plDesc);
+
+        std::string wgsl = "@group(1) @binding(" + std::to_string(M) +
+                           ") var<storage, read_write> B : array<u32>;\n"
+                           "@compute @workgroup_size(1) fn main() {\n"
+                           "  let len = arrayLength(&B);\n"
+                           "  B[0] = len;\n"
+                           "  // Robustness wraps this as B[min(idx, arrayLength(&B)-1)].\n"
+                           "  // With the bug arrayLength(&B) is huge, so the write lands at\n"
+                           "  // index 1000 – past the 64-byte bound range.\n"
+                           "  B[" +
+                           std::to_string(kOobIndex) + "u] = " + std::to_string(kOobMarker) +
+                           "u;\n"
+                           "}\n";
+
+        wgpu::ComputePipelineDescriptor pipelineDesc;
+        pipelineDesc.layout = pl;
+        pipelineDesc.compute.module = utils::CreateShaderModule(device, wgsl.c_str());
+        wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&pipelineDesc);
+
+        wgpu::BindGroup bgA = utils::MakeBindGroup(device, bglA, {{1, bufA, 0, kBufASize}});
+        wgpu::BindGroup bgB = utils::MakeBindGroup(device, bglB, {{M, bufB, 0, kBufBBound}});
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bgA);
+        pass.SetBindGroup(1, bgB);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        // Read back B[0] (the arrayLength the shader observed) and B[1000].
+        std::vector<uint32_t> readback(kBufBSize / 4);
+        wgpu::BufferDescriptor stagingDesc;
+        stagingDesc.size = kBufBSize;
+        stagingDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
+        wgpu::Buffer staging = device.CreateBuffer(&stagingDesc);
+        wgpu::CommandEncoder enc2 = device.CreateCommandEncoder();
+        enc2.CopyBufferToBuffer(bufB, 0, staging, 0, kBufBSize);
+        wgpu::CommandBuffer cmd2 = enc2.Finish();
+        queue.Submit(1, &cmd2);
+        bool done = false;
+        staging.MapAsync(wgpu::MapMode::Read, 0, kBufBSize, wgpu::CallbackMode::AllowProcessEvents,
+                         [&done](wgpu::MapAsyncStatus, wgpu::StringView) { done = true; });
+        while (!done) {
+            WaitABit();
+        }
+        const uint32_t* data =
+            static_cast<const uint32_t*>(staging.GetConstMappedRange(0, kBufBSize));
+        uint32_t observedLen = data[0];
+        DAWN_UNSAFE_TODO(uint32_t observedOob = data[kOobIndex]);
+        staging.Unmap();
+
+        const uint32_t expectedLen = kBufBBound / 4;  // 16
+        EXPECT_EQ(expectedLen, observedLen);
+        EXPECT_NE(kOobMarker, observedOob);
+    }
+}
+
+DAWN_INSTANTIATE_TEST(OpArrayLengthVisibilityCollisionTest,
+                      OpenGLESBackend(),
+                      OpenGLESBackend({"gl_use_array_length_from_uniform"}),
+                      VulkanBackend());
+
 enum class TieredLimits {
     No,
     Yes,
