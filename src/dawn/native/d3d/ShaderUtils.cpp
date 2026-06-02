@@ -135,6 +135,17 @@ std::vector<const wchar_t*> GetDXCArguments(std::wstring_view entryPointNameW,
         arguments.push_back(L"/enable-16bit-types");
     }
 
+    // TODO(amaiorano): HACK! Add a bunch of possible dirs that contain the HLSL includes. We won't
+    // need this once https://github.com/microsoft/DirectXShaderCompiler/pull/8445 lands
+    // ${dawn_dxc_dir}/tools/clang/lib/Headers/hlsl
+    arguments.push_back(L"-I");
+    arguments.push_back(
+        L"../../third_party/directx-shader-compiler/src/tools/clang/lib/Headers/hlsl");
+    arguments.push_back(L"-I");
+    arguments.push_back(L"../third_party/directx-shader-compiler/src/tools/clang/lib/Headers/hlsl");
+    arguments.push_back(L"-I");
+    arguments.push_back(L"third_party/directx-shader-compiler/src/tools/clang/lib/Headers/hlsl");
+
     arguments.push_back(L"-HV");
     arguments.push_back(hlslVersion);
 
@@ -158,10 +169,10 @@ ResultOrError<ComPtr<IDxcBlob>> CompileShaderDXC(const d3d::D3DBytecodeCompilati
     // pointers in this vector don't have static lifetime.
     std::vector<const wchar_t*> arguments = GetDXCArguments(entryPointW, r, hlslVersion);
     ComPtr<IDxcResult> result;
-    DAWN_TRY(CheckHRESULT(
-        r.dxcCompiler.UnsafeGetValue()->Compile(&dxcBuffer, arguments.data(), arguments.size(),
-                                                nullptr, IID_PPV_ARGS(&result)),
-        "DXC compile"));
+    DAWN_TRY(CheckHRESULT(r.dxcCompiler.UnsafeGetValue()->Compile(
+                              &dxcBuffer, arguments.data(), arguments.size(),
+                              r.dxcIncludeHandler.UnsafeGetValue(), IID_PPV_ARGS(&result)),
+                          "DXC compile"));
 
     HRESULT hr;
     DAWN_TRY(CheckHRESULT(result->GetStatus(&hr), "DXC get status"));
@@ -256,7 +267,7 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
         Extent3D workgroupSize;
         DAWN_TRY_ASSIGN(workgroupSize,
                         ValidateComputeStageWorkgroupSize(
-                            result->workgroup_info, /*usesSubgroupMatrix=*/false, r.maxSubgroupSize,
+                            result->workgroup_info, r.usesSubgroupMatrix, r.maxSubgroupSize,
                             r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
 
         if (result->workgroup_info.subgroup_size.has_value()) {

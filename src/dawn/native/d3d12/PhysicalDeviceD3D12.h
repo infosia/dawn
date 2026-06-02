@@ -57,6 +57,9 @@ class PhysicalDevice : public d3d::PhysicalDevice {
 
     bool SupportsBufferMapExtendedUsages() const;
 
+    std::vector<SubgroupMatrixConfig> EnumerateSubgroupMatrixConfigs(
+        const TogglesState& toggles) const;
+
   private:
     using Base = d3d::PhysicalDevice;
 

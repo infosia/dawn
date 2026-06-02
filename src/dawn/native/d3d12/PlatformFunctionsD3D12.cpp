@@ -158,6 +158,14 @@ void PlatformFunctions::EnsureAgilitySDKDeviceFactory() {
     // Obtain the device configuration interface for root signature operations.
     DAWN_CHECK(SUCCEEDED(mDeviceFactory.As(&mDeviceConfiguration)));
 
+    // Must enable experimental shader models to use D3D12 LinAlg while in Preview.
+    // This must be done before the device is created via the factory.
+    UUID Features[] = {D3D12ExperimentalShaderModels};
+    // TODO(amaiorano): Allow failure? If we have latest Agility SDK, is this expected to always
+    // succeed?
+    DAWN_CHECK(SUCCEEDED(mDeviceFactory->EnableExperimentalFeatures(_countof(Features), Features,
+                                                                    nullptr, nullptr)));
+
     dawn::InfoLog() << "[AgilitySDK] active: SDK version = " << D3D12_PREVIEW_SDK_VERSION;
 }
 #endif  // DAWN_USE_AGILITY_SDK

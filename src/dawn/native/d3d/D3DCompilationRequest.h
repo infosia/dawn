@@ -76,19 +76,21 @@ using InterStageShaderVariablesMask = std::bitset<tint::hlsl::writer::kMaxInterS
     X(uint32_t, maxSubgroupSize)                                                     \
     X(uint32_t, waveLaneCountMin)                                                    \
     X(uint32_t, waveLaneCountMax)                                                    \
+    X(bool, usesSubgroupMatrix)                                                      \
     X(bool, disableSymbolRenaming)                                                   \
     X(bool, dumpShaders)                                                             \
     X(bool, dumpShadersOnFailure)
 
-#define D3D_BYTECODE_COMPILATION_REQUEST_MEMBERS(X)      \
-    X(bool, hasShaderF16Feature)                         \
-    X(uint32_t, compileFlags)                            \
-    X(Compiler, compiler)                                \
-    X(std::wstring_view, dxcShaderProfile)               \
-    X(std::string_view, fxcShaderProfile)                \
-    X(UnsafeUnserializedValue<pD3DCompile>, d3dCompile)  \
-    X(UnsafeUnserializedValue<IDxcLibrary*>, dxcLibrary) \
-    X(UnsafeUnserializedValue<IDxcCompiler3*>, dxcCompiler)
+#define D3D_BYTECODE_COMPILATION_REQUEST_MEMBERS(X)         \
+    X(bool, hasShaderF16Feature)                            \
+    X(uint32_t, compileFlags)                               \
+    X(Compiler, compiler)                                   \
+    X(std::wstring_view, dxcShaderProfile)                  \
+    X(std::string_view, fxcShaderProfile)                   \
+    X(UnsafeUnserializedValue<pD3DCompile>, d3dCompile)     \
+    X(UnsafeUnserializedValue<IDxcLibrary*>, dxcLibrary)    \
+    X(UnsafeUnserializedValue<IDxcCompiler3*>, dxcCompiler) \
+    X(UnsafeUnserializedValue<IDxcIncludeHandler*>, dxcIncludeHandler)
 
 DAWN_SERIALIZABLE(struct, HlslCompilationRequest, HLSL_COMPILATION_REQUEST_MEMBERS){};
 #undef HLSL_COMPILATION_REQUEST_MEMBERS
