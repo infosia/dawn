@@ -16,6 +16,24 @@
       "message": "I believe that removing declare_args() makes this not overridable by the developer in their local build config in `args.gn`. The things in `dawn_overrides_with_defaults.gni` are different, those are meant to be overridden by the parent project (not by `args.gn`).\n\nIf we make this change to dawn_use_x11/dawn_use_wayland then perhaps they should move to `dawn_overrides_with_defaults.gni`, however, I think we do want it to be overridable.",
       "revId": "432db5d793fab353075fc2f445f4a20ef84f337a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20b023fc_d9d31514",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4866099
+      },
+      "writtenOn": "2026-06-02T02:16:39Z",
+      "side": 0,
+      "message": "Done. PS2 keeps declare_args() — it only flips the default from false to is_linux \u0026\u0026 !is_chromeos, matching the existing dawn_use_x11 pattern. Developers can still override via gn args dawn_use_wayland\u003dfalse.",
+      "parentUuid": "716e3cfa_1f761b5e",
+      "revId": "432db5d793fab353075fc2f445f4a20ef84f337a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
