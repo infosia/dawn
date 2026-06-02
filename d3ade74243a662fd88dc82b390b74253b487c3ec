@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fcceb5c4_9e9a4217",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-02T21:21:07Z",
+      "side": 1,
+      "message": "Emscripten include path fix (it was indeed unrelated): https://dawn-review.googlesource.com/c/dawn/+/313255\n\n\u003e Internally dawn doesn\u0027t need to scan for deps\n\nNice, that\u0027s better than disabling it on older compilers :)",
+      "parentUuid": "498357a7_1850f307",
+      "revId": "d3ade74243a662fd88dc82b390b74253b487c3ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3c56072_28950a01",
         "filename": "src/dawn/CMakeLists.txt",
         "patchSetId": 10
