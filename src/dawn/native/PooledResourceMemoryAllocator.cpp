@@ -85,11 +85,18 @@ void AllocationSizeTracker::Decrement(ExecutionSerial currentSerial, uint64_t de
     mMemoryToDecrement.Enqueue(decrementSize, currentSerial);
 }
 
-void AllocationSizeTracker::Tick(ExecutionSerial completedSerial) {
-    for (uint64_t size : mMemoryToDecrement.IterateUpTo(completedSerial)) {
-        DAWN_ASSERT(mTotalSize >= size);
+void AllocationSizeTracker::UpdateCompletedSerialTo(ExecutionSerial completedSerial) {
+    for (auto& size : mMemoryToDecrement.IterateUpTo(completedSerial)) {
         mTotalSize -= size;
     }
     mMemoryToDecrement.ClearUpTo(completedSerial);
 }
+
+void AllocationSizeTracker::AssumeCommandsComplete() {
+    for (auto& size : mMemoryToDecrement.IterateAll()) {
+        mTotalSize -= size;
+    }
+    mMemoryToDecrement.Clear();
+}
+
 }  // namespace dawn::native
