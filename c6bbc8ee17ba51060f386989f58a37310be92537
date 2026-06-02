@@ -69,6 +69,24 @@
       "parentUuid": "764069a6_e710479e",
       "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31088476_66e972ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4866099
+      },
+      "writtenOn": "2026-06-02T06:12:53Z",
+      "side": 1,
+      "message": "Root-caused it. Flipping `dawn_use_wayland` on makes `src/dawn/common/BUILD.gn` define `DAWN_USE_WAYLAND`, which activates the  `glfwGetWaylandDisplay()`/`glfwGetWaylandWindow()` branch in `src/dawn/glfw/utils.cpp`. But `third_party/gn/glfw/BUILD.gn` only builds the X11 backend  (the existing // No wayland support for GLFW in GN builds), so those symbols aren\u0027t in libglfw.a -\u003e `ComputeBoids`/`dawn_perf_tests` fail to link.\n  \nReproduced locally with the bot\u0027s `args.gn` + `dawn_use_wayland\u003dtrue` — `ComputeBoids` fails with the same undefined symbol:  `glfwGetWaylandDisplay/Window` referenced from `SetupWindowAndGetSurfaceDescriptor` in `libglfw.a`.\n\nWhat this CL actually needs for ANGLE is the native path — `DAWN_USE_WAYLAND` enabling `WGPUSurfaceSourceWaylandSurface` in `Surface.cpp`, which builds fine. Only the GLFW windowing helper breaks.\n\nSo I\u0027d propose decoupling them: gate the `glfwGetWayland*` branch in `utils.cpp` on GLFW actually having a Wayland backend (a signal from the glfw GN target, never set today) rather than on `DAWN_USE_WAYLAND`. The branch stays compiled out, the link succeeds, and the default flip still gives ANGLE its native Wayland surface support. The heavier alternative — actually adding the GLFW Wayland backend to the GN build (wayland-scanner protocol generation + libwayland-client/libxkbcommon/libdecor) — is a much bigger change and probably its own CL.\n\nDoes the decouple direction sound right to you, or would you rather track adding the GLFW backend instead?\n\nFor context on the consumer side: the WIP ANGLE CL that needs this is https://chromium-review.googlesource.com/c/angle/angle/+/7885810 — it adds `WindowSurfaceWgpuWayland` on top of Dawn\u0027s `WGPUSurfaceSourceWaylandSurface` (the native path, which builds fine). It sits on ANGLE\u0027s already-landed Wayland support (https://chromium-review.googlesource.com/c/angle/angle/+/7844989).",
+      "parentUuid": "4987adf1_7d0f5e47",
+      "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
