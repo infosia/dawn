@@ -59,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0344a4b_39629e39",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4294,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-02T20:26:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9f22b95_50f511d7",
+      "range": {
+        "startLine": 4286,
+        "startChar": 0,
+        "endLine": 4294,
+        "endChar": 5
+      },
+      "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67681189_10ebd30b",
@@ -72,6 +96,24 @@
       "writtenOn": "2026-05-29T18:42:27Z",
       "side": 1,
       "message": "Worth adding a unit test for the negative i32 case too",
+      "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b53b7977_11ae08e1",
+        "filename": "src/tint/lang/core/ir/validator_builtin_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-02T20:26:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67681189_10ebd30b",
       "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -93,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db3a9d45_00c4e047",
+        "filename": "src/tint/lang/wgsl/resolver/subgroup_matrix_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-02T20:26:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd11582c_b0b1025a",
+      "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77698879_7fa84a36",
@@ -106,6 +166,24 @@
       "writtenOn": "2026-05-29T18:42:27Z",
       "side": 1,
       "message": "The offset parameter is currently specified in elements of the matrix component type, which may differ from that array element type. Specifically, you can load/store a `i8`/u8` matrix from a `i32`/`u32` array. In this scenario we\u0027d need to adjust either the offset or array count by a factor of 4 to compensate.\n\nThis is likely why the E2E tests are failing on CQ.",
+      "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c69047d7_d5ac6bc3",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3696,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-02T20:26:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77698879_7fa84a36",
       "revId": "7386c1361cb8f1f36af1b576c3d04592bce36822",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
