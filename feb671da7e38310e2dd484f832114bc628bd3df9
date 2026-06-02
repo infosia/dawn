@@ -16,6 +16,24 @@
       "message": "Thanks for taking care so fast about this. Are you going to add the other two platforms to the build? Rapsberry pi (AARCH64) with Wayland support and tvos (darwin), so that I do not have to take care about parallel builds?",
       "revId": "feb671da7e38310e2dd484f832114bc628bd3df9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7af1d494_d3ea3b23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-02T17:31:14Z",
+      "side": 1,
+      "message": "We don\u0027t really have a tvOS device to test on, maybe you can contribute that upstream as part of the matrix of builds that we do on Github?",
+      "parentUuid": "d5756bdd_77c85f0e",
+      "revId": "feb671da7e38310e2dd484f832114bc628bd3df9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
