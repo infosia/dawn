@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1afbd10_8946bb94",
+        "filename": "src/tint/lang/core/ir/module.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T13:42:36Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Allows lets to have any type\n```\n\nWe don\u0027t mention usage locations for any others (and we could easily add it into other locations). Alternatively, if this is MSL specific, `kAllowMslAnyLetType` would better match the MSL only property we already have.",
+      "revId": "de7d3fb6eaf8a5233623ee18b6f5234f29024915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
