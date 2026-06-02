@@ -16,6 +16,24 @@
       "message": "```suggestion\n    /// Allows lets to have any type\n```\n\nWe don\u0027t mention usage locations for any others (and we could easily add it into other locations). Alternatively, if this is MSL specific, `kAllowMslAnyLetType` would better match the MSL only property we already have.",
       "revId": "de7d3fb6eaf8a5233623ee18b6f5234f29024915",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b8b7666_9f4d3d0d",
+        "filename": "src/tint/lang/core/ir/module.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-02T16:53:49Z",
+      "side": 1,
+      "message": "Removed the extra part of the comment for now.\n\nMany of these properties are specific to certain backends, so maybe we can go back through and add prefixes to them all. Made a note to come back to this.",
+      "parentUuid": "d1afbd10_8946bb94",
+      "revId": "de7d3fb6eaf8a5233623ee18b6f5234f29024915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
