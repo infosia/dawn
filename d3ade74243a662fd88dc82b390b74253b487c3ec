@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c20e2337_5e7e1544",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2026-06-02T18:09:52Z",
+      "side": 1,
+      "message": "FWIW, Skia just upgraded clang linux to v22",
+      "parentUuid": "b279b6e2_a63c7169",
+      "revId": "d3ade74243a662fd88dc82b390b74253b487c3ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3c56072_28950a01",
         "filename": "src/dawn/CMakeLists.txt",
         "patchSetId": 10
