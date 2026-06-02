@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd017bb4_12460ff9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-02T22:43:21Z",
+      "side": 1,
+      "message": "Rebased past the `utils` move, code not changed. PTAL",
+      "revId": "8006c62bc309b3dcc383cc329d8c1b63b6f4f1e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
