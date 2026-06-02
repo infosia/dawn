@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82c65aef_08bae48f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-02T18:48:51Z",
+      "side": 1,
+      "message": "Good to know thanks, that probably won\u0027t be an issue for skia then, probably just for local cmake builds (but we need those to work anyway).\n\nI believe there are three issues. These two are related to this CL:\n- `fatal error: \u0027dawn/webgpu_cpp.h\u0027 file not found` that Corentin explained above\n- `the compiler does not provide a way to discover the import graph dependencies`\n\nThis one is related to Dan\u0027s include path changes:\n- When building emdawnwebgpu tests (under Emscripten), `fatal error: \u0027dawn/webgpu.h\u0027 file not found` when building `dawn_wgpu_utils`",
+      "parentUuid": "c20e2337_5e7e1544",
+      "revId": "d3ade74243a662fd88dc82b390b74253b487c3ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3c56072_28950a01",
         "filename": "src/dawn/CMakeLists.txt",
         "patchSetId": 10
