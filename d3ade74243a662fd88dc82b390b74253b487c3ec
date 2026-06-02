@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "07481974_ee53edd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-02T17:59:10Z",
+      "side": 1,
+      "message": "We had to revert unfortunately. I think there are two issues:\n- [This include](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/include/webgpu/webgpu.h) breaks. I\u0027m not sure why it doesn\u0027t break on the Gerrit build checks, but it broke in both the `emcmake` wasm [build](https://github.com/google/dawn/actions/runs/26677264644/job/78631307107) and when Skia builds Dawn as a dependency (by invoking CMake from its build).\n- If clang is too old it says `the compiler does not provide a way to discover the import graph dependencies`.",
+      "revId": "d3ade74243a662fd88dc82b390b74253b487c3ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3c56072_28950a01",
         "filename": "src/dawn/CMakeLists.txt",
         "patchSetId": 10
