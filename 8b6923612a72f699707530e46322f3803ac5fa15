@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6555cf45_1d15598f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-02T18:23:01Z",
+      "side": 1,
+      "message": "High level question, would it make more sense to add the explicit structs that you want to be \"experimental\" to a list in `dawn_kotlin.json` instead of adding the tag to the `dawn.json`? It feels like it would make more sense to put it in there, especially because you have to name specific members to skip already in that file for some of the new experimental structs.",
+      "revId": "8b6923612a72f699707530e46322f3803ac5fa15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
