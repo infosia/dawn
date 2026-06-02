@@ -16,6 +16,23 @@
       "message": "LGTM, needs a second reviewer.",
       "revId": "19daaf0df74269cbf1a5d541b68eabab71ff2f00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2cf97c3_234519df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-02T22:08:54Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand how this prevents an error in that case, but LGTM regardless!",
+      "revId": "19daaf0df74269cbf1a5d541b68eabab71ff2f00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
