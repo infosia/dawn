@@ -87,6 +87,24 @@
       "parentUuid": "4987adf1_7d0f5e47",
       "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52b0252a_4494e8b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-02T15:35:13Z",
+      "side": 1,
+      "message": "Drive by:\n\nDo you still need this for GN builds? The CMake build has wayland support turned on by default now.\n\nAdding Wayland support will require adding GN support for building GLFW with wayland support, which is non-trivial as it involves code generator for wayland protocol files.",
+      "parentUuid": "31088476_66e972ef",
+      "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
