@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2908c47_7dd23d96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-06-02T21:23:53Z",
+      "side": 1,
+      "message": "This new test helped verify that resolves from multiple transient attachments in a single pass are working correctly on Mali devices. Probably don\u0027t need to update the ResolveMultipleAttachmentInSeparatePasses workaround as a result.",
+      "revId": "a94b86a83f1371fa550f70d988245059fa30a4eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
