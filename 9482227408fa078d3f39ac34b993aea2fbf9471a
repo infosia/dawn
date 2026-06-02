@@ -16,6 +16,24 @@
       "message": "I don\u0027t think this is true. Non-core types can be created in the frontends and lowered down to Core. This is checking to verify that we didn\u0027t fail to remove any of those non-core types as we lower.",
       "revId": "9482227408fa078d3f39ac34b993aea2fbf9471a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43ec04eb_a8461513",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-02T16:56:08Z",
+      "side": 1,
+      "message": "Added it back and updated all of the transforms that need to add property.",
+      "parentUuid": "5c257bc1_275e3eda",
+      "revId": "9482227408fa078d3f39ac34b993aea2fbf9471a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
