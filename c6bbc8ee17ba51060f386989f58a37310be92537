@@ -51,6 +51,24 @@
       "parentUuid": "4fd8706f_445da256",
       "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4987adf1_7d0f5e47",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-02T05:24:33Z",
+      "side": 1,
+      "message": "I don\u0027t remember how to do that (or if I can do that) offhand. For now you should be able to reproduce the error locally, which will be more useful anyway, because the bots are really slow. Here is the `args.gn` from a failing bot (you can see it under `lookup GN args`):\n\n```\ndawn_build_node_bindings \u003d true\ndawn_enable_d3d12 \u003d false\ndawn_use_swiftshader \u003d true\nis_clang \u003d true\nis_component_build \u003d true\nis_debug \u003d true\ntarget_cpu \u003d \"x64\"\ntarget_os \u003d \"linux\"\ntint_build_hlsl_writer \u003d true\ntint_build_msl_writer \u003d true\ntint_build_spv_reader \u003d true\ntint_build_spv_writer \u003d true\ntint_build_wgsl_reader \u003d true\ntint_build_wgsl_writer \u003d true\n```\n\nand it\u0027s failing on the target `ComputeBoids`.",
+      "parentUuid": "764069a6_e710479e",
+      "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
