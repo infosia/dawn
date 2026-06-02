@@ -97,9 +97,7 @@ TEST_F(IR_HlslMemberBuiltinCallTest, DoesNotMatchNonMemberFunction) {
         b.Return(func, builtin);
     });
 
-    auto res = core::ir::Validate(mod, core::ir::Capabilities{
-                                           core::ir::Capability::kAllowNonCoreTypes,
-                                       });
+    auto res = core::ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(
         res.Failure().reason,
@@ -139,9 +137,7 @@ TEST_F(IR_HlslMemberBuiltinCallTest, DoesNotMatchIncorrectType) {
         b.Return(func, builtin);
     });
 
-    auto res = core::ir::Validate(mod, core::ir::Capabilities{
-                                           core::ir::Capability::kAllowNonCoreTypes,
-                                       });
+    auto res = core::ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(
         res.Failure().reason,
@@ -189,9 +185,7 @@ TEST_F(IR_HlslMemberBuiltinCallTest, DoesNotMatchIncorrectType_NotAllOverloadsAr
         b.Return(func, builtin);
     });
 
-    auto res = core::ir::Validate(mod, core::ir::Capabilities{
-                                           core::ir::Capability::kAllowNonCoreTypes,
-                                       });
+    auto res = core::ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(
         res.Failure().reason,
@@ -242,9 +236,7 @@ TEST_F(IR_HlslMemberBuiltinCallTest, Valid) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod, core::ir::Capabilities{
-                                           core::ir::Capability::kAllowNonCoreTypes,
-                                       });
+    auto res = core::ir::Validate(mod);
     ASSERT_EQ(res, Success);
 }
 
@@ -262,9 +254,7 @@ TEST_F(IR_HlslMemberBuiltinCallTest, MissingResults) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod, core::ir::Capabilities{
-                                           core::ir::Capability::kAllowNonCoreTypes,
-                                       });
+    auto res = core::ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason,
               R"(:7:16 error: Load: expected exactly 1 results, got 0
@@ -301,9 +291,7 @@ TEST_F(IR_HlslMemberBuiltinCallTest, TooFewArgs) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod, core::ir::Capabilities{
-                                           core::ir::Capability::kAllowNonCoreTypes,
-                                       });
+    auto res = core::ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason,
               R"(:7:17 error: Load: no matching call to 'Load(hlsl.byte_address_buffer<read>)'
@@ -402,9 +390,7 @@ TEST_F(IR_HlslMemberBuiltinCallTest, TooManyArgs) {
         b.Return(func);
     });
 
-    auto res = core::ir::Validate(mod, core::ir::Capabilities{
-                                           core::ir::Capability::kAllowNonCoreTypes,
-                                       });
+    auto res = core::ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(
         res.Failure().reason,
