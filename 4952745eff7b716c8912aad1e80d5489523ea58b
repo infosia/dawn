@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b01185e_65d6fc94",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T20:46:45Z",
+      "side": 1,
+      "message": "I think, technically, I could skip this as the fragment has to be a subset of the vertex locations. But, seemed safer this way.",
+      "revId": "4952745eff7b716c8912aad1e80d5489523ea58b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a04d364_52d82711",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T20:46:45Z",
+      "side": 1,
+      "message": "Is this the right thing to do here, or should it be a DAWN_ASSERT?",
+      "revId": "4952745eff7b716c8912aad1e80d5489523ea58b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
