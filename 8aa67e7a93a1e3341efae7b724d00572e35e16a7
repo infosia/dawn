@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1f9e69f_ceee9695",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-06-02T16:41:58Z",
+      "side": 1,
+      "message": "Geoff: PTAL. Thanks!\n\nNote that I copied the end2end test almost verbatim from the bug report (just fixed compilation and removed logging). I\u0027m happy to try to trim it down if you\u0027d prefer.",
+      "revId": "8aa67e7a93a1e3341efae7b724d00572e35e16a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
