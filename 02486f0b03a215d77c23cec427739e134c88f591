@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed364ff4_3903a91a",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-02T22:25:56Z",
+      "side": 1,
+      "message": "This looks like just an if-elseif-else, why is the `shouldComplete` needed?",
+      "revId": "02486f0b03a215d77c23cec427739e134c88f591",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11eb7ca6_60f0c500",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-02T22:25:56Z",
+      "side": 1,
+      "message": "By the time this happens it\u0027s possible we already called WaitForQueueSerial. Seems like we should first check for support on all the queues and then wait them?",
+      "revId": "02486f0b03a215d77c23cec427739e134c88f591",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
