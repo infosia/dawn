@@ -105,6 +105,24 @@
       "parentUuid": "31088476_66e972ef",
       "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bb12ba6_2a3cc637",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4866099
+      },
+      "writtenOn": "2026-06-02T20:54:34Z",
+      "side": 1,
+      "message": "Yes, still needed for GN — ANGLE consumes Dawn via the GN build, not CMake, so Dawn\u0027s CMake Wayland default doesn\u0027t help here.\n\nI think \"need it for the GN build for ANGLE\" is ambiguous, so to be precise: ANGLE doesn\u0027t use GLFW at all — not in production, and not in ANGLE\u0027s own test harness. ANGLE only needs `DAWN_USE_WAYLAND` defined in the GN build so Dawn\u0027s native WGPUSurfaceSourceWaylandSurface runtime path works. The GLFW link breakage we\u0027ve been discussing is purely Dawn\u0027s own test harness (ComputeBoids/dawn_perf_tests), which gets pulled in only because flipping dawn_use_wayland also activates the GLFW windowing helper.\n\nSo there are two distinct levels of effort:\n\n1. Wayland for production ANGLE usage — define `DAWN_USE_WAYLAND` in GN + decouple Dawn\u0027s GLFW helper so it isn\u0027t dragged in. No GLFW Wayland backend / protocol codegen required.\n2. Level 1 + Wayland for Dawn\u0027s GLFW-based test harness — i.e. actually adding the non-trivial GN GLFW Wayland support (wayland-scanner protocol generation + libwayland/xkbcommon/libdecor) that Corentin mentioned.\n\nANGLE only needs level 1. I\u0027d propose scoping this CL to level 1 via the decouple (Dawn\u0027s GLFW samples/tests keep using X11, same as today — no regression), and leaving level 2 as a separate future effort if/when someone wants Wayland for the GLFW harness. Does that scoping sound good?",
+      "parentUuid": "52b0252a_4494e8b8",
+      "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
