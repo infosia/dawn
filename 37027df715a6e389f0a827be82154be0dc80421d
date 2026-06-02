@@ -16,6 +16,142 @@
       "message": "PTAL.",
       "revId": "37027df715a6e389f0a827be82154be0dc80421d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0ba0e52_34ffe87c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-02T16:41:29Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8190e2d1_6db32c10",
+        "filename": "docs/dawn/debugging.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-02T16:41:29Z",
+      "side": 1,
+      "message": "That\u0027s now force_crash.h I think. I forgot to update it earlier.",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c7cda23_e0a47488",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-02T16:41:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0abaa2a1_2991864c",
+        "filename": "generator/templates/dawn/wire/client/ClientHandlers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-02T16:41:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b1333b6_cfdf802a",
+        "filename": "generator/templates/dawn/wire/server/ServerDoers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-02T16:41:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99424232_1961b9cb",
+        "filename": "generator/templates/dawn/wire/server/ServerHandlers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-02T16:41:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13037ee0_c5ee0996",
+        "filename": "generator/templates/dawn_proc.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-02T16:41:29Z",
+      "side": 1,
+      "message": "nit: include order is no longer alphabetical (template files don\u0027t get formatted by clang-format.)",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15d6c228_774f716e",
+        "filename": "generator/templates/mock_api.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-02T16:41:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
