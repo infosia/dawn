@@ -172,6 +172,7 @@ class Device final : public d3d::Device {
     // Those DXC methods are needed by d3d12::ShaderModule
     ComPtr<IDxcLibrary> GetDxcLibrary() const;
     ComPtr<IDxcCompiler3> GetDxcCompiler() const;
+    ComPtr<IDxcIncludeHandler> GetDxcIncludeHandler() const;
 
     const PerStage<std::wstring>& GetDxcShaderProfiles() const;
 

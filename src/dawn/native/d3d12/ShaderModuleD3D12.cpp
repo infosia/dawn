@@ -142,6 +142,8 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         req.bytecode.compiler = d3d::Compiler::DXC;
         req.bytecode.dxcLibrary = UnsafeUnserializedValue(device->GetDxcLibrary().Get());
         req.bytecode.dxcCompiler = UnsafeUnserializedValue(device->GetDxcCompiler().Get());
+        req.bytecode.dxcIncludeHandler =
+            UnsafeUnserializedValue(device->GetDxcIncludeHandler().Get());
         req.bytecode.dxcShaderProfile = device->GetDxcShaderProfiles()[stage];
     } else {
         req.bytecode.compiler = d3d::Compiler::FXC;
@@ -362,6 +364,8 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         req.hlsl.waveLaneCountMin = deviceInfo.waveLaneCountMin;
         req.hlsl.waveLaneCountMax = deviceInfo.waveLaneCountMax;
     }
+
+    req.hlsl.usesSubgroupMatrix = programmableStage.metadata->usesSubgroupMatrix;
 
     CacheResult<d3d::CompiledShader> compiledShader;
     DAWN_TRY_LOAD_OR_RUN(compiledShader, device, std::move(req),
