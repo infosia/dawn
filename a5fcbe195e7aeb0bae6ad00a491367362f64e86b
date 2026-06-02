@@ -237,6 +237,30 @@
       },
       "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fafb3bd4_25d9dc97",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-02T19:44:37Z",
+      "side": 1,
+      "message": "Thanks for sharing your build output. I think I know what\u0027s going on: you\u0027re using a local install of Visual Studio, rather than the one downloaded with gclient/depot_tools. I\u0027m going to reproduce this locally and see what the right move is.",
+      "parentUuid": "ad9f4f34_88d338f3",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
