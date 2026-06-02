@@ -16,6 +16,24 @@
       "message": "Is this handled elsewhere now?",
       "revId": "84e2b7eeec737989ef167fbb7c433e5f89cb1c0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b75e67dd_2169e3de",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 4864227
+      },
+      "writtenOn": "2026-06-02T09:38:48Z",
+      "side": 0,
+      "message": "The type walk here is still needed to detect when an access goes through a row-major member, especially after the member decoration has been stripped from the rewritten struct. The later provenance sets only propagate that information through derived pointer values and aliases; they do not replace the initial member lookup.",
+      "parentUuid": "ce7d33f1_f181eab0",
+      "revId": "84e2b7eeec737989ef167fbb7c433e5f89cb1c0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

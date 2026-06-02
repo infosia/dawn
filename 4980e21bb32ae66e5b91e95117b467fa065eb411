@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "181a23c4_8addc4ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4864227
+      },
+      "writtenOn": "2026-06-02T09:38:48Z",
+      "side": 1,
+      "message": "Thanks, that makes sense to ask. The bug is a correctness issue for square row-major matrices, not a performance optimization. The previous lowering mostly discovered work by seeing that the matrix type changed after row-major rewriting. For square matrices, the logical type remains `matNxN`, so after the struct member\u0027s row-major decoration is removed, later uses can look type-identical and skip the required semantic transpose.\n\nThe updated patch tracks pointer provenance for values that still refer to physical row-major storage. Changing the ordinary matrix type would not really solve the square case unless we introduced some separate transient row-major matrix marker/type through the IR, which seemed like a larger design change for this fix.",
+      "parentUuid": "08865cc6_6fa0369b",
+      "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2aca0ff8_cd530bcb",
         "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
         "patchSetId": 5
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-01T17:47:18Z",
       "side": 1,
       "message": "What does it mean if there is no original struct?",
+      "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80b7c8cb_2334859b",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 4864227
+      },
+      "writtenOn": "2026-06-02T09:38:48Z",
+      "side": 1,
+      "message": "That means the construct result type is not one of the structs rebuilt by this transform. The `struct_to_original` map is only needed when a struct was rewritten and the row-major member decoration was stripped from the new struct. In that case, the original struct lets us recover which members were row-major. If there is no original struct entry, there is no stripped row-major metadata to recover, so the existing type-difference check is sufficient.",
+      "parentUuid": "2aca0ff8_cd530bcb",
       "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de9b113b_b77b649e",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 4864227
+      },
+      "writtenOn": "2026-06-02T09:38:48Z",
+      "side": 1,
+      "message": "The source can now be either an `Access` or a `Let` that aliases a row-major matrix pointer. That happens when we split an aliased matrix-vector access and use a `let` to carry the matrix pointer plus the saved column index. Keeping this as the more general instruction result lets both direct accesses and let aliases flow through the same load/store-vector-element path.",
+      "parentUuid": "5a2b021b_58eb58c0",
+      "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5b226bb5_bff36cfb",
         "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
         "patchSetId": 5
@@ -65,6 +119,24 @@
       "writtenOn": "2026-06-01T17:42:19Z",
       "side": 1,
       "message": "How did the access end up emtpy?",
+      "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e5dd3f7_95fa2c6a",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 4864227
+      },
+      "writtenOn": "2026-06-02T09:38:48Z",
+      "side": 1,
+      "message": "This can happen for a single-index access through an alias to the matrix pointer, for example `let m \u003d \u0026(s.m); m[i]`. When we pop the final index to save it as the row/column index, there are no indices left for the `Access` instruction. Since `Access` needs at least one index, the patch creates a `let` for the matrix pointer and records the popped index alongside it.",
+      "parentUuid": "5b226bb5_bff36cfb",
       "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
