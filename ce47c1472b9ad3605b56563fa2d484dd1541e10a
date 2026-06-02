@@ -16,6 +16,24 @@
       "message": "The changes here and in the next CL look reasonable, but there is also an existing CL that addresses these same issues (and more) from another contributor here:\nhttps://dawn-review.git.corp.google.com/c/dawn/+/310015\n\nHolding off on approving this one for now to avoid conflicts with that one.",
       "revId": "ce47c1472b9ad3605b56563fa2d484dd1541e10a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddb119fb_4d33f2e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T17:42:11Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c9a915c3_53ba1f70",
+      "revId": "ce47c1472b9ad3605b56563fa2d484dd1541e10a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
