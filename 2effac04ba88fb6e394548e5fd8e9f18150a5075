@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77c346b2_2f664945",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T04:05:37Z",
+      "side": 1,
+      "message": "PTAL. I was able to do a `bazel build //src/utils` which completed successfully, so it seems to be correct? Not sure how else to test as I don\u0027t usually use bazel.",
+      "revId": "2effac04ba88fb6e394548e5fd8e9f18150a5075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
