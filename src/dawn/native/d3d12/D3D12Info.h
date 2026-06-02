@@ -34,6 +34,11 @@
 
 namespace dawn::native::d3d12 {
 
+// TODO(crbug.com/513251803): Don't store shader model as decimal value
+constexpr uint32_t ShaderModel(uint32_t major, uint32_t minor) {
+    return major * 10 + minor;
+}
+
 class PhysicalDevice;
 
 struct D3D12DeviceInfo {
