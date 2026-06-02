@@ -33,6 +33,24 @@
       "message": "Hmmm it seems some build issue has crept in with this config 😞\nWould you be able to look at it?",
       "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "764069a6_e710479e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4866099
+      },
+      "writtenOn": "2026-06-02T05:15:43Z",
+      "side": 1,
+      "message": "I will take a look. To avoid pinging you repeatedly to kick trybot while I iterate, can I have permission to kick trybot myself?",
+      "parentUuid": "4fd8706f_445da256",
+      "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
