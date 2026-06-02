@@ -1961,6 +1961,9 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
 // LoadOp::ExpandResolveTexture. The resolve texture will have its content preserved between
 // passes.
 TEST_P(DawnLoadResolveTextureTest, DrawThenLoad) {
+    // TODO(crbug.com/519251257): Produces incorrect result on Pixel 10.
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsImgTec() && IsVulkan());
+
     auto multiSampledTexture = CreateTextureForRenderAttachment(
         kColorFormat, 4, 1, 1,
         /*transientAttachment=*/device.HasFeature(wgpu::FeatureName::TransientAttachments),
@@ -2009,6 +2012,9 @@ TEST_P(DawnLoadResolveTextureTest, DrawThenLoad) {
 
 // Test using ExpandResolveTexture load op for non-zero indexed attachment.
 TEST_P(DawnLoadResolveTextureTest, DrawThenLoadNonZeroIndexedAttachment) {
+    // TODO(crbug.com/519251257): Produces incorrect result on Pixel 10.
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsImgTec() && IsVulkan());
+
     auto multiSampledTexture = CreateTextureForRenderAttachment(
         kColorFormat, 4, 1, 1,
         /*transientAttachment=*/device.HasFeature(wgpu::FeatureName::TransientAttachments),
@@ -2058,6 +2064,9 @@ TEST_P(DawnLoadResolveTextureTest, DrawThenLoadNonZeroIndexedAttachment) {
 // Test rendering into 2 attachments. The 1st attachment will use
 // LoadOp::ExpandResolveTexture.
 TEST_P(DawnLoadResolveTextureTest, TwoOutputsDrawThenLoadColor0) {
+    // TODO(crbug.com/519251257): Produces incorrect result on Pixel 10.
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsImgTec() && IsVulkan());
+
     // TODO(42240662): "resolve_multiple_attachments_in_separate_passes" is currently not working
     // with DawnLoadResolveTexture feature if there are more than one attachment.
     DAWN_TEST_UNSUPPORTED_IF(HasResolveMultipleAttachmentInSeparatePassesToggle());
@@ -2139,6 +2148,9 @@ TEST_P(DawnLoadResolveTextureTest, TwoOutputsDrawThenLoadColor0) {
 // Test rendering into 2 attachments. The 2nd attachment will use
 // LoadOp::ExpandResolveTexture.
 TEST_P(DawnLoadResolveTextureTest, TwoOutputsDrawThenLoadColor1) {
+    // TODO(crbug.com/519251257): Produces incorrect result on Pixel 10.
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsImgTec() && IsVulkan());
+
     // TODO(42240662): "resolve_multiple_attachments_in_separate_passes" is currently not working
     // with DawnLoadResolveTexture feature if there are more than one attachment.
     DAWN_TEST_UNSUPPORTED_IF(HasResolveMultipleAttachmentInSeparatePassesToggle());
@@ -2219,6 +2231,9 @@ TEST_P(DawnLoadResolveTextureTest, TwoOutputsDrawThenLoadColor1) {
 // Test rendering into 2 attachments. The both attachments will use
 // LoadOp::ExpandResolveTexture.
 TEST_P(DawnLoadResolveTextureTest, TwoOutputsDrawThenLoadColor0AndColor1) {
+    // TODO(crbug.com/519251257): Produces incorrect result on Pixel 10.
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsImgTec() && IsVulkan());
+
     // TODO(42240662): "resolve_multiple_attachments_in_separate_passes" is currently not working
     // with DawnLoadResolveTexture feature if there are more than one attachment.
     DAWN_TEST_UNSUPPORTED_IF(HasResolveMultipleAttachmentInSeparatePassesToggle());
@@ -2295,6 +2310,9 @@ TEST_P(DawnLoadResolveTextureTest, TwoOutputsDrawThenLoadColor0AndColor1) {
 
 // Test ExpandResolveTexture load op rendering with depth test works correctly.
 TEST_P(DawnLoadResolveTextureTest, DrawWithDepthTest) {
+    // TODO(crbug.com/519251257): Produces incorrect result on Pixel 10.
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsImgTec() && IsVulkan());
+
     auto multiSampledTexture = CreateTextureForRenderAttachment(
         kColorFormat, 4, 1, 1,
         /*transientAttachment=*/device.HasFeature(wgpu::FeatureName::TransientAttachments),
@@ -2366,6 +2384,9 @@ TEST_P(DawnLoadResolveTextureTest, DrawWithDepthTest) {
 // Test ExpandResolveTexture load op rendering with depth test works correctly with
 // two outputs both use ExpandResolveTexture load op.
 TEST_P(DawnLoadResolveTextureTest, TwoOutputsDrawWithDepthTestColor0AndColor1) {
+    // TODO(crbug.com/519251257): Produces incorrect result on Pixel 10.
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsImgTec() && IsVulkan());
+
     // TODO(42240662): "resolve_multiple_attachments_in_separate_passes" is currently not working
     // with DawnLoadResolveTexture feature if there are more than one attachment.
     DAWN_TEST_UNSUPPORTED_IF(HasResolveMultipleAttachmentInSeparatePassesToggle());
@@ -2470,6 +2491,9 @@ TEST_P(DawnLoadResolveTextureTest, TwoOutputsDrawWithDepthTestColor0AndColor1) {
 
 // Test rendering into a layer of a 2D array texture and load op=LoadOp::ExpandResolveTexture.
 TEST_P(DawnLoadResolveTextureTest, DrawThenLoad2DArrayTextureLayer) {
+    // TODO(crbug.com/519251257): Produces incorrect result on Pixel 10.
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsImgTec() && IsVulkan());
+
     // Creating 2D view from 2D array texture is not supported in compat mode.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
