@@ -176,9 +176,9 @@ dawn_add_library(
     SOURCES
         ${sources}
     DEPENDS
-        dawn::dawn_version
         webgpu_c
         webgpu_cpp
+        dawn::dawn_version
         absl::flat_hash_set
         absl::inlined_vector
         absl::no_destructor
