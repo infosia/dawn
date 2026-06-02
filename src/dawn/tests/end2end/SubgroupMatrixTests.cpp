@@ -92,6 +92,13 @@ uint32_t ComponentTypeToByteSize(wgpu::SubgroupMatrixComponentType c) {
     return 0;
 }
 
+std::ostream& operator<<(std::ostream& o, const wgpu::SubgroupMatrixConfig& config) {
+    o << config.M << "x" << config.N << "x" << config.K << " "
+      << ComponentTypeToWgslType(config.componentType) << " -> "
+      << ComponentTypeToWgslType(config.resultComponentType);
+    return o;
+}
+
 /// A Matrix object holds the data and layout of a single matrix.
 /// Provides helper functions to get and set values in different formats and to fill the matrix with
 /// interesting values.
@@ -526,7 +533,7 @@ fn main() {
         // Verify the result against a reference implementation.
         Matrix expected(config.N, config.M, config.resultComponentType, columnMajor);
         GenerateReferenceMatrixMultiply(expected, inputLHS, inputRHS, acc);
-        EXPECT_BUFFER_U8_RANGE_EQ(expected.data, output, 0, expected.TotalByteSize());
+        EXPECT_BUFFER_U8_RANGE_EQ(expected.data, output, 0, expected.TotalByteSize()) << config;
     }
 };
 
@@ -548,13 +555,6 @@ TEST_P(SubgroupMatrix_MatrixMatrixArithmeticTest, MatrixMultiply) {
     // Test each supported config.
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
         auto& config = subgroupMatrixConfigs.configs[i];
-
-        std::stringstream configInfo;
-        configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
-                   << ComponentTypeToWgslType(config.componentType) << " -> "
-                   << ComponentTypeToWgslType(config.resultComponentType);
-        SCOPED_TRACE(configInfo.str());
-
         TestSubgroupMatrixConfig(config, op, info.subgroupMaxSize, columnMajor);
     }
 }
@@ -730,7 +730,7 @@ fn main() {
         // Verify the result against a reference implementation.
         Matrix expected(config.K, config.M, config.componentType, columnMajor);
         GenerateReferenceResult(expected, inputLHS, op);
-        EXPECT_BUFFER_U8_RANGE_EQ(expected.data, output, 0, expected.TotalByteSize());
+        EXPECT_BUFFER_U8_RANGE_EQ(expected.data, output, 0, expected.TotalByteSize()) << config;
     }
 };
 
@@ -750,13 +750,6 @@ TEST_P(SubgroupMatrix_MatrixScalarArithmeticTest, MatrixScalar) {
     // Test each supported config.
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
         auto& config = subgroupMatrixConfigs.configs[i];
-
-        std::stringstream configInfo;
-        configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
-                   << ComponentTypeToWgslType(config.componentType) << " -> "
-                   << ComponentTypeToWgslType(config.resultComponentType);
-        SCOPED_TRACE(configInfo.str());
-
         TestSubgroupMatrixConfig(config, op, info.subgroupMaxSize, columnMajor);
     }
 }
@@ -897,9 +890,10 @@ fn main() {
 
         // Verify the result in the output buffer.
         std::vector<uint8_t> zeroBuffer(storeOffset, static_cast<uint8_t>(0));
-        EXPECT_BUFFER_U8_RANGE_EQ(zeroBuffer.data(), output, 0, storeOffset);
+        EXPECT_BUFFER_U8_RANGE_EQ(zeroBuffer.data(), output, 0, storeOffset) << config;
         EXPECT_BUFFER_U8_RANGE_EQ(inputMatrix.data, output, storeOffset,
-                                  inputMatrix.TotalByteSize());
+                                  inputMatrix.TotalByteSize())
+            << config;
     }
 };
 
@@ -916,13 +910,6 @@ TEST_P(SubgroupMatrix_MatrixStoreTest, MatrixStoreWithOffset) {
     // Test each supported config.
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
         auto& config = subgroupMatrixConfigs.configs[i];
-
-        std::stringstream configInfo;
-        configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
-                   << ComponentTypeToWgslType(config.componentType) << " -> "
-                   << ComponentTypeToWgslType(config.resultComponentType);
-        SCOPED_TRACE(configInfo.str());
-
         TestSubgroupMatrixConfig(config, info.subgroupMaxSize, GetParam().mInputColumnMajor);
     }
 }
@@ -1035,7 +1022,7 @@ fn main() {
         // Verify the result in the output buffer.
         Matrix expected(config.K, config.M, config.componentType, false);
         GenerateReferenceResult(expected, withArgument);
-        EXPECT_BUFFER_U8_RANGE_EQ(expected.data, output, 0, expected.TotalByteSize());
+        EXPECT_BUFFER_U8_RANGE_EQ(expected.data, output, 0, expected.TotalByteSize()) << config;
     }
 
     void GenerateReferenceResult(Matrix& expected, bool withArgument) {
@@ -1078,13 +1065,6 @@ TEST_P(SubgroupMatrix_MatrixConstructorTest, MatrixConstruct) {
     // Test each supported config.
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
         auto& config = subgroupMatrixConfigs.configs[i];
-
-        std::stringstream configInfo;
-        configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
-                   << ComponentTypeToWgslType(config.componentType) << " -> "
-                   << ComponentTypeToWgslType(config.resultComponentType);
-        SCOPED_TRACE(configInfo.str());
-
         TestSubgroupMatrixConfig(config, info.subgroupMaxSize, GetParam().mWithArgument);
     }
 }
@@ -1144,6 +1124,9 @@ TEST_P(SubgroupMatrix_TiledMatrixMultiplyTest, MatrixMultiply) {
 
     // TODO(crbug.com/492539239): Access violation during test teardown.
     DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
+
+    // TODO(amaiorano): On WARP 1.65535.20-preview, starts hanging for tile dim 2+
+    DAWN_SUPPRESS_TEST_IF(IsWARP() && kTileDim >= 2);
 
     // Query the supported subgroup matrix configurations.
     wgpu::AdapterInfo info;

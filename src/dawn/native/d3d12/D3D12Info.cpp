@@ -166,7 +166,7 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
 
     DAWN_ASSERT(shaderModelMajor < 10);
     DAWN_ASSERT(shaderModelMinor < 16);
-    info.highestSupportedShaderModel = 10 * shaderModelMajor + shaderModelMinor;
+    info.highestSupportedShaderModel = ShaderModel(shaderModelMajor, shaderModelMinor);
 
     // Device support wave intrinsics if shader model >= SM6.0 and capabilities flag WaveOps is set.
     // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics
