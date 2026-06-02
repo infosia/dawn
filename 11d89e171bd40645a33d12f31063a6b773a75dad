@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2113edf1_a6c18599",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-02T04:53:37Z",
+      "side": 1,
+      "message": "Apologies I saw the GitHub PR and then lost track of this for a month. Is this CL still current?",
+      "revId": "11d89e171bd40645a33d12f31063a6b773a75dad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
