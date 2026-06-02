@@ -189,6 +189,30 @@
       },
       "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "415701ba_0e9136fd",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-06-02T00:17:17Z",
+      "side": 1,
+      "message": "Locally, I am seeing the same as Antonio. \n\nSteps I followed:\n-Applied the latest patchset to my Dawn enlistment synced to top of tree.\n-Added `dawn_use_agility_sdk \u003d true` to all of my `args.gn` files\n-Reverted just the changes in `d3d12_platform.h`\n\nI am able to build both debug_x64 and release_x64 with no build errors.",
+      "parentUuid": "33bc9094_f68eab5b",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
