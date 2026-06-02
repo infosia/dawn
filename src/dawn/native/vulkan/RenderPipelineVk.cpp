@@ -27,8 +27,10 @@
 
 #include "src/dawn/native/vulkan/RenderPipelineVk.h"
 
+#include <algorithm>
 #include <memory>
 #include <string>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -506,14 +508,43 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
         return {};
     };
 
+    std::optional<uint32_t> pixelCenterPolyfillLocation = std::nullopt;
+    if (NeedsPixelCenterPolyfill()) {
+        std::unordered_set<uint32_t> freeLocations;
+
+        const EntryPointMetadata* vtx = GetStage(SingleShaderStage::Vertex).metadata;
+        for (size_t i = 0; i < vtx->usedInterStageVariables.size(); ++i) {
+            if (vtx->usedInterStageVariables[i] == false) {
+                freeLocations.emplace(i);
+            }
+        }
+
+        if (HasStage(SingleShaderStage::Fragment)) {
+            const EntryPointMetadata* frag = GetStage(SingleShaderStage::Fragment).metadata;
+            for (size_t i = 0; i < frag->usedInterStageVariables.size(); ++i) {
+                if (frag->usedInterStageVariables[i] == true) {
+                    freeLocations.erase(i);
+                }
+            }
+        }
+
+        if (freeLocations.empty()) {
+            pixelCenterPolyfillLocation = vtx->usedInterStageVariables.size();
+        } else {
+            std::vector<uint32_t> sorted(freeLocations.begin(), freeLocations.end());
+            std::sort(sorted.begin(), sorted.end());
+            pixelCenterPolyfillLocation = sorted.front();
+        }
+    }
+
     // Add the vertex stage that's always present.
     DAWN_TRY(AddShaderStage({
         .stage = &GetStage(SingleShaderStage::Vertex),
         .layout = layout,
         .immediateMask = GetImmediateMask(),
         .ycbcrExternalTextures = &specialization.ycbcrExternalTextures,
+        .polyfillPixelCenter = pixelCenterPolyfillLocation,
         .emitPointSize = GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList,
-        .polyfillPixelCenter = NeedsPixelCenterPolyfill(),
         .pipelineUsesFramebufferFetch = UsesFramebufferFetch(),
     }));
 
@@ -524,7 +555,7 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
             .layout = layout,
             .immediateMask = GetImmediateMask(),
             .ycbcrExternalTextures = &specialization.ycbcrExternalTextures,
-            .polyfillPixelCenter = NeedsPixelCenterPolyfill(),
+            .polyfillPixelCenter = pixelCenterPolyfillLocation,
             .pipelineUsesFramebufferFetch = UsesFramebufferFetch(),
             .needsMultisampledFramebufferFetch = UseSampleRateShading() && UsesFramebufferFetch(),
         }));
