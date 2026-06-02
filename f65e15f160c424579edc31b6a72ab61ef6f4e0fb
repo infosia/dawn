@@ -16,6 +16,303 @@
       "message": "I\u0027m not too familiar with the threading mechanisms of kotlin, but I assume that it\u0027s more idiomatic for this type of dedicated thread usage (kinda like Chromium), over just a simple mutex?\n\nAssuming that\u0027s the case, the general use seems fine. I do wonder if it would be easy to change this should the Dawn native APIs become more multithreadable in the future.",
       "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb5d2b6a_c0e86a60",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/MultisampleStateTest.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "is any of the tests in this change using WebGPU.createDefaultWebGpuDispatcher ?\n\nCan we add a test using the default dispatcher as well?",
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef4f5409_5651386b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/MultisampleStateTest.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "this kind of if-statement in teardown makes me a little nervous. Is webgpu supposed to be initialized? Why do we need this check?",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 60
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53478c07_62a1e637",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderPassEncoderTest.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: The addition of `TextureUsage.CopySrc` seems unnecessary for this test suite, as no readback operations or bitmap creations are performed on this texture here.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5471ead0_f038c6c7",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/TextureTest.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "is `: Unit` necessary?",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8d847638_f2a1d494",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/TextureTest.kt",
+              "range": {
+                "startLine": 50,
+                "startChar": 0,
+                "endLine": 51,
+                "endChar": 0
+              },
+              "replacement": "  fun setup() \u003d runBlocking {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "767d2ee9_9e5e56f3",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "repeatedly setting the activeDispatcher from execute seems redundant - can we set this field once, inside the thread factory in createDefaultWebGpuDispatcher, and read it during cleanup?",
+      "fixSuggestions": [
+        {
+          "fixId": "cd7475e3_ec0f7d18",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+              "range": {
+                "startLine": 83,
+                "startChar": 0,
+                "endLine": 90,
+                "endChar": 0
+              },
+              "replacement": "            block()\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+              "range": {
+                "startLine": 95,
+                "startChar": 0,
+                "endLine": 104,
+                "endChar": 0
+              },
+              "replacement": "            while (currentCoroutineContext().isActive) {\n                instance.processEvents()\n                delay(POLLING_DELAY_MS)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0d64390_1a35928e",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "is this a new public method that should be called by apps? Should it be documented with kdoc?",
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5dd36e3_fe23f51e",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: Manual management of the ThreadLocal here is redundant because the thread factory (line 64) already sets `activeDispatcher` for the lifetime of the thread. Additionally, using ThreadLocal with coroutines can lead to unexpected behavior if the coroutine suspends and the thread is reused by another coroutine. Since this is a single-threaded dispatcher, it is safe, but unnecessary.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05f42cc6_bd1e4966",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "is this a new public method that should be called by apps? Should it be documented with kdoc?",
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb36f19d_f91b45e0",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "Is it worth adding Kdoc with description of the parameters of `createWebGpu`?",
+      "fixSuggestions": [
+        {
+          "fixId": "41ad8963_bb05885f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "/**\n * Creates a [WebGpu] instance with a default single-threaded [CoroutineDispatcher].\n *\n * @param surface The [Surface] to create a [GPUSurface] from. If null, no surface will be created.\n * @param instanceDescriptor Optional descriptor for the [GPUInstance].\n * @param requestAdapterOptions Optional options for requesting the [GPUAdapter].\n * @param deviceDescriptor Optional descriptor for requesting the [GPUDevice].\n * @return A [WebGpu] instance.\n */\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "/**\n * Creates a [WebGpu] instance with a provided [CoroutineDispatcher].\n *\n * @param dispatcher The [CoroutineDispatcher] to use for all WebGPU operations.\n * @param surface The [Surface] to create a [GPUSurface] from. If null, no surface will be created.\n * @param instanceDescriptor Optional descriptor for the [GPUInstance].\n * @param requestAdapterOptions Optional options for requesting the [GPUAdapter].\n * @param deviceDescriptor Optional descriptor for requesting the [GPUDevice].\n * @return A [WebGpu] instance.\n */\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d08d893a_3bcf35e4",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: Dawn initialization (Instance, Adapter, Device) is happening on the caller\u0027s thread. It should be moved to the `dispatcher` to ensure all native objects are created and used on the same thread, avoiding cross-thread access during setup.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 0
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fa4167b_7a4b8ecd",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-02T09:17:27Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: There is a risk of deadlock here if the user calls `close()` from the dispatcher thread without being inside an `execute` block. In that case, `activeDispatcher.get()` would be null, and `runBlocking(dispatcher)` would be called on the dispatcher thread itself.\n\nConsider adding a check to see if the current thread is the one owned by the dispatcher (if it\u0027s an `ExecutorCoroutineDispatcher`) or ensuring the ThreadLocal is set more broadly.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 0
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
