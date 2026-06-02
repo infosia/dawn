@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "498357a7_1850f307",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-06-02T20:55:07Z",
+      "side": 1,
+      "message": "- I can repro the include issue for emdawn. It\u0027d need to make EM_BUILD_GEN_DIR accesible outside its subdirectory to be used in the include dirs here and put before DAWN_INCLUDE_DIR (or we privately link against webgpu_cpp again). We need a separate target for emdawn with its specific params for the generation of webgpu.ixx anyways.\n- Internally dawn doesn\u0027t need to scan for deps and we can set(CMAKE_CXX_SCAN_FOR_MODULES OFF). AFAIK some distros ship clang-scan-deps separately(apt clang-tools) and AppleClang does not support it at all.",
+      "parentUuid": "82c65aef_08bae48f",
+      "revId": "d3ade74243a662fd88dc82b390b74253b487c3ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3c56072_28950a01",
         "filename": "src/dawn/CMakeLists.txt",
         "patchSetId": 10
