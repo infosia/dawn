@@ -22,6 +22,30 @@
       },
       "revId": "84b40c191e9e21b5b50bb450198e123a5670af64",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2819f308_ea61950e",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-06-02T05:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "893525ff_c24f6f70",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 56
+      },
+      "revId": "84b40c191e9e21b5b50bb450198e123a5670af64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
