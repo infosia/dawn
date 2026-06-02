@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "37b9bb36_8c8c697e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-06-02T17:38:59Z",
+      "side": 1,
+      "message": "I reverted the changes for the compilation errors in this CL in favor of the above to avoid conflicts. So the remaining changes only address warnings that are specific to gcc + cmake.",
+      "parentUuid": "370a9dae_cdb0f583",
+      "revId": "de1644e10b68f2ca8939e0dc28dabfba07067906",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a6c42b55_8c690671",
         "filename": "src/dawn/common/ityp_array.h",
         "patchSetId": 1
