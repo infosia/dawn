@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fd8706f_445da256",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-02T04:51:21Z",
+      "side": 1,
+      "message": "Hmmm it seems some build issue has crept in with this config 😞\nWould you be able to look at it?",
+      "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
