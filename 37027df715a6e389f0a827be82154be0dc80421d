@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce4dc1c8_f599e5d5",
+        "filename": "docs/dawn/debugging.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T16:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8190e2d1_6db32c10",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c7cda23_e0a47488",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-06-02T16:41:29Z",
       "side": 1,
       "message": "ditto",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee34b721_dcd5e6dc",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T16:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c7cda23_e0a47488",
       "revId": "37027df715a6e389f0a827be82154be0dc80421d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4c167ad_478c8505",
+        "filename": "generator/templates/dawn/wire/client/ClientHandlers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T16:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0abaa2a1_2991864c",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b1333b6_cfdf802a",
@@ -99,6 +153,24 @@
       "writtenOn": "2026-06-02T16:41:29Z",
       "side": 1,
       "message": "ditto",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23fa1c39_eaea727d",
+        "filename": "generator/templates/dawn/wire/server/ServerDoers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T16:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b1333b6_cfdf802a",
       "revId": "37027df715a6e389f0a827be82154be0dc80421d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +192,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfc3fb4e_399b83f6",
+        "filename": "generator/templates/dawn/wire/server/ServerHandlers.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T16:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99424232_1961b9cb",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13037ee0_c5ee0996",
@@ -137,6 +227,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb0c954b_42ed0b73",
+        "filename": "generator/templates/dawn_proc.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T16:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13037ee0_c5ee0996",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15d6c228_774f716e",
@@ -150,6 +258,24 @@
       "writtenOn": "2026-06-02T16:41:29Z",
       "side": 1,
       "message": "ditto",
+      "revId": "37027df715a6e389f0a827be82154be0dc80421d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80b1d368_a18361b4",
+        "filename": "generator/templates/mock_api.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-02T16:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15d6c228_774f716e",
       "revId": "37027df715a6e389f0a827be82154be0dc80421d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
