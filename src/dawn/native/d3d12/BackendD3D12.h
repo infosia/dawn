@@ -56,6 +56,7 @@ class Backend final : public d3d::Backend {
     ComPtr<IDxcLibrary> GetDxcLibrary() const;
     ComPtr<IDxcCompiler3> GetDxcCompiler() const;
     ComPtr<IDxcValidator> GetDxcValidator() const;
+    ComPtr<IDxcIncludeHandler> GetDxcIncludeHandler() const;
 
     const PlatformFunctions* GetFunctions() const;
 
@@ -70,6 +71,7 @@ class Backend final : public d3d::Backend {
     ComPtr<IDxcLibrary> mDxcLibrary;
     ComPtr<IDxcCompiler3> mDxcCompiler;
     ComPtr<IDxcValidator> mDxcValidator;
+    ComPtr<IDxcIncludeHandler> mDxcIncludeHandler;
 
     using Base = d3d::Backend;
 };

@@ -188,11 +188,16 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
             ToBackend(GetPhysicalDevice())->GetAppliedShaderModelUnderToggles(GetTogglesState());
         uint32_t shaderModelMajor = appliedShaderModel / 10;
         uint32_t shaderModelMinor = appliedShaderModel % 10;
+
+        // TODO(crbug.com/513251803): Remove this hack
+        if (appliedShaderModel >= 70) {
+            shaderModelMinor = 10 + appliedShaderModel % 10;
+            shaderModelMajor = appliedShaderModel / 10 - 1;
+        }
+
         // Profiles are always <stage>s_<minor>_<major> so we build the s_<minor>_major and add
         // it to each of the stage's suffix.
-        std::wstring profileSuffix = L"s_M_n";
-        profileSuffix[2] = wchar_t('0' + shaderModelMajor);
-        profileSuffix[4] = wchar_t('0' + shaderModelMinor);
+        std::wstring profileSuffix = std::format(L"s_{}_{}", shaderModelMajor, shaderModelMinor);
         mDxcShaderProfiles[SingleShaderStage::Vertex] = L"v" + profileSuffix;
         mDxcShaderProfiles[SingleShaderStage::Fragment] = L"p" + profileSuffix;
         mDxcShaderProfiles[SingleShaderStage::Compute] = L"c" + profileSuffix;
@@ -895,6 +900,10 @@ ComPtr<IDxcLibrary> Device::GetDxcLibrary() const {
 
 ComPtr<IDxcCompiler3> Device::GetDxcCompiler() const {
     return ToBackend(GetPhysicalDevice())->GetBackend()->GetDxcCompiler();
+}
+
+ComPtr<IDxcIncludeHandler> Device::GetDxcIncludeHandler() const {
+    return ToBackend(GetPhysicalDevice())->GetBackend()->GetDxcIncludeHandler();
 }
 
 const PerStage<std::wstring>& Device::GetDxcShaderProfiles() const {

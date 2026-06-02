@@ -35,6 +35,7 @@
 #include "dawn/platform/DawnPlatform.h"
 #include "src/dawn/common/Constants.h"
 #include "src/dawn/common/GPUInfo.h"
+#include "src/dawn/common/Log.h"
 #include "src/dawn/common/WindowsUtils.h"
 #include "src/dawn/native/ChainUtils.h"
 #include "src/dawn/native/Instance.h"
@@ -181,6 +182,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses);
     }
 
+    HRESULT hrCheck;
+
 #if defined(DAWN_USE_BUILT_DXC)
     // ShaderF16 features require DXC version being 1.4 or higher, shader model supporting 6.2 or
     // higher, and native supporting F16 shader ops.
@@ -201,13 +204,24 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (mDeviceInfo.supportsInt64Atomics) {
         EnableFeature(Feature::AtomicVec2uMinMax);
     }
+
+    if (mDeviceInfo.highestSupportedShaderModel >= ShaderModel(6, 10)) {
+        D3D12_FEATURE_DATA_LINEAR_ALGEBRA_SUPPORT linearAlgebraSupport = {};
+        hrCheck =
+            mD3d12Device->CheckFeatureSupport(D3D12_FEATURE_LINEAR_ALGEBRA_SUPPORT,
+                                              &linearAlgebraSupport, sizeof(linearAlgebraSupport));
+        if (SUCCEEDED(hrCheck) &&
+            linearAlgebraSupport.LinearAlgebraTier >= D3D12_LINEAR_ALGEBRA_TIER_1_0) {
+            EnableFeature(Feature::ChromiumExperimentalSubgroupMatrix);
+        }
+    }
 #endif
 
     D3D12_FEATURE_DATA_FORMAT_SUPPORT bgra8unormFormatInfo = {};
     bgra8unormFormatInfo.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-    HRESULT hr = mD3d12Device->CheckFeatureSupport(
-        D3D12_FEATURE_FORMAT_SUPPORT, &bgra8unormFormatInfo, sizeof(bgra8unormFormatInfo));
-    if (SUCCEEDED(hr) &&
+    hrCheck = mD3d12Device->CheckFeatureSupport(D3D12_FEATURE_FORMAT_SUPPORT, &bgra8unormFormatInfo,
+                                                sizeof(bgra8unormFormatInfo));
+    if (SUCCEEDED(hrCheck) &&
         (bgra8unormFormatInfo.Support1 & D3D12_FORMAT_SUPPORT1_TYPED_UNORDERED_ACCESS_VIEW)) {
         EnableFeature(Feature::BGRA8UnormStorage);
     }
@@ -236,8 +250,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     // in the set is supported by the device, all formats in the set are supported.
     D3D12_FEATURE_DATA_FORMAT_SUPPORT r8unormFormatSupport = {};
     r8unormFormatSupport.Format = DXGI_FORMAT_R8_UNORM;
-    HRESULT hrCheck = mD3d12Device->CheckFeatureSupport(
-        D3D12_FEATURE_FORMAT_SUPPORT, &r8unormFormatSupport, sizeof(r8unormFormatSupport));
+    hrCheck = mD3d12Device->CheckFeatureSupport(D3D12_FEATURE_FORMAT_SUPPORT, &r8unormFormatSupport,
+                                                sizeof(r8unormFormatSupport));
     if (SUCCEEDED(hrCheck) &&
         (r8unormFormatSupport.Support2 & D3D12_FORMAT_SUPPORT2_UAV_TYPED_LOAD) &&
         (r8unormFormatSupport.Support2 & D3D12_FORMAT_SUPPORT2_UAV_TYPED_STORE)) {
@@ -963,7 +977,7 @@ MaybeError PhysicalDevice::ResetInternalDeviceForTestingImpl() {
 }
 
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
-                                               const TogglesState&) const {
+                                               const TogglesState& toggles) const {
     if (auto* memoryHeapProperties = info.Get<AdapterPropertiesMemoryHeaps>()) {
         // https://microsoft.github.io/DirectX-Specs/d3d/D3D12GPUUploadHeaps.html describes
         // the properties of D3D12 Default/Upload/Readback heaps.
@@ -1002,6 +1016,180 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
         // Report highest supported shader model version, instead of actual applied version.
         d3dProperties->shaderModel = GetDeviceInfo().highestSupportedShaderModel;
     }
+    if (auto* subgroupMatrixConfigs = info.Get<AdapterPropertiesSubgroupMatrixConfigs>()) {
+        std::vector<SubgroupMatrixConfig> supportedConfigs =
+            EnumerateSubgroupMatrixConfigs(toggles);
+        size_t count = supportedConfigs.size();
+        SubgroupMatrixConfig* configs = new SubgroupMatrixConfig[count];
+        subgroupMatrixConfigs->configs = configs;
+        subgroupMatrixConfigs->configCount = supportedConfigs.size();
+        DAWN_UNSAFE_TODO(
+            memcpy(configs, supportedConfigs.data(), count * sizeof(SubgroupMatrixConfig)));
+    }
+}
+
+std::vector<SubgroupMatrixConfig> PhysicalDevice::EnumerateSubgroupMatrixConfigs(
+    const TogglesState& toggles) const {
+    // TODO(amaiorano): For Vulkan, this function is much faster, as it just filters
+    // mDeviceInfo.cooperativeMatrixConfigs. Here we do more expensive queries against the driver.
+    // Maybe these queries should be made in GatherDeviceInfo and stored on the D3D12DeviceInfo?
+
+    std::vector<SubgroupMatrixConfig> subgroupMatrixConfigs;
+
+    auto typesToQuery = std::set{
+        D3D12_LINEAR_ALGEBRA_DATATYPE_SINT32,   //
+        D3D12_LINEAR_ALGEBRA_DATATYPE_UINT32,   //
+        D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT16,  //
+        D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT32,  //
+        D3D12_LINEAR_ALGEBRA_DATATYPE_SINT8,    //
+        D3D12_LINEAR_ALGEBRA_DATATYPE_UINT8,    //
+    };
+
+    // https://microsoft.github.io/DirectX-Specs/d3d/HLSL_SM_6_6_WaveSize.html#allowed-wave-sizes
+    constexpr std::array waveSizesToQuery = {4, 8, 16, 32, 64, 128};
+
+    auto toWgpuType =
+        [](D3D12_LINEAR_ALGEBRA_DATATYPE dataType) -> wgpu::SubgroupMatrixComponentType {
+        switch (dataType) {
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_SINT32:
+                return wgpu::SubgroupMatrixComponentType::I32;
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_UINT32:
+                return wgpu::SubgroupMatrixComponentType::U32;
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT16:
+                return wgpu::SubgroupMatrixComponentType::F16;
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT32:
+                return wgpu::SubgroupMatrixComponentType::F32;
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_SINT8:
+                return wgpu::SubgroupMatrixComponentType::I8;
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_UINT8:
+                return wgpu::SubgroupMatrixComponentType::U8;
+            default:
+                DAWN_UNREACHABLE();
+        }
+        DAWN_UNREACHABLE();
+    };
+
+    [[maybe_unused]] auto isFloat = [](D3D12_LINEAR_ALGEBRA_DATATYPE dataType) {
+        return dataType == D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT16 ||
+               dataType == D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT32;
+    };
+
+    [[maybe_unused]] auto byteSize = [](D3D12_LINEAR_ALGEBRA_DATATYPE dataType) {
+        switch (dataType) {
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_SINT32:
+                return 4;
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_UINT32:
+                return 4;
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT16:
+                return 2;
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT32:
+                return 4;
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_SINT8:
+                return 1;
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_UINT8:
+                return 1;
+            default:
+                DAWN_UNREACHABLE();
+        }
+        DAWN_UNREACHABLE();
+    };
+
+    [[maybe_unused]] auto toString = [](D3D12_LINEAR_ALGEBRA_DATATYPE dataType) {
+        switch (dataType) {
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_SINT32:
+                return "i32";
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_UINT32:
+                return "u32";
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT16:
+                return "f16";
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT32:
+                return "f32";
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_SINT8:
+                return "i8";
+            case D3D12_LINEAR_ALGEBRA_DATATYPE_UINT8:
+                return "u8";
+            default:
+                DAWN_UNREACHABLE();
+        }
+        DAWN_UNREACHABLE();
+    };
+
+    if (gpu_info::IsMicrosoftWARP(mVendorId, mDeviceId)) {
+        // Jesse: all formats except I8 and F8 should be supported as input and output
+        typesToQuery.erase(D3D12_LINEAR_ALGEBRA_DATATYPE_SINT8);
+        typesToQuery.erase(D3D12_LINEAR_ALGEBRA_DATATYPE_UINT8);
+    }
+
+    if (!IsFeatureSupportedWithToggles(wgpu::FeatureName::ShaderF16, toggles)) {
+        typesToQuery.erase(D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT16);
+    }
+
+    for (auto dataTypeAB : typesToQuery) {
+        for (auto dataTypeAcc : typesToQuery) {
+            // Don't mix ints and floats - we don't support this in Tint (no subgroupMatrixMultiply
+            // overload). Should we?
+            if (isFloat(dataTypeAB) != isFloat(dataTypeAcc)) {
+                // dawn::InfoLog() << "Skipping " << toString(dataTypeAB) << " -> "
+                //                 << toString(dataTypeAcc)
+                //                 << ", mixing int and float is not supported";
+                continue;
+            }
+
+            // Skip if input types are larger than output type - we don't support this in Tint
+            // e.g. f32 -> f16
+            if (byteSize(dataTypeAB) > byteSize(dataTypeAcc)) {
+                // dawn::InfoLog() << "Skipping " << toString(dataTypeAB) << " -> "
+                //                 << toString(dataTypeAcc)
+                //                 << ", input type is larger than output type";
+                continue;
+            }
+
+            for (auto waveSize : waveSizesToQuery) {
+                D3D12_FEATURE_DATA_LINEAR_ALGEBRA_MATRIX_OPERATION_SUPPORT opSupport = {};
+                opSupport.OperationType = D3D12_LINEAR_ALGEBRA_OPERATION_TYPE_WAVE_MATRIX_MULTIPLY;
+                opSupport.WaveMatrixMultiply.Inputs.WaveSize = waveSize;
+                opSupport.WaveMatrixMultiply.Inputs.MatrixAComponentType = dataTypeAB;
+                opSupport.WaveMatrixMultiply.Inputs.MatrixBComponentType = dataTypeAB;
+                opSupport.WaveMatrixMultiply.Inputs.AccumulatorComponentType = dataTypeAcc;
+                opSupport.WaveMatrixMultiply.NumShapes = 0;
+
+                // First call to get number of shapes
+                if (FAILED(mD3d12Device->CheckFeatureSupport(
+                        D3D12_FEATURE_LINEAR_ALGEBRA_LINEAR_ALGEBRA_MATRIX_OPERATION_SUPPORT,
+                        &opSupport, sizeof(opSupport)))) {
+                    continue;
+                }
+                uint32_t numShapes = opSupport.WaveMatrixMultiply.NumShapes;
+                if (numShapes == 0) {
+                    continue;
+                }
+
+                std::vector<D3D12_LINEAR_ALGEBRA_MATRIX_MULTIPLY_SHAPE> shapes(numShapes);
+                opSupport.WaveMatrixMultiply.Shapes = shapes.data();
+
+                // Second call to populate shapes
+                if (FAILED(mD3d12Device->CheckFeatureSupport(
+                        D3D12_FEATURE_LINEAR_ALGEBRA_LINEAR_ALGEBRA_MATRIX_OPERATION_SUPPORT,
+                        &opSupport, sizeof(opSupport)))) {
+                    continue;
+                }
+
+                for (const auto& shape : shapes) {
+                    SubgroupMatrixConfig config;
+                    config.M = shape.M;
+                    config.N = shape.N;
+                    config.K = shape.K;
+
+                    config.componentType = toWgpuType(dataTypeAB);
+                    config.resultComponentType = toWgpuType(dataTypeAcc);
+
+                    subgroupMatrixConfigs.push_back(config);
+                }
+            }
+        }
+    }
+
+    return subgroupMatrixConfigs;
 }
 
 }  // namespace dawn::native::d3d12

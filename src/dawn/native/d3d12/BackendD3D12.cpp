@@ -118,9 +118,19 @@ MaybeError Backend::EnsureDXC() {
         GetFunctions()->dxcCreateInstance(CLSID_DxcValidator, IID_PPV_ARGS(&dxcValidator)),
         "DXC create validator"));
 
+    ComPtr<IDxcUtils> dxcUtils;
+    DAWN_TRY(
+        CheckHRESULT(GetFunctions()->dxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils)),
+                     "DXC create utils"));
+
+    ComPtr<IDxcIncludeHandler> dxcIncludeHandler;
+    DAWN_TRY(CheckHRESULT(dxcUtils->CreateDefaultIncludeHandler(&dxcIncludeHandler),
+                          "DXC create handler"));
+
     mDxcLibrary = std::move(dxcLibrary);
     mDxcCompiler = std::move(dxcCompiler);
     mDxcValidator = std::move(dxcValidator);
+    mDxcIncludeHandler = std::move(dxcIncludeHandler);
 
     return {};
 #else
@@ -141,6 +151,11 @@ ComPtr<IDxcCompiler3> Backend::GetDxcCompiler() const {
 ComPtr<IDxcValidator> Backend::GetDxcValidator() const {
     DAWN_ASSERT(mDxcValidator != nullptr);
     return mDxcValidator;
+}
+
+ComPtr<IDxcIncludeHandler> Backend::GetDxcIncludeHandler() const {
+    DAWN_ASSERT(mDxcIncludeHandler != nullptr);
+    return mDxcIncludeHandler;
 }
 
 ResultOrError<Ref<PhysicalDeviceBase>> Backend::CreatePhysicalDeviceFromIDXGIAdapter(
