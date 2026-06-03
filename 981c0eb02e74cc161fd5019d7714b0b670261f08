@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "981c0eb02e74cc161fd5019d7714b0b670261f08",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "227ae54c_3f5925a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-03T20:50:03Z",
+      "side": 1,
+      "message": "Nice! It would be awesome if we could eventually make the `ResourceAlocationManagers` into `SerialProcessors` too.",
+      "revId": "981c0eb02e74cc161fd5019d7714b0b670261f08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
