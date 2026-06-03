@@ -96,6 +96,10 @@ const char* str(BuiltinFn i) {
             return "sample_compare";
         case BuiltinFn::kWrite:
             return "write";
+        case BuiltinFn::kClz:
+            return "clz";
+        case BuiltinFn::kCtz:
+            return "ctz";
         case BuiltinFn::kDistance:
             return "distance";
         case BuiltinFn::kDot:
@@ -171,6 +175,8 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kSimdgroupStore:
             return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kStore};
 
+        case BuiltinFn::kClz:
+        case BuiltinFn::kCtz:
         case BuiltinFn::kDistance:
         case BuiltinFn::kDot:
         case BuiltinFn::kFmod:

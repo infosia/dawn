@@ -373,6 +373,10 @@ match subgroup_matrix_kind_result : subgroup_matrix_kind.result
 @member_function implicit(A: iu32) fn write(texture: texture_storage_2d_array<u32_texel_format, writable>, value: vec4<u32>, coords: vec2<u32>, array_index: A)
 @member_function fn write(texture: texture_storage_3d<u32_texel_format, writable>, value: vec4<u32>, coords: vec3<u32>)
 
+implicit(T: iu32) fn clz(T) -> T
+implicit(T: iu32, N: num) fn clz(vec<N, T>) -> vec<N, T>
+implicit(T: iu32) fn ctz(T) -> T
+implicit(T: iu32, N: num) fn ctz(vec<N, T>) -> vec<N, T>
 implicit(N: num, T: f32_f16) fn distance(vec<N, T>, vec<N, T>) -> T
 implicit(N: num, T: f32_f16) fn dot(vec<N, T>, vec<N, T>) -> T
 implicit(T: f32_f16) fn fmod(T, T) -> T

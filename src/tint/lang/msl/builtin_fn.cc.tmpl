@@ -64,6 +64,8 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kSimdgroupStore:
             return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kStore};
 
+        case BuiltinFn::kClz:
+        case BuiltinFn::kCtz:
         case BuiltinFn::kDistance:
         case BuiltinFn::kDot:
         case BuiltinFn::kFmod:
