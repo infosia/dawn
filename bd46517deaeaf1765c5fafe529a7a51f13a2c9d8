@@ -33,6 +33,24 @@
       "message": "Huh, must be because Tint is compiling for iOS.\nUnfortunate that we don\u0027t catch this on our CQ. LGTM",
       "revId": "bd46517deaeaf1765c5fafe529a7a51f13a2c9d8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cca3fc68_21bdc80c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-03T21:15:54Z",
+      "side": 1,
+      "message": "`third_party/dawn/src/tint/cmd/test:tint_unittests` is in ios build target",
+      "parentUuid": "238f22ce_40fa7bdb",
+      "revId": "bd46517deaeaf1765c5fafe529a7a51f13a2c9d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
