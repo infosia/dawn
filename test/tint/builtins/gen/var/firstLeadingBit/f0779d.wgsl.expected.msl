@@ -11,7 +11,15 @@ struct tint_module_vars_struct {
 uint firstLeadingBit_f0779d() {
   uint arg_0 = 1u;
   uint const v = arg_0;
-  uint res = select((select(16u, 0u, ((v & 4294901760u) == 0u)) | (select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u)) | (select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u)) | (select(2u, 0u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) & 12u) == 0u)) | select(1u, 0u, ((((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) >> select(2u, 0u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) & 12u) == 0u))) & 2u) == 0u)))))), 4294967295u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) >> select(2u, 0u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) & 12u) == 0u))) == 0u));
+  uint const v_1 = select(16u, 0u, ((v & 4294901760u) == 0u));
+  uint const v_2 = (v >> v_1);
+  uint const v_3 = select(8u, 0u, ((v_2 & 65280u) == 0u));
+  uint const v_4 = (v_2 >> v_3);
+  uint const v_5 = select(4u, 0u, ((v_4 & 240u) == 0u));
+  uint const v_6 = (v_4 >> v_5);
+  uint const v_7 = select(2u, 0u, ((v_6 & 12u) == 0u));
+  uint const v_8 = (v_6 >> v_7);
+  uint res = select((v_1 | (v_3 | (v_5 | (v_7 | select(1u, 0u, ((v_8 & 2u) == 0u)))))), 4294967295u, (v_8 == 0u));
   return res;
 }
 
@@ -32,7 +40,15 @@ struct tint_module_vars_struct {
 uint firstLeadingBit_f0779d() {
   uint arg_0 = 1u;
   uint const v = arg_0;
-  uint res = select((select(16u, 0u, ((v & 4294901760u) == 0u)) | (select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u)) | (select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u)) | (select(2u, 0u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) & 12u) == 0u)) | select(1u, 0u, ((((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) >> select(2u, 0u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) & 12u) == 0u))) & 2u) == 0u)))))), 4294967295u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) >> select(2u, 0u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) & 12u) == 0u))) == 0u));
+  uint const v_1 = select(16u, 0u, ((v & 4294901760u) == 0u));
+  uint const v_2 = (v >> v_1);
+  uint const v_3 = select(8u, 0u, ((v_2 & 65280u) == 0u));
+  uint const v_4 = (v_2 >> v_3);
+  uint const v_5 = select(4u, 0u, ((v_4 & 240u) == 0u));
+  uint const v_6 = (v_4 >> v_5);
+  uint const v_7 = select(2u, 0u, ((v_6 & 12u) == 0u));
+  uint const v_8 = (v_6 >> v_7);
+  uint res = select((v_1 | (v_3 | (v_5 | (v_7 | select(1u, 0u, ((v_8 & 2u) == 0u)))))), 4294967295u, (v_8 == 0u));
   return res;
 }
 
@@ -60,7 +76,15 @@ struct vertex_main_outputs {
 uint firstLeadingBit_f0779d() {
   uint arg_0 = 1u;
   uint const v = arg_0;
-  uint res = select((select(16u, 0u, ((v & 4294901760u) == 0u)) | (select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u)) | (select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u)) | (select(2u, 0u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) & 12u) == 0u)) | select(1u, 0u, ((((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) >> select(2u, 0u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) & 12u) == 0u))) & 2u) == 0u)))))), 4294967295u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) >> select(2u, 0u, (((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) >> select(4u, 0u, ((((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) >> select(8u, 0u, (((v >> select(16u, 0u, ((v & 4294901760u) == 0u))) & 65280u) == 0u))) & 240u) == 0u))) & 12u) == 0u))) == 0u));
+  uint const v_1 = select(16u, 0u, ((v & 4294901760u) == 0u));
+  uint const v_2 = (v >> v_1);
+  uint const v_3 = select(8u, 0u, ((v_2 & 65280u) == 0u));
+  uint const v_4 = (v_2 >> v_3);
+  uint const v_5 = select(4u, 0u, ((v_4 & 240u) == 0u));
+  uint const v_6 = (v_4 >> v_5);
+  uint const v_7 = select(2u, 0u, ((v_6 & 12u) == 0u));
+  uint const v_8 = (v_6 >> v_7);
+  uint res = select((v_1 | (v_3 | (v_5 | (v_7 | select(1u, 0u, ((v_8 & 2u) == 0u)))))), 4294967295u, (v_8 == 0u));
   return res;
 }
 
@@ -72,9 +96,9 @@ VertexOutput vertex_main_inner() {
 }
 
 vertex vertex_main_outputs vertex_main() {
-  VertexOutput const v_1 = vertex_main_inner();
+  VertexOutput const v_9 = vertex_main_inner();
   vertex_main_outputs tint_wrapper_result = {};
-  tint_wrapper_result.VertexOutput_pos = v_1.pos;
-  tint_wrapper_result.VertexOutput_prevent_dce = v_1.prevent_dce;
+  tint_wrapper_result.VertexOutput_pos = v_9.pos;
+  tint_wrapper_result.VertexOutput_prevent_dce = v_9.prevent_dce;
   return tint_wrapper_result;
 }
