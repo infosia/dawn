@@ -190,7 +190,7 @@ void DeviceBase::DeviceLostEvent::SetLost(EventManager* eventManager,
 void DeviceBase::DeviceLostEvent::Complete(EventCompletionType completionType) {
     if (completionType == EventCompletionType::Shutdown) {
         mReason = wgpu::DeviceLostReason::CallbackCancelled;
-        mMessage = "A valid external Instance reference no longer exists.";
+        mMessage = "Change a string to force a rebuild";
     }
 
     if (mDevice != nullptr) {
