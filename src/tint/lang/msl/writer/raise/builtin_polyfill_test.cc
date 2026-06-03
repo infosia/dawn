@@ -4245,5 +4245,343 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(MslWriter_BuiltinPolyfillTest, FirstLeadingBit_u32) {
+    auto* foo = b.Function("foo", ty.void_());
+    auto* p = b.FunctionParam("p", ty.u32());
+    foo->SetParams({p});
+    b.Append(foo->Block(), [&] {
+        auto* call = b.Call(ty.u32(), core::BuiltinFn::kFirstLeadingBit, p);
+        b.Let("res", call);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+%foo = func(%p:u32):void {
+  $B1: {
+    %3:u32 = firstLeadingBit %p
+    %res:u32 = let %3
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%p:u32):void {
+  $B1: {
+    %3:u32 = msl.clz %p
+    %4:u32 = sub 31u, %3
+    %5:bool = eq %p, 0u
+    %6:u32 = select %4, 4294967295u, %5
+    %res:u32 = let %6
+    ret
+  }
+}
+)";
+
+    BuiltinPolyfillConfig config;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(MslWriter_BuiltinPolyfillTest, FirstLeadingBit_vec2u) {
+    auto* foo = b.Function("foo", ty.void_());
+    auto* p = b.FunctionParam("p", ty.vec2u());
+    foo->SetParams({p});
+    b.Append(foo->Block(), [&] {
+        auto* call = b.Call(ty.vec2u(), core::BuiltinFn::kFirstLeadingBit, p);
+        b.Let("res", call);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+%foo = func(%p:vec2<u32>):void {
+  $B1: {
+    %3:vec2<u32> = firstLeadingBit %p
+    %res:vec2<u32> = let %3
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%p:vec2<u32>):void {
+  $B1: {
+    %3:vec2<u32> = msl.clz %p
+    %4:vec2<u32> = sub vec2<u32>(31u), %3
+    %5:vec2<bool> = eq %p, vec2<u32>(0u)
+    %6:vec2<u32> = select %4, vec2<u32>(4294967295u), %5
+    %res:vec2<u32> = let %6
+    ret
+  }
+}
+)";
+
+    BuiltinPolyfillConfig config;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(MslWriter_BuiltinPolyfillTest, FirstLeadingBit_i32) {
+    auto* foo = b.Function("foo", ty.void_());
+    auto* p = b.FunctionParam("p", ty.i32());
+    foo->SetParams({p});
+    b.Append(foo->Block(), [&] {
+        auto* call = b.Call(ty.i32(), core::BuiltinFn::kFirstLeadingBit, p);
+        b.Let("res", call);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+%foo = func(%p:i32):void {
+  $B1: {
+    %3:i32 = firstLeadingBit %p
+    %res:i32 = let %3
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%p:i32):void {
+  $B1: {
+    %3:u32 = bitcast<u32> %p
+    %4:u32 = complement %3
+    %5:bool = lt %3, 2147483648u
+    %6:u32 = select %4, %3, %5
+    %7:u32 = msl.clz %6
+    %8:u32 = sub 31u, %7
+    %9:bool = eq %p, 0i
+    %10:bool = eq %p, -1i
+    %11:bool = or %9, %10
+    %12:u32 = select %8, 4294967295u, %11
+    %13:i32 = bitcast<i32> %12
+    %res:i32 = let %13
+    ret
+  }
+}
+)";
+
+    BuiltinPolyfillConfig config;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(MslWriter_BuiltinPolyfillTest, FirstLeadingBit_vec3i) {
+    auto* foo = b.Function("foo", ty.void_());
+    auto* p = b.FunctionParam("p", ty.vec3i());
+    foo->SetParams({p});
+    b.Append(foo->Block(), [&] {
+        auto* call = b.Call(ty.vec3i(), core::BuiltinFn::kFirstLeadingBit, p);
+        b.Let("res", call);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+%foo = func(%p:vec3<i32>):void {
+  $B1: {
+    %3:vec3<i32> = firstLeadingBit %p
+    %res:vec3<i32> = let %3
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%p:vec3<i32>):void {
+  $B1: {
+    %3:vec3<u32> = bitcast<vec3<u32>> %p
+    %4:vec3<u32> = complement %3
+    %5:vec3<bool> = lt %3, vec3<u32>(2147483648u)
+    %6:vec3<u32> = select %4, %3, %5
+    %7:vec3<u32> = msl.clz %6
+    %8:vec3<u32> = sub vec3<u32>(31u), %7
+    %9:vec3<bool> = eq %p, vec3<i32>(0i)
+    %10:vec3<bool> = eq %p, vec3<i32>(-1i)
+    %11:vec3<bool> = or %9, %10
+    %12:vec3<u32> = select %8, vec3<u32>(4294967295u), %11
+    %13:vec3<i32> = bitcast<vec3<i32>> %12
+    %res:vec3<i32> = let %13
+    ret
+  }
+}
+)";
+
+    BuiltinPolyfillConfig config;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(MslWriter_BuiltinPolyfillTest, FirstTrailingBit_u32) {
+    auto* foo = b.Function("foo", ty.void_());
+    auto* p = b.FunctionParam("p", ty.u32());
+    foo->SetParams({p});
+    b.Append(foo->Block(), [&] {
+        auto* call = b.Call(ty.u32(), core::BuiltinFn::kFirstTrailingBit, p);
+        b.Let("res", call);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+%foo = func(%p:u32):void {
+  $B1: {
+    %3:u32 = firstTrailingBit %p
+    %res:u32 = let %3
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%p:u32):void {
+  $B1: {
+    %3:u32 = msl.ctz %p
+    %4:bool = eq %p, 0u
+    %5:u32 = select %3, 4294967295u, %4
+    %res:u32 = let %5
+    ret
+  }
+}
+)";
+
+    BuiltinPolyfillConfig config;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(MslWriter_BuiltinPolyfillTest, FirstTrailingBit_vec2u) {
+    auto* foo = b.Function("foo", ty.void_());
+    auto* p = b.FunctionParam("p", ty.vec2u());
+    foo->SetParams({p});
+    b.Append(foo->Block(), [&] {
+        auto* call = b.Call(ty.vec2u(), core::BuiltinFn::kFirstTrailingBit, p);
+        b.Let("res", call);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+%foo = func(%p:vec2<u32>):void {
+  $B1: {
+    %3:vec2<u32> = firstTrailingBit %p
+    %res:vec2<u32> = let %3
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%p:vec2<u32>):void {
+  $B1: {
+    %3:vec2<u32> = msl.ctz %p
+    %4:vec2<bool> = eq %p, vec2<u32>(0u)
+    %5:vec2<u32> = select %3, vec2<u32>(4294967295u), %4
+    %res:vec2<u32> = let %5
+    ret
+  }
+}
+)";
+
+    BuiltinPolyfillConfig config;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(MslWriter_BuiltinPolyfillTest, FirstTrailingBit_i32) {
+    auto* foo = b.Function("foo", ty.void_());
+    auto* p = b.FunctionParam("p", ty.i32());
+    foo->SetParams({p});
+    b.Append(foo->Block(), [&] {
+        auto* call = b.Call(ty.i32(), core::BuiltinFn::kFirstTrailingBit, p);
+        b.Let("res", call);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+%foo = func(%p:i32):void {
+  $B1: {
+    %3:i32 = firstTrailingBit %p
+    %res:i32 = let %3
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%p:i32):void {
+  $B1: {
+    %3:i32 = msl.ctz %p
+    %4:bool = eq %p, 0i
+    %5:i32 = select %3, -1i, %4
+    %res:i32 = let %5
+    ret
+  }
+}
+)";
+
+    BuiltinPolyfillConfig config;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(MslWriter_BuiltinPolyfillTest, FirstTrailingBit_vec3i) {
+    auto* foo = b.Function("foo", ty.void_());
+    auto* p = b.FunctionParam("p", ty.vec3i());
+    foo->SetParams({p});
+    b.Append(foo->Block(), [&] {
+        auto* call = b.Call(ty.vec3i(), core::BuiltinFn::kFirstTrailingBit, p);
+        b.Let("res", call);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+%foo = func(%p:vec3<i32>):void {
+  $B1: {
+    %3:vec3<i32> = firstTrailingBit %p
+    %res:vec3<i32> = let %3
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%p:vec3<i32>):void {
+  $B1: {
+    %3:vec3<i32> = msl.ctz %p
+    %4:vec3<bool> = eq %p, vec3<i32>(0i)
+    %5:vec3<i32> = select %3, vec3<i32>(-1i), %4
+    %res:vec3<i32> = let %5
+    ret
+  }
+}
+)";
+
+    BuiltinPolyfillConfig config;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::msl::writer::raise
