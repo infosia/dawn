@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2246a16e_a4ae988f",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-03T23:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "099e23a2_b241a54a",
+      "revId": "4a64ba491ca3cf9d78472db7a4ad01942a24febf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9607b4a9_9e2ec9ae",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2f80070_c8c1d161",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-03T23:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9607b4a9_9e2ec9ae",
+      "range": {
+        "startLine": 387,
+        "startChar": 12,
+        "endLine": 387,
+        "endChar": 83
+      },
+      "revId": "4a64ba491ca3cf9d78472db7a4ad01942a24febf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7333a965_f96a7eb7",
@@ -54,6 +96,24 @@
       "writtenOn": "2026-06-03T19:37:14Z",
       "side": 1,
       "message": "Need a `struct` version of this test as per my comment on `SetSubgroupSizeMaskForEntryPoint`.",
+      "revId": "4a64ba491ca3cf9d78472db7a4ad01942a24febf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43d9247f_a731ee02",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4174,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-03T23:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7333a965_f96a7eb7",
       "revId": "4a64ba491ca3cf9d78472db7a4ad01942a24febf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
