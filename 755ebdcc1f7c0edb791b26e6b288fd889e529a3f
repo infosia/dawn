@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a08eb3e_abb08591",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-03T01:03:32Z",
+      "side": 1,
+      "message": "PTAL. Choosing to fix-forward instead of revert because I would need to revert 3 CLs and doing so might cause merge conflicts if any new changes added new includes.",
+      "revId": "755ebdcc1f7c0edb791b26e6b288fd889e529a3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
