@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10aa93ff_1bb52a24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-03T00:05:57Z",
+      "side": 1,
+      "message": "12..13 rebases with no changes,\n13..14 addresses comments.\nPTAL",
+      "revId": "ef5a671aa622bf52b00571ccb73f750b3a143360",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
