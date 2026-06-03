@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bcb8b12_a8339232",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-03T21:10:14Z",
+      "side": 1,
+      "message": "Dawn -\u003e Chromium roller failing on ios-simulator due to compile error.\nWith this CL I was able to build this target `third_party/dawn/src/utils:unittests` successfully on a local chromium checkout for ios. (But not the whole compile with `vpython3 tools/utr -p chromium -B try -b ios-simulator compile` like shown at [ios-simulator build page](https://ci.chromium.org/ui/p/chromium/builders/try/ios-simulator/2825611/overview) yet)\nios-simluator try bot is on chromium so cannot tested here. But I think we can land this and see if can fix the roller",
+      "revId": "bd46517deaeaf1765c5fafe529a7a51f13a2c9d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
