@@ -16,6 +16,24 @@
       "message": "High level question, would it make more sense to add the explicit structs that you want to be \"experimental\" to a list in `dawn_kotlin.json` instead of adding the tag to the `dawn.json`? It feels like it would make more sense to put it in there, especially because you have to name specific members to skip already in that file for some of the new experimental structs.",
       "revId": "8b6923612a72f699707530e46322f3803ac5fa15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cbf6d52_62e77863",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-03T06:07:59Z",
+      "side": 1,
+      "message": "The rationale behind this approach was that while keeping this metadata in dawn_kotlin.json offers a cleaner separation of concerns, utilizing the \"art_experimental\" tag in dawn.json provides better visibility in dawn.json and allows to reuse the generator existing tag-filtering logic (i.e item_is_enabled).\n\nMoving this configuration to dawn_kotlin.json introduces a new dilemma: we would either still need to tag these features with \"art\" in dawn.json just to enable their generation (leaving us with edits in both files) along with changes to the parsing logics, or we would have to implement a custom flow to force-enable items on demand based on the dawn_kotlin.json file, which would increase dawn_json_generator complexity and reduces readability (similar to https://github.com/SigmanZero/AndroidAdobeDawn/pull/1/changes#diff-46d741a6857b69e68e263bcef071dc784fed946e71c475406a9ac00bb86916a3)",
+      "parentUuid": "6555cf45_1d15598f",
+      "revId": "8b6923612a72f699707530e46322f3803ac5fa15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
