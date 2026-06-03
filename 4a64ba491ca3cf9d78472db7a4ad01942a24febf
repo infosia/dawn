@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "099e23a2_b241a54a",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-03T19:37:14Z",
+      "side": 1,
+      "message": "Nit: We can skip the referenced-module-vars checks here because we\u0027ve already stripped the module down to a single entry point, and removed any functions that are not reachable from that entry point.",
+      "revId": "4a64ba491ca3cf9d78472db7a4ad01942a24febf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9607b4a9_9e2ec9ae",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-03T19:37:14Z",
+      "side": 1,
+      "message": "Because this is currently running before ShaderIO, we also have to check for the case where the entry point parameter is a struct that contains the subgroup size as a member.\n\nThe MSL SimdBallot transform didn\u0027t have to do that because it runs after ShaderIO, which for MSL will turn all builtins into non-struct parameters.",
+      "range": {
+        "startLine": 387,
+        "startChar": 12,
+        "endLine": 387,
+        "endChar": 83
+      },
+      "revId": "4a64ba491ca3cf9d78472db7a4ad01942a24febf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7333a965_f96a7eb7",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4174,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-03T19:37:14Z",
+      "side": 1,
+      "message": "Need a `struct` version of this test as per my comment on `SetSubgroupSizeMaskForEntryPoint`.",
+      "revId": "4a64ba491ca3cf9d78472db7a4ad01942a24febf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
