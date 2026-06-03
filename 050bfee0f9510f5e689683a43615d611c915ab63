@@ -33,6 +33,24 @@
       "message": "This still needs to be under a killswitch. Can you undo this change?",
       "revId": "050bfee0f9510f5e689683a43615d611c915ab63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "239f2edf_43cf8f3f",
+        "filename": "src/tint/lang/wgsl/feature_status.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-03T14:43:59Z",
+      "side": 1,
+      "message": "It\u0027s still shipped with killswitch here? None of these features have yet been moved over to `kShipped`. I\u0027ve been meaning to start doing that for some of the older language features.",
+      "parentUuid": "b652d07a_94c1073e",
+      "revId": "050bfee0f9510f5e689683a43615d611c915ab63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
