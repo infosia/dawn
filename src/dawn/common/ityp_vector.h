@@ -29,9 +29,10 @@
 #define SRC_DAWN_COMMON_ITYP_VECTOR_H_
 
 #include <cstddef>
+#include <limits>
 #include <vector>
 
-#include "src/utils/numeric.h"
+#include "src/dawn/common/Numeric.h"
 #include "src/utils/underlying_type.h"
 
 namespace dawn::ityp {
