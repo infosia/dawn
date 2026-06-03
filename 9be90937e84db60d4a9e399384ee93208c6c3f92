@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78c87fd2_bdb6e39d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-03T10:39:17Z",
+      "side": 1,
+      "message": "looks good, someone else needs to approve - I don\u0027t have +2 powers here and am not too familiar with the codebase",
+      "revId": "9be90937e84db60d4a9e399384ee93208c6c3f92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c86f33c0_82c47616",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/AdapterTest.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-03T10:39:17Z",
+      "side": 1,
+      "message": "This file appears to contain only indentation changes. If this was unintended, consider reverting to keep the PR focused.",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 0
+      },
+      "revId": "9be90937e84db60d4a9e399384ee93208c6c3f92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c29fa95a_8f3b1de4",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/BufferTest.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-03T10:39:17Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: In this file, `device.destroy()` was removed. In `RenderPassEncoderTest.kt`, it was kept but wrapped in `gpu.execute`. We should be consistent: if the device needs explicit destruction, we should keep it here and wrap it in the dispatcher as well.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "9be90937e84db60d4a9e399384ee93208c6c3f92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "588c1986_12206f54",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/QuerySetTest.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-03T10:39:17Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: The `Assume.assumeTrue(..., true)` pattern is a bit strange because it will always pass if reached. Usually, you\u0027d pass the actual condition: `Assume.assumeTrue(\"msg\", device.hasFeature(...))`. If you want to manually skip, `Assume.assumeTrue` isn\u0027t strictly needed if you are returning early anyway, but it helps the test runner report it as \u0027skipped\u0027.",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "9be90937e84db60d4a9e399384ee93208c6c3f92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
