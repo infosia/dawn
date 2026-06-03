@@ -261,6 +261,30 @@
       },
       "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a305dab_c27ed166",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-03T04:01:25Z",
+      "side": 1,
+      "message": "Okay, I spent more time on this, and came to the realization that we should be fine only including the Agility SDK\u0027s d3d12.h internally when building Dawn\u0027s D3D12 backend. It\u0027s not needed as a public_config for other deps, such as tests (at least for now). This means we partially bring back your changes to this file, and modify the GN build a bit. I\u0027ve sent you an email with the patch file attached.",
+      "parentUuid": "fafb3bd4_25d9dc97",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
