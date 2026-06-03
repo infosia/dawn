@@ -3,6 +3,29 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6f560851_53d68e8d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 46
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-03T14:12:45Z",
+      "side": 1,
+      "message": "Note that LinAlg was actually introduced in [1.720.0](https://www.nuget.org/packages/Microsoft.Direct3D.D3D12/1.721.0-preview), but I\u0027m fine with updating to the very latest.",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 52
+      },
+      "revId": "af7f589f06236fbdd15a91c9d05143b7c8ccb64d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "fdf635c0_ecfcb5a2",
         "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
         "patchSetId": 46
