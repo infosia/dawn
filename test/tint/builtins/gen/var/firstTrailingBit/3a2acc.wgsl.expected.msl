@@ -11,7 +11,15 @@ struct tint_module_vars_struct {
 int firstTrailingBit_3a2acc() {
   int arg_0 = 1;
   uint const v = as_type<uint>(arg_0);
-  int res = as_type<int>(select((select(0u, 16u, ((v & 65535u) == 0u)) | (select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u)) | (select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u)) | (select(0u, 2u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) & 3u) == 0u)) | select(0u, 1u, ((((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) >> select(0u, 2u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) & 3u) == 0u))) & 1u) == 0u)))))), 4294967295u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) >> select(0u, 2u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) & 3u) == 0u))) == 0u)));
+  uint const v_1 = select(0u, 16u, ((v & 65535u) == 0u));
+  uint const v_2 = (v >> v_1);
+  uint const v_3 = select(0u, 8u, ((v_2 & 255u) == 0u));
+  uint const v_4 = (v_2 >> v_3);
+  uint const v_5 = select(0u, 4u, ((v_4 & 15u) == 0u));
+  uint const v_6 = (v_4 >> v_5);
+  uint const v_7 = select(0u, 2u, ((v_6 & 3u) == 0u));
+  uint const v_8 = (v_6 >> v_7);
+  int res = as_type<int>(select((v_1 | (v_3 | (v_5 | (v_7 | select(0u, 1u, ((v_8 & 1u) == 0u)))))), 4294967295u, (v_8 == 0u)));
   return res;
 }
 
@@ -32,7 +40,15 @@ struct tint_module_vars_struct {
 int firstTrailingBit_3a2acc() {
   int arg_0 = 1;
   uint const v = as_type<uint>(arg_0);
-  int res = as_type<int>(select((select(0u, 16u, ((v & 65535u) == 0u)) | (select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u)) | (select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u)) | (select(0u, 2u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) & 3u) == 0u)) | select(0u, 1u, ((((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) >> select(0u, 2u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) & 3u) == 0u))) & 1u) == 0u)))))), 4294967295u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) >> select(0u, 2u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) & 3u) == 0u))) == 0u)));
+  uint const v_1 = select(0u, 16u, ((v & 65535u) == 0u));
+  uint const v_2 = (v >> v_1);
+  uint const v_3 = select(0u, 8u, ((v_2 & 255u) == 0u));
+  uint const v_4 = (v_2 >> v_3);
+  uint const v_5 = select(0u, 4u, ((v_4 & 15u) == 0u));
+  uint const v_6 = (v_4 >> v_5);
+  uint const v_7 = select(0u, 2u, ((v_6 & 3u) == 0u));
+  uint const v_8 = (v_6 >> v_7);
+  int res = as_type<int>(select((v_1 | (v_3 | (v_5 | (v_7 | select(0u, 1u, ((v_8 & 1u) == 0u)))))), 4294967295u, (v_8 == 0u)));
   return res;
 }
 
@@ -60,7 +76,15 @@ struct vertex_main_outputs {
 int firstTrailingBit_3a2acc() {
   int arg_0 = 1;
   uint const v = as_type<uint>(arg_0);
-  int res = as_type<int>(select((select(0u, 16u, ((v & 65535u) == 0u)) | (select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u)) | (select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u)) | (select(0u, 2u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) & 3u) == 0u)) | select(0u, 1u, ((((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) >> select(0u, 2u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) & 3u) == 0u))) & 1u) == 0u)))))), 4294967295u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) >> select(0u, 2u, (((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) >> select(0u, 4u, ((((v >> select(0u, 16u, ((v & 65535u) == 0u))) >> select(0u, 8u, (((v >> select(0u, 16u, ((v & 65535u) == 0u))) & 255u) == 0u))) & 15u) == 0u))) & 3u) == 0u))) == 0u)));
+  uint const v_1 = select(0u, 16u, ((v & 65535u) == 0u));
+  uint const v_2 = (v >> v_1);
+  uint const v_3 = select(0u, 8u, ((v_2 & 255u) == 0u));
+  uint const v_4 = (v_2 >> v_3);
+  uint const v_5 = select(0u, 4u, ((v_4 & 15u) == 0u));
+  uint const v_6 = (v_4 >> v_5);
+  uint const v_7 = select(0u, 2u, ((v_6 & 3u) == 0u));
+  uint const v_8 = (v_6 >> v_7);
+  int res = as_type<int>(select((v_1 | (v_3 | (v_5 | (v_7 | select(0u, 1u, ((v_8 & 1u) == 0u)))))), 4294967295u, (v_8 == 0u)));
   return res;
 }
 
@@ -72,9 +96,9 @@ VertexOutput vertex_main_inner() {
 }
 
 vertex vertex_main_outputs vertex_main() {
-  VertexOutput const v_1 = vertex_main_inner();
+  VertexOutput const v_9 = vertex_main_inner();
   vertex_main_outputs tint_wrapper_result = {};
-  tint_wrapper_result.VertexOutput_pos = v_1.pos;
-  tint_wrapper_result.VertexOutput_prevent_dce = v_1.prevent_dce;
+  tint_wrapper_result.VertexOutput_pos = v_9.pos;
+  tint_wrapper_result.VertexOutput_prevent_dce = v_9.prevent_dce;
   return tint_wrapper_result;
 }

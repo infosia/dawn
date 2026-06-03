@@ -1,0 +1,48 @@
+#include <metal_stdlib>
+using namespace metal;
+
+struct tint_module_vars_struct {
+  device uint2* value;
+};
+
+[[max_total_threads_per_threadgroup(1)]]
+kernel void v(device uint2* value [[buffer(0)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.value=value};
+  uint2 const v_1 = (*tint_module_vars.value);
+  uint2 const v_2 = select(uint2(16u), uint2(0u), ((v_1 & uint2(4294901760u)) == uint2(0u)));
+  uint2 const v_3 = (v_1 >> v_2);
+  uint2 const v_4 = select(uint2(8u), uint2(0u), ((v_3 & uint2(65280u)) == uint2(0u)));
+  uint2 const v_5 = (v_3 >> v_4);
+  uint2 const v_6 = select(uint2(4u), uint2(0u), ((v_5 & uint2(240u)) == uint2(0u)));
+  uint2 const v_7 = (v_5 >> v_6);
+  uint2 const v_8 = select(uint2(2u), uint2(0u), ((v_7 & uint2(12u)) == uint2(0u)));
+  uint2 const v_9 = (v_7 >> v_8);
+  uint2 const v_10 = select((v_2 | (v_4 | (v_6 | (v_8 | select(uint2(1u), uint2(0u), ((v_9 & uint2(2u)) == uint2(0u))))))), uint2(4294967295u), (v_9 == uint2(0u)));
+  uint2 const v_11 = select(uint2(16u), uint2(0u), ((v_10 & uint2(4294901760u)) == uint2(0u)));
+  uint2 const v_12 = (v_10 >> v_11);
+  uint2 const v_13 = select(uint2(8u), uint2(0u), ((v_12 & uint2(65280u)) == uint2(0u)));
+  uint2 const v_14 = (v_12 >> v_13);
+  uint2 const v_15 = select(uint2(4u), uint2(0u), ((v_14 & uint2(240u)) == uint2(0u)));
+  uint2 const v_16 = (v_14 >> v_15);
+  uint2 const v_17 = select(uint2(2u), uint2(0u), ((v_16 & uint2(12u)) == uint2(0u)));
+  uint2 const v_18 = (v_16 >> v_17);
+  uint2 const v_19 = select((v_11 | (v_13 | (v_15 | (v_17 | select(uint2(1u), uint2(0u), ((v_18 & uint2(2u)) == uint2(0u))))))), uint2(4294967295u), (v_18 == uint2(0u)));
+  uint2 const v_20 = select(uint2(16u), uint2(0u), ((v_19 & uint2(4294901760u)) == uint2(0u)));
+  uint2 const v_21 = (v_19 >> v_20);
+  uint2 const v_22 = select(uint2(8u), uint2(0u), ((v_21 & uint2(65280u)) == uint2(0u)));
+  uint2 const v_23 = (v_21 >> v_22);
+  uint2 const v_24 = select(uint2(4u), uint2(0u), ((v_23 & uint2(240u)) == uint2(0u)));
+  uint2 const v_25 = (v_23 >> v_24);
+  uint2 const v_26 = select(uint2(2u), uint2(0u), ((v_25 & uint2(12u)) == uint2(0u)));
+  uint2 const v_27 = (v_25 >> v_26);
+  uint2 const v_28 = select((v_20 | (v_22 | (v_24 | (v_26 | select(uint2(1u), uint2(0u), ((v_27 & uint2(2u)) == uint2(0u))))))), uint2(4294967295u), (v_27 == uint2(0u)));
+  uint2 const v_29 = select(uint2(16u), uint2(0u), ((v_28 & uint2(4294901760u)) == uint2(0u)));
+  uint2 const v_30 = (v_28 >> v_29);
+  uint2 const v_31 = select(uint2(8u), uint2(0u), ((v_30 & uint2(65280u)) == uint2(0u)));
+  uint2 const v_32 = (v_30 >> v_31);
+  uint2 const v_33 = select(uint2(4u), uint2(0u), ((v_32 & uint2(240u)) == uint2(0u)));
+  uint2 const v_34 = (v_32 >> v_33);
+  uint2 const v_35 = select(uint2(2u), uint2(0u), ((v_34 & uint2(12u)) == uint2(0u)));
+  uint2 const v_36 = (v_34 >> v_35);
+  (*tint_module_vars.value) = select((v_29 | (v_31 | (v_33 | (v_35 | select(uint2(1u), uint2(0u), ((v_36 & uint2(2u)) == uint2(0u))))))), uint2(4294967295u), (v_36 == uint2(0u)));
+}
