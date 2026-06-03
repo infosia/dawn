@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8437b0e6_be1d3f0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-03T17:58:16Z",
+      "side": 1,
+      "message": "flags_V2_FINAL_FOR_REAL_NOW.bzl",
+      "revId": "af5537d39a29fc767176d513bc3ba6de388cb4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
