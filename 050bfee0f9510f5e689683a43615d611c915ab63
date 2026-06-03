@@ -69,6 +69,24 @@
       "parentUuid": "239f2edf_43cf8f3f",
       "revId": "050bfee0f9510f5e689683a43615d611c915ab63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd85e67d_ff17cd0d",
+        "filename": "src/tint/lang/wgsl/feature_status.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:46:33Z",
+      "side": 1,
+      "message": "But we still need to keep the comment for the block that they are shipped with killswitch",
+      "parentUuid": "a2041d96_209722f4",
+      "revId": "050bfee0f9510f5e689683a43615d611c915ab63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
