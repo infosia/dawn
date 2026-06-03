@@ -320,7 +320,7 @@ static constexpr LanguageFeatureCase kValidLanguageFeatureCases[] = {
     {"chromium_testing_unimplemented", LanguageFeature::kChromiumTestingUnimplemented},
     {"chromium_testing_unsafe_experimental", LanguageFeature::kChromiumTestingUnsafeExperimental},
     {"fragment_depth", LanguageFeature::kFragmentDepth},
-    {"immediate_address_space", LanguageFeature::kImmediateAddressSpace},
+    {"immediate_data", LanguageFeature::kImmediateData},
     {"linear_indexing", LanguageFeature::kLinearIndexing},
     {"packed_4x8_integer_dot_product", LanguageFeature::kPacked4X8IntegerDotProduct},
     {"pointer_composite_access", LanguageFeature::kPointerCompositeAccess},

@@ -135,9 +135,9 @@ ResultOrError<UnpackedPtr<PipelineLayoutDescriptor>> ValidatePipelineLayoutDescr
 
     // Validate immediateSize.
     if (descriptor->immediateSize) {
-        DAWN_INVALID_IF(!device->GetInstance()->HasFeature(
-                            wgpu::WGSLLanguageFeatureName::ImmediateAddressSpace),
-                        "ImmediateAddressSpace feature is not enabled");
+        DAWN_INVALID_IF(
+            !device->GetInstance()->HasFeature(wgpu::WGSLLanguageFeatureName::ImmediateData),
+            "ImmediateData feature is not enabled");
         DAWN_INVALID_IF(!IsAligned(descriptor->immediateSize, kImmediateElementByteSize),
                         "immediateSize (%i) is not a multiple of %i bytes.",
                         descriptor->immediateSize, kImmediateElementByteSize);

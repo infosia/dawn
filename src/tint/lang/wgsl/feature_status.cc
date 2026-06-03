@@ -46,7 +46,7 @@ FeatureStatus GetLanguageFeatureStatus(LanguageFeature f) {
             ////////////////////////////////////////////////////////////////////
             // Shipped with killswitch features
             ///////////////////////////////////////////////////////////////////
-        case LanguageFeature::kImmediateAddressSpace:
+        case LanguageFeature::kImmediateData:
             return FeatureStatus::kShippedWithKillswitch;
 
             ////////////////////////////////////////////////////////////////////

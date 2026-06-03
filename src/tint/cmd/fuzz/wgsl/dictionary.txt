@@ -270,7 +270,7 @@
 "image"
 "image_operands"
 "immediate"
-"immediate_address_space"
+"immediate_data"
 "info"
 "inputAttachmentLoad"
 "input_attachment"

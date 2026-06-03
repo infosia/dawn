@@ -204,8 +204,8 @@ LanguageFeature ParseLanguageFeature(std::string_view str) {
     if (str == "fragment_depth") {
         return LanguageFeature::kFragmentDepth;
     }
-    if (str == "immediate_address_space") {
-        return LanguageFeature::kImmediateAddressSpace;
+    if (str == "immediate_data") {
+        return LanguageFeature::kImmediateData;
     }
     if (str == "linear_indexing") {
         return LanguageFeature::kLinearIndexing;
@@ -268,8 +268,8 @@ std::string_view ToString(LanguageFeature value) {
             return "chromium_testing_unsafe_experimental";
         case LanguageFeature::kFragmentDepth:
             return "fragment_depth";
-        case LanguageFeature::kImmediateAddressSpace:
-            return "immediate_address_space";
+        case LanguageFeature::kImmediateData:
+            return "immediate_data";
         case LanguageFeature::kLinearIndexing:
             return "linear_indexing";
         case LanguageFeature::kPacked4X8IntegerDotProduct:

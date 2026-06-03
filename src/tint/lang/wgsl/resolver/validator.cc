@@ -3524,10 +3524,10 @@ bool Validator::CheckTypeAccessAddressSpace(const core::type::Type* store_ty,
             }
             break;
         case core::AddressSpace::kImmediate:
-            if (DAWN_UNLIKELY(!allowed_features_.features.contains(
-                    wgsl::LanguageFeature::kImmediateAddressSpace))) {
+            if (DAWN_UNLIKELY(
+                    !allowed_features_.features.contains(wgsl::LanguageFeature::kImmediateData))) {
                 AddError(source) << "use of variable address space " << style::Enum("immediate")
-                                 << " requires the immediate_address_space language feature, which "
+                                 << " requires the immediate_data language feature, which "
                                     "is not allowed in the current environment";
                 return false;
             }

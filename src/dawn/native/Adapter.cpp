@@ -107,7 +107,7 @@ void AdapterBase::UpdateLimits() {
     // If immediates are not enabled (e.g. blocklisted), report a maxImmediateSize of 0.
     // TODO(crbug.com/366291600): Remove when immediates are implemented on all backends and
     // not be blocklisted.
-    if (!GetInstance()->HasFeature(wgpu::WGSLLanguageFeatureName::ImmediateAddressSpace)) {
+    if (!GetInstance()->HasFeature(wgpu::WGSLLanguageFeatureName::ImmediateData)) {
         mLimits.v1.maxImmediateSize = 0;
     }
 }

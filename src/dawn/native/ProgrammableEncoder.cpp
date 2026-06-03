@@ -126,9 +126,9 @@ void ProgrammableEncoder::APIPushDebugGroup(StringView groupLabelIn) {
 }
 
 MaybeError ProgrammableEncoder::ValidateSetImmediates(uint32_t offset, size_t size) const {
-    DAWN_INVALID_IF(!GetDevice()->GetInstance()->HasFeature(
-                        wgpu::WGSLLanguageFeatureName::ImmediateAddressSpace),
-                    "ImmediateAddressSpace feature is not enabled");
+    DAWN_INVALID_IF(
+        !GetDevice()->GetInstance()->HasFeature(wgpu::WGSLLanguageFeatureName::ImmediateData),
+        "ImmediateData feature is not enabled");
 
     // Validate offset and size are aligned to 4 bytes.
     DAWN_INVALID_IF(offset % 4 != 0, "offset (%u) is not a multiple of 4", offset);

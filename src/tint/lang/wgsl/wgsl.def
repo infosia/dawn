@@ -117,7 +117,7 @@ enum language_feature {
   subgroup_id
   subgroup_uniformity
   fragment_depth
-  immediate_address_space
+  immediate_data
   texture_and_sampler_let
   buffer_view
   swizzle_assignment

@@ -457,10 +457,9 @@ TEST_F(ResolverEntryPointValidationTest, ImmediateDisallowedWithFeatureDisabled)
 
     auto resolver = Resolver{this, wgsl::AllowedFeatures{}};
     EXPECT_FALSE(resolver.Resolve());
-    EXPECT_EQ(
-        resolver.error(),
-        "1:2 error: use of variable address space 'immediate' requires the immediate_address_space "
-        "language feature, which is not allowed in the current environment");
+    EXPECT_EQ(resolver.error(),
+              "1:2 error: use of variable address space 'immediate' requires the immediate_data "
+              "language feature, which is not allowed in the current environment");
 }
 
 TEST_F(ResolverEntryPointValidationTest, ImmediateOneVariableUsedInEntryPoint) {

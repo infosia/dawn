@@ -4671,7 +4671,7 @@ fn main() {}
 
 TEST_F(InspectorImmediateBlockTest, UnusedImmediateVariable) {
     auto* src = R"(
-requires immediate_address_space;
+requires immediate_data;
 var<immediate> a : u32;
 @compute @workgroup_size(1)
 fn main() {}
@@ -4683,7 +4683,7 @@ fn main() {}
 
 TEST_F(InspectorImmediateBlockTest, SimpleScalar) {
     auto* src = R"(
-requires immediate_address_space;
+requires immediate_data;
 var<immediate> a : u32;
 @compute @workgroup_size(1)
 fn main() {
@@ -4700,7 +4700,7 @@ fn main() {
 
 TEST_F(InspectorImmediateBlockTest, SimpleVector) {
     auto* src = R"(
-requires immediate_address_space;
+requires immediate_data;
 var<immediate> a : vec4<f32>;
 @compute @workgroup_size(1)
 fn main() {
@@ -4719,7 +4719,7 @@ fn main() {
 
 TEST_F(InspectorImmediateBlockTest, MatrixWithPadding) {
     auto* src = R"(
-requires immediate_address_space;
+requires immediate_data;
 var<immediate> a : mat3x3<f32>;
 @compute @workgroup_size(1)
 fn main() {
@@ -4757,7 +4757,7 @@ fn main() {
 
 TEST_F(InspectorImmediateBlockTest, StructWithPadding) {
     auto* src = R"(
-requires immediate_address_space;
+requires immediate_data;
 struct S {
   a : u32,
   b : vec3<f32>,
@@ -4797,7 +4797,7 @@ fn main() {
 
 TEST_F(InspectorImmediateBlockTest, IndirectUse) {
     auto* src = R"(
-requires immediate_address_space;
+requires immediate_data;
 var<immediate> a : u32;
 fn foo() {
   _ = a;
@@ -4817,7 +4817,7 @@ fn main() {
 
 TEST_F(InspectorImmediateBlockTest, PartialAccess) {
     auto* src = R"(
-requires immediate_address_space;
+requires immediate_data;
 struct S {
   a : u32,
   b : u32,
@@ -4840,7 +4840,7 @@ fn main() {
 
 TEST_F(InspectorImmediateBlockTest, FunctionParameter) {
     auto* src = R"(
-requires immediate_address_space;
+requires immediate_data;
 var<immediate> a : u32;
 fn foo(val : u32) {
   _ = val;

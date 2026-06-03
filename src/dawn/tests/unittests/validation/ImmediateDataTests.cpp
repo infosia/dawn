@@ -50,7 +50,7 @@ struct ImmediateDataDisableTest : ValidationTestWithParam<FeatureMode> {
             case FeatureMode::Enabled:
                 return {};
             case FeatureMode::DisabledViaBlocklistedFeatures:
-                return {"immediate_address_space"};
+                return {"immediate_data"};
         }
         DAWN_UNREACHABLE();
         return {};

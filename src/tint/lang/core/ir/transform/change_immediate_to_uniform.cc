@@ -102,12 +102,12 @@ struct State {
         }
         immediate->SetBindingPoint(bp.group, bp.binding);
 
-        ReplaceImmediateAddressSpace(immediate);
+        ReplaceImmediateData(immediate);
     }
 
     /// Replace an immediate variable's pointer address space to make it `uniform`.
     /// @param var the immediate variable
-    void ReplaceImmediateAddressSpace(core::ir::Var* var) {
+    void ReplaceImmediateData(core::ir::Var* var) {
         Vector<core::ir::Value*, 8> to_replace;
         to_replace.Push(var->Result());
 

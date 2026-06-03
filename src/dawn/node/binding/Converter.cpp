@@ -1854,8 +1854,8 @@ bool Converter::Convert(wgpu::WGSLLanguageFeatureName& out, interop::WGSLLanguag
         case interop::WGSLLanguageFeatureName::kFragmentDepth:
             out = wgpu::WGSLLanguageFeatureName::FragmentDepth;
             return true;
-        case interop::WGSLLanguageFeatureName::kImmediateAddressSpace:
-            out = wgpu::WGSLLanguageFeatureName::ImmediateAddressSpace;
+        case interop::WGSLLanguageFeatureName::kImmediateData:
+            out = wgpu::WGSLLanguageFeatureName::ImmediateData;
             return true;
         case interop::WGSLLanguageFeatureName::kChromiumPrint:
             out = wgpu::WGSLLanguageFeatureName::ChromiumPrint;
@@ -1911,8 +1911,8 @@ bool Converter::Convert(interop::WGSLLanguageFeatureName& out, wgpu::WGSLLanguag
         case wgpu::WGSLLanguageFeatureName::FragmentDepth:
             out = interop::WGSLLanguageFeatureName::kFragmentDepth;
             return true;
-        case wgpu::WGSLLanguageFeatureName::ImmediateAddressSpace:
-            out = interop::WGSLLanguageFeatureName::kImmediateAddressSpace;
+        case wgpu::WGSLLanguageFeatureName::ImmediateData:
+            out = interop::WGSLLanguageFeatureName::kImmediateData;
             return true;
         case wgpu::WGSLLanguageFeatureName::ChromiumPrint:
             out = interop::WGSLLanguageFeatureName::kChromiumPrint;
