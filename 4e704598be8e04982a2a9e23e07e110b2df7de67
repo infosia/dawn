@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c53d9e6_af7d65a1",
+        "filename": "generator/templates/art/GPUHardwareBufferExternalTexture.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:21:38Z",
+      "side": 1,
+      "message": "These files don\u0027t seem to use the templating except for this. Maybe we could extract them to not be generated files?",
+      "revId": "4e704598be8e04982a2a9e23e07e110b2df7de67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
