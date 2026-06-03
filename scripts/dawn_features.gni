@@ -25,13 +25,13 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import("//build/config/dcheck_always_on.gni")
+import("//build/config/sanitizers/sanitizers.gni")
 import("//build_overrides/build.gni")
 import("dawn_overrides_with_defaults.gni")
 
 if (build_with_chromium) {
   import("//build/config/ozone.gni")
-  import("//build/config/sanitizers/sanitizers.gni")
-
   dawn_use_x11 = ozone_platform_x11
   dawn_use_wayland = false
 } else {
@@ -112,8 +112,7 @@ declare_args() {
                        is_fuchsia || is_android || dawn_use_swiftshader
 
   # Enables error injection for faking failures to native API calls
-  dawn_enable_error_injection =
-      is_debug || (build_with_chromium && use_fuzzing_engine)
+  dawn_enable_error_injection = is_debug || use_fuzzing_engine
 }
 
 # GN does not allow reading a variable defined in the same declare_args().
