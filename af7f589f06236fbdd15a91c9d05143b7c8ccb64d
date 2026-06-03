@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdf635c0_ecfcb5a2",
+        "filename": "src/dawn/native/d3d12/BackendD3D12.cpp",
+        "patchSetId": 46
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:03:53Z",
+      "side": 1,
+      "message": "As a follow-up, this can use `CheckHRESULT`.",
+      "revId": "af7f589f06236fbdd15a91c9d05143b7c8ccb64d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bf2474b_4fca86b9",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 46
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:03:53Z",
+      "side": 1,
+      "message": "Please move the TODO somewhere else. Files must start with the copyright.\n\n```suggestion\n// Copyright 2018 The Dawn \u0026 Tint Authors\n//\n```",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "af7f589f06236fbdd15a91c9d05143b7c8ccb64d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "707c7bc1_f8170557",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 46
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:03:53Z",
+      "side": 1,
+      "message": "```suggestion\n    // TODO(crbug.com/517940507): Gracefully handle when D3D12GetInterface is not available.\n    DAWN_CHECK(d3d12GetInterface !\u003d nullptr);\n```",
+      "revId": "af7f589f06236fbdd15a91c9d05143b7c8ccb64d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
