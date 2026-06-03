@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "050bfee0f9510f5e689683a43615d611c915ab63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b652d07a_94c1073e",
+        "filename": "src/tint/lang/wgsl/feature_status.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:36:26Z",
+      "side": 1,
+      "message": "This still needs to be under a killswitch. Can you undo this change?",
+      "revId": "050bfee0f9510f5e689683a43615d611c915ab63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
