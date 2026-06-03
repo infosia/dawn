@@ -87,6 +87,24 @@
       "parentUuid": "a2041d96_209722f4",
       "revId": "050bfee0f9510f5e689683a43615d611c915ab63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9180b851_0fbcbf72",
+        "filename": "src/tint/lang/wgsl/feature_status.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-06-03T14:49:55Z",
+      "side": 1,
+      "message": "I\u0027ve reverted these changes and will let James clean this up later then.",
+      "parentUuid": "fd85e67d_ff17cd0d",
+      "revId": "050bfee0f9510f5e689683a43615d611c915ab63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
