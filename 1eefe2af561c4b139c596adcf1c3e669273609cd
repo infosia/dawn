@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32fbcb7f_acebef08",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-06-03T15:37:19Z",
+      "side": 1,
+      "message": "Q: Why is this needed? If the Buffer is in PendingMap it will take the branch above that already acquires the lock and won\u0027t release it until after the callback has finished running.",
+      "revId": "1eefe2af561c4b139c596adcf1c3e669273609cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
