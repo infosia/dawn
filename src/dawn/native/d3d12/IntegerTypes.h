@@ -30,7 +30,7 @@
 
 #include <cstdint>
 
-#include "src/utils/typed_integer.h"
+#include "src/dawn/common/TypedInteger.h"
 
 namespace dawn::native::d3d12 {
 

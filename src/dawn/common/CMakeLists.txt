@@ -87,6 +87,7 @@ set(private_headers
     "SystemUtils.h"
     "ThreadLocal.h"
     "Time.h"
+    "TypedInteger.h"
     "TypeTraits.h"
     "vulkan_platform.h"
     "WeakRef.h"

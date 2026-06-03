@@ -28,7 +28,7 @@
 #include "gtest/gtest.h"
 #include "src/dawn/common/Compiler.h"
 #include "src/dawn/common/Range.h"
-#include "src/utils/typed_integer.h"
+#include "src/dawn/common/TypedInteger.h"
 
 namespace dawn {
 namespace {

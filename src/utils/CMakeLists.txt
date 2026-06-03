@@ -34,7 +34,6 @@ set(private_headers
     "non_movable.h"
     "numeric.h"
     "platform.h"
-    "typed_integer.h"
     "underlying_type.h"
 )
 
