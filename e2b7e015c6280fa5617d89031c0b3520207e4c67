@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "313467ff_fecc9e49",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T11:37:06Z",
+      "side": 1,
+      "message": "This define should also be in src/utils.",
+      "revId": "e2b7e015c6280fa5617d89031c0b3520207e4c67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
