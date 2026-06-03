@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8426e35f_86cb4b10",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-03T13:04:05Z",
+      "side": 1,
+      "message": "Yes, this is copied from:\n```\ndef CheckChangeTodoHasOwner(input_api, output_api, source_file_filter\u003dNone):\n    \"\"\"Checks that TODO comments have the issue number.\"\"\"\n    legacyTODO \u003d \u0027\\\\s*\\\\(.+\\\\)\\\\s*:\u0027\n    modernTODO \u003d \u0027:\\\\s*[^\\\\s]+\\\\s*\\\\-\u0027\n    unowned_todo \u003d input_api.re.compile(\u0027TODO(?!(%s|%s))\u0027 %\n                                        (legacyTODO, modernTODO))\n    errors \u003d _FindNewViolationsOfRule(lambda _, x: not unowned_todo.search(x),\n                                      input_api, source_file_filter)\n    errors \u003d [\u0027Found TODO with no issue number in \u0027 + x for x in errors]\n    if errors:\n        return [output_api.PresubmitPromptWarning(\u0027\\n\u0027.join(errors))]\n    return []\n```\n\nwhich is essentially a regex.\n\nI updated the description.",
+      "parentUuid": "713c77dd_17a8aee5",
+      "revId": "6228374effba1e459a1b6ad29c7b0ee2cfde585a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4666446f_e51f930f",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-29T19:46:45Z",
       "side": 1,
       "message": "This will ignore lines that have both TODO and DAWN_UNSAFE_TODO. Probably won\u0027t happen, but could the regex just use a word boundary marker `\\bTODO`?",
+      "revId": "6228374effba1e459a1b6ad29c7b0ee2cfde585a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5043c375_7c495952",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-03T13:04:05Z",
+      "side": 1,
+      "message": "Sure! I also added a regression test.",
+      "parentUuid": "4666446f_e51f930f",
       "revId": "6228374effba1e459a1b6ad29c7b0ee2cfde585a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
