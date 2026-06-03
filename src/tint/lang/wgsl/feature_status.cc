@@ -44,12 +44,6 @@ FeatureStatus GetLanguageFeatureStatus(LanguageFeature f) {
             return FeatureStatus::kUnsafeExperimental;
 
             ////////////////////////////////////////////////////////////////////
-            // Shipped with killswitch features
-            ///////////////////////////////////////////////////////////////////
-        case LanguageFeature::kImmediateAddressSpace:
-            return FeatureStatus::kShippedWithKillswitch;
-
-            ////////////////////////////////////////////////////////////////////
             // Chromium developer features
             ///////////////////////////////////////////////////////////////////
         case LanguageFeature::kChromiumPrint:
@@ -68,6 +62,7 @@ FeatureStatus GetLanguageFeatureStatus(LanguageFeature f) {
         case LanguageFeature::kTextureAndSamplerLet:
         case LanguageFeature::kTextureFormatsTier1:
         case LanguageFeature::kLinearIndexing:
+        case LanguageFeature::kImmediateAddressSpace:
             return FeatureStatus::kShippedWithKillswitch;
 
             ////////////////////////////////////////////////////////////////////
