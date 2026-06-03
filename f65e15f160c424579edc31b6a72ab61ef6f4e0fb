@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2209b20_b70b28b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Yes, it would be extremely easy to adapt in the future.\n\nBecause this branch abstracts the threading model behind the dispatcher property and the execute { ... } block (which just uses withContext(dispatcher)), the call sites don\u0027t need to know how the thread is managed.\n\nIf the Dawn native APIs become thread-safe in the future, all we have to do is change the createDefaultWebGpuDispatcher() function from returning a single-threaded executor to returning a multi-threaded one (like Dispatchers.Default or a larger thread pool). The withContext(dispatcher) blocks throughout the codebase would instantly start executing concurrently across multiple threads without requiring us to rewrite the actual WebGPU logic or remove any manual mutexes.",
+      "parentUuid": "d3cadc95_8a593dac",
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb5d2b6a_c0e86a60",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-02T09:17:27Z",
       "side": 1,
       "message": "is any of the tests in this change using WebGPU.createDefaultWebGpuDispatcher ?\n\nCan we add a test using the default dispatcher as well?",
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0d6ef13_6050ecff",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/MultisampleStateTest.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Thanks, I will add tests for that.",
+      "parentUuid": "eb5d2b6a_c0e86a60",
       "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5e8c9a7_e76e79cf",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/MultisampleStateTest.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "WebGPU is always initialized before this method is called. I will remove these checks.\nThanks",
+      "parentUuid": "ef4f5409_5651386b",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 60
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "53478c07_62a1e637",
@@ -71,6 +131,30 @@
       "writtenOn": "2026-06-02T09:17:27Z",
       "side": 1,
       "message": "Please fix this WARNING reported by autoreview issue finding: The addition of `TextureUsage.CopySrc` seems unnecessary for this test suite, as no readback operations or bitmap creations are performed on this texture here.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad383ada_dd72913d",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/RenderPassEncoderTest.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Yes, Fixed Thanks.",
+      "parentUuid": "53478c07_62a1e637",
       "range": {
         "startLine": 71,
         "startChar": 0,
@@ -122,6 +206,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69af73d6_0fefa72e",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/TextureTest.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Yes, it is needed because of the launch call at the end of this function.",
+      "parentUuid": "5471ead0_f038c6c7",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "767d2ee9_9e5e56f3",
@@ -167,6 +275,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1b55142_358bffbc",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "767d2ee9_9e5e56f3",
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0d64390_1a35928e",
@@ -207,6 +333,48 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0af4c8d_144ca811",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b5dd36e3_fe23f51e",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3d56ccc_8f6a803b",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Agreed, Thanks",
+      "parentUuid": "e0d64390_1a35928e",
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05f42cc6_bd1e4966",
@@ -220,6 +388,24 @@
       "writtenOn": "2026-06-02T09:17:27Z",
       "side": 1,
       "message": "is this a new public method that should be called by apps? Should it be documented with kdoc?",
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d83b5364_3f9a12f3",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Yes, thanks Yordan!",
+      "parentUuid": "05f42cc6_bd1e4966",
       "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -269,6 +455,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6dd5137_5a2195e3",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "eb36f19d_f91b45e0",
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d08d893a_3bcf35e4",
@@ -292,6 +496,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "605d895a_6c580948",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d08d893a_3bcf35e4",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 0
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5fa4167b_7a4b8ecd",
@@ -305,6 +533,30 @@
       "writtenOn": "2026-06-02T09:17:27Z",
       "side": 1,
       "message": "Please fix this WARNING reported by autoreview issue finding: There is a risk of deadlock here if the user calls `close()` from the dispatcher thread without being inside an `execute` block. In that case, `activeDispatcher.get()` would be null, and `runBlocking(dispatcher)` would be called on the dispatcher thread itself.\n\nConsider adding a check to see if the current thread is the one owned by the dispatcher (if it\u0027s an `ExecutorCoroutineDispatcher`) or ensuring the ThreadLocal is set more broadly.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 0
+      },
+      "revId": "f65e15f160c424579edc31b6a72ab61ef6f4e0fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0d05423_c966f22d",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/WebGpu.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5fa4167b_7a4b8ecd",
       "range": {
         "startLine": 189,
         "startChar": 0,

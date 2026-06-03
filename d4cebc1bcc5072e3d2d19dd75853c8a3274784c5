@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d4136e3_27672f7c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/ComputePassEncoderTest.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-06-03T10:29:14Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: This is redundant as `webGpu.close()` (called on the next line) already destroys the device internally.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "d4cebc1bcc5072e3d2d19dd75853c8a3274784c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
