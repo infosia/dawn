@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c40e3df4_699d56c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-03T19:55:24Z",
+      "side": 1,
+      "message": "Adding Mridul to take a look as well for Kotlin stuff.",
+      "revId": "1a1d9af2e53c13415110df42bbcf956bbc0924a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
