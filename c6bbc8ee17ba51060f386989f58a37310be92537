@@ -123,6 +123,24 @@
       "parentUuid": "52b0252a_4494e8b8",
       "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f04a8bc_f9db9958",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-03T01:39:51Z",
+      "side": 1,
+      "message": "Decoupling sounds fine to me IF there\u0027s a clean way to resolve both being enabled without adding glfw wayland support.\n\nOtherwise I think it\u0027s only valid in the build config to enable EITHER glfw (already default enabled) OR wayland. Can ANGLE just override the args such that `dawn_use_wayland\u003dtrue` and `dawn_supports_glfw_for_windowing\u003dfalse`? (I think so, with some small changes in Dawn)",
+      "parentUuid": "8bb12ba6_2a3cc637",
+      "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
