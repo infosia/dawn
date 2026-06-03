@@ -285,6 +285,30 @@
       },
       "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4444b5fb_faf83f9a",
+        "filename": "src/dawn/native/d3d12/d3d12_platform.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-06-03T05:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a305dab_c27ed166",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 6
+      },
+      "revId": "a5fcbe195e7aeb0bae6ad00a491367362f64e86b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
