@@ -16,6 +16,23 @@
       "message": "Thanks for the early review. This is now ready.",
       "revId": "11281b1658c61869b9ba6c1ea2e6b9d469ee1f1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d6dccc4_2dc89921",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-03T21:05:00Z",
+      "side": 1,
+      "message": "Thank you!",
+      "revId": "11281b1658c61869b9ba6c1ea2e6b9d469ee1f1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
