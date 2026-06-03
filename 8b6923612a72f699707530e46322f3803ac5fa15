@@ -34,6 +34,52 @@
       "parentUuid": "6555cf45_1d15598f",
       "revId": "8b6923612a72f699707530e46322f3803ac5fa15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e042cf12_27031239",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-03T19:52:51Z",
+      "side": 1,
+      "message": "I don\u0027t see the usage for this overload of `parse_json`.",
+      "range": {
+        "startLine": 678,
+        "startChar": 55,
+        "endLine": 678,
+        "endChar": 71
+      },
+      "revId": "8b6923612a72f699707530e46322f3803ac5fa15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "329a28d7_996b2686",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-03T19:52:51Z",
+      "side": 1,
+      "message": "Is `parent` referring to a parent struct that holds a member type? If so, couldn\u0027t we just make sure to add the tag on all the members that need to be a part of the tag? Although it might be a bit more verbose in `dawn.json` it would document it better also whereas this will hide the tags implicitly.",
+      "range": {
+        "startLine": 1407,
+        "startChar": 20,
+        "endLine": 1407,
+        "endChar": 37
+      },
+      "revId": "8b6923612a72f699707530e46322f3803ac5fa15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
