@@ -66,9 +66,6 @@ def main() -> int:
     ]
     cmd.extend(unknown_args)
 
-    # Disable CGO since it causes problems when cross-compiling (see https://crbug.com/516926043).
-    os.environ['CGO_ENABLED'] = '0'
-
     proc = subprocess.run(cmd, check=False, cwd=DAWN_ROOT)
     return proc.returncode
 
