@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec25a479_0292a745",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:10:07Z",
+      "side": 1,
+      "message": "IMHO we should break in on the first available VS interstage variable available and ASSERT that it is available in the FS (because of the subsetting). It would also get rid of the sorting done below.",
+      "parentUuid": "5b01185e_65d6fc94",
+      "revId": "4952745eff7b716c8912aad1e80d5489523ea58b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5a04d364_52d82711",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-02T20:46:45Z",
       "side": 1,
       "message": "Is this the right thing to do here, or should it be a DAWN_ASSERT?",
+      "revId": "4952745eff7b716c8912aad1e80d5489523ea58b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e8a7884_613e1293",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:10:07Z",
+      "side": 1,
+      "message": "We should get the 1+ the last used inter stage one. My worry is what we need to do when we run against the limit of maxInterStageShaderVariables? Was this discussed in the group? In the meantime we can `return DAWN_INTERNAL_ERROR(\"stuff\")`",
+      "parentUuid": "5a04d364_52d82711",
       "revId": "4952745eff7b716c8912aad1e80d5489523ea58b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -16,6 +16,63 @@
       "message": "PTAL.",
       "revId": "0f822d538c6e3410fe2b341b0569a1b8e53ead68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b72d38fd_8eb7d963",
+        "filename": "src/dawn/tests/end2end/ShaderIOPolyfillTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:10:07Z",
+      "side": 1,
+      "message": "The ClangTidy warning could be fixed by inlining the `utils::CreateShaderModule` call here. Ditto for fs",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "0f822d538c6e3410fe2b341b0569a1b8e53ead68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28e6fbfd_5342159c",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:10:07Z",
+      "side": 1,
+      "message": "```\nb/s/w/ir/cache/uncached/dawn/src/tint/lang/spirv/writer/raise/shader_io.cc:104:88: error: unused parameter \u0027entries\u0027 [-Werror,-Wunused-parameter]\n  104 |     uint32_t AddCenterPosInterpolant(Vector\u003ccore::type::Manager::StructMemberDesc, 4\u003e\u0026 entries,\n```",
+      "revId": "0f822d538c6e3410fe2b341b0569a1b8e53ead68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "351f9290_efe13279",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-03T14:10:07Z",
+      "side": 1,
+      "message": "One of these is failing.",
+      "revId": "0f822d538c6e3410fe2b341b0569a1b8e53ead68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
