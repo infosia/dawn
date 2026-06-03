@@ -30,6 +30,7 @@ angle_root = "//third_party/angle"
 
 # True if ANGLE can access build/, testing/ and other Chrome folders.
 angle_has_build = true
+angle_use_static_angle = false
 
 # Paths to ANGLE dependencies in Dawn
 angle_glslang_dir = "//third_party/glslang/src"
