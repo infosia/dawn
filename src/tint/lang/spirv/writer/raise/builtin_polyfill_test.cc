@@ -1389,9 +1389,16 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, Select_ScalarCondition_VectorOperands_Sp
 
 TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleDown_Clamped) {
     auto* val = b.FunctionParam("val", ty.i32());
+    val->SetLocation(0);
+    val->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* delta = b.FunctionParam("delta", ty.u32());
+    delta->SetLocation(1);
+    delta->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* func = b.Function("foo", ty.i32());
     func->SetParams({val, delta});
+    func->SetStage(core::ir::Function::PipelineStage::kFragment);
+    func->SetReturnLocation(0);
+    func->SetReturnInterpolation(core::Interpolation{core::InterpolationType::kFlat});
 
     b.Append(func->Block(), [&] {
         auto* result = b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffleDown, val, delta);
@@ -1399,7 +1406,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleDown_Clamped) {
     });
 
     auto* src = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
+%foo = @fragment func(%val:i32 [@location(0), @interpolate(flat)], %delta:u32 [@location(1), @interpolate(flat)]):i32 [@location(0), @interpolate(flat)] {
   $B1: {
     %4:i32 = subgroupShuffleDown %val, %delta
     ret %4
@@ -1409,26 +1416,39 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleDown_Clamped) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
-  $B1: {
-    %4:u32 = and %delta, 127u
-    %5:i32 = subgroupShuffleDown %val, %4
-    ret %5
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%val:i32 [@location(0), @interpolate(flat)], %delta:u32 [@location(1), @interpolate(flat)], %tint_subgroup_size:u32 [@subgroup_size]):i32 [@location(0), @interpolate(flat)] {
+  $B2: {
+    %6:u32 = sub %tint_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %6
+    %7:u32 = load %tint_subgroup_size_mask
+    %8:u32 = and %delta, %7
+    %9:i32 = subgroupShuffleDown %val, %8
+    ret %9
   }
 }
 )";
 
-    PolyfillConfig config{.subgroup_shuffle_clamped = true};
-    Run(BuiltinPolyfill, config);
+    Run(BuiltinPolyfill, PolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
 
 TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleDown_SignedDelta_Clamped) {
     auto* val = b.FunctionParam("val", ty.i32());
+    val->SetLocation(0);
+    val->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* delta = b.FunctionParam("delta", ty.u32());
+    delta->SetLocation(1);
+    delta->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* func = b.Function("foo", ty.i32());
     func->SetParams({val, delta});
+    func->SetStage(core::ir::Function::PipelineStage::kFragment);
+    func->SetReturnLocation(0);
+    func->SetReturnInterpolation(core::Interpolation{core::InterpolationType::kFlat});
 
     b.Append(func->Block(), [&] {
         auto* result = b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffleDown, val, delta);
@@ -1436,7 +1456,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleDown_SignedDelta_Clamped)
     });
 
     auto* src = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
+%foo = @fragment func(%val:i32 [@location(0), @interpolate(flat)], %delta:u32 [@location(1), @interpolate(flat)]):i32 [@location(0), @interpolate(flat)] {
   $B1: {
     %4:i32 = subgroupShuffleDown %val, %delta
     ret %4
@@ -1446,89 +1466,39 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleDown_SignedDelta_Clamped)
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
-  $B1: {
-    %4:u32 = and %delta, 127u
-    %5:i32 = subgroupShuffleDown %val, %4
-    ret %5
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%val:i32 [@location(0), @interpolate(flat)], %delta:u32 [@location(1), @interpolate(flat)], %tint_subgroup_size:u32 [@subgroup_size]):i32 [@location(0), @interpolate(flat)] {
+  $B2: {
+    %6:u32 = sub %tint_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %6
+    %7:u32 = load %tint_subgroup_size_mask
+    %8:u32 = and %delta, %7
+    %9:i32 = subgroupShuffleDown %val, %8
+    ret %9
   }
 }
 )";
 
-    PolyfillConfig config{.subgroup_shuffle_clamped = true};
-    Run(BuiltinPolyfill, config);
-
-    EXPECT_EQ(expect, str());
-}
-
-TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleDown_Unclamped) {
-    auto* val = b.FunctionParam("val", ty.i32());
-    auto* delta = b.FunctionParam("delta", ty.u32());
-    auto* func = b.Function("foo", ty.i32());
-    func->SetParams({val, delta});
-
-    b.Append(func->Block(), [&] {
-        auto* result = b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffleDown, val, delta);
-        b.Return(func, result);
-    });
-
-    auto* src = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
-  $B1: {
-    %4:i32 = subgroupShuffleDown %val, %delta
-    ret %4
-  }
-}
-)";
-    EXPECT_EQ(src, str());
-
-    PolyfillConfig config{.subgroup_shuffle_clamped = false};
-    Run(BuiltinPolyfill, config);
-
-    EXPECT_EQ(src, str());
-}
-
-TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleDown_SignedDelta_Unclamped) {
-    auto* val = b.FunctionParam("val", ty.i32());
-    auto* delta = b.FunctionParam("delta", ty.u32());
-    auto* func = b.Function("foo", ty.i32());
-    func->SetParams({val, delta});
-
-    b.Append(func->Block(), [&] {
-        auto* result = b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffleDown, val, delta);
-        b.Return(func, result);
-    });
-
-    auto* src = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
-  $B1: {
-    %4:i32 = subgroupShuffleDown %val, %delta
-    ret %4
-  }
-}
-)";
-    EXPECT_EQ(src, str());
-
-    auto* expect = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
-  $B1: {
-    %4:i32 = subgroupShuffleDown %val, %delta
-    ret %4
-  }
-}
-)";
-
-    PolyfillConfig config{.subgroup_shuffle_clamped = false};
-    Run(BuiltinPolyfill, config);
+    Run(BuiltinPolyfill, PolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
 
 TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleUp_Clamped) {
     auto* val = b.FunctionParam("val", ty.i32());
+    val->SetLocation(0);
+    val->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* delta = b.FunctionParam("delta", ty.u32());
+    delta->SetLocation(1);
+    delta->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* func = b.Function("foo", ty.i32());
     func->SetParams({val, delta});
+    func->SetStage(core::ir::Function::PipelineStage::kFragment);
+    func->SetReturnLocation(0);
+    func->SetReturnInterpolation(core::Interpolation{core::InterpolationType::kFlat});
 
     b.Append(func->Block(), [&] {
         auto* result = b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffleUp, val, delta);
@@ -1536,7 +1506,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleUp_Clamped) {
     });
 
     auto* src = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
+%foo = @fragment func(%val:i32 [@location(0), @interpolate(flat)], %delta:u32 [@location(1), @interpolate(flat)]):i32 [@location(0), @interpolate(flat)] {
   $B1: {
     %4:i32 = subgroupShuffleUp %val, %delta
     ret %4
@@ -1546,26 +1516,39 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleUp_Clamped) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
-  $B1: {
-    %4:u32 = and %delta, 127u
-    %5:i32 = subgroupShuffleUp %val, %4
-    ret %5
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%val:i32 [@location(0), @interpolate(flat)], %delta:u32 [@location(1), @interpolate(flat)], %tint_subgroup_size:u32 [@subgroup_size]):i32 [@location(0), @interpolate(flat)] {
+  $B2: {
+    %6:u32 = sub %tint_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %6
+    %7:u32 = load %tint_subgroup_size_mask
+    %8:u32 = and %delta, %7
+    %9:i32 = subgroupShuffleUp %val, %8
+    ret %9
   }
 }
 )";
 
-    PolyfillConfig config{.subgroup_shuffle_clamped = true};
-    Run(BuiltinPolyfill, config);
+    Run(BuiltinPolyfill, PolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
 
 TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleUp_SignedDelta_Clamped) {
     auto* val = b.FunctionParam("val", ty.i32());
+    val->SetLocation(0);
+    val->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* delta = b.FunctionParam("delta", ty.u32());
+    delta->SetLocation(1);
+    delta->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* func = b.Function("foo", ty.i32());
     func->SetParams({val, delta});
+    func->SetStage(core::ir::Function::PipelineStage::kFragment);
+    func->SetReturnLocation(0);
+    func->SetReturnInterpolation(core::Interpolation{core::InterpolationType::kFlat});
 
     b.Append(func->Block(), [&] {
         auto* result = b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffleUp, val, delta);
@@ -1573,7 +1556,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleUp_SignedDelta_Clamped) {
     });
 
     auto* src = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
+%foo = @fragment func(%val:i32 [@location(0), @interpolate(flat)], %delta:u32 [@location(1), @interpolate(flat)]):i32 [@location(0), @interpolate(flat)] {
   $B1: {
     %4:i32 = subgroupShuffleUp %val, %delta
     ret %4
@@ -1583,53 +1566,39 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleUp_SignedDelta_Clamped) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
-  $B1: {
-    %4:u32 = and %delta, 127u
-    %5:i32 = subgroupShuffleUp %val, %4
-    ret %5
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%val:i32 [@location(0), @interpolate(flat)], %delta:u32 [@location(1), @interpolate(flat)], %tint_subgroup_size:u32 [@subgroup_size]):i32 [@location(0), @interpolate(flat)] {
+  $B2: {
+    %6:u32 = sub %tint_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %6
+    %7:u32 = load %tint_subgroup_size_mask
+    %8:u32 = and %delta, %7
+    %9:i32 = subgroupShuffleUp %val, %8
+    ret %9
   }
 }
 )";
 
-    PolyfillConfig config{.subgroup_shuffle_clamped = true};
-    Run(BuiltinPolyfill, config);
+    Run(BuiltinPolyfill, PolyfillConfig{});
 
     EXPECT_EQ(expect, str());
-}
-
-TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleUp_Unclamped) {
-    auto* val = b.FunctionParam("val", ty.i32());
-    auto* delta = b.FunctionParam("delta", ty.u32());
-    auto* func = b.Function("foo", ty.i32());
-    func->SetParams({val, delta});
-
-    b.Append(func->Block(), [&] {
-        auto* result = b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffleUp, val, delta);
-        b.Return(func, result);
-    });
-
-    auto* src = R"(
-%foo = func(%val:i32, %delta:u32):i32 {
-  $B1: {
-    %4:i32 = subgroupShuffleUp %val, %delta
-    ret %4
-  }
-}
-)";
-    EXPECT_EQ(src, str());
-
-    PolyfillConfig config{.subgroup_shuffle_clamped = false};
-    Run(BuiltinPolyfill, config);
-
-    EXPECT_EQ(src, str());
 }
 
 TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleXor_Clamped) {
     auto* val = b.FunctionParam("val", ty.i32());
+    val->SetLocation(0);
+    val->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* mask = b.FunctionParam("mask", ty.u32());
+    mask->SetLocation(1);
+    mask->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* func = b.Function("foo", ty.i32());
     func->SetParams({val, mask});
+    func->SetStage(core::ir::Function::PipelineStage::kFragment);
+    func->SetReturnLocation(0);
+    func->SetReturnInterpolation(core::Interpolation{core::InterpolationType::kFlat});
 
     b.Append(func->Block(), [&] {
         auto* result = b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffleXor, val, mask);
@@ -1637,7 +1606,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleXor_Clamped) {
     });
 
     auto* src = R"(
-%foo = func(%val:i32, %mask:u32):i32 {
+%foo = @fragment func(%val:i32 [@location(0), @interpolate(flat)], %mask:u32 [@location(1), @interpolate(flat)]):i32 [@location(0), @interpolate(flat)] {
   $B1: {
     %4:i32 = subgroupShuffleXor %val, %mask
     ret %4
@@ -1647,46 +1616,25 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleXor_Clamped) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%val:i32, %mask:u32):i32 {
-  $B1: {
-    %4:u32 = and %mask, 127u
-    %5:i32 = subgroupShuffleXor %val, %4
-    ret %5
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%val:i32 [@location(0), @interpolate(flat)], %mask:u32 [@location(1), @interpolate(flat)], %tint_subgroup_size:u32 [@subgroup_size]):i32 [@location(0), @interpolate(flat)] {
+  $B2: {
+    %6:u32 = sub %tint_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %6
+    %7:u32 = load %tint_subgroup_size_mask
+    %8:u32 = and %mask, %7
+    %9:i32 = subgroupShuffleXor %val, %8
+    ret %9
   }
 }
 )";
 
-    PolyfillConfig config{.subgroup_shuffle_clamped = true};
-    Run(BuiltinPolyfill, config);
+    Run(BuiltinPolyfill, PolyfillConfig{});
 
     EXPECT_EQ(expect, str());
-}
-
-TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleXor_Unclamped) {
-    auto* val = b.FunctionParam("val", ty.i32());
-    auto* mask = b.FunctionParam("mask", ty.u32());
-    auto* func = b.Function("foo", ty.i32());
-    func->SetParams({val, mask});
-
-    b.Append(func->Block(), [&] {
-        auto* result = b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffleXor, val, mask);
-        b.Return(func, result);
-    });
-
-    auto* src = R"(
-%foo = func(%val:i32, %mask:u32):i32 {
-  $B1: {
-    %4:i32 = subgroupShuffleXor %val, %mask
-    ret %4
-  }
-}
-)";
-    EXPECT_EQ(src, str());
-
-    PolyfillConfig config{.subgroup_shuffle_clamped = false};
-    Run(BuiltinPolyfill, config);
-
-    EXPECT_EQ(src, str());
 }
 
 TEST_F(SpirvWriter_BuiltinPolyfillTest, TextureLoad_2D) {
@@ -4209,11 +4157,19 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffle) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = @fragment func():void {
-  $B1: {
-    %2:u32 = bitcast<u32> 1i
-    %3:i32 = subgroupShuffle 1i, %2
-    %a:i32 = let %3
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%tint_subgroup_size:u32 [@subgroup_size]):void {
+  $B2: {
+    %4:u32 = sub %tint_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %4
+    %5:u32 = bitcast<u32> 1i
+    %6:u32 = load %tint_subgroup_size_mask
+    %7:u32 = and %5, %6
+    %8:i32 = subgroupShuffle 1i, %7
+    %a:i32 = let %8
     ret
   }
 }
@@ -4222,6 +4178,52 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffle) {
     PolyfillConfig config;
     Run(BuiltinPolyfill, config);
 
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffle_ExistingBuiltin) {
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    auto* subgroup_size = b.FunctionParam("my_subgroup_size", ty.u32());
+    subgroup_size->SetBuiltin(core::BuiltinValue::kSubgroupSize);
+    func->SetParams({subgroup_size});
+
+    b.Append(func->Block(), [&] {
+        b.Let("a", b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffle, 1_i, 1_i));
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%foo = @fragment func(%my_subgroup_size:u32 [@subgroup_size]):void {
+  $B1: {
+    %3:i32 = subgroupShuffle 1i, 1i
+    %a:i32 = let %3
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%my_subgroup_size:u32 [@subgroup_size]):void {
+  $B2: {
+    %4:u32 = sub %my_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %4
+    %5:u32 = bitcast<u32> 1i
+    %6:u32 = load %tint_subgroup_size_mask
+    %7:u32 = and %5, %6
+    %8:i32 = subgroupShuffle 1i, %7
+    %a:i32 = let %8
+    ret
+  }
+}
+)";
+
+    PolyfillConfig config;
+    Run(BuiltinPolyfill, config);
     EXPECT_EQ(expect, str());
 }
 
@@ -5049,55 +5051,23 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupMatrixMultiplyAccumulate_U8_U32)
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_NoPolyfill) {
-    auto* func = b.Function("foo", ty.void_());
-    auto* arg1 = b.FunctionParam("arg1", ty.i32());
-    auto* arg2 = b.FunctionParam("arg2", ty.i32());
-    func->SetParams({arg1, arg2});
-
-    b.Append(func->Block(), [&] {
-        b.Let("a", b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffle, arg1, arg2));
-        b.Return(func);
-    });
-    auto* src = R"(
-%foo = func(%arg1:i32, %arg2:i32):void {
-  $B1: {
-    %4:i32 = subgroupShuffle %arg1, %arg2
-    %a:i32 = let %4
-    ret
-  }
-}
-)";
-
-    auto* expect = R"(
-%foo = func(%arg1:i32, %arg2:i32):void {
-  $B1: {
-    %4:u32 = bitcast<u32> %arg2
-    %5:i32 = subgroupShuffle %arg1, %4
-    %a:i32 = let %5
-    ret
-  }
-}
-)";
-    EXPECT_EQ(src, str());
-
-    PolyfillConfig config;
-    config.subgroup_shuffle_clamped = false;
-    Run(BuiltinPolyfill, config);
-    EXPECT_EQ(expect, str());
-}
-
 TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_I32) {
     auto* func = b.Function("foo", ty.void_());
     auto* arg1 = b.FunctionParam("arg1", ty.i32());
+    arg1->SetLocation(0);
+    arg1->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* arg2 = b.FunctionParam("arg2", ty.i32());
+    arg2->SetLocation(1);
+    arg2->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     func->SetParams({arg1, arg2});
+    func->SetStage(core::ir::Function::PipelineStage::kFragment);
+
     b.Append(func->Block(), [&] {
         b.Let("a", b.Call(ty.i32(), core::BuiltinFn::kSubgroupShuffle, arg1, arg2));
         b.Return(func);
     });
     auto* src = R"(
-%foo = func(%arg1:i32, %arg2:i32):void {
+%foo = @fragment func(%arg1:i32 [@location(0), @interpolate(flat)], %arg2:i32 [@location(1), @interpolate(flat)]):void {
   $B1: {
     %4:i32 = subgroupShuffle %arg1, %arg2
     %a:i32 = let %4
@@ -5106,12 +5076,19 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_I32) {
 }
 )";
     auto* expect = R"(
-%foo = func(%arg1:i32, %arg2:i32):void {
-  $B1: {
-    %4:u32 = bitcast<u32> %arg2
-    %5:u32 = and %4, 127u
-    %6:i32 = subgroupShuffle %arg1, %5
-    %a:i32 = let %6
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%arg1:i32 [@location(0), @interpolate(flat)], %arg2:i32 [@location(1), @interpolate(flat)], %tint_subgroup_size:u32 [@subgroup_size]):void {
+  $B2: {
+    %6:u32 = sub %tint_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %6
+    %7:u32 = bitcast<u32> %arg2
+    %8:u32 = load %tint_subgroup_size_mask
+    %9:u32 = and %7, %8
+    %10:i32 = subgroupShuffle %arg1, %9
+    %a:i32 = let %10
     ret
   }
 }
@@ -5119,23 +5096,27 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_I32) {
 
     EXPECT_EQ(src, str());
 
-    PolyfillConfig config;
-    config.subgroup_shuffle_clamped = true;
-    Run(BuiltinPolyfill, config);
+    Run(BuiltinPolyfill, PolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
 TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_U32) {
     auto* func = b.Function("foo", ty.void_());
     auto* arg1 = b.FunctionParam("arg1", ty.u32());
+    arg1->SetLocation(0);
+    arg1->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     auto* arg2 = b.FunctionParam("arg2", ty.u32());
+    arg2->SetLocation(1);
+    arg2->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     func->SetParams({arg1, arg2});
+    func->SetStage(core::ir::Function::PipelineStage::kFragment);
+
     b.Append(func->Block(), [&] {
         b.Let("a", b.Call(ty.u32(), core::BuiltinFn::kSubgroupShuffle, arg1, arg2));
         b.Return(func);
     });
     auto* src = R"(
-%foo = func(%arg1:u32, %arg2:u32):void {
+%foo = @fragment func(%arg1:u32 [@location(0), @interpolate(flat)], %arg2:u32 [@location(1), @interpolate(flat)]):void {
   $B1: {
     %4:u32 = subgroupShuffle %arg1, %arg2
     %a:u32 = let %4
@@ -5144,11 +5125,18 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_U32) {
 }
 )";
     auto* expect = R"(
-%foo = func(%arg1:u32, %arg2:u32):void {
-  $B1: {
-    %4:u32 = and %arg2, 127u
-    %5:u32 = subgroupShuffle %arg1, %4
-    %a:u32 = let %5
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%arg1:u32 [@location(0), @interpolate(flat)], %arg2:u32 [@location(1), @interpolate(flat)], %tint_subgroup_size:u32 [@subgroup_size]):void {
+  $B2: {
+    %6:u32 = sub %tint_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %6
+    %7:u32 = load %tint_subgroup_size_mask
+    %8:u32 = and %arg2, %7
+    %9:u32 = subgroupShuffle %arg1, %8
+    %a:u32 = let %9
     ret
   }
 }
@@ -5156,23 +5144,26 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_U32) {
 
     EXPECT_EQ(src, str());
 
-    PolyfillConfig config;
-    config.subgroup_shuffle_clamped = true;
-    Run(BuiltinPolyfill, config);
+    Run(BuiltinPolyfill, PolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
 TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_F32) {
     auto* func = b.Function("foo", ty.void_());
     auto* arg1 = b.FunctionParam("arg1", ty.f32());
+    arg1->SetLocation(0);
     auto* arg2 = b.FunctionParam("arg2", ty.u32());
+    arg2->SetLocation(1);
+    arg2->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     func->SetParams({arg1, arg2});
+    func->SetStage(core::ir::Function::PipelineStage::kFragment);
+
     b.Append(func->Block(), [&] {
         b.Let("a", b.Call(ty.f32(), core::BuiltinFn::kSubgroupShuffle, arg1, arg2));
         b.Return(func);
     });
     auto* src = R"(
-%foo = func(%arg1:f32, %arg2:u32):void {
+%foo = @fragment func(%arg1:f32 [@location(0)], %arg2:u32 [@location(1), @interpolate(flat)]):void {
   $B1: {
     %4:f32 = subgroupShuffle %arg1, %arg2
     %a:f32 = let %4
@@ -5181,11 +5172,18 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_F32) {
 }
 )";
     auto* expect = R"(
-%foo = func(%arg1:f32, %arg2:u32):void {
-  $B1: {
-    %4:u32 = and %arg2, 127u
-    %5:f32 = subgroupShuffle %arg1, %4
-    %a:f32 = let %5
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%arg1:f32 [@location(0)], %arg2:u32 [@location(1), @interpolate(flat)], %tint_subgroup_size:u32 [@subgroup_size]):void {
+  $B2: {
+    %6:u32 = sub %tint_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %6
+    %7:u32 = load %tint_subgroup_size_mask
+    %8:u32 = and %arg2, %7
+    %9:f32 = subgroupShuffle %arg1, %8
+    %a:f32 = let %9
     ret
   }
 }
@@ -5193,23 +5191,26 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_F32) {
 
     EXPECT_EQ(src, str());
 
-    PolyfillConfig config;
-    config.subgroup_shuffle_clamped = true;
-    Run(BuiltinPolyfill, config);
+    Run(BuiltinPolyfill, PolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
 TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_Vec2F32) {
     auto* func = b.Function("foo", ty.void_());
     auto* arg1 = b.FunctionParam("arg1", ty.vec2f());
+    arg1->SetLocation(0);
     auto* arg2 = b.FunctionParam("arg2", ty.u32());
+    arg2->SetLocation(1);
+    arg2->SetInterpolation(core::Interpolation{core::InterpolationType::kFlat});
     func->SetParams({arg1, arg2});
+    func->SetStage(core::ir::Function::PipelineStage::kFragment);
+
     b.Append(func->Block(), [&] {
         b.Let("a", b.Call(ty.vec2f(), core::BuiltinFn::kSubgroupShuffle, arg1, arg2));
         b.Return(func);
     });
     auto* src = R"(
-%foo = func(%arg1:vec2<f32>, %arg2:u32):void {
+%foo = @fragment func(%arg1:vec2<f32> [@location(0)], %arg2:u32 [@location(1), @interpolate(flat)]):void {
   $B1: {
     %4:vec2<f32> = subgroupShuffle %arg1, %arg2
     %a:vec2<f32> = let %4
@@ -5218,11 +5219,18 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_Vec2F32) {
 }
 )";
     auto* expect = R"(
-%foo = func(%arg1:vec2<f32>, %arg2:u32):void {
-  $B1: {
-    %4:u32 = and %arg2, 127u
-    %5:vec2<f32> = subgroupShuffle %arg1, %4
-    %a:vec2<f32> = let %5
+$B1: {  # root
+  %tint_subgroup_size_mask:ptr<private, u32, read_write> = var undef
+}
+
+%foo = @fragment func(%arg1:vec2<f32> [@location(0)], %arg2:u32 [@location(1), @interpolate(flat)], %tint_subgroup_size:u32 [@subgroup_size]):void {
+  $B2: {
+    %6:u32 = sub %tint_subgroup_size, 1u
+    store %tint_subgroup_size_mask, %6
+    %7:u32 = load %tint_subgroup_size_mask
+    %8:u32 = and %arg2, %7
+    %9:vec2<f32> = subgroupShuffle %arg1, %8
+    %a:vec2<f32> = let %9
     ret
   }
 }
@@ -5230,9 +5238,7 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffleClamped_Vec2F32) {
 
     EXPECT_EQ(src, str());
 
-    PolyfillConfig config;
-    config.subgroup_shuffle_clamped = true;
-    Run(BuiltinPolyfill, config);
+    Run(BuiltinPolyfill, PolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
