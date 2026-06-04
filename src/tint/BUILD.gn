@@ -225,7 +225,7 @@ action("generate_sources") {
   args = [
     "gen",
     "sources",
-    rebase_path(root_gen_dir, dawn_root),
+    rebase_path(root_gen_dir, root_build_dir),
   ]
 }
 

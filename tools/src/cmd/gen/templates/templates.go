@@ -32,6 +32,7 @@ import (
 	"flag"
 	"fmt"
 	"math/rand"
+	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -135,7 +136,13 @@ func runTemplates(ctx context.Context, cfg *common.Config, dirPrefix string, out
 
 			var outPath string
 			if outputDir != "" {
-				outPath = filepath.Join(outputDir, dirPrefix, filepath.Dir(relTmplPath), relPath)
+				resolvedOutputDir := outputDir
+				if !filepath.IsAbs(outputDir) {
+					if buildDir := os.Getenv("DAWN_BUILD_DIR"); buildDir != "" {
+						resolvedOutputDir = filepath.Join(buildDir, outputDir)
+					}
+				}
+				outPath = filepath.Join(resolvedOutputDir, dirPrefix, filepath.Dir(relTmplPath), relPath)
 			} else {
 				outPath = filepath.Join(tmplDir, relPath)
 			}

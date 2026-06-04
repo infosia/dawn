@@ -81,6 +81,9 @@ def main() -> int:
     # resolve correctly, overriding any potential system-wide or user-wide
     # environment settings like GO111MODULE=off.
     os.environ['GO111MODULE'] = 'on'
+    # Record the original working directory (which is usually the build directory)
+    # so that tools can resolve relative paths correctly even when run with cwd=DAWN_ROOT.
+    os.environ['DAWN_BUILD_DIR'] = os.path.abspath(os.getcwd())
 
     proc = subprocess.run(cmd, check=False, cwd=DAWN_ROOT)
     return proc.returncode
