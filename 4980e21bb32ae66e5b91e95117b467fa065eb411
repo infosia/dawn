@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5a436c86_7e14f83e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-04T21:12:08Z",
+      "side": 1,
+      "message": "https://dawn-review.git.corp.google.com/c/dawn/+/313995\n\nIf you wanted to patch that in to see if it handle your original issue?",
+      "parentUuid": "829e946a_bdfe10b0",
+      "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2aca0ff8_cd530bcb",
         "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
         "patchSetId": 5
