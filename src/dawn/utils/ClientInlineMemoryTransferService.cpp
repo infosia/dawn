@@ -1,4 +1,4 @@
-// Copyright 2019 The Dawn & Tint Authors
+// Copyright 2026 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -31,13 +31,14 @@
 
 #include "dawn/wire/WireClient.h"
 #include "src/dawn/common/Alloc.h"
-#include "src/dawn/wire/client/Client.h"
+#include "src/dawn/utils/InlineMemoryTransferService.h"
 #include "src/utils/assert.h"
 #include "src/utils/compiler.h"
 
-namespace dawn::wire::client {
+namespace dawn::utils {
 
-class InlineMemoryTransferService : public MemoryTransferService {
+namespace {
+class InlineMemoryTransferService : public dawn::wire::client::MemoryTransferService {
     class ReadHandleImpl : public ReadHandle {
       public:
         explicit ReadHandleImpl(std::unique_ptr<uint8_t[]> stagingData, size_t size)
@@ -123,8 +124,11 @@ class InlineMemoryTransferService : public MemoryTransferService {
     }
 };
 
-std::unique_ptr<MemoryTransferService> CreateInlineMemoryTransferService() {
+}  // anonymous namespace
+
+std::unique_ptr<dawn::wire::client::MemoryTransferService>
+CreateClientInlineMemoryTransferService() {
     return std::make_unique<InlineMemoryTransferService>();
 }
 
-}  // namespace dawn::wire::client
+}  // namespace dawn::utils

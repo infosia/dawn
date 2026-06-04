@@ -198,6 +198,9 @@ class WireTest : virtual public testing::Test {
     // ensure that this invariant holds true for any devices returned.
     absl::flat_hash_map<WGPUDevice, bool> mDeviceDestroyed;
 
+    std::unique_ptr<wire::client::MemoryTransferService> mClientMemoryTransferService;
+    std::unique_ptr<wire::server::MemoryTransferService> mServerMemoryTransferService;
+
     std::unique_ptr<wire::WireServer> mWireServer;
     std::unique_ptr<wire::WireClient> mWireClient;
     std::unique_ptr<utils::TerribleCommandBuffer> mS2cBuf;

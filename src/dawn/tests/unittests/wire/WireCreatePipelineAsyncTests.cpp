@@ -36,6 +36,7 @@
 #include "src/dawn/tests/StringViewMatchers.h"
 #include "src/dawn/tests/unittests/wire/WireFutureTest.h"
 #include "src/dawn/tests/unittests/wire/WireTest.h"
+#include "src/dawn/utils/InlineMemoryTransferService.h"
 #include "src/dawn/utils/TerribleCommandBuffer.h"
 
 namespace dawn::wire {
@@ -379,15 +380,19 @@ TEST(WireCreatePipelineAsyncTestNullBackend, ServerDeletedBeforeCallback) {
     auto c2sBuf = std::make_unique<dawn::utils::TerribleCommandBuffer>();
     auto s2cBuf = std::make_unique<dawn::utils::TerribleCommandBuffer>();
 
+    auto serverMemoryTransferService = dawn::utils::CreateServerInlineMemoryTransferService();
     dawn::wire::WireServerDescriptor serverDesc = {};
     serverDesc.procs = &dawn::native::GetProcs();
     serverDesc.serializer = s2cBuf.get();
+    serverDesc.memoryTransferService = serverMemoryTransferService.get();
 
     auto wireServer = std::make_unique<dawn::wire::WireServer>(serverDesc);
     c2sBuf->SetHandler(wireServer.get());
 
+    auto clientMemoryTransferService = dawn::utils::CreateClientInlineMemoryTransferService();
     dawn::wire::WireClientDescriptor clientDesc = {};
     clientDesc.serializer = c2sBuf.get();
+    clientDesc.memoryTransferService = clientMemoryTransferService.get();
 
     auto wireClient = std::make_unique<dawn::wire::WireClient>(clientDesc);
     s2cBuf->SetHandler(wireClient.get());

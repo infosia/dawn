@@ -1,4 +1,4 @@
-// Copyright 2019 The Dawn & Tint Authors
+// Copyright 2026 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -29,13 +29,14 @@
 #include <memory>
 
 #include "dawn/wire/WireServer.h"
-#include "src/dawn/wire/server/Server.h"
+#include "src/dawn/utils/InlineMemoryTransferService.h"
 #include "src/utils/assert.h"
 #include "src/utils/compiler.h"
 
-namespace dawn::wire::server {
+namespace dawn::utils {
 
-class InlineMemoryTransferService : public MemoryTransferService {
+namespace {
+class InlineMemoryTransferService : public dawn::wire::server::MemoryTransferService {
   public:
     class ReadHandleImpl : public ReadHandle {
       public:
@@ -91,8 +92,11 @@ class InlineMemoryTransferService : public MemoryTransferService {
     }
 };
 
-std::unique_ptr<MemoryTransferService> CreateInlineMemoryTransferService() {
+}  // anonymous namespace
+
+std::unique_ptr<dawn::wire::server::MemoryTransferService>
+CreateServerInlineMemoryTransferService() {
     return std::make_unique<InlineMemoryTransferService>();
 }
 
-}  // namespace dawn::wire::server
+}  // namespace dawn::utils

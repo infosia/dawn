@@ -144,7 +144,6 @@ class Client : public ClientBase {
 
     ChunkedCommandSerializer mSerializer;
     PerObjectType<ObjectStore> mObjects;
-    std::unique_ptr<MemoryTransferService> mOwnedMemoryTransferService = nullptr;
     raw_ptr<MemoryTransferService> mMemoryTransferService = nullptr;
     // Map of instance object handles to a corresponding event manager. Note that for now because we
     // do not have an internal refcount on the instances, i.e. we don't know when the last object
@@ -156,8 +155,6 @@ class Client : public ClientBase {
     absl::flat_hash_map<ObjectHandle, std::unique_ptr<EventManager>> mEventManagers;
     bool mDisconnected = false;
 };
-
-std::unique_ptr<MemoryTransferService> CreateInlineMemoryTransferService();
 
 }  // namespace dawn::wire::client
 

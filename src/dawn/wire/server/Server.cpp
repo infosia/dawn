@@ -54,11 +54,7 @@ Server::Server(const DawnProcTable& procs,
       mSerializer(serializer),
       mMemoryTransferService(memoryTransferService),
       mUseSpontaneousCallbacks(useSpontaneousCallbacks) {
-    if (mMemoryTransferService == nullptr) {
-        // If a MemoryTransferService is not provided, fallback to inline memory.
-        mOwnedMemoryTransferService = CreateInlineMemoryTransferService();
-        mMemoryTransferService = mOwnedMemoryTransferService.get();
-    }
+    DAWN_ASSERT(mMemoryTransferService != nullptr);
 }
 
 Server::~Server() {
