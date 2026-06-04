@@ -30,11 +30,14 @@
 
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
 #include "src/dawn/common/Constants.h"
+#include "src/dawn/common/MutexProtected.h"
 #include "src/dawn/common/ityp_array.h"
 #include "src/dawn/common/ityp_vector.h"
 #include "src/dawn/native/BindingInfo.h"
 #include "src/dawn/native/PipelineLayout.h"
+#include "src/dawn/native/d3d12/PipelineD3D12.h"
 #include "src/dawn/native/d3d12/d3d12_platform.h"
 
 namespace dawn::native::d3d12 {
@@ -78,15 +81,8 @@ class PipelineLayout final : public PipelineLayoutBase {
     uint32_t GetImmediatesShaderRegister() const;
     uint32_t GetImmediatesParameterIndex() const;
 
-    ID3D12RootSignature* GetRootSignature() const;
-
-    ID3DBlob* GetRootSignatureBlob() const;
-
-    ID3D12CommandSignature* GetDispatchIndirectCommandSignatureWithNumWorkgroups();
-
-    ID3D12CommandSignature* GetDrawIndirectCommandSignatureWithInstanceVertexOffsets();
-
-    ID3D12CommandSignature* GetDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets();
+    ResultOrError<Ref<PipelineLayoutHandle>> GetOrCreatePipelineLayoutHandle(
+        uint32_t immediateCounts);
 
     struct BindGroupDynamicStorageBufferInfo {
         // First register offset for a bind group's dynamic storage buffer lengths or offsets.
@@ -115,6 +111,8 @@ class PipelineLayout final : public PipelineLayoutBase {
     MaybeError Initialize();
     void DestroyImpl(DestroyReason reason) override;
 
+    ResultOrError<Ref<PipelineLayoutHandle>> CreatePipelineLayoutHandle(uint32_t immediateCounts);
+
     PerBindGroup<uint32_t> mCbvUavSrvRootParameterIndices;
     PerBindGroup<uint32_t> mSamplerRootParameterIndices;
     PerBindGroup<ityp::vector<BindingIndex, uint32_t>> mDynamicUniformRootParameterIndices;
@@ -126,12 +124,8 @@ class PipelineLayout final : public PipelineLayoutBase {
     uint32_t mDynamicStorageBufferLengthsParameterIndex;
     uint32_t mDynamicStorageBufferOffsetsParameterIndex;
     uint32_t mImmediatesParameterIndex;
-    ComPtr<ID3D12RootSignature> mRootSignature;
-    // Store the root signature blob to put in pipeline cachekey
-    ComPtr<ID3DBlob> mRootSignatureBlob;
-    ComPtr<ID3D12CommandSignature> mDispatchIndirectCommandSignatureWithNumWorkgroups;
-    ComPtr<ID3D12CommandSignature> mDrawIndirectCommandSignatureWithInstanceVertexOffsets;
-    ComPtr<ID3D12CommandSignature> mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets;
+
+    MutexProtected<absl::flat_hash_map<uint32_t, Ref<PipelineLayoutHandle>>> mPipelineLayoutHandles;
 };
 
 }  // namespace dawn::native::d3d12
