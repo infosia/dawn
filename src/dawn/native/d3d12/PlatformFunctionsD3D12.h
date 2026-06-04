@@ -42,12 +42,12 @@ class PlatformFunctions final : public d3d::PlatformFunctions {
     PlatformFunctions();
     ~PlatformFunctions() override;
 
-    MaybeError Initialize(std::span<const std::string> searchPaths);
+    MaybeError Initialize(std::span<const std::string> searchPaths, bool useAgilitySDK);
     MaybeError EnsureDXCLibraries(std::span<const std::string> searchPaths);
     bool IsPIXEventRuntimeLoaded() const;
 
-    // Helper methods that route to the Agility SDK interfaces when DAWN_USE_AGILITY_SDK
-    // is defined, or fall back to the loaded d3d12.dll exports otherwise.
+    // Helper methods that route to the Agility SDK device factory when it was successfully
+    // created at Initialize time, or fall back to the loaded d3d12.dll exports otherwise.
     HRESULT CreateDevice(IUnknown* adapter,
                          D3D_FEATURE_LEVEL featureLevel,
                          REFIID riid,
@@ -99,22 +99,23 @@ class PlatformFunctions final : public d3d::PlatformFunctions {
     MaybeError LoadD3D11();
     void LoadPIXRuntime(std::span<const std::string> searchPaths);
 
+    void TryInitializeAgilitySDKDeviceFactory();
+
+    // True if TryInitializeAgilitySDKDeviceFactory() succeeded.
+    bool IsAgilitySDKActive() const { return mDeviceFactory != nullptr; }
+
     // Raw DLL exports — use the public helper methods instead.
     PFN_D3D12_CREATE_DEVICE d3d12CreateDevice = nullptr;
     PFN_D3D12_SERIALIZE_VERSIONED_ROOT_SIGNATURE d3d12SerializeVersionedRootSignature = nullptr;
     PFN_D3D12_CREATE_VERSIONED_ROOT_SIGNATURE_DESERIALIZER
     d3d12CreateVersionedRootSignatureDeserializer = nullptr;
-    // Optional; nullptr on older systems without Agility SDK.
+    // Optional; nullptr on older Win10 systems whose inbox d3d12.dll predates the Agility SDK
+    // loader.
     PFN_D3D12_GET_INTERFACE d3d12GetInterface = nullptr;
 
-#ifdef DAWN_USE_AGILITY_SDK
-    // Called once by Initialize().
-    void EnsureAgilitySDKDeviceFactory();
-
-    // Non-null after a successful EnsureAgilitySDKDeviceFactory() call.
+    // Non-null after a successful TryInitializeAgilitySDKDeviceFactory() call.
     ComPtr<ID3D12DeviceFactory> mDeviceFactory;
     ComPtr<ID3D12DeviceConfiguration> mDeviceConfiguration;
-#endif  // DAWN_USE_AGILITY_SDK
 
     DynamicLib mD3D12Lib;
     DynamicLib mD3D11Lib;

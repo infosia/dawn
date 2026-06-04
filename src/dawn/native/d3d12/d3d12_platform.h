@@ -30,11 +30,9 @@
 
 #include "src/dawn/native/d3d/d3d_platform.h"
 
-#if defined(DAWN_USE_AGILITY_SDK)
-
-// Include d3d12.h from the Agility SDK. Note that we only include this header from Dawn's internal
-// implementation. Externally, <d3d12.h> will be included from the Windows SDK, which may be an
-// older version, but this typically does not cause any issues.
+// Always include D3D12.h from the Agility SDK in Dawn's internal implementation. Externally,
+// <d3d12.h> will be included from the Windows SDK, which may be an older version, but this
+// typically does not cause any issues.
 
 #if defined(__clang__)
 #pragma clang diagnostic push
@@ -45,10 +43,6 @@
 #if defined(__clang__)
 #pragma clang diagnostic pop
 #endif
-
-#else  // defined(DAWN_USE_AGILITY_SDK)
-#include <d3d12.h>
-#endif  // defined(DAWN_USE_AGILITY_SDK)
 
 #include <d3d11on12.h>
 

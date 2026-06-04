@@ -189,6 +189,7 @@ enum class Toggle {
     VulkanUseExtendedDynamicState,
     VulkanForceStaticSamplersForExternalTextures,
     D3D12UseHLSL2021,
+    D3D12UseAgilitySDK,
 
     // Once all backends have been updated to be thread safe for waiting, we can remove this toggle.
     WaitIsThreadSafe,
