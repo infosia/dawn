@@ -51,6 +51,24 @@
       "parentUuid": "21133258_843dd96e",
       "revId": "374d9a5e02482604d858f132233f1581868c6bad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bc7ee3a_b9698e6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-04T14:19:21Z",
+      "side": 1,
+      "message": "Yeah that was a separate thing, but I ported the fixes in that other CL into this one.\n\nThis one fixes a non-deterministic path thing.",
+      "parentUuid": "8d6d21a5_f55b4a5a",
+      "revId": "374d9a5e02482604d858f132233f1581868c6bad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
