@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2809a4cc_63007e7a",
+        "filename": "src/utils/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-04T14:57:13Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm....\n\ncheck: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-typename.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-typename` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "069a1c56c300b78249d1722f480773dfd6f76bd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e2a567e_b4b6493d",
+        "filename": "src/utils/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-04T14:57:13Z",
+      "side": 1,
+      "message": "```suggestion\n        DAWN_CHECK(mSize !\u003d SpanBase::extent);\n```",
+      "revId": "069a1c56c300b78249d1722f480773dfd6f76bd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "438886b5_a0865f55",
+        "filename": "src/utils/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-04T14:57:13Z",
+      "side": 1,
+      "message": "```suggestion\n        DAWN_CHECK(mSize \u003c\u003d SpanBase::extent);\n```",
+      "revId": "069a1c56c300b78249d1722f480773dfd6f76bd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
