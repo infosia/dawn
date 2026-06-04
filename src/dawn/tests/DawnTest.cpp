@@ -439,11 +439,11 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
             continue;
         }
 
-        if (mToggleParser.ParseEnabledToggles(argv[i])) {
+        if (mToggleParser.ParseEnabledToggles(std::string_view(argv[i]))) {
             continue;
         }
 
-        if (mToggleParser.ParseDisabledToggles(argv[i])) {
+        if (mToggleParser.ParseDisabledToggles(std::string_view(argv[i]))) {
             continue;
         }
 

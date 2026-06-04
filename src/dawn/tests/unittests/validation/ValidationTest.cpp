@@ -35,6 +35,8 @@
 #include <webgpu/webgpu.h>
 
 #include <algorithm>
+#include <span>
+#include <string_view>
 #include <unordered_set>
 #include <utility>
 #include <vector>
@@ -79,11 +81,11 @@ void InitDawnValidationTestEnvironment(int argc, char** argv) {
             continue;
         }
 
-        if (gToggleParser->ParseEnabledToggles(argv[i])) {
+        if (gToggleParser->ParseEnabledToggles(std::string_view(argv[i]))) {
             continue;
         }
 
-        if (gToggleParser->ParseDisabledToggles(argv[i])) {
+        if (gToggleParser->ParseDisabledToggles(std::string_view(argv[i]))) {
             continue;
         }
 

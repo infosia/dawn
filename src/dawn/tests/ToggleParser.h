@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_TESTS_TOGGLEPARSER_H_
 #define SRC_DAWN_TESTS_TOGGLEPARSER_H_
 
+#include <span>
 #include <string>
 #include <vector>
 
@@ -36,8 +37,8 @@ class ToggleParser {
     ToggleParser();
     ~ToggleParser();
 
-    bool ParseEnabledToggles(char* arg);
-    bool ParseDisabledToggles(char* arg);
+    bool ParseEnabledToggles(std::span<const char> arg);
+    bool ParseDisabledToggles(std::span<const char> arg);
 
     const std::vector<std::string>& GetEnabledToggles() const;
     const std::vector<std::string>& GetDisabledToggles() const;
