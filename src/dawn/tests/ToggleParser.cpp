@@ -28,19 +28,22 @@
 #include "src/dawn/tests/ToggleParser.h"
 
 #include <cstring>
+#include <span>
 #include <sstream>
+#include <string_view>
 
 #include "src/utils/compiler.h"
 
 ToggleParser::ToggleParser() = default;
 ToggleParser::~ToggleParser() = default;
 
-bool ToggleParser::ParseEnabledToggles(char* arg) {
-    constexpr const char kEnableTogglesSwitch[] = "--enable-toggles=";
-    size_t argLen = sizeof(kEnableTogglesSwitch) - 1;
-    if (DAWN_UNSAFE_TODO(strncmp(arg, kEnableTogglesSwitch, argLen)) == 0) {
+bool ToggleParser::ParseEnabledToggles(std::span<const char> arg) {
+    constexpr std::string_view kEnableTogglesSwitch = "--enable-toggles=";
+    std::string_view argView(arg.data(), arg.size());
+    if (argView.starts_with(kEnableTogglesSwitch)) {
+        std::string_view togglesView = argView.substr(kEnableTogglesSwitch.size());
+        std::stringstream toggles((std::string(togglesView)));
         std::string toggle;
-        std::stringstream toggles(DAWN_UNSAFE_TODO(arg + argLen));
         while (getline(toggles, toggle, ',')) {
             mEnabledToggles.push_back(toggle);
         }
@@ -49,12 +52,13 @@ bool ToggleParser::ParseEnabledToggles(char* arg) {
     return false;
 }
 
-bool ToggleParser::ParseDisabledToggles(char* arg) {
-    constexpr const char kDisableTogglesSwitch[] = "--disable-toggles=";
-    size_t argLDis = sizeof(kDisableTogglesSwitch) - 1;
-    if (DAWN_UNSAFE_TODO(strncmp(arg, kDisableTogglesSwitch, argLDis)) == 0) {
+bool ToggleParser::ParseDisabledToggles(std::span<const char> arg) {
+    constexpr std::string_view kDisableTogglesSwitch = "--disable-toggles=";
+    std::string_view argView(arg.data(), arg.size());
+    if (argView.starts_with(kDisableTogglesSwitch)) {
+        std::string_view togglesView = argView.substr(kDisableTogglesSwitch.size());
+        std::stringstream toggles((std::string(togglesView)));
         std::string toggle;
-        std::stringstream toggles(DAWN_UNSAFE_TODO(arg + argLDis));
         while (getline(toggles, toggle, ',')) {
             mDisabledToggles.push_back(toggle);
         }

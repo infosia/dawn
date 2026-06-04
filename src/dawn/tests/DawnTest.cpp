@@ -35,6 +35,7 @@
 #include <algorithm>
 #include <atomic>
 #include <cstdio>
+#include <cstring>
 #include <format>
 #include <fstream>
 #include <iomanip>
@@ -439,11 +440,11 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
             continue;
         }
 
-        if (mToggleParser.ParseEnabledToggles(argv[i])) {
+        if (mToggleParser.ParseEnabledToggles(std::span<const char>(argv[i], strlen(argv[i])))) {
             continue;
         }
 
-        if (mToggleParser.ParseDisabledToggles(argv[i])) {
+        if (mToggleParser.ParseDisabledToggles(std::span<const char>(argv[i], strlen(argv[i])))) {
             continue;
         }
 
