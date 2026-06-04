@@ -30,7 +30,10 @@
 
 #include <stdint.h>
 
+#include <array>
 #include <cstddef>
+#include <span>
+#include <string_view>
 
 #include "src/tint/utils/macros/compiler.h"
 
@@ -73,12 +76,10 @@
 //
 // A replacement implementing would need to be comparable in performance, be usable in constexpr,
 // and have our confidence in its safety.
-TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
-
 namespace tint {
 
 /// CRC32 immutable lookup table data.
-constexpr uint32_t kCRC32LUT[] = {
+constexpr auto kCRC32LUT = std::to_array<uint32_t>({
     0,          0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f, 0xe963a535, 0x9e6495a3,
     0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988, 0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91,
     0x1db71064, 0x6ab020f2, 0xf3b97148, 0x84be41de, 0x1adad47d, 0x6ddde4eb, 0xf4d4b551, 0x83d385c7,
@@ -110,35 +111,32 @@ constexpr uint32_t kCRC32LUT[] = {
     0xa00ae278, 0xd70dd2ee, 0x4e048354, 0x3903b3c2, 0xa7672661, 0xd06016f7, 0x4969474d, 0x3e6e77db,
     0xaed16a4a, 0xd9d65adc, 0x40df0b66, 0x37d83bf0, 0xa9bcae53, 0xdebb9ec5, 0x47b2cf7f, 0x30b5ffe9,
     0xbdbdf21c, 0xcabac28a, 0x53b39330, 0x24b4a3a6, 0xbad03605, 0xcdd70693, 0x54de5729, 0x23d967bf,
-    0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94, 0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d};
+    0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94, 0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d,
+});
 
-/// @param s the null-terminated string
+/// @param s the string view
 /// @returns the CRC32 of the string @p s.
 /// @note this function can be used to calculate the CRC32 of a string literal
 /// at compile time.
 /// @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check#CRC-32_algorithm
-constexpr uint32_t CRC32(const char* s) {
+constexpr uint32_t CRC32(std::string_view s) {
     uint32_t crc = 0xffffffff;
-    for (auto* p = s; *p != '\0'; ++p) {
-        crc = (crc >> 8) ^ kCRC32LUT[static_cast<uint8_t>(crc) ^ static_cast<uint8_t>(*p)];
+    for (char c : s) {
+        crc = (crc >> 8) ^ kCRC32LUT[static_cast<uint8_t>(crc) ^ static_cast<uint8_t>(c)];
     }
     return crc ^ 0xffffffff;
 }
 
-/// @param ptr a pointer to the start of the data
-/// @param size the number of bytes of the data
-/// @returns the CRC32 of the data at @p ptr of size @p size.
-inline uint32_t CRC32(const void* ptr, size_t size) {
-    auto* p = static_cast<const uint8_t*>(ptr);
+/// @param data the data span
+/// @returns the CRC32 of the data @p data.
+inline uint32_t CRC32(std::span<const std::byte> data) {
     uint32_t crc = 0xffffffff;
-    while (size--) {
-        crc = (crc >> 8) ^ kCRC32LUT[static_cast<uint8_t>(crc) ^ *p++];
+    for (std::byte b : data) {
+        crc = (crc >> 8) ^ kCRC32LUT[static_cast<uint8_t>(crc) ^ static_cast<uint8_t>(b)];
     }
     return crc ^ 0xffffffff;
 }
 
 }  // namespace tint
-
-TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
 #endif  // SRC_TINT_UTILS_MATH_CRC32_H_

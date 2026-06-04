@@ -29,7 +29,9 @@
 #include <iostream>
 #include <memory>
 #include <optional>
+#include <span>
 #include <string>
+#include <string_view>
 #include <unordered_map>
 #include <vector>
 
@@ -1020,7 +1022,7 @@ std::string Disassemble(const std::vector<uint32_t>& data) {
         }
     }
 
-    const auto hash = tint::CRC32(result.Get().spirv.data(), result.Get().spirv.size());
+    const auto hash = tint::CRC32(std::as_bytes(std::span(result.Get().spirv)));
     if (options.print_hash) {
         PrintHash(hash);
     }
@@ -1075,7 +1077,7 @@ bool GenerateWgsl([[maybe_unused]] Options& options,
         return false;
     }
 
-    const auto hash = tint::CRC32(result->wgsl.data(), result->wgsl.size());
+    const auto hash = tint::CRC32(result->wgsl);
     if (options.print_hash) {
         PrintHash(hash);
     }
@@ -1195,7 +1197,7 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
         return false;
     }
 
-    const auto hash = tint::CRC32(result->msl.c_str());
+    const auto hash = tint::CRC32(result->msl);
     if (options.print_hash) {
         PrintHash(hash);
     }
@@ -1281,7 +1283,7 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
         return false;
     }
 
-    const auto hash = tint::CRC32(result->hlsl.c_str());
+    const auto hash = tint::CRC32(result->hlsl);
     if (options.print_hash) {
         PrintHash(hash);
     }
@@ -1427,7 +1429,7 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
         return false;
     }
 
-    const auto hash = tint::CRC32(result->glsl.c_str());
+    const auto hash = tint::CRC32(result->glsl);
     if (options.print_hash) {
         PrintHash(hash);
     }

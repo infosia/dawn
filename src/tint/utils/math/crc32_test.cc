@@ -27,10 +27,18 @@
 
 #include "src/tint/utils/math/crc32.h"
 
+#include <span>
+#include <vector>
+
 #include "gtest/gtest.h"
 
 namespace tint {
 namespace {
+
+TEST(CRC32Test, RuntimeSpan) {
+    std::vector<uint8_t> data = {'h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'};
+    EXPECT_EQ(CRC32(std::as_bytes(std::span(data))), 0x0d4a1185u);
+}
 
 TEST(CRC32Test, Compiletime) {
     static_assert(CRC32("") == 0x00000000u);
