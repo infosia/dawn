@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6ff1041_41fe608e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-04T01:45:09Z",
+      "side": 1,
+      "message": "Will wait for other outstanding CLs to land to avoid merge conflicts.",
+      "revId": "c348062d2a6be8944a4f822d68f9f0941aa5f42e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
