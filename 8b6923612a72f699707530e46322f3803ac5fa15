@@ -79,6 +79,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1e2633ef_9e0cac02",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-04T08:49:22Z",
+      "side": 1,
+      "message": "Thanks for pointing out! Removed it.",
+      "parentUuid": "e042cf12_27031239",
+      "range": {
+        "startLine": 678,
+        "startChar": 55,
+        "endLine": 678,
+        "endChar": 71
+      },
+      "revId": "8b6923612a72f699707530e46322f3803ac5fa15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "329a28d7_996b2686",
         "filename": "generator/dawn_json_generator.py",
         "patchSetId": 18
@@ -90,6 +114,30 @@
       "writtenOn": "2026-06-03T19:52:51Z",
       "side": 1,
       "message": "Is `parent` referring to a parent struct that holds a member type? If so, couldn\u0027t we just make sure to add the tag on all the members that need to be a part of the tag? Although it might be a bit more verbose in `dawn.json` it would document it better also whereas this will hide the tags implicitly.",
+      "range": {
+        "startLine": 1407,
+        "startChar": 20,
+        "endLine": 1407,
+        "endChar": 37
+      },
+      "revId": "8b6923612a72f699707530e46322f3803ac5fa15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "549ae1e2_763590c9",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-04T08:49:22Z",
+      "side": 1,
+      "message": "Removed the use \"parent\". This is was no longer needed as we are marking the required struct with \"art_experimental\" tags in dawn.json.",
+      "parentUuid": "329a28d7_996b2686",
       "range": {
         "startLine": 1407,
         "startChar": 20,
