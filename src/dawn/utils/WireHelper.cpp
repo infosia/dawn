@@ -43,6 +43,7 @@
 #include "dawn/wire/WireServer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 #include "src/dawn/common/SystemUtils.h"
+#include "src/dawn/utils/InlineMemoryTransferService.h"
 #include "src/dawn/utils/TerribleCommandBuffer.h"
 #include "src/utils/assert.h"
 #include "src/utils/log.h"
@@ -127,9 +128,12 @@ class WireHelperProxy : public WireHelper {
         mC2sBuf = std::make_unique<dawn::utils::TerribleCommandBuffer>();
         mS2cBuf = std::make_unique<dawn::utils::TerribleCommandBuffer>();
 
+        mServerMemoryTransferService = dawn::utils::CreateServerInlineMemoryTransferService();
+
         dawn::wire::WireServerDescriptor serverDesc = {};
         serverDesc.procs = &procs;
         serverDesc.serializer = mS2cBuf.get();
+        serverDesc.memoryTransferService = mServerMemoryTransferService.get();
         serverDesc.useSpontaneousCallbacks = true;
 
         mWireServer.reset(new dawn::wire::WireServer(serverDesc));
@@ -140,8 +144,11 @@ class WireHelperProxy : public WireHelper {
             mC2sBuf->SetHandler(mWireServerTraceLayer.get());
         }
 
+        mClientMemoryTransferService = dawn::utils::CreateClientInlineMemoryTransferService();
+
         dawn::wire::WireClientDescriptor clientDesc = {};
         clientDesc.serializer = mC2sBuf.get();
+        clientDesc.memoryTransferService = mClientMemoryTransferService.get();
 
         mWireClient.reset(new dawn::wire::WireClient(clientDesc));
         mS2cBuf->SetHandler(mWireClient.get());
@@ -186,6 +193,8 @@ class WireHelperProxy : public WireHelper {
     std::unique_ptr<dawn::wire::WireServer> mWireServer;
     std::unique_ptr<dawn::wire::WireClient> mWireClient;
     std::unique_ptr<WireServerTraceLayer> mWireServerTraceLayer;
+    std::unique_ptr<dawn::wire::server::MemoryTransferService> mServerMemoryTransferService;
+    std::unique_ptr<dawn::wire::client::MemoryTransferService> mClientMemoryTransferService;
 };
 
 }  // anonymous namespace

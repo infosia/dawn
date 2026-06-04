@@ -170,6 +170,7 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
     MemoryTransferService(const MemoryTransferService&) = delete;
     MemoryTransferService& operator=(const MemoryTransferService&) = delete;
 };
+
 }  // namespace server
 
 }  // namespace dawn::wire

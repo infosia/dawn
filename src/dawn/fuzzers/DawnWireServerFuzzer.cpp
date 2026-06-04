@@ -39,6 +39,7 @@
 #include "src/dawn/common/DynamicLib.h"
 #include "src/dawn/common/StringViewUtils.h"
 #include "src/dawn/common/SystemUtils.h"
+#include "src/dawn/utils/InlineMemoryTransferService.h"
 #include "src/dawn/utils/SystemUtils.h"
 #include "src/utils/assert.h"
 #include "src/utils/compiler.h"
@@ -140,9 +141,11 @@ int DawnWireServerFuzzer::Run(const uint8_t* data,
     dawnProcSetProcs(&procs);
 
     DevNull devNull;
+    auto serverMemoryTransferService = dawn::utils::CreateServerInlineMemoryTransferService();
     dawn::wire::WireServerDescriptor serverDesc = {};
     serverDesc.procs = &procs;
     serverDesc.serializer = &devNull;
+    serverDesc.memoryTransferService = serverMemoryTransferService.get();
     serverDesc.useSpontaneousCallbacks = true;
 
     std::unique_ptr<dawn::wire::WireServer> wireServer(new dawn::wire::WireServer(serverDesc));
