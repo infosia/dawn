@@ -288,8 +288,8 @@ void Instance::GatherWGSLFeatures(const WGPUDawnWireWGSLControl* wgslControl,
 
     // Remove blocklisted features.
     if (wgslBlocklist != nullptr) {
-        for (size_t i = 0; i < wgslBlocklist->blocklistedFeatureCount; i++) {
-            const char* name = DAWN_UNSAFE_TODO(wgslBlocklist->blocklistedFeatures[i]);
+        for (const char* name : std::span(wgslBlocklist->blocklistedFeatures,
+                                          wgslBlocklist->blocklistedFeatureCount)) {
             tint::wgsl::LanguageFeature tintFeature = tint::wgsl::ParseLanguageFeature(name);
             if (tintFeature == tint::wgsl::LanguageFeature::kUndefined) {
                 // Ignore unknown features in the blocklist.
@@ -308,9 +308,10 @@ void Instance::APIGetWGSLLanguageFeatures(WGPUSupportedWGSLLanguageFeatures* fea
     DAWN_ASSERT(features != nullptr);
     size_t featureCount = mWGSLFeatures.size();
     WGPUWGSLLanguageFeatureName* wgslFeatures = new WGPUWGSLLanguageFeatureName[featureCount];
+    std::span<WGPUWGSLLanguageFeatureName> wgslFeaturesSpan(wgslFeatures, featureCount);
     uint32_t index = 0;
     for (WGPUWGSLLanguageFeatureName feature : mWGSLFeatures) {
-        DAWN_UNSAFE_TODO(wgslFeatures[index++]) = feature;
+        wgslFeaturesSpan[index++] = feature;
     }
     DAWN_ASSERT(index == featureCount);
 
