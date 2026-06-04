@@ -141,6 +141,24 @@
       "parentUuid": "8bb12ba6_2a3cc637",
       "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1239b0c_59ef2908",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4866099
+      },
+      "writtenOn": "2026-06-04T06:26:46Z",
+      "side": 1,
+      "message": "PS3 implements the decouple we discussed, in the minimal form.\nVerified locally with the failing bot\u0027s args.gn + dawn_use_wayland\u003dtrue: ComputeBoids now links cleanly.\n\n@Kai, can you please kick the trybots when you get a chance? I still can\u0027t self-trigger CQ.",
+      "parentUuid": "9f04a8bc_f9db9958",
+      "revId": "c6bbc8ee17ba51060f386989f58a37310be92537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
