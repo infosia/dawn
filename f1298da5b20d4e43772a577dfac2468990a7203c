@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b60cbd37_01ffa2a5",
+        "filename": "tools/run.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-04T08:53:30Z",
+      "side": 1,
+      "message": "It is fine to remove this file if you don\u0027t use this in generate_sources action?\n\nhttps://source.chromium.org/search?q\u003dtools%2Frun.py%20f:gni%3F$\u0026ss\u003dchromium%2Fchromium%2Fsrc:third_party%2Fdawn%2F\u0026ssfr\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "4b6d84dc_2185e507",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/run.py",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 75,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "f1298da5b20d4e43772a577dfac2468990a7203c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
