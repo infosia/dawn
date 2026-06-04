@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "839c0e93_6d706fe2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-04T18:19:50Z",
+      "side": 1,
+      "message": "Two thoughts about this CL--\n1. There\u0027s a lot going on here, perhaps some of the changes (ex: build target updates) could be broken out to a prior CL?  That\u0027d help reviewer clarity, and reduce risks if you have to rollback.\n2. coughcoughcoughtests?cough.",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44d90e53_a4009258",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-04T18:19:50Z",
+      "side": 1,
+      "message": "Spidey-sense tingling.  Is this a safe assumption, or do you plan to refactor later?  (If so, please file a tracking bug)",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51837c0a_8991b475",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-04T18:19:50Z",
+      "side": 1,
+      "message": "Minor c syle nit, but you could add \"\u0026\u0026 !failed\" to the for() loop\u0027s exit check for clarity.\n\nHm, same applies for the loop above, I notice.",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31c10751_2ac9623f",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUAndroidHardwareBufferUtil.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-04T18:19:50Z",
+      "side": 1,
+      "message": "Could you note in the CL description please, why some changes require TIRAMISU and others Q?",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1acc81a5_0755073f",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-04T18:19:50Z",
+      "side": 1,
+      "message": "wait is it FenceSync or SyncFence?",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
