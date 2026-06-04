@@ -33,6 +33,24 @@
       "message": "lgtm! If there were a canned check for this that would be really nice though, I wonder if this could be contributed upstream instead, and then linked by us?",
       "revId": "1b6a88b238dcf8ad00fd1047bd073b2b8acd7aa7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac4e6298_b55b2821",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-04T09:46:55Z",
+      "side": 1,
+      "message": "There aren\u0027t.\n\nIn Chrome, we just check UNSAFE_BUFFERS isn\u0027t used and add a warning about adding SAFETY message.\nWhat I added in Dawn is better, because we don\u0027t issue a warning if a SAFETY message exist.\n\nThis might be a good idea to upstream. I don\u0027t think I will. However \"DAWN_UNSAFE_BUFFERS\" is quite specific to Dawn.",
+      "parentUuid": "bd62663d_402c4d40",
+      "revId": "1b6a88b238dcf8ad00fd1047bd073b2b8acd7aa7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
