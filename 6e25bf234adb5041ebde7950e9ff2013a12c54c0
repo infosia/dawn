@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "298fbb3e_9c9ff221",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-04T16:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "896394d4_559a5106",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "6e25bf234adb5041ebde7950e9ff2013a12c54c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "752d9db8_1e208cea",
@@ -37,6 +61,24 @@
       "writtenOn": "2026-06-04T15:45:49Z",
       "side": 1,
       "message": "Nit: I think we could just use the core `countLeadingZeros` and `countTrailingZeros` builtins which map onto `clz`/`ctz` already, to avoid adding new MSL specific ones.",
+      "revId": "6e25bf234adb5041ebde7950e9ff2013a12c54c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7e94ae6_a178bd6e",
+        "filename": "src/tint/lang/msl/msl.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-04T16:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "752d9db8_1e208cea",
       "revId": "6e25bf234adb5041ebde7950e9ff2013a12c54c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af211bff_4873bf0f",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1330,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-04T16:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c3af06_dabab3d6",
+      "revId": "6e25bf234adb5041ebde7950e9ff2013a12c54c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8560a02a_b86e5b8c",
@@ -71,6 +131,24 @@
       "writtenOn": "2026-06-04T15:45:49Z",
       "side": 1,
       "message": "Is the `select` actually necessary for unsigned?\n\nAFAICT we should already have the right result if `x \u003d\u003d 0`, because `clz` will return `32`, and `31 - 32` will produce the `-1` that we need.\n\nActually doesn\u0027t it also work for signed without the select, since we convert to unsigned first? Just worked through the `x \u003d\u003d 0` and `x \u003d\u003d -1` cases and they seemed to work out fine, but maybe I made a mistake somewhere.",
+      "revId": "6e25bf234adb5041ebde7950e9ff2013a12c54c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c451b9a0_1a70d488",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-04T16:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8560a02a_b86e5b8c",
       "revId": "6e25bf234adb5041ebde7950e9ff2013a12c54c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
