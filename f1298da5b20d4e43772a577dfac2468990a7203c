@@ -34,6 +34,24 @@
       ],
       "revId": "f1298da5b20d4e43772a577dfac2468990a7203c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b268980_3247eae8",
+        "filename": "tools/run.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-04T13:31:09Z",
+      "side": 1,
+      "message": "No, this file is used for other reasons outside of GN.",
+      "parentUuid": "b60cbd37_01ffa2a5",
+      "revId": "f1298da5b20d4e43772a577dfac2468990a7203c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
