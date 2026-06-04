@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <algorithm>
+#include <array>
 #include <limits>
 #include <sstream>
 #include <string>
@@ -490,56 +491,50 @@ TEST_F(CompatValidationTest, CanNotUseTooManyTextureSamplerCombos) {
         uint32_t maxTexturesPerShaderStage =
             limits.maxSampledTexturesPerShaderStage - (test.numExternalTextures * 3);
         auto numCombos = test.numCombos;
-        std::vector<std::string> textureDeclarations[2];
-        std::vector<std::string> samplerDeclarations[2];
-        std::vector<std::string> usages[2];
+        std::array<std::vector<std::string>, 2> textureDeclarations;
+        std::array<std::vector<std::string>, 2> samplerDeclarations;
+        std::array<std::vector<std::string>, 2> usages;
         for (uint32_t stage = 0; stage < 2; ++stage) {
             uint32_t count = 0;
             for (uint32_t t = 0; count < numCombos && t < maxTexturesPerShaderStage; ++t) {
-                DAWN_UNSAFE_TODO(textureDeclarations[stage])
-                    .push_back(
-                        absl::StrFormat("@group(%u) @binding(%u) var t%u_%u: texture_2d<f32>;",
-                                        stage * 2, t, stage, t));
+                textureDeclarations[stage].push_back(
+                    absl::StrFormat("@group(%u) @binding(%u) var t%u_%u: texture_2d<f32>;",
+                                    stage * 2, t, stage, t));
                 for (uint32_t s = 0; count < numCombos && t < limits.maxSamplersPerShaderStage;
                      ++s) {
                     if (t == 0) {
-                        DAWN_UNSAFE_TODO(samplerDeclarations[stage])
-                            .push_back(
-                                absl::StrFormat("@group(%u) @binding(%u) var s%u_%u: sampler;",
-                                                (stage * 2) + 1, s, stage, s));
+                        samplerDeclarations[stage].push_back(
+                            absl::StrFormat("@group(%u) @binding(%u) var s%u_%u: sampler;",
+                                            (stage * 2) + 1, s, stage, s));
                     }
-                    DAWN_UNSAFE_TODO(usages[stage])
-                        .push_back(
-                            absl::StrFormat("c += textureSampleLevel(t%u_%u, s%u_%u, vec2f(0), 0);",
-                                            stage, t, stage, s));
+                    usages[stage].push_back(
+                        absl::StrFormat("c += textureSampleLevel(t%u_%u, s%u_%u, vec2f(0), 0);",
+                                        stage, t, stage, s));
                     ++count;
                 }
             }
 
             for (uint32_t t = 0; t < test.numNonSamplerUsages; ++t) {
-                if (t >= DAWN_UNSAFE_TODO(textureDeclarations[stage]).size()) {
-                    DAWN_UNSAFE_TODO(textureDeclarations[stage])
-                        .push_back(
-                            absl::StrFormat("@group(%u) @binding(%u) var t%u_%u: texture_2d<f32>;",
-                                            stage * 2, t, stage, t));
+                if (t >= textureDeclarations[stage].size()) {
+                    textureDeclarations[stage].push_back(
+                        absl::StrFormat("@group(%u) @binding(%u) var t%u_%u: texture_2d<f32>;",
+                                        stage * 2, t, stage, t));
                 }
-                DAWN_UNSAFE_TODO(usages[stage])
-                    .push_back(absl::StrFormat("c += textureLoad(t%u_%u, vec2u(0), 0);", stage, t));
+                usages[stage].push_back(
+                    absl::StrFormat("c += textureLoad(t%u_%u, vec2u(0), 0);", stage, t));
             }
 
             for (uint32_t t = 0; t < test.numExternalTextures; ++t) {
                 if (t == 0 || !test.useSameExternalTexture) {
-                    auto et = DAWN_UNSAFE_TODO(textureDeclarations[stage]).size() + t;
-                    DAWN_UNSAFE_TODO(textureDeclarations[stage])
-                        .push_back(
-                            absl::StrFormat("@group(%u) @binding(%u) var e%u_%u: texture_external;",
-                                            stage * 2, et, stage, t));
+                    auto et = textureDeclarations[stage].size() + t;
+                    textureDeclarations[stage].push_back(
+                        absl::StrFormat("@group(%u) @binding(%u) var e%u_%u: texture_external;",
+                                        stage * 2, et, stage, t));
                 }
-                DAWN_UNSAFE_TODO(usages[stage])
-                    .push_back(absl::StrFormat(
-                        "c += textureSampleBaseClampToEdge(e%u_%u, s%u_%u, vec2f(0));", stage,
-                        test.useSameExternalTexture ? 0 : t, stage,
-                        test.useSameExternalTexture ? t : 0));
+                usages[stage].push_back(
+                    absl::StrFormat("c += textureSampleBaseClampToEdge(e%u_%u, s%u_%u, vec2f(0));",
+                                    stage, test.useSameExternalTexture ? 0 : t, stage,
+                                    test.useSameExternalTexture ? t : 0));
             }
         }
 
@@ -2241,7 +2236,7 @@ class CompatLayoutLimitsTests : public CompatValidationTest {
         EXPECT_TRUE(limitInStage > 0);
         EXPECT_TRUE(limitInStage < limitPerStage);
 
-        wgpu::BindGroupLayout bgls[2];
+        std::array<wgpu::BindGroupLayout, 2> bgls;
 
         std::vector<wgpu::BindGroupLayoutEntry> entries(limitInStage);
         for (size_t i = 0; i < entries.size(); ++i) {
@@ -2260,7 +2255,7 @@ class CompatLayoutLimitsTests : public CompatValidationTest {
 
         wgpu::PipelineLayoutDescriptor pipelineLayoutDescriptor = {};
         pipelineLayoutDescriptor.bindGroupLayoutCount = 2;
-        pipelineLayoutDescriptor.bindGroupLayouts = bgls;
+        pipelineLayoutDescriptor.bindGroupLayouts = bgls.data();
 
         ASSERT_DEVICE_ERROR(device.CreatePipelineLayout(&pipelineLayoutDescriptor),
                             testing::HasSubstr(expectedErrorSubstring));
