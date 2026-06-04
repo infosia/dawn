@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b620d9ca_650e931a",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-04T17:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec25a479_0292a745",
+      "revId": "4952745eff7b716c8912aad1e80d5489523ea58b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a04d364_52d82711",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "We should get the 1+ the last used inter stage one. My worry is what we need to do when we run against the limit of maxInterStageShaderVariables? Was this discussed in the group? In the meantime we can `return DAWN_INTERNAL_ERROR(\"stuff\")`",
       "parentUuid": "5a04d364_52d82711",
+      "revId": "4952745eff7b716c8912aad1e80d5489523ea58b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38cb3e58_1a488eb5",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-04T17:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e8a7884_613e1293",
       "revId": "4952745eff7b716c8912aad1e80d5489523ea58b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

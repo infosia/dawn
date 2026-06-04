@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d282381_b4c2baf2",
+        "filename": "src/dawn/tests/end2end/ShaderIOPolyfillTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-04T17:45:49Z",
+      "side": 1,
+      "message": "I just did a std::move which should also fix the warning.",
+      "parentUuid": "b72d38fd_8eb7d963",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "0f822d538c6e3410fe2b341b0569a1b8e53ead68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28e6fbfd_5342159c",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f5a8fa7_50431da0",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-04T17:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28e6fbfd_5342159c",
+      "revId": "0f822d538c6e3410fe2b341b0569a1b8e53ead68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "351f9290_efe13279",
@@ -71,6 +113,24 @@
       "writtenOn": "2026-06-03T14:10:07Z",
       "side": 1,
       "message": "One of these is failing.",
+      "revId": "0f822d538c6e3410fe2b341b0569a1b8e53ead68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bec6827_e597ff6b",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-04T17:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "351f9290_efe13279",
       "revId": "0f822d538c6e3410fe2b341b0569a1b8e53ead68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
