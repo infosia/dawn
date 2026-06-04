@@ -66,6 +66,17 @@ class PhysicalDevice : public PhysicalDeviceBase {
     bool IsAndroidSamsung() const;
     bool IsAndroidImgTec() const;
     bool IsPixel10() const;
+<<<<<<< HEAD   (c1179de12ec3ed8feb91e922f12a90ae33f4a8cf [M149] [native] Fix IndirectDrawValidationEncoder merging no)
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+    bool IsSwiftshader() const;
+
+    // Check using VkDriverId, which is available in Vk 1.2 or an extension.
+=======
+    bool IsSwiftshader() const;
+    bool IsWindowsAMD() const;
+
+    // Check using VkDriverId, which is available in Vk 1.2 or an extension.
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
     bool IsIntelMesa() const;
     bool IsAmdMesa() const;
     bool IsAndroidHuawei() const;
