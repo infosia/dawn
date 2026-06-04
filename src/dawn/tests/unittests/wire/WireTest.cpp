@@ -70,11 +70,11 @@ WireTest::~WireTest() {
 }
 
 wire::client::MemoryTransferService* WireTest::GetClientMemoryTransferService() {
-    return nullptr;
+    return mClientMemoryTransferService.get();
 }
 
 wire::server::MemoryTransferService* WireTest::GetServerMemoryTransferService() {
-    return nullptr;
+    return mServerMemoryTransferService.get();
 }
 
 utils::TerribleCommandBuffer* WireTest::GetC2SCommandBuffer() {
@@ -88,6 +88,8 @@ void WireTest::SetUp() {
     mS2cBuf = std::make_unique<utils::TerribleCommandBuffer>();
     mC2sBuf = std::make_unique<utils::TerribleCommandBuffer>(mWireServer.get());
 
+    mServerMemoryTransferService = wire::server::CreateInlineMemoryTransferService();
+
     wire::WireServerDescriptor serverDesc = {};
     serverDesc.procs = &mockProcs;
     serverDesc.serializer = mS2cBuf.get();
@@ -95,6 +97,8 @@ void WireTest::SetUp() {
 
     mWireServer.reset(new wire::WireServer(serverDesc));
     mC2sBuf->SetHandler(mWireServer.get());
+
+    mClientMemoryTransferService = wire::client::CreateInlineMemoryTransferService();
 
     wire::WireClientDescriptor clientDesc = {};
     clientDesc.serializer = mC2sBuf.get();

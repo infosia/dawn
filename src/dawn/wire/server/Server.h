@@ -293,15 +293,12 @@ class Server : public ServerBase {
 #include "dawn/wire/server/ServerPrototypes_autogen.inc"
 
     MutexProtected<ChunkedCommandSerializer> mSerializer;
-    std::unique_ptr<MemoryTransferService> mOwnedMemoryTransferService = nullptr;
     raw_ptr<MemoryTransferService> mMemoryTransferService = nullptr;
     bool mUseSpontaneousCallbacks = false;
 
     // Weak pointer to self to facilitate creation of userdata.
     std::weak_ptr<Server> mSelf;
 };
-
-std::unique_ptr<MemoryTransferService> CreateInlineMemoryTransferService();
 
 }  // namespace dawn::wire::server
 

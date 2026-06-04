@@ -202,6 +202,9 @@ class WireTest : virtual public testing::Test {
     std::unique_ptr<wire::WireClient> mWireClient;
     std::unique_ptr<utils::TerribleCommandBuffer> mS2cBuf;
     std::unique_ptr<utils::TerribleCommandBuffer> mC2sBuf;
+
+    std::unique_ptr<wire::client::MemoryTransferService> mClientMemoryTransferService;
+    std::unique_ptr<wire::server::MemoryTransferService> mServerMemoryTransferService;
 };
 
 }  // namespace dawn
