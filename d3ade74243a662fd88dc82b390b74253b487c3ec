@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca304e09_e04b1234",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-06-04T13:23:51Z",
+      "side": 1,
+      "message": "\u003e `the compiler does not provide a way to discover the import graph dependencies`\n\nDid you run into his with llvm clang by any chance?\nRef:  https://cmake.org/cmake/help/latest/manual/cmake-cxxmodules.7.html#compiler-support\nI could add a simple compile check or put this behind an option",
+      "parentUuid": "fcceb5c4_9e9a4217",
+      "revId": "d3ade74243a662fd88dc82b390b74253b487c3ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3c56072_28950a01",
         "filename": "src/dawn/CMakeLists.txt",
         "patchSetId": 10
@@ -121,6 +139,24 @@
       "writtenOn": "2026-06-02T17:32:22Z",
       "side": 1,
       "message": "This makes a Skia build fail because of:\n\n```\n[405/1060] Scanning /b/s/w/ir/cache/work/skia/out/3fd7b1/cmake_dawn/gen/include/dawn/webgpu.ixx for CXX dependencies\nFAILED: src/dawn/CMakeFiles/dawncpp_miu.dir/__/__/gen/include/dawn/webgpu.ixx.o.ddi \n\"/b/s/w/ir/.cipd/pkgs/8/jDGieA1N2AL6ysj3Iwgzm5APFMdN7ITCpdift7tgfxYC/bin/clang-scan-deps\" -format\u003dp1689 -- /b/s/w/ir/clang_linux/bin/clang++  -I/b/s/w/ir/skia/third_party/externals/dawn/include -I/b/s/w/ir/cache/work/skia/out/3fd7b1/cmake_dawn/gen/include -O1 -w -g -std\u003dc++20 -fPIC -Wno-c++20-compat -x c++ /b/s/w/ir/cache/work/skia/out/3fd7b1/cmake_dawn/gen/include/dawn/webgpu.ixx -c -o src/dawn/CMakeFiles/dawncpp_miu.dir/__/__/gen/include/dawn/webgpu.ixx.o -resource-dir \"/b/s/w/ir/.cipd/pkgs/8/jDGieA1N2AL6ysj3Iwgzm5APFMdN7ITCpdift7tgfxYC/lib/clang/18\" -MT src/dawn/CMakeFiles/dawncpp_miu.dir/__/__/gen/include/dawn/webgpu.ixx.o.ddi -MD -MF src/dawn/CMakeFiles/dawncpp_miu.dir/__/__/gen/include/dawn/webgpu.ixx.o.ddi.d \u003e src/dawn/CMakeFiles/dawncpp_miu.dir/__/__/gen/include/dawn/webgpu.ixx.o.ddi.tmp \u0026\u0026 mv src/dawn/CMakeFiles/dawncpp_miu.dir/__/__/gen/include/dawn/webgpu.ixx.o.ddi.tmp src/dawn/CMakeFiles/dawncpp_miu.dir/__/__/gen/include/dawn/webgpu.ixx.o.ddi\nError while scanning dependencies for /b/s/w/ir/cache/work/skia/out/3fd7b1/cmake_dawn/gen/include/dawn/webgpu.ixx:\nIn file included from /b/s/w/ir/cache/work/skia/out/3fd7b1/cmake_dawn/gen/include/dawn/webgpu.ixx:29:\n/b/s/w/ir/skia/third_party/externals/dawn/include/webgpu/webgpu_cpp.h:31:10: fatal error: \u0027dawn/webgpu_cpp.h\u0027 file not found\n```\n\nMaybe there\u0027s a dependency missing somehow? But we need to revert this until there\u0027s a fix.",
+      "revId": "d3ade74243a662fd88dc82b390b74253b487c3ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0166fd4_4605b0a4",
+        "filename": "src/dawn/CMakeLists.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 4847044
+      },
+      "writtenOn": "2026-06-04T13:23:51Z",
+      "side": 1,
+      "message": "Uhm yeah. Seems with the include_directories change the target needed to explicitly depend on webgpu_cpp and webgpu_c to generate their files beforehand.",
+      "parentUuid": "f3c56072_28950a01",
       "revId": "d3ade74243a662fd88dc82b390b74253b487c3ec",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
