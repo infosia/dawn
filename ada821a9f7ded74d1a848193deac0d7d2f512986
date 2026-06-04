@@ -50,6 +50,42 @@
       "message": "nit: Same as the others, it would be nice if this came from some upstream repository, but less important",
       "revId": "ada821a9f7ded74d1a848193deac0d7d2f512986",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b58d9361_e57553da",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-04T10:08:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb12d1ee_d081665d",
+      "revId": "ada821a9f7ded74d1a848193deac0d7d2f512986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "608f7f82_9ab393e7",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-04T10:08:04Z",
+      "side": 1,
+      "message": "It was made from scratch, but looking at Chromium implementation, I just decided to copy it from chrome.\n\nIn particular, it adds that if the user ignored the PRESUBMIT warning, it would be added as a lint into gerrit. This is nice to have!\n\n\nSince my patch is not totally different, could you please +2 again to confirm your code review?",
+      "parentUuid": "4d4c7bc1_36ec17fa",
+      "revId": "ada821a9f7ded74d1a848193deac0d7d2f512986",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
