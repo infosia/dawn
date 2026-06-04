@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bb0b25e_100134e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-04T13:31:53Z",
+      "side": 1,
+      "message": "Should have said: this is basically a clone of `run.py` but stripped down to only run `gen`.",
+      "revId": "374d9a5e02482604d858f132233f1581868c6bad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
