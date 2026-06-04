@@ -251,6 +251,11 @@ ResultOrError<Ref<InstanceBase>> InstanceBase::Create(const InstanceDescriptor* 
     // and devices created by this instance if not overriden.
     instanceToggles.Default(Toggle::AllowUnsafeAPIs, false);
 
+    // By default do not route through the D3D12 Agility SDK device factory. When enabled, the
+    // PlatformFunctions runtime detection gracefully falls back to the inbox d3d12.dll exports
+    // when D3D12GetInterface is missing on older versions of Windows 10.
+    instanceToggles.Default(Toggle::D3D12UseAgilitySDK, false);
+
     Ref<InstanceBase> instance = AcquireRef(new InstanceBase(instanceToggles));
     DAWN_TRY(instance->Initialize(unpacked));
     return instance;

@@ -792,6 +792,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::D3D12UseHLSL2021,
      {"d3d12_use_hlsl_2021", "Use HLSL 2021 when targeting DXC.", "https://crbug.com/508342536",
       ToggleStage::Device}},
+    {Toggle::D3D12UseAgilitySDK,
+     {"d3d12_use_agility_sdk",
+      "Route D3D12 device creation and root signature serialization through the D3D12 Agility SDK "
+      "device factory. Requires the loaded D3D12.dll to export D3D12GetInterface. If it does not, "
+      "Dawn falls back to the inbox D3D12.dll exports.",
+      "https://crbug.com/507448270", ToggleStage::Instance}},
     {Toggle::WaitIsThreadSafe,
      {"wait_is_thread_safe",
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "
