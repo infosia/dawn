@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf873edd_65699656",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-05T09:08:06Z",
+      "side": 1,
+      "message": "(most manually, AI helps on reviewing and fix race condition part, manually reviewd)\n\nPTAL, thanks!",
+      "revId": "c986a0100c2225c1a1a524bb3d68d0458d286587",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
