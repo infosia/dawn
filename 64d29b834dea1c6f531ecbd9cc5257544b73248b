@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "276dec09_47491d05",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-05T10:49:41Z",
+      "side": 1,
+      "message": "@bentonian@google.com Moved the Build Gradle parameterized build infra changes to a separate CL - https://dawn-review.git.corp.google.com/c/dawn/+/314175/1",
+      "parentUuid": "bdb0fa5f_e6ddc00d",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44d90e53_a4009258",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 14
