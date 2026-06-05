@@ -178,6 +178,20 @@ For background, see also
 There is sometimes an unknown issue with building standard libraries with Siso.
 If this happens, try building locally, using `autoninja --offline`.
 
+**Alternate method:**
+
+You can also build as a secondary toolchain under an existing build directory.
+This is slower because Siso can't remotely compile in most cases.
+(This works incidentally - we support this for some backends just for clangd.)
+
+1.  Follow steps 1-2 above.
+1.  Set the GN arg `dawn_also_cross_compile_win_clang_x64 = true`
+    (or `dawn_maximal = true`).
+1.  Build the target `all_with_cross_compile`.
+    Your output will be in `out/YOUR_BUILD_DIR/TOOLCHAIN_NAME/`, so you can also
+    build specific targets, for example:
+    `autoninja -C out/Debug win_clang_x64/dawn_unittests.exe`
+
 #### For Android targets (Linux hosts)
 
 **Cross-compilation for Android as described above works to compile targets, but
