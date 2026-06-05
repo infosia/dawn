@@ -178,6 +178,13 @@ enum class Toggle {
     EnableShaderPrint,
     BlobCacheHashValidation,
     DecomposeUniformBuffers,
+<<<<<<< HEAD   (ba03542094db327811ed00f0d32b5c177d281c91 [M148] [native] Fix IndirectDrawValidationEncoder merging no)
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+    D3D12DecomposeWorkgroupAccess,
+=======
+    D3D12DecomposeWorkgroupAccess,
+    CollapseSubgroupMinMax,
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
     VulkanEnableF16OnNvidia,
     EnableRenderDocProcessInjection,
     VulkanUseDynamicRendering,

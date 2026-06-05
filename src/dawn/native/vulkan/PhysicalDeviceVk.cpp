@@ -1079,6 +1079,14 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::IgnoreImportedAHardwareBufferVulkanImageSize, true);
     }
 
+    // Collapse redundant subgroup min and max operations to workaround a driver crash on some AMD
+    // GPUs.  Should only affect AMD Windows Driver versions < 31.0.22000.0, but because this is a
+    // harmless "optimizing" workaround go ahead enable for all versions. See:
+    // https://crbug.com/508265321.
+    if (IsWindowsAMD()) {
+        deviceToggles->Default(Toggle::CollapseSubgroupMinMax, true);
+    }
+
     if (IsSwiftshader()) {
         // Swiftshader doesn't handle propagating decorations for descriptors through
         // OpCompositeExtract which happens when a binding_array is indexed "by value" instead of
@@ -1394,6 +1402,72 @@ bool PhysicalDevice::IsSwiftshader() const {
     return gpu_info::IsGoogleSwiftshader(GetVendorId(), GetDeviceId());
 }
 
+<<<<<<< HEAD   (ba03542094db327811ed00f0d32b5c177d281c91 [M148] [native] Fix IndirectDrawValidationEncoder merging no)
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+bool PhysicalDevice::MayBeArmProprietary() const {
+    if (!gpu_info::IsARM(GetVendorId())) {
+        return false;
+    }
+
+    return !mDeviceInfo.HasExt(DeviceExt::DriverProperties) ||
+           mDeviceInfo.driverProperties.driverID == VK_DRIVER_ID_ARM_PROPRIETARY;
+}
+
+bool PhysicalDevice::MayBeQualcommProprietary() const {
+    if (!gpu_info::IsQualcommPCI(GetVendorId())) {
+        return false;
+    }
+
+    return !mDeviceInfo.HasExt(DeviceExt::DriverProperties) ||
+           mDeviceInfo.driverProperties.driverID == VK_DRIVER_ID_QUALCOMM_PROPRIETARY;
+}
+
+bool PhysicalDevice::MayBeImaginationProprietary() const {
+    if (!gpu_info::IsImgTec(GetVendorId())) {
+        return false;
+    }
+
+    return !mDeviceInfo.HasExt(DeviceExt::DriverProperties) ||
+           mDeviceInfo.driverProperties.driverID == VK_DRIVER_ID_IMAGINATION_PROPRIETARY;
+}
+
+=======
+bool PhysicalDevice::IsWindowsAMD() const {
+#if DAWN_PLATFORM_IS(WINDOWS)
+    return gpu_info::IsAMD(GetVendorId());
+#else
+    return false;
+#endif
+}
+
+bool PhysicalDevice::MayBeArmProprietary() const {
+    if (!gpu_info::IsARM(GetVendorId())) {
+        return false;
+    }
+
+    return !mDeviceInfo.HasExt(DeviceExt::DriverProperties) ||
+           mDeviceInfo.driverProperties.driverID == VK_DRIVER_ID_ARM_PROPRIETARY;
+}
+
+bool PhysicalDevice::MayBeQualcommProprietary() const {
+    if (!gpu_info::IsQualcommPCI(GetVendorId())) {
+        return false;
+    }
+
+    return !mDeviceInfo.HasExt(DeviceExt::DriverProperties) ||
+           mDeviceInfo.driverProperties.driverID == VK_DRIVER_ID_QUALCOMM_PROPRIETARY;
+}
+
+bool PhysicalDevice::MayBeImaginationProprietary() const {
+    if (!gpu_info::IsImgTec(GetVendorId())) {
+        return false;
+    }
+
+    return !mDeviceInfo.HasExt(DeviceExt::DriverProperties) ||
+           mDeviceInfo.driverProperties.driverID == VK_DRIVER_ID_IMAGINATION_PROPRIETARY;
+}
+
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
 std::optional<uint32_t> PhysicalDevice::FindDefaultComputeSubgroupSize() const {
     if (!mDeviceInfo.HasExt(DeviceExt::SubgroupSizeControl)) {
         return std::nullopt;

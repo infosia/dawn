@@ -63,6 +63,15 @@ struct FuzzedOptions {
     std::optional<uint32_t> num_workgroups_start_offset;
     std::vector<BindingPoint> ignored_by_robustness_transform;
     SubstituteOverridesConfig substitute_overrides_config;
+<<<<<<< HEAD   (ba03542094db327811ed00f0d32b5c177d281c91 [M148] [native] Fix IndirectDrawValidationEncoder merging no)
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+    bool d3d12_decompose_workgroup_access;
+    bool polyfill_sample_mask;
+=======
+    bool d3d12_decompose_workgroup_access;
+    bool polyfill_sample_mask;
+    bool collapse_subgroup_min_max;
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -83,7 +92,18 @@ struct FuzzedOptions {
                  first_instance_offset,
                  num_workgroups_start_offset,
                  ignored_by_robustness_transform,
+<<<<<<< HEAD   (ba03542094db327811ed00f0d32b5c177d281c91 [M148] [native] Fix IndirectDrawValidationEncoder merging no)
                  substitute_overrides_config);
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+                 substitute_overrides_config,
+                 d3d12_decompose_workgroup_access,
+                 polyfill_sample_mask);
+=======
+                 substitute_overrides_config,
+                 d3d12_decompose_workgroup_access,
+                 polyfill_sample_mask,
+                 collapse_subgroup_min_max);
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
 };
 
 Result<SuccessType> IRFuzzer(core::ir::Module& module,
@@ -123,6 +143,15 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.workarounds.polyfill_reflect_vec2_f32 = fuzzed_options.polyfill_reflect_vec2_f32;
     options.workarounds.polyfill_subgroup_broadcast_f16 =
         fuzzed_options.polyfill_subgroup_broadcast_f16;
+<<<<<<< HEAD   (ba03542094db327811ed00f0d32b5c177d281c91 [M148] [native] Fix IndirectDrawValidationEncoder merging no)
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+    options.workarounds.d3d12_decompose_workgroup_access =
+        fuzzed_options.d3d12_decompose_workgroup_access;
+=======
+    options.workarounds.d3d12_decompose_workgroup_access =
+        fuzzed_options.d3d12_decompose_workgroup_access;
+    options.workarounds.collapse_subgroup_min_max = fuzzed_options.collapse_subgroup_min_max;
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
     options.extensions.polyfill_dot_4x8_packed = fuzzed_options.polyfill_dot_4x8_packed;
     options.extensions.polyfill_pack_unpack_4x8 = fuzzed_options.polyfill_pack_unpack_4x8;
     options.compiler = fuzzed_options.compiler;

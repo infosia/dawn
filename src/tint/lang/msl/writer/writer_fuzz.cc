@@ -62,6 +62,13 @@ struct FuzzedOptions {
     SubstituteOverridesConfig substitute_overrides_config;
     bool polyfill_tanh_f16;
     bool replace_workgroup_bool_with_u32;
+<<<<<<< HEAD   (ba03542094db327811ed00f0d32b5c177d281c91 [M148] [native] Fix IndirectDrawValidationEncoder merging no)
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+    bool polyfill_sample_mask;
+=======
+    bool polyfill_sample_mask;
+    bool collapse_subgroup_min_max;
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -83,7 +90,16 @@ struct FuzzedOptions {
                  group_to_argument_buffer_info,
                  substitute_overrides_config,
                  polyfill_tanh_f16,
+<<<<<<< HEAD   (ba03542094db327811ed00f0d32b5c177d281c91 [M148] [native] Fix IndirectDrawValidationEncoder merging no)
                  replace_workgroup_bool_with_u32);
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+                 replace_workgroup_bool_with_u32,
+                 polyfill_sample_mask);
+=======
+                 replace_workgroup_bool_with_u32,
+                 polyfill_sample_mask,
+                 collapse_subgroup_min_max);
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
     TINT_REFLECT_HASH_CODE(FuzzedOptions);
 };
 
@@ -131,6 +147,13 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.workarounds.polyfill_tanh_f16 = fuzzed_options.polyfill_tanh_f16;
     options.workarounds.replace_workgroup_bool_with_u32 =
         fuzzed_options.replace_workgroup_bool_with_u32;
+<<<<<<< HEAD   (ba03542094db327811ed00f0d32b5c177d281c91 [M148] [native] Fix IndirectDrawValidationEncoder merging no)
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+    options.polyfill_sample_mask = fuzzed_options.polyfill_sample_mask;
+=======
+    options.polyfill_sample_mask = fuzzed_options.polyfill_sample_mask;
+    options.workarounds.collapse_subgroup_min_max = fuzzed_options.collapse_subgroup_min_max;
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
     options.fixed_sample_mask = fuzzed_options.fixed_sample_mask;
     options.pixel_local_attachments = fuzzed_options.pixel_local_attachments;
     options.vertex_pulling_config = fuzzed_options.vertex_pulling_config;

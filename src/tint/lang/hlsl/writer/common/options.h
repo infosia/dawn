@@ -147,10 +147,32 @@ struct Options {
         /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
         bool polyfill_subgroup_broadcast_f16 = false;
 
+<<<<<<< HEAD   (ba03542094db327811ed00f0d32b5c177d281c91 [M148] [native] Fix IndirectDrawValidationEncoder merging no)
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+        /// Set to `true` to decompose workgroup accesses via DecomposeAccess.
+        bool d3d12_decompose_workgroup_access = false;
+
+=======
+        /// Set to `true` to decompose workgroup accesses via DecomposeAccess.
+        bool d3d12_decompose_workgroup_access = false;
+
+        /// Set to `true` to collapse redundant subgroup min and max operations
+        bool collapse_subgroup_min_max = false;
+
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
         TINT_REFLECT(Workarounds,
                      scalarize_max_min_clamp,
                      polyfill_reflect_vec2_f32,
+<<<<<<< HEAD   (ba03542094db327811ed00f0d32b5c177d281c91 [M148] [native] Fix IndirectDrawValidationEncoder merging no)
                      polyfill_subgroup_broadcast_f16);
+||||||| BASE   (78f92fc2d65532f577fd57d77032e21979036fd3 Roll third_party/webgpu-cts/ f08551b0f..b507bd117 (5 commits)
+                     polyfill_subgroup_broadcast_f16,
+                     d3d12_decompose_workgroup_access);
+=======
+                     polyfill_subgroup_broadcast_f16,
+                     d3d12_decompose_workgroup_access,
+                     collapse_subgroup_min_max);
+>>>>>>> CHANGE (99622c4f7ef017a2f527e1e1d4afddcb93d04b35 [tint] Collapse nested subgroupMin/Max ops on AMD)
         bool operator==(const Workarounds&) const = default;
     };
 
