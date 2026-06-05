@@ -16,6 +16,23 @@
       "message": "LGTM for Tint",
       "revId": "11cb2d0e31b45bd66f4f46a4a8da2a01a89438bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00e0d4b9_9aaa3be7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-05T07:32:00Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "11cb2d0e31b45bd66f4f46a4a8da2a01a89438bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
