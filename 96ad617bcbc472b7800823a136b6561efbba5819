@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "552dde99_2d17d1a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-06-05T20:08:11Z",
+      "side": 1,
+      "message": "PTAL. Not really sure if this is where we want to have a check like this, but it\u0027s the clearest spot I\u0027m aware of to definitively avoid the UB the issue is concerned with. If you have a more preferable place in mind let me know!",
+      "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
