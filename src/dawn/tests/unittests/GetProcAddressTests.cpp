@@ -34,6 +34,7 @@
 #include "gtest/gtest.h"
 #include "src/dawn/native/Instance.h"
 #include "src/dawn/native/null/DeviceNull.h"
+#include "src/dawn/utils/InlineMemoryTransferService.h"
 #include "src/dawn/utils/TerribleCommandBuffer.h"
 
 namespace dawn {
@@ -86,8 +87,7 @@ class GetProcAddressTests : public testing::TestWithParam<DawnFlavor> {
 
             case DawnFlavor::Wire: {
                 mC2sBuf = std::make_unique<utils::TerribleCommandBuffer>();
-                mClientMemoryTransferService =
-                    dawn::wire::client::CreateInlineMemoryTransferService();
+                mClientMemoryTransferService = utils::CreateClientInlineMemoryTransferService();
                 wire::WireClientDescriptor clientDesc = {};
                 clientDesc.serializer = mC2sBuf.get();
                 clientDesc.memoryTransferService = mClientMemoryTransferService.get();

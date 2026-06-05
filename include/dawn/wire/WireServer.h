@@ -171,8 +171,6 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
     MemoryTransferService& operator=(const MemoryTransferService&) = delete;
 };
 
-DAWN_WIRE_EXPORT std::unique_ptr<MemoryTransferService> CreateInlineMemoryTransferService();
-
 }  // namespace server
 
 }  // namespace dawn::wire

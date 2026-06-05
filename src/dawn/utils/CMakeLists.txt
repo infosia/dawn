@@ -81,11 +81,14 @@ dawn_add_library(
   UTILITY_TARGET dawn_internal_config
   PRIVATE_HEADERS
     "BinarySemaphore.h"
+    "InlineMemoryTransferService.h"
     "TerribleCommandBuffer.h"
     "TestUtils.h"
     "WireHelper.h"
   SOURCES
     "BinarySemaphore.cpp"
+    "ClientInlineMemoryTransferService.cpp"
+    "ServerInlineMemoryTransferService.cpp"
     "TerribleCommandBuffer.cpp"
     "TestUtils.cpp"
     "WireHelper.cpp"

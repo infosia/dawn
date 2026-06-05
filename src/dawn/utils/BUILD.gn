@@ -78,6 +78,9 @@ static_library("test_utils") {
   sources = [
     "BinarySemaphore.cpp",
     "BinarySemaphore.h",
+    "ClientInlineMemoryTransferService.cpp",
+    "InlineMemoryTransferService.h",
+    "ServerInlineMemoryTransferService.cpp",
     "TerribleCommandBuffer.cpp",
     "TerribleCommandBuffer.h",
     "TestUtils.cpp",

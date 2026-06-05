@@ -32,6 +32,7 @@
 #include "dawn/wire/WireServer.h"
 #include "src/dawn/common/StringViewUtils.h"
 #include "src/dawn/tests/MockCallback.h"
+#include "src/dawn/utils/InlineMemoryTransferService.h"
 #include "src/dawn/utils/TerribleCommandBuffer.h"
 
 using testing::_;
@@ -88,7 +89,7 @@ void WireTest::SetUp() {
     mS2cBuf = std::make_unique<utils::TerribleCommandBuffer>();
     mC2sBuf = std::make_unique<utils::TerribleCommandBuffer>(mWireServer.get());
 
-    mServerMemoryTransferService = wire::server::CreateInlineMemoryTransferService();
+    mServerMemoryTransferService = utils::CreateServerInlineMemoryTransferService();
 
     wire::WireServerDescriptor serverDesc = {};
     serverDesc.procs = &mockProcs;
@@ -98,7 +99,7 @@ void WireTest::SetUp() {
     mWireServer.reset(new wire::WireServer(serverDesc));
     mC2sBuf->SetHandler(mWireServer.get());
 
-    mClientMemoryTransferService = wire::client::CreateInlineMemoryTransferService();
+    mClientMemoryTransferService = utils::CreateClientInlineMemoryTransferService();
 
     wire::WireClientDescriptor clientDesc = {};
     clientDesc.serializer = mC2sBuf.get();
