@@ -65,6 +65,34 @@ struct UniqueFd {
 
 extern "C" {
 
+static inline AHardwareBuffer* GetAHardwareBuffer(JNIEnv* env, jobject hardwareBuffer) {
+    if (__builtin_available(android 26, *)) {
+        return AHardwareBuffer_fromHardwareBuffer(env, hardwareBuffer);
+    }
+    return nullptr;
+}
+
+static inline void AcquireAHardwareBuffer(AHardwareBuffer* ahb) {
+    if (__builtin_available(android 26, *)) {
+        AHardwareBuffer_acquire(ahb);
+    }
+}
+
+static inline void ReleaseAHardwareBuffer(AHardwareBuffer* ahb) {
+    if (__builtin_available(android 26, *)) {
+        if (ahb) {
+            AHardwareBuffer_release(ahb);
+        }
+    }
+}
+
+static inline int SyncMerge(const char* name, int fd1, int fd2) {
+    if (__builtin_available(android 26, *)) {
+        return sync_merge(name, fd1, fd2);
+    }
+    return -1;
+}
+
 static WGPUSharedTextureMemory createSharedTextureMemoryFromAhb(JNIEnv* env,
                                                                 jobject deviceObj,
                                                                 jobject hardwareBuffer,
@@ -79,7 +107,7 @@ static WGPUSharedTextureMemory createSharedTextureMemoryFromAhb(JNIEnv* env,
         return nullptr;
     }
 
-    *outAhb = AHardwareBuffer_fromHardwareBuffer(env, hardwareBuffer);
+    *outAhb = GetAHardwareBuffer(env, hardwareBuffer);
     if (!*outAhb) {
         env->ThrowNew(classes->javaIllegalStateException,
                       "Failed to extract native AHardwareBuffer.");
@@ -89,7 +117,7 @@ static WGPUSharedTextureMemory createSharedTextureMemoryFromAhb(JNIEnv* env,
     // is only guaranteed to be valid while the Java HardwareBuffer remains alive. Since the
     // wrapper outlives the JNI call, take our own reference to match the release in
     // nativeDestroy.
-    AHardwareBuffer_acquire(*outAhb);
+    AcquireAHardwareBuffer(*outAhb);
 
     WGPUSharedTextureMemoryAHardwareBufferDescriptor ahbDesc = {};
     ahbDesc.chain.sType = WGPUSType_SharedTextureMemoryAHardwareBufferDescriptor;
@@ -121,14 +149,14 @@ Java_androidx_webgpu_helper_GPUAndroidHardwareBufferUtil_createTextureNative(JNI
         createSharedTextureMemoryFromAhb(env, deviceObj, hardwareBuffer, &ahb, &device);
     if (!stm) {
         if (ahb) {
-            AHardwareBuffer_release(ahb);
+            ReleaseAHardwareBuffer(ahb);
         }
         return nullptr;
     }
 
     if (!wgpuDeviceHasFeature(device, WGPUFeatureName_SharedTextureMemoryAHardwareBuffer)) {
         wgpuSharedTextureMemoryRelease(stm);
-        AHardwareBuffer_release(ahb);
+        ReleaseAHardwareBuffer(ahb);
         env->ThrowNew(classes->javaUnsupportedOperationException,
                       "Missing WGPUFeatureName_SharedTextureMemoryAHardwareBuffer.");
         return nullptr;
@@ -139,7 +167,7 @@ Java_androidx_webgpu_helper_GPUAndroidHardwareBufferUtil_createTextureNative(JNI
 
     if (props.format == WGPUTextureFormat_Undefined) {
         wgpuSharedTextureMemoryRelease(stm);
-        AHardwareBuffer_release(ahb);
+        ReleaseAHardwareBuffer(ahb);
         env->ThrowNew(classes->javaUnsupportedOperationException,
                       "AHB format maps to WGPUTextureFormat_Undefined. Dawn cannot sample this.");
         return nullptr;
@@ -159,7 +187,7 @@ Java_androidx_webgpu_helper_GPUAndroidHardwareBufferUtil_createTextureNative(JNI
             wgpuTextureRelease(texture);
         }
         wgpuSharedTextureMemoryRelease(stm);
-        AHardwareBuffer_release(ahb);
+        ReleaseAHardwareBuffer(ahb);
         return nullptr;
     }
 
@@ -193,14 +221,14 @@ Java_androidx_webgpu_helper_GPUAndroidHardwareBufferUtil_createExternalTextureNa
         createSharedTextureMemoryFromAhb(env, deviceObj, hardwareBuffer, &ahb, &device);
     if (!stm) {
         if (ahb) {
-            AHardwareBuffer_release(ahb);
+            ReleaseAHardwareBuffer(ahb);
         }
         return nullptr;
     }
 
     if (!wgpuDeviceHasFeature(device, WGPUFeatureName_OpaqueYCbCrAndroidForExternalTexture)) {
         wgpuSharedTextureMemoryRelease(stm);
-        AHardwareBuffer_release(ahb);
+        ReleaseAHardwareBuffer(ahb);
         env->ThrowNew(classes->javaUnsupportedOperationException,
                       "Missing WGPUFeatureName_OpaqueYCbCrAndroidForExternalTexture.");
         return nullptr;
@@ -210,13 +238,13 @@ Java_androidx_webgpu_helper_GPUAndroidHardwareBufferUtil_createExternalTextureNa
     wgpuSharedTextureMemoryGetProperties(stm, &props);
     if (env->ExceptionCheck()) {
         wgpuSharedTextureMemoryRelease(stm);
-        AHardwareBuffer_release(ahb);
+        ReleaseAHardwareBuffer(ahb);
         return nullptr;
     }
 
     if (props.format == WGPUTextureFormat_Undefined) {
         wgpuSharedTextureMemoryRelease(stm);
-        AHardwareBuffer_release(ahb);
+        ReleaseAHardwareBuffer(ahb);
         env->ThrowNew(classes->javaUnsupportedOperationException,
                       "YUV AHB format maps to WGPUTextureFormat_Undefined.");
         return nullptr;
@@ -240,7 +268,7 @@ Java_androidx_webgpu_helper_GPUAndroidHardwareBufferUtil_createExternalTextureNa
             wgpuTextureRelease(texture);
         }
         wgpuSharedTextureMemoryRelease(stm);
-        AHardwareBuffer_release(ahb);
+        ReleaseAHardwareBuffer(ahb);
         return nullptr;
     }
 
@@ -280,7 +308,7 @@ Java_androidx_webgpu_helper_GPUAndroidHardwareBufferUtil_createExternalTextureNa
         wgpuTextureViewRelease(view);
         wgpuTextureRelease(texture);
         wgpuSharedTextureMemoryRelease(stm);
-        AHardwareBuffer_release(ahb);
+        ReleaseAHardwareBuffer(ahb);
         env->ThrowNew(classes->javaIllegalStateException,
                       "Failed to compute external texture params.");
         return nullptr;
@@ -479,7 +507,7 @@ Java_androidx_webgpu_GPUHardwareBufferWrapper_nativeEndAccess(JNIEnv* env,
         if (mergedFd.fd == -1) {
             mergedFd = std::move(fd);
         } else {
-            int newFd = sync_merge("wgpu_fence", mergedFd.fd, fd.fd);
+            int newFd = SyncMerge("wgpu_fence", mergedFd.fd, fd.fd);
             mergedFd = UniqueFd(newFd);
             if (newFd < 0) {
                 failed = true;
@@ -521,7 +549,7 @@ JNIEXPORT void JNICALL Java_androidx_webgpu_GPUHardwareBufferWrapper_nativeDestr
         wgpuSharedTextureMemoryRelease(wrapper->stm);
     }
     if (wrapper->ahb) {
-        AHardwareBuffer_release(wrapper->ahb);
+        ReleaseAHardwareBuffer(wrapper->ahb);
     }
     if (wrapper->device) {
         wgpuDeviceRelease(wrapper->device);
