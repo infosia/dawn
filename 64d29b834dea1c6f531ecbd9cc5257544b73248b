@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c84cd91_f77368cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-05T19:33:17Z",
+      "side": 1,
+      "message": "FWIW for future reference, it\u0027s a safer pattern to divide code changes by function, rather than location, and group functional changes with their tests whenever possible.  (You and I chatted about this offline, I\u0027m just noting it in writing for the wider audience.)\n\nThanks for the discussion!",
+      "parentUuid": "276dec09_47491d05",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44d90e53_a4009258",
@@ -85,6 +103,24 @@
       "side": 1,
       "message": "It is a safe assumption as VK_IMAGE_LAYOUT_GENERAL is the most flexible image layout in Vulkan and indicates that an image can be accessed for almost any purpose.",
       "parentUuid": "44d90e53_a4009258",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b717b77_1e270a83",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-05T19:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cce2f69_d2427fef",
       "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -172,6 +208,24 @@
       "side": 1,
       "message": "SyncFence is the name of Android Framework Class that creates the android.hardware.SyncFence while \u0027fence_sync\u0027 is the terminology used by the underlying EGL extension (EGL_ANDROID_native_fence_sync). In this function we are checking for support of this EGL extension, hence the name.",
       "parentUuid": "1acc81a5_0755073f",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f61d4cb_1181a602",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-05T19:33:17Z",
+      "side": 1,
+      "message": ":thumbs_up:",
+      "parentUuid": "65371998_ab9f9b35",
       "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
