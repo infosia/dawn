@@ -16,3 +16,4 @@ solutions = [
     }
   },
 ]
+target_os = ['win']
