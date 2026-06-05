@@ -33,6 +33,7 @@
 #include "src/dawn/native/ShaderModule.h"
 #include "src/dawn/native/vulkan/DeviceVk.h"
 #include "src/dawn/native/vulkan/Forward.h"
+#include "src/dawn/native/vulkan/PhysicalDeviceVk.h"
 #include "src/dawn/native/vulkan/TextureVk.h"
 #include "src/dawn/native/vulkan/VulkanError.h"
 #include "src/dawn/native/vulkan/VulkanFunctions.h"
@@ -445,6 +446,18 @@ ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversion(
     vulkanYCbCrCreateInfo.chromaFilter = ToVulkanSamplerFilter(yCbCrDescriptor.vkChromaFilter);
     vulkanYCbCrCreateInfo.forceExplicitReconstruction =
         static_cast<VkBool32>(yCbCrDescriptor.forceExplicitReconstruction);
+
+    // VUID-VkSamplerYcbcrConversionCreateInfo-chromaFilter-01657
+    if (vulkanYCbCrCreateInfo.chromaFilter == VK_FILTER_LINEAR) {
+        VkPhysicalDevice vkPhysicalDevice =
+            ToBackend(device->GetPhysicalDevice())->GetVkPhysicalDevice();
+        VkFormatProperties formatProperties;
+        device->fn.GetPhysicalDeviceFormatProperties(vkPhysicalDevice, vulkanFormat,
+                                                     &formatProperties);
+        DAWN_ASSERT(IsSubset(
+            VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT,
+            formatProperties.optimalTilingFeatures | formatProperties.linearTilingFeatures));
+    }
 
 #if DAWN_PLATFORM_IS(ANDROID)
     VkExternalFormatANDROID vulkanExternalFormat;
