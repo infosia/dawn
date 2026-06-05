@@ -146,6 +146,12 @@ if (dawn_standalone) {
       ":samples",
       ":tests",
     ]
+
+    # If cross compilation is requested, also build all targets using a Windows
+    # secondary toolchain in addition to the primary. This recurses once.
+    if (dawn_also_cross_compile_win_clang_x64 && !is_win) {
+      deps += [ ":all(//build/toolchain/win:win_clang_x64)" ]
+    }
   }
 
   # This target is built when no specific target is specified on the command
