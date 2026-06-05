@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f16993b_93767dbc",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-05T23:01:02Z",
+      "side": 1,
+      "message": "From the thread linked [here](https://docs.google.com/document/d/1qJRTJRY318ZEqhK6ryw4P-91FumYQfOnNP6LpANYy6A/edit?tab\u003dt.0#bookmark\u003did.h8xgntegau3z) I\u0027m not sure this is sufficient. Seems we need to specifically check for SYNC_FD support, see the bit that says:\n\n\u003e That SYNC_FD is supported at all on the driver you\u0027re using?\n\nthough I\u0027m not sure how to do that",
+      "range": {
+        "startLine": 1215,
+        "startChar": 43,
+        "endLine": 1215,
+        "endChar": 58
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09d170ea_c97d8880",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-05T23:01:02Z",
+      "side": 1,
+      "message": "may need to update this text too",
+      "range": {
+        "startLine": 528,
+        "startChar": 64,
+        "endLine": 529,
+        "endChar": 42
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a01157a6_1d734818",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-05T23:01:02Z",
+      "side": 1,
+      "message": "I wouldn\u0027t necessarily expect this to be a waitable handle, unless that\u0027s implied by [`DXGI_SHARED_RESOURCE_READ | DXGI_SHARED_RESOURCE_WRITE`](https://docs.vulkan.org/refpages/latest/refpages/source/VkExportFenceWin32HandleInfoKHR.html#:~:text\u003dDXGI_SHARED_RESOURCE_READ%20%7C%20DXGI_SHARED_RESOURCE_WRITE)? It\u0027s not really clear from the extension text whether you\u0027re supposed to be able to use the handle or only re-import it.\n\nDo tests exercise these codepaths?",
+      "range": {
+        "startLine": 563,
+        "startChar": 22,
+        "endLine": 563,
+        "endChar": 68
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d9b111f_cb799ded",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-05T23:01:02Z",
+      "side": 1,
+      "message": "Is this possible if the DAWN_TRYs above have succeeded?",
+      "range": {
+        "startLine": 574,
+        "startChar": 8,
+        "endLine": 574,
+        "endChar": 53
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cc7eea6_e555c0ce",
+        "filename": "src/dawn/utils/SystemHandle.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-05T23:01:02Z",
+      "side": 1,
+      "message": "You can use `Handle` for all three of these constants, then you can move the includes back to the cpp file.",
+      "range": {
+        "startLine": 53,
+        "startChar": 21,
+        "endLine": 53,
+        "endChar": 27
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
