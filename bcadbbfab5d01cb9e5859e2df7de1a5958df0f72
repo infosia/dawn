@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "984708c5_ac22fc25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-05T23:43:18Z",
+      "side": 1,
+      "message": "Modified to satisfy ComplianceLint: Please add the full license text for \"Apache-2.0\"; at the moment the LICENSE file only contains the header version of the license.",
+      "revId": "bcadbbfab5d01cb9e5859e2df7de1a5958df0f72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
