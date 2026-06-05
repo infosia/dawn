@@ -10,11 +10,11 @@ dawn_enable_desktop_gl = true
 # Build SwiftShader so the Vulkan backend can be run.
 dawn_use_swiftshader = true
 
-# Also build the entire project for Windows. This copy will inherit the above
-# but also build the Windows backends (D3D11/12).
-dawn_also_cross_compile_win_clang_x64 = true
-
 # Force-enable Emdawnwebgpu and dawn.node (GN will catch if .gclient isn't set
 # up properly for this).
 dawn_build_emdawnwebgpu = true
 dawn_build_node_bindings = true
+
+# Also build the entire project for Windows. This copy will inherit the above
+# but also build the Windows backends (D3D11/12).
+dawn_also_cross_compile_win_clang_x64 = true
