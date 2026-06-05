@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91c758af_bb579fc2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-05T03:49:50Z",
+      "side": 1,
+      "message": "I agree that doesn\u0027t seem like the right place for a lock, but if not there, then where? Will the lock always be taken outside whatever calls the callback? Presumably not, or it would have been deadlocking always. \n\nShould we just replace it with a recursive mutex?",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 15,
+        "endChar": 12
+      },
+      "revId": "5416f5307ae5b4a9421ad7016e4ab779a34a812e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
