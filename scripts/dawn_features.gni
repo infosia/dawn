@@ -71,6 +71,17 @@ declare_args() {
 
   # Whether Dawn uses the Agility SDK.
   dawn_use_agility_sdk = false
+
+  # Whether to cross-compile Dawn for Windows in addition to the primary target.
+  # This builds into out/*/win_clang_x64. This allows building almost all files
+  # in the project in a single build directory (and compile_commands.json).
+  # Note:
+  # - This requires `target_os = ['win']` in .gclient.
+  # - Siso can't compile these remotely. If you need that, use a separate out
+  #   directory with `target_os = "win"`.
+  # - For files compiled more than once, clangd seems to just pick one (not
+  #   merge them).
+  dawn_also_cross_compile_win_clang_x64 = false
 }
 
 declare_args() {
