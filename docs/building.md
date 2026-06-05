@@ -169,19 +169,30 @@ Cross-compilation for Windows targets on Mac/Linux hosts is provided on a
 best-effort basis, primarily for the purpose of compilation checks during local
 Dawn development.
 
-Following [this guide](https://chromium.googlesource.com/chromium/src/+/main/docs/win_cross.md):
+1.  Add `target_os = ['win']` to the end of your `.gclient`
+1.  `gclient sync`
+1.  **Method 1:** Building as a secondary toolchain under an existing build directory.
+    This provides `clangd` support for all files at once, but Siso can't remotely
+    compile the Windows files.
 
-- Add `target_os = ['win']` to the top level of `.gclient`
-- `gclient sync`
-- Create a new `out/` directory with GN args:
+    1.  Set the GN arg `dawn_also_cross_compile_win_clang_x64 = true`
+    1.  Build! Your output will be in `out/*/win_clang_x64/`, so you can build,
+        for example `autoninja -C out/Debug win_clang_x64/dawn_unittests.exe`
 
-  ```
-  target_os = "win"
-  target_cpu = "x64"
-  ```
+    **Method 2:** Building in a separate build directory. This provides Siso
+    remote compilation support.
 
-There is sometimes an unknown issue with building standard libraries with Siso.
-If this happens, try building locally, using `autoninja --offline`.
+    1.  Create a new `out/` directory with GN args:
+
+        ```
+        target_os = "win"
+        target_cpu = "x64"
+        ```
+    1.  Build! Your output will be in `out/*` so you can build,
+        for example `autoninja -C out/Debug-win dawn_unittests.exe`
+
+    There is sometimes an unknown issue with building standard libraries with Siso.
+    If this happens, try building locally, using `autoninja --offline`.
 
 ### Using ccache for CMake builds
 
