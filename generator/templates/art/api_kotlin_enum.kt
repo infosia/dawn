@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-{% from 'art/api_kotlin_types.kt' import generate_simple_kdoc, add_kdoc_disclaimer with context %}
+{% from 'art/api_kotlin_types.kt' import generate_simple_kdoc, add_kdoc_disclaimer, kotlin_member_optin, kotlin_class_optin, item_requires_optin with context %}
 {{ add_kdoc_disclaimer() }}
 package {{ kotlin_package }}
 
@@ -31,6 +31,11 @@ import kotlin.jvm.JvmStatic
 {% set docstring = file_docs.get(enum.name.get(), {}).doc %}
 {% if docstring %}
     {{ generate_simple_kdoc(docstring) }}
+{% endif %}
+{% set experimental = kotlin_class_optin(enum) -%}
+{% if experimental %}
+    //* Injects experimental opt-in requirement if the enum itself is experimental.
+    {{ experimental }}
 {% endif %}
 public class {{ enum.name.CamelCase() }} private constructor() {
 
