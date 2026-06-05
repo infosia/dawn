@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bdb0fa5f_e6ddc00d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-05T08:51:10Z",
+      "side": 1,
+      "message": "1. Thanks for the suggestion! I kept the build updates here as they are functionally required to compile the GPUImportedAHB.cpp (using the CMakeList) and link the sync library. Providing them together ensures the new AHB support can be reviewed and verified with complete context without moving from CL-to-CL. However, if you feel the build changes are still too noisy for this review, I’m happy to move the changes in build.gradle to a separate CL.\n\n2. There is a separate CL for tests: https://dawn-review.git.corp.google.com/c/dawn/+/312255",
+      "parentUuid": "839c0e93_6d706fe2",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44d90e53_a4009258",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 14
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9cce2f69_d2427fef",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-05T08:51:10Z",
+      "side": 1,
+      "message": "It is a safe assumption as VK_IMAGE_LAYOUT_GENERAL is the most flexible image layout in Vulkan and indicates that an image can be accessed for almost any purpose.",
+      "parentUuid": "44d90e53_a4009258",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "51837c0a_8991b475",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 14
@@ -48,6 +84,24 @@
       "writtenOn": "2026-06-04T18:19:50Z",
       "side": 1,
       "message": "Minor c syle nit, but you could add \"\u0026\u0026 !failed\" to the for() loop\u0027s exit check for clarity.\n\nHm, same applies for the loop above, I notice.",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17743103_d56bcad8",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-05T08:51:10Z",
+      "side": 1,
+      "message": "Done. Thanks for pointing out!",
+      "parentUuid": "51837c0a_8991b475",
       "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -82,6 +136,24 @@
       "writtenOn": "2026-06-04T18:19:50Z",
       "side": 1,
       "message": "wait is it FenceSync or SyncFence?",
+      "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65371998_ab9f9b35",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-05T08:51:10Z",
+      "side": 1,
+      "message": "SyncFence is the name of Android Framework Class that creates the android.hardware.SyncFence while \u0027fence_sync\u0027 is the terminology used by the underlying EGL extension (EGL_ANDROID_native_fence_sync). In this function we are checking for support of this EGL extension, hence the name.",
+      "parentUuid": "1acc81a5_0755073f",
       "revId": "64d29b834dea1c6f531ecbd9cc5257544b73248b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
