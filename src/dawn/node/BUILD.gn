@@ -286,11 +286,11 @@ if (is_win) {
 
 copy("copy_index_js") {
   sources = [ "$dawn_root/src/dawn/node/index.js" ]
-  outputs = [ "$root_build_dir/index.js" ]
+  outputs = [ "$root_out_dir/index.js" ]
 }
 copy("copy_cts_js") {
   sources = [ "$dawn_root/src/dawn/node/cts.cjs" ]
-  outputs = [ "$root_build_dir/cts.cjs" ]
+  outputs = [ "$root_out_dir/cts.cjs" ]
 }
 
 shared_library("dawn_node") {
