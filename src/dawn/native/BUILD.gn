@@ -145,7 +145,8 @@ source_set("headers") {
   ]
 }
 
-if (dawn_standalone && (dawn_enable_d3d11 || dawn_enable_d3d12)) {
+if ((dawn_standalone || build_with_chromium) &&
+    (dawn_enable_d3d11 || dawn_enable_d3d12)) {
   # Use ANGLE's target as it's always available in standalone builds
   _copy_fxc_dll_target = "//third_party/angle:copy_compiler_dll"
 }
@@ -209,7 +210,7 @@ source_set("sources") {
   ]
 
   if (defined(_copy_fxc_dll_target)) {
-    deps += [ _copy_fxc_dll_target ]
+    data_deps += [ _copy_fxc_dll_target ]
   }
 
   sources = get_target_outputs(":utils_gen")
