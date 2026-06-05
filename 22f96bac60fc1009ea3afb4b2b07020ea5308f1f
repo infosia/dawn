@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "977e2d48_ef52d54f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-05T17:10:49Z",
+      "side": 1,
+      "message": "Edited this in the internal roll without realizing it was a file directly rolled from upstream.",
+      "revId": "22f96bac60fc1009ea3afb4b2b07020ea5308f1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
