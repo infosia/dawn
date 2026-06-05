@@ -16,6 +16,24 @@
       "message": "LGTM, I will verify it locally before landing though!",
       "revId": "febbcfc9b3be69e9463da2998902d0ad46bbe898",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5db47f20_3923fc68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-05T21:11:09Z",
+      "side": 1,
+      "message": "Verified locally on my Mac! for:\n- CMake build (old broken, new works)\n- CMake Emscripten build (old broken, new works)\n- Skia build (can\u0027t verify old because of first issue, new works, hopefully it\u0027s fine)",
+      "parentUuid": "07149730_526d5302",
+      "revId": "febbcfc9b3be69e9463da2998902d0ad46bbe898",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
