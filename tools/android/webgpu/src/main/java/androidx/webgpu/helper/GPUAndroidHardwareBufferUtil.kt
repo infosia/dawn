@@ -6,8 +6,10 @@ import androidx.annotation.RequiresApi
 import androidx.webgpu.GPUDevice
 import androidx.webgpu.GPUExternalTextureDescriptor
 import androidx.webgpu.GPUHardwareBufferExternalTexture
+import androidx.webgpu.ExperimentalWebGpuApi
 import androidx.webgpu.GPUHardwareBufferTexture
 
+@ExperimentalWebGpuApi
 @RequiresApi(Build.VERSION_CODES.O)
 public object GPUAndroidHardwareBufferUtil {
 
