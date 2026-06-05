@@ -39,6 +39,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
+@OptIn(ExperimentalWebGpuApi::class)
 class GPUSyncFenceTest {
 
     companion object {
