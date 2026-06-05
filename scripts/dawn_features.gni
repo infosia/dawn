@@ -78,6 +78,21 @@ declare_args() {
 
   # Whether Dawn uses the Agility SDK.
   dawn_use_agility_sdk = false
+
+  # Whether to cross-compile Dawn under secondary toolchains in addition to the
+  # primary build. This allows building almost all files in the project in a
+  # single build directory, producing a single compile_commands.json for clangd.
+  # Notes:
+  # - Siso can't generally compile these remotely. If you need that, use a
+  #   separate out directory that sets `target_os`.
+  # - For files compiled more than once, clangd seems to just pick one (not
+  #   merge them).
+  # - Toolchains do not nest - e.g. both the default and win_clang_x64 builds
+  #   declare dependencies on the wasm build, but there is only one wasm build.
+  #
+  # Toolchains available:
+  # - out/*/win_clang_x64 - Requires `target_os = ['win']` in .gclient.
+  dawn_also_cross_compile_win_clang_x64 = false
 }
 
 declare_args() {
