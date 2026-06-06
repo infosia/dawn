@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfcbfe07_40d6fd50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-06T15:07:11Z",
+      "side": 1,
+      "message": "(Apologies, I drafted these replies but forgot to send them, some questions may not longer still hold)",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ecce7e3_93e0c607",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-06T15:07:11Z",
+      "side": 1,
+      "message": "Can we eliminate some of this code duplication, please?  Subroutines ftw",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a626313a_650df24b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-06T15:07:11Z",
+      "side": 1,
+      "message": "1) What\u0027s being tested here, and how?\n2) Don\u0027t assume that a loop of 20 on one thread will interleave with a loop of 20 on another -- they might not.  Best to gate after 1 iteration of each loop and enure they interleave\n3) Duplicated code is duplicated; please use subroutine",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a72c265e_22e302c6",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-06T15:07:11Z",
+      "side": 1,
+      "message": "If fence \u003d\u003d null should the test fail?",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80a0e888_12d73bc8",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-06T15:07:11Z",
+      "side": 1,
+      "message": "I think at this point you\u0027ve gambled that there was an event pending from line 389 that would signal the fence on line 397.  I wonder if there isn\u0027t a case where the event has already been consumed before we reached 397, perhaps because the test run was backgrounded or GC\u0027d or something else caused a delay in test execution.",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d877f6b_18ab4436",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-06T15:07:11Z",
+      "side": 1,
+      "message": "(local vars unneccessary, for brevity)",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7a19157_8fa5cd30",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-06T15:07:11Z",
+      "side": 1,
+      "message": "I sense much opportunity for code re-use in subroutines here...",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd6a48d8_53d6574c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-06T15:07:11Z",
+      "side": 1,
+      "message": "What would a test failure look like, here?\n\n(Rhetorical question applies to several tests, I see this pattern below as well)",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3be2602_579f562c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-06T15:07:11Z",
+      "side": 1,
+      "message": "This test is (_scrolls for a while..._) 200+ lines long.  What might you collapse and/or re-use into nicely-named self-documenting subroutines, to make the test easier to read or understand what can be learned, if it were to fail?",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
