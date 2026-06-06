@@ -1,37 +1,22 @@
 # Running clang-tidy
 
-* Add `"checkout_clang_tidy": True` to `.gclient` file in the `custom_vars`.
-  ```
-  {
-    "custom_vars": {
-      "checkout_clang_tidy": True,
-    }
+* Add `"checkout_clang_tidy": True` to `.gclient` file in the `custom_vars`
+  (or use `standalone-maximal.gclient` which includes this).
+
+  ```py
+  "custom_vars": {
+    "checkout_clang_tidy": True,
   }
   ```
 * `gclient sync`
+* Set up a build directory for the configuration you want to run. It doesn't
+  need to be built yet. This can be a native build or a cross-compiled build.
+* Run `tools/run-tricium-clang-tidy.py --help` for instructions.
+* This will output a json file with the full findings, and a txt file with the
+  output of the script (which is somewhat readable - search for `warning:`).
 
-There should now be `third_party/llvm-build/Release+Asserts/bin/clang-tidy`
+  It's recommended to [set up clangd](./development-tips.md) and open a file
+  in your IDE to see the errors in context (and to get an autofix button).
 
-* `cd out`
-* `git clone https://chromium.googlesource.com/chromium/tools/build`
-
-The Chromium build folder contains the `tricium` files used to run `clang-tidy`
-
-Running clang-tidy over all the source can be done with:
-
-```
-cd ..
-out/build/recipes/recipe_modules/tricium_clang_tidy/resources/tricium_clang_tidy_script.py \
---base_path $PWD \
---out_dir out/Debug \
---findings_file all_findings.json \
---clang_tidy_binary $PWD/third_party/llvm-build/Release+Asserts/bin/clang-tidy \
---all
-```
-
-`--all` can be replaced by specific files if desired to run on individual source
-files.
-
-
-## References
-* https://chromium.googlesource.com/chromium/src.git/+/HEAD/docs/clang_tidy.md
+For additional info on running clang-tidy locally, see
+[these instructions](https://chromium.googlesource.com/chromium/src/+/main/docs/clang_tidy.md).
