@@ -22,11 +22,12 @@ Running clang-tidy over all the source can be done with:
 ```
 cd ..
 out/build/recipes/recipe_modules/tricium_clang_tidy/resources/tricium_clang_tidy_script.py \
---base_path $PWD \
---out_dir out/Debug \
---findings_file all_findings.json \
---clang_tidy_binary $PWD/third_party/llvm-build/Release+Asserts/bin/clang-tidy \
---all
+  --base_path="$PWD" \
+  --out_dir out/Debug \
+  --findings_file all_findings.json \
+  --clang_tidy_binary="$PWD/third_party/llvm-build/Release+Asserts/bin/clang-tidy" \
+  --windows \
+  --all
 ```
 
 `--all` can be replaced by specific files if desired to run on individual source
