@@ -25,6 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <array>
+
 #ifdef UNSAFE_BUFFERS_BUILD
 // TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
 #pragma allow_unsafe_buffers
@@ -1098,7 +1100,7 @@ TEST_P(MultithreadTests, DestroyTextureAndViewsAtSameTime) {
         texDescriptor.sampleCount = 1;
 
         wgpu::Texture texture = device.CreateTexture(&texDescriptor);
-        wgpu::TextureView textureViews[kNumViews];
+        std::array<wgpu::TextureView, kNumViews> textureViews;
 
         for (uint32_t i = 0; i < kNumViews; ++i) {
             wgpu::TextureViewDescriptor viewDescriptor = {};
