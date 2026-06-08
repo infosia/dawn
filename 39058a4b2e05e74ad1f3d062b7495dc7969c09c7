@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a450fcd_b8015aef",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T19:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0c2709c_9861ebca",
+      "revId": "39058a4b2e05e74ad1f3d062b7495dc7969c09c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3396637e_adfa1419",
@@ -58,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce1f0161_2ee87161",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T19:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3396637e_adfa1419",
+      "range": {
+        "startLine": 1020,
+        "startChar": 0,
+        "endLine": 1022,
+        "endChar": 9
+      },
+      "revId": "39058a4b2e05e74ad1f3d062b7495dc7969c09c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ccc725ae_f4f510d7",
@@ -71,6 +113,24 @@
       "writtenOn": "2026-06-08T19:03:23Z",
       "side": 1,
       "message": "and here",
+      "revId": "39058a4b2e05e74ad1f3d062b7495dc7969c09c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28192227_293ee169",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T19:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccc725ae_f4f510d7",
       "revId": "39058a4b2e05e74ad1f3d062b7495dc7969c09c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
