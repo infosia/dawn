@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "6e7df43c5888299ab852b2c57a9c8a605a33fe4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85e86f0e_dc406163",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-08T15:58:40Z",
+      "side": 1,
+      "message": "I think this (and all IR value scoping violations) would be structural errors, not functional errors. The WGSL frontend will have its own scoping validation via DependencyGraph.",
+      "revId": "6e7df43c5888299ab852b2c57a9c8a605a33fe4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
