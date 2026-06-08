@@ -33,6 +33,24 @@
       "message": "Can we have a TODO to add more details \"once available\" or something like that?",
       "revId": "42594bad602036cee3118ecdf382321c29e9ffee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac09cb9c_3947508c",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1003586
+      },
+      "writtenOn": "2026-06-08T15:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65bc76ef_1897728c",
+      "revId": "42594bad602036cee3118ecdf382321c29e9ffee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
