@@ -16,6 +16,23 @@
       "message": "PTAL. Not really sure if this is where we want to have a check like this, but it\u0027s the clearest spot I\u0027m aware of to definitively avoid the UB the issue is concerned with. If you have a more preferable place in mind let me know!",
       "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80b07e8a_25939831",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-08T09:42:15Z",
+      "side": 1,
+      "message": "This should already be checked by https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/SharedTextureMemoryVk.cpp;drc\u003d6783d038de3cce7ba4ba047143b18a1329bd5a6e;l\u003d580 so I\u0027m not sure what we gain here. The issues seems that we either lack validation in Dawn, or that Skia/Chromium should validate.\n\nIf we want to add validation in Dawn, it would be at https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Texture.cpp;drc\u003d1cae4908f51a03869223c21965128eb4a56df989;l\u003d937 with `IsYCbCrFilterable`.",
+      "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
