@@ -33,6 +33,24 @@
       "message": "I think this (and all IR value scoping violations) would be structural errors, not functional errors. The WGSL frontend will have its own scoping validation via DependencyGraph.",
       "revId": "6e7df43c5888299ab852b2c57a9c8a605a33fe4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dcff9de_189c6d65",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T17:05:28Z",
+      "side": 1,
+      "message": "K, I\u0027ll move the scoping checks back in a followup.",
+      "parentUuid": "85e86f0e_dc406163",
+      "revId": "6e7df43c5888299ab852b2c57a9c8a605a33fe4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
