@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "feb58e53a4f1a5238f93e42aa97b3c74d538b1da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c32934f5_4d80a5db",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-08T18:50:24Z",
+      "side": 1,
+      "message": "Nit: structural should ensure non-null result",
+      "revId": "feb58e53a4f1a5238f93e42aa97b3c74d538b1da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20ff90d7_0dbc8cbc",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-08T18:50:24Z",
+      "side": 1,
+      "message": "Nit: structural should ensure non-null value",
+      "revId": "feb58e53a4f1a5238f93e42aa97b3c74d538b1da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
