@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8f75bc9_21dfe79c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T19:19:44Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "707e9df1a61046d88091aa097359eb82c2be376d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99006d07_596bdcd3",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T19:19:44Z",
+      "side": 1,
+      "message": "This was the fuzzer issue. The boolean option was turning into a 0 or 1 location. Instead, just makeup a location which is sufficiently large it should be fine?",
+      "revId": "707e9df1a61046d88091aa097359eb82c2be376d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
