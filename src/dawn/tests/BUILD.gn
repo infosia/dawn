@@ -120,15 +120,28 @@ template("dawn_test") {
 
     configs += [ "${dawn_root}/src/dawn/common:internal_config" ]
 
-    if (dawn_tests_use_angle && defined(dawn_angle_dir) &&
-        !dawn_use_static_angle) {
-      if (!defined(data_deps)) {
-        data_deps = []
+    if (dawn_tests_use_angle && defined(dawn_angle_dir)) {
+      if (dawn_use_static_angle) {
+        if (!defined(deps)) {
+          deps = []
+        }
+        deps += [
+          "${dawn_angle_dir}:libEGL",
+          "${dawn_angle_dir}:libGLESv2",
+        ]
+        if (!defined(defines)) {
+          defines = []
+        }
+        defines += [ "DAWN_USE_STATIC_ANGLE" ]
+      } else {
+        if (!defined(data_deps)) {
+          data_deps = []
+        }
+        data_deps += [
+          "${dawn_angle_dir}:libEGL",
+          "${dawn_angle_dir}:libGLESv2",
+        ]
       }
-      data_deps += [
-        "${dawn_angle_dir}:libEGL",
-        "${dawn_angle_dir}:libGLESv2",
-      ]
     }
 
     # Running Dawn tests within Chromium in Windows may require DXC, copy DXC
@@ -503,6 +516,18 @@ source_set("test_infra_sources") {
     "DawnTest.cpp",
     "ToggleParser.cpp",
   ]
+
+  if (dawn_tests_use_angle && defined(dawn_angle_dir) &&
+      dawn_use_static_angle) {
+    deps += [
+      "${dawn_angle_dir}:libEGL",
+      "${dawn_angle_dir}:libGLESv2",
+    ]
+    if (!defined(defines)) {
+      defines = []
+    }
+    defines += [ "DAWN_USE_STATIC_ANGLE" ]
+  }
 }
 
 ###############################################################################

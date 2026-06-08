@@ -90,9 +90,13 @@
 #include "dawn/replay/Replay.h"
 #endif
 
-#if defined(DAWN_ENABLE_BACKEND_OPENGL)
+#if defined(DAWN_ENABLE_BACKEND_OPENGL) || defined(DAWN_USE_STATIC_ANGLE)
 #include "dawn/native/OpenGLBackend.h"
-#endif  // DAWN_ENABLE_BACKEND_OPENGL
+#endif  // DAWN_ENABLE_BACKEND_OPENGL || DAWN_USE_STATIC_ANGLE
+
+#ifdef DAWN_USE_STATIC_ANGLE
+#include <EGL/egl.h>
+#endif
 
 namespace dawn {
 
@@ -110,6 +114,30 @@ using testing::MockCppCallback;
 
 DawnTestEnvironment* gTestEnv = nullptr;
 DawnTestBase* gCurrentTest = nullptr;
+
+#ifdef DAWN_USE_STATIC_ANGLE
+// Helper struct to chain RequestAdapterOptionsGetGLProc into RequestAdapterOptions.
+// This is used in static ANGLE builds to pass the statically linked eglGetProcAddress
+// to Dawn native, bypassing the dynamic loading of libEGL.so.
+struct StaticANGLEAdapterOptionsHelper {
+    dawn::native::opengl::RequestAdapterOptionsGetGLProc glProcOptions;
+    explicit StaticANGLEAdapterOptionsHelper(wgpu::RequestAdapterOptions* options) {
+        glProcOptions.getProc =
+            reinterpret_cast<dawn::native::opengl::EGLGetProcProc>(eglGetProcAddress);
+        // Pass EGL_NO_DISPLAY to instruct Dawn native to create and manage the default
+        // EGL display itself (using eglGetDisplay(EGL_DEFAULT_DISPLAY)). This allows
+        // ANGLE to select the backend based on environment variables (like
+        // ANGLE_DEFAULT_PLATFORM) set by the test harness.
+        glProcOptions.display = EGL_NO_DISPLAY;
+        glProcOptions.nextInChain = options->nextInChain;
+        options->nextInChain = &glProcOptions;
+    }
+};
+#else
+struct StaticANGLEAdapterOptionsHelper {
+    explicit StaticANGLEAdapterOptionsHelper(wgpu::RequestAdapterOptions*) {}
+};
+#endif
 
 template <typename T>
 void printBuffer(testing::AssertionResult& result, const T* buffer, const size_t count) {
@@ -673,6 +701,7 @@ void DawnTestEnvironment::SelectPreferredAdapterProperties(const native::Instanc
                  {wgpu::FeatureLevel::Core, wgpu::FeatureLevel::Compatibility}) {
                 wgpu::RequestAdapterOptions adapterOptions;
                 adapterOptions.featureLevel = featureLevel;
+                StaticANGLEAdapterOptionsHelper staticANGLEHelper(&adapterOptions);
                 // TODO(347047627): Use a webgpu.h version of enumerateAdapters
                 for (const native::Adapter& nativeAdapter :
                      instance->EnumerateAdapters(&adapterOptions)) {
@@ -695,6 +724,7 @@ void DawnTestEnvironment::SelectPreferredAdapterProperties(const native::Instanc
          {wgpu::FeatureLevel::Core, wgpu::FeatureLevel::Compatibility}) {
         wgpu::RequestAdapterOptions adapterOptions = {};
         adapterOptions.featureLevel = featureLevel;
+        StaticANGLEAdapterOptionsHelper staticANGLEHelper(&adapterOptions);
 
         auto adapters = instance->EnumerateAdapters(&adapterOptions);
 
@@ -704,6 +734,7 @@ void DawnTestEnvironment::SelectPreferredAdapterProperties(const native::Instanc
             adapterOptions.backendType = GetWebGPUInnerBackendTypeFilter();
             adapterOptions.forceFallbackAdapter = GetWebGPUInnerForceFallbackAdapter();
         }
+        webgpuBackendOptions.nextInChain = adapterOptions.nextInChain;
         adapterOptions.nextInChain = &webgpuBackendOptions;
 
         {
@@ -1003,6 +1034,7 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
 
         wgpu::RequestAdapterOptions adapterOptions;
         adapterOptions.nextInChain = &adapterTogglesHelper.togglesDesc;
+        StaticANGLEAdapterOptionsHelper staticANGLEHelper(&adapterOptions);
         adapterOptions.featureLevel = gCurrentTest->mParam.adapterProperties.compatibilityMode
                                           ? wgpu::FeatureLevel::Compatibility
                                           : wgpu::FeatureLevel::Core;
