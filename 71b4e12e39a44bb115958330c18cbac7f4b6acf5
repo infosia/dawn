@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1be36856_213d706e",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-08T18:18:53Z",
+      "side": 1,
+      "message": "This is just for safety of not setting a flag if the extension is not supported.",
+      "revId": "71b4e12e39a44bb115958330c18cbac7f4b6acf5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
