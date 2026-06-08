@@ -33,6 +33,24 @@
       "message": "Nit: I think we can assume non-null condition here",
       "revId": "cd327aef489123a8280fa5b119dd409dcf1df688",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dac7208e_4add0d59",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T19:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fc05562_2a692b3c",
+      "revId": "cd327aef489123a8280fa5b119dd409dcf1df688",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
