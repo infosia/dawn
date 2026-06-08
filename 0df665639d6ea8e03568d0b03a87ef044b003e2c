@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4fc48cf_aade402c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-08T14:34:53Z",
+      "side": 1,
+      "message": "The conditionality here still seems odd.  Shouldn\u0027t we assert that we got a fence?  Else this test is implicitly following one of two tracks and if there were a bug, it\u0027d be flaky.",
+      "revId": "0df665639d6ea8e03568d0b03a87ef044b003e2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
