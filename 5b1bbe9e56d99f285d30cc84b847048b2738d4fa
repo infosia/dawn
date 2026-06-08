@@ -26,6 +26,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0320d1e5_941d3a8e",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-08T14:04:35Z",
+      "side": 1,
+      "message": "Also the condition seems a bit wonky with the `if (true)`, we could have a boolean set depending on the platform that is then used for the condition.",
+      "parentUuid": "6f16993b_93767dbc",
+      "range": {
+        "startLine": 1215,
+        "startChar": 43,
+        "endLine": 1215,
+        "endChar": 58
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91c81837_15ba39b5",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-08T14:04:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a CHECK?",
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "09d170ea_c97d8880",
         "filename": "src/dawn/native/vulkan/QueueVk.cpp",
         "patchSetId": 17
@@ -83,6 +124,30 @@
       "writtenOn": "2026-06-05T23:01:02Z",
       "side": 1,
       "message": "Is this possible if the DAWN_TRYs above have succeeded?",
+      "range": {
+        "startLine": 574,
+        "startChar": 8,
+        "endLine": 574,
+        "endChar": 53
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db83e9ce_f5a699e3",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-08T14:04:35Z",
+      "side": 1,
+      "message": "I think it is possible for the driver to return -1 for FDs that are already completed for example.",
+      "parentUuid": "6d9b111f_cb799ded",
       "range": {
         "startLine": 574,
         "startChar": 8,
