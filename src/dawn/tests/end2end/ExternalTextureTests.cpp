@@ -2046,6 +2046,17 @@ TEST_P(ExternalTextureTests, ColorSpaceConversion_HLG_sRGBLinear) {
         wgpu::PredefinedColorSpace::SRGBLinear, {0.75, 0.75, 0.75, 1}, {1, 1, 1});
 }
 
+// Test that the color conversion from HLG to sRGBLinear works as expected.
+TEST_P(ExternalTextureTests, ColorSpaceConversion_sRGB_Rec2020Linear) {
+    // https://apps.colorjs.io/convert/?color=rgb(0.2%200.5%200.9)&precision=5
+    // XXX
+    CheckColorSpaceConversion(
+        {
+            .primaries = wgpu::ColorSpacePrimariesDawn::SRGB,
+        },
+        wgpu::PredefinedColorSpace::SRGBLinear, {0.4, 0.2, 0.1, 1}, {0.30376, 0.03184, 0.00536});
+}
+
 // TODO(https://crbug.com/468988322): Add tests of ExternalTextures being used with a resource table
 // and with Vulkan's extended dynamic state as these are other interactions that could easily break.
 
