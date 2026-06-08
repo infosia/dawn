@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "4788091f71a9ec00d5ce11e9098c0bec3df1483d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2259433_a054c9d6",
+        "filename": "scripts/args-maximal.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T14:27:44Z",
+      "side": 1,
+      "message": "dawn_enable_null ?",
+      "revId": "4788091f71a9ec00d5ce11e9098c0bec3df1483d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
