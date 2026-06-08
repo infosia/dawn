@@ -129,6 +129,62 @@ struct FuzzedOptions {
 
 namespace {
 
+[[maybe_unused]] std::ostream& operator<<(std::ostream& out, const FuzzedOptions& opts) {
+    out << "strip_all_names: " << opts.strip_all_names << "\n";
+    out << "disable_robustness: " << opts.disable_robustness << "\n";
+    out << "disable_workgroup_init: " << opts.disable_workgroup_init << "\n";
+    out << "disable_polyfill_integer_div_mod: " << opts.disable_polyfill_integer_div_mod << "\n";
+    out << "enable_integer_range_analysis: " << opts.enable_integer_range_analysis << "\n";
+    out << "emit_vertex_point_size: " << opts.emit_vertex_point_size << "\n";
+    out << "polyfill_pixel_center: " << opts.polyfill_pixel_center << "\n";
+    out << "polyfill_case_switch: " << opts.polyfill_case_switch << "\n";
+    out << "scalarize_max_min_clamp: " << opts.scalarize_max_min_clamp << "\n";
+    out << "dva_transform_handle: " << opts.dva_transform_handle << "\n";
+    out << "polyfill_pack_unpack_4x8_norm: " << opts.polyfill_pack_unpack_4x8_norm << "\n";
+    out << "subgroup_shuffle_clamped: " << opts.subgroup_shuffle_clamped << "\n";
+    out << "polyfill_subgroup_broadcast_f16: " << opts.polyfill_subgroup_broadcast_f16 << "\n";
+    out << "pass_matrix_by_pointer: " << opts.pass_matrix_by_pointer << "\n";
+    out << "polyfill_float_negation: " << opts.polyfill_float_negation << "\n";
+    out << "polyfill_float_abs: " << opts.polyfill_float_abs << "\n";
+    out << "use_demote_to_helper_invocation: " << opts.use_demote_to_helper_invocation << "\n";
+    out << "use_storage_input_output_16: " << opts.use_storage_input_output_16 << "\n";
+    out << "use_zero_initialize_workgroup_memory: " << opts.use_zero_initialize_workgroup_memory
+        << "\n";
+    out << "use_vulkan_memory_model: " << opts.use_vulkan_memory_model << "\n";
+    out << "disable_image_robustness: " << opts.disable_image_robustness << "\n";
+    out << "disable_runtime_sized_array_index_clamping: "
+        << opts.disable_runtime_sized_array_index_clamping << "\n";
+    out << "dot_4x8_packed: " << opts.dot_4x8_packed << "\n";
+    if (opts.depth_range_offsets.has_value()) {
+        out << "depth_range_offsets: [" << opts.depth_range_offsets.value().min << ", "
+            << opts.depth_range_offsets.value().max << "]\n";
+    } else {
+        out << "depth_range_offsets: none\n";
+    }
+    out << "spirv_version: " << uint32_t(opts.spirv_version) << "\n";
+    out << "substitute_overrides_config: {";
+    if (opts.substitute_overrides_config.map.size() > 0) {
+        out << "\n";
+        for (auto& entry : opts.substitute_overrides_config.map) {
+            out << "  " << entry.first.value << ": " << entry.second << "\n";
+        }
+    }
+
+    out << "}\n";
+    out << "texture_sample_compare_depth_cube_array: "
+        << opts.texture_sample_compare_depth_cube_array << "\n";
+    out << "texture_sample_compare_2d_polyfill: " << opts.texture_sample_compare_2d_polyfill
+        << "\n";
+    out << "polyfill_saturate_as_min_max_f16: " << opts.polyfill_saturate_as_min_max_f16 << "\n";
+    out << "multisampled_framebuffer_fetch: " << opts.multisampled_framebuffer_fetch << "\n";
+    out << "cooperative_matrix_stride_is_matrix_elements: "
+        << opts.cooperative_matrix_stride_is_matrix_elements << "\n";
+    out << "polyfill_length_scalar_float: " << opts.polyfill_length_scalar_float << "\n";
+    out << "polyfill_distance_scalar_float: " << opts.polyfill_distance_scalar_float << "\n";
+    out << "collapse_subgroup_min_max: " << opts.collapse_subgroup_min_max << "\n";
+    return out;
+}
+
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT
 Result<SuccessType> ValidateUsingVulkan(const std::string& vk_icd_path,
                                         std::span<const uint32_t> spirv) {
