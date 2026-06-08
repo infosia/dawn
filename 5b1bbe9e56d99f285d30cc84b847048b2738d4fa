@@ -160,6 +160,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22c2e864_68524e16",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-08T18:52:12Z",
+      "side": 1,
+      "message": "Ah right. Maybe it\u0027s silly but could we handle that explicitly in the Fd path, where the spec says it can return -1 meaning AlreadySignaled? The spec for Win32Handle doesn\u0027t seem to say anything like that.\n\nAnd in the Fd path have a different value for \"not initialized\" (line 549) vs the -1 we get from the driver. Similar to [here](https://dawn-review.git.corp.google.com/c/dawn/+/307755/4/src/dawn/native/vulkan/external_semaphore/SemaphoreServiceImplementationFD.cpp#167).",
+      "parentUuid": "db83e9ce_f5a699e3",
+      "range": {
+        "startLine": 574,
+        "startChar": 8,
+        "endLine": 574,
+        "endChar": 53
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9cc7eea6_e555c0ce",
         "filename": "src/dawn/utils/SystemHandle.h",
         "patchSetId": 17
