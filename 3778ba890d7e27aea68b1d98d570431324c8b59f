@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0512c01a_26240287",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3711353
+      },
+      "writtenOn": "2026-06-08T02:15:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure if the trybots can work on M144 branch. Could you please let me know if this cherry-pick CL should be modified to pass the trybots?",
+      "revId": "3778ba890d7e27aea68b1d98d570431324c8b59f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
