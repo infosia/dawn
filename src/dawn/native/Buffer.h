@@ -29,8 +29,10 @@
 #define SRC_DAWN_NATIVE_BUFFER_H_
 
 #include <atomic>
+#include <condition_variable>
 #include <functional>
 #include <memory>
+#include <mutex>
 #include <utility>
 
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -299,6 +301,8 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     // successful, that MapAsync() must have succeeded. We cannot guarantee, however, that Unmap()
     // did not race with GetMappedRange(), but that is the responsibility of the caller.
     std::atomic<BufferState> mState = BufferState::Unmapped;
+    std::mutex mStateMutex;
+    std::condition_variable mStateCondVar;
 
     // A recursive buffer used to implement mappedAtCreation for buffers with non-mappable
     // usage. It is transiently allocated and released when the mappedAtCreation-buffer is

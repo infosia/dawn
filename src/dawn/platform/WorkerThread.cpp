@@ -69,7 +69,8 @@ AsyncTaskHandleImpl::~AsyncTaskHandleImpl() {
 }
 
 void AsyncTaskHandleImpl::Wait() {
-    mCompleted.wait(false, std::memory_order::acquire);
+    std::unique_lock<std::mutex> lock(mMutex);
+    mCondVar.wait(lock, [this]() { return mCompleted.load(); });
 }
 
 bool AsyncTaskHandleImpl::IsComplete() const {
@@ -78,8 +79,11 @@ bool AsyncTaskHandleImpl::IsComplete() const {
 
 void AsyncTaskHandleImpl::Complete() {
     mCallback(mUserdata.ExtractAsDangling());
-    mCompleted = true;
-    mCompleted.notify_all();
+    {
+        std::unique_lock<std::mutex> lock(mMutex);
+        mCompleted = true;
+    }
+    mCondVar.notify_all();
 }
 
 // AsyncJobHandleImpl

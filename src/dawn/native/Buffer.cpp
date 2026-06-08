@@ -324,9 +324,9 @@ class BufferBase::MapAsyncEvent final : public EventManager::TrackedEvent {
             return;
         }
 
-        DAWN_CHECK(buffer);
+        DAWN_ASSERT(buffer);
         MaybeError result = buffer->FinalizeMap(BufferState::Mapped);
-        buffer->mState.notify_all();
+        buffer->mStateCondVar.notify_all();
         if (result.IsError()) {
             auto error = result.AcquireError();
             DAWN_CHECK(error->GetType() != InternalErrorType::Validation);
@@ -933,7 +933,10 @@ MaybeError BufferBase::UnmapInternal(bool forDestroy) {
         }
 
         // Wait until FinalizeMap() finishes before falling through to a regular unmap.
-        mState.wait(BufferState::PendingMap, std::memory_order::acquire);
+        {
+            std::unique_lock<std::mutex> lock(mStateMutex);
+            mStateCondVar.wait(lock, [this]() { return mState.load() != BufferState::PendingMap; });
+        }
     }
 
     // Wait for any active MapAsyncEvent callback to finish. Just acquiring and releasing the lock

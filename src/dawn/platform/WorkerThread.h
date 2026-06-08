@@ -60,6 +60,8 @@ class AsyncTaskHandleImpl : public RefCounted, public NonCopyable {
     PostWorkerTaskCallback mCallback;
     raw_ptr<void> mUserdata;
     std::atomic<bool> mCompleted = false;
+    std::mutex mMutex;
+    std::condition_variable mCondVar;
 };
 
 class AsyncJobHandleImpl : public RefCounted, public NonCopyable {
