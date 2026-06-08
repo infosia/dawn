@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "cd327aef489123a8280fa5b119dd409dcf1df688",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fc05562_2a692b3c",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-08T18:44:35Z",
+      "side": 1,
+      "message": "Nit: I think we can assume non-null condition here",
+      "revId": "cd327aef489123a8280fa5b119dd409dcf1df688",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
