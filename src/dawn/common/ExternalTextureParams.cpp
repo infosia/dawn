@@ -172,6 +172,10 @@ wgpu::Status ComputeExternalTextureParams(const wgpu::ColorSpaceDawn& srcColorSp
             dstXYZToRGB = kXYZToRGB_DisplayP3;
             dstOETF = kEOTF_Identity;
             break;
+        case wgpu::PredefinedColorSpace::BT2020Linear:
+            dstXYZToRGB = kXYZToRGB_Rec2020;
+            dstOETF = kEOTF_Identity;
+            break;
         default:
             return wgpu::Status::Error;
     }
