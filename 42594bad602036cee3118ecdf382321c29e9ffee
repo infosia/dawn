@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84e6764f_b4cc0a3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-08T14:42:10Z",
+      "side": 1,
+      "message": "LGTM\n\nBrandon PTAL as well, we can\u0027t add details yet hence the need for a TODO.",
+      "revId": "42594bad602036cee3118ecdf382321c29e9ffee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65bc76ef_1897728c",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-08T14:42:10Z",
+      "side": 1,
+      "message": "Can we have a TODO to add more details \"once available\" or something like that?",
+      "revId": "42594bad602036cee3118ecdf382321c29e9ffee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
