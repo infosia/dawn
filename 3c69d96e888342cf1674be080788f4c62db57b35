@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a28b0965_93b23e82",
+        "filename": "src/tint/lang/hlsl/hlsl.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T14:20:35Z",
+      "side": 1,
+      "message": "I don\u0027t think this is right, this value type does not need to match the type in `atomic\u003cT\u003e` which will now be required. We could have `atomic\u003cu32\u003e` and still use `i32` here.",
+      "revId": "3c69d96e888342cf1674be080788f4c62db57b35",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
