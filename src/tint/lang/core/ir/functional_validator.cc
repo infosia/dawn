@@ -291,12 +291,9 @@ diag::Diagnostic& Functional::AddNote(const Instruction* inst, size_t idx) {
 
 void Functional::CheckRootBlock(const Block* blk) {
     block_stack_.Push(blk);
-    scope_stack_.Push();
     TINT_DEFER({
-        scope_stack_.Pop();
         block_stack_.Pop();
         TINT_ASSERT(block_stack_.IsEmpty());
-        TINT_ASSERT(scope_stack_.IsEmpty());
     });
 
     for (auto* inst : *blk) {
@@ -305,9 +302,6 @@ void Functional::CheckRootBlock(const Block* blk) {
 }
 
 void Functional::CheckFunction(const Function* func) {
-    scope_stack_.Push();
-    TINT_DEFER(scope_stack_.Pop());
-
     if (func->IsEntryPoint()) {
         // Check that there is at most one entry point unless we allow multiple entry points.
         if (!ir_.properties.Contains(Property::kAllowMultipleEntryPoints)) {
@@ -347,7 +341,6 @@ void Functional::CheckFunction(const Function* func) {
     Hashset<const FunctionParam*, 4> param_set{};
     for (auto* param : func->Params()) {
         CheckFunctionParam(param, param_set);
-        scope_stack_.Add(param);
     }
 
     CheckBlock(func->Block());
@@ -412,17 +405,7 @@ void Functional::CheckFunctionParam(const FunctionParam* param,
 
 void Functional::CheckBlock(const Block* blk) {
     block_stack_.Push(blk);
-    scope_stack_.Push();
-    TINT_DEFER({
-        scope_stack_.Pop();
-        block_stack_.Pop();
-    });
-
-    if (auto* mb = blk->As<MultiInBlock>()) {
-        for (auto* param : mb->Params()) {
-            scope_stack_.Add(param);
-        }
-    }
+    TINT_DEFER({ block_stack_.Pop(); });
 
     const Instruction* inst = blk->Instructions();
     while (inst != nullptr) {
@@ -452,10 +435,6 @@ void Functional::CheckInstruction(const Instruction* inst) {
         [&](const Unary* u) { CheckUnary(u); },                            //
         [&](const Var* var) { CheckVar(var); },                            //
         TINT_ICE_ON_NO_MATCH);
-
-    for (auto* result : inst->Results()) {
-        scope_stack_.Add(result);
-    }
 }
 
 void Functional::CheckOverride(const Override* o) {
@@ -557,15 +536,7 @@ void Functional::CheckVar(const Var* var) {
         }
     }
 
-    if (mv->AddressSpace() == AddressSpace::kWorkgroup) {
-        if (auto* ary = result_type->UnwrapPtr()->As<core::type::Array>()) {
-            if (auto* count = ary->Count()->As<core::ir::type::ValueArrayCount>()) {
-                if (!scope_stack_.Contains(count->value)) {
-                    AddError(var) << NameOf(count->value) << " is not in scope";
-                }
-            }
-        }
-    } else if (mv->AddressSpace() == AddressSpace::kStorage) {
+    if (mv->AddressSpace() == AddressSpace::kStorage) {
         if (mv->StoreType() && !mv->StoreType()->IsHostShareable()) {
             AddError(var) << "vars in the 'storage' address space must be host-shareable";
             return;

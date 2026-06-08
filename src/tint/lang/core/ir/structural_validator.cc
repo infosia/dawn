@@ -1939,6 +1939,15 @@ void Structural::CheckVar(const Var* var) {
                       << " must be a pointer or a reference";
         return;
     }
+    if (mv->AddressSpace() == AddressSpace::kWorkgroup) {
+        if (auto* ary = result_type->UnwrapPtr()->As<core::type::Array>()) {
+            if (auto* count = ary->Count()->As<core::ir::type::ValueArrayCount>()) {
+                if (!scope_stack_.Contains(count->value)) {
+                    AddError(var) << NameOf(count->value) << " is not in scope";
+                }
+            }
+        }
+    }
 
     if (var->Initializer()) {
         if (!CheckOperand(var, ir::Var::kInitializerOperandOffset)) {
