@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eca3e24_54057c6a",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T19:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faa2fe26_afbb5209",
+      "revId": "93f778e26fac546e0f1d063e8acfe696a47533ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8a56f44_a0d7ad1f",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-06-08T18:46:12Z",
       "side": 1,
       "message": "Nit: should be able to assume non-null here, assuming structural validator has checked it",
+      "revId": "93f778e26fac546e0f1d063e8acfe696a47533ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5ab4c8b_cd08b6e8",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T19:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8a56f44_a0d7ad1f",
       "revId": "93f778e26fac546e0f1d063e8acfe696a47533ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
