@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffa22217_5ca15bf7",
+        "filename": "src/tint/lang/core/ir/structural_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3654,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-08T19:00:17Z",
+      "side": 0,
+      "message": "Why remove this check? This is why the unit test changed, but seems like it\u0027s still something that should be checked?",
+      "revId": "feb58e53a4f1a5238f93e42aa97b3c74d538b1da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
