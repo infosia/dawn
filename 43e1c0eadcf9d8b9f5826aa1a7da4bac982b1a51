@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8269d234_2ac43436",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-08T11:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ecce7e3_93e0c607",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a626313a_650df24b",
         "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
         "patchSetId": 6
@@ -48,6 +66,24 @@
       "writtenOn": "2026-06-06T15:07:11Z",
       "side": 1,
       "message": "1) What\u0027s being tested here, and how?\n2) Don\u0027t assume that a loop of 20 on one thread will interleave with a loop of 20 on another -- they might not.  Best to gate after 1 iteration of each loop and enure they interleave\n3) Duplicated code is duplicated; please use subroutine",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40b5133b_746f2459",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-08T11:26:15Z",
+      "side": 1,
+      "message": "Thanks for pointing this out!\n\nRefactored it and now it uses CyclicBarrier inside a subroutine loop to explicitly gate the threads. It forces them to wait for each other at the end of every single iteration, guaranteeing strict 1-to-1 interleaving. I also added a comment explaining the test\u0027s exact purpose.",
+      "parentUuid": "a626313a_650df24b",
       "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "35c33afe_0543ec24",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-08T11:26:15Z",
+      "side": 1,
+      "message": "Agreed, I have added explicit `requireNotNull` checks.",
+      "parentUuid": "a72c265e_22e302c6",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "80a0e888_12d73bc8",
         "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
         "patchSetId": 6
@@ -82,6 +136,24 @@
       "writtenOn": "2026-06-06T15:07:11Z",
       "side": 1,
       "message": "I think at this point you\u0027ve gambled that there was an event pending from line 389 that would signal the fence on line 397.  I wonder if there isn\u0027t a case where the event has already been consumed before we reached 397, perhaps because the test run was backgrounded or GC\u0027d or something else caused a delay in test execution.",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f245da2_bd88879f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-08T11:26:15Z",
+      "side": 1,
+      "message": "Thanks for pointing this! But we are safe from race conditions here.\n\nSyncFence objects are sticky state variables, not consumable events. Once they move to a signaled state, they stay signaled forever. If a GC delays the test execution and the GPU finishes its work early (and it signals the fence), calling await() will simply see the signaled state and return true instantly (and the test passes because we are checking assertTrue(signaled).\n\nAdditionally, When we do platformSyncFence \u003d fence.toSyncFence(), the Kotlin object takes ownership of that File Descriptor.\nBecause we assigned it to a local variable (platformSyncFence), the GC knows the object is actively being used. The GC will close it.",
+      "parentUuid": "80a0e888_12d73bc8",
       "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +177,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22d0b295_9851834c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-08T11:26:15Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9d877f6b_18ab4436",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c7a19157_8fa5cd30",
         "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
         "patchSetId": 6
@@ -116,6 +206,24 @@
       "writtenOn": "2026-06-06T15:07:11Z",
       "side": 1,
       "message": "I sense much opportunity for code re-use in subroutines here...",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb1dd220_8044924f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-08T11:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7a19157_8fa5cd30",
       "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -139,6 +247,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "85baf9f5_d938ae1d",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-08T11:26:15Z",
+      "side": 1,
+      "message": "Failure here would just be a native JNI crash or a Dawn validation error returning null. These tests are meant to check that GPUExternalTextureDescriptor works properly accross JNI boundary. To make this intent implicit, I\u0027ve renamed the tests to end with _validatesWithoutError and added KDoc comments explicitly calling out what is being tested.",
+      "parentUuid": "bd6a48d8_53d6574c",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d3be2602_579f562c",
         "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
         "patchSetId": 6
@@ -150,6 +276,24 @@
       "writtenOn": "2026-06-06T15:07:11Z",
       "side": 1,
       "message": "This test is (_scrolls for a while..._) 200+ lines long.  What might you collapse and/or re-use into nicely-named self-documenting subroutines, to make the test easier to read or understand what can be learned, if it were to fail?",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aed4e74f_5c9b50b6",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-08T11:26:15Z",
+      "side": 1,
+      "message": "Thanks! Refactored",
+      "parentUuid": "d3be2602_579f562c",
       "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
