@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "93f778e26fac546e0f1d063e8acfe696a47533ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faa2fe26_afbb5209",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-08T18:46:12Z",
+      "side": 1,
+      "message": "Nit: I think can assume index-\u003eType() is non-null here",
+      "revId": "93f778e26fac546e0f1d063e8acfe696a47533ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8a56f44_a0d7ad1f",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-08T18:46:12Z",
+      "side": 1,
+      "message": "Nit: should be able to assume non-null here, assuming structural validator has checked it",
+      "revId": "93f778e26fac546e0f1d063e8acfe696a47533ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
