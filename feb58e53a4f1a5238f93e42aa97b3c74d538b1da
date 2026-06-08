@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75d0deb0_eaaeb8de",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T19:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c32934f5_4d80a5db",
+      "revId": "feb58e53a4f1a5238f93e42aa97b3c74d538b1da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20ff90d7_0dbc8cbc",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-06-08T18:50:24Z",
       "side": 1,
       "message": "Nit: structural should ensure non-null value",
+      "revId": "feb58e53a4f1a5238f93e42aa97b3c74d538b1da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9dfc614_03e2088b",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T19:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20ff90d7_0dbc8cbc",
       "revId": "feb58e53a4f1a5238f93e42aa97b3c74d538b1da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
