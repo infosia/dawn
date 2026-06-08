@@ -16,6 +16,24 @@
       "message": "I don\u0027t think this is right, this value type does not need to match the type in `atomic\u003cT\u003e` which will now be required. We could have `atomic\u003cu32\u003e` and still use `i32` here.",
       "revId": "3c69d96e888342cf1674be080788f4c62db57b35",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a0f0dc7_2325d780",
+        "filename": "src/tint/lang/hlsl/hlsl.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-08T14:57:46Z",
+      "side": 1,
+      "message": "According to https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/interlockedadd, it seemed they did need to be the same, but I can revert if that\u0027s preferable.",
+      "parentUuid": "a28b0965_93b23e82",
+      "revId": "3c69d96e888342cf1674be080788f4c62db57b35",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

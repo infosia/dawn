@@ -16,6 +16,24 @@
       "message": "Was this a mistake before? else, why did these change from `writable` to `read_write`?",
       "revId": "23cf554e645f61acabcd10aac24bfe6d6b0eeeec",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34af9bf3_87e60aa8",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-08T14:57:46Z",
+      "side": 0,
+      "message": "These are intentional as they are all read-modify-write operations and, therefore, needs to both read and write.",
+      "parentUuid": "6460c433_bd936027",
+      "revId": "23cf554e645f61acabcd10aac24bfe6d6b0eeeec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
