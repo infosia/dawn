@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "110c36ef_3c249d9d",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-08T18:10:17Z",
+      "side": 1,
+      "message": "nit. Since it looks like you are using the C API directly, I\u0027d suggest using the INIT macros we provide for this initialization (here and in other relevant places below). It also allows you to omit setting the `sType` manually which can be error-prone. The macros look something like `WGPU_SHARED_TEXTURE_MEMORY_A_HARDWARE_BUFFER_DESCRIPTOR_INIT`.\n\nAlternatively, would it be possible to use the C++ API instead of the C API? I think it would be a lot easier for handling all the manual reference counting you are doing which can often be a source of memory leaks that are hard to catch. Plus it actually looks like you are using some C++ APIs (for enums and stuff, i.e. any of the `wgpu::*` stuff) already, so maybe it would be best to limit the C API to only places where we absolutely need it?",
+      "range": {
+        "startLine": 122,
+        "startChar": 63,
+        "endLine": 122,
+        "endChar": 66
+      },
+      "revId": "3ffc11c4c975a73a41279d8c14ec36d9b30486cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df11e115_3a6831e9",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-08T18:10:17Z",
+      "side": 1,
+      "message": "nit. I think you don\u0027t need to do a `reinterpret_cast` here if you just do `stmDesc.nextInChain \u003d \u0026ahbDesc.chain` instead.",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 73
+      },
+      "revId": "3ffc11c4c975a73a41279d8c14ec36d9b30486cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3835ee9_55edd2d9",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-08T18:10:17Z",
+      "side": 1,
+      "message": "From what I can tell, there\u0027s nothing in the `AhbTextureWrapper` that suggests that it releases the texture/device, so do we actually want to add the refs here? If we add the refs and never release them, then these objects might be leaked? See comment above about maybe using C++ API instead?",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 195,
+        "endChar": 29
+      },
+      "revId": "3ffc11c4c975a73a41279d8c14ec36d9b30486cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
