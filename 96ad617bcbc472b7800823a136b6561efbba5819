@@ -33,6 +33,24 @@
       "message": "This should already be checked by https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/SharedTextureMemoryVk.cpp;drc\u003d6783d038de3cce7ba4ba047143b18a1329bd5a6e;l\u003d580 so I\u0027m not sure what we gain here. The issues seems that we either lack validation in Dawn, or that Skia/Chromium should validate.\n\nIf we want to add validation in Dawn, it would be at https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Texture.cpp;drc\u003d1cae4908f51a03869223c21965128eb4a56df989;l\u003d937 with `IsYCbCrFilterable`.",
       "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d10fc7a8_d98a803b",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-06-08T19:41:52Z",
+      "side": 1,
+      "message": "Thanks for the additional details. The concern raised in https://crbug.com/520180257 is that you could potentially force the wrong filter mode here when creating a `Sampler` directly, rather than via a `SharedTexture`.\n\nValidation for sampler creation doesn\u0027t check the format compatibility (Not sure it should? That\u0027s basically an implementation detail, right?) https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Sampler.cpp;l\u003d74;drc\u003d77010a16c40f098e9a0d9022eed415ad8e491540;bpv\u003d0;bpt\u003d1\n\nOtherwise the sampler creation will pass the descriptor\u0027s `vkChromaFilter` straight through as far as I can tell. So my questions are: Is that something we expect to happen, or should these descriptors always come from a `SharedTexture`? If we do expect them to be supplied directly, should this be a validation issue or should we silently fix it for the developer during sampler creation?",
+      "parentUuid": "80b07e8a_25939831",
+      "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
