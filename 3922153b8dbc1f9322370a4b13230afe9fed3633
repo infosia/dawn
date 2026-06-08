@@ -16,6 +16,23 @@
       "message": "Thanks for the review, could you help with landing? I couldn\u0027t dry-run it.",
       "revId": "3922153b8dbc1f9322370a4b13230afe9fed3633",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb95eae3_4a532080",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-08T17:25:29Z",
+      "side": 1,
+      "message": "I\u0027ve triggered a dry run, but you\u0027ll need another LGTM from a committer since you aren\u0027t one yourself.\n\nI\u0027ve added kainino@ to stamp.",
+      "revId": "3922153b8dbc1f9322370a4b13230afe9fed3633",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
