@@ -129,6 +129,15 @@ void Register(const IRFuzzer& fuzzer) {
             if (result != Success && context.options.verbose) {
                 std::cout << "   " << result.Failure() << "\n";
             }
+
+            if (!context.options.disable_ir_validator) {
+                if (auto val = tint::core::ir::Validate(ir.Get(), fuzzer.post_capabilities,
+                                                        "finish " + std::string(fuzzer.name));
+                    val != Success) {
+                    TINT_ICE() << "Failed to validate against fuzzer capabilities after running:\n"
+                               << val.Failure() << "\n";
+                }
+            }
         },
     });
 #endif
