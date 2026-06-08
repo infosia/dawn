@@ -33,6 +33,41 @@
       "message": "seems reasonable to me, but I will let James take a look",
       "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1238444_2dcd8799",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-08T20:08:25Z",
+      "side": 1,
+      "message": "I like the idea of printing the options. Can\u0027t we do this with Tint\u0027s reflection instead though, and then we shouldn\u0027t need to update anything when we add new options?",
+      "parentUuid": "e8f13784_f9462f9f",
+      "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc83b5dc_2577769f",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-08T20:08:25Z",
+      "side": 1,
+      "message": "Why unused, can\u0027t we just always print when `--verbose` is passed?",
+      "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
