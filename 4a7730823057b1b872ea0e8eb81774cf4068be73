@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ed4e923_12ebbf2e",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-08T14:39:58Z",
+      "side": 1,
+      "message": "This and the same for data_deps below could be moved up before the `if (dawn_tests_use_angle \u0026\u0026 defined(dawn_angle_dir)) {`. This way we don\u0027t have to repeat it in both if branches.",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 9
+      },
+      "revId": "4a7730823057b1b872ea0e8eb81774cf4068be73",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53a14981_159ff396",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-08T14:39:58Z",
+      "side": 1,
+      "message": "Having to duplicate this here seems bad. Maybe the answer is to factor out the bit in the dawn_test template to a `config` and add it to both?",
+      "range": {
+        "startLine": 525,
+        "startChar": 65,
+        "endLine": 526,
+        "endChar": 69
+      },
+      "revId": "4a7730823057b1b872ea0e8eb81774cf4068be73",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b24e85d9_42b91538",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-08T14:39:58Z",
+      "side": 1,
+      "message": "Why a struct and not a function?",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 39
+      },
+      "revId": "4a7730823057b1b872ea0e8eb81774cf4068be73",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
