@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8fdcc7e1_46cdfae8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T20:14:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure, you could certainly get all the options but a few of them require special handling like the substitute overrides and depth range options. So, we\u0027d either need a bunch of helpers to add `operator\u003c\u003c` for random things or we do it this way.",
+      "parentUuid": "b1238444_2dcd8799",
+      "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc83b5dc_2577769f",
         "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "writtenOn": "2026-06-08T20:08:25Z",
       "side": 1,
       "message": "Why unused, can\u0027t we just always print when `--verbose` is passed?",
+      "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7228f81_40bdba60",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-08T20:14:26Z",
+      "side": 1,
+      "message": "I couldn\u0027t get any params to pass to the wgsl fuzzer, so I wouldn\u0027t be able to test it. I just did a straight std::cerr \u003c\u003c options and then removed it later, heh.\n\nWe _should_ add it to verbose, but that can come ofterwards when we figure out why wgsl fuzzer options don\u0027t seem to be working?",
+      "parentUuid": "fc83b5dc_2577769f",
       "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
