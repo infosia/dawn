@@ -212,6 +212,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ed7ac80_8d8a4057",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-09T10:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f245da2_bd88879f",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d877f6b_18ab4436",
@@ -349,6 +367,24 @@
       "side": 1,
       "message": "Failure here would just be a native JNI crash or a Dawn validation error returning null. These tests are meant to check that GPUExternalTextureDescriptor works properly accross JNI boundary. To make this intent implicit, I\u0027ve renamed the tests to end with _validatesWithoutError and added KDoc comments explicitly calling out what is being tested.",
       "parentUuid": "bd6a48d8_53d6574c",
+      "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50943e19_a52fe9b0",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2026-06-09T10:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85baf9f5_d938ae1d",
       "revId": "43e1c0eadcf9d8b9f5826aa1a7da4bac982b1a51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
