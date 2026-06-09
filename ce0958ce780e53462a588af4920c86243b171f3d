@@ -34,6 +34,24 @@
       "parentUuid": "0da005f6_15bc7d2c",
       "revId": "ce0958ce780e53462a588af4920c86243b171f3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e36e41e_9eb4c0cf",
+        "filename": "src/dawn/tests/end2end/EventTests.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-09T17:41:26Z",
+      "side": 1,
+      "message": "Yeah that\u0027s basically what I was thinking, but I forgot it would be on by default. Not that important, it would just test the validation.",
+      "parentUuid": "aca0b6e2_3a879fd7",
+      "revId": "ce0958ce780e53462a588af4920c86243b171f3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
