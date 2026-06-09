@@ -16,6 +16,24 @@
       "message": "This is the fix over the normal auto-roll",
       "revId": "124be0b6e15adf7ea55e60b1aaab97b41c28a31e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9879c30_2a946418",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-09T16:59:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "352c0330_b0441cde",
+      "revId": "124be0b6e15adf7ea55e60b1aaab97b41c28a31e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
