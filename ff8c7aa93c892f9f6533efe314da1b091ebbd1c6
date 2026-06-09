@@ -16,6 +16,24 @@
       "message": "structural",
       "revId": "ff8c7aa93c892f9f6533efe314da1b091ebbd1c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d732085_d2f077af",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-09T11:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ff1a2cc_c180723e",
+      "revId": "ff8c7aa93c892f9f6533efe314da1b091ebbd1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
