@@ -1939,6 +1939,15 @@ void Structural::CheckVar(const Var* var) {
                       << " must be a pointer or a reference";
         return;
     }
+    if (mv->AddressSpace() == AddressSpace::kWorkgroup) {
+        if (auto* ary = result_type->UnwrapPtr()->As<core::type::Array>()) {
+            if (auto* count = ary->Count()->As<core::ir::type::ValueArrayCount>()) {
+                if (!scope_stack_.Contains(count->value)) {
+                    AddError(var) << NameOf(count->value) << " is not in scope";
+                }
+            }
+        }
+    }
 
     if (var->Initializer()) {
         if (!CheckOperand(var, ir::Var::kInitializerOperandOffset)) {
@@ -2615,13 +2624,27 @@ void Structural::CheckLoop(const Loop* l) {
 
     if (!l->Continuing()->IsEmpty()) {
         tasks_.Push([this, l] { BeginBlock(l->Continuing()); });
+    } else if (!l->Continuing()->Params().IsEmpty()) {
+        AddError(l) << "loop continuing block has parameters but is empty";
     }
 
-    tasks_.Push([this, l] { BeginBlock(l->Body()); });
+    tasks_.Push([this, l] {
+        CheckLoopBody(l);
+        BeginBlock(l->Body());
+    });
     if (!l->Initializer()->IsEmpty()) {
         tasks_.Push([this, l] { BeginBlock(l->Initializer()); });
     }
     tasks_.Push([this, l] { control_stack_.Push(l); });
+}
+
+void Structural::CheckLoopBody(const Loop* loop) {
+    // If the body block has parameters, there must be an initializer block.
+    if (!loop->Body()->Params().IsEmpty()) {
+        if (!loop->HasInitializer()) {
+            AddError(loop) << "loop with body block parameters must have an initializer";
+        }
+    }
 }
 
 void Structural::CheckSwitch(const Switch* s) {
@@ -2631,6 +2654,9 @@ void Structural::CheckSwitch(const Switch* s) {
     tasks_.Push([this] { control_stack_.Pop(); });
 
     for (auto& cse : s->Cases()) {
+        if (cse.selectors.IsEmpty()) {
+            AddError(s) << "case does not have any selectors";
+        }
         if (cse.block->Is<core::ir::MultiInBlock>()) {
             AddError(s) << "case block must be a block";
         }
