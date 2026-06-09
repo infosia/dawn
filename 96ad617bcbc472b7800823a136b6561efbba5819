@@ -69,6 +69,24 @@
       "parentUuid": "d10fc7a8_d98a803b",
       "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4d1eea6_546edd6d",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-06-09T21:09:02Z",
+      "side": 1,
+      "message": "Updated to adjust to nearest silently in the case that linear isn\u0027t supported.\n\nNot clear on what you mean by validation for the texture view? We can plumb up the right info to validate against for both the texture view and and sampler, but the concern for me is that\u0027s opaque to the dev, and would result on validation that sometimes fails without being able to predict it.",
+      "parentUuid": "2fdf2579_68aab52f",
+      "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
