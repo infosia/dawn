@@ -16,6 +16,23 @@
       "message": "PTAL. An annoying oversight from the first round of fixes to the bundle validation logic.",
       "revId": "b430407009f45f9ee26596c839a8c45e21f8b802",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc19cd63_25960271",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T08:27:50Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "b430407009f45f9ee26596c839a8c45e21f8b802",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
