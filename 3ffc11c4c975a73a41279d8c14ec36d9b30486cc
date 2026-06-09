@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5258c457_0584054d",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-09T17:57:54Z",
+      "side": 1,
+      "message": "Thanks for the review! Because this exact version of the code is currently what Adobe is using in their app,I will keep this CL as-is and I completely agree with your suggestions and have addressed the macros and C++ API migration in an follow-up CL - https://dawn-review.googlesource.com/c/dawn/+/315235",
+      "parentUuid": "110c36ef_3c249d9d",
+      "range": {
+        "startLine": 122,
+        "startChar": 63,
+        "endLine": 122,
+        "endChar": 66
+      },
+      "revId": "3ffc11c4c975a73a41279d8c14ec36d9b30486cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "df11e115_3a6831e9",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 18
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a06d686_f560c74f",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-09T17:57:54Z",
+      "side": 1,
+      "message": "Added fix to: https://dawn-review.googlesource.com/c/dawn/+/315235",
+      "parentUuid": "df11e115_3a6831e9",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 73
+      },
+      "revId": "3ffc11c4c975a73a41279d8c14ec36d9b30486cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3835ee9_55edd2d9",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 18
@@ -60,6 +108,30 @@
       "writtenOn": "2026-06-08T18:10:17Z",
       "side": 1,
       "message": "From what I can tell, there\u0027s nothing in the `AhbTextureWrapper` that suggests that it releases the texture/device, so do we actually want to add the refs here? If we add the refs and never release them, then these objects might be leaked? See comment above about maybe using C++ API instead?",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 195,
+        "endChar": 29
+      },
+      "revId": "3ffc11c4c975a73a41279d8c14ec36d9b30486cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75cfc61d_4f7b2f2b",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-09T17:57:54Z",
+      "side": 1,
+      "message": "Added fix to: https://dawn-review.googlesource.com/c/dawn/+/315235",
+      "parentUuid": "f3835ee9_55edd2d9",
       "range": {
         "startLine": 194,
         "startChar": 4,
