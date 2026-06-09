@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d446aa03_36f781a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-09T17:16:29Z",
+      "side": 1,
+      "message": "shoot, how did I manage this? That change should have been by find/replace. I will to check if I messed up any other find/replace in that CL.",
+      "revId": "7911eba5ca00020ee55bc915fdafaec63c440ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
