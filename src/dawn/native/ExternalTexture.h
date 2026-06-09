@@ -78,6 +78,7 @@ struct ExternalTextureParams {
     // textureLoad() passes coords in plane0 related size.
     // Use this Factor to calculate plane1 load coord.
     math::Vec2f plane1CoordFactor;
+    math::Vec4f ootf;
 };
 
 MaybeError ValidateExternalTextureDescriptor(const DeviceBase* device,
