@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b8d59a1_abc4db54",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T18:49:17Z",
+      "side": 1,
+      "message": "nit. Is this additional ref needed? Since you are passing the C++ version of the object now to `AhbTextureWrapper` I think a reference will already be added for that, unless this new ref is for the `jobject` below? In which case I\u0027m not familiar with how that works enough to comment on whether this is needed. If it is for the `jobject` it would be good to comment on where the matching release call is expected to happen.\n\nI guess alternatively, what is the lifetime of the `jobject`? And is it the same as the `wrapper` object? If it is, then the ref that the `wrapper` holds would keep the pointer valid also, so we wouldn\u0027t need the additional `AddRef` call above.",
+      "range": {
+        "startLine": 188,
+        "startChar": 4,
+        "endLine": 188,
+        "endChar": 37
+      },
+      "revId": "5dba460e15fd6dcbd4b12fa2717d6b920f37d3ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20b0c20c_167c7568",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T18:49:17Z",
+      "side": 1,
+      "message": "Same comment as above to either add a comment as to where the release is called or whether this is needed at all?",
+      "range": {
+        "startLine": 346,
+        "startChar": 4,
+        "endLine": 346,
+        "endChar": 53
+      },
+      "revId": "5dba460e15fd6dcbd4b12fa2717d6b920f37d3ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
