@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65ec8a81_617a50fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-09T14:58:34Z",
+      "side": 1,
+      "message": "Looking great so far. A few comments.",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a6eeb43_0b6e96aa",
@@ -56,6 +73,70 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1165e391_2c8598af",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-09T14:58:34Z",
+      "side": 1,
+      "message": "Actually, can we please have this test as part of this CL?",
+      "parentUuid": "baf9805b_98c9359f",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b13448d0_44911322",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-09T14:58:34Z",
+      "side": 1,
+      "message": "Is this really the case? Looking at their usage, it seems they\u0027re only read a few times per `Apply` (draw/dispatch).",
+      "range": {
+        "startLine": 798,
+        "startChar": 0,
+        "endLine": 800,
+        "endChar": 29
+      },
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51214b41_1e280547",
+        "filename": "src/dawn/native/d3d12/PipelineD3D12.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-09T14:58:34Z",
+      "side": 1,
+      "message": "Let\u0027s rename this file `PipelineLayoutHandle.h` instead of `PipelineD3D12.h`. I know this was mimicing the similarly named `PipelineVk.h`, but that file should also probably be renamed - it has this name for historical reasons.",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fbb768aa_255e9333",
         "filename": "src/dawn/native/d3d12/PipelineD3D12.h",
         "patchSetId": 5
@@ -67,6 +148,29 @@
       "writtenOn": "2026-06-08T10:10:25Z",
       "side": 1,
       "message": "nit: implementation can be in the .cpp file.",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91ec0e0e_3ee82084",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-09T14:58:34Z",
+      "side": 1,
+      "message": "Could be done in a future change, but we could wrap these three in a struct, making each a const member, like:\n\n```\nstruct InvariantParams {\n    const std::vector\u003cD3D12_ROOT_PARAMETER1\u003e mRootParameters;\n    const std::vector\u003cD3D12_DESCRIPTOR_RANGE1\u003e mRanges;\n    const std::vector\u003cD3D12_STATIC_SAMPLER_DESC\u003e mStaticSamplers;\n};\n\nInvariantParams mInvariantParams;\n```\n\nThen here we\u0027d in-place construct an `InvariantParams`, moving in the vectors as you do here. This would guarantee that they could not be modified after creation.",
+      "range": {
+        "startLine": 436,
+        "startChar": 17,
+        "endLine": 436,
+        "endChar": 44
+      },
       "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
