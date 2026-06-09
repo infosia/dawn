@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cc6d432_52353af8",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T18:50:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5258c457_0584054d",
+      "range": {
+        "startLine": 122,
+        "startChar": 63,
+        "endLine": 122,
+        "endChar": 66
+      },
+      "revId": "3ffc11c4c975a73a41279d8c14ec36d9b30486cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df11e115_3a6831e9",
@@ -95,6 +119,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecc326ba_ee2f6615",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T18:50:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3a06d686_f560c74f",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 73
+      },
+      "revId": "3ffc11c4c975a73a41279d8c14ec36d9b30486cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3835ee9_55edd2d9",
@@ -132,6 +180,30 @@
       "side": 1,
       "message": "Added fix to: https://dawn-review.googlesource.com/c/dawn/+/315235",
       "parentUuid": "f3835ee9_55edd2d9",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 195,
+        "endChar": 29
+      },
+      "revId": "3ffc11c4c975a73a41279d8c14ec36d9b30486cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbb4fea7_14395127",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T18:50:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "75cfc61d_4f7b2f2b",
       "range": {
         "startLine": 194,
         "startChar": 4,
