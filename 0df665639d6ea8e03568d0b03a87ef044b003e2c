@@ -16,6 +16,24 @@
       "message": "The conditionality here still seems odd.  Shouldn\u0027t we assert that we got a fence?  Else this test is implicitly following one of two tracks and if there were a bug, it\u0027d be flaky.",
       "revId": "0df665639d6ea8e03568d0b03a87ef044b003e2c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ee72449_6dd2b5ed",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/GPUHardwareBufferTest.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-09T07:23:23Z",
+      "side": 1,
+      "message": "Thanks for pointing out. I\u0027ve updated the tests to strictly assert the fence (requireNotNull) wherever GPU work is actually submitted.",
+      "parentUuid": "a4fc48cf_aade402c",
+      "revId": "0df665639d6ea8e03568d0b03a87ef044b003e2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
