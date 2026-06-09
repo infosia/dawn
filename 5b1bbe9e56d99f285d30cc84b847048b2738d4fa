@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dacad6c_745bf0ab",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T08:36:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0320d1e5_941d3a8e",
+      "range": {
+        "startLine": 1215,
+        "startChar": 43,
+        "endLine": 1215,
+        "endChar": 58
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91c81837_15ba39b5",
@@ -61,6 +85,24 @@
       "writtenOn": "2026-06-08T14:04:35Z",
       "side": 1,
       "message": "Shouldn\u0027t this be a CHECK?",
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ca3fab3_ae0ba379",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T08:36:24Z",
+      "side": 1,
+      "message": "Originally, I was making this call and using the error to determine whether we had the feature, but I since changed that so yea, it makes a lot more sense to just make this a check now! Done.",
+      "parentUuid": "91c81837_15ba39b5",
       "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -88,6 +130,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a3ab539_560f0c17",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T08:36:24Z",
+      "side": 1,
+      "message": "Removed this entirely for the check.",
+      "parentUuid": "09d170ea_c97d8880",
+      "range": {
+        "startLine": 528,
+        "startChar": 64,
+        "endLine": 529,
+        "endChar": 42
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a01157a6_1d734818",
@@ -101,6 +167,30 @@
       "writtenOn": "2026-06-05T23:01:02Z",
       "side": 1,
       "message": "I wouldn\u0027t necessarily expect this to be a waitable handle, unless that\u0027s implied by [`DXGI_SHARED_RESOURCE_READ | DXGI_SHARED_RESOURCE_WRITE`](https://docs.vulkan.org/refpages/latest/refpages/source/VkExportFenceWin32HandleInfoKHR.html#:~:text\u003dDXGI_SHARED_RESOURCE_READ%20%7C%20DXGI_SHARED_RESOURCE_WRITE)? It\u0027s not really clear from the extension text whether you\u0027re supposed to be able to use the handle or only re-import it.\n\nDo tests exercise these codepaths?",
+      "range": {
+        "startLine": 563,
+        "startChar": 22,
+        "endLine": 563,
+        "endChar": 68
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "379f9568_1193e8b5",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T08:36:24Z",
+      "side": 1,
+      "message": "The child CL adds the first tests for this path. It *seems* to work?",
+      "parentUuid": "a01157a6_1d734818",
       "range": {
         "startLine": 563,
         "startChar": 22,
@@ -182,6 +272,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "815a697a_3d5d7747",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T08:36:24Z",
+      "side": 1,
+      "message": "I moved the condition into the FD path. I didn\u0027t bother with the extra value though since I think it should be safe to assume that the `CheckVkSuccess` would fail if something else went wrong.",
+      "parentUuid": "22c2e864_68524e16",
+      "range": {
+        "startLine": 574,
+        "startChar": 8,
+        "endLine": 574,
+        "endChar": 53
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9cc7eea6_e555c0ce",
@@ -195,6 +309,30 @@
       "writtenOn": "2026-06-05T23:01:02Z",
       "side": 1,
       "message": "You can use `Handle` for all three of these constants, then you can move the includes back to the cpp file.",
+      "range": {
+        "startLine": 53,
+        "startChar": 21,
+        "endLine": 53,
+        "endChar": 27
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d03fcc58_8d5fdfa2",
+        "filename": "src/dawn/utils/SystemHandle.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T08:36:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cc7eea6_e555c0ce",
       "range": {
         "startLine": 53,
         "startChar": 21,
