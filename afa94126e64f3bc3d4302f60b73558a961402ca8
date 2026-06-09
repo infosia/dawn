@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7dff6c7d_178489f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T12:00:39Z",
+      "side": 1,
+      "message": "Also if you aren\u0027t already, you could consider using dawn.node (and extending it somehow): https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/node/README.md;l\u003d1?q\u003ddawn%2Fnode%2FREAD\u0026sq\u003d",
+      "revId": "afa94126e64f3bc3d4302f60b73558a961402ca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29d2a350_c7e13429",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
