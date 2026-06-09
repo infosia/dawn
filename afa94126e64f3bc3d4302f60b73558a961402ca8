@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29d2a350_c7e13429",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T11:59:47Z",
+      "side": 1,
+      "message": "Ideally we have something in this PR. It cannot be done in an end2end test because it\u0027s integration with the window manager. Instead you can maybe modify [ManualSurfaceTests.cpp](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/samples/ManualSurfaceTest.cpp;l\u003d1?q\u003dManualSurf\u0026sq\u003d) and check that the results are as expected?",
+      "revId": "afa94126e64f3bc3d4302f60b73558a961402ca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e41520b0_e4a483aa",
+        "filename": "src/dawn/native/vulkan/SwapChainVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T11:59:47Z",
+      "side": 1,
+      "message": "nit: avoid encoding the history of the code in the comment, that\u0027s what git is for. With the other simplifications, this could just be `// Choose the Vulkan alpha mode by directly converting from the WebGPU enum`.",
+      "revId": "afa94126e64f3bc3d4302f60b73558a961402ca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c12e0407_14c5cdd0",
+        "filename": "src/dawn/native/vulkan/SwapChainVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T11:59:47Z",
+      "side": 1,
+      "message": "Thanks to [1], we can make `Auto` and the default case do `DAWN_UNREACHABLE()` to be more precise that we expect these cases to never happen.",
+      "revId": "afa94126e64f3bc3d4302f60b73558a961402ca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bce1ec21_c8ca1e26",
+        "filename": "src/dawn/native/vulkan/SwapChainVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T11:59:47Z",
+      "side": 1,
+      "message": "Thanks to [1] we can use `requestedVk` directly (and assign it to `config.alphaMode` without an intermediate variable).",
+      "revId": "afa94126e64f3bc3d4302f60b73558a961402ca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c7d5b30_bf754788",
+        "filename": "src/dawn/native/vulkan/SwapChainVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T11:59:47Z",
+      "side": 1,
+      "message": "[1] [PhysicalDeviceVk](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/PhysicalDeviceVk.cpp;drc\u003db36238462c111616b68937a3d8a1dc562b043478;l\u003d1591) should reflect the available alpha modes already, the auto alpha mode is handled [here]() and the rest of the alpha modes validated [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Surface.cpp;drc\u003d23a05af69c4d8a53bde357eb16480d012b00d78b;l\u003d246).\n\nIt means that this condition should instead be a `DAWN_CHECK`.",
+      "revId": "afa94126e64f3bc3d4302f60b73558a961402ca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
