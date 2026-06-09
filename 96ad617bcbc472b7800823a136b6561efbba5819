@@ -51,6 +51,24 @@
       "parentUuid": "80b07e8a_25939831",
       "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fdf2579_68aab52f",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T08:34:04Z",
+      "side": 1,
+      "message": "Mmmh yeah the sampler creation path is not something where we can easily validate because we don\u0027t have the driver\u0027s YCbCr info at hand. The YCbCr desc for samplers should always be derived from the reflection of STMs so we could produce an error but it makes a good case for just fixing it for the application. (it would be nice to have validation for the texture view though)",
+      "parentUuid": "d10fc7a8_d98a803b",
+      "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
