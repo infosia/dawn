@@ -16,6 +16,24 @@
       "message": "Need additional backend lines in DAWN_INSTANTIATE_TEST to make sure that all of these paths are tested?",
       "revId": "ce0958ce780e53462a588af4920c86243b171f3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aca0b6e2_3a879fd7",
+        "filename": "src/dawn/tests/end2end/EventTests.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-09T08:37:30Z",
+      "side": 1,
+      "message": "The toggle is set by default when available. I guess we could force disable it for the tests? But I\u0027m not sure how valuable that is?",
+      "parentUuid": "0da005f6_15bc7d2c",
+      "revId": "ce0958ce780e53462a588af4920c86243b171f3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
