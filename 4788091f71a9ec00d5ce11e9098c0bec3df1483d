@@ -33,6 +33,24 @@
       "message": "dawn_enable_null ?",
       "revId": "4788091f71a9ec00d5ce11e9098c0bec3df1483d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58b928e6_52f63a87",
+        "filename": "scripts/args-maximal.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-09T03:56:27Z",
+      "side": 1,
+      "message": "That\u0027s always `true`, the unittests won\u0027t build without it. I don\u0027t even know why it\u0027s configurable.",
+      "parentUuid": "c2259433_a054c9d6",
+      "revId": "4788091f71a9ec00d5ce11e9098c0bec3df1483d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
