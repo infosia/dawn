@@ -16,6 +16,23 @@
       "message": "PTAL. \nAny better way to handle? Thank you.",
       "revId": "edc5cba07755f6bebd864ba191cdb25bdae4ecfb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8325bbb0_bdd8a35f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-06-09T16:17:05Z",
+      "side": 1,
+      "message": "Given that f16 is an optional feature, this is the appropriate short-term way to address a driver bug like this.\n\nIt would be great if we could get fixed drivers out to these devices in a reasonable timespan, but history shows that\u0027s unlikely. The alternative is to implement a workaround in tint, but whether or not that\u0027s feasible will probably take a while to figure out. In the meantime disabling the feature ensures that developers don\u0027t accidentally trigger the broken behavior.",
+      "revId": "edc5cba07755f6bebd864ba191cdb25bdae4ecfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
