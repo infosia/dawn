@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32adcdb5_f2305e34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-09T23:41:11Z",
+      "side": 1,
+      "message": "It works! both x64 and arm. And I copied the arm binaries to mac and that worked too",
+      "revId": "85f2b3c95465d4859750e1fda26f4d17e2c1f875",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
