@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e3fd884a_18393834",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-09T13:33:52Z",
+      "side": 1,
+      "message": "I filed a bug to track these three issues, thank you. https://crbug.com/521775317",
+      "parentUuid": "b4531462_7e707566",
+      "revId": "4980e21bb32ae66e5b91e95117b467fa065eb411",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2aca0ff8_cd530bcb",
         "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major.cc",
         "patchSetId": 5
