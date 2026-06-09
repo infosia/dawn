@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6cbeb7d4_71c2386d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-09T01:50:52Z",
+      "side": 1,
+      "message": "I think most of those things also have reflection information, so they \"just work\". I just gave this a quick try and it was only the SPIR-V version enum that had needed a `operator\u003c\u003c` overload:\nhttps://dawn-review.git.corp.google.com/c/dawn/+/315055\n\nNot trying to hijack your CL, but I do think this kind of approach would be easier to maintain in the long run, and the helper could also be used outside of the fuzzers too. LMK what you think (example output in that CL as a comment).",
+      "parentUuid": "8fdcc7e1_46cdfae8",
+      "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc83b5dc_2577769f",
         "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
         "patchSetId": 1
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "I couldn\u0027t get any params to pass to the wgsl fuzzer, so I wouldn\u0027t be able to test it. I just did a straight std::cerr \u003c\u003c options and then removed it later, heh.\n\nWe _should_ add it to verbose, but that can come ofterwards when we figure out why wgsl fuzzer options don\u0027t seem to be working?",
       "parentUuid": "fc83b5dc_2577769f",
+      "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6752769_db45a5d0",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-09T01:50:52Z",
+      "side": 1,
+      "message": "Weird, just tested and `--verbose` is working fine for me.",
+      "parentUuid": "f7228f81_40bdba60",
       "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
