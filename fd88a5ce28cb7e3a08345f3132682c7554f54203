@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "baf9805b_98c9359f",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T08:41:34Z",
+      "side": 1,
+      "message": "The method is used to know when we can skip dirtying bindgroups. Because the function returns `true` in a smaller amount of cases, it means we will dirty the bindgroups more often than previously. This looks correct, but means that there was previously a bug when pipelines with the same layout but different amount of immediates.\n\nAh ok that was not possible previously because this is the patch stack that folds existing root constant usage into immediates. Can we make sure to add a test in the future with a two render pipelines on the same layout, one with internal immediates and one without (like for base vertex) and check that the dirtying logic happens correctly?",
+      "parentUuid": "f7be0ff2_8fdf34c7",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbb768aa_255e9333",
