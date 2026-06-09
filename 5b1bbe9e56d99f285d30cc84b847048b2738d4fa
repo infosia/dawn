@@ -201,6 +201,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3c61e64_52b8d3e6",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-09T17:43:53Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "379f9568_1193e8b5",
+      "range": {
+        "startLine": 563,
+        "startChar": 22,
+        "endLine": 563,
+        "endChar": 68
+      },
+      "revId": "5b1bbe9e56d99f285d30cc84b847048b2738d4fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d9b111f_cb799ded",
