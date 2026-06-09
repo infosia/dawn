@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f7be0ff2_8fdf34c7",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-09T00:40:44Z",
+      "side": 1,
+      "message": "It tries to be an optimization for the scenario that different pipelines share the same root signature. So that in UpdateRootSignature call we could skip the setRootSignature call.",
+      "parentUuid": "4a6eeb43_0b6e96aa",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fbb768aa_255e9333",
         "filename": "src/dawn/native/d3d12/PipelineD3D12.h",
         "patchSetId": 5
