@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dfce1e41_a5c6b6c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-09T01:55:45Z",
+      "side": 1,
+      "message": "Your\u0027s is better, closing this in favour of yours.",
+      "parentUuid": "6cbeb7d4_71c2386d",
+      "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc83b5dc_2577769f",
         "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
         "patchSetId": 1
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "Weird, just tested and `--verbose` is working fine for me.",
       "parentUuid": "f7228f81_40bdba60",
+      "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75921859_c8e3e37f",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-09T01:55:45Z",
+      "side": 1,
+      "message": "Yea, it also works for Ryan, we\u0027re wondering if it\u0027s because of the options I\u0027m building with. Ryan is going to try to repro what I\u0027m seeing tomorrow.",
+      "parentUuid": "e6752769_db45a5d0",
       "revId": "baafcfd23be3b8901ca5df9548244e1c6d7383b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
