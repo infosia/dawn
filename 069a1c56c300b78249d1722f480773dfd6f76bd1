@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efc88d02_6621ee28",
+        "filename": "src/utils/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T12:05:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2809a4cc_63007e7a",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "069a1c56c300b78249d1722f480773dfd6f76bd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e2a567e_b4b6493d",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19aab31d_0ff19edd",
+        "filename": "src/utils/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T12:05:46Z",
+      "side": 1,
+      "message": "I think it hides the intent more, which is we don\u0027t support a size that\u0027s the max for that index type.",
+      "parentUuid": "2e2a567e_b4b6493d",
+      "revId": "069a1c56c300b78249d1722f480773dfd6f76bd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "438886b5_a0865f55",
@@ -54,6 +96,24 @@
       "writtenOn": "2026-06-04T14:57:13Z",
       "side": 1,
       "message": "```suggestion\n        DAWN_CHECK(mSize \u003c\u003d SpanBase::extent);\n```",
+      "revId": "069a1c56c300b78249d1722f480773dfd6f76bd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ddc1987_4b8b6d88",
+        "filename": "src/utils/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-09T12:05:46Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "438886b5_a0865f55",
       "revId": "069a1c56c300b78249d1722f480773dfd6f76bd1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
