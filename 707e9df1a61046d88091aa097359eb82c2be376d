@@ -51,6 +51,24 @@
       "parentUuid": "99006d07_596bdcd3",
       "revId": "707e9df1a61046d88091aa097359eb82c2be376d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "625637a4_01010c5e",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-09T11:53:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7922b90d_98a646d3",
+      "revId": "707e9df1a61046d88091aa097359eb82c2be376d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
