@@ -85,6 +85,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6700639a_46393e0c",
+        "filename": "src/utils/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-09T13:19:04Z",
+      "side": 1,
+      "message": "If it hides intent, then is the static on 81 useful? Won\u0027t it always have the issue that it hides intent?",
+      "parentUuid": "19aab31d_0ff19edd",
+      "revId": "069a1c56c300b78249d1722f480773dfd6f76bd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "438886b5_a0865f55",
         "filename": "src/utils/span.h",
         "patchSetId": 3
