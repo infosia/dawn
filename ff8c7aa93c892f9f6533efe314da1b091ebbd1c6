@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ff1a2cc_c180723e",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-09T03:39:11Z",
+      "side": 1,
+      "message": "structural",
+      "revId": "ff8c7aa93c892f9f6533efe314da1b091ebbd1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
