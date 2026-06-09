@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4ddd7bf_1822f3e5",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-09T19:47:26Z",
+      "side": 1,
+      "message": "Nit: can assume return type is non-null",
+      "fixSuggestions": [
+        {
+          "fixId": "1ebaa82c_df18061a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/functional_validator.cc",
+              "range": {
+                "startLine": 333,
+                "startChar": 0,
+                "endLine": 334,
+                "endChar": 0
+              },
+              "replacement": "            if (DAWN_UNLIKELY(!func-\u003eReturnType()-\u003eIs\u003ccore::type::Void\u003e())) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a79802c7d433da8102e5caeeea1db141fb58dcdd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c67ee5b5_0b9f2dd9",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-09T19:47:26Z",
+      "side": 1,
+      "message": "Arguably functional?",
+      "revId": "a79802c7d433da8102e5caeeea1db141fb58dcdd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
