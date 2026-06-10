@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "ce0ef57a28ab181b4d494cd4e64c6dc45452633a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cea9dd2f_f8909dfe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004016
+      },
+      "writtenOn": "2026-06-10T13:35:08Z",
+      "side": 1,
+      "message": "I very much approve of rec2020 linear (as opposed to rec2100 linear, cause that can be thought to be \"an HDR space\" whereupon the world wonders what its white means).",
+      "revId": "ce0ef57a28ab181b4d494cd4e64c6dc45452633a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
