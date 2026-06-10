@@ -42,6 +42,7 @@ extern "C" {
 // are done using libdawn_proc since further usage will cause a segfault instead of calling an
 // unexpected function.
 WGPU_EXPORT void dawnProcSetProcs(const DawnProcTable* procs);
+WGPU_EXPORT void dawnProcSetProcsByGetProcAddress(WGPUProcGetProcAddress getProcAddress);
 
 // Returns the static array of uint8_t of size 20 representing the Dawn version.
 WGPU_EXPORT const uint8_t* dawnProcGetVersion();

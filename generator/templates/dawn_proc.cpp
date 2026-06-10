@@ -70,6 +70,31 @@ void {{prefix}}ProcSetProcs(const {{Prefix}}ProcTable* procs_) {
     }
 }
 
+void {{prefix}}ProcSetProcsByGetProcAddress(WGPUProcGetProcAddress getProcAddress) {
+    if (!getProcAddress) {
+        {{prefix}}ProcSetProcs(nullptr);
+        return;
+    }
+
+    {{Prefix}}ProcTable newProcs = MakeNullProcTable();
+
+    {% for function in by_category["function"] %}
+        newProcs.{{as_varName(function.name)}} = reinterpret_cast<{{as_cProc(None, function.name)}}>(
+            getProcAddress({"{{as_cMethod(None, function.name)}}", sizeof("{{as_cMethod(None, function.name)}}") - 1})
+        );
+    {% endfor %}
+
+    {% for (type, methods) in c_methods_sorted_by_parent %}
+        {% for method in methods %}
+            newProcs.{{as_varName(type.name, method.name)}} = reinterpret_cast<{{as_cProc(type.name, method.name)}}>(
+                getProcAddress({"{{as_cMethod(type.name, method.name)}}", sizeof("{{as_cMethod(type.name, method.name)}}") - 1})
+            );
+        {% endfor %}
+    {% endfor %}
+
+    {{prefix}}ProcSetProcs(&newProcs);
+}
+
 const uint8_t* {{prefix}}ProcGetVersion() {
     return dawn::kDawnVersion.data();
 }
