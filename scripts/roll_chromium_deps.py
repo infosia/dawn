@@ -62,7 +62,14 @@ DEFAULT_REVISION_CHARACTERS = 10
 
 # GN variables that need to be synced. A map from Dawn variable name to
 # Chromium variable name.
-SYNCED_VARIABLES = {}
+SYNCED_VARIABLES = {
+    # For Android builds in standalone.
+    'android_ndk_version': None,
+    'android_sdk_build-tools_version': None,
+    'android_sdk_emulator_version': None,
+    'android_sdk_platform-tools_version': None,
+    'android_sdk_platforms_version': None,
+}
 
 # DEPS entries which have dep_type = cipd. In the Chromium DEPS file, these
 # will be prefixed with src/.
@@ -73,6 +80,13 @@ SYNCED_CIPD_DEPS = {
     'buildtools/win',
     'third_party/ninja',
     'third_party/siso/cipd',
+
+    # For Android builds in standalone.
+    'third_party/android_sdk/public',
+    'third_party/android_toolchain/ndk',
+    'third_party/jdk/current',
+    'third_party/android_build_tools/aapt2/cipd',
+    'third_party/android_build_tools/manifest_merger/cipd',
 }
 
 # DEPS entries which have dep_type = gcs. In the Chromium DEPS file, these will
@@ -126,11 +140,16 @@ SYNCED_REPOS = {
     # third_party/webgpu-cts is technically used by both Chromium and Dawn, but
     # they are used for different purposes and the CTS roller needs to roll
     # Dawn's copy in order to update expectations.
+
+    # For Android builds in standalone.
+    'third_party/cpu_features/src': None,
+    'third_party/libunwind/src': None,
 }
 
 # Chromium directories that are exported as pseudo-repos in
 # chromium.googlesource.com under chromium/src/. Mapping of Dawn path to
 # Chromium src-relative path. None means that the names are identical.
+# NOTE: These are always rolled to top-of-tree - they ignore --revision.
 EXPORTED_CHROMIUM_REPOS = {
     'build': None,
     'buildtools': None,
@@ -147,6 +166,11 @@ EXPORTED_CHROMIUM_REPOS = {
     'tools/protoc_wrapper': None,
     'tools/valgrind': None,
     'tools/win': None,
+
+    # For Android builds in standalone.
+    'third_party/android_build_tools': None,
+    'third_party/android_sdk': None,
+    'third_party/ijar': None,
 }
 
 
@@ -545,6 +569,7 @@ def _get_changed_variables(dawn_deps: dict,
     """
     changed_variables = []
     for dawn_var, chromium_var in SYNCED_VARIABLES.items():
+        chromium_var = chromium_var or dawn_var
         dawn_value = dawn_deps['vars'].get(dawn_var)
         chromium_value = chromium_deps['vars'].get(chromium_var)
         if not dawn_value:
