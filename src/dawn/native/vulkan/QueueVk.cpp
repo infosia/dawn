@@ -27,6 +27,7 @@
 
 #include "src/dawn/native/vulkan/QueueVk.h"
 
+#include <array>
 #include <limits>
 #include <optional>
 #include <utility>
@@ -34,11 +35,13 @@
 #include "absl/cleanup/cleanup.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/dawn/common/MatchVariant.h"
 #include "src/dawn/common/Math.h"
 #include "src/dawn/native/Buffer.h"
 #include "src/dawn/native/CommandValidation.h"
 #include "src/dawn/native/Commands.h"
 #include "src/dawn/native/DynamicUploader.h"
+#include "src/dawn/native/WaitAnySystemEvent.h"
 #include "src/dawn/native/vulkan/CommandBufferVk.h"
 #include "src/dawn/native/vulkan/CommandRecordingContextVk.h"
 #include "src/dawn/native/vulkan/DeviceVk.h"
@@ -135,10 +138,27 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
     return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
         ExecutionSerial fenceSerial(0u);
         while (!fencesInFlight->empty()) {
-            VkFence fence = fencesInFlight->front().first;
-            ExecutionSerial tentativeSerial = fencesInFlight->front().second;
-            VkResult result = VkResult::WrapUnsafe(INJECT_ERROR_OR_RUN(
-                device->fn.GetFenceStatus(device->GetVkDevice(), fence), VK_ERROR_DEVICE_LOST));
+            if (fencesInFlight->front().waiterCount > 0) {
+                // If there is currently another waiter, that waiter will also call this function
+                // eventually, so we defer it to the last waiter to handle recycling the fence.
+                return fenceSerial;
+            }
+
+            const auto& fenceOrHandle = fencesInFlight->front().fenceOrHandle;
+            ExecutionSerial tentativeSerial = fencesInFlight->front().serial;
+
+            VkResult result = MatchVariant(
+                fenceOrHandle,
+                [&](const VkFence& fence) {
+                    return VkResult::WrapUnsafe(
+                        INJECT_ERROR_OR_RUN(device->fn.GetFenceStatus(device->GetVkDevice(), fence),
+                                            VK_ERROR_DEVICE_LOST));
+                },
+                [&](const utils::SystemHandle& exportedHandle) {
+                    return WaitOneSystemHandle(exportedHandle.Duplicate(), Nanoseconds(0u))
+                               ? VkResult::WrapUnsafe(VK_SUCCESS)
+                               : VkResult::WrapUnsafe(VK_NOT_READY);
+                });
 
             // Fence are added in order, so we can stop searching as soon
             // as we see one that's not ready.
@@ -151,7 +171,12 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
             // Update fenceSerial since fence is ready.
             fenceSerial = tentativeSerial;
 
-            mUnusedFences->push_back(fence);
+            MatchVariant(
+                fenceOrHandle,  // Comment to force formatting.
+                [&](const VkFence& fence) { mUnusedFences->push_back(fence); },
+                [](const utils::SystemHandle&) {
+                    // Exported handles are closed/destroyed when popped.
+                });
             fencesInFlight->pop_front();
         }
         return fenceSerial;
@@ -352,7 +377,7 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
         device->GetFencedDeleter()->DeleteWhenUnused(semaphore);
     }
     IncrementLastSubmittedCommandSerial();
-    mFencesInFlight->emplace_back(fence, GetLastSubmittedCommandSerial());
+    mFencesInFlight->push_back(FenceInFlight{fence, GetLastSubmittedCommandSerial(), 0});
 
     for (auto texture : mRecordingContext.specialSyncTextures) {
         DAWN_TRY(texture->OnAfterSubmit());
@@ -439,7 +464,7 @@ ResultOrError<VkFence> Queue::GetUnusedFence() {
         ExecutionSerial lowestSerial = kBeginningOfGPUTime;
         mFencesInFlight.Use([&](auto fencesInFlight) {
             if (fencesInFlight->size() >= kMaxFencesInFlight) {
-                lowestSerial = fencesInFlight->front().second;
+                lowestSerial = fencesInFlight->front().serial;
             }
         });
 
@@ -485,7 +510,13 @@ void Queue::DestroyImpl(DestroyReason reason) {
     // Delete them since at this point all commands are complete.
     mFencesInFlight.Use([&](auto fencesInFlight) {
         while (!fencesInFlight->empty()) {
-            device->fn.DestroyFence(vkDevice, *fencesInFlight->front().first, nullptr);
+            MatchVariant(
+                fencesInFlight->front().fenceOrHandle,
+                [&](const VkFence& fence) { device->fn.DestroyFence(vkDevice, fence, nullptr); },
+                [](const utils::SystemHandle&) {
+                    // Exported handles are closed/destroyed when popped or when the deque is
+                    // cleared.
+                });
             fencesInFlight->pop_front();
         }
     });
@@ -511,101 +542,167 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
     // specified).
     // TODO(crbug.com/344798087): Handle the issue of timeouts in a more general way further up the
     // stack.
-    while (1) {
-        ExecutionSerial completedSerial = kWaitSerialTimeout;
-        VkResult waitResult = mFencesInFlight.Use([&](auto fencesInFlight) {
-            // Search from for the first fence >= serial.
-            VkFence waitFence = VK_NULL_HANDLE;
+    std::variant<VkFence, utils::SystemHandle> fenceOrHandle;
+    ExecutionSerial completedSerial = kWaitSerialTimeout;
+
+    mFencesInFlight.Use([&](auto fencesInFlight) {
+        for (auto it = fencesInFlight->begin(); it != fencesInFlight->end(); ++it) {
+            if (it->serial >= waitSerial) {
+                completedSerial = it->serial;
+                it->waiterCount++;
+
+                MatchVariant(
+                    it->fenceOrHandle,  // Comment to force formatting.
+                    [&](const VkFence& fence) { fenceOrHandle = fence; },
+                    [&](const utils::SystemHandle& exportedHandle) {
+                        fenceOrHandle = exportedHandle.Duplicate();
+                    });
+                break;
+            }
+        }
+    });
+
+    // If we did not find a serial to wait for, then that means the serial must already be
+    // completed.
+    if (completedSerial == kWaitSerialTimeout) {
+        return waitSerial;
+    }
+
+    // Cleanup routine to ensure that we unset the waiterCount for the fence or handle.
+    absl::Cleanup decrementWaiterCount = [&] {
+        mFencesInFlight.Use([&](auto fencesInFlight) {
             for (auto it = fencesInFlight->begin(); it != fencesInFlight->end(); ++it) {
-                if (it->second >= waitSerial) {
-                    waitFence = it->first;
-                    completedSerial = it->second;
+                if (it->serial == completedSerial) {
+                    DAWN_CHECK(it->waiterCount > 0);
+                    it->waiterCount--;
                     break;
                 }
             }
-            if (waitFence == VK_NULL_HANDLE) {
-                // Fence not found. This serial must have already completed.
-                // Return a VK_SUCCESS status.
-                completedSerial = waitSerial;
-                return VkResult::WrapUnsafe(VK_SUCCESS);
-            }
-            return VkResult::WrapUnsafe(
-                INJECT_ERROR_OR_RUN(device->fn.WaitForFences(vkDevice, 1, &*waitFence, true,
-                                                             static_cast<uint64_t>(timeout)),
-                                    VK_ERROR_DEVICE_LOST));
         });
-        if (waitResult == VK_TIMEOUT) {
-            // There is evidence that `VK_TIMEOUT` can get returned even when the
-            // client has specified an infinite timeout (e.g., due to signals). Retry
-            // waiting on the fence in this case in order to satisfy the semantics
-            // that the function should return only when either (a) the fences are
-            // signaled or (b) the passed-in timeout is reached. Note that this can
-            // result in this function busy-looping forever in this case, but the
-            // client has explicitly requested this behavior by passing in an infinite
-            // timeout.
-            // TODO(crbug.com/344798087): Handle the issue of timeouts in a more general way further
-            // up the stack.
-            if (static_cast<uint64_t>(timeout) == std::numeric_limits<uint64_t>::max()) {
-                continue;
+    };
+
+    return MatchVariant(
+        fenceOrHandle,
+        [&](VkFence& fence) -> ResultOrError<ExecutionSerial> {
+            if (fence == VK_NULL_HANDLE) {
+                // If the fence is VK_NULL_HANDLE, that means that it was exported but was
+                // already complete by the time it was finished exporting.
+                return waitSerial;
             }
-            return kWaitSerialTimeout;
-        }
-        DAWN_TRY(CheckVkSuccess(::VkResult(waitResult), "vkWaitForFences"));
-        return completedSerial;
-    }
+
+            VkResult waitResult = VkResult::WrapUnsafe(VK_TIMEOUT);
+            do {
+                // There is evidence that `VK_TIMEOUT` can get returned even when the client
+                // has specified an infinite timeout (e.g., due to signals). Retry waiting on
+                // the fence in this case in order to satisfy the semantics that the function
+                // should return only when either (a) the fences are signaled or (b) the
+                // passed-in timeout is reached. Note that this can result in this function
+                // busy-looping forever in this case, but the client has explicitly requested
+                // this behavior by passing in an infinite timeout.
+                // TODO(crbug.com/344798087): Handle the issue of timeouts in a more general way
+                // further up the stack.
+                waitResult = VkResult::WrapUnsafe(
+                    INJECT_ERROR_OR_RUN(device->fn.WaitForFences(vkDevice, 1, &*fence, true,
+                                                                 static_cast<uint64_t>(timeout)),
+                                        VK_ERROR_DEVICE_LOST));
+            } while (waitResult == VK_TIMEOUT &&
+                     static_cast<uint64_t>(timeout) == std::numeric_limits<uint64_t>::max());
+
+            if (waitResult != VK_TIMEOUT) {
+                DAWN_TRY(CheckVkSuccess(::VkResult(waitResult), "vkWaitForFences"));
+                return completedSerial;
+            } else {
+                return kWaitSerialTimeout;
+            }
+        },
+        [&](utils::SystemHandle& waitHandle) -> ResultOrError<ExecutionSerial> {
+            if (WaitOneSystemHandle(std::move(waitHandle), timeout)) {
+                return completedSerial;
+            } else {
+                return kWaitSerialTimeout;
+            }
+        });
 }
 
 ResultOrError<SystemEventReceiver> Queue::GetSystemEventReceiverForSerial(ExecutionSerial serial) {
     Device* device = ToBackend(GetDevice());
     DAWN_CHECK(device->IsToggleEnabled(Toggle::ExportQueueEventsToSystemEvents));
 
-    // Find the relevant fence for the serial.
-    VkFence fence = VK_NULL_HANDLE;
-    mFencesInFlight.Use([&](auto fencesInFlight) {
-        // Search from for the first fence >= serial.
+    return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<SystemEventReceiver> {
         for (auto it = fencesInFlight->begin(); it != fencesInFlight->end(); ++it) {
-            if (it->second >= serial) {
-                fence = it->first;
-                break;
+            // Search for the first fence/handle >= serial.
+            if (it->serial < serial) {
+                continue;
             }
-        }
-    });
 
-    // If we didn't find a fence, then we can just return an already signaled receiver.
-    if (fence == VK_NULL_HANDLE) {
-        return SystemEventReceiver::CreateAlreadySignaled();
-    }
+            return MatchVariant(
+                it->fenceOrHandle,
+                [&](VkFence& fence) -> ResultOrError<SystemEventReceiver> {
+                    if (fence == VK_NULL_HANDLE) {
+                        // The fence is only ever null if we've exported it, and by the time the
+                        // export completed, the fence already completed.
+                        return SystemEventReceiver::CreateAlreadySignaled();
+                    }
 
-    utils::SystemHandle::Handle handle = utils::SystemHandle::kInvalidHandle;
+                    utils::SystemHandle::Handle handle = utils::SystemHandle::kInvalidHandle;
 #if DAWN_PLATFORM_IS(POSIX)
-    VkFenceGetFdInfoKHR info;
-    info.sType = VK_STRUCTURE_TYPE_FENCE_GET_FD_INFO_KHR;
-    info.pNext = nullptr;
-    info.fence = fence;
-    info.handleType = VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT;
-    DAWN_TRY(CheckVkSuccess(device->fn.GetFenceFdKHR(device->GetVkDevice(), &info, &handle),
-                            "vkGetFenceFdKHR"));
-    // If we raced, and by the time that we got the FD, the fence was already complete, it's
-    // possible for |handle| to still be equal to |kInvalidHandle| even if we succeed, so check it
-    // again and handle it with a signaled receiver if necessary.
-    if (handle == utils::SystemHandle::kInvalidHandle) {
-        return SystemEventReceiver::CreateAlreadySignaled();
-    }
-#elif DAWN_PLATFORM_IS(WINDOWS)
-    VkFenceGetWin32HandleInfoKHR info;
-    info.sType = VK_STRUCTURE_TYPE_FENCE_GET_WIN32_HANDLE_INFO_KHR;
-    info.pNext = nullptr;
-    info.fence = fence;
-    info.handleType = VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT;
-    DAWN_TRY(
-        CheckVkSuccess(device->fn.GetFenceWin32HandleKHR(device->GetVkDevice(), &info, &handle),
-                       "vkGetFenceWin32HandleKHR"));
-#else
-    DAWN_UNREACHABLE();
-#endif
+                    VkFenceGetFdInfoKHR info;
+                    info.sType = VK_STRUCTURE_TYPE_FENCE_GET_FD_INFO_KHR;
+                    info.pNext = nullptr;
+                    info.fence = fence;
+                    info.handleType = VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT;
+                    DAWN_TRY(CheckVkSuccess(
+                        device->fn.GetFenceFdKHR(device->GetVkDevice(), &info, &handle),
+                        "vkGetFenceFdKHR"));
 
-    DAWN_CHECK(handle != utils::SystemHandle::kInvalidHandle);
-    return SystemEventReceiver(utils::SystemHandle::Acquire(handle));
+                    // Once we export the fence to a FD, the fence is reset to unsignaled because
+                    // the transference is "copy" for exported FDs, so move the fence back into the
+                    // unused pool.
+                    mUnusedFences->push_back(fence);
+
+                    // If we raced, and by the time that we got the FD, the fence was already
+                    // complete, it's possible for |handle| to still be equal to
+                    // |kInvalidHandle| even if we succeed, so check it again and handle it with
+                    // a signaled receiver if necessary. We also update the fence to be
+                    // VK_NULL_HANDLE in this case so that we don't try to export it again.
+                    if (handle == utils::SystemHandle::kInvalidHandle) {
+                        fence = VK_NULL_HANDLE;
+                        return SystemEventReceiver::CreateAlreadySignaled();
+                    } else {
+                        it->fenceOrHandle = std::move(utils::SystemHandle::Duplicate(handle));
+                        return SystemEventReceiver(utils::SystemHandle::Acquire(handle));
+                    }
+#elif DAWN_PLATFORM_IS(WINDOWS)
+                    VkFenceGetWin32HandleInfoKHR info;
+                    info.sType = VK_STRUCTURE_TYPE_FENCE_GET_WIN32_HANDLE_INFO_KHR;
+                    info.pNext = nullptr;
+                    info.fence = fence;
+                    info.handleType = VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT;
+                    DAWN_TRY(CheckVkSuccess(
+                        device->fn.GetFenceWin32HandleKHR(device->GetVkDevice(), &info, &handle),
+                        "vkGetFenceWin32HandleKHR"));
+
+                    // For the Windows handle, the Vulkan specs suggest that the handle is of
+                    // transference "reference" type which I believe means that each handle created
+                    // here can be used independently, all while the fence is also still valid.
+                    // Therefore, we don't want to override the fence in the entry, and instead just
+                    // use the handle for this one use case.
+                    DAWN_ASSERT(handle != utils::SystemHandle::kInvalidHandle);
+                    return SystemEventReceiver(utils::SystemHandle::Acquire(handle));
+#else
+                    DAWN_UNREACHABLE();
+#endif
+                },
+                [&](const utils::SystemHandle& exportedHandle)
+                    -> ResultOrError<SystemEventReceiver> {
+                    // Already exported. Just duplicate the handle.
+                    return SystemEventReceiver(exportedHandle.Duplicate());
+                });
+        }
+
+        // If we didn't find any fence/handle, then we can just return an already signaled receiver.
+        return SystemEventReceiver::CreateAlreadySignaled();
+    });
 }
 
 }  // namespace dawn::native::vulkan

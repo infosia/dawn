@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_COMMON_MATCHVARIANT_H_
 #define SRC_DAWN_COMMON_MATCHVARIANT_H_
 
+#include <utility>
 #include <variant>
 
 #include "absl/functional/overload.h"
@@ -37,8 +38,8 @@ namespace dawn {
 // With this template we can simplify the call of
 // std::visit(absl::Overload{...}, variant).
 template <typename Variant, typename... Callables>
-auto MatchVariant(const Variant& v, Callables... args) {
-    return std::visit(absl::Overload{args...}, v);
+auto MatchVariant(Variant&& v, Callables&&... args) {
+    return std::visit(absl::Overload{std::forward<Callables>(args)...}, std::forward<Variant>(v));
 }
 
 }  // namespace dawn
