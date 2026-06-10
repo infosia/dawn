@@ -25,6 +25,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import("${dawn_angle_dir}/gni/angle.gni")
 import("../../../scripts/dawn_overrides_with_defaults.gni")
 
 import("//build_overrides/build.gni")
@@ -810,6 +811,7 @@ source_set("sources") {
   }
 
   if (dawn_enable_opengl) {
+    defines += [ "DAWN_ANGLE_LIBS_SUFFIX=\"${angle_libs_suffix}\"" ]
     public_deps += [
       ":opengl_loader_gen",
       "${dawn_root}/src/tint/api/common",
