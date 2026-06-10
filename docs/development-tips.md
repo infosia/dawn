@@ -54,4 +54,12 @@ If:
     - "src/.*_[Mm]etal.*"
 CompileFlags:
   CompilationDatabase: out/Debug-mac
+---
+If:
+  PathMatch:
+    - "src/.*[Aa]ndroid.*"
+    - "src/.*AHardwareBuffer.*"
+    - "src/.*AHB.*"
+CompileFlags:
+  CompilationDatabase: out/Debug-android
 ```

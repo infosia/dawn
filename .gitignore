@@ -14,11 +14,13 @@
 /testing
 /third_party/abseil-cpp/
 /third_party/agility-sdk/src
+/third_party/android_toolchain
 /third_party/angle
 /third_party/binutils
 /third_party/catapult
 /third_party/clang-format
 /third_party/cpplint
+/third_party/cpu_features/src
 /third_party/depot_tools
 /third_party/directx-shader-compiler/src
 /third_party/directx-headers/src
@@ -26,6 +28,7 @@
 /third_party/glslang/src/
 /third_party/google_benchmark/src
 /third_party/googletest
+/third_party/jdk/current
 /third_party/gpuweb
 /third_party/jinja2
 /third_party/jsoncpp

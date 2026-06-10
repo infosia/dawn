@@ -27,4 +27,4 @@ target_os = []
 if platform.system() == "Darwin":
     target_os += ['win']
 elif platform.system() == "Linux":
-    target_os += ['win', 'mac']
+    target_os += ['win', 'mac', 'android']
