@@ -22,6 +22,30 @@
       },
       "revId": "50d6e4583b0e906b18e4019cd46d90c49908dc11",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34b01867_9eff5c0f",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-10T20:05:18Z",
+      "side": 1,
+      "message": "If we think this is the issue it seems like it could happen on non-android Linux just as well (except that desktop distros set a higher default limit).\n\nWe could diagnose this by checking the number of open fds (number of files in `/proc/self/fd`) and the maximum number of fds for the process (`getrlimit(RLIMIT_NOFILE)`), and then potentially disable fence support based on the max fds instead of whether it\u0027s Android or not.",
+      "parentUuid": "3248f7fb_019edc1d",
+      "range": {
+        "startLine": 1522,
+        "startChar": 5,
+        "endLine": 1530,
+        "endChar": 22
+      },
+      "revId": "50d6e4583b0e906b18e4019cd46d90c49908dc11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
