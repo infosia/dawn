@@ -51,6 +51,28 @@ if (build_with_chromium) {
 config("internal_config") {
   include_dirs = [ "${dawn_root}" ]
 
+  cflags = []
+
+  if (is_clang) {
+    cflags += [
+      # We use __builtin_assume in DAWN_RELEASE_ASSUME, allow ignoring
+      # side-effects there.
+      "-Wno-assume",
+
+      # Flags use of __COUNTER__, which is used in histogram macros that were
+      # largely copied from Chromium. Chromium continues to use __COUNTER__ in
+      # their copy.
+      "-Wno-c2y-extensions",
+
+      # Flags normal usages of structs, especially in Vulkan.
+      # Pushes developers away from using designated initializers.
+      "-Wno-missing-designated-field-initializers",
+    ]
+
+    # Dawn doesn't have the annotations to work with this analysis.
+    cflags_cc = [ "-Wno-thread-safety" ]
+  }
+
   defines = []
 
   if (dawn_always_assert || dcheck_always_on || is_debug ||

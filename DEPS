@@ -3,6 +3,7 @@ use_relative_paths = True
 gclient_gn_args_file = 'build/config/gclient_args.gni'
 
 gclient_gn_args = [
+  'android_ndk_version',
   'build_with_chromium',
   'dawn_node',
   'dawn_wasm',
@@ -16,6 +17,10 @@ vars = {
   'dawn_git': 'https://dawn.googlesource.com',
   'github_git': 'https://github.com',
   'swiftshader_git': 'https://swiftshader.googlesource.com',
+
+  # The version of the NDK. Set here, to allow the autoroller to update this
+  # value when updating the CIPD hash.
+  'android_ndk_version': Str('2@30.0.14608247'),
 
   'dawn_standalone': True,
   'dawn_node': False, # Also fetches dependencies required for building NodeJS bindings.
@@ -83,6 +88,23 @@ vars = {
   # Checkout //tools/code_coverage from Chromium and fetches the
   # prebuilt versions of llvm-cov and llvm-profdata.
   'checkout_clang_coverage_tools': False,
+
+  # Three lines of non-changing comments so that
+  # the commit queue can handle CLs rolling android_sdk_build-tools_version
+  # and whatever else without interference from each other.
+  'android_sdk_build-tools_version': 'febJrTgiK9s1ANoUlc4Orn3--zs9GjGCj2vQc8g7OaMC',
+  # Three lines of non-changing comments so that
+  # the commit queue can handle CLs rolling android_sdk_emulator_version
+  # and whatever else without interference from each other.
+  'android_sdk_emulator_version': '9lGp8nTUCRRWGMnI_96HcKfzjnxEJKUcfvfwmA3wXNkC',
+  # Three lines of non-changing comments so that
+  # the commit queue can handle CLs rolling android_sdk_platform-tools_version
+  # and whatever else without interference from each other.
+  'android_sdk_platform-tools_version': 'qTD9QdBlBf3dyHsN1lJ0RH6AhHxR42Hmg2Ih-Vj4zIEC',
+  # Three lines of non-changing comments so that
+  # the commit queue can handle CLs rolling android_sdk_platforms_version
+  # and whatever else without interference from each other.
+  'android_sdk_platforms_version': 'WhtP32Q46ZHdTmgCgdauM3ws_H9iPoGKEZ_cPggcQ6wC',
 }
 
 deps = {
@@ -633,6 +655,95 @@ deps = {
   'third_party/partition_alloc': {
     'url': '{chromium_git}/chromium/src/base/allocator/partition_allocator.git@b1d0141bcecfda2bfd108882d818fc5df70ae5c7',
     'condition': 'dawn_standalone',
+  },
+
+  # For Android builds in standalone.
+  # FIXME: placeholder_chromium roll probably needs to roll these?
+  'third_party/android_sdk': {
+    'url': Var('chromium_git') + '/chromium/src/third_party/android_sdk@7a2315c1042afa89610bfd7ca6dd5d313dbbfc67',
+    'condition': 'checkout_android and dawn_standalone',
+  },
+  'third_party/android_sdk/public': {
+    'packages': [
+      {
+        'package': 'chromium/third_party/android_sdk/public/build-tools/37.0.0',
+        'version': Var('android_sdk_build-tools_version'),
+      },
+      {
+        'package': 'chromium/third_party/android_sdk/public/emulator',
+        'version': Var('android_sdk_emulator_version'),
+      },
+      {
+        'package': 'chromium/third_party/android_sdk/public/platform-tools',
+        'version': Var('android_sdk_platform-tools_version'),
+      },
+      {
+        'package': 'chromium/third_party/android_sdk/public/platforms/android-37.0',
+        'version': Var('android_sdk_platforms_version'),
+      },
+      {
+        'package': 'chromium/third_party/android_sdk/public/cmdline-tools/linux',
+        'version': 'LZa8CWNVWS6UUQgQ7IJdFCqRV1Bmx2-alTNqEDJpJkcC',
+      },
+    ],
+    'condition': 'checkout_android and dawn_standalone',
+    'dep_type': 'cipd',
+  },
+  'third_party/android_toolchain/ndk': {
+    'packages': [
+      {
+        'package': 'chromium/third_party/android_toolchain/android_toolchain',
+        'version': 'version:' + Var('android_ndk_version'),
+      },
+    ],
+    'condition': 'checkout_android and dawn_standalone',
+    'dep_type': 'cipd',
+  },
+  'third_party/jdk/current': {
+    'packages': [
+      {
+        'package': 'chromium/third_party/jdk/linux-amd64',
+        'version': '2iiuF-nKDH3moTImx2op4WTRetbfhzKoZhH7Xo44zGsC',
+      },
+    ],
+    'condition': 'checkout_android and dawn_standalone and non_git_source',
+    'dep_type': 'cipd',
+  },
+  'third_party/android_build_tools': {
+    'url': Var('chromium_git') + '/chromium/src/third_party/android_build_tools@bf728906b86d63e57ef33a21215eaec7d1ad1991',
+    'condition': 'checkout_android and dawn_standalone',
+  },
+  'third_party/android_build_tools/aapt2/cipd': {
+    'packages': [
+      {
+        'package': 'chromium/third_party/android_build_tools/aapt2',
+        'version': 'yfxf90-dNwgtoT5PFTDA5BUz9mvuYdTImnJF1K-jaeMC',
+      },
+    ],
+    'condition': 'checkout_android and dawn_standalone',
+    'dep_type': 'cipd',
+  },
+  'third_party/android_build_tools/manifest_merger/cipd': {
+    'packages': [
+      {
+        'package': 'chromium/third_party/android_build_tools/manifest_merger',
+        'version': '5t4XXJF0lLTEEcyB-6QtjaMd2_Q7I_ON2Y-RZOU7O-gC',
+      },
+    ],
+    'condition': 'checkout_android and dawn_standalone',
+    'dep_type': 'cipd',
+  },
+  'third_party/cpu_features/src': {
+    'url': Var('chromium_git') + '/external/github.com/google/cpu_features.git' + '@' + '81d13c49649f0714dd41fb56bb246398b6584085',
+    'condition': 'checkout_android and dawn_standalone',
+  },
+  'third_party/ijar': {
+    'url': Var('chromium_git') + '/chromium/src/third_party/ijar@94af60a05b33f9acb33477a8d969e48eb1c3029f',
+    'condition': 'checkout_android and dawn_standalone',
+  },
+  'third_party/libunwind/src': {
+    'url': Var('chromium_git') + '/external/github.com/llvm/llvm-project/libunwind.git@d6c7a21e978f0adaa43accaad53bc64f0b64f6ec',
+    'condition': 'checkout_android and dawn_standalone',
   },
 
   # We never want to actually checkout Chromium, but we need a fake DEPS entry
