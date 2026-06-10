@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3248f7fb_019edc1d",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-10T03:59:58Z",
+      "side": 1,
+      "message": "I moved this around a bit after reading some specs more + looking at ANGLE. I was still running into some issues on Android, so I suppressed it for Android for now. I am trying a workaround in a follow up change which hopefully addresses this though.",
+      "range": {
+        "startLine": 1522,
+        "startChar": 5,
+        "endLine": 1530,
+        "endChar": 22
+      },
+      "revId": "50d6e4583b0e906b18e4019cd46d90c49908dc11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
