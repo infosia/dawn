@@ -243,6 +243,24 @@
       "parentUuid": "fca67424_63c366c2",
       "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "605d84f9_a304d5a1",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-10T07:14:43Z",
+      "side": 1,
+      "message": "Got it, I was looking for a return of an error but didn\u0027t realize there was a `DAWN_TRY`.",
+      "parentUuid": "75afa966_4d5cd931",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
