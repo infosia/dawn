@@ -16,6 +16,23 @@
       "message": "I\u0027m not sure if the trybots can work on M144 branch. Could you please let me know if this cherry-pick CL should be modified to pass the trybots?",
       "revId": "3778ba890d7e27aea68b1d98d570431324c8b59f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99d97c0d_b0a62f45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3711353
+      },
+      "writtenOn": "2026-06-10T02:43:45Z",
+      "side": 1,
+      "message": "The bug was approved for M144 LTS. And, it looks like the trybot\u0027s error was not related to this CL. WDYT?",
+      "revId": "3778ba890d7e27aea68b1d98d570431324c8b59f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
