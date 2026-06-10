@@ -124,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07ecce5d_dc8c27c9",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-10T07:58:45Z",
+      "side": 1,
+      "message": "First, for test, we have https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/ImmediateDataTests.cpp;drc\u003dba3121cc5421b6c7816ac9d5359f259fea7b7b67;l\u003d727 to guarded correct rebound.\n\nAnd for D3D12 it passed due to current implementation always allocate internal root constants. So this new AreLayoutCompatible is not proper to be added here and I choose to revert it.\n\nI\u0027ll apply this opt in the CL that internal root constants is allocated dynamically.",
+      "parentUuid": "80b5e022_1a44e8ae",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b13448d0_44911322",
@@ -137,6 +155,30 @@
       "writtenOn": "2026-06-09T14:58:34Z",
       "side": 1,
       "message": "Is this really the case? Looking at their usage, it seems they\u0027re only read a few times per `Apply` (draw/dispatch).",
+      "range": {
+        "startLine": 798,
+        "startChar": 0,
+        "endLine": 800,
+        "endChar": 29
+      },
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9620acf3_07b36f2e",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-10T07:58:45Z",
+      "side": 1,
+      "message": "Yes, I think LLM reviewer are overkilled. This is not that hot. keep raw_ptr here.",
+      "parentUuid": "b13448d0_44911322",
       "range": {
         "startLine": 798,
         "startChar": 0,
@@ -170,6 +212,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a103cdbe_3652acdb",
+        "filename": "src/dawn/native/d3d12/PipelineD3D12.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-10T07:58:45Z",
+      "side": 1,
+      "message": "Done for d3d part here. We can use a simple CL to do the rename for PipelineVk.h.",
+      "parentUuid": "51214b41_1e280547",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbb768aa_255e9333",
@@ -187,6 +253,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a7c1a67_eaf94624",
+        "filename": "src/dawn/native/d3d12/PipelineD3D12.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-10T07:58:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb768aa_255e9333",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91ec0e0e_3ee82084",
@@ -200,6 +284,30 @@
       "writtenOn": "2026-06-09T14:58:34Z",
       "side": 1,
       "message": "Could be done in a future change, but we could wrap these three in a struct, making each a const member, like:\n\n```\nstruct InvariantParams {\n    const std::vector\u003cD3D12_ROOT_PARAMETER1\u003e mRootParameters;\n    const std::vector\u003cD3D12_DESCRIPTOR_RANGE1\u003e mRanges;\n    const std::vector\u003cD3D12_STATIC_SAMPLER_DESC\u003e mStaticSamplers;\n};\n\nInvariantParams mInvariantParams;\n```\n\nThen here we\u0027d in-place construct an `InvariantParams`, moving in the vectors as you do here. This would guarantee that they could not be modified after creation.",
+      "range": {
+        "startLine": 436,
+        "startChar": 17,
+        "endLine": 436,
+        "endChar": 44
+      },
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c36648dc_157f2781",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-10T07:58:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91ec0e0e_3ee82084",
       "range": {
         "startLine": 436,
         "startChar": 17,
