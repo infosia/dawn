@@ -25,6 +25,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import("${dawn_angle_dir}/gni/angle.gni")
 import("../../../scripts/dawn_overrides_with_defaults.gni")
 import("../../../scripts/tint_overrides_with_defaults.gni")
 
@@ -120,8 +121,7 @@ template("dawn_test") {
 
     configs += [ "${dawn_root}/src/dawn/common:internal_config" ]
 
-    if (dawn_tests_use_angle && defined(dawn_angle_dir) &&
-        !dawn_use_static_angle) {
+    if (dawn_tests_use_angle && defined(dawn_angle_dir)) {
       if (!defined(data_deps)) {
         data_deps = []
       }
@@ -873,6 +873,10 @@ source_set("white_box_tests_sources") {
   }
 
   if (dawn_enable_opengles) {
+    if (!defined(defines)) {
+      defines = []
+    }
+    defines += [ "DAWN_ANGLE_LIBS_SUFFIX=\"${angle_libs_suffix}\"" ]
     sources += [
       "white_box/EGLImageWrappingTests.cpp",
       "white_box/GLTextureWrappingTests.cpp",
