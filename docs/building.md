@@ -164,10 +164,20 @@ the resulting binaries are not guaranteed to work.
 
 #### For Android targets (Linux hosts)
 
-Compiling Dawn binaries for Android is not supported in a Dawn standalone
-checkout; it must be checked out as a submodule of `chromium/src` (on a Linux
-host). If Chromium is configured to build for Android, then Dawn targets (like
-`dawn_unittests` will also be buildable.
+**This works to compile targets for Android but the resulting binaries have not
+been tested.**
+If you want to run them you *may* need to set up a Chromium build for Android,
+and build Dawn's targets in the Chromium build (like `dawn_unittests`).
+
+1.  Add `target_os = ['android']` to the end of your `.gclient`.
+1.  `gclient sync`
+1.  Create a new `out/` directory with GN args:
+
+    ```
+    target_os = "android"
+    target_cpu = "arm64"
+    ```
+1.  Build!
 
 ### For Mac targets (Linux hosts)
 
