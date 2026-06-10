@@ -33,6 +33,7 @@
 #include <string>
 
 #include "src/tint/cmd/fuzz/common/init.h"
+#include "src/tint/cmd/fuzz/wgsl/cst/mutator.h"
 #include "src/tint/cmd/fuzz/wgsl/fuzz.h"
 #include "src/tint/utils/text/base64.h"
 #include "src/tint/utils/text/string.h"
@@ -76,3 +77,12 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
 
     return 0;
 }
+
+#if TINT_BUILD_WGSL_READER
+extern "C" size_t LLVMFuzzerCustomMutator(uint8_t* data,
+                                          size_t size,
+                                          size_t max_size,
+                                          unsigned int seed) {
+    return tint::fuzz::wgsl::cst::CustomMutate(data, size, max_size, seed);
+}
+#endif  // TINT_BUILD_WGSL_READER

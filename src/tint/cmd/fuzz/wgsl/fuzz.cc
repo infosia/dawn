@@ -34,6 +34,7 @@
 #include <thread>
 
 #include "src/tint/cmd/fuzz/common/runner.h"
+#include "src/tint/cmd/fuzz/wgsl/cst/mutator.h"
 #include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/wgsl/allowed_features.h"
 #include "src/tint/lang/wgsl/ast/alias.h"
@@ -165,6 +166,10 @@ void Run(std::string_view wgsl, const Options& options, std::span<const std::byt
         }
         return;
     }
+
+#if TINT_BUILD_WGSL_READER
+    tint::fuzz::wgsl::cst::PopulateCache(wgsl);
+#endif
 
     Context context;
     context.options = options;

@@ -47,13 +47,16 @@ tint_add_target(tint_cmd_fuzz_wgsl_mesa_fuzz_cmd fuzz_cmd
 tint_target_add_dependencies(tint_cmd_fuzz_wgsl_mesa_fuzz_cmd fuzz_cmd
   tint_cmd_fuzz_common
   tint_cmd_fuzz_ir_fuzz
+  tint_cmd_fuzz_wgsl_cst
   tint_cmd_fuzz_wgsl_fuzz
   tint_lang_core_ir_transform_fuzz
   tint_lang_hlsl_writer_raise_fuzz
+  tint_lang_wgsl_reader_parser
   tint_lang_wgsl_writer_raise_fuzz
   tint_utils
   tint_utils_bytes
   tint_utils_containers
+  tint_utils_diagnostic
   tint_utils_ice
   tint_utils_macros
   tint_utils_math

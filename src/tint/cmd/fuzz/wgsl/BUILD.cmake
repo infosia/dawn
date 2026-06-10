@@ -34,6 +34,8 @@
 #                       Do not modify this file directly
 ################################################################################
 
+include(cmd/fuzz/wgsl/cst/BUILD.cmake)
+
 if(TINT_BUILD_WGSL_READER)
 ################################################################################
 # Target:    tint_cmd_fuzz_wgsl_fuzz_cmd
@@ -47,13 +49,16 @@ tint_add_target(tint_cmd_fuzz_wgsl_fuzz_cmd fuzz_cmd
 tint_target_add_dependencies(tint_cmd_fuzz_wgsl_fuzz_cmd fuzz_cmd
   tint_cmd_fuzz_common
   tint_cmd_fuzz_ir_fuzz
+  tint_cmd_fuzz_wgsl_cst
   tint_cmd_fuzz_wgsl_fuzz
   tint_lang_core_ir_transform_fuzz
   tint_lang_hlsl_writer_raise_fuzz
+  tint_lang_wgsl_reader_parser
   tint_lang_wgsl_writer_raise_fuzz
   tint_utils
   tint_utils_bytes
   tint_utils_containers
+  tint_utils_diagnostic
   tint_utils_ice
   tint_utils_macros
   tint_utils_math
@@ -129,6 +134,7 @@ tint_add_target(tint_cmd_fuzz_wgsl_fuzz fuzz
 tint_target_add_dependencies(tint_cmd_fuzz_wgsl_fuzz fuzz
   tint_api_common
   tint_cmd_fuzz_common
+  tint_cmd_fuzz_wgsl_cst
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_ir
@@ -137,6 +143,7 @@ tint_target_add_dependencies(tint_cmd_fuzz_wgsl_fuzz fuzz
   tint_lang_wgsl_ast
   tint_lang_wgsl_program
   tint_lang_wgsl_reader
+  tint_lang_wgsl_reader_parser
   tint_lang_wgsl_sem
   tint_lang_wgsl_writer_common
   tint_utils
