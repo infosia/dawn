@@ -16,6 +16,97 @@
       "message": "PTAL.",
       "revId": "2b8baba79cf3dae3709c609c62f3759049ec8189",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fe102bb_fcaf6e0d",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-10T12:58:38Z",
+      "side": 1,
+      "message": "nit: ootfParams maybe?",
+      "range": {
+        "startLine": 400,
+        "startChar": 45,
+        "endLine": 400,
+        "endChar": 49
+      },
+      "revId": "2b8baba79cf3dae3709c609c62f3759049ec8189",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9390e6e8_bbf4f1e2",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-10T12:58:38Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "2b8baba79cf3dae3709c609c62f3759049ec8189",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84c2f0bb_287300bb",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-10T12:58:38Z",
+      "side": 1,
+      "message": "nit: maybe this should be moved in the comment at [1], same for the TextureLoadYCBCRExternal",
+      "revId": "2b8baba79cf3dae3709c609c62f3759049ec8189",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ea75391_5bafbb2d",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-10T12:58:38Z",
+      "side": 1,
+      "message": "These need the same change.",
+      "revId": "2b8baba79cf3dae3709c609c62f3759049ec8189",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b774587a_8e093df1",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-10T12:58:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2b8baba79cf3dae3709c609c62f3759049ec8189",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
