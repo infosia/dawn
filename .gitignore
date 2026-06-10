@@ -157,6 +157,8 @@ tint.dot
 ### pyenv files
 /.python-version
 
+### Clangd config file is reserved for local use
+/.clangd
 ### Clangd cached index files
 /.cache
 
