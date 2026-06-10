@@ -225,6 +225,24 @@
       "message": "```suggestion\n    void BuildBaseRootParameters();\n```",
       "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75afa966_4d5cd931",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-10T03:27:47Z",
+      "side": 1,
+      "message": "` DAWN_TRY_ASSIGN(resourceTableRanges, ResourceTable::GetDescriptorRanges(*this));`\nPrevent this...",
+      "parentUuid": "fca67424_63c366c2",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
