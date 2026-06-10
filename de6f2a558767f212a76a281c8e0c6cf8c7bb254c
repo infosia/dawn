@@ -33,6 +33,24 @@
       "message": "nit: color \u003d ApplyGammaCorrect(params, color)\n\nditto in other places",
       "revId": "de6f2a558767f212a76a281c8e0c6cf8c7bb254c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "474247e1_ea487078",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-10T18:04:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d513b406_693c62ce",
+      "revId": "de6f2a558767f212a76a281c8e0c6cf8c7bb254c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
