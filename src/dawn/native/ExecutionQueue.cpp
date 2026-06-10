@@ -115,8 +115,8 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
             // Wait on the serial if it hasn't passed yet.
             ExecutionSerial completedSerial = kWaitSerialTimeout;
             DAWN_TRY_ASSIGN(completedSerial, WaitForQueueSerialImpl(waitSerial, timeout));
-            UpdateCompletedSerialTo(QueuePriority::UserVisible, completedSerial);
-            return {};
+            mCompletedSerial.Use(
+                [&](auto old) { *old = std::max(*old, static_cast<uint64_t>(completedSerial)); });
         }
         return UpdateCompletedSerial(QueuePriority::UserVisible);
     } else {

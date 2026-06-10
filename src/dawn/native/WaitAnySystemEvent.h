@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_WAITANYSYSTEMEVENT_H_
 #define SRC_DAWN_NATIVE_WAITANYSYSTEMEVENT_H_
 
+#include <array>
 #include <limits>
 #include <utility>
 
@@ -136,6 +137,15 @@ template <typename It>
 #else
     DAWN_UNREACHABLE();  // Not implemented.
 #endif
+}
+
+inline bool WaitOneSystemHandle(dawn::utils::SystemHandle&& handle, Nanoseconds timeout) {
+    bool ready = false;
+    SystemEventReceiver receiver(std::move(handle));
+    std::array<std::pair<const SystemEventReceiver&, bool*>, 1> waitEvents = {{{receiver, &ready}}};
+    bool result = WaitAnySystemEvent(waitEvents.begin(), waitEvents.end(), timeout);
+    DAWN_ASSERT(result == ready);
+    return result;
 }
 
 }  // namespace dawn::native

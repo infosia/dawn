@@ -37,6 +37,7 @@
 #include "src/dawn/native/Device.h"
 #include "src/dawn/native/Queue.h"
 #include "src/dawn/native/vulkan/CommandRecordingContextVk.h"
+#include "src/dawn/utils/SystemHandle.h"
 
 namespace dawn::native::vulkan {
 
@@ -83,8 +84,13 @@ class Queue final : public QueueBase {
     // This works only because we have a single queue. Each submit to a queue is associated
     // to a serial and a fence, such that when the fence is "ready" we know the operations
     // have finished.
+    struct FenceInFlight {
+        std::variant<VkFence, dawn::utils::SystemHandle> fenceOrHandle = VkFence{VK_NULL_HANDLE};
+        ExecutionSerial serial = ExecutionSerial(0u);
+        size_t waiterCount = 0;
+    };
     static constexpr size_t kMaxFencesInFlight = 128;
-    MutexProtected<std::deque<std::pair<VkFence, ExecutionSerial>>> mFencesInFlight;
+    MutexProtected<std::deque<FenceInFlight>> mFencesInFlight;
     // Fences in the unused list aren't reset yet.
     MutexProtected<std::vector<VkFence>> mUnusedFences;
 
