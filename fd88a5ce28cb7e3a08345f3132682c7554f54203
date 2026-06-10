@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2fe89700_763086c9",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-10T13:38:27Z",
+      "side": 1,
+      "message": "AFAIK the test you pointed at wouldn\u0027t result in a different use of internal immediates on D3D12 because we don\u0027t to the frag_depth clamping there, only on Metal and Vulkan. Can you add a version with first_vertex/first_instance and num_workgroups? (I defer to Antonio on when to add this test: this CL or the next one)",
+      "parentUuid": "07ecce5d_dc8c27c9",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b13448d0_44911322",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 5
