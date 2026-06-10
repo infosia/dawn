@@ -34,6 +34,7 @@ import androidx.webgpu.UncapturedErrorCallback
 import androidx.webgpu.GPU.createInstance
 import androidx.webgpu.WebGpuRuntimeException
 import androidx.webgpu.helper.Util.windowFromSurface
+import androidx.webkit.WebViewDawnLoader
 import java.util.concurrent.Executor
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.CoroutineDispatcher
@@ -253,4 +254,12 @@ private val defaultDeviceLostCallback get(): DeviceLostCallback {
 /** Initializes the native library. This method should be called before making and WebGPU calls. */
 public fun initLibrary() {
     System.loadLibrary("webgpu_c_bundled")
+    setupDawn()
 }
+
+public fun setupDawn() {
+    val address = WebViewDawnLoader.getDawnLoader()
+    mapDawnAddress(address)
+}
+
+public external fun mapDawnAddress(address: Long)
