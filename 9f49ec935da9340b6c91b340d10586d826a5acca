@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33313800_85b9a6f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-06-10T16:32:46Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "9f49ec935da9340b6c91b340d10586d826a5acca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "493b6236_dd8cb1b5",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-06-10T16:32:46Z",
+      "side": 1,
+      "message": "mLoadCallbackInfo here and later",
+      "range": {
+        "startLine": 170,
+        "startChar": 42,
+        "endLine": 170,
+        "endChar": 55
+      },
+      "revId": "9f49ec935da9340b6c91b340d10586d826a5acca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
