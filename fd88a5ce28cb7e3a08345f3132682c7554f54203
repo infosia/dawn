@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "487889b5_ff0e247d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-10T01:10:36Z",
+      "side": 1,
+      "message": "a",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a6eeb43_0b6e96aa",
@@ -85,6 +102,24 @@
       "side": 1,
       "message": "Actually, can we please have this test as part of this CL?",
       "parentUuid": "baf9805b_98c9359f",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80b5e022_1a44e8ae",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-10T01:10:36Z",
+      "side": 1,
+      "message": "\u003eAh ok that was not possible previously because this is the patch stack that folds existing root constant usage into immediates.\n\nYes, pipeline handle has all immediates (customers/internals).\n\nFor test, I\u0027ll add it(I thought we have one for vulkan at least? If not, I\u0027ll cover all backends.)",
+      "parentUuid": "1165e391_2c8598af",
       "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
