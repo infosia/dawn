@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fe151fe_60cb9d72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-10T18:01:02Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "de6f2a558767f212a76a281c8e0c6cf8c7bb254c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d513b406_693c62ce",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-10T18:01:02Z",
+      "side": 1,
+      "message": "nit: color \u003d ApplyGammaCorrect(params, color)\n\nditto in other places",
+      "revId": "de6f2a558767f212a76a281c8e0c6cf8c7bb254c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
