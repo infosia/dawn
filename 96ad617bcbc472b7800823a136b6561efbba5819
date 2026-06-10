@@ -87,6 +87,24 @@
       "parentUuid": "2fdf2579_68aab52f",
       "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dac0ef5b_6bf0d1df",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-10T13:42:26Z",
+      "side": 1,
+      "message": "Mmmmh ok let\u0027s keep as in the current patchset, I\u0027m a bit concerned about the silent intervention, but this code path should only be used by Graphite so that\u0027s ok.",
+      "parentUuid": "f4d1eea6_546edd6d",
+      "revId": "96ad617bcbc472b7800823a136b6561efbba5819",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
