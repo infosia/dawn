@@ -46,6 +46,30 @@
       },
       "revId": "50d6e4583b0e906b18e4019cd46d90c49908dc11",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76c6acaa_c184df99",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-10T20:43:09Z",
+      "side": 1,
+      "message": "Yea, it could theoretically happen on non-Android linux also, but from what I can find, the limits on desktop linux are usually on the order of ~1million, whereas on Android it\u0027s 1k. I think my goal here is to land this initial change and iterate on it though.",
+      "parentUuid": "34b01867_9eff5c0f",
+      "range": {
+        "startLine": 1522,
+        "startChar": 5,
+        "endLine": 1530,
+        "endChar": 22
+      },
+      "revId": "50d6e4583b0e906b18e4019cd46d90c49908dc11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
