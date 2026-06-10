@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5e87f0b3_6b0ecbd7",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-10T06:35:10Z",
+      "side": 1,
+      "message": "Yes, this additional ref is needed for the jobject created below it. When AhbTextureWrapper is created, it acquires one reference for the wrapper to own.\nWhen we pass the raw pointer via env-\u003eNewObject to create the Java GPUTexture, the Java object gets it owns a second reference, but no reference is automatically added across the JNI boundary. Therefore, we must manually AddRef.\n\nRegarding the lifetime of the GPUTexture jobject is identical to the AhbTextureWrapper (they are tied together in GPUHardwareBufferTexture). However, because they are separate objects, they both independently release their references during destruction. And if we omit the manual AddRef() the ref count drops to -1 and causes a crash",
+      "parentUuid": "1b8d59a1_abc4db54",
+      "range": {
+        "startLine": 188,
+        "startChar": 4,
+        "endLine": 188,
+        "endChar": 37
+      },
+      "revId": "5dba460e15fd6dcbd4b12fa2717d6b920f37d3ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "20b0c20c_167c7568",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2026-06-09T18:49:17Z",
       "side": 1,
       "message": "Same comment as above to either add a comment as to where the release is called or whether this is needed at all?",
+      "range": {
+        "startLine": 346,
+        "startChar": 4,
+        "endLine": 346,
+        "endChar": 53
+      },
+      "revId": "5dba460e15fd6dcbd4b12fa2717d6b920f37d3ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7811ae3c_106b5910",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-10T06:35:10Z",
+      "side": 1,
+      "message": "Same as the other reply! https://dawn-review.git.corp.google.com/c/dawn/+/315235/comment/1b8d59a1_abc4db54/",
+      "parentUuid": "20b0c20c_167c7568",
       "range": {
         "startLine": 346,
         "startChar": 4,
