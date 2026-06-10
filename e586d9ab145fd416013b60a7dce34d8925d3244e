@@ -16,6 +16,24 @@
       "message": "Do you still want to keep this for the `chromium_testing_experimental` and `chromium_testing_unsafe_experimental` entries?\n\nTest becomes `BlockListOfAnyUnshippedFeature` or something?",
       "revId": "e586d9ab145fd416013b60a7dce34d8925d3244e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "251a8b1f_271da542",
+        "filename": "src/dawn/tests/unittests/validation/WGSLFeatureValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-10T21:17:10Z",
+      "side": 0,
+      "message": "Done, it just blocklists the experimental features since they are the only ones not covered by the test above or the test below.",
+      "parentUuid": "0bd18e72_a8bb21f8",
+      "revId": "e586d9ab145fd416013b60a7dce34d8925d3244e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
