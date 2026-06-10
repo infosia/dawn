@@ -249,19 +249,13 @@ TEST_F(WGSLFeatureValidationTest, BlockListOfKillswitchedFeatures) {
     )"));
 }
 
-// Test that DawnWGSLBlocklist can block any feature name (even without a killswitch).
-TEST_F(WGSLFeatureValidationTest, BlockListOfAnyFeature) {
-    SetUp({.allowUnsafeAPIs = true,
-           .blocklist = {"chromium_testing_shipped", "chromium_testing_experimental",
-                         "chromium_testing_unsafe_experimental"}});
+// Test that DawnWGSLBlocklist does not features that are fully shipped.
+TEST_F(WGSLFeatureValidationTest, BlockListOfShippedFeature) {
+    SetUp({.allowUnsafeAPIs = true, .blocklist = {"chromium_testing_shipped"}});
 
-    // All blocklisted features aren't present.
-    ASSERT_FALSE(
+    // The shipped feature is still present.
+    ASSERT_TRUE(
         instance.HasWGSLLanguageFeature(wgpu::WGSLLanguageFeatureName::ChromiumTestingShipped));
-    ASSERT_FALSE(instance.HasWGSLLanguageFeature(
-        wgpu::WGSLLanguageFeatureName::ChromiumTestingExperimental));
-    ASSERT_FALSE(instance.HasWGSLLanguageFeature(
-        wgpu::WGSLLanguageFeatureName::ChromiumTestingUnsafeExperimental));
 }
 
 // Test that DawnWGSLBlocklist can contain garbage names without causing problems.
