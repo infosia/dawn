@@ -33,6 +33,24 @@
       "message": "The bug was approved for M144 LTS. And, it looks like the trybot\u0027s error was not related to this CL. WDYT?",
       "revId": "3778ba890d7e27aea68b1d98d570431324c8b59f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03e39823_52067902",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-06-10T16:22:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure what to make of the bot failures. If you built locally to confirm, I think it\u0027s probably safe.",
+      "parentUuid": "99d97c0d_b0a62f45",
+      "revId": "3778ba890d7e27aea68b1d98d570431324c8b59f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
