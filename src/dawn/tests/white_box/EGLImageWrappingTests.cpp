@@ -47,12 +47,16 @@ class EGLFunctions {
     EGLFunctions() = default;
 
     bool Initialize(const std::vector<std::string>& searchPaths) {
+#ifndef DAWN_ANGLE_LIBS_SUFFIX
+#define DAWN_ANGLE_LIBS_SUFFIX ""
+#endif
+
 #if DAWN_PLATFORM_IS(WINDOWS)
-        const char* eglLib = "libEGL.dll";
+        const char* eglLib = "libEGL" DAWN_ANGLE_LIBS_SUFFIX ".dll";
 #elif DAWN_PLATFORM_IS(MACOS)
-        const char* eglLib = "libEGL.dylib";
+        const char* eglLib = "libEGL" DAWN_ANGLE_LIBS_SUFFIX ".dylib";
 #else
-        const char* eglLib = "libEGL.so";
+        const char* eglLib = "libEGL" DAWN_ANGLE_LIBS_SUFFIX ".so";
 #endif
         std::string error;
         if (!mlibEGL.Open(eglLib, searchPaths, &error)) {
