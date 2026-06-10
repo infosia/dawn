@@ -32,6 +32,10 @@ import("${dawn_root}/generator/dawn_generator.gni")
 import("${dawn_root}/scripts/dawn_component.gni")
 import("${dawn_root}/scripts/dawn_features.gni")
 
+if (is_android) {
+  import("//build/config/android/config.gni")
+}
+
 # The VVLs are an optional dependency, only use it if the path has been set.
 enable_vulkan_validation_layers = dawn_enable_vulkan_validation_layers &&
                                   dawn_vulkan_validation_layers_dir != ""
@@ -986,6 +990,13 @@ source_set("sources") {
         "vulkan/external_semaphore/SemaphoreServiceImplementationFD.h",
       ]
       if (is_android) {
+        # In API level 26 ANativeWindow APIs were moved from libandroid.so
+        # into a separate library, libnativewindow.so
+        if (android_ndk_api_level >= 26) {
+          libs += [ "nativewindow" ]
+        } else {
+          libs += [ "android" ]
+        }
         sources += [
           "vulkan/external_memory/MemoryServiceImplementationAHardwareBuffer.cpp",
           "vulkan/external_memory/MemoryServiceImplementationAHardwareBuffer.h",

@@ -68,18 +68,16 @@ class ServiceImplementationAHardwareBuffer : public ServiceImplementation {
             .flags = flags,
         };
 
-        VkPhysicalDeviceExternalImageFormatInfo externalFormatInfo = {
-            .handleType = VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID,
-        };
+        VkPhysicalDeviceExternalImageFormatInfo externalFormatInfo{};
+        externalFormatInfo.handleType =
+            VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID;
 
         PNextChainBuilder formatInfoChain(&formatInfo);
         formatInfoChain.Add(&externalFormatInfo,
                             VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO_KHR);
 
-        VkImageFormatProperties2 formatProperties = {
-            .sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2_KHR,
-            .pNext = nullptr,
-        };
+        VkImageFormatProperties2 formatProperties{};
+        formatProperties.sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2_KHR;
 
         VkExternalImageFormatProperties externalFormatProperties;
         PNextChainBuilder formatPropertiesChain(&formatProperties);
@@ -118,10 +116,8 @@ class ServiceImplementationAHardwareBuffer : public ServiceImplementation {
         const ExternalImageDescriptorAHardwareBuffer* aHardwareBufferDescriptor =
             static_cast<const ExternalImageDescriptorAHardwareBuffer*>(descriptor);
 
-        VkAndroidHardwareBufferPropertiesANDROID bufferProperties = {
-            .sType = VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID,
-            .pNext = nullptr,
-        };
+        VkAndroidHardwareBufferPropertiesANDROID bufferProperties{};
+        bufferProperties.sType = VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID;
 
         PNextChainBuilder bufferPropertiesChain(&bufferProperties);
 
@@ -164,9 +160,8 @@ class ServiceImplementationAHardwareBuffer : public ServiceImplementation {
 
         PNextChainBuilder allocateInfoChain(&allocateInfo);
 
-        VkImportAndroidHardwareBufferInfoANDROID importMemoryAHBInfo = {
-            .buffer = handle,
-        };
+        VkImportAndroidHardwareBufferInfoANDROID importMemoryAHBInfo{};
+        importMemoryAHBInfo.buffer = handle;
         allocateInfoChain.Add(&importMemoryAHBInfo,
                               VK_STRUCTURE_TYPE_IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID);
 
@@ -194,9 +189,9 @@ class ServiceImplementationAHardwareBuffer : public ServiceImplementation {
 
         PNextChainBuilder createInfoChain(&createInfo);
 
-        VkExternalMemoryImageCreateInfo externalMemoryImageCreateInfo = {
-            .handleTypes = VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID,
-        };
+        VkExternalMemoryImageCreateInfo externalMemoryImageCreateInfo{};
+        externalMemoryImageCreateInfo.handleTypes =
+            VK_EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_BIT_ANDROID;
         createInfoChain.Add(&externalMemoryImageCreateInfo,
                             VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO);
 
