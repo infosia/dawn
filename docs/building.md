@@ -165,12 +165,17 @@ It may not always work, and the resulting binaries are not guaranteed to work.
 
 1.  Add your target OS to the `target_os` array in `.gclient`. Or, use
     `standalone-maximal.gclient` and follow the instructions in it.
+    This will enable downloading toolchains and any target-specific Dawn DEPS.
+    - Windows: ~16GB.
+    - Mac: ~4GB.
+    - Android: ~2.5GB.
 1.  `gclient sync`.
 1.  Create a new `out/*` directory for each target build with the relevant GN
     args. The following configurations have been tested:
 
     - `target_os = "mac"` `target_cpu = "arm64"`/`"x64"` on Linux hosts
     - `target_os = "win"` `target_cpu = "x64"` on Linux and Mac hosts
+    - `target_os = "android` `target_cpu = "arm64"` on Linux hosts (note below)
 
 For background, see also
 [this guide](https://chromium.googlesource.com/chromium/src/+/main/docs/win_cross.md).
@@ -180,10 +185,10 @@ If this happens, try building locally, using `autoninja --offline`.
 
 #### For Android targets (Linux hosts)
 
-Compiling Dawn binaries for Android is not supported in a Dawn standalone
-checkout; it must be checked out as a submodule of `chromium/src` (on a Linux
-host). If Chromium is configured to build for Android, then Dawn targets (like
-`dawn_unittests` will also be buildable.
+**Cross-compilation for Android as described above works to compile targets, but
+the resulting binaries have not been tested.** If you want to run them you *may*
+need to set up an Android Chromium build (which contains Dawn) and build Dawn
+targets (like `dawn_unittests`, `dawn_end2end_tests`) in the Chromium build.
 
 ### Using ccache for CMake builds
 
