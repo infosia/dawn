@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1d5f1f6_0ce948cf",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-10T20:28:25Z",
+      "side": 1,
+      "message": "Thanks for trying this out. I forgot that making const data members results in deleting the copy-assignment operator. The C++ way to make immutable types is to make private mutable data members, use a constructor to initialize them, and provide only const-access members to them. I think we can go with this for now, and revisit in the future.",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 34
+      },
+      "revId": "3dc65b2f7e5552d62f77647514ac2fcda9b2fb32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
