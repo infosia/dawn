@@ -61,6 +61,7 @@ static ValidationTest* gCurrentTest = nullptr;
 }  // namespace
 
 void InitDawnValidationTestEnvironment(int argc, char** argv) {
+    dawn::InstallCrashHandler(argv[0]);
     dawn::InitializePartitionAllocForTesting();
     dawn::InitializeDanglingPointerDetectorForTesting();
 

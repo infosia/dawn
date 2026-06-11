@@ -62,4 +62,7 @@ dawn_add_library(
         ${private_headers}
     SOURCES
         ${sources}
+    DEPENDS
+        absl::failure_signal_handler
+        absl::symbolize
 )
