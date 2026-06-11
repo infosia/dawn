@@ -69,6 +69,24 @@
       "parentUuid": "a4402e40_4dc84118",
       "revId": "1f035898e186551474bc18478bb336dbdcd055c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "274f8596_62d2c6c3",
+        "filename": "test/tint/errors/json-diagnostics-error-with-notes.wgsl.expected.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-11T18:52:05Z",
+      "side": 1,
+      "message": "Ah, it\u0027s just the test runner, not tint, got it.",
+      "parentUuid": "1b49eb66_db64e186",
+      "revId": "1f035898e186551474bc18478bb336dbdcd055c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
