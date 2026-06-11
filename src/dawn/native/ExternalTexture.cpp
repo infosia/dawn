@@ -253,6 +253,10 @@ ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescript
     params.dstTransferFunction =
         ToTransferFunctionParams(descriptor->dstTransferFunctionParameters);
 
+    if (params.srcTransferFunction.mode == TransferFunctionMode::HLG) {
+        params.ootfParams = ; //????
+    }
+
     // Compute the various transforms and bounds used for sampling and loading operations. They make
     // them appear as if operating on a `apparentSize` texture but instead they are all happening in
     // a transformed and cropped rectangle of the planes. Perform all 2D operations in homogeneous
