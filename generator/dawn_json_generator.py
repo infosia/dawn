@@ -1593,18 +1593,25 @@ class MultiGeneratorFromDawnJSON(Generator):
 
         targets = args.targets.split(',')
 
+        need_wire = any(t in targets for t in [
+            'wire', 'headers', 'cpp_headers', 'proc', 'mock_api',
+            'native_utils', 'dawn_utils', 'webgpu_dawn_native_proc'
+        ])
+        need_kotlin = any(t in targets for t in ['kotlin', 'jni'])
+        need_kt_docs = 'kotlin' in targets
+
         wire_json = None
-        if args.wire_json:
+        if need_wire and args.wire_json:
             with open(args.wire_json) as f:
                 wire_json = json.loads(f.read())
 
         kotlin_json = None
-        if args.kotlin_json:
+        if need_kotlin and args.kotlin_json:
             with open(args.kotlin_json) as f:
                 kotlin_json = json.loads(f.read())
 
         webgpu_kt_docs_data = None
-        if args.webgpu_kt_docs:
+        if need_kt_docs and args.webgpu_kt_docs:
             webgpu_kt_docs_data = load_json_data(args.webgpu_kt_docs)
 
         doc_warn_log_file_path = args.doc_warn_log_file
@@ -2076,10 +2083,21 @@ class MultiGeneratorFromDawnJSON(Generator):
 
     def get_dependencies(self, args):
         deps = [os.path.abspath(args.dawn_json)]
-        if args.wire_json != None:
+        targets = args.targets.split(',')
+
+        need_wire = any(t in targets for t in [
+            'wire', 'headers', 'cpp_headers', 'proc', 'mock_api',
+            'native_utils', 'dawn_utils', 'webgpu_dawn_native_proc'
+        ])
+        need_kotlin = any(t in targets for t in ['kotlin', 'jni'])
+        need_kt_docs = 'kotlin' in targets
+
+        if need_wire and args.wire_json != None:
             deps += [os.path.abspath(args.wire_json)]
-        if args.kotlin_json != None:
+        if need_kotlin and args.kotlin_json != None:
             deps += [os.path.abspath(args.kotlin_json)]
+        if need_kt_docs and args.webgpu_kt_docs != None:
+            deps += [os.path.abspath(args.webgpu_kt_docs)]
         return deps
 
 
