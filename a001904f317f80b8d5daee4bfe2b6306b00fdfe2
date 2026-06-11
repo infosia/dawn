@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fdbf8827_25136d28",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-11T08:10:16Z",
+      "side": 1,
+      "message": "To run the action remotely, we need to tell the list of inputs to build system even before the action generates inputs list in depfile. And we\u0027d like to specify inputs in build config correctly rather than relying on depfile so that we can utilize remote execution more (e.g. parallel execution, cache sharing).",
+      "parentUuid": "c45284fa_e2c7928a",
+      "revId": "a001904f317f80b8d5daee4bfe2b6306b00fdfe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "19ec62af_ddc65c97",
         "filename": "generator/dawn_generator.gni",
         "patchSetId": 5
