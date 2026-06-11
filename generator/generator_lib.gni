@@ -26,6 +26,11 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import("//third_party/jinja2/jinja2.gni")
 
+if (!defined(dawn_root)) {
+  dawn_root = get_path_info("..", "abspath")
+}
+dawn_template_dir = "${dawn_root}/generator/templates"
+
 # Template to help invoking code generators based on generator_lib.py
 # Internal use only, this should only be called from templates implementing
 # generator-specific actions.
@@ -77,7 +82,7 @@ template("generator_lib_action") {
   if (defined(invoker.root_dir)) {
     _generator_args += [
       "--root-dir",
-      rebase_path(_root_dir, root_build_dir),
+      rebase_path(invoker.root_dir, root_build_dir),
     ]
   }
 
@@ -126,6 +131,22 @@ template("generator_lib_action") {
     "--expected-outputs-file",
     rebase_path(_expected_outputs_file, root_build_dir),
   ]
+  _expected_inputs = [
+    invoker.script,
+    "${invoker.generator_lib_dir}/generator_lib.py",
+  ]
+  if (defined(invoker.inputs)) {
+    _expected_inputs += invoker.inputs
+  }
+
+  _expected_inputs_file = "${_gen_dir}/${target_name}.expected_inputs"
+  write_file(_expected_inputs_file,
+             rebase_path(_expected_inputs, root_build_dir))
+
+  _generator_args += [
+    "--expected-inputs-file",
+    rebase_path(_expected_inputs_file, root_build_dir),
+  ]
 
   # The code generator invocation that will write the JSON tarball, check the
   # outputs are what's expected and write a depfile for Ninja.
@@ -137,10 +158,10 @@ template("generator_lib_action") {
     if (defined(invoker.deps)) {
       deps = invoker.deps
     }
-    inputs = [ _expected_outputs_file ] + jinja2_sources
-    if (defined(invoker.inputs)) {
-      inputs += invoker.inputs
-    }
+    inputs = [
+               _expected_outputs_file,
+               _expected_inputs_file,
+             ] + jinja2_sources + _expected_inputs
   }
 
   # Extract the JSON tarball into the gen_dir
