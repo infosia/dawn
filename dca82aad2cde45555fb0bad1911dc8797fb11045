@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ade561_aff21874",
+        "filename": "src/dawn/native/vulkan/QueueVk.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T08:08:01Z",
+      "side": 1,
+      "message": "```suggestion\n    static inline constexpr size_t kMaxFencesInFlight \u003d 128;\n```\n\nBut also consider defining it in the .cpp",
+      "revId": "dca82aad2cde45555fb0bad1911dc8797fb11045",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
