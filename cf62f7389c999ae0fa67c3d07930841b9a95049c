@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8055befd_4a9c5488",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-11T00:03:06Z",
+      "side": 1,
+      "message": "just a preliminary review!",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16ba2159_048e74e4",
+        "filename": "DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-11T00:03:06Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org what do you think about this? too much mess?",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9976dcbd_ccb93731",
+        "filename": "DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-11T00:03:06Z",
+      "side": 1,
+      "message": "@bsheedy@google.com could you point me to how this might be done?",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
