@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "062e3c1c_7cf3d642",
+        "filename": "src/tint/cmd/common/helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-11T18:39:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83b90a4a_e81b1633",
+      "revId": "1f035898e186551474bc18478bb336dbdcd055c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4402e40_4dc84118",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-11T18:28:47Z",
       "side": 1,
       "message": "Is the weird filename an issue? The `\u003cdawn\u003e/` bit specifically",
+      "revId": "1f035898e186551474bc18478bb336dbdcd055c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b49eb66_db64e186",
+        "filename": "test/tint/errors/json-diagnostics-error-with-notes.wgsl.expected.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-11T18:39:42Z",
+      "side": 1,
+      "message": "The E2E test runner replaces the absolute path with `\u003cdawn\u003e` here to make it consistent across different systems. There\u0027s existing code to do that because of errors from downstream compilers causing churn in the SKIP files (e.g. for FXC).",
+      "parentUuid": "a4402e40_4dc84118",
       "revId": "1f035898e186551474bc18478bb336dbdcd055c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
