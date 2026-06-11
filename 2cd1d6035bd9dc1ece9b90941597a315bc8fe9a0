@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86b4f57f_eeebed8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T12:32:33Z",
+      "side": 1,
+      "message": "This looks a lot better and very maintainable (considering)! There\u0027s a few nits, with the only structural change being to try to find a way to but the ignoring of jinja/markupsafe/.git next to the logic that actually requires it.",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "052fd221_f025d3b1",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T12:32:33Z",
+      "side": 1,
+      "message": "Mmmh only `wire` should need the wire. This is weird.",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ea09b6f_cbd04c32",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T12:32:33Z",
+      "side": 1,
+      "message": "nit: these we could add in individual template invocations as there should be few of them that require these files. It would avoid the logic above.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 5
+      },
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06d9faad_886e5c1d",
+        "filename": "generator/generator_lib.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T12:32:33Z",
+      "side": 1,
+      "message": "```suggestion\nimport(\"../scripts/dawn_overrides_with_defaults.gni\")\n\n```",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 1
+      },
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8548fbf_0c05356c",
+        "filename": "generator/generator_lib.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T12:32:33Z",
+      "side": 1,
+      "message": "nit: add `inputs` documentation here.",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a5a59d1_d06c3553",
+        "filename": "generator/generator_lib.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T12:32:33Z",
+      "side": 1,
+      "message": "Can we have a small comment explaining why we do this?",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c30dab61_5ef5cc11",
+        "filename": "generator/generator_lib.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T12:32:33Z",
+      "side": 1,
+      "message": "nit: move the computation of dependencies to happen unconditionally. It\u0027s weird right now how it\u0027s defined inside the branch but leaks in the enclosing scope. This would allow removing this condition and keep only the condition for individual flags.",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "059f55f4_7bc0183e",
+        "filename": "generator/generator_lib.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T12:32:33Z",
+      "side": 1,
+      "message": "nit: the logic for Jinja and .git looks a bit weird when it is in this script that\u0027s just a framework. I wonder if we could have \"globs\" in the expected inputs like \"/.git/*\" and \"/third_party/jinja2/*\" that would tell it to ignore these files.",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
