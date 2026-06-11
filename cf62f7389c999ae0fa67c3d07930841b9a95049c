@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "201ad69d_bdeb9fd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-11T00:37:25Z",
+      "side": 1,
+      "message": "Will do a more thorough review, but responding to comments for now.",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16ba2159_048e74e4",
@@ -54,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1e5788c2_4848822f",
+        "filename": "DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-11T00:37:25Z",
+      "side": 1,
+      "message": "If these should be kept in sync with Chromium, you can add to the correct sync sets in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/scripts/roll_chromium_deps.py depending on their type (looks like a combination of stuff that should go in `SYNCED_REPOS`, `SYNCED_CHROMIUM_REPOS` and `SYNCED_CIPD_DEPS`.\n\nIf for whatever reason you want them to be rolled to HEAD instead of whatever Chromium is using, we\u0027ll need to set up one or more new autorollers.",
+      "parentUuid": "9976dcbd_ccb93731",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "79bf512b_042af0ce",
         "filename": "docs/building.md",
         "patchSetId": 9
@@ -65,6 +100,24 @@
       "writtenOn": "2026-06-11T00:05:44Z",
       "side": 1,
       "message": "@bsheedy@google.com heads up I might also ask for help later putting up compile-only Linux bots for cross-compilation to mac/win/android in `dawn_maximal` mode.",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eba09671_e6edd7fb",
+        "filename": "docs/building.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-11T00:37:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "79bf512b_042af0ce",
       "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
