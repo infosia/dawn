@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "11621168_696506fa",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T08:16:57Z",
+      "side": 1,
+      "message": "That\u0027s quite unfortunate :/\n\nIf we need to do it, we should do something where we change `generator_lib.py` to take in a list of paths of dependencies and validates that the list match exactly what is produced [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/generator_lib.py;drc\u003d06b0435d10620dabc8f137d6e42e93223f29808f;l\u003d345). Then change `generator_lib_action` and `dawn_json_generator` to take in the list of dependencies explicitly as a `gen_deps` (name tbd). This way each code generation target will list exactly the dependencies that it has and we avoid false dependencies.\n\nWe can also have a `dawn_template_dir` defined in `generator_lib.gni` to replace all uses of `${dawn_root}/generator/templates/`.",
+      "parentUuid": "fdbf8827_25136d28",
+      "revId": "a001904f317f80b8d5daee4bfe2b6306b00fdfe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "19ec62af_ddc65c97",
         "filename": "generator/dawn_generator.gni",
         "patchSetId": 5
