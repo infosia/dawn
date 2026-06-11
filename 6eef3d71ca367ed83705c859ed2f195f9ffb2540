@@ -34,6 +34,24 @@
       "parentUuid": "6349f97f_94f22b2a",
       "revId": "6eef3d71ca367ed83705c859ed2f195f9ffb2540",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cf1eed5_ba3d6b66",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-11T09:19:34Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b6cb4f78_00a609b6",
+      "revId": "6eef3d71ca367ed83705c859ed2f195f9ffb2540",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
