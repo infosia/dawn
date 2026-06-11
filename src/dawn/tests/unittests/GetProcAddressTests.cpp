@@ -87,8 +87,14 @@ class GetProcAddressTests : public testing::TestWithParam<DawnFlavor> {
             case DawnFlavor::Wire: {
                 mC2sBuf = std::make_unique<utils::TerribleCommandBuffer>();
 
+                mTransferBufferManager = std::make_unique<dawn::wire::TransferBufferManager>();
+                mClientMemoryTransferService =
+                    dawn::wire::client::CreateSimpleMemoryTransferService(
+                        mTransferBufferManager.get());
+
                 wire::WireClientDescriptor clientDesc = {};
                 clientDesc.serializer = mC2sBuf.get();
+                clientDesc.memoryTransferService = mClientMemoryTransferService.get();
                 mWireClient = std::make_unique<wire::WireClient>(clientDesc);
 
                 // Note that currently we are passing a null device since we do not actually use the
@@ -120,6 +126,9 @@ class GetProcAddressTests : public testing::TestWithParam<DawnFlavor> {
   protected:
     Ref<native::InstanceBase> mNativeInstance;
     native::AdapterBase mAdapterBase;
+
+    std::unique_ptr<dawn::wire::TransferBufferManager> mTransferBufferManager;
+    std::unique_ptr<dawn::wire::client::MemoryTransferService> mClientMemoryTransferService;
 
     std::unique_ptr<utils::TerribleCommandBuffer> mC2sBuf;
     std::unique_ptr<wire::WireClient> mWireClient;
