@@ -128,6 +128,7 @@ MATCHER_P(CHandleIs, cType, "") {
 
 namespace wire {
 class CommandSerializer;
+class TransferBufferManager;
 class WireClient;
 class WireServer;
 namespace client {
@@ -202,6 +203,10 @@ class WireTest : virtual public testing::Test {
     std::unique_ptr<wire::WireClient> mWireClient;
     std::unique_ptr<utils::TerribleCommandBuffer> mS2cBuf;
     std::unique_ptr<utils::TerribleCommandBuffer> mC2sBuf;
+
+    std::unique_ptr<dawn::wire::TransferBufferManager> mTransferBufferManager;
+    std::unique_ptr<dawn::wire::client::MemoryTransferService> mClientMemoryTransferService;
+    std::unique_ptr<dawn::wire::server::MemoryTransferService> mServerMemoryTransferService;
 };
 
 }  // namespace dawn
