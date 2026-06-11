@@ -2076,10 +2076,21 @@ class MultiGeneratorFromDawnJSON(Generator):
 
     def get_dependencies(self, args):
         deps = [os.path.abspath(args.dawn_json)]
-        if args.wire_json != None:
+        targets = args.targets.split(',')
+
+        need_wire = any(t in targets for t in [
+            'wire', 'headers', 'cpp_headers', 'proc', 'mock_api', 'native_utils',
+            'dawn_utils', 'webgpu_dawn_native_proc'
+        ])
+        need_kotlin = any(t in targets for t in ['kotlin', 'jni'])
+        need_kt_docs = 'kotlin' in targets
+
+        if need_wire and args.wire_json != None:
             deps += [os.path.abspath(args.wire_json)]
-        if args.kotlin_json != None:
+        if need_kotlin and args.kotlin_json != None:
             deps += [os.path.abspath(args.kotlin_json)]
+        if need_kt_docs and args.webgpu_kt_docs != None:
+            deps += [os.path.abspath(args.webgpu_kt_docs)]
         return deps
 
 
