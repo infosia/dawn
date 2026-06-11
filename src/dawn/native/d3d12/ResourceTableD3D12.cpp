@@ -41,6 +41,7 @@
 #include "src/dawn/native/d3d12/SamplerD3D12.h"
 #include "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.h"
 #include "src/dawn/native/d3d12/StagingDescriptorAllocatorD3D12.h"
+#include "src/dawn/native/d3d12/TextureD3D12.h"
 #include "src/utils/compiler.h"
 
 namespace dawn::native::d3d12 {
@@ -300,6 +301,26 @@ void ResourceTable::FreeCPUHeap(ResourceTable::Heap& heap) {
     heap.cpuAllocation.Invalidate();
     heap.sizeIncrement = 0;
     heap.numDescriptors = 0;
+}
+
+MaybeError ResourceTable::MakeResourcesVisibleExcept(
+    CommandRecordingContext* commandContext,
+    const absl::flat_hash_set<TextureBase*>& writableTextures) {
+    // Callback for each texture to make visible
+    auto onMakeVisible = [&](TextureBase* textureBase) -> MaybeError {
+        // Transition the texture to shader resource layout
+        Texture* texture = ToBackend(textureBase);
+        DAWN_TRY(texture->EnsureSubresourceContentInitialized(commandContext,
+                                                              texture->GetAllSubresources()));
+
+        // Transition to TextureBinding (ShaderResource)
+        texture->TrackUsageAndTransitionNow(commandContext, wgpu::TextureUsage::TextureBinding,
+                                            texture->GetAllSubresources());
+
+        return {};
+    };
+
+    return MakeResourcesVisibileExcept(writableTextures, onMakeVisible);
 }
 
 // Apply updates to resources or to the metadata buffers that are pending.

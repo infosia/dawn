@@ -340,6 +340,7 @@ source_set("sources") {
     "ObjectContentHasher.cpp",
     "ObjectContentHasher.h",
     "ObjectLabel.h",
+    "PassResourceUsage.cpp",
     "PassResourceUsage.h",
     "PassResourceUsageTracker.cpp",
     "PassResourceUsageTracker.h",

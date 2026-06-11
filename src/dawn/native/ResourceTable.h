@@ -30,6 +30,8 @@
 
 #include <vector>
 
+#include "absl/container/flat_hash_set.h"
+#include "absl/functional/function_ref.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 #include "src/dawn/common/Ref.h"
 #include "src/dawn/common/WeakRefSupport.h"
@@ -61,9 +63,6 @@ MaybeError ValidateResourceTableDescriptor(const DeviceBase* device,
 //    may be accessed. Tint enum values are used since Tint is the place where shader-side
 //    validation is implemented..
 //  - The updates of resources in slots and of the metadata buffer are batched.
-//  - Textures must be pinned to be accessible via the resource table, which requires
-//    bidirectional communication so that textures know in which slot they are and notify them of
-//    pinning/unpinning. This is why ResourceTable is WeakRefSupport.
 //  - Default resources are inserted at the end of the table, in a way invisible to the
 //    application, which means that there are two different sizes for the table (the API visible
 //    size and the real one).
@@ -83,11 +82,6 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
     BufferBase* GetMetadataBuffer() const;
     bool IsDestroyed() const;
     MaybeError ValidateCanUseInSubmitNow() const;
-
-    // Methods used by resources to notify when pinning state changes, which in turns may need to
-    // update the contents of the metadata buffer.
-    void OnPinned(ResourceTableSlot slot, TextureBase* texture);
-    void OnUnpinned(ResourceTableSlot slot, TextureBase* texture);
 
     // Dawn API
     void APIDestroy();
@@ -119,6 +113,10 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
     void UpdateWithDeviceValidation(ResourceTableSlot slot,
                                     const BindingResource* resource,
                                     std::string_view methodName);
+
+    MaybeError MakeResourcesVisibileExcept(
+        const absl::flat_hash_set<TextureBase*>& writableTextures,
+        absl::FunctionRef<MaybeError(TextureBase*)> onMakeVisible);
 
     // AcquireDirtySlotUpdates returns all the batched updates that need to be applied before uses
     // of the ResourceTable (since the last call to AcquireDirtySlotUpdates or creation of the
@@ -178,7 +176,7 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
         ExecutionSerial availableAfter = kBeginningOfGPUTime;
         bool dirty = false;
         bool resourceDirty = false;  // resourceDirty implies dirty.
-        bool pinned = false;         // Applies to textures
+        bool visible = false;        // Applies to textures
     };
     ityp::vector<ResourceTableSlot, SlotState> mSlots;
 

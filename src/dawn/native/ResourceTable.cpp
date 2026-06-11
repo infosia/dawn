@@ -36,6 +36,7 @@
 #include "src/dawn/native/Device.h"
 #include "src/dawn/native/Queue.h"
 #include "src/dawn/native/ResourceTableDefaultResources.h"
+#include "src/dawn/native/Texture.h"
 #include "src/utils/compiler.h"
 #include "tint/tint.h"
 
@@ -76,10 +77,9 @@ MaybeError ValidateBindingResource(const DeviceBase* device, const BindingResour
 
         // TODO(https://issues.chromium.org/473444515): Support storage textures in
         // FullResourceTable
-        DAWN_INVALID_IF(
-            (view->GetUsage() & kTextureViewOnlyUsages) != wgpu::TextureUsage::TextureBinding,
-            "%s's usages (%s) are not exactly %s.", view, view->GetUsage() & kTextureViewOnlyUsages,
-            wgpu::TextureUsage::TextureBinding);
+        DAWN_INVALID_IF(!(view->GetUsage() & wgpu::TextureUsage::TextureBinding),
+                        "%s's usages (%s) do not include %s.", view, view->GetUsage(),
+                        wgpu::TextureUsage::TextureBinding);
 
         DAWN_INVALID_IF(view->IsYCbCr(), "%s is YCbCr.", view);
     } else if (SamplerBase* sampler = resource->sampler) {
@@ -209,12 +209,6 @@ MaybeError ResourceTableBase::InitializeBase() {
 
 void ResourceTableBase::DestroyImpl(DestroyReason reason) {
     DAWN_CHECK(!mDestroyed);
-
-    for (auto [i, slot] : Enumerate(mSlots)) {
-        if (auto view = GetRef<TextureViewBase>(slot.resource)) {
-            view->GetTexture()->RemoveResourceTableSlotUse(this, i);
-        }
-    }
 
     mSlots.clear();
     mDirtySlots.clear();
@@ -442,23 +436,7 @@ bool ResourceTableBase::IsValidSlot(ResourceTableSlot slot) const {
     return !mDestroyed && slot < mAPISize;
 }
 
-void ResourceTableBase::OnPinned(ResourceTableSlot slot, TextureBase* texture) {
-    DAWN_CHECK(!mDestroyed);
-    DAWN_CHECK(std::holds_alternative<Ref<TextureViewBase>>(mSlots[slot].resource));
-    DAWN_CHECK(std::get<Ref<TextureViewBase>>(mSlots[slot].resource)->GetTexture() == texture);
-    DAWN_ASSERT(!mSlots[slot].pinned);
-    mSlots[slot].pinned = true;
-    MarkStateDirty(slot);
-}
 
-void ResourceTableBase::OnUnpinned(ResourceTableSlot slot, TextureBase* texture) {
-    DAWN_CHECK(!mDestroyed);
-    DAWN_CHECK(std::holds_alternative<Ref<TextureViewBase>>(mSlots[slot].resource));
-    DAWN_CHECK(std::get<Ref<TextureViewBase>>(mSlots[slot].resource)->GetTexture() == texture);
-    DAWN_ASSERT(mSlots[slot].pinned);
-    mSlots[slot].pinned = false;
-    MarkStateDirty(slot);
-}
 
 void ResourceTableBase::Update(ResourceTableSlot slot, const BindingResource* contents) {
     DAWN_ASSERT(mSlots[slot].availableAfter <=
@@ -506,10 +484,6 @@ void ResourceTableBase::SetEntry(ResourceTableSlot slot, const BindingResource* 
             return;
         }
 
-        // Remove the mapping to the slot stored in the textures.
-        if (view != nullptr) {
-            view->GetTexture()->RemoveResourceTableSlotUse(this, slot);
-        }
     } else if (auto sampler = GetRef<SamplerBase>(state.resource)) {
         if (sampler == contents->sampler) {
             return;
@@ -518,14 +492,12 @@ void ResourceTableBase::SetEntry(ResourceTableSlot slot, const BindingResource* 
 
     // Update to new state
     state.resource = {};
-    state.pinned = false;
+    state.visible = false;
     // Note: state.lastResource is only updated by AcquireDirtySlotUpdates
 
     if (TextureViewBase* view = contents->textureView) {
-        // Add the mapping to the slot stored in the textures.
-        view->GetTexture()->AddResourceTableSlotUse(this, slot);
         state.resource = view;
-        state.pinned = view->GetTexture()->HasPinnedUsage();
+        state.visible = true;
 
     } else if (SamplerBase* sampler = contents->sampler) {
         state.resource = sampler;
@@ -534,6 +506,47 @@ void ResourceTableBase::SetEntry(ResourceTableSlot slot, const BindingResource* 
     state.typeId = ComputeTypeId(state.resource);
     state.resourceDirty = true;
     MarkStateDirty(slot);
+}
+
+MaybeError ResourceTableBase::MakeResourcesVisibileExcept(
+    const absl::flat_hash_set<TextureBase*>& writableTextures,
+    absl::FunctionRef<MaybeError(TextureBase*)> onMakeVisible) {
+    for (ResourceTableSlot slot = ResourceTableSlot(0u); slot < mAPISize; ++slot) {
+        SlotState& state = mSlots[slot];
+        auto view = GetRef<TextureViewBase>(state.resource);
+        if (!view) {
+            continue;
+        }
+
+        TextureBase* texture = view->GetTexture();
+
+        DAWN_ASSERT(texture->HasAccess());
+        if (texture->IsDestroyed()) {
+            if (state.visible) {
+                state.visible = false;
+                MarkStateDirty(slot);
+            }
+            continue;
+        }
+
+        if (writableTextures.contains(texture)) {
+            // If it's writable, make it non-visible for the resource table
+            if (state.visible) {
+                state.visible = false;
+                MarkStateDirty(slot);
+            }
+            continue;
+        }
+
+        // Make it visible
+        if (!state.visible) {
+            state.visible = true;
+            MarkStateDirty(slot);
+        }
+        DAWN_TRY(onMakeVisible(texture));
+    }
+
+    return {};
 }
 
 ResourceTableBase::Updates ResourceTableBase::AcquireDirtySlotUpdates() {
@@ -549,7 +562,7 @@ ResourceTableBase::Updates ResourceTableBase::AcquireDirtySlotUpdates() {
         // the type id if it's pinned, else we clear it.
         tint::ResourceType effectiveType = state.typeId;
         if (std::holds_alternative<Ref<TextureViewBase>>(state.resource)) {
-            effectiveType = state.pinned ? state.typeId : tint::ResourceType::kEmpty;
+            effectiveType = state.visible ? state.typeId : tint::ResourceType::kEmpty;
         }
 
         // Add the update for the metadata buffer.

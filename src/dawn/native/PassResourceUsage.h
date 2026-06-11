@@ -122,6 +122,9 @@ struct CommandBufferResourceUsage {
     absl::flat_hash_set<QuerySetBase*> usedQuerySets;
 };
 
+// Returns a set of writable textures from scope.textures
+absl::flat_hash_set<TextureBase*> GatherWritableTextures(const SyncScopeResourceUsage& scope);
+
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_PASSRESOURCEUSAGE_H_
