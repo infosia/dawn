@@ -107,6 +107,19 @@ TEST_F(AssertDeathTest, AssertKills) {
     EXPECT_DEATH(DAWN_ASSERT(g_var2 != 124), "g_var2 != 124");
 #endif
 }
+
+TEST_F(AssertDeathTest, StackTrace) {
+    EXPECT_DEATH(DAWN_UNREACHABLE(), "PC: @");
+}
+
+TEST_F(AssertDeathTest, CrashStackTrace) {
+    EXPECT_DEATH(
+        {
+            volatile int* ptr = nullptr;
+            *ptr = 1;
+        },
+        "PC: @");
+}
 #endif
 
 using AssertFunctionalityTest = ::testing::Test;
