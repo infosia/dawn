@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83b90a4a_e81b1633",
+        "filename": "src/tint/cmd/common/helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-11T18:28:47Z",
+      "side": 1,
+      "message": "Why not a stringstream?",
+      "revId": "1f035898e186551474bc18478bb336dbdcd055c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4402e40_4dc84118",
+        "filename": "test/tint/errors/json-diagnostics-error-with-notes.wgsl.expected.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-11T18:28:47Z",
+      "side": 1,
+      "message": "Is the weird filename an issue? The `\u003cdawn\u003e/` bit specifically",
+      "revId": "1f035898e186551474bc18478bb336dbdcd055c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
