@@ -162,6 +162,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b177ab87_188e94e4",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-11T00:13:16Z",
+      "side": 1,
+      "message": "Ah, correct, I\u0027ll add one for  first_vertex/first_instance and num_workgroups usage.",
+      "parentUuid": "2fe89700_763086c9",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b13448d0_44911322",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 5
