@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "85f15c3a_4f680217",
+        "filename": "DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T08:22:09Z",
+      "side": 1,
+      "message": "This is ... a lot. But also it is clearly scoped to `checkout_android and dawn_standalone`. If it becomes too annoying to maintain, we can easily remove it in the future.",
+      "parentUuid": "16ba2159_048e74e4",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9976dcbd_ccb93731",
         "filename": "DEPS",
         "patchSetId": 9
@@ -158,6 +176,47 @@
         "endLine": 57,
         "endChar": 50
       },
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0ad52db_6cb09225",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T08:22:09Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "0ed7aaa7_84acc381",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 50
+      },
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "737ea0dc_c53c6de0",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T08:22:09Z",
+      "side": 1,
+      "message": "To derisk this CL we should land changes to `src/dawn/{native, samples, tests}` separately as they are cleanups unrelated to enabling Android development.",
       "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
