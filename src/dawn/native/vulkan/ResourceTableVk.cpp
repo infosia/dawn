@@ -202,6 +202,22 @@ MaybeError ResourceTable::ApplyPendingUpdates(CommandRecordingContext* recording
     return {};
 }
 
+MaybeError ResourceTable::MakeResourcesVisibleExcept(
+    CommandRecordingContext* commandContext,
+    const absl::flat_hash_set<TextureBase*>& writableTextures) {
+    // Callback for each texture to make visible
+    auto onMakeVisible = [&](TextureBase* textureBase) -> MaybeError {
+        Texture* texture = ToBackend(textureBase);
+        DAWN_TRY(texture->EnsureSubresourceContentInitialized(commandContext,
+                                                              texture->GetAllSubresources()));
+        texture->TransitionUsageNow(commandContext, wgpu::TextureUsage::TextureBinding, kAllStages,
+                                    texture->GetAllSubresources());
+        return {};
+    };
+
+    return MakeResourcesVisibileExcept(writableTextures, onMakeVisible);
+}
+
 MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordingContext,
                                                const std::vector<MetadataUpdate>& updates) {
     // Updates the metadata buffer by scheduling a copy for each u32 that needs to be updated.

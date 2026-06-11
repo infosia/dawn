@@ -401,7 +401,9 @@ MaybeError PrepareResourcesForSyncScope(Device* device,
                                         const SyncScopeResourceUsage& scope) {
     // Apply pending updates to all resource tables used in usages scope.
     // This has to be done before transitioning resources.
+    auto writables = GatherWritableTextures(scope);
     for (auto& resourceTable : scope.usedResourceTables) {
+        DAWN_TRY(ToBackend(resourceTable)->MakeResourcesVisibleExcept(recordingContext, writables));
         DAWN_TRY(ToBackend(resourceTable)->ApplyPendingUpdates(recordingContext));
     }
 

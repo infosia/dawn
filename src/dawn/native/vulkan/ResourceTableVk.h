@@ -30,6 +30,7 @@
 
 #include <vector>
 
+#include "absl/container/flat_hash_set.h"
 #include "src/dawn/common/vulkan_platform.h"
 #include "src/dawn/native/Error.h"
 #include "src/dawn/native/ResourceTable.h"
@@ -49,6 +50,10 @@ class ResourceTable final : public ResourceTableBase {
 
     // Apply updates to resources or to the metadata buffers that are pending.
     MaybeError ApplyPendingUpdates(CommandRecordingContext* recordingContext);
+
+    MaybeError MakeResourcesVisibleExcept(
+        CommandRecordingContext* recordingContext,
+        const absl::flat_hash_set<TextureBase*>& writableTextures);
 
     VkDescriptorSet GetHandle() const;
 
