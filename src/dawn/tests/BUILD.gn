@@ -482,6 +482,7 @@ source_set("test_infra_sources") {
     "${dawn_root}/src/dawn/utils:system_utils",
     "${dawn_root}/src/dawn/utils:test_utils",
     "${dawn_root}/src/dawn/utils:wgpu_utils",
+    "${dawn_root}/src/utils:crash_handler",
   ]
 
   public = [
