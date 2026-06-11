@@ -92,6 +92,7 @@ static_library("utils") {
   }
 
   public_configs = [ ":internal_config" ]
+  deps = [ "${dawn_root}:abseil" ]
 }
 
 dawn_nocompile_source_set("nocompile_sources") {
