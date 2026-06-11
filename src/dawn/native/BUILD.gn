@@ -115,6 +115,10 @@ if (dawn_enable_opengl) {
       "--supported-extensions",
       rebase_path("opengl/supported_extensions.json", root_build_dir),
     ]
+    inputs = [
+      "${dawn_opengl_registry_dir}/xml/gl.xml",
+      "opengl/supported_extensions.json",
+    ]
     outputs = [
       "src/dawn/native/opengl/OpenGLFunctionsBase_autogen.cpp",
       "src/dawn/native/opengl/OpenGLFunctionsBase_autogen.h",
