@@ -101,6 +101,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78fb8807_034a5e3d",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-11T06:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e2633ef_9e0cac02",
+      "range": {
+        "startLine": 678,
+        "startChar": 55,
+        "endLine": 678,
+        "endChar": 71
+      },
+      "revId": "8b6923612a72f699707530e46322f3803ac5fa15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "329a28d7_996b2686",
@@ -138,6 +162,30 @@
       "side": 1,
       "message": "Removed the use \"parent\". This is was no longer needed as we are marking the required struct with \"art_experimental\" tags in dawn.json.",
       "parentUuid": "329a28d7_996b2686",
+      "range": {
+        "startLine": 1407,
+        "startChar": 20,
+        "endLine": 1407,
+        "endChar": 37
+      },
+      "revId": "8b6923612a72f699707530e46322f3803ac5fa15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c357ed75_78477408",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-11T06:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "549ae1e2_763590c9",
       "range": {
         "startLine": 1407,
         "startChar": 20,
