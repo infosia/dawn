@@ -2066,6 +2066,9 @@ class MultiGeneratorFromDawnJSON(Generator):
                 FileRender('art/methods.cpp', 'cpp/methods.cpp',
                            [RENDER_PARAMS_BASE, params_kotlin]))
             renders.append(
+                FileRender('art/WebViewDawnProcInitializer.cpp', 'cpp/WebViewDawnProcInitializer.cpp',
+                           [RENDER_PARAMS_BASE, params_kotlin]))
+            renders.append(
                 FileRender('art/JNIClasses.h', 'cpp/JNIClasses.h',
                            [RENDER_PARAMS_BASE, params_kotlin]))
             renders.append(
