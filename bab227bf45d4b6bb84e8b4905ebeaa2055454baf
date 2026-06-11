@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04b745e9_1526a278",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-11T20:11:40Z",
+      "side": 1,
+      "message": "I believe minimum macOS version that Dawn supports is 12.0+ (see here: https://github.com/google/dawn/blob/main/docs/support.md) so this change doesn\u0027t make sense and isn\u0027t needed.",
+      "revId": "bab227bf45d4b6bb84e8b4905ebeaa2055454baf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
