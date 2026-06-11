@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4428538e_34c72322",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-11T11:10:21Z",
+      "side": 1,
+      "message": "Thank you for suggestion, I made https://dawn-review.googlesource.com/c/dawn/+/315915. WDYT?",
+      "parentUuid": "11621168_696506fa",
+      "revId": "a001904f317f80b8d5daee4bfe2b6306b00fdfe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "19ec62af_ddc65c97",
         "filename": "generator/dawn_generator.gni",
         "patchSetId": 5
