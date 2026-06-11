@@ -50,6 +50,23 @@
       "message": "@bsheedy@google.com could you point me to how this might be done?",
       "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79bf512b_042af0ce",
+        "filename": "docs/building.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-11T00:05:44Z",
+      "side": 1,
+      "message": "@bsheedy@google.com heads up I might also ask for help later putting up compile-only Linux bots for cross-compilation to mac/win/android in `dawn_maximal` mode.",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
