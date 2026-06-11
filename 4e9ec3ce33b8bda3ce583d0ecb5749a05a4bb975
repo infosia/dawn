@@ -16,6 +16,24 @@
       "message": "I think `test/tint/extensions/fragment_depth/` test files must be updated as well",
       "revId": "4e9ec3ce33b8bda3ce583d0ecb5749a05a4bb975",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce998ac4_f375a072",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-11T11:33:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9d471984_b1d2fdb8",
+      "revId": "4e9ec3ce33b8bda3ce583d0ecb5749a05a4bb975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
