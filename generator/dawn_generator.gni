@@ -28,6 +28,82 @@
 import("../scripts/dawn_overrides_with_defaults.gni")
 import("generator_lib.gni")
 
+dawn_templates = [
+  # Root templates
+  "${dawn_root}/generator/templates/api.h",
+  "${dawn_root}/generator/templates/api_cpp.h",
+  "${dawn_root}/generator/templates/api_cpp.ixx",
+  "${dawn_root}/generator/templates/api_cpp_chained_struct.h",
+  "${dawn_root}/generator/templates/api_cpp_print.h",
+  "${dawn_root}/generator/templates/dawn_proc.cpp",
+  "${dawn_root}/generator/templates/dawn_proc_table.h",
+  "${dawn_root}/generator/templates/dawn_thread_dispatch_proc.cpp",
+  "${dawn_root}/generator/templates/mock_api.cpp",
+  "${dawn_root}/generator/templates/mock_api.h",
+
+  # art templates
+  "${dawn_root}/generator/templates/art/JNIClasses.cpp",
+  "${dawn_root}/generator/templates/art/JNIClasses.h",
+  "${dawn_root}/generator/templates/art/api_jni_types.cpp",
+  "${dawn_root}/generator/templates/art/api_kotlin_async_helpers.kt",
+  "${dawn_root}/generator/templates/art/api_kotlin_callback.kt",
+  "${dawn_root}/generator/templates/art/api_kotlin_constants.kt",
+  "${dawn_root}/generator/templates/art/api_kotlin_enum.kt",
+  "${dawn_root}/generator/templates/art/api_kotlin_exceptions.kt",
+  "${dawn_root}/generator/templates/art/api_kotlin_function_pointer.kt",
+  "${dawn_root}/generator/templates/art/api_kotlin_functions.kt",
+  "${dawn_root}/generator/templates/art/api_kotlin_object.kt",
+  "${dawn_root}/generator/templates/art/api_kotlin_structure.kt",
+  "${dawn_root}/generator/templates/art/api_kotlin_types.kt",
+  "${dawn_root}/generator/templates/art/kotlin_record_conversion.cpp",
+  "${dawn_root}/generator/templates/art/methods.cpp",
+  "${dawn_root}/generator/templates/art/structures.cpp",
+  "${dawn_root}/generator/templates/art/structures.h",
+
+  # opengl templates
+  "${dawn_root}/generator/templates/opengl/OpenGLFunctionsBase.cpp",
+  "${dawn_root}/generator/templates/opengl/OpenGLFunctionsBase.h",
+  "${dawn_root}/generator/templates/opengl/opengl_platform.h",
+
+  # dawn templates
+  "${dawn_root}/generator/templates/dawn/common/GPUInfo.cpp",
+  "${dawn_root}/generator/templates/dawn/common/GPUInfo.h",
+  "${dawn_root}/generator/templates/dawn/cpp_macros.tmpl",
+  "${dawn_root}/generator/templates/dawn/dawn_version.h",
+  "${dawn_root}/generator/templates/dawn/native/ChainUtils.cpp",
+  "${dawn_root}/generator/templates/dawn/native/ChainUtils.h",
+  "${dawn_root}/generator/templates/dawn/native/Features.h",
+  "${dawn_root}/generator/templates/dawn/native/Features.inl",
+  "${dawn_root}/generator/templates/dawn/native/ObjectType.cpp",
+  "${dawn_root}/generator/templates/dawn/native/ObjectType.h",
+  "${dawn_root}/generator/templates/dawn/native/ProcTable.cpp",
+  "${dawn_root}/generator/templates/dawn/native/ValidationUtils.cpp",
+  "${dawn_root}/generator/templates/dawn/native/ValidationUtils.h",
+  "${dawn_root}/generator/templates/dawn/native/api_StreamImpl.cpp",
+  "${dawn_root}/generator/templates/dawn/native/api_absl_format.cpp",
+  "${dawn_root}/generator/templates/dawn/native/api_absl_format.h",
+  "${dawn_root}/generator/templates/dawn/native/api_dawn_native_proc.cpp",
+  "${dawn_root}/generator/templates/dawn/native/api_structs.cpp",
+  "${dawn_root}/generator/templates/dawn/native/api_structs.h",
+  "${dawn_root}/generator/templates/dawn/native/dawn_platform.h",
+  "${dawn_root}/generator/templates/dawn/utils/ComboLimits.cpp",
+  "${dawn_root}/generator/templates/dawn/utils/ComboLimits.h",
+  "${dawn_root}/generator/templates/dawn/wire/ObjectType.h",
+  "${dawn_root}/generator/templates/dawn/wire/WireCmd.cpp",
+  "${dawn_root}/generator/templates/dawn/wire/WireCmd.h",
+  "${dawn_root}/generator/templates/dawn/wire/client/ApiObjects.h",
+  "${dawn_root}/generator/templates/dawn/wire/client/ApiProcs.cpp",
+  "${dawn_root}/generator/templates/dawn/wire/client/ClientBase.h",
+  "${dawn_root}/generator/templates/dawn/wire/client/ClientHandlers.cpp",
+  "${dawn_root}/generator/templates/dawn/wire/client/ClientPrototypes.inc",
+  "${dawn_root}/generator/templates/dawn/wire/client/api.h",
+  "${dawn_root}/generator/templates/dawn/wire/server/ServerBase.h",
+  "${dawn_root}/generator/templates/dawn/wire/server/ServerDoers.cpp",
+  "${dawn_root}/generator/templates/dawn/wire/server/ServerHandlers.cpp",
+  "${dawn_root}/generator/templates/dawn/wire/server/ServerPrototypes.inc",
+  "${dawn_root}/generator/templates/dawn/wire/server/WGPUTraits.h",
+]
+
 # Template to help invoking Dawn code generators based on generator_lib
 #
 #   dawn_generator("my_target_gen") {
@@ -70,7 +146,7 @@ template("dawn_generator") {
     # tree but start at ${dawn_gen_root} instead of ${dawn_root}
     custom_gen_dir = dawn_gen_root
 
-    inputs = [ "${generator_lib_dir}/generator_lib.py" ]
+    inputs = [ "${generator_lib_dir}/generator_lib.py" ] + dawn_templates
     if (defined(invoker.inputs)) {
       inputs += invoker.inputs
     }
@@ -111,7 +187,9 @@ template("dawn_json_generator") {
       "${dawn_root}/src/dawn/dawn.json",
       "${dawn_root}/src/dawn/dawn_wire.json",
       "${dawn_root}/src/dawn/dawn_kotlin.json",
+      "${dawn_root}/src/dawn/webgpu_kt_docs.json",
       "${dawn_root}/third_party/webgpu-headers/src/webgpu.json",
+      "${dawn_root}/generator/webgpu_docs_utility.py",
     ]
 
     forward_variables_from(invoker,
