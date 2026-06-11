@@ -139,11 +139,16 @@ int DawnWireServerFuzzer::Run(const uint8_t* data,
 
     dawnProcSetProcs(&procs);
 
+    auto transferBufferManager = std::make_unique<dawn::wire::TransferBufferManager>();
+    auto memoryTransferService =
+        dawn::wire::server::CreateSimpleMemoryTransferService(transferBufferManager.get());
+
     DevNull devNull;
     dawn::wire::WireServerDescriptor serverDesc = {};
     serverDesc.procs = &procs;
     serverDesc.serializer = &devNull;
     serverDesc.useSpontaneousCallbacks = true;
+    serverDesc.memoryTransferService = memoryTransferService.get();
 
     std::unique_ptr<dawn::wire::WireServer> wireServer(new dawn::wire::WireServer(serverDesc));
     wireServer->InjectInstance(instance->Get(), {1, 0});

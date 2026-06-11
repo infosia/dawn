@@ -32,6 +32,9 @@
 
 #include <cstdint>
 #include <limits>
+#include <span>
+#include <unordered_map>
+#include <vector>
 
 #include "dawn/wire/dawn_wire_export.h"
 
@@ -70,6 +73,47 @@ struct Handle {
     uint32_t generation = 0;
 
     bool operator==(const Handle& other) const = default;
+};
+
+// Identifier serialized between client and server to locate a shared buffer.
+struct DAWN_WIRE_EXPORT TransferBufferHandle {
+    uint64_t id;
+    size_t size;
+};
+
+class DAWN_WIRE_EXPORT TransferBufferManager {
+  public:
+    TransferBufferManager();
+    ~TransferBufferManager();
+
+    // Allocates a zero-initialized buffer of the given size and returns its unique ID.
+    // The buffer starts with a reference count of 1.
+    // Returns 0 on failure.
+    uint64_t CreateBuffer(size_t size);
+
+    // Returns true if a buffer with the given ID exists.
+    bool HasBuffer(uint64_t id) const;
+
+    // Increments the reference count of the buffer.
+    void AddBufferRef(uint64_t id);
+
+    // Decrements the reference count of the buffer. Destroys the buffer when it reaches 0.
+    void ReleaseBuffer(uint64_t id);
+
+    // Looks up a previously created buffer by ID. Returns an empty span if not found.
+    std::span<const uint8_t> GetBufferPointer(uint64_t id) const;
+
+    // Returns the size of a previously created buffer. Returns 0 if not found.
+    size_t GetBufferSize(uint64_t id) const;
+
+  private:
+    struct Buffer {
+        std::vector<uint8_t> data;
+        uint32_t refCount = 1;
+    };
+
+    std::unordered_map<uint64_t, Buffer> mBuffers;
+    uint64_t mNextId = 1;
 };
 
 }  // namespace dawn::wire
