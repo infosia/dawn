@@ -139,6 +139,9 @@ namespace dawn {
 // print "note: declared here" pointing to this function so the reader knows what's going on.
 inline void XXXXXXXXXX_CheckFailedInConsteval_XXXXXXXXXX() {}
 
+// Install crash handler to print a demangled stack trace on unexpected crashes or assertions.
+void InstallCrashHandler(const char* argv0);
+
 }  // namespace dawn
 
 #endif  // SRC_UTILS_ASSERT_H_

@@ -29,10 +29,22 @@
 
 #include <cstdlib>
 
+#include "absl/debugging/failure_signal_handler.h"
+#include "absl/debugging/symbolize.h"
 #include "src/utils/force_crash.h"
 #include "src/utils/log.h"
 
 namespace dawn {
+
+void InstallCrashHandler(const char* argv0) {
+    absl::InitializeSymbolizer(argv0);
+    absl::FailureSignalHandlerOptions options;
+    options.symbolize_stacktrace = true;
+    options.use_alternate_stack = true;
+    options.alarm_on_failure_secs = 3;
+    options.call_previous_handler = true;
+    absl::InstallFailureSignalHandler(options);
+}
 
 void HandleAssertionFailure(const char* file,
                             const char* function,
