@@ -352,6 +352,7 @@ DawnTestEnvironment* DawnTestEnvironment::GetEnvironment() {
 }
 
 DawnTestEnvironment::DawnTestEnvironment(int argc, char** argv) {
+    InstallCrashHandler(argv[0]);
     InitializePartitionAllocForTesting();
     InitializeDanglingPointerDetectorForTesting();
 
