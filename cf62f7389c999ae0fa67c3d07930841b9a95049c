@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c061f94_c1b2c539",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-11T00:49:15Z",
+      "side": 1,
+      "message": "Once this lands, we can set up arm/arm64 compile builders and add them to the CQ to make sure things don\u0027t break. We can add child testers to those whenever the binaries are confirmed to actually work properly.",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16ba2159_048e74e4",
@@ -118,6 +135,75 @@
       "side": 1,
       "message": "Acknowledged",
       "parentUuid": "79bf512b_042af0ce",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ed7aaa7_84acc381",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-11T00:49:15Z",
+      "side": 1,
+      "message": "I don\u0027t know if we actually want to enable SwiftShader for Android? My understanding is that all Android devices should always have a GPU (or at least what appears to be a GPU if running in an emulator), so SwiftShader should not actually ever need to be used.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 50
+      },
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ea372a0_a2aebba1",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-11T00:49:15Z",
+      "side": 1,
+      "message": "What\u0027s the reasoning for needing to move this chunk of flags out from `src/dawn/common/BUILD.gn`?",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 3
+      },
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a062463_79b532a4",
+        "filename": "third_party/cpu_features/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-11T00:49:15Z",
+      "side": 1,
+      "message": "Any reason why this needs to be manually copied instead of adding it as a dependency that can be kept in sync automatically? It looks like this directory is exported from Chromium as a pseudo repo https://chromium.googlesource.com/chromium/src/third_party/cpu_features/+/4974e2063946d9dd2a417c27db139fd982ff447a\n\nIs it due to the Chromium export not exporting the `src` directory?",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 22
+      },
       "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
