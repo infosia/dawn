@@ -50,6 +50,24 @@
       "message": "nit: can we moves the `defines \u003d []` at [1]?",
       "revId": "4d69f1595fa6caba6535a44b87b5547efc08121f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b20f4767_f87414b5",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2026-06-11T11:40:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd12423f_238f620f",
+      "revId": "4d69f1595fa6caba6535a44b87b5547efc08121f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
