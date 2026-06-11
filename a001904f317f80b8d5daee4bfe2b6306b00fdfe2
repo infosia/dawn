@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c45284fa_e2c7928a",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T07:51:18Z",
+      "side": 1,
+      "message": "Why is this needed? We\u0027d really like to avoid this especially because there is no reminder to add to this file list when new templates are added.\n\nThe invocation of the generator emits a [`depfile`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/generator_lib.gni;drc\u003d06b0435d10620dabc8f137d6e42e93223f29808f;l\u003d113) that should make the listing of templates and all other python files unnecessary.",
+      "revId": "a001904f317f80b8d5daee4bfe2b6306b00fdfe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19ec62af_ddc65c97",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T07:51:18Z",
+      "side": 1,
+      "message": "This should be part of the depfile as well. If `webgpu_kt_docs.json` is not added, it might be an omission in [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/dawn_json_generator.py;drc\u003dd6ac7662810e3fcd8c36f2df17f45fadf2b3db00;l\u003d2077).",
+      "revId": "a001904f317f80b8d5daee4bfe2b6306b00fdfe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac15ac0a_421973a8",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T07:51:18Z",
+      "side": 1,
+      "message": "Likewise this should be in the depfile.",
+      "revId": "a001904f317f80b8d5daee4bfe2b6306b00fdfe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
