@@ -63,6 +63,7 @@ struct FuzzedOptions {
     bool polyfill_tanh_f16;
     bool replace_workgroup_bool_with_u32;
     bool collapse_subgroup_min_max;
+    bool fix_u32_div_mod;
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -85,7 +86,16 @@ struct FuzzedOptions {
                  substitute_overrides_config,
                  polyfill_tanh_f16,
                  replace_workgroup_bool_with_u32,
+<<<<<<< HEAD   (8508cb4150ab6e8b9f5bfed22d0f6c61b2ab5354 [M149] Reland "[native] Guarantee thread safety during the m)
                  collapse_subgroup_min_max);
+||||||| BASE   (abaff7bf12608ff36de97dd229081f6ddbad012b [owners] Remove petermcneeley@google.com from src/tint/OWNER)
+                 polyfill_sample_mask,
+                 collapse_subgroup_min_max);
+=======
+                 polyfill_sample_mask,
+                 collapse_subgroup_min_max,
+                 fix_u32_div_mod);
+>>>>>>> CHANGE (a9a6ec351486b901f0d1f6e6c46f256248bc90c0 [msl] Add workaround for u32 div/mod miscompile)
     TINT_REFLECT_HASH_CODE(FuzzedOptions);
 };
 
@@ -139,6 +149,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.vertex_pulling_config = fuzzed_options.vertex_pulling_config;
     options.group_to_argument_buffer_info = fuzzed_options.group_to_argument_buffer_info;
     options.substitute_overrides_config = fuzzed_options.substitute_overrides_config;
+    options.workarounds.fix_u32_div_mod = fuzzed_options.fix_u32_div_mod;
 
     options.bindings = GenerateBindings(module, ep_name, false, false);
     options.immediate_binding_point = BindingPoint(0, 30);

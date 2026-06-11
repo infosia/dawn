@@ -189,6 +189,13 @@ enum class Toggle {
     VulkanCooperativeMatrixStrideIsMatrixElements,
     VulkanUseExtendedDynamicState,
     VulkanForceStaticSamplersForExternalTextures,
+<<<<<<< HEAD   (8508cb4150ab6e8b9f5bfed22d0f6c61b2ab5354 [M149] Reland "[native] Guarantee thread safety during the m)
+||||||| BASE   (abaff7bf12608ff36de97dd229081f6ddbad012b [owners] Remove petermcneeley@google.com from src/tint/OWNER)
+    D3D12UseHLSL2021,
+=======
+    D3D12UseHLSL2021,
+    MetalFixU32DivMod,
+>>>>>>> CHANGE (a9a6ec351486b901f0d1f6e6c46f256248bc90c0 [msl] Add workaround for u32 div/mod miscompile)
 
     // Once all backends have been updated to be thread safe for waiting, we can remove this toggle.
     WaitIsThreadSafe,
