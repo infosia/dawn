@@ -11268,6 +11268,7 @@ constexpr OverloadInfo kOverloads[] = {
     /* const_eval_fn */ ConstEvalFunctionIndex(/* invalid */),
   },
   {
+<<<<<<< HEAD   (89d8eab32a74fd264e32f2c886e35d06c9e1cc15 [M148] Reland "[native] Guarantee thread safety during the m)
     /* [372] */
     /* flags */ OverloadFlags(OverloadFlag::kIsBuiltin, OverloadFlag::kSupportsVertexPipeline, OverloadFlag::kSupportsFragmentPipeline, OverloadFlag::kSupportsComputePipeline),
     /* num_parameters */ 2,
@@ -11276,6 +11277,17 @@ constexpr OverloadInfo kOverloads[] = {
     /* templates */ TemplateIndex(34),
     /* parameters */ ParameterIndex(818),
     /* return_matcher_indices */ MatcherIndicesIndex(63),
+||||||| BASE   (abaff7bf12608ff36de97dd229081f6ddbad012b [owners] Remove petermcneeley@google.com from src/tint/OWNER)
+=======
+    /* [203] */
+    /* flags */ OverloadFlags(OverloadFlag::kIsBuiltin, OverloadFlag::kSupportsVertexPipeline, OverloadFlag::kSupportsFragmentPipeline, OverloadFlag::kSupportsComputePipeline),
+    /* num_parameters */ 0,
+    /* num_explicit_templates */ 0,
+    /* num_templates   */ 0,
+    /* templates */ TemplateIndex(/* invalid */),
+    /* parameters */ ParameterIndex(/* invalid */),
+    /* return_matcher_indices */ MatcherIndicesIndex(62),
+>>>>>>> CHANGE (a9a6ec351486b901f0d1f6e6c46f256248bc90c0 [msl] Add workaround for u32 div/mod miscompile)
     /* const_eval_fn */ ConstEvalFunctionIndex(/* invalid */),
   },
 };
@@ -11893,6 +11905,12 @@ constexpr IntrinsicInfo kBuiltins[] = {
     /* fn pointer_offset[T, S : address_space, A : access](ptr<S, T, A>, u32) -> ptr<S, T, A> */
     /* num overloads */ 1,
     /* overloads */ OverloadIndex(372),
+  },
+  {
+    /* [45] */
+    /* fn volatile_zero() -> u32 */
+    /* num overloads */ 1,
+    /* overloads */ OverloadIndex(203),
   },
 };
 

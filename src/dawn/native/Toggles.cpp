@@ -787,6 +787,20 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "samplers are only require to sample YCbCr AHB on Android, this is useful for testing on "
       "other devices.",
       "https://crbug.com/468988322", ToggleStage::Device}},
+<<<<<<< HEAD   (89d8eab32a74fd264e32f2c886e35d06c9e1cc15 [M148] Reland "[native] Guarantee thread safety during the m)
+||||||| BASE   (abaff7bf12608ff36de97dd229081f6ddbad012b [owners] Remove petermcneeley@google.com from src/tint/OWNER)
+    {Toggle::D3D12UseHLSL2021,
+     {"d3d12_use_hlsl_2021", "Use HLSL 2021 when targeting DXC.", "https://crbug.com/508342536",
+      ToggleStage::Device}},
+=======
+    {Toggle::D3D12UseHLSL2021,
+     {"d3d12_use_hlsl_2021", "Use HLSL 2021 when targeting DXC.", "https://crbug.com/508342536",
+      ToggleStage::Device}},
+    {Toggle::MetalFixU32DivMod,
+     {"metal_fix_u32_div_mod",
+      "Workaround a driver bug on Apple Silicon with u32 div and mod operations.",
+      "https://crbug.com/517225032", ToggleStage::Device}},
+>>>>>>> CHANGE (a9a6ec351486b901f0d1f6e6c46f256248bc90c0 [msl] Add workaround for u32 div/mod miscompile)
     {Toggle::WaitIsThreadSafe,
      {"wait_is_thread_safe",
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "
