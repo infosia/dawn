@@ -113,9 +113,6 @@ class ReferencedModuleDecls {
             auto* ptr = var->Result()->Type()->template As<core::type::Pointer>();
             TINT_ASSERT(ptr);
 
-            if (ptr->AddressSpace() != core::AddressSpace::kWorkgroup) {
-                continue;
-            }
             auto* ary = ptr->UnwrapPtr()->template As<core::type::Array>();
             auto* buf = ptr->UnwrapPtr()->template As<core::type::Buffer>();
             if (!ary && !buf) {
