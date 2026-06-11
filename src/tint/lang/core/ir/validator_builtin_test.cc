@@ -491,7 +491,7 @@ TEST_F(IR_ValidatorTest, Builtin_FragDepth_WrongType) {
 
 TEST_F(IR_ValidatorTest, Builtin_NonFragDepth_NonUndefinedDepthMode) {
     auto* f = VertexEntryPoint();
-    f->SetReturnDepthMode(BuiltinDepthMode::kAny);
+    f->SetReturnDepthMode(BuiltinDepthMode::kGreater);
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
@@ -509,7 +509,7 @@ TEST_F(IR_ValidatorTest, Builtin_NonFragDepth_NonUndefinedDepthMode) {
 TEST_F(IR_ValidatorTest, MissingBuiltin_WithFragDepth) {
     auto* f = ComputeEntryPoint();
     AddReturn(f, "pos", ty.vec4f());
-    f->SetReturnDepthMode(BuiltinDepthMode::kAny);
+    f->SetReturnDepthMode(BuiltinDepthMode::kGreater);
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
@@ -531,17 +531,6 @@ TEST_F(IR_ValidatorTest, Builtin_FragDepth_UndefinedDepthMode) {
 
     auto res = ir::Validate(mod);
     ASSERT_EQ(res, Success);
-}
-
-TEST_F(IR_ValidatorTest, Builtin_FragDepth_AnyDepthMode) {
-    auto* f = FragmentEntryPoint();
-    AddBuiltinReturn(f, "depth", BuiltinValue::kFragDepth, ty.f32());
-    f->SetReturnDepthMode(BuiltinDepthMode::kAny);
-
-    b.Append(f->Block(), [&] { b.Unreachable(); });
-
-    auto res = ir::Validate(mod);
-    ASSERT_EQ(res, Success) << res.Failure();
 }
 
 TEST_F(IR_ValidatorTest, Builtin_FragDepth_GreaterDepthMode) {

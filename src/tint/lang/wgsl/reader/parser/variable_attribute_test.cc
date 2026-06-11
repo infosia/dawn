@@ -32,8 +32,8 @@
 namespace tint::wgsl::reader {
 namespace {
 
-const core::BuiltinDepthMode kDepthModes[] = {
-    core::BuiltinDepthMode::kAny, core::BuiltinDepthMode::kGreater, core::BuiltinDepthMode::kLess};
+const core::BuiltinDepthMode kDepthModes[] = {core::BuiltinDepthMode::kGreater,
+                                              core::BuiltinDepthMode::kLess};
 
 TEST_F(WGSLParserTest, Attribute_Id) {
     auto p = parser("id(4)");

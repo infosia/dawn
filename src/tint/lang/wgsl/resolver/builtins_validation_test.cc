@@ -234,17 +234,17 @@ note: while analyzing entry point 'fragShader')");
 TEST_F(ResolverBuiltinsValidationTest, UseFragDepthModeWithoutExtension) {
     // @fragment
     // fn fs_main() -> @builtin(frag_depth, any) f32 { return 1.0; }
-    Func(
-        "fs_main", tint::Empty, ty.f32(),
-        Vector{
-            Return(1_f),
-        },
-        Vector{
-            Stage(ast::PipelineStage::kFragment),
-        },
-        Vector{
-            Builtin(Source{{12, 34}}, core::BuiltinValue::kFragDepth, core::BuiltinDepthMode::kAny),
-        });
+    Func("fs_main", tint::Empty, ty.f32(),
+         Vector{
+             Return(1_f),
+         },
+         Vector{
+             Stage(ast::PipelineStage::kFragment),
+         },
+         Vector{
+             Builtin(Source{{12, 34}}, core::BuiltinValue::kFragDepth,
+                     core::BuiltinDepthMode::kGreater),
+         });
 
     Resolver resolver{this, wgsl::AllowedFeatures{}};
     EXPECT_FALSE(resolver.Resolve());
@@ -263,7 +263,8 @@ TEST_F(ResolverBuiltinsValidationTest, UseFragDepthModeIsInvalidForPosition) {
          },
          Vector{Stage(ast::PipelineStage::kVertex)},
          Vector{
-             Builtin(Source{{12, 34}}, core::BuiltinValue::kPosition, core::BuiltinDepthMode::kAny),
+             Builtin(Source{{12, 34}}, core::BuiltinValue::kPosition,
+                     core::BuiltinDepthMode::kGreater),
          });
 
     EXPECT_FALSE(r()->Resolve());
@@ -283,7 +284,7 @@ TEST_F(ResolverBuiltinsValidationTest, UseFragDepthModeIsInvalidForPositionInStr
         "Output", Vector{
                       Member("pos", ty.vec4<f32>(),
                              Vector{Builtin(Source{{12, 34}}, core::BuiltinValue::kPosition,
-                                            core::BuiltinDepthMode::kAny)}),
+                                            core::BuiltinDepthMode::kGreater)}),
                   });
     Func(Source{{12, 34}}, "main", tint::Empty, ty.Of(output),
          Vector{
