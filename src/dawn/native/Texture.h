@@ -172,8 +172,6 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     SubresourceRange GetAllSubresources() const;
     uint32_t GetSampleCount() const;
     uint32_t GetSubresourceCount() const;
-    bool HasPinnedUsage() const;
-    wgpu::TextureUsage GetPinnedUsage() const;
 
     // |GetUsage| returns the usage with which the texture was created using the base WebGPU
     // API. The dawn-internal-usages extension may add additional usages. |GetInternalUsage|
@@ -221,10 +219,6 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     Extent3D GetMipLevelSubresourcePhysicalSize(uint32_t level, Aspect aspect) const;
     Extent3D GetMipLevelSubresourceVirtualSize(uint32_t level, Aspect aspect) const;
 
-    MaybeError Pin(wgpu::TextureUsage usage);
-    void Unpin();
-    void AddResourceTableSlotUse(ResourceTableBase* table, ResourceTableSlot slot);
-    void RemoveResourceTableSlotUse(ResourceTableBase* table, ResourceTableSlot slot);
 
     ResultOrError<Ref<TextureViewBase>> CreateView(
         const TextureViewDescriptor* descriptor = nullptr);
@@ -244,8 +238,6 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     TextureViewBase* APICreateView(const TextureViewDescriptor* descriptor = nullptr);
     TextureViewBase* APICreateErrorView(const TextureViewDescriptor* descriptor = nullptr);
     void APIDestroy();
-    void APIPin(wgpu::TextureUsage usages);
-    void APIUnpin();
     uint32_t APIGetWidth() const;
     uint32_t APIGetHeight() const;
     uint32_t APIGetDepthOrArrayLayers() const;
@@ -267,8 +259,6 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
 
     ExecutionSerial mLastSharedTextureMemoryUsageSerial{kBeginningOfGPUTime};
 
-    virtual MaybeError PinImpl(wgpu::TextureUsage usage);
-    virtual void UnpinImpl();
 
   private:
     struct TextureState {
@@ -286,8 +276,6 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
 
     ResultOrError<Ref<TextureViewBase>> GetOrCreateDefaultView();
 
-    MaybeError ValidatePin(wgpu::TextureUsage usages) const;
-    MaybeError ValidateUnpin() const;
 
     void WillAddFirstExternalRef() override;
     void WillDropLastExternalRef() override;
@@ -307,7 +295,6 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     uint32_t mSampleCount = 0;
     wgpu::TextureUsage mUsage = wgpu::TextureUsage::None;
     wgpu::TextureUsage mInternalUsage = wgpu::TextureUsage::None;
-    wgpu::TextureUsage mPinnedUsage = wgpu::TextureUsage::None;  // None if not pinned.
     TextureState mState;
     wgpu::TextureFormat mFormatEnumForReflection = wgpu::TextureFormat::Undefined;
 
@@ -319,21 +306,6 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     using TextureViewCache =
         LRUCache<TextureViewQuery, Ref<TextureViewBase>, TextureViewCacheFuncs>;
     std::unique_ptr<TextureViewCache> mTextureViewCache;
-
-    // Keep a hash set of the places this texture is bound to in ResourceTables.
-    struct ResourceTableSlotUse {
-        WeakRef<ResourceTableBase> table;
-        ResourceTableSlot slot;
-
-        struct HashFuncs {
-            size_t operator()(const ResourceTableSlotUse& query) const;
-            bool operator()(const ResourceTableSlotUse& a, const ResourceTableSlotUse& b) const;
-        };
-    };
-    absl::flat_hash_set<ResourceTableSlotUse,
-                        ResourceTableSlotUse::HashFuncs,
-                        ResourceTableSlotUse::HashFuncs>
-        mResourceTableSlotUses;
 
     // TODO(crbug.com/dawn/845): Use a more optimized data structure to save space
     std::vector<bool> mIsSubresourceContentInitializedAtIndex;

@@ -342,7 +342,9 @@ MaybeError TransitionAndClearForSyncScope(CommandRecordingContext* commandContex
                                           bool* passHasUAV = nullptr) {
     // Apply pending updates to all resource tables used in usages scope.
     // This has to be done before transitioning resources.
+    auto writables = GatherWritableTextures(usages);
     for (auto& resourceTable : usages.usedResourceTables) {
+        DAWN_TRY(ToBackend(resourceTable)->MakeResourcesVisibleExcept(commandContext, writables));
         DAWN_TRY(ToBackend(resourceTable)->ApplyPendingUpdates(commandContext));
     }
 

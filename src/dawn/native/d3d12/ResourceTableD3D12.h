@@ -31,6 +31,7 @@
 #include <memory>
 #include <vector>
 
+#include "absl/container/flat_hash_set.h"
 #include "src/dawn/native/Error.h"
 #include "src/dawn/native/ResourceTable.h"
 #include "src/dawn/native/d3d12/CPUDescriptorHeapAllocationD3D12.h"
@@ -55,6 +56,12 @@ class ResourceTable final : public ResourceTableBase {
 
     static ResultOrError<Ref<ResourceTable>> Create(Device* device,
                                                     const ResourceTableDescriptor* descriptor);
+
+    // Mark all bound textures, except the ones in `writableTextures`, as visible in the metadata
+    // table, and transition their usage.
+    MaybeError MakeResourcesVisibleExcept(
+        CommandRecordingContext* recordingContext,
+        const absl::flat_hash_set<TextureBase*>& writableTextures);
 
     // Apply updates to resources or to the metadata buffers that are pending.
     MaybeError ApplyPendingUpdates(CommandRecordingContext* recordingContext);
