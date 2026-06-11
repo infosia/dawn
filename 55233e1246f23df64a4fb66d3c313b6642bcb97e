@@ -16,6 +16,23 @@
       "message": "PTAL as discussed offline - diff is https://dawn-review.googlesource.com/c/dawn/+/315635/5..6 . Thanks!",
       "revId": "55233e1246f23df64a4fb66d3c313b6642bcb97e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daca99b7_eedda049",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T12:51:20Z",
+      "side": 1,
+      "message": "LGTM thanks!",
+      "revId": "55233e1246f23df64a4fb66d3c313b6642bcb97e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
