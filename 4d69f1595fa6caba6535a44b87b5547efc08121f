@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1f6bb71_fc8e176e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T07:58:03Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "4d69f1595fa6caba6535a44b87b5547efc08121f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc9c8a2c_4ed62be6",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T07:58:03Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "4d69f1595fa6caba6535a44b87b5547efc08121f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd12423f_238f620f",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-11T07:58:03Z",
+      "side": 1,
+      "message": "nit: can we moves the `defines \u003d []` at [1]?",
+      "revId": "4d69f1595fa6caba6535a44b87b5547efc08121f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
