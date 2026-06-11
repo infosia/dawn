@@ -110,6 +110,7 @@ source_set("sources") {
     "client/Client.h",
     "client/ClientDoers.cpp",
     "client/ClientInlineMemoryTransferService.cpp",
+    "client/ClientSharedMemoryTransferService.cpp",
     "client/ComputePassEncoder.cpp",
     "client/ComputePassEncoder.h",
     "client/Device.cpp",
@@ -151,6 +152,7 @@ source_set("sources") {
     "server/ServerProgrammableEncoder.cpp",
     "server/ServerQueue.cpp",
     "server/ServerShaderModule.cpp",
+    "server/ServerSharedMemoryTransferService.cpp",
     "server/ServerSurface.cpp",
   ]
 

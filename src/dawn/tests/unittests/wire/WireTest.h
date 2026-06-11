@@ -128,6 +128,7 @@ MATCHER_P(CHandleIs, cType, "") {
 
 namespace wire {
 class CommandSerializer;
+class TransferBufferManager;
 class WireClient;
 class WireServer;
 namespace client {
@@ -197,6 +198,10 @@ class WireTest : virtual public testing::Test {
     // Devices created on the server MUST call Device.Destroy at least once. This map is used to
     // ensure that this invariant holds true for any devices returned.
     absl::flat_hash_map<WGPUDevice, bool> mDeviceDestroyed;
+
+    std::shared_ptr<dawn::wire::TransferBufferManager> mTransferBufferManager;
+    std::unique_ptr<dawn::wire::client::MemoryTransferService> mClientMemoryTransferService;
+    std::unique_ptr<dawn::wire::server::MemoryTransferService> mServerMemoryTransferService;
 
     std::unique_ptr<wire::WireServer> mWireServer;
     std::unique_ptr<wire::WireClient> mWireClient;
