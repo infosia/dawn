@@ -112,6 +112,7 @@ template("dawn_json_generator") {
       "${dawn_root}/src/dawn/dawn_wire.json",
       "${dawn_root}/src/dawn/dawn_kotlin.json",
       "${dawn_root}/third_party/webgpu-headers/src/webgpu.json",
+      "${dawn_root}/generator/webgpu_docs_utility.py",
     ]
 
     forward_variables_from(invoker,
