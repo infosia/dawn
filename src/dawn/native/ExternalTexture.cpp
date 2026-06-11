@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "dawn/native/ObjectType_autogen.h"
+#include "src/dawn/common/ColorSpace.h"
 #include "src/dawn/native/Buffer.h"
 #include "src/dawn/native/Device.h"
 #include "src/dawn/native/Queue.h"
@@ -253,6 +254,13 @@ ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescript
         ToTransferFunctionParams(descriptor->srcTransferFunctionParameters);
     params.dstTransferFunction =
         ToTransferFunctionParams(descriptor->dstTransferFunctionParameters);
+
+    // Configure the HLG OOTF to perform a gamma 1.2 on the Rec2020 luminance.
+    // TODO(https://crbug.com/521494707): Make the parameters configurable.
+    if (params.srcTransferFunction.mode == TransferFunctionMode::HLG) {
+        constexpr math::Vec3f yFactors = kYCbCrToRGB_Rec2020.Inverse()[0];
+        params.ootfParam = {yFactors[0], yFactors[1], yFactors[2], 1.2};
+    }
 
     // Compute the various transforms and bounds used for sampling and loading operations. They make
     // them appear as if operating on a `apparentSize` texture but instead they are all happening in
