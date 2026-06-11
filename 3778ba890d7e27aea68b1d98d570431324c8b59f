@@ -51,6 +51,24 @@
       "parentUuid": "99d97c0d_b0a62f45",
       "revId": "3778ba890d7e27aea68b1d98d570431324c8b59f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31e2078a_242d8d4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3711353
+      },
+      "writtenOn": "2026-06-11T05:51:22Z",
+      "side": 1,
+      "message": "ok, I confirmed to build the `dawn_end2end_tests` target with the patch.",
+      "parentUuid": "03e39823_52067902",
+      "revId": "3778ba890d7e27aea68b1d98d570431324c8b59f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
