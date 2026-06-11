@@ -27,6 +27,10 @@
 
 #include "dawn/wire/Wire.h"
 
+#include <utility>
+
+#include "src/dawn/common/Alloc.h"
+
 namespace dawn::wire {
 
 CommandSerializer::CommandSerializer() = default;
@@ -36,5 +40,69 @@ void CommandSerializer::OnSerializeError() {}
 
 CommandHandler::CommandHandler() = default;
 CommandHandler::~CommandHandler() = default;
+
+TransferBufferManager::TransferBufferManager() = default;
+TransferBufferManager::~TransferBufferManager() = default;
+
+uint64_t TransferBufferManager::CreateBuffer(size_t size) {
+    // Use AllocNoThrow to avoid throwing in -fno-exceptions mode when
+    // the requested size is too large (e.g. OOM tests).
+    uint8_t* data = AllocNoThrow<uint8_t>(size);
+    if (data == nullptr && size != 0) {
+        return 0;
+    }
+
+    uint64_t id = mNextId++;
+    Buffer buffer;
+    if (size > 0) {
+        buffer.data.resize(size);
+    } else {
+        // WebGPU requires `GetMappedPointer` cannot return nullptr for zero-sized buffers, so we
+        // need to allocate at least 1 byte.
+        buffer.data.resize(1);
+    }
+    delete[] data;
+
+    buffer.refCount = 1;
+    mBuffers[id] = std::move(buffer);
+    return id;
+}
+
+bool TransferBufferManager::HasBuffer(uint64_t id) const {
+    return mBuffers.contains(id);
+}
+
+void TransferBufferManager::AddBufferRef(uint64_t id) {
+    auto it = mBuffers.find(id);
+    if (it != mBuffers.end()) {
+        it->second.refCount++;
+    }
+}
+
+void TransferBufferManager::ReleaseBuffer(uint64_t id) {
+    auto it = mBuffers.find(id);
+    if (it != mBuffers.end()) {
+        --it->second.refCount;
+        if (it->second.refCount == 0) {
+            mBuffers.erase(it);
+        }
+    }
+}
+
+std::span<const uint8_t> TransferBufferManager::GetBufferPointer(uint64_t id) const {
+    auto it = mBuffers.find(id);
+    if (it == mBuffers.end()) {
+        return {};
+    }
+    return std::span<const uint8_t>(it->second.data.data(), it->second.data.size());
+}
+
+size_t TransferBufferManager::GetBufferSize(uint64_t id) const {
+    auto it = mBuffers.find(id);
+    if (it == mBuffers.end()) {
+        return 0;
+    }
+    return it->second.data.size();
+}
 
 }  // namespace dawn::wire

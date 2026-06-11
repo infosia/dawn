@@ -28,6 +28,7 @@
 #include "src/dawn/tests/unittests/wire/WireTest.h"
 
 #include "dawn/dawn_proc.h"
+#include "dawn/wire/Wire.h"
 #include "dawn/wire/WireClient.h"
 #include "dawn/wire/WireServer.h"
 #include "src/dawn/common/StringViewUtils.h"
@@ -70,11 +71,11 @@ WireTest::~WireTest() {
 }
 
 wire::client::MemoryTransferService* WireTest::GetClientMemoryTransferService() {
-    return nullptr;
+    return mClientMemoryTransferService.get();
 }
 
 wire::server::MemoryTransferService* WireTest::GetServerMemoryTransferService() {
-    return nullptr;
+    return mServerMemoryTransferService.get();
 }
 
 utils::TerribleCommandBuffer* WireTest::GetC2SCommandBuffer() {
@@ -87,6 +88,12 @@ void WireTest::SetUp() {
 
     mS2cBuf = std::make_unique<utils::TerribleCommandBuffer>();
     mC2sBuf = std::make_unique<utils::TerribleCommandBuffer>(mWireServer.get());
+
+    mTransferBufferManager = std::make_unique<dawn::wire::TransferBufferManager>();
+    mClientMemoryTransferService =
+        dawn::wire::client::CreateSimpleMemoryTransferService(mTransferBufferManager.get());
+    mServerMemoryTransferService =
+        dawn::wire::server::CreateSimpleMemoryTransferService(mTransferBufferManager.get());
 
     wire::WireServerDescriptor serverDesc = {};
     serverDesc.procs = &mockProcs;
