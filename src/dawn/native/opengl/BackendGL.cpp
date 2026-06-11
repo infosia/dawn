@@ -40,12 +40,16 @@
 namespace dawn::native::opengl {
 
 namespace {
+#ifndef DAWN_ANGLE_LIBS_SUFFIX
+#define DAWN_ANGLE_LIBS_SUFFIX ""
+#endif
+
 #if DAWN_PLATFORM_IS(WINDOWS)
-const char* kEGLLib = "libEGL.dll";
+const char* kEGLLib = "libEGL" DAWN_ANGLE_LIBS_SUFFIX ".dll";
 #elif DAWN_PLATFORM_IS(MACOS)
-const char* kEGLLib = "libEGL.dylib";
+const char* kEGLLib = "libEGL" DAWN_ANGLE_LIBS_SUFFIX ".dylib";
 #else
-const char* kEGLLib = "libEGL.so";
+const char* kEGLLib = "libEGL" DAWN_ANGLE_LIBS_SUFFIX ".so";
 #endif
 
 }  // anonymous namespace
