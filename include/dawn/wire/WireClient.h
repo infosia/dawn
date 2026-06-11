@@ -192,6 +192,10 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
 
 // Backdoor to get the order of the ProcMap for testing
 DAWN_WIRE_EXPORT std::vector<std::string_view> GetProcMapNamesForTesting();
+
+DAWN_WIRE_EXPORT std::unique_ptr<MemoryTransferService> CreateSimpleMemoryTransferService(
+    std::shared_ptr<TransferBufferManager> transferBufferManager);
+
 }  // namespace client
 }  // namespace dawn::wire
 

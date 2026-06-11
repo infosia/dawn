@@ -127,9 +127,16 @@ class WireHelperProxy : public WireHelper {
         mC2sBuf = std::make_unique<dawn::utils::TerribleCommandBuffer>();
         mS2cBuf = std::make_unique<dawn::utils::TerribleCommandBuffer>();
 
+        mTransferBufferManager = std::make_shared<dawn::wire::TransferBufferManager>();
+        mClientMemoryTransferService =
+            dawn::wire::client::CreateSimpleMemoryTransferService(mTransferBufferManager);
+        mServerMemoryTransferService =
+            dawn::wire::server::CreateSimpleMemoryTransferService(mTransferBufferManager);
+
         dawn::wire::WireServerDescriptor serverDesc = {};
         serverDesc.procs = &procs;
         serverDesc.serializer = mS2cBuf.get();
+        serverDesc.memoryTransferService = mServerMemoryTransferService.get();
         serverDesc.useSpontaneousCallbacks = true;
 
         mWireServer.reset(new dawn::wire::WireServer(serverDesc));
@@ -142,6 +149,7 @@ class WireHelperProxy : public WireHelper {
 
         dawn::wire::WireClientDescriptor clientDesc = {};
         clientDesc.serializer = mC2sBuf.get();
+        clientDesc.memoryTransferService = mClientMemoryTransferService.get();
 
         mWireClient.reset(new dawn::wire::WireClient(clientDesc));
         mS2cBuf->SetHandler(mWireClient.get());
@@ -183,6 +191,9 @@ class WireHelperProxy : public WireHelper {
   private:
     std::unique_ptr<dawn::utils::TerribleCommandBuffer> mC2sBuf;
     std::unique_ptr<dawn::utils::TerribleCommandBuffer> mS2cBuf;
+    std::shared_ptr<dawn::wire::TransferBufferManager> mTransferBufferManager;
+    std::unique_ptr<dawn::wire::client::MemoryTransferService> mClientMemoryTransferService;
+    std::unique_ptr<dawn::wire::server::MemoryTransferService> mServerMemoryTransferService;
     std::unique_ptr<dawn::wire::WireServer> mWireServer;
     std::unique_ptr<dawn::wire::WireClient> mWireClient;
     std::unique_ptr<WireServerTraceLayer> mWireServerTraceLayer;
