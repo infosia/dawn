@@ -34,6 +34,7 @@ import androidx.webgpu.UncapturedErrorCallback
 import androidx.webgpu.GPU.createInstance
 import androidx.webgpu.WebGpuRuntimeException
 import androidx.webgpu.helper.Util.windowFromSurface
+import androidx.webkit.WebViewDawnLoader
 import java.util.concurrent.Executor
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.CoroutineDispatcher
@@ -253,4 +254,20 @@ private val defaultDeviceLostCallback get(): DeviceLostCallback {
 /** Initializes the native library. This method should be called before making and WebGPU calls. */
 public fun initLibrary() {
     System.loadLibrary("webgpu_c_bundled")
+    initializeDawnProcTableFromWebView()
 }
+
+/**
+ * Initializes the Dawn ProcTable from the Chromium WebView backend.
+ * This is required to route WebGPU calls directly to the WebView's Dawn implementation.
+ */
+public fun initializeDawnProcTableFromWebView() {
+    val procTableAddress = WebViewDawnLoader.getDawnLoader()
+    nativeSetDawnProcTable(procTableAddress)
+}
+
+/**
+ * Native JNI method that takes the DawnProcTable address from WebView,
+ * extracts the getProcAddress function, and populates the local Jetpack DawnProcTable.
+ */
+public external fun nativeSetDawnProcTable(procTableAddress: Long)
