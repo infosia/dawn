@@ -16,6 +16,24 @@
       "message": "Can we have a similar test for num_workgroups?",
       "revId": "6eef3d71ca367ed83705c859ed2f195f9ffb2540",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6cb4f78_00a609b6",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-11T08:27:59Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "6349f97f_94f22b2a",
+      "revId": "6eef3d71ca367ed83705c859ed2f195f9ffb2540",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
