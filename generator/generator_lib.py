@@ -315,6 +315,11 @@ def run_generator(generator):
         type=str,
         help="File to compare outputs with and fail if it doesn't match")
     parser.add_argument(
+        '--expected-inputs-file',
+        default=None,
+        type=str,
+        help="File to compare inputs with and fail if it doesn't match")
+    parser.add_argument(
         '--root-dir',
         default=None,
         type=str,
@@ -342,7 +347,7 @@ def run_generator(generator):
     output = generator.get_outputs(args)
 
     # Output a list of all dependencies for CMake or the tarball for GN/Ninja.
-    if args.depfile != None or args.print_cmake_dependencies:
+    if args.depfile != None or args.print_cmake_dependencies or args.expected_inputs_file != None:
         dependencies = generator.get_dependencies(args)
         dependencies += [
             args.template_dir + os.path.sep + render.template
@@ -367,6 +372,39 @@ def run_generator(generator):
         if args.print_cmake_dependencies:
             sys.stdout.write(_cmake_path_list(dependencies))
             return 0
+
+    # The caller wants to assert that the inputs are what it expects.
+    # Load the file and compare with our dependencies.
+    if args.expected_inputs_file != None:
+        with open(args.expected_inputs_file) as f:
+            absolute_expected = set()
+            for line in f.readlines():
+                path = line.strip()
+                if path:
+                    absolute_expected.add(os.path.abspath(path))
+
+        absolute_actual = set([os.path.abspath(dep) for dep in dependencies])
+
+        if absolute_actual != absolute_expected:
+            print("Wrong expected inputs, caller expected:")
+            for p in sorted(list(absolute_expected)):
+                print("    " + p)
+            print("Actual dependencies:")
+            for p in sorted(list(absolute_actual)):
+                print("    " + p)
+            added = absolute_actual - absolute_expected
+            removed = absolute_expected - absolute_actual
+            if added:
+                print("Missing from expected inputs (need to be added to GN):")
+                for p in sorted(list(added)):
+                    print("    " + p)
+            if removed:
+                print(
+                    "Unexpected in expected inputs (need to be removed from GN):"
+                )
+                for p in sorted(list(removed)):
+                    print("    " + p)
+            return 1
 
     # The caller wants to assert that the outputs are what it expects.
     # Load the file and compare with our renders.
