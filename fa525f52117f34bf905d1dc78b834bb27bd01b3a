@@ -16,6 +16,23 @@
       "message": "Added No-Try because looks like our 144 branch builders don\u0027t work (and I don\u0027t really want to deal with making them work, this is a clean merge)",
       "revId": "fa525f52117f34bf905d1dc78b834bb27bd01b3a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4ec47d4_a0490037",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3711353
+      },
+      "writtenOn": "2026-06-11T14:10:31Z",
+      "side": 1,
+      "message": "The bug was approved for M144 LTS. PTAL.",
+      "revId": "fa525f52117f34bf905d1dc78b834bb27bd01b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
