@@ -22,6 +22,30 @@
       },
       "revId": "3dc65b2f7e5552d62f77647514ac2fcda9b2fb32",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a381f2f2_12a6920c",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-11T06:32:24Z",
+      "side": 1,
+      "message": "Done. And add TODO for future revisit.",
+      "parentUuid": "a1d5f1f6_0ce948cf",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 34
+      },
+      "revId": "3dc65b2f7e5552d62f77647514ac2fcda9b2fb32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

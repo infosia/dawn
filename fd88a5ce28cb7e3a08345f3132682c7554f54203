@@ -180,6 +180,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4de6fcbf_43e3dece",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-11T06:32:24Z",
+      "side": 1,
+      "message": "Expanded the test https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/ImmediateDataTests.cpp;drc\u003dba3121cc5421b6c7816ac9d5359f259fea7b7b67;l\u003d727, PTAL, thanks!",
+      "parentUuid": "b177ab87_188e94e4",
+      "revId": "fd88a5ce28cb7e3a08345f3132682c7554f54203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b13448d0_44911322",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 5
