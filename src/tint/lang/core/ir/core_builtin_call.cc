@@ -227,6 +227,7 @@ tint::core::ir::Instruction::Accesses CoreBuiltinCall::GetSideEffects() const {
         case BuiltinFn::kBufferView:
         case BuiltinFn::kBufferLength:
         case BuiltinFn::kBufferArrayView:
+        case BuiltinFn::kTestExplicitEnumTemplate:
         case BuiltinFn::kNone:
             break;
     }
