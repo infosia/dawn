@@ -44,7 +44,7 @@ TEST(RawPtrTests, DanglingPointerCauseCrash) {
             owner.reset();  // DanglingRawPtrDetectedFn handler => no-op.
             ptr = nullptr;  // DanglingRawPtrReleasedFn handler => crash.
         },
-        "DanglingPointerDetector: A pointer was dangling!");
+        "Memory was freed at:(.|\n)*Dangling raw_ptr was released at:");
 }
 
 // The flag `DisableDanglingPtrDetection` must allow a raw_ptr to dangle.
