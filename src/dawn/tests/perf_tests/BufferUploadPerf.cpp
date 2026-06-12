@@ -25,6 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <array>
+
 #ifdef UNSAFE_BUFFERS_BUILD
 // TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
 #pragma allow_unsafe_buffers
@@ -193,8 +195,8 @@ class BufferMapExtendedUsagesPerf : public DawnPerfTestWithParams<BufferUploadPa
                          size_t offset,
                          size_t size);
 
-    wgpu::Buffer buffers[kNumIterations];
-    wgpu::Buffer stagingBuffers[kNumIterations];
+    std::array<wgpu::Buffer, kNumIterations> buffers;
+    std::array<wgpu::Buffer, kNumIterations> stagingBuffers;
     std::vector<uint8_t> data;
 };
 
