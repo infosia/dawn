@@ -272,8 +272,7 @@ if (NOT DAWN_ENABLE_RTTI)
 endif()
 
 # Allowing usage of enable_if() and nullability extensions in abseil and avoid shadowing errors
-if (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") OR
-    ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang"))
+if (COMPILER_IS_CLANG)
   target_compile_options(libprotobuf PUBLIC
           -Wno-gcc-compat
           -Wno-unreachable-code-break

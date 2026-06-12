@@ -46,8 +46,7 @@ if (NOT TARGET absl::strings)
     # Recommended setting for compatibility with future abseil releases.
     set(ABSL_PROPAGATE_CXX_STD ON CACHE BOOL "" FORCE)
     message(STATUS "Dawn: using Abseil at ${DAWN_ABSEIL_DIR}")
-    if (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") OR
-    ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang"))
+    if (COMPILER_IS_CLANG)
         add_compile_options(
                 -Wno-array-parameter
                 -Wno-deprecated-builtins
@@ -64,7 +63,7 @@ if (NOT TARGET absl::strings)
 endif()
 
 if (DAWN_BUILD_PROTOBUF AND EXISTS "${DAWN_PROTOBUF_DIR}/cmake")
-    if (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") AND WIN32)
+    if (COMPILER_IS_CLANG_CL)
         set(protobuf_HAVE_BUILTIN_ATOMICS 1)
     endif()
 endif()

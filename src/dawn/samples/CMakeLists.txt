@@ -84,8 +84,7 @@ function(Sample)
             "-sJSPI"
         )
     endif()
-    target_link_libraries(${arg_NAME} PUBLIC dawn::dawn_sample_utils)
-    common_compile_options(${arg_NAME})
+    target_link_libraries(${arg_NAME} PRIVATE dawn::dawn_sample_utils dawn_internal_config dawn_common_config)
 endfunction()
 
 Sample(

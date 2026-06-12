@@ -83,7 +83,7 @@ function(tint_core_compile_options TARGET)
     target_compile_definitions(${TARGET} PUBLIC -DTINT_BUILD_FUZZER_VULKAN_SUPPORT=$<BOOL:${TINT_BUILD_FUZZER_VULKAN_SUPPORT}>)
   endif()
 
-  common_compile_options(${TARGET})
+  target_link_libraries(${TARGET} PRIVATE dawn_common_config)
 endfunction()
 
 function(tint_default_compile_options TARGET)
@@ -91,58 +91,20 @@ function(tint_default_compile_options TARGET)
 
   set_target_properties(${TARGET} PROPERTIES LINKER_LANGUAGE CXX)
 
-  set(COMMON_GNU_OPTIONS
-    -Wall
-    -Wextra
-    -Wno-padded
-    -Wno-switch-enum
-    -Wno-unknown-pragmas
-  )
-  if (${DAWN_WERROR})
-      list(APPEND COMMON_GNU_OPTIONS -Werror)
-  endif()
+  target_link_libraries(${TARGET} PRIVATE dawn_warnings_config)
 
-  set(COMMON_CLANG_OPTIONS
-    -Wno-c++98-compat
-    -Wno-c++98-compat-pedantic
-    -Wno-deprecated-copy-with-dtor
-    -Wno-documentation
-    -Wno-documentation-unknown-command
-    -Wno-format-pedantic
-    -Wno-poison-system-directories
-    -Wno-return-std-move-in-c++11
-    -Wno-undefined-var-template
-    -Wno-unknown-warning-option
-    -Wno-used-but-marked-unused
-    -Weverything
-    -Wunsafe-buffer-usage
-    -Wno-unsafe-buffer-usage-in-libc-call
-    -Wno-covered-switch-default
-    -Wno-c2y-extensions
-    -Wno-lifetime-safety-intra-tu-suggestions
-    -Wno-lifetime-safety-cross-tu-suggestions
-    -Wno-lifetime-safety-invalidation
-  )
+  if(COMPILER_IS_CLANG)
+    if(IS_DEBUG_BUILD)
+      target_compile_options(${TARGET} PRIVATE -fstandalone-debug)
+    endif()
+    target_link_libraries(${TARGET} PRIVATE dawn_everything_config)
+  endif()
 
   if(COMPILER_IS_GNU)
     # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80635
     # Despite the bug being closed, false-positives still seen in GCC-13.
     target_compile_options(${TARGET} PRIVATE -Wno-maybe-uninitialized)
   endif(COMPILER_IS_GNU)
-
-  if(COMPILER_IS_LIKE_GNU)
-    target_compile_options(${TARGET} PRIVATE
-      -pedantic-errors
-      ${COMMON_GNU_OPTIONS}
-    )
-
-    if(COMPILER_IS_CLANG)
-      if(IS_DEBUG_BUILD)
-        target_compile_options(${TARGET} PRIVATE -fstandalone-debug)
-      endif()
-      target_compile_options(${TARGET} PRIVATE ${COMMON_CLANG_OPTIONS})
-    endif()
-  endif(COMPILER_IS_LIKE_GNU)
 
   if(MSVC)
     # Specify /EHs for exception handling.
@@ -181,10 +143,9 @@ function(tint_default_compile_options TARGET)
     if(COMPILER_IS_CLANG_CL)
       # When building with clang-cl on Windows, try to match our clang build
       # options as much as possible.
-      target_compile_options(${TARGET} PRIVATE
-        ${COMMON_GNU_OPTIONS}
-        ${COMMON_CLANG_OPTIONS}
+      target_link_libraries(${TARGET} PRIVATE dawn_warnings_config dawn_everything_config)
 
+      target_compile_options(${TARGET} PRIVATE
         # Disable warnings that are usually disabled in downstream deps for
         # gcc/clang, but aren't for clang-cl.
         -Wno-global-constructors

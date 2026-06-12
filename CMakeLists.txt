@@ -414,7 +414,7 @@ find_package(Python3 REQUIRED)
 message(STATUS "Dawn: using python at ${Python3_EXECUTABLE}")
 
 # Options and compile definitions for the internal config
-add_dependencies(dawn_internal_config dawn_warnings_config)
+target_link_libraries(dawn_internal_config INTERFACE dawn_warnings_config dawn_common_config)
 if (DAWN_ALWAYS_ASSERT OR IS_DEBUG_BUILD)
     target_compile_definitions(dawn_internal_config INTERFACE "DAWN_ENABLE_ASSERTS")
 endif()

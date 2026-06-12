@@ -25,11 +25,76 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Common compiler flag config. This can be depended on directly, or via
+# Common compiler warning config. This can be depended on directly, or via
 # dawn_internal_config.
 add_library(dawn_warnings_config INTERFACE)
 
-# Flags we can add without bothering with CheckCompilerFlag.
+# Config that enables -Weverything and then suppresses a lot of warnings.
+# Tint always enables this on Clang, while Dawn only enables it if DAWN_WEVERYTHING is ON.
+add_library(dawn_everything_config INTERFACE)
+
+if (COMPILER_IS_CLANG)
+  target_compile_options(dawn_everything_config
+    INTERFACE
+      "-Weverything"
+      "-Wno-c++98-compat"
+      "-Wno-c++98-compat-pedantic"
+      "-Wno-covered-switch-default"
+      "-Wno-cast-function-type-strict"
+      "-Wno-c++20-extensions"
+      "-Wno-c++20-compat"
+      "-Wno-deprecated-redundant-constexpr-static-def"
+      "-Wno-documentation"
+      "-Wno-documentation-unknown-command"
+      "-Wno-double-promotion"
+      "-Wno-exit-time-destructors"
+      "-Wno-extra-semi-stmt"
+      "-Wno-float-conversion"
+      "-Wno-float-equal"
+      "-Wno-format-nonliteral"
+      "-Wno-format-pedantic"
+      "-Wno-global-constructors"
+      "-Wno-implicit-float-conversion"
+      "-Wno-implicit-int-conversion"
+      "-Wno-lifetime-safety-intra-tu-suggestions"
+      "-Wno-lifetime-safety-cross-tu-suggestions"
+      "-Wno-lifetime-safety-invalidation"
+      "-Wno-missing-noreturn"
+      "-Wno-missing-prototypes"
+      "-Wno-missing-variable-declarations"
+      "-Wno-newline-eof"
+      "-Wno-non-virtual-dtor"
+      "-Wno-nullability-extension"
+      "-Wno-objc-messaging-id"
+      "-Wno-old-style-cast"
+      "-Wno-padded"
+      "-Wno-poison-system-directories"
+      "-Wno-redundant-parens"
+      "-Wno-reserved-identifier"
+      "-Wno-return-std-move-in-c++11"
+      "-Wno-shadow"
+      "-Wno-shadow-field-in-constructor"
+      "-Wno-shorten-64-to-32"
+      "-Wno-sign-conversion"
+      "-Wno-switch-default"
+      "-Wno-switch-enum"
+      "-Wno-tautological-type-limit-compare"
+      "-Wno-thread-safety-negative"
+      "-Wno-undefined-func-template"
+      "-Wno-undefined-reinterpret-cast"
+      "-Wno-undefined-var-template"
+      "-Wno-unsafe-buffer-usage"
+      "-Wno-unsafe-buffer-usage-in-libc-call"
+      "-Wno-unused-macros"
+      "-Wno-unused-member-function"
+      "-Wno-unused-parameter"
+      "-Wno-unused-template"
+      "-Wno-used-but-marked-unused"
+      "-Wno-weak-vtables"
+      "-Wno-zero-as-null-pointer-constant"
+      "-Wno-nrvo"
+  )
+endif()
 
 if (DAWN_WERROR)
   if (COMPILER_IS_LIKE_GNU)
@@ -39,25 +104,19 @@ if (DAWN_WERROR)
     )
   endif()
 endif()
+
+if (COMPILER_IS_LIKE_GNU)
+  target_compile_options(dawn_warnings_config
+    INTERFACE
+      "-pedantic-errors"
+      "-Wall"
+      "-Wextra"
+      "-Wno-c++20-compat"
+  )
+endif()
+
 if (DAWN_WEVERYTHING)
-  # This is NOT a supported configuration; Dawn is not currently intended to be warning-clean in
-  # this configuration. For now it is a way to manually discover new warnings we should fix.
-  # TODO(crbug.com/436300898): Improve this config and enable more (or all) warnings.
-  if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(dawn_warnings_config
-      INTERFACE
-        "-Weverything"
-        "-Wno-c++98-compat"
-        "-Wno-c++98-compat-pedantic"
-        "-Wno-covered-switch-default"
-        "-Wno-global-constructors"
-        "-Wno-padded"
-        "-Wno-poison-system-directories"
-        "-Wno-shadow"
-        "-Wno-shadow-field-in-constructor"
-        "-Wno-unsafe-buffer-usage"
-    )
-  endif()
+  target_link_libraries(dawn_warnings_config INTERFACE dawn_everything_config)
 endif()
 
 # Flags that might not be supported in every version of a compiler.
@@ -110,7 +169,7 @@ dawn_add_flag("-Wunreachable-code-aggressive" ${langs})
 dawn_add_flag("-Wunused-but-set-variable" ${langs})
 dawn_add_flag("-Wunused-macros" ${langs})
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+if (COMPILER_IS_CLANG)
   # Flags use of __COUNTER__, which is used in histogram macros that were
   # largely copied from Chromium. Chromium continues to use __COUNTER__ in
   # their copy.
@@ -118,6 +177,14 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   if (CMAKE_CXX_COMPILER_VERSION_MAJOR VERSION_LESS_EQUAL 18)
     dawn_add_flag("-Wno-gcc-compat" ${langs})
   endif ()
+
+  # Suppressions for Abseil headers
+  dawn_add_flag("-Wno-gcc-compat" ${langs})
+  dawn_add_flag("-Wno-unreachable-code-break" ${langs})
+  dawn_add_flag("-Wno-nullability-extension" ${langs})
+  dawn_add_flag("-Wno-shadow" ${langs})
+  dawn_add_flag("-Wno-unknown-warning-option" ${langs})
+
   if (WIN32)
     dawn_add_flag("/clang:-pedantic" ${langs})
     # Allow the use of __uuidof()

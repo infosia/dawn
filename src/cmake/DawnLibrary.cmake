@@ -145,7 +145,6 @@ function(dawn_add_library name)
         ${arg_PRIVATE_DEPENDS}
         ${arg_UTILITY_TARGET}
       )
-    common_compile_options("${name}")
   endif ()
   add_library("dawn::${name}" ALIAS "${name}")
 endfunction()
