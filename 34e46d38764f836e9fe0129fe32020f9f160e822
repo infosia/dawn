@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cf3a72a_056e4ca3",
+        "filename": "src/utils/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003626
+      },
+      "writtenOn": "2026-06-12T16:33:35Z",
+      "side": 1,
+      "message": "It would be nice if the new function (and absl debug dependency) was defined from a test-only target.\n\nI only found chromium_test_compat shared by Dawn \u0026 Tint that is test-only.\n\nI think we want some kind of \"test_utils\" target that would contain the new function and what is currently chromium_test_compat made of.\n\nI just wanted a confirmation this was a valuable direction before submitting it.\n\nDo you link the current patch, or would you like something like this?",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 23
+      },
+      "revId": "34e46d38764f836e9fe0129fe32020f9f160e822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
