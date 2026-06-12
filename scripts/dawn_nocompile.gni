@@ -34,7 +34,7 @@ import("dawn_features.gni")
 # They run only when the build is configured to use Dawn's own copy of Clang
 # that's pinned at a known revision. Otherwise, the source set is a no-op.
 template("dawn_nocompile_source_set") {
-  if (dawn_standalone && is_clang) {
+  if (dawn_standalone && dawn_weverything) {
     nocompile_source_set(target_name) {
       configs = []
 
