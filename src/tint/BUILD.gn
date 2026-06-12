@@ -57,11 +57,16 @@ config("tint_common_config") {
   # triggering a warning if it is the last statement on a function that has a
   # return value.
   if (!is_clang && is_win) {
-    cflags = [ "/wd4715" ]
+    if (!defined(cflags)) {
+      cflags = []
+    }
+    cflags += [ "/wd4715" ]
   }
 }
 
 config("tint_public_config") {
+  configs = [ "${dawn_root}/scripts:language_extension_token_suppression" ]
+
   defines = []
   if (tint_build_spv_reader) {
     defines += [ "TINT_BUILD_SPV_READER=1" ]

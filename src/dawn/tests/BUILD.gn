@@ -121,7 +121,10 @@ template("dawn_test") {
       configs += invoker.configs
     }
 
-    configs += [ "${dawn_root}/src/dawn/common:internal_config" ]
+    configs += [
+      "${dawn_root}/src/dawn/common:internal_config",
+      "${dawn_root}/scripts:language_extension_token_suppression",
+    ]
 
     if (dawn_tests_use_angle && defined(dawn_angle_dir)) {
       if (!defined(data_deps)) {
@@ -536,6 +539,7 @@ source_set("platform_mocks_sources") {
 }
 
 source_set("end2end_tests_sources") {
+  configs += [ "${dawn_root}/scripts:language_extension_token_suppression" ]
   testonly = true
 
   deps = [
@@ -886,7 +890,7 @@ source_set("white_box_tests_sources") {
       "white_box/EGLImageWrappingTests.cpp",
       "white_box/GLTextureWrappingTests.cpp",
     ]
-    include_dirs = [ "//third_party/EGL-Registry" ]
+    include_dirs = [ "${dawn_root}/third_party/EGL-Registry" ]
   }
 }
 
