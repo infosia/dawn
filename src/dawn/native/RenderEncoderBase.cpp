@@ -719,8 +719,7 @@ void RenderEncoderBase::APISetVertexBuffer(uint32_t slot,
 
 void RenderEncoderBase::APISetBindGroup(uint32_t groupIndexIn,
                                         BindGroupBase* group,
-                                        uint32_t dynamicOffsetCount,
-                                        const uint32_t* dynamicOffsets) {
+                                        Span<const uint32_t> dynamicOffsets) {
     mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
@@ -728,15 +727,15 @@ void RenderEncoderBase::APISetBindGroup(uint32_t groupIndexIn,
 
             if (IsValidationEnabled()) {
                 DAWN_TRY(
-                    ValidateSetBindGroup(groupIndex, group, dynamicOffsetCount, dynamicOffsets));
+                    ValidateSetBindGroup(groupIndex, group, dynamicOffsets));
             }
 
             if (group == nullptr) {
                 mCommandBufferState.UnsetBindGroup(groupIndex);
             } else {
-                RecordSetBindGroup(allocator, groupIndex, group, dynamicOffsetCount,
+                RecordSetBindGroup(allocator, groupIndex, group,
                                    dynamicOffsets);
-                mCommandBufferState.SetBindGroup(groupIndex, group, dynamicOffsetCount,
+                mCommandBufferState.SetBindGroup(groupIndex, group, 
                                                  dynamicOffsets);
                 mUsageTracker.AddBindGroup(group);
             }

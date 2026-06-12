@@ -147,8 +147,7 @@ MaybeError ProgrammableEncoder::ValidateSetImmediates(uint32_t offset, size_t si
 
 MaybeError ProgrammableEncoder::ValidateSetBindGroup(BindGroupIndex index,
                                                      BindGroupBase* group,
-                                                     uint32_t dynamicOffsetCountIn,
-                                                     const uint32_t* dynamicOffsetsIn) const {
+                                                     TypedSpan<BindingIndex, const uint32_t> dynamicOffsetsIn) const {
     DAWN_INVALID_IF(index >= kMaxBindGroupsTyped, "Bind group index (%u) exceeds the maximum (%u).",
                     index, kMaxBindGroupsTyped);
 
@@ -231,8 +230,7 @@ MaybeError ProgrammableEncoder::ValidateSetBindGroup(BindGroupIndex index,
 void ProgrammableEncoder::RecordSetBindGroup(CommandAllocator* allocator,
                                              BindGroupIndex index,
                                              BindGroupBase* group,
-                                             uint32_t dynamicOffsetCount,
-                                             const uint32_t* dynamicOffsets) const {
+                                             Span<const uint32_t> dynamicOffsets) const {
     SetBindGroupCmd* cmd = allocator->Allocate<SetBindGroupCmd>(Command::SetBindGroup);
     cmd->index = index;
     cmd->group = group;

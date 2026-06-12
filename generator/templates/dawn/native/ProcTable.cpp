@@ -38,6 +38,7 @@
 #include "{{native_dir}}/{{prefix}}_platform.h"
 #include "{{include_dir}}/{{Prefix}}Native.h"
 #include "dawn/dawn_version.h"
+#include "src/utils/span.h"
 
 {% for type in by_category["object"] %}
     {% if type.name.canonical_case() not in ["texture view"] %}
@@ -63,7 +64,20 @@ namespace {{native_namespace}} {
 
                 {% for arg in method.arguments %}
                     {% set varName = as_varName(arg.name) %}
-                    {% if arg.type.category in ["enum", "bitmask"] and arg.annotation == "value" %}
+                    {% if arg.is_length %}
+                        //* Skip as it's included in the span just below.
+                    {% elif arg.length and arg.length != "constant" %}
+                        // TODO(https://crbug.com/515272358): Support fixed-length spans.
+                        {% if arg.type.name.canonical_case() == "void" %}
+                            using {{varName}}SpanT = const char;
+                        {% else %}
+                            using {{varName}}SpanT = std::remove_pointer_t<{{decorate(as_frontendType(arg.type), arg)}}>;
+                        {% endif %}
+                        auto {{varName}}Size = {{as_varName(arg.length.name)}};
+                        auto {{varName}}Ptr = reinterpret_cast<{{varName}}SpanT*>({{varName}});
+                        // SAFETY: The webgpu.h user is required to pass valid ranges of objects.
+                        auto {{varName}}_ = DAWN_UNSAFE_BUFFERS(Span<{{varName}}SpanT>({{varName}}Ptr, {{varName}}Size));
+                    {% elif arg.type.category in ["enum", "bitmask"] and arg.annotation == "value" %}
                         auto {{varName}}_ = static_cast<{{as_frontendType(arg.type)}}>({{varName}});
                     {% elif arg.type.category == "structure" and arg.annotation == "value" %}
                         auto {{varName}}_ = *reinterpret_cast<{{as_frontendType(arg.type)}}*>(&{{varName}});
@@ -90,14 +104,14 @@ namespace {{native_namespace}} {
                 {%- endif %}
                 {% if type.category == "object" %}
                     self->API{{method.name.CamelCase()}}(
-                        {%- for arg in method.arguments -%}
+                        {%- for arg in method.arguments if not arg.is_length -%}
                             {%- if not loop.first %}, {% endif -%}
                             {{as_varName(arg.name)}}_
                         {%- endfor -%}
                     );
                 {% elif type.category == "structure" %}
                     API{{suffix}}(cSelf
-                        {%- for arg in method.arguments -%}
+                        {%- for arg in method.arguments if not arg.is_length -%}
                             , {{as_varName(arg.name)}}_
                         {%- endfor -%}
                     );
