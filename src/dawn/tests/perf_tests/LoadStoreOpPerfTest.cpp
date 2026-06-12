@@ -25,6 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <array>
+
 #ifdef UNSAFE_BUFFERS_BUILD
 // TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
 #pragma allow_unsafe_buffers
@@ -99,20 +101,20 @@ class LoadStoreOpPerfTest : public DawnPerfTestWithParams<LoadStoreOpParams> {
     static constexpr uint32_t kHeight = 4096;
     static constexpr uint32_t kNumTextures = 5;
 
-    wgpu::Texture msaaTexture[kNumTextures];
-    wgpu::TextureView msaaTextureView[kNumTextures];
-    wgpu::Texture resolveTexture[kNumTextures];
-    wgpu::TextureView resolveTextureView[kNumTextures];
+    std::array<wgpu::Texture, kNumTextures> msaaTexture;
+    std::array<wgpu::TextureView, kNumTextures> msaaTextureView;
+    std::array<wgpu::Texture, kNumTextures> resolveTexture;
+    std::array<wgpu::TextureView, kNumTextures> resolveTextureView;
 
-    wgpu::Texture srcTexture1[kNumTextures];
-    wgpu::Texture srcTexture2[kNumTextures];
-    wgpu::TextureView srcTextureView1[kNumTextures];
-    wgpu::TextureView srcTextureView2[kNumTextures];
+    std::array<wgpu::Texture, kNumTextures> srcTexture1;
+    std::array<wgpu::Texture, kNumTextures> srcTexture2;
+    std::array<wgpu::TextureView, kNumTextures> srcTextureView1;
+    std::array<wgpu::TextureView, kNumTextures> srcTextureView2;
 
     wgpu::RenderPipeline msaaPipeline;
     wgpu::RenderPipeline singleSampledPipeline;
-    wgpu::BindGroup blitBindGroup1[kNumTextures];
-    wgpu::BindGroup blitBindGroup2[kNumTextures];
+    std::array<wgpu::BindGroup, kNumTextures> blitBindGroup1;
+    std::array<wgpu::BindGroup, kNumTextures> blitBindGroup2;
 };
 
 void LoadStoreOpPerfTest::SetUpPerfTest() {
@@ -320,10 +322,10 @@ class StoreOpDepthPerfTest : public DawnPerfTestWithParams<StoreOpParams> {
     static constexpr uint32_t kHeight = 4096;
     static constexpr uint32_t kNumTextures = 5;
 
-    wgpu::Texture colorTexture[kNumTextures];
-    wgpu::TextureView colorTextureView[kNumTextures];
-    wgpu::Texture depthTexture[kNumTextures];
-    wgpu::TextureView depthTextureView[kNumTextures];
+    std::array<wgpu::Texture, kNumTextures> colorTexture;
+    std::array<wgpu::TextureView, kNumTextures> colorTextureView;
+    std::array<wgpu::Texture, kNumTextures> depthTexture;
+    std::array<wgpu::TextureView, kNumTextures> depthTextureView;
 
     wgpu::RenderPipeline pipeline;
 };
