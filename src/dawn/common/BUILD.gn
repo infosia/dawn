@@ -36,7 +36,10 @@ import("${dawn_root}/scripts/dawn_features.gni")
 ###############################################################################
 
 config("internal_config") {
-  configs = [ "${dawn_root}/src/utils:internal_config" ]
+  configs = [
+    "${dawn_root}/src/utils:internal_config",
+    "${dawn_root}/scripts:language_extension_token_suppression",
+  ]
   include_dirs = [ "${target_gen_dir}/../../../src" ]
 
   defines = []
@@ -111,47 +114,14 @@ config("internal_config") {
     cflags_cc = [ "-Wno-thread-safety" ]
   }
 
-  # Enable more warnings that were found when using Dawn in other projects.
-  # Add them only when building in standalone because we control which clang
-  # version we use. Otherwise we risk breaking projects depending on Dawn when
-  # the use a different clang version.
+  # Enable additional safety checks and stricter standards compliance when
+  # building in standalone.
   if (dawn_standalone && is_clang) {
-    cflags += [
-      "-Wconditional-uninitialized",
-      "-Wcstring-format-directive",
-      "-Wctad-maybe-unsupported",
-      "-Wc++11-narrowing",
-      "-Wdeprecated-copy",
-      "-Wdeprecated-copy-dtor",
-      "-Wduplicate-enum",
-      "-Wextra-semi",
-      "-Wextra-semi-stmt",
-      "-Wimplicit-fallthrough",
-      "-Winconsistent-missing-destructor-override",
-      "-Winvalid-offsetof",
-      "-Wmissing-field-initializers",
-      "-Wnon-c-typedef-for-linkage",
-      "-Wpessimizing-move",
-      "-Wrange-loop-analysis",
-      "-Wredundant-move",
-      "-Wshadow-field",
-      "-Wstrict-prototypes",
-      "-Wsuggest-destructor-override",
-      "-Wsuggest-override",
-      "-Wtautological-unsigned-zero-compare",
-      "-Wunreachable-code-aggressive",
-      "-Wunused-but-set-variable",
-      "-Wunused-macros",
-    ]
-
     if (is_win) {
       cflags += [
         # clang-cl doesn't know -pedantic, pass it explicitly to the clang
         # driver
         "/clang:-pedantic",
-
-        # Allow the use of __uuidof()
-        "-Wno-language-extension-token",
       ]
     } else {
       cflags += [ "-pedantic" ]

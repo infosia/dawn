@@ -135,8 +135,12 @@ tint_fuzzer_test("{{$.Directory.Name}}") {
   public_configs = [ "${tint_spirv_tools_dir}/:spvtools_internal_config" ]
 {{- end}}
 
-{{- if $.Kind.IsTestCmd }}
+{{- if or $.Kind.IsTestCmd $.Kind.IsBenchCmd }}
+  configs += [ "${tint_src_dir}:tint_common_config" ]
+
+  {{ if $.Kind.IsTestCmd -}}
   configs += [ "${tint_src_dir}:tint_unittests_config" ]
+  {{- end }}
 
   if (build_with_chromium) {
     configs -= [ "//build/config/compiler:chromium_code" ]

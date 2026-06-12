@@ -132,6 +132,12 @@ if (tint_build_benchmarks) {
       if (tint_build_wgsl_writer) {
         deps += [ "${tint_src_dir}/cmd/bench/wgsl:bench" ]
       }
+      configs += [ "${tint_src_dir}:tint_common_config" ]
+
+      if (build_with_chromium) {
+        configs -= [ "//build/config/compiler:chromium_code" ]
+        configs += [ "//build/config/compiler:no_chromium_code" ]
+      }
     }
   }
 }
