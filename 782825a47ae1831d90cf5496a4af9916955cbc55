@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdf58900_6b3e45ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-06-12T22:49:41Z",
+      "side": 1,
+      "message": "Rubber Stamping to account for Corentin\u0027s vote being reset.",
+      "revId": "782825a47ae1831d90cf5496a4af9916955cbc55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
