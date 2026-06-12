@@ -52,7 +52,7 @@ config("internal_config") {
   include_dirs = [ "${dawn_root}" ]
 
   defines = []
-  configs = []
+  configs = [ "${dawn_root}/scripts:dawn_everything_warnings" ]
 
   if (is_clang && dawn_standalone && !is_wasm) {
     configs += [ ":raw_ptr_check" ]
@@ -116,10 +116,12 @@ source_set("crash_handler") {
 }
 
 dawn_nocompile_source_set("nocompile_sources") {
+  configs = [ "${dawn_root}/scripts:dawn_everything_warnings" ]
   deps = [ ":utils" ]
   sources = [
     "numeric_nocompile.nc",
     "typed_integer_nocompile.nc",
+    "warning_nocompile.nc",
   ]
 }
 
