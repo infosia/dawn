@@ -1471,6 +1471,7 @@ struct Encoder {
                 return pb::BuiltinFn::buffer_length;
             case core::BuiltinFn::kBufferArrayView:
                 return pb::BuiltinFn::buffer_array_view;
+            case core::BuiltinFn::kTestExplicitEnumTemplate:
             case core::BuiltinFn::kNone:
                 break;
         }

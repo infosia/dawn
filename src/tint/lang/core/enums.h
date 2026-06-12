@@ -198,7 +198,37 @@ constexpr std::string_view kInterpolationTypeStrings[] = {
     "perspective",
 };
 
-/// Address space of a given pointer.
+/// The majorness of a matrix.
+enum class Majorness : uint8_t {
+    kUndefined,
+    kColMajor,
+    kRowMajor,
+};
+
+/// @param value the enum value
+/// @returns the string for the given enum value
+std::string_view ToString(Majorness value);
+
+/// @param out the stream to write to
+/// @param value the Majorness
+/// @returns @p out so calls can be chained
+template <typename STREAM>
+    requires(traits::IsOStream<STREAM>)
+auto& operator<<(STREAM& out, Majorness value) {
+    return out << ToString(value);
+}
+
+/// ParseMajorness parses a Majorness from a string.
+/// @param str the string to parse
+/// @returns the parsed enum, or Majorness::kUndefined if the string could not be parsed.
+Majorness ParseMajorness(std::string_view str);
+
+constexpr std::string_view kMajornessStrings[] = {
+    "col_major",
+    "row_major",
+};
+
+/// The kind of subgroup matrix.
 enum class SubgroupMatrixKind : uint8_t {
     kUndefined,
     kLeft,
@@ -979,6 +1009,7 @@ enum class BuiltinFn : uint8_t {
     kPrint,
     kHasResource,
     kGetResource,
+    kTestExplicitEnumTemplate,
     kNone,
 };
 
@@ -1164,6 +1195,7 @@ constexpr BuiltinFn kBuiltinFns[] = {
     BuiltinFn::kPrint,
     BuiltinFn::kHasResource,
     BuiltinFn::kGetResource,
+    BuiltinFn::kTestExplicitEnumTemplate,
 };
 
 /// All builtin function names
@@ -1330,6 +1362,7 @@ constexpr const char* kBuiltinFnStrings[] = {
     "print",
     "hasResource",
     "getResource",
+    "testExplicitEnumTemplate",
 };
 
 /// Determines if the given `f` is a coarse derivative.
