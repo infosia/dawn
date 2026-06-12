@@ -16,6 +16,24 @@
       "message": "nit: I find adding the `-ferror-limit\u003d0` is useful to get all the errors instead clangd just stopping at some number.\n\n```suggestion\n  CompilationDatabase: out/Debug\n  Add: -ferror-limit\u003d0\n```",
       "revId": "e25c74eb433cc854d017974e1cb96b926927c893",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06d55e58_15f49743",
+        "filename": "docs/development-tips.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-12T21:53:14Z",
+      "side": 1,
+      "message": "Done and I added more info about how this works and how to add other personal settings.",
+      "parentUuid": "dc39d58a_6e7eb14c",
+      "revId": "e25c74eb433cc854d017974e1cb96b926927c893",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
