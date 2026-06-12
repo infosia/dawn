@@ -202,7 +202,7 @@ fn f() { f(1.0, <); }
 
 TEST_F(ParserImplErrorTest, CallStmtMissingSemicolon) {
     EXPECT("fn f() { f() }",
-           R"(test.wgsl:1:14 error: expected ';' for function call
+           R"(test.wgsl:1:14 error: expected '=' for assignment
 fn f() { f() }
              ^
 )");

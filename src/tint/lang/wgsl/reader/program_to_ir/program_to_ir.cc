@@ -1143,6 +1143,13 @@ class Impl {
                             for (uint32_t i = 0; i < b->Overload().num_explicit_templates; i++) {
                                 auto* tmpl_sem = impl.program_.Sem().Get(tmpl->arguments[i]);
                                 auto* tmpl_ty = tmpl_sem->As<sem::TypeExpression>();
+                                // TODO(520804445): Support non-type template parameters.
+                                if (!tmpl_ty) {
+                                    impl.AddError(tmpl->source)
+                                        << "Non-type-based template parameters are currently "
+                                           "unsupported";
+                                    return;
+                                }
                                 TINT_ASSERT(tmpl_ty);
                                 auto* cloned_ty = tmpl_ty->Type()->Clone(impl.clone_ctx_.type_ctx);
                                 explicit_types.Push(cloned_ty);
