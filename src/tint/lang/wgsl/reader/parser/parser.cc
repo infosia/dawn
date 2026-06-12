@@ -1316,7 +1316,7 @@ Maybe<const ast::Statement*> Parser::statement() {
 
 // non_block_statement (continued)
 //   : return_statement SEMICOLON
-//   | func_call_statement SEMICOLON
+//   | func_call_statement SEMICOLON (merged into variable_updating statement)
 //   | variable_statement SEMICOLON
 //   | break_statement SEMICOLON
 //   | continue_statement SEMICOLON
@@ -1331,14 +1331,6 @@ Maybe<const ast::Statement*> Parser::non_block_statement() {
         }
         if (ret_stmt.matched) {
             return ret_stmt.value;
-        }
-
-        auto func = func_call_statement();
-        if (func.errored) {
-            return Failure::kErrored;
-        }
-        if (func.matched) {
-            return func.value;
         }
 
         auto var = variable_statement();
@@ -1901,24 +1893,36 @@ Maybe<const ast::WhileStatement*> Parser::while_statement(AttributeList& attrs) 
 }
 
 // func_call_statement
-//    : IDENT argument_expression_list
+//    : template_elaborated_ident argument_expression_list
 Maybe<const ast::CallStatement*> Parser::func_call_statement() {
     auto& t = peek();
     auto& t2 = peek(1);
-    if (!t.IsIdentifier() || !t2.Is(Token::Type::kParenLeft)) {
+    if (!t.IsIdentifier() ||
+        !(t2.Is(Token::Type::kParenLeft) || t2.Is(Token::Type::kTemplateArgsLeft))) {
         return Failure::kNoMatch;
     }
 
+    MultiTokenSource source(this);
     next();  // Consume the first peek
+
+    const ast::Identifier* ident = nullptr;
+    if (t2.Is(Token::Type::kTemplateArgsLeft)) {
+        auto tmpl_args = expect_template_arg_block("template arguments", [&] {
+            return expect_expression_list("template argument list",
+                                          Token::Type::kTemplateArgsRight);
+        });
+
+        ident = builder_.Ident(source(), t.to_str(), std::move(tmpl_args.value));
+    } else {
+        ident = builder_.Ident(source(), t.to_str());
+    }
 
     auto params = expect_argument_expression_list("function call");
     if (params.errored) {
         return Failure::kErrored;
     }
 
-    return builder_.CallStmt(
-        t.source(),
-        builder_.Call(t.source(), builder_.Expr(t.source(), t.to_str()), std::move(params.value)));
+    return builder_.CallStmt(t.source(), builder_.Call(t.source(), ident, std::move(params.value)));
 }
 
 // break_statement
@@ -2738,25 +2742,25 @@ Maybe<const ast::Expression*> Parser::core_lhs_expression() {
                 return expect_expression_list("template argument list",
                                               Token::Type::kTemplateArgsRight);
             });
-            const auto* ident = builder_.Ident(source(), t.to_str(), std::move(tmpl_args.value));
+            const auto* ident = builder_.Ident(t.source(), t.to_str(), std::move(tmpl_args.value));
 
             auto params = expect_argument_expression_list("function call");
             if (params.errored) {
                 return Failure::kErrored;
             }
 
-            return builder_.Call(source(), ident, std::move(params.value));
+            return builder_.Call(t.source(), ident, std::move(params.value));
         }
 
         if (peek_is(Token::Type::kParenLeft)) {
-            const auto* ident = builder_.Ident(source(), t.to_str());
+            const auto* ident = builder_.Ident(t.source(), t.to_str());
 
             auto params = expect_argument_expression_list("function call");
             if (params.errored) {
                 return Failure::kErrored;
             }
 
-            return builder_.Call(source(), ident, std::move(params.value));
+            return builder_.Call(t.source(), ident, std::move(params.value));
         }
 
         return builder_.Expr(t.source(), t.to_str());
@@ -2883,6 +2887,14 @@ Maybe<const ast::Statement*> Parser::variable_updating_statement() {
         }
         if (!lhs_result.matched) {
             return Failure::kNoMatch;
+        }
+
+        // Is this actually a function call statement?
+        if (t.IsIdentifier() && lhs_result->Is<ast::CallExpression>() &&
+            peek_is(Token::Type::kSemicolon)) {
+            auto* call_expr = lhs_result->As<ast::CallExpression>();
+            return builder_.CallStmt(call_expr->target->source,
+                                     lhs_result->As<ast::CallExpression>());
         }
 
         lhs = lhs_result.value;

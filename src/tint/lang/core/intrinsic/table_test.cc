@@ -999,5 +999,14 @@ TEST_F(CoreIntrinsicTableTest, MemberFunctionDoesNotMatchNonMemberFunction) {
 )");
 }
 
+TEST_F(CoreIntrinsicTableTest, EnumTemplateParameter_WrongEnum) {
+    // Ensure different enums cannot match each other.
+    Vector<core::intrinsic::TemplateParameter, 1> templates{core::Majorness::kRowMajor};
+    auto result = table.Lookup(BuiltinFn::kTestExplicitEnumTemplate, templates, Empty,
+                               core::EvaluationStage::kRuntime);
+    ASSERT_NE(result, Success);
+    ASSERT_THAT(result.Failure().Plain(), HasSubstr("no matching call"));
+}
+
 }  // namespace
 }  // namespace tint::core::intrinsic

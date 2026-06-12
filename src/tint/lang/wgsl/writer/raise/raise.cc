@@ -212,6 +212,7 @@ wgsl::BuiltinFn Convert(core::BuiltinFn fn) {
         CASE(kBufferLength)
         CASE(kBufferArrayView)
         case core::BuiltinFn::kAddSat:  // lowered below
+        case core::BuiltinFn::kTestExplicitEnumTemplate:  // test only function
         case core::BuiltinFn::kNone:
             break;
     }

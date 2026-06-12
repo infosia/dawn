@@ -105,7 +105,7 @@ TEST_F(WGSLParserTest, Statement_Call_Missing_Semi) {
     EXPECT_TRUE(p->has_error());
     EXPECT_TRUE(e.errored);
     EXPECT_FALSE(e.matched);
-    EXPECT_EQ(p->error(), "1:4: expected ';' for function call");
+    EXPECT_EQ(p->error(), "1:4: expected '=' for assignment");
 }
 
 TEST_F(WGSLParserTest, Statement_Call_Bad_ArgList) {
