@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed03aa86_87ee7e7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-12T04:42:20Z",
+      "side": 1,
+      "message": "Thank you for your review, I applied your suggestions.",
+      "parentUuid": "86b4f57f_eeebed8c",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "052fd221_f025d3b1",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa13828a_d32541ef",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-12T04:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "052fd221_f025d3b1",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ea09b6f_cbd04c32",
@@ -48,6 +84,30 @@
       "writtenOn": "2026-06-11T12:32:33Z",
       "side": 1,
       "message": "nit: these we could add in individual template invocations as there should be few of them that require these files. It would avoid the logic above.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 5
+      },
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd875ebc_95f4e37d",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-12T04:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea09b6f_cbd04c32",
       "range": {
         "startLine": 128,
         "startChar": 0,
@@ -81,6 +141,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "053fc30c_5ce5c2ec",
+        "filename": "generator/generator_lib.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-12T04:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06d9faad_886e5c1d",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 1
+      },
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8548fbf_0c05356c",
@@ -94,6 +178,24 @@
       "writtenOn": "2026-06-11T12:32:33Z",
       "side": 1,
       "message": "nit: add `inputs` documentation here.",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28f45f25_a7a3355c",
+        "filename": "generator/generator_lib.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-12T04:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8548fbf_0c05356c",
       "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -115,6 +217,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d12fe201_20ec7965",
+        "filename": "generator/generator_lib.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-12T04:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a5a59d1_d06c3553",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c30dab61_5ef5cc11",
@@ -132,6 +252,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5892f095_46cda727",
+        "filename": "generator/generator_lib.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-12T04:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c30dab61_5ef5cc11",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "059f55f4_7bc0183e",
@@ -145,6 +283,24 @@
       "writtenOn": "2026-06-11T12:32:33Z",
       "side": 1,
       "message": "nit: the logic for Jinja and .git looks a bit weird when it is in this script that\u0027s just a framework. I wonder if we could have \"globs\" in the expected inputs like \"/.git/*\" and \"/third_party/jinja2/*\" that would tell it to ignore these files.",
+      "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25d9f4d6_28366249",
+        "filename": "generator/generator_lib.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-12T04:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "059f55f4_7bc0183e",
       "revId": "2cd1d6035bd9dc1ece9b90941597a315bc8fe9a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
