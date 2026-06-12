@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52d1246e_8bd1621f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-12T09:32:30Z",
+      "side": 1,
+      "message": "LGTM with a couple follow ups that we\u0027ll take care of, thanks a lot for making this integration really clean (considering that it will be a bit annoying to maintain the input list). Kai PTAL as well!",
+      "revId": "e439ca05ee7fa4cdc0c935dd4992ff6f11b780d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1c00293_60552e56",
+        "filename": "generator/generator_lib.gni",
+        "patchSetId": 17
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-12T09:32:30Z",
+      "side": 1,
+      "message": "Follow-up for the Dawn team (most likely me): check if .git should be listed here or can be in just `dawn_version`.",
+      "revId": "e439ca05ee7fa4cdc0c935dd4992ff6f11b780d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3e67750_f14f20c3",
+        "filename": "generator/generator_lib.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-12T09:32:30Z",
+      "side": 1,
+      "message": "Follow-up for the Dawn team: check if this condition is required (could be because of the last empty line? Can we just use `readlines()[:-1]`?)",
+      "revId": "e439ca05ee7fa4cdc0c935dd4992ff6f11b780d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7229cc1_5c89c7ed",
+        "filename": "include/dawn/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-12T09:32:30Z",
+      "side": 1,
+      "message": "Follow-up for the Dawn team (probably me): look if we can remove dawn_wire from most of those targets.",
+      "revId": "e439ca05ee7fa4cdc0c935dd4992ff6f11b780d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
