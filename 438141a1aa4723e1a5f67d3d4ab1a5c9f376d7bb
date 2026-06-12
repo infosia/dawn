@@ -16,6 +16,23 @@
       "message": "Antonio PTAL",
       "revId": "438141a1aa4723e1a5f67d3d4ab1a5c9f376d7bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "944fb464_cbefa406",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-12T14:43:52Z",
+      "side": 1,
+      "message": "Love it",
+      "revId": "438141a1aa4723e1a5f67d3d4ab1a5c9f376d7bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
