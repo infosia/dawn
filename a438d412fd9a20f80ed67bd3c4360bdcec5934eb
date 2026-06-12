@@ -16,6 +16,23 @@
       "message": "PTAL\n\nThis should hopefully be the last of the dawn_end2end_tests suppressions unless I messed something up along the way or something regresses in Dawn.",
       "revId": "a438d412fd9a20f80ed67bd3c4360bdcec5934eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44559f6f_281d0075",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-12T19:45:38Z",
+      "side": 1,
+      "message": "I know we have a lot of tests but it feels like we must have suppressed almost every test by now :P",
+      "revId": "a438d412fd9a20f80ed67bd3c4360bdcec5934eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
