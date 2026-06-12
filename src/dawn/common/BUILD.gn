@@ -88,7 +88,10 @@ clang_plugin("raw_ptr_check") {
 ###############################################################################
 
 config("internal_config") {
-  configs = [ "${dawn_root}/src/utils:internal_config" ]
+  configs = [
+    "${dawn_root}/src/utils:internal_config",
+    "${dawn_root}/scripts:dawn_everything_warnings",
+  ]
   include_dirs = [ "${target_gen_dir}/../../../src" ]
 
   defines = []

@@ -49,6 +49,7 @@ if (build_with_chromium) {
 }
 
 config("internal_config") {
+  configs = [ "${dawn_root}/scripts:dawn_everything_warnings" ]
   include_dirs = [ "${dawn_root}" ]
 
   defines = []
