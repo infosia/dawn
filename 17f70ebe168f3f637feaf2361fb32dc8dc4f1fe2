@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2e20125_57116aae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-12T22:44:00Z",
+      "side": 1,
+      "message": "Had some very minor comments, applied them.",
+      "revId": "17f70ebe168f3f637feaf2361fb32dc8dc4f1fe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd7f4f85_f373214c",
+        "filename": "generator/dawn_generator.gni",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-12T22:44:00Z",
+      "side": 1,
+      "message": "nit: can this be:\n```suggestion\n    _has_wire \u003d filter_include(inputs, [ \"*dawn_wire.json\" ]) !\u003d []\n    if (_has_wire) {\n      args +\u003d [\n        \"--wire-json\",\n        rebase_path(\"${dawn_root}/src/dawn/dawn_wire.json\", root_build_dir),\n      ]\n    }\n\n    _has_kotlin \u003d filter_include(inputs, [ \"*dawn_kotlin.json\" ]) !\u003d []\n    if (_has_kotlin) {\n      args +\u003d [\n        \"--kotlin-json\",\n        rebase_path(\"${dawn_root}/src/dawn/dawn_kotlin.json\", root_build_dir),\n      ]\n    }\n\n    _has_kt_docs \u003d filter_include(inputs, [ \"*webgpu_kt_docs.json\" ]) !\u003d []\n    if (_has_kt_docs) {\n```",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 29
+      },
+      "revId": "17f70ebe168f3f637feaf2361fb32dc8dc4f1fe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20c42af7_28e3410d",
+        "filename": "generator/generator_lib.gni",
+        "patchSetId": 18
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-12T22:44:00Z",
+      "side": 1,
+      "message": "nit: can this be:\n```suggestion\n    _has_wildcard \u003d string_replace(input, \"*\", \"\") !\u003d input\n    if (_has_wildcard) {\n      # Keep glob patterns as-is without rebasing, so they can be matched\n      # as raw patterns in the generator.\n      _rebased_expected_inputs +\u003d [ input ]\n    } else {\n      _rebased_expected_inputs +\u003d [ rebase_path(input, root_build_dir) ]\n    }\n```",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 5
+      },
+      "revId": "17f70ebe168f3f637feaf2361fb32dc8dc4f1fe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d00b042b_fd0ab9fc",
+        "filename": "generator/generator_lib.gni",
+        "patchSetId": 18
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-12T22:44:00Z",
+      "side": 1,
+      "message": "```suggestion\n      _has_wildcard \u003d string_replace(input, \"*\", \"\") !\u003d input\n      if (!_has_wildcard) {\n```",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 27
+      },
+      "revId": "17f70ebe168f3f637feaf2361fb32dc8dc4f1fe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fca13fb0_c2825141",
+        "filename": "generator/generator_lib.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-12T22:44:00Z",
+      "side": 1,
+      "message": "This should be after we check the `expected_inputs_file`, AND/OR the two options should be considered mutually-exclusive (https://docs.python.org/3/library/argparse.html#mutual-exclusion)",
+      "revId": "17f70ebe168f3f637feaf2361fb32dc8dc4f1fe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
