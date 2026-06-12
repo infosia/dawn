@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3017a513_388d26d9",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryYCbCrAndroidTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-12T10:58:21Z",
+      "side": 1,
+      "message": "```suggestion\n        constexpr auto kUndoVulkanSwizzle \u003d math::Mat4x4f::FromRows({\n```",
+      "range": {
+        "startLine": 470,
+        "startChar": 44,
+        "endLine": 470,
+        "endChar": 48
+      },
+      "revId": "dd8f90c1ecbe4f0884a46ae0bc11e39049a6499d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
