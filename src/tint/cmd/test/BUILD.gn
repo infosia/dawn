@@ -178,6 +178,8 @@ if (tint_build_unittests) {
         "${tint_src_dir}/lang/wgsl/writer/ast_printer:unittests",
       ]
     }
+    configs += [ "${tint_src_dir}:tint_common_config" ]
+
     configs += [ "${tint_src_dir}:tint_unittests_config" ]
 
     if (build_with_chromium) {
