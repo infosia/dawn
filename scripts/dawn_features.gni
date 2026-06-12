@@ -25,8 +25,14 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import("//build/config/clang/clang.gni")
 import("//build_overrides/build.gni")
 import("dawn_overrides_with_defaults.gni")
+
+# Determine if we are using the pinned Clang compiler.
+# We only want to enable -Weverything when using the pinned Clang because
+# it's the version we control and test against.
+using_pinned_clang = is_clang && clang_base_path == default_clang_base_path
 
 if (build_with_chromium) {
   import("//build/config/ozone.gni")
