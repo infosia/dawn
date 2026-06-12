@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "049c9cf8_e4081b78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-12T18:52:23Z",
+      "side": 1,
+      "message": "PTAL\n\nThis should hopefully be the last of the dawn_end2end_tests suppressions unless I messed something up along the way or something regresses in Dawn.",
+      "revId": "a438d412fd9a20f80ed67bd3c4360bdcec5934eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
