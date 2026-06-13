@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "823eab70_bbcfc4d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:10:46Z",
+      "side": 1,
+      "message": "Expertise gained working on `ityp::span` and `ityp::heap_array` paid off 😎",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e2544de_5f50db0f",
@@ -117,6 +134,24 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "I don\u0027t think we can use `T*` as the iterator type because it doesn\u0027t have checked arithmetic operators. For example `dst`\u0027s `iterator+1` needs to be checked in order for\n`std::ranges::copy(src, dst.begin());`\nto be safe (this is how hardened libc++ works IIUC).\n\nIn this case, I\u0027m not sure if std::ranges::copy would be silently unsafe or if it just means it would require UNSAFE_BUFFERS, but either way that doesn\u0027t seem good. You could check this in a nocompile test, probably.\n\nThis might be a silly idea but I think you could define this as `std::span\u003cT\u003e::iterator` and define `begin()` as `return std::span(mData, mSize).begin();`. Then you don\u0027t need your own iterator type. (I did a cursory look and it seems destroying the span doesn\u0027t invalidate the iterator.)\n\nThat trick could also work for a few other things (`at`, `front`, `back`, even `first`/`last`/`subspan`) so we don\u0027t have to rely as much on the correctness of our own checks.",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4846bd5_0d81a887",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:10:46Z",
+      "side": 1,
+      "message": "which is to say\n```\nauto begin() { return DAWN_UNSAFE_BUFFERS(std::span(mData, mSize)).at(i); }\nauto at(i) { return DAWN_UNSAFE_BUFFERS(std::span(mData, mSize)).at(i); }\nauto front() { return DAWN_UNSAFE_BUFFERS(std::span(mData, mSize)).front(); }\nauto first(a) { return Self(DAWN_UNSAFE_BUFFERS(std::span(mData, mSize)).first(a); }\n// etc.\n```",
+      "parentUuid": "31ee54a6_0d611dad",
       "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
