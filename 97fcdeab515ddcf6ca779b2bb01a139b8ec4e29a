@@ -16,6 +16,509 @@
       "message": "PTAL!",
       "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "638e9a2c_99bfb553",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "MSVC failure looks trivial.",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e2544de_5f50db0f",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"betwwen\" is a possible misspelling of \"between\".\n\nTo bypass Spellchecker, add a...\n\n\"betwwen\" is a possible misspelling of \"between\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 51,
+        "startChar": 43,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb0cf5aa_534ca1f4",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "optional nit: technically this could require `std::ranges::size(r)` (as `std::sized_range` does) or maybe use `std::sized_range` directly",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 12
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67215c57_617ad9fb",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "This should be required to be unsigned. Technically we could allow signed but so far nothing using ityp has needed signed index types, and they\u0027re harder to reason about. (There\u0027s at least one thing in here that assumes it.)\n\n```\n    static_assert(HasUnsignedUnderlyingType\u003cIndex\u003e, \"Index type must be unsigned\");\n```",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 36
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31ee54a6_0d611dad",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "I don\u0027t think we can use `T*` as the iterator type because it doesn\u0027t have checked arithmetic operators. For example `dst`\u0027s `iterator+1` needs to be checked in order for\n`std::ranges::copy(src, dst.begin());`\nto be safe (this is how hardened libc++ works IIUC).\n\nIn this case, I\u0027m not sure if std::ranges::copy would be silently unsafe or if it just means it would require UNSAFE_BUFFERS, but either way that doesn\u0027t seem good. You could check this in a nocompile test, probably.\n\nThis might be a silly idea but I think you could define this as `std::span\u003cT\u003e::iterator` and define `begin()` as `return std::span(mData, mSize).begin();`. Then you don\u0027t need your own iterator type. (I did a cursory look and it seems destroying the span doesn\u0027t invalidate the iterator.)\n\nThat trick could also work for a few other things (`at`, `front`, `back`, even `first`/`last`/`subspan`) so we don\u0027t have to rely as much on the correctness of our own checks.",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73eebf58_b1bc911c",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "```suggestion\n    // challenging to duplicate the exact logic while keeping support for custom index types.\n```",
+      "range": {
+        "startLine": 119,
+        "startChar": 48,
+        "endLine": 119,
+        "endChar": 52
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76ec1b59_4386fcc7",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "```suggestion\n    // Constructor from a pointer + size. This is UNSAFE_BUFFER_USAGE as other methods should be\n```",
+      "range": {
+        "startLine": 123,
+        "startChar": 79,
+        "endLine": 123,
+        "endChar": 85
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3be1ce6_2d6fef9b",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "nit: `std::distance`",
+      "range": {
+        "startLine": 140,
+        "startChar": 16,
+        "endLine": 140,
+        "endChar": 28
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca851a9e_5bd6f498",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "does this mean copy constructor?",
+      "range": {
+        "startLine": 161,
+        "startChar": 14,
+        "endLine": 161,
+        "endChar": 36
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5117619_2bbb28b0",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "```suggestion\n    // Returns a reference to the last element of this. When empty, will DAWN_CHECK().\n```",
+      "range": {
+        "startLine": 183,
+        "startChar": 72,
+        "endLine": 183,
+        "endChar": 82
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "435845fc_ae2e7723",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "This will underflow if size is 0. Which seems to have the correct behavior, but should comment why it\u0027s OK, or just do something else that avoids the underflow.",
+      "range": {
+        "startLine": 184,
+        "startChar": 58,
+        "endLine": 184,
+        "endChar": 76
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe2c0feb_c09c2011",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "Arguably this should be DAWN_UNSAFE_BUFFER_USAGE so that SAFETY comments are required on each usage.",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9b74c47_0f70e2c5",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "There is no DAWN_CHECK here.",
+      "range": {
+        "startLine": 265,
+        "startChar": 69,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f4d0e69_0767d21d",
+        "filename": "src/utils/span.nc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "`span_nocompile.nc` to follow the style (which we copied from `base`)",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b92bcf16_f27a5b83",
+        "filename": "src/utils/span.nc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "I don\u0027t think the SAFETY presubmit check checks nocompile tests, you could just remove all of these comments. They make it harder to read.",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "358cd08e_383e7c9f",
+        "filename": "src/utils/span.nc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "Should be able to add a test similar to this but going to/from TypedInteger\u003csize_t\u003e rather than uint8_t.",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92e1cda2_573fd085",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "std::array::iterator should be an iterator type and not a `T*` (at least with hardening enabled).\n\nIf we get a safe iterator type then I think we could mark the constructor safe, though I don\u0027t think there\u0027s any reason to, so better to leave it unsafe.",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 141,
+        "endChar": 13
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a782e800_6773e169",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "formatter made the indentation weird",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55097278_3f3b4e17",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "several of these comments are not quite right. Probably just delete them because they\u0027re not much easier to read than the code\n```suggestion\n    // std::vector\u003cT\u003e -\u003e Span\u003cconst T\u003e\n```",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0246a43_49c11fa5",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "I think technically this will invoke the range constructor, not the copy constructor.",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1c15bf1_3d11333f",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "Also mut-to-const assignment?",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cb70457_107b7842",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "also test these for zero-sized span",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6059fd6e_3eae99be",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "this is not guaranteed to be the size you want, maybe use `std::span(ints).size_bytes()`",
+      "range": {
+        "startLine": 453,
+        "startChar": 44,
+        "endLine": 453,
+        "endChar": 56
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c42e1e4_19875572",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "subspan3_2",
+      "range": {
+        "startLine": 541,
+        "startChar": 24,
+        "endLine": 541,
+        "endChar": 34
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3af0492_fa3657f1",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T05:02:12Z",
+      "side": 1,
+      "message": "perhaps also test this for a Index8 which overflows in the index type rather than in native size_t",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
