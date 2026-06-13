@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e4e1173_b9dc6049",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-13T01:13:08Z",
+      "side": 1,
+      "message": "huh, it seems like our Code-Owners check (brokenly?) checks owner+reviewer, not uploader+reviewer, but still ignores reviews from the uploader. Weird, guess this will have to wait",
+      "revId": "052c883830f7e8f0d5e66d878a62c219c0aad998",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
