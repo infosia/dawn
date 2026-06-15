@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "76dbcab3_a91ea3a3",
+        "filename": "src/dawn/native/CommandAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-15T15:16:48Z",
+      "side": 1,
+      "message": "Yes.\n\nMoreover, I believe the line:\n```\n    mEndPtr \u003d reinterpret_cast\u003cchar*\u003e(\u0026DAWN_UNSAFE_TODO(mPlaceholderSpace[1]));\n```\nis going to trigger the bounds check.",
+      "parentUuid": "a555103c_a72d8fa7",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "335a8a19_6319dd54",
         "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-15T07:41:21Z",
       "side": 1,
       "message": "Seems like it should be after `allow_unsafe_buffers`",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32730c63_58af2c71",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-15T15:16:48Z",
+      "side": 1,
+      "message": "@angdaniel@google.com,\n\n\nGiven the amount, this can be done manually, but we used to have this script:\n```\ntools/clang/spanify/reorder-pragma-and-includes.py\n```\n\n\nThis was before removing all of the UNSAFE_BUFFERS_BUILD in Chrome.",
+      "parentUuid": "335a8a19_6319dd54",
       "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -133,6 +169,24 @@
       "writtenOn": "2026-06-15T07:41:21Z",
       "side": 1,
       "message": "nit: just std::array\u0027s constructor should work here and below?",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bb75301_ce7962cf",
+        "filename": "src/dawn/tests/unittests/EnumMaskIteratorTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-15T15:16:48Z",
+      "side": 1,
+      "message": "The current logic is to match the previous code. If the size was implicit, keep it implicit. That being said, we can update things manually here.\n\n---\n\nAnother construct we haven\u0027t used in the tool, but that might be worth using here:\n```\nstd::array expected \u003d {\n  TestAspect::Color,\n  TestAspect::Depth,\n  TestAspect::Stencil\n}\n```\nThis works well only when we don\u0027t require some kind of implicit conversion of the elements, because both the type and the length are determined from the template.",
+      "parentUuid": "2cf8c56b_e9aeadeb",
       "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
