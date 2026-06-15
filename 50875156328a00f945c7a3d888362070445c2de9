@@ -16,6 +16,24 @@
       "message": "Opinion about calling this `TSpan` for short?",
       "revId": "50875156328a00f945c7a3d888362070445c2de9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39ac422e_95be095b",
+        "filename": "src/utils/span.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T15:55:28Z",
+      "side": 1,
+      "message": "Personally I\u0027d prefer `TypedSpan` as it\u0027s a lot clearer for new folks.",
+      "parentUuid": "8ad997f4_337cdf2a",
+      "revId": "50875156328a00f945c7a3d888362070445c2de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
