@@ -124,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "381c2ca5_c255f7dc",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T23:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c8f7cce_ad290e98",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f714ade3_565f3341",
@@ -349,6 +367,24 @@
       "side": 1,
       "message": "Similar to above, it should be the case that it\u0027s missing code, no?",
       "parentUuid": "f1d4cd03_c1e3a06c",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6da84d3d_d0819e0d",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T23:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34c6fab5_5fdff9e3",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
