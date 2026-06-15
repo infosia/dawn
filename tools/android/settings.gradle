@@ -40,6 +40,12 @@ dependencyResolutionManagement {
                 includeGroup "androidx.webkit"
             }
         }
+        maven {
+            url "/usr/local/google/home/sainitarun/aosp-androidx-main/out/repository"
+            content {
+                includeGroup "androidx.webkit"
+            }
+        }
         google()
         mavenCentral()
     }
