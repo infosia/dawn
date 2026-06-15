@@ -150,8 +150,7 @@ class InstanceBase final : public ErrorSink, public RefCounted {
     // Dawn API
     Surface* APICreateSurface(const SurfaceDescriptor* descriptor);
     void APIProcessEvents();
-    [[nodiscard]] wgpu::WaitStatus APIWaitAny(Span<FutureWaitInfo> futures,
-                                              uint64_t timeoutNS);
+    [[nodiscard]] wgpu::WaitStatus APIWaitAny(Span<FutureWaitInfo> futures, uint64_t timeoutNS);
     bool APIHasWGSLLanguageFeature(wgpu::WGSLLanguageFeatureName feature) const;
     void APIGetWGSLLanguageFeatures(SupportedWGSLLanguageFeatures* features) const;
 
