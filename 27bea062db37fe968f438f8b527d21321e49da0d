@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9c8f7cce_ad290e98",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T21:01:33Z",
+      "side": 1,
+      "message": "This case should be impossible no? It would only arise if we added a new entry to the variant and forgot to update this code. I think it\u0027s better to crash in that case, no?",
+      "parentUuid": "2a82696d_45ace1e9",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f714ade3_565f3341",
         "filename": "src/tint/lang/core/intrinsic/table.cc",
         "patchSetId": 3
@@ -319,6 +337,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "34c6fab5_5fdff9e3",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T21:01:33Z",
+      "side": 1,
+      "message": "Similar to above, it should be the case that it\u0027s missing code, no?",
+      "parentUuid": "f1d4cd03_c1e3a06c",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e626a9a5_72f1a745",
         "filename": "src/tint/lang/core/intrinsic/table_data.h",
         "patchSetId": 3
@@ -348,6 +384,24 @@
       "side": 1,
       "message": "They come directly from .def enums through the go code. So yes.",
       "parentUuid": "e626a9a5_72f1a745",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daad6f68_6cfa8d8b",
+        "filename": "src/tint/lang/core/intrinsic/table_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T21:01:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "751167ab_2cb857ff",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -541,6 +595,24 @@
       "side": 1,
       "message": "The uniformity tests all expected just the function name highlighted. So I updated these to match that expectation.",
       "parentUuid": "1ec8d6e6_56a1a3ad",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4aa6b942_982b7b48",
+        "filename": "src/tint/lang/wgsl/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T21:01:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "407e3875_fbafd126",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
