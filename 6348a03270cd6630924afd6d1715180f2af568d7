@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3406537_c3923638",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T00:53:39Z",
+      "side": 1,
+      "message": "The go changes get buried at the end.",
+      "revId": "6348a03270cd6630924afd6d1715180f2af568d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
