@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "89363299_cc9c6681",
+        "filename": "src/dawn/tests/PartitionAllocSupport.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-15T15:15:56Z",
+      "side": 1,
+      "message": "Not. This should apply to exactly zero, because:\n- This excludes raw_ptr allowed to dangling with `DanglingUntriaged` or `DisableDanglingPtrDetection`.\n- This only includes dangling pointers.\n\nSo, we are only recording a stack trace when a regression happens.\n\n---\n\nThat being said, one edge case might cause what I said to be slightly wrong: If a dangling raw_ptr is leaked: we would record the \"free\", but never reached the point where the dangling ptr is released.\n\nLet me some time to check at the end of the tests that `g_dangling_stack_trace` is indeed empty to make sure we have zero instances.",
+      "parentUuid": "f117bebe_00ade8c7",
+      "revId": "596ee652c195eed70df6023969ad39cee79997a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc3077c4_ef3400e6",
         "filename": "src/dawn/tests/PartitionAllocSupport.cpp",
         "patchSetId": 7
