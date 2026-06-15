@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e834a810_31792ce0",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 2337,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "Hm, I\u0027d prefer not to add this just for testing, since it will end up as a read core intrinsic. Is there some other way we can handle testing?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45e33459_65625409",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "I think using the same penalty makes sense",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86e8164a_720cc275",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "TINT_UNREACHABLE?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f714ade3_565f3341",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "nit, we don\u0027t need the case entry anymore",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6eaea92_17a32be9",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "Shouldnt \u0027this whole `if` chain be wrapped in a `if (!matched) ` block? (We shouldn\u0027t need the `if (matcher_indices)` checks in that case as well)",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "691f7810_632c2569",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "If we did this before the line 591 and then wrapped that in a `if(!matched)` we could save the `Match` call in the case where it isn\u0027t a kType anyway?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a643f4ff_02ce569b",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb9e104a_a2f3ff7f",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "Should this be `TINT_UNREACHABLE`?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e626a9a5_72f1a745",
+        "filename": "src/tint/lang/core/intrinsic/table_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "You mean, these specific names get written out into data files which is why the caseing doesn\u0027t match our normal `kAccess` naming?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f882aea2_43aa453e",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "Seems converted? (Also, TODOs should be bug numbers instead of user names)",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6bb435e_d0a4eefd",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0883bc55_40e33b44",
+        "filename": "src/tint/lang/core/ir/structural_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2506,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d480890_0e6db3ec",
+        "filename": "src/tint/lang/core/majorness.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "Should we call this `column_major` or is it more a term of art as `col_major` ?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ec8d6e6_56a1a3ad",
+        "filename": "src/tint/lang/wgsl/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "Why shorten the source? I believe the `source()` here would have included both the ident and the template params, where the new version is just the ident?\n\n(I guess we have no tests which would error on this token)",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1730e6f_52746f67",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "Can we pull the bodies of these two blocks out to helper functions as they seem pretty self contained?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eb6008e_8bdd97f2",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-15T19:39:10Z",
+      "side": 1,
+      "message": "We have a src/tint/lang/core/type/invalid that could be used here?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
