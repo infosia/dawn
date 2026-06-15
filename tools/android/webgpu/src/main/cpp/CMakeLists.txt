@@ -37,6 +37,16 @@ set(DAWN_BUILD_MONOLITHIC_LIBRARY STATIC)
 
 set(DAWN_DIR "${webgpu_SOURCE_DIR}/../../../../../..")
 add_subdirectory(${DAWN_DIR} dawn)
+if(TARGET dawn_proc)
+    set_target_properties(dawn_proc PROPERTIES
+            C_VISIBILITY_PRESET default
+            CXX_VISIBILITY_PRESET default
+    )
+
+    # 2. Ensure WGPU_EXPORT expands to "default" visibility
+    target_compile_definitions(dawn_proc PRIVATE WGPU_IMPLEMENTATION)
+    target_compile_definitions(dawn_proc PUBLIC WGPU_SHARED_LIBRARY)
+endif()
 
 list(INSERT CMAKE_MODULE_PATH 0 "${DAWN_DIR}/src/cmake")
 include(DawnCompilerChecks)
@@ -50,37 +60,55 @@ DawnJSONGenerator(
     OUTPUT_HEADERS WEBGPU_JNI_HEADERS
 )
 
-add_library(webgpu_c_bundled SHARED)
-target_sources(webgpu_c_bundled PRIVATE
+add_library(webgpu_jni SHARED)
+target_sources(webgpu_jni PRIVATE
     ${WEBGPU_JNI_SOURCES}
     ${WEBGPU_JNI_HEADERS}
     JNIContext.cpp
     JNIContext.h
     Util.cpp
+    WebViewDawnProcMapper.cpp
 )
 
-target_include_directories(webgpu_c_bundled PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(webgpu_c_bundled PRIVATE android webgpu_dawn dawn_common dawn_internal_config)
-target_link_options(webgpu_c_bundled PRIVATE "-Wl,-z,max-page-size=16384")
+target_include_directories(webgpu_jni PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(webgpu_jni PRIVATE android
+        -Wl,--whole-archive
+        dawn_proc
+        -Wl,--no-whole-archive
+        dawn_common dawn_internal_config log)
+target_link_options(webgpu_jni PRIVATE "-Wl,-z,max-page-size=16384" "-Wl,-Bsymbolic")
 
-# Copy headers for webgpu_c_bundled over.
-add_custom_command(DEPENDS dawncpp_headers POST_BUILD
+# Build the bundled Dawn shared library
+add_library(webgpu_dawn_shared SHARED BundledDawnWrapper.cpp)
+target_link_libraries(webgpu_dawn_shared PRIVATE android
+        -Wl,--whole-archive
+        webgpu_dawn
+        -Wl,--no-whole-archive
+        dawn_common dawn_internal_config)
+target_link_options(webgpu_dawn_shared PRIVATE "-Wl,-z,max-page-size=16384" "-Wl,-Bsymbolic")
+
+# Copy headers for webgpu_jni over.
+add_custom_target(copy_webgpu_header
                    OUTPUT ${CMAKE_SOURCE_DIR}/gen/include/dawn/webgpu.h
                    COMMAND rm -r "${CMAKE_SOURCE_DIR}/gen" || echo
                    COMMAND ${CMAKE_COMMAND} -E copy
                            ${CMAKE_CURRENT_BINARY_DIR}/dawn/gen/include/dawn/webgpu.h
                            ${CMAKE_SOURCE_DIR}/gen/include/dawn/webgpu.h)
 
+# Make your library depend on this copy
+add_dependencies(webgpu_jni copy_webgpu_header)
+
+# Ensure the copy waits for Dawn to generate the header
+add_dependencies(copy_webgpu_header dawn_proc)
+
 # Add unit test build configuration
-# To run use the following command:
-# ./gradlew -i connectedAndroidTest
 find_package(googletest REQUIRED CONFIG)
 find_package(junit-gtest REQUIRED CONFIG)
 add_library(webgpu_wrapper_tests SHARED ./../../androidTest/cpp/webgpu_wrapper_tests.cpp)
 target_include_directories(webgpu_wrapper_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(webgpu_wrapper_tests
   PRIVATE
-    webgpu_c_bundled
+    webgpu_jni
     android
     atomic
     log
