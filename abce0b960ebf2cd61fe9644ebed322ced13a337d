@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a555103c_a72d8fa7",
+        "filename": "src/dawn/native/CommandAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T07:41:21Z",
+      "side": 1,
+      "message": "mmmh this should be possible to turn into just a uint32_t.",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "335a8a19_6319dd54",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T07:41:21Z",
+      "side": 1,
+      "message": "Seems like it should be after `allow_unsafe_buffers`",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e0b84b6_e142c96f",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T07:41:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5905f76_b78aef33",
+        "filename": "src/dawn/tests/perf_tests/BufferUploadPerf.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T07:41:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dafcf363_e68a4cdb",
+        "filename": "src/dawn/tests/perf_tests/DrawCallPerf.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T07:41:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca44983a_e1e0dad2",
+        "filename": "src/dawn/tests/perf_tests/LoadStoreOpPerfTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T07:41:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51e05459_e5d2ad9e",
+        "filename": "src/dawn/tests/unittests/CommandAllocatorTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T07:41:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cf8c56b_e9aeadeb",
+        "filename": "src/dawn/tests/unittests/EnumMaskIteratorTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T07:41:21Z",
+      "side": 1,
+      "message": "nit: just std::array\u0027s constructor should work here and below?",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd1d6cb5_40070ac8",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T07:41:21Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
