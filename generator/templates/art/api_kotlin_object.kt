@@ -48,6 +48,9 @@ public class {{ kotlin_name(obj) }} private constructor(public val handle: Long)
         {{ generate_kdoc(main_doc, return_doc, arg_docs_map, method_args, "\n     * ", indent_prefix = "    ") }}
 
         {%- endif %}
+        {% if not method.is_core %}
+            @ConditionalApi
+        {% endif %}
         @FastNative
         @JvmName("{{ method.name.camelCase() }}")
         {% for arg in kotlin_record_members(method.arguments) %}
