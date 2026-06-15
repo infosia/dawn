@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5a7f608f_0f95bca3",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 2337,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:04:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure. I specifically wanted to test a different enum being used as the parameter and only implemented support for majorness so far. I didn\u0027t add more because it wouldn\u0027t be exercised.",
+      "parentUuid": "e834a810_31792ce0",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "45e33459_65625409",
         "filename": "src/tint/lang/core/intrinsic/table.cc",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "writtenOn": "2026-06-15T19:39:10Z",
       "side": 1,
       "message": "TINT_UNREACHABLE?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a82696d_45ace1e9",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:04:32Z",
+      "side": 1,
+      "message": "Is that better than printing the alternatives?",
+      "parentUuid": "86e8164a_720cc275",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -88,6 +124,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ea446bd5_7237516e",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:04:32Z",
+      "side": 1,
+      "message": "One part is an OR and the other is an AND. So we\u0027d need to keep the check against template kind. We\u0027d match different enums incorrectly if we didn\u0027t check the kind.",
+      "parentUuid": "d6eaea92_17a32be9",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "691f7810_632c2569",
         "filename": "src/tint/lang/core/intrinsic/table.cc",
         "patchSetId": 3
@@ -99,6 +153,24 @@
       "writtenOn": "2026-06-15T19:39:10Z",
       "side": 1,
       "message": "If we did this before the line 591 and then wrapped that in a `if(!matched)` we could save the `Match` call in the case where it isn\u0027t a kType anyway?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20216ee0_b25623cf",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:04:32Z",
+      "side": 1,
+      "message": "I\u0027ll try refactoring this to make it nicer.",
+      "parentUuid": "691f7810_632c2569",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -139,6 +211,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f1d4cd03_c1e3a06c",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:04:32Z",
+      "side": 1,
+      "message": "Yes, but not sure which is better, ICE\u0027ing on an unsupported template or printing a mismatch.",
+      "parentUuid": "fb9e104a_a2f3ff7f",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e626a9a5_72f1a745",
         "filename": "src/tint/lang/core/intrinsic/table_data.h",
         "patchSetId": 3
@@ -156,6 +246,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "751167ab_2cb857ff",
+        "filename": "src/tint/lang/core/intrinsic/table_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:04:32Z",
+      "side": 1,
+      "message": "They come directly from .def enums through the go code. So yes.",
+      "parentUuid": "e626a9a5_72f1a745",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f882aea2_43aa453e",
         "filename": "src/tint/lang/core/ir/evaluator.cc",
         "patchSetId": 3
@@ -167,6 +275,24 @@
       "writtenOn": "2026-06-15T19:39:10Z",
       "side": 1,
       "message": "Seems converted? (Also, TODOs should be bug numbers instead of user names)",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22e12d70_57d25860",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:04:32Z",
+      "side": 1,
+      "message": "I think I just missed updating this to the bug. The TODO is make the function take `VectorRef\u003cTemplateParameter\u003e` at some point instead of just types.",
+      "parentUuid": "f882aea2_43aa453e",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -224,6 +350,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a81db47d_7617be91",
+        "filename": "src/tint/lang/core/majorness.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:04:32Z",
+      "side": 1,
+      "message": "Proposal uses col_major (and SPIR-V). I could go either way. Some enums use short forms (e.g. `frag_depth`).",
+      "parentUuid": "2d480890_0e6db3ec",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ec8d6e6_56a1a3ad",
         "filename": "src/tint/lang/wgsl/reader/parser/parser.cc",
         "patchSetId": 3
@@ -235,6 +379,24 @@
       "writtenOn": "2026-06-15T19:39:10Z",
       "side": 1,
       "message": "Why shorten the source? I believe the `source()` here would have included both the ident and the template params, where the new version is just the ident?\n\n(I guess we have no tests which would error on this token)",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "407e3875_fbafd126",
+        "filename": "src/tint/lang/wgsl/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:04:32Z",
+      "side": 1,
+      "message": "The uniformity tests all expected just the function name highlighted. So I updated these to match that expectation.",
+      "parentUuid": "1ec8d6e6_56a1a3ad",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -269,6 +431,24 @@
       "writtenOn": "2026-06-15T19:39:10Z",
       "side": 1,
       "message": "We have a src/tint/lang/core/type/invalid that could be used here?",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "946a37cf_c9bfc5d5",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:04:32Z",
+      "side": 1,
+      "message": "I didn\u0027t know that. I\u0027ll use that.",
+      "parentUuid": "3eb6008e_8bdd97f2",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
