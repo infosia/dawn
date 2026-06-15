@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b028431b_9f1611a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T15:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "638e9a2c_99bfb553",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e2544de_5f50db0f",
@@ -224,6 +242,24 @@
       "side": 1,
       "message": "which is to say\n```\nauto begin() { return DAWN_UNSAFE_BUFFERS(std::span(mData, mSize)).at(i); }\nauto at(i) { return DAWN_UNSAFE_BUFFERS(std::span(mData, mSize)).at(i); }\nauto front() { return DAWN_UNSAFE_BUFFERS(std::span(mData, mSize)).front(); }\nauto first(a) { return Self(DAWN_UNSAFE_BUFFERS(std::span(mData, mSize)).first(a); }\n// etc.\n```",
       "parentUuid": "31ee54a6_0d611dad",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c4e43ec_3b81321d",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T15:06:45Z",
+      "side": 1,
+      "message": "If possible, I\u0027d rather use the `DAWN_CHECK` where possible as it makes the configuration consistent in Dawn instead of having some things checked by the libc++ hardening and some by DAWN_CHECK.\n\nHowever the hardenend iterators seem pretty important. I ran into an issue with them that required adding a `\u0026*` in a test so I should have thought about it. The hack to use span\u0027s hardened iterator seems... not terrible? If possible I\u0027d like to create them directly but there might not be a portable way to do it.",
+      "parentUuid": "c4846bd5_0d81a887",
       "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
