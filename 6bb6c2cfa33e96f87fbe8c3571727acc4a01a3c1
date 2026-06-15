@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ddd70f3_916299d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2026-06-15T03:10:35Z",
+      "side": 1,
+      "message": "I modified commit message, could you give CR+2 again?",
+      "revId": "6bb6c2cfa33e96f87fbe8c3571727acc4a01a3c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
