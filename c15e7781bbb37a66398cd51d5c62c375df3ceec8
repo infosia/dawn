@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efc72fac_efa1da50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T17:24:15Z",
+      "side": 1,
+      "message": "There\u0027s a lack of dependencies on the go code when generating tint sources, but apparently this is not the right way to add them.",
+      "revId": "c15e7781bbb37a66398cd51d5c62c375df3ceec8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
