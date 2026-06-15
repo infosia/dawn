@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "643ffb1a_48187f28",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-15T06:11:26Z",
+      "side": 1,
+      "message": "Marking it as resolved",
+      "parentUuid": "5e87f0b3_6b0ecbd7",
+      "range": {
+        "startLine": 188,
+        "startChar": 4,
+        "endLine": 188,
+        "endChar": 37
+      },
+      "revId": "5dba460e15fd6dcbd4b12fa2717d6b920f37d3ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20b0c20c_167c7568",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Same as the other reply! https://dawn-review.git.corp.google.com/c/dawn/+/315235/comment/1b8d59a1_abc4db54/",
       "parentUuid": "20b0c20c_167c7568",
+      "range": {
+        "startLine": 346,
+        "startChar": 4,
+        "endLine": 346,
+        "endChar": 53
+      },
+      "revId": "5dba460e15fd6dcbd4b12fa2717d6b920f37d3ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a842d9a5_aad9ae2b",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-15T06:11:26Z",
+      "side": 1,
+      "message": "Marking it as resolved",
+      "parentUuid": "7811ae3c_106b5910",
       "range": {
         "startLine": 346,
         "startChar": 4,
