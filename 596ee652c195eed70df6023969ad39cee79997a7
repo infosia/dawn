@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2b25510_e1512a00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-15T12:28:08Z",
+      "side": 1,
+      "message": "Hello,\nCould you please take a look?",
+      "revId": "596ee652c195eed70df6023969ad39cee79997a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc71fa87_35dc0045",
+        "filename": "src/dawn/tests/PartitionAllocSupport.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-15T12:28:08Z",
+      "side": 1,
+      "message": "Example output:\n```\n    -----------\n    DanglingPointerDetector: A pointer was dangling!\n    Documentation: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/docs/dangling-pointer-detector.md\n\n    Memory was freed at:\n        #0 0x557648c34a19 dawn::InitializeDanglingPointerDetectorForTesting()::$_0::__invoke()\n        #1 0x7f8da96e5c01 partition_alloc::PartitionRoot::FreeNoHooksImmediateInternal\u003c\u003e()\n        #2 0x7f8da96d11ea partition_alloc::PartitionRoot::FreeInUnknownRoot\u003c\u003e()\n        #3 0x557648bb62dc std::__Cr::default_delete\u003c\u003e::operator()()\n        #4 0x557648bb621a std::__Cr::unique_ptr\u003c\u003e::reset()\n        #5 0x557648bb5abb dawn::(anonymous namespace)::RawPtrTests_DanglingPointerCauseCrash_Test::TestBody()\n\n    Dangling raw_ptr was released at:\n        #0 0x557648c34e99 dawn::InitializeDanglingPointerDetectorForTesting()::$_1::__invoke()\n        #1 0x7f8da972b788 base::internal::RawPtrBackupRefImpl\u003c\u003e::ReleaseInternal()\n        #2 0x5576483dc446 base::internal::RawPtrBackupRefImpl\u003c\u003e::ReleaseWrappedPtr\u003c\u003e()\n        #3 0x557648bb6240 base::raw_ptr\u003c\u003e::operator\u003d()\n        #4 0x557648bb5ac8 dawn::(anonymous namespace)::RawPtrTests_DanglingPointerCauseCrash_Test::TestBody()\n    -----------\n```",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 34
+      },
+      "revId": "596ee652c195eed70df6023969ad39cee79997a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
