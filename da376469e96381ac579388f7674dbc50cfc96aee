@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b5de921_73694dba",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 21
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-15T13:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62599b71_3acb614f",
+      "revId": "da376469e96381ac579388f7674dbc50cfc96aee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1916f2f0_dcf51303",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b81bfc0d_c73b325f",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 21
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-15T13:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1916f2f0_dcf51303",
+      "revId": "da376469e96381ac579388f7674dbc50cfc96aee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a924655_9f15153a",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-06-15T07:18:29Z",
       "side": 1,
       "message": "This is stable but ways to create external textures are experimental. `destroy` should be experimental, and `expire/resume` should be dawn only, but `set label` is stable.",
+      "revId": "da376469e96381ac579388f7674dbc50cfc96aee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c1a7adc_9e99458b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 21
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-15T13:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a924655_9f15153a",
       "revId": "da376469e96381ac579388f7674dbc50cfc96aee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
