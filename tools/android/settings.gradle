@@ -35,6 +35,11 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal {
+            content {
+                includeGroup "androidx.webkit"
+            }
+        }
         google()
         mavenCentral()
     }
@@ -42,3 +47,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "library"
 include ':webgpu'
+include ':webgpu-plugin'
