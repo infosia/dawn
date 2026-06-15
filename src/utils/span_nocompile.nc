@@ -83,6 +83,7 @@ void TestConstructorWithRangeRequirements() {
     };
     Span<const int>{FakeRangeBadSize()}; // expected-error {{no matching constructor for initialization of}}
 
+#if defined(DAWN_ENABLE_ASSERTS)
     struct FakeRangeTypedSize {
          IndexSizeT size() const {
             return IndexSizeT{kSpanData.size()};
@@ -90,6 +91,7 @@ void TestConstructorWithRangeRequirements() {
         const int* data() const { return kSpanData.data(); }
     };
     Span<const int>{FakeRangeTypedSize()}; // expected-error {{no matching constructor for initialization of}}
+#endif
 
     struct FakeRangeBadData {
         size_t size() const {
