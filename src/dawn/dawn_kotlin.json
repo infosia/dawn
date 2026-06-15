@@ -34,11 +34,9 @@
 
     "api_tier_config": {
         "conditional": {
-            "INJECT_ERROR": [
-                "device inject error"
-            ],
             "DEVICE_CREATE_QUERY_SET": [
-                "device create query set"
+                "device create query set",
+                "device create device"
             ]
         }
     },

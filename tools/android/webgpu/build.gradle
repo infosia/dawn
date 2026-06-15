@@ -36,7 +36,7 @@ android {
     namespace 'net.android.webgpu'
     defaultConfig {
         minSdkVersion 24
-        compileSdk 34
+        compileSdk 35
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         externalNativeBuild {
             cmake {
@@ -115,8 +115,8 @@ dependencies {
 
     androidTestUtil 'androidx.test:orchestrator:1.5.1'
     // Webkit with required changes
-    compileOnly 'androidx.webkit:webkit:1.17.0-alpha03'
-    androidTestImplementation 'androidx.webkit:webkit:1.17.0-alpha03'
+    compileOnly 'androidx.webkit:webkit:1.15.0-alpha03'
+    androidTestImplementation 'androidx.webkit:webkit:1.15.0-alpha03'
 }
 
 tasks.register('sourcesJar', Jar) {

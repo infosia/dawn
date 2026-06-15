@@ -1,0 +1,82 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "net.android",
+    "module": "webgpu-plugin",
+    "version": "3.4.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.9.22"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "webgpu-plugin-3.4.0.jar",
+          "url": "webgpu-plugin-3.4.0.jar",
+          "size": 11538,
+          "sha512": "aa4f8cb6c4a34a76ef37cdbb8c46ef85a4e7ff87c4192ee4707d62eaf887cf40179dbed607d972b9a64fc040aea90fec5c5ac1817ac54fbf8d51bdef5f55dec1",
+          "sha256": "7068ed519b81aaec8b3aa970fa84ea73641ea0dba3e1b6c70e99d063b98a8d9d",
+          "sha1": "34f339dd6235c3133df4a171add5820f4b3f83a5",
+          "md5": "d44ee08201ba782bc0e833934994db4b"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.9.22"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "webgpu-plugin-3.4.0.jar",
+          "url": "webgpu-plugin-3.4.0.jar",
+          "size": 11538,
+          "sha512": "aa4f8cb6c4a34a76ef37cdbb8c46ef85a4e7ff87c4192ee4707d62eaf887cf40179dbed607d972b9a64fc040aea90fec5c5ac1817ac54fbf8d51bdef5f55dec1",
+          "sha256": "7068ed519b81aaec8b3aa970fa84ea73641ea0dba3e1b6c70e99d063b98a8d9d",
+          "sha1": "34f339dd6235c3133df4a171add5820f4b3f83a5",
+          "md5": "d44ee08201ba782bc0e833934994db4b"
+        }
+      ]
+    }
+  ]
+}
