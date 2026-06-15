@@ -220,7 +220,16 @@ group("gmock_and_gtest") {
 
 action("generate_sources") {
   script = "${dawn_root}/tools/generate-sources-gn.py"
-  inputs = tint_generation_dependencies
+  inputs = tint_generation_dependencies + [
+             "//tools/src/tint/intrinsic/ast/ast.go",
+             "//tools/src/tint/intrinsic/gen/gen.go",
+             "//tools/src/tint/intrinsic/gen/permutate.go",
+             "//tools/src/tint/intrinsic/lexer/lexer.go",
+             "//tools/src/tint/intrinsic/parser/parser.go",
+             "//tools/src/tint/intrinsic/resolver/resolve.go",
+             "//tools/src/tint/intrinsic/sem/sem.go",
+             "//tools/src/tint/intrinsic/tok/tok.go",
+           ]
   outputs = tint_generated_sources
   args = [ rebase_path(root_gen_dir, root_build_dir) ]
 }
