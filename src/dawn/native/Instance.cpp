@@ -666,8 +666,7 @@ void InstanceBase::APIProcessEvents() {
     ProcessEvents();
 }
 
-wgpu::WaitStatus InstanceBase::APIWaitAny(Span<FutureWaitInfo> futures,
-                                          uint64_t timeoutNS) {
+wgpu::WaitStatus InstanceBase::APIWaitAny(Span<FutureWaitInfo> futures, uint64_t timeoutNS) {
     if (timeoutNS > 0) {
         if (!HasFeature(wgpu::InstanceFeatureName::TimedWaitAny)) {
             EmitLog(WGPULoggingType_Error,
