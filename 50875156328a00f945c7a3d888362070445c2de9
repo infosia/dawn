@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ad997f4_337cdf2a",
+        "filename": "src/utils/span.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T15:35:07Z",
+      "side": 1,
+      "message": "Opinion about calling this `TSpan` for short?",
+      "revId": "50875156328a00f945c7a3d888362070445c2de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
