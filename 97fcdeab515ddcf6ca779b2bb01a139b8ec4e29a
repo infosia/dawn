@@ -75,6 +75,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d15a5a78_b3bf9274",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e2544de_5f50db0f",
+      "range": {
+        "startLine": 51,
+        "startChar": 43,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb0cf5aa_534ca1f4",
@@ -100,6 +124,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6a83faee_f009bb0c",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "I have a slight preference for avoiding the include of \u003citerator\u003e or \u003crange\u003e unless necessary. Leaving open as it\u0027s something that we might need to do anyway for the safe iterators.",
+      "parentUuid": "bb0cf5aa_534ca1f4",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 12
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "67215c57_617ad9fb",
         "filename": "src/utils/span.h",
         "patchSetId": 8
@@ -111,6 +159,30 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "This should be required to be unsigned. Technically we could allow signed but so far nothing using ityp has needed signed index types, and they\u0027re harder to reason about. (There\u0027s at least one thing in here that assumes it.)\n\n```\n    static_assert(HasUnsignedUnderlyingType\u003cIndex\u003e, \"Index type must be unsigned\");\n```",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 36
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0755ab2_52887544",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67215c57_617ad9fb",
       "range": {
         "startLine": 93,
         "startChar": 31,
@@ -179,6 +251,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a057d30b_68f54440",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73eebf58_b1bc911c",
+      "range": {
+        "startLine": 119,
+        "startChar": 48,
+        "endLine": 119,
+        "endChar": 52
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76ec1b59_4386fcc7",
@@ -192,6 +288,30 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "```suggestion\n    // Constructor from a pointer + size. This is UNSAFE_BUFFER_USAGE as other methods should be\n```",
+      "range": {
+        "startLine": 123,
+        "startChar": 79,
+        "endLine": 123,
+        "endChar": 85
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bef486a7_ccfe4a9c",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76ec1b59_4386fcc7",
       "range": {
         "startLine": 123,
         "startChar": 79,
@@ -227,6 +347,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8690ee7f_09398d9f",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "I have a slight preference for avoiding the include of `\u003citerator\u003e` or `\u003crange\u003e` unless necessary. Leaving open as it\u0027s something that we might need to do anyway for the safe iterators.",
+      "parentUuid": "b3be1ce6_2d6fef9b",
+      "range": {
+        "startLine": 140,
+        "startChar": 16,
+        "endLine": 140,
+        "endChar": 28
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca851a9e_5bd6f498",
         "filename": "src/utils/span.h",
         "patchSetId": 8
@@ -238,6 +382,30 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "does this mean copy constructor?",
+      "range": {
+        "startLine": 161,
+        "startChar": 14,
+        "endLine": 161,
+        "endChar": 36
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ca53ee6_a486655c",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca851a9e_5bd6f498",
       "range": {
         "startLine": 161,
         "startChar": 14,
@@ -271,6 +439,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ccdbf45_e87fc11b",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5117619_2bbb28b0",
+      "range": {
+        "startLine": 183,
+        "startChar": 72,
+        "endLine": 183,
+        "endChar": 82
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "435845fc_ae2e7723",
@@ -284,6 +476,30 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "This will underflow if size is 0. Which seems to have the correct behavior, but should comment why it\u0027s OK, or just do something else that avoids the underflow.",
+      "range": {
+        "startLine": 184,
+        "startChar": 58,
+        "endLine": 184,
+        "endChar": 76
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7aec4c95_ad275304",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "435845fc_ae2e7723",
       "range": {
         "startLine": 184,
         "startChar": 58,
@@ -311,6 +527,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75b2f0ba_a9fc1822",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe2c0feb_c09c2011",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9b74c47_0f70e2c5",
@@ -324,6 +558,30 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "There is no DAWN_CHECK here.",
+      "range": {
+        "startLine": 265,
+        "startChar": 69,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3b51a3e_2a4ffb68",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9b74c47_0f70e2c5",
       "range": {
         "startLine": 265,
         "startChar": 69,
@@ -351,6 +609,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5261f19b_e8bd8899",
+        "filename": "src/utils/span.nc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f4d0e69_0767d21d",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b92bcf16_f27a5b83",
@@ -368,6 +644,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fca82e3_efc80629",
+        "filename": "src/utils/span.nc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b92bcf16_f27a5b83",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "358cd08e_383e7c9f",
@@ -381,6 +675,24 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "Should be able to add a test similar to this but going to/from TypedInteger\u003csize_t\u003e rather than uint8_t.",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06fb24aa_7c6ecd8d",
+        "filename": "src/utils/span.nc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "358cd08e_383e7c9f",
       "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -425,6 +737,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "85559af8_22314fe9",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a782e800_6773e169",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55097278_3f3b4e17",
@@ -438,6 +768,24 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "several of these comments are not quite right. Probably just delete them because they\u0027re not much easier to read than the code\n```suggestion\n    // std::vector\u003cT\u003e -\u003e Span\u003cconst T\u003e\n```",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91134bcc_902658de",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55097278_3f3b4e17",
       "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -459,6 +807,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c4fca0c_d4f6092f",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0246a43_49c11fa5",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1c15bf1_3d11333f",
@@ -472,6 +838,24 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "Also mut-to-const assignment?",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99f41293_a0db2330",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1c15bf1_3d11333f",
       "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -493,6 +877,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e19e555_79401b98",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cb70457_107b7842",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6059fd6e_3eae99be",
@@ -506,6 +908,30 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "this is not guaranteed to be the size you want, maybe use `std::span(ints).size_bytes()`",
+      "range": {
+        "startLine": 453,
+        "startChar": 44,
+        "endLine": 453,
+        "endChar": 56
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e909f632_c46b89b6",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Why is it not guaranteed? Ah because std::array could technically have additional members? Fixed.",
+      "parentUuid": "6059fd6e_3eae99be",
       "range": {
         "startLine": 453,
         "startChar": 44,
@@ -539,6 +965,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14ab82d9_1c9c7b63",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c42e1e4_19875572",
+      "range": {
+        "startLine": 541,
+        "startChar": 24,
+        "endLine": 541,
+        "endChar": 34
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3af0492_fa3657f1",
@@ -552,6 +1002,24 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "perhaps also test this for a Index8 which overflows in the index type rather than in native size_t",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ae6d525_42180230",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T08:52:46Z",
+      "side": 1,
+      "message": "I added a commented out test. The problem is that `TypedInteger` prevents using `operator -` which is used in various `DAWN_CHECK` and computations for `subspan`. I think we should finally make `typed_integer.h` always wrap in a struct and use `clang:trivial_abi` to avoid the performance loss.",
+      "parentUuid": "d3af0492_fa3657f1",
       "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
