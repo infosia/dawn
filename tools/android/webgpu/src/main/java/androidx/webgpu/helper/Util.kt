@@ -19,7 +19,7 @@ import android.view.Surface
 
 public object Util {
     init {
-        System.loadLibrary("webgpu_c_bundled")
+        System.loadLibrary("webgpu_jni")
     }
 
     public external fun windowFromSurface(surface: Surface?): Long
