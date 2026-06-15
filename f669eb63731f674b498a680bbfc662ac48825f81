@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fec7507_1ffc8b0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 1,
+      "message": "Approach looks good overall, but two major concerns about 1) the removal of the handling of textures being destroyed/endAccessed and 2) the interface between frontend and backend being more complex than it needs to be.",
+      "revId": "f669eb63731f674b498a680bbfc662ac48825f81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e9fe7f1_cf12a442",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 1,
+      "message": "We should keep the bidirectional mapping from textures to slots and use that to invert the loops: `for each writable {check if in resource table and do stuff}`. Walking a 64000 entry resource table every sync scope seem like way too much. In practice `writableTextures.size()` would be MUCH smaller.",
+      "revId": "f669eb63731f674b498a680bbfc662ac48825f81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "766862c3_f6dcadac",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 1,
+      "message": "Instead of having a callback from the backends, how about bundling the need to handle the visibility change (from invisible to visible) in the transactions, either as part of the current transaction structure per slot, or a separate list that\u0027s per-resource and not per-slot?",
+      "revId": "f669eb63731f674b498a680bbfc662ac48825f81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80e3d5cc_7d7d51da",
+        "filename": "src/dawn/native/ResourceTable.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 1,
+      "message": "```suggestion\n    MaybeError MakeResourcesVisibleExcept(\n```",
+      "revId": "f669eb63731f674b498a680bbfc662ac48825f81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b8b93c3_03275514",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 1,
+      "message": "Can we have TODOs to handle this at the same time as the loops below over the usages so that we don\u0027t have to walk these large lists twice (trashing the cache in the process)? Ditto in D3D12. The slightly annoying part is that we\u0027ll have to be able to add the metadata buffer barrier after MakeResourcesVisibleExcept and merge it with the rest.",
+      "revId": "f669eb63731f674b498a680bbfc662ac48825f81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "864ddce8_6f9501bd",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 1,
+      "message": "Is there value in having two different calls? AFAIU they\u0027ll always be together.",
+      "revId": "f669eb63731f674b498a680bbfc662ac48825f81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "120b39df_f9d8d186",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised that std::format can be used. Is it available in the various platforms we want to run tests on? (including Android outside of Chromium?)",
+      "revId": "f669eb63731f674b498a680bbfc662ac48825f81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65a4fb56_62df60a9",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 1,
+      "message": "Can we have TODOs for depth attachment, including depthReadOnly being visible in the resource table?",
+      "revId": "f669eb63731f674b498a680bbfc662ac48825f81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c829315_b3c3ad4f",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 1,
+      "message": "Can we have tests for a texture being destroyed, and a TODO for STM EndAccess?",
+      "revId": "f669eb63731f674b498a680bbfc662ac48825f81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac3047be_06f4447d",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 1,
+      "message": "Unless it causes other problems, I\u0027d rather disallow this for now just in case the heterogeneous bindless story requires it in the future.",
+      "revId": "f669eb63731f674b498a680bbfc662ac48825f81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

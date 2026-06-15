@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c56fcb8_ca064d79",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 0,
+      "message": "With this removed, what prevents using a texture in a resource table that had `.Destroy()` called.",
+      "revId": "d129410fa66282ec07b836b639fba6060d3e9769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0d0d6de_76c92b22",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 0,
+      "message": "ditto for imported textures.",
+      "revId": "d129410fa66282ec07b836b639fba6060d3e9769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8972cb8b_cf0f820d",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-15T14:00:17Z",
+      "side": 0,
+      "message": "We still need these TODOs about imported textures somewhere. It\u0027s something that we need to solve before OT as the canvas texture for example is an imported texture.",
+      "revId": "d129410fa66282ec07b836b639fba6060d3e9769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
