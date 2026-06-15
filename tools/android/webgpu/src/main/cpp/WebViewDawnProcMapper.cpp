@@ -10,10 +10,10 @@
 extern void InitializeDawnProcsFromWebView(WGPUProcGetProcAddress getProcAddress, JNIEnv* env, jintArray requiredFeatures);
 
 /**
- * JNI Implementation for WebGpuUtils.nativeSetDawnProcTable.
+ * JNI Implementation for WebGpuUtils.nativeSetDawnGetProcAddress.
  * 
- * Takes the memory address of the DawnProcTable populated by Chromium WebView,
- * extracts its `getProcAddress` function, and invokes the auto-generated method
+ * Takes the memory address of the WGPUProcGetProcAddress function from Chromium WebView,
+ * and invokes the auto-generated method
  * to correctly wire up all Dawn function pointers for the current Android app.
  */
 #include <dawn/native/DawnNative.h>
@@ -43,18 +43,18 @@ Java_androidx_webgpu_helper_WebGpuUtils_nativeInitializeBundledDawn(JNIEnv* env,
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_androidx_webgpu_helper_WebGpuUtils_nativeSetDawnProcTable(JNIEnv* env, jclass clazz, jlong procTableAddress, jintArray requiredFeatures) {
-    LOGI("Java_androidx_webgpu_helper_WebGpuUtils_nativeSetDawnProcTable called with address %lld", (long long)procTableAddress);
-    if (procTableAddress == 0) {
+Java_androidx_webgpu_helper_WebGpuUtils_nativeSetDawnGetProcAddress(JNIEnv* env, jclass clazz, jlong getProcAddressPtr, jintArray requiredFeatures) {
+    LOGI("Java_androidx_webgpu_helper_WebGpuUtils_nativeSetDawnGetProcAddress called with address %lld", (long long)getProcAddressPtr);
+    if (getProcAddressPtr == 0) {
         ::InitializeDawnProcsFromWebView(nullptr, env, requiredFeatures);
         return;
     }
 
-    // Cast the raw memory address back to a DawnProcTable struct
-    const DawnProcTable* procs = reinterpret_cast<const DawnProcTable*>(procTableAddress);
-    LOGI("Received DawnProcTable from WebView. Version: %02x%02x%02x%02x", procs->version[0], procs->version[1], procs->version[2], procs->version[3]);
+    // Cast the raw memory address to WGPUProcGetProcAddress
+    WGPUProcGetProcAddress getProcAddress = reinterpret_cast<WGPUProcGetProcAddress>(getProcAddressPtr);
+    LOGI("Received Dawn GetProcAddress pointer from WebView.");
 
     // Call the generated function using getProcAddress to avoid ABI mismatch issues
     // between Chromium's bundled Dawn and the Android Jetpack version.
-    ::InitializeDawnProcsFromWebView(procs->getProcAddress, env, requiredFeatures);
+    ::InitializeDawnProcsFromWebView(getProcAddress, env, requiredFeatures);
 }

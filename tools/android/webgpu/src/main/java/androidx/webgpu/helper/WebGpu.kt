@@ -275,17 +275,17 @@ public fun initLibrary(useBundled: Boolean = false, vararg requiredFeatures: Web
         }
     } else {
         val featureIds = requiredFeatures.map { it.id }.toIntArray()
-        val procTableAddress = try {
-            androidx.webkit.WebViewDawn.getDawnProcTableAddress()
+        val getProcAddressPtr = try {
+            androidx.webkit.WebViewDawn.getDawnGetProcAddress()
         } catch (e: NoClassDefFoundError) {
             throw IllegalStateException("Missing androidx.webkit dependency. Please add it to your app's dependencies or set useBundled = true", e)
         }
-        nativeSetDawnProcTable(procTableAddress, featureIds)
+        nativeSetDawnGetProcAddress(getProcAddressPtr, featureIds)
     }
 }
 
 @JvmName("nativeInitializeBundledDawn")
 private external fun nativeInitializeBundledDawn(): Boolean
 
-@JvmName("nativeSetDawnProcTable")
-public external fun nativeSetDawnProcTable(procTableAddress: Long, requiredFeatures: IntArray)
+@JvmName("nativeSetDawnGetProcAddress")
+public external fun nativeSetDawnGetProcAddress(getProcAddressPtr: Long, requiredFeatures: IntArray)
