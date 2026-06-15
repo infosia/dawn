@@ -666,8 +666,7 @@ void InstanceBase::APIProcessEvents() {
     ProcessEvents();
 }
 
-wgpu::WaitStatus InstanceBase::APIWaitAny(size_t count,
-                                          FutureWaitInfo* futures,
+wgpu::WaitStatus InstanceBase::APIWaitAny(Span<FutureWaitInfo> futures,
                                           uint64_t timeoutNS) {
     if (timeoutNS > 0) {
         if (!HasFeature(wgpu::InstanceFeatureName::TimedWaitAny)) {
@@ -675,18 +674,17 @@ wgpu::WaitStatus InstanceBase::APIWaitAny(size_t count,
                     "Timeout waits are either not enabled or not supported.");
             return wgpu::WaitStatus::Error;
         }
-        if (count > mLimits.timedWaitAnyMaxCount) {
+        if (futures.size() > mLimits.timedWaitAnyMaxCount) {
             EmitLog(WGPULoggingType_Error,
                     absl::StrFormat("Number of futures to wait on (%d) exceeds maximum (%d).",
-                                    count, mLimits.timedWaitAnyMaxCount));
+                                    futures.size(), mLimits.timedWaitAnyMaxCount));
             return wgpu::WaitStatus::Error;
         }
     }
-    if (count == 0) {
+    if (futures.empty()) {
         return wgpu::WaitStatus::Success;
     }
-    auto waitInfos = std::span(futures, count);
-    return mEventManager.WaitAny(waitInfos, Nanoseconds(timeoutNS));
+    return mEventManager.WaitAny(futures, Nanoseconds(timeoutNS));
 }
 
 const std::vector<std::string>& InstanceBase::GetRuntimeSearchPaths() const {
