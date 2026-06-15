@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2570ebd_c8babfc5",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e33459_65625409",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86e8164a_720cc275",
@@ -105,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e395705_4b1583b1",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f714ade3_565f3341",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6eaea92_17a32be9",
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "One part is an OR and the other is an AND. So we\u0027d need to keep the check against template kind. We\u0027d match different enums incorrectly if we didn\u0027t check the kind.",
       "parentUuid": "d6eaea92_17a32be9",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18cf074e_5771eb84",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea446bd5_7237516e",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -175,6 +229,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6b42947_4e6c2a6a",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20216ee0_b25623cf",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a643f4ff_02ce569b",
@@ -188,6 +260,24 @@
       "writtenOn": "2026-06-15T19:39:10Z",
       "side": 1,
       "message": "ditto",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87422893_150daea0",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a643f4ff_02ce569b",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -297,6 +387,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c89dad5_ec53e43d",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22e12d70_57d25860",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6bb435e_d0a4eefd",
@@ -314,6 +422,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf0d641c_c8a958f9",
+        "filename": "src/tint/lang/core/ir/functional_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6bb435e_d0a4eefd",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0883bc55_40e33b44",
@@ -327,6 +453,24 @@
       "writtenOn": "2026-06-15T19:39:10Z",
       "side": 1,
       "message": "ditto",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db28f402_3e41070f",
+        "filename": "src/tint/lang/core/ir/structural_validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2506,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0883bc55_40e33b44",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -418,6 +562,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7b53d2f_ce2b3b91",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1730e6f_52746f67",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3eb6008e_8bdd97f2",
@@ -449,6 +611,24 @@
       "side": 1,
       "message": "I didn\u0027t know that. I\u0027ll use that.",
       "parentUuid": "3eb6008e_8bdd97f2",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "826a936d_5a508d6b",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-15T20:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "946a37cf_c9bfc5d5",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
