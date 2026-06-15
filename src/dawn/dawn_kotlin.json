@@ -32,6 +32,11 @@
 
     "kotlin_package": "androidx.webgpu",
 
+    "api_tier_config": {
+        "conditional": {
+        }
+    },
+
     "jni_primitives" : {
         "bool": "jboolean",
         "double": "jdouble",
