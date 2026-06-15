@@ -40,6 +40,9 @@ public object GPU {
         {% if function.has_default %}
             @JvmOverloads
         {% endif %}
+        {% if not function.is_core %}
+            @ConditionalApi
+        {% endif %}
         @FastNative
         {% if function.returns and function.returns.type.name.canonical_case() == 'status' %}
             @Throws({{"WebGpuException::class"}})

@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:OptIn(androidx.webgpu.ConditionalApi::class)
+
 package androidx.webgpu
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
