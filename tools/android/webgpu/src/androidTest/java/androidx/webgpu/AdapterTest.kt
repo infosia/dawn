@@ -42,7 +42,7 @@ class AdapterTest {
 
   @Before
   fun setup() = runBlocking {
-    initLibrary()
+    initLibrary(useBundled = false)
     instance = createInstance()
     adapter = instance.requestAdapter()
   }

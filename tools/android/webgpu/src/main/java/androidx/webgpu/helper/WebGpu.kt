@@ -16,8 +16,8 @@
 @file:JvmName("WebGpuUtils")
 
 package androidx.webgpu.helper
-
 import android.view.Surface
+import androidx.webgpu.WebGpuFeature
 import androidx.webgpu.GPUAdapter
 import androidx.webgpu.BackendType
 import androidx.webgpu.GPUDevice
@@ -34,6 +34,7 @@ import androidx.webgpu.UncapturedErrorCallback
 import androidx.webgpu.GPU.createInstance
 import androidx.webgpu.WebGpuRuntimeException
 import androidx.webgpu.helper.Util.windowFromSurface
+import androidx.webkit.WebViewDawn
 import java.util.concurrent.Executor
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.CoroutineDispatcher
@@ -125,14 +126,18 @@ public suspend fun createWebGpu(
     surface: Surface? = null,
     instanceDescriptor: GPUInstanceDescriptor = GPUInstanceDescriptor(),
     requestAdapterOptions: GPURequestAdapterOptions = GPURequestAdapterOptions(),
-    deviceDescriptor: GPUDeviceDescriptor = defaultDeviceDescriptor
+    deviceDescriptor: GPUDeviceDescriptor = defaultDeviceDescriptor,
+    useBundled: Boolean = false,
+    vararg requiredFeatures: WebGpuFeature
 ): WebGpu = createWebGpuInternal(
     dispatcher = createDefaultWebGpuDispatcher(),
     isDispatcherOwned = true,
     surface = surface,
     instanceDescriptor = instanceDescriptor,
     requestAdapterOptions = requestAdapterOptions,
-    deviceDescriptor = deviceDescriptor
+    deviceDescriptor = deviceDescriptor,
+    useBundled = useBundled,
+    requiredFeatures = requiredFeatures
 )
 
 /**
@@ -151,14 +156,18 @@ public suspend fun createWebGpu(
     surface: Surface? = null,
     instanceDescriptor: GPUInstanceDescriptor = GPUInstanceDescriptor(),
     requestAdapterOptions: GPURequestAdapterOptions = GPURequestAdapterOptions(),
-    deviceDescriptor: GPUDeviceDescriptor = defaultDeviceDescriptor
+    deviceDescriptor: GPUDeviceDescriptor = defaultDeviceDescriptor,
+    useBundled: Boolean = false,
+    vararg requiredFeatures: WebGpuFeature
 ): WebGpu = createWebGpuInternal(
     dispatcher = dispatcher,
     isDispatcherOwned = false,
     surface = surface,
     instanceDescriptor = instanceDescriptor,
     requestAdapterOptions = requestAdapterOptions,
-    deviceDescriptor = deviceDescriptor
+    deviceDescriptor = deviceDescriptor,
+    useBundled = useBundled,
+    requiredFeatures = requiredFeatures
 )
 
 private suspend fun createWebGpuInternal(
@@ -168,8 +177,10 @@ private suspend fun createWebGpuInternal(
     instanceDescriptor: GPUInstanceDescriptor,
     requestAdapterOptions: GPURequestAdapterOptions,
     deviceDescriptor: GPUDeviceDescriptor,
+    useBundled: Boolean,
+    requiredFeatures: Array<out WebGpuFeature>
 ): WebGpu = withContext(dispatcher) {
-    initLibrary()
+    initLibrary(useBundled, *requiredFeatures)
 
     val instance = createInstance(instanceDescriptor)
     val webgpuSurface =
@@ -250,7 +261,31 @@ private val defaultDeviceLostCallback get(): DeviceLostCallback {
     }
 }
 
-/** Initializes the native library. This method should be called before making and WebGPU calls. */
-public fun initLibrary() {
-    System.loadLibrary("webgpu_c_bundled")
+/** Initializes the native library. This method should be called before making any WebGPU calls. */
+public fun initLibrary(useBundled: Boolean = false, vararg requiredFeatures: WebGpuFeature) {
+    System.loadLibrary("webgpu_jni")
+    if (useBundled) {
+        try {
+            System.loadLibrary("webgpu_dawn_shared")
+            if (!nativeInitializeBundledDawn()) {
+                throw IllegalStateException("Failed to initialize bundled Dawn native implementation.")
+            }
+        } catch (e: UnsatisfiedLinkError) {
+            throw IllegalStateException("Bundled Dawn library not found. Did you exclude libwebgpu_dawn_shared.so in packagingOptions?", e)
+        }
+    } else {
+        val featureIds = requiredFeatures.map { it.id }.toIntArray()
+        val procTableAddress = try {
+            androidx.webkit.WebViewDawn.getDawnProcTableAddress()
+        } catch (e: NoClassDefFoundError) {
+            throw IllegalStateException("Missing androidx.webkit dependency. Please add it to your app's dependencies or set useBundled = true", e)
+        }
+        nativeSetDawnProcTable(procTableAddress, featureIds)
+    }
 }
+
+@JvmName("nativeInitializeBundledDawn")
+private external fun nativeInitializeBundledDawn(): Boolean
+
+@JvmName("nativeSetDawnProcTable")
+public external fun nativeSetDawnProcTable(procTableAddress: Long, requiredFeatures: IntArray)

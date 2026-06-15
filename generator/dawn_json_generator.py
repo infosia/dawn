@@ -954,6 +954,52 @@ def compute_kotlin_params(loaded_json,
     customize_structures = customize_api["structures"]
     customize_enums = customize_api["enums"]
     customize_callback = customize_api["function pointer"]
+    
+    api_tier_config = kotlin_json.get('api_tier_config', {'conditional': {}})
+    conditional_dict = api_tier_config.get('conditional', {})
+    
+    feature_names = sorted(list(conditional_dict.keys()))
+    feature_map = {name: i + 1 for i, name in enumerate(feature_names)}
+    params_kotlin['webgpu_features'] = feature_map
+    
+    conditional_apis = {}
+    for feature, apis in conditional_dict.items():
+        for api in apis:
+            conditional_apis[api] = feature
+            
+    def annotate_method(obj_name, method):
+        full_method_name = f"{obj_name.get()} {method.name.get()}"
+        if full_method_name in conditional_apis:
+            method.is_core = False
+            method.conditional_feature_name = conditional_apis[full_method_name]
+            method.conditional_feature_id = feature_map[method.conditional_feature_name]
+        else:
+            method.is_core = True
+            method.conditional_feature_name = None
+            method.conditional_feature_id = -1
+        return True
+        
+    def annotate_function(function):
+        full_function_name = function.name.get()
+        if full_function_name in conditional_apis:
+            function.is_core = False
+            function.conditional_feature_name = conditional_apis[full_function_name]
+            function.conditional_feature_id = feature_map[function.conditional_feature_name]
+        else:
+            function.is_core = True
+            function.conditional_feature_name = None
+            function.conditional_feature_id = -1
+        return True
+
+    for params in [params_kotlin]:
+        if not params:
+            continue
+        for obj in params['by_category']['object']:
+            obj.methods = [m for m in obj.methods if annotate_method(obj.name, m)]
+            
+        for func in params['by_category']['function']:
+            annotate_function(func)
+
 
     def kotlin_record_members(members):
         # Members are sorted in the following order.
@@ -1398,13 +1444,19 @@ def as_wireType(metadata, typ):
 
 def c_methods(params, typ):
     if typ.category == 'object':
-        return typ.methods + [
-            Method(Name('add ref'), None, [], False, {}),
-            Method(Name('release'), None, [], False, {}),
-        ]
+        add_ref = Method(Name('add ref'), None, [], False, {})
+        release = Method(Name('release'), None, [], False, {})
+        add_ref.is_core = True
+        add_ref.conditional_feature_id = -1
+        release.is_core = True
+        release.conditional_feature_id = -1
+        return typ.methods + [add_ref, release]
     elif typ.category == 'structure':
         if typ.has_free_members_function:
-            return [Method(Name('free members'), None, [], False, {})]
+            free_members = Method(Name('free members'), None, [], False, {})
+            free_members.is_core = True
+            free_members.conditional_feature_id = -1
+            return [free_members]
         return []
     else:
         assert False, "c_methods only valid on objects and structure"
@@ -1685,14 +1737,6 @@ class MultiGeneratorFromDawnJSON(Generator):
                            'include/webgpu/' + api + '_cpp_chained_struct.h',
                            [RENDER_PARAMS_BASE, params_dawn]))
 
-        if 'cpp_modules' in targets:
-            renders.append(
-                FileRender('api_cpp.ixx', 'include/dawn/' + api + '.ixx', [
-                    RENDER_PARAMS_BASE, params_dawn, {
-                        'cpp_header': api + '/' + api + '_cpp.h',
-                    }
-                ]))
-
         if 'proc' in targets:
             renders.append(
                 FileRender('dawn_proc.cpp', 'src/dawn/' + prefix + '_proc.cpp',
@@ -1752,17 +1796,6 @@ class MultiGeneratorFromDawnJSON(Generator):
                                    'c_namespace': None,
                                }
                            ]))
-
-        if 'emdawnwebgpu_modules' in targets:
-            assert api == 'webgpu'
-            params_emscripten = parse_json(loaded_json,
-                                           enabled_tags=['emscripten'])
-            renders.append(
-                FileRender('api_cpp.ixx', 'include/dawn/' + api + '.ixx', [
-                    RENDER_PARAMS_BASE, params_emscripten, {
-                        'cpp_header': api + '/' + api + '_cpp.h',
-                    }
-                ]))
 
         if 'emdawnwebgpu_js' in targets:
             assert api == 'webgpu'
@@ -1974,6 +2007,7 @@ class MultiGeneratorFromDawnJSON(Generator):
             jni_name = params_kotlin['jni_name']
 
             imported_templates += [
+                "art/api_kotlin_feature.kt",
                 "art/api_kotlin_async_helpers.kt",
                 "art/api_kotlin_types.kt",
             ]
@@ -2028,6 +2062,11 @@ class MultiGeneratorFromDawnJSON(Generator):
                            'java/' + kt_file_path + '/GPURequestCallback.kt',
                            [RENDER_PARAMS_BASE, params_kotlin]))
 
+            renders.append(
+                FileRender('art/api_kotlin_feature.kt',
+                           'java/' + kt_file_path + '/WebGpuFeature.kt',
+                           [RENDER_PARAMS_BASE, params_kotlin]))
+
             for enum in (params_kotlin['by_category']['bitmask'] +
                          params_kotlin['by_category']['enum']):
                 if params_kotlin['include_enum'](enum):
@@ -2064,6 +2103,9 @@ class MultiGeneratorFromDawnJSON(Generator):
                            [RENDER_PARAMS_BASE, params_kotlin]))
             renders.append(
                 FileRender('art/methods.cpp', 'cpp/methods.cpp',
+                           [RENDER_PARAMS_BASE, params_kotlin]))
+            renders.append(
+                FileRender('art/WebViewDawnProcInitializer.cpp', 'cpp/WebViewDawnProcInitializer.cpp',
                            [RENDER_PARAMS_BASE, params_kotlin]))
             renders.append(
                 FileRender('art/JNIClasses.h', 'cpp/JNIClasses.h',
