@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "409bde40_2d66db88",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T21:51:07Z",
+      "side": 1,
+      "message": "If not we can still enable `-Wall -Wextra` and an allowlist of warnings (move them from `src/utils:internal_config`)",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d32bd93_56a6b303",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T21:51:07Z",
+      "side": 1,
+      "message": "Let\u0027s have a `nocompile` test that checks one or a few warnings that trigger with `-Weverything` but not with `-Wall -Wextra`, to verify they\u0027re getting enabled",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "929f51f9_5b08080c",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T21:51:07Z",
+      "side": 1,
+      "message": "Let\u0027s go ahead and put some of these warnings in a block as warnings we\u0027ll never enable, such as these.\n\nThe rest of the warnings can go in a block that says \"TODO: triage these warnings and determine whether they\u0027re warnings we definitely don\u0027t want, or warnings we want to try to enable, or warnings that we can\u0027t currently enable for some reason\"",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f98e5446_a0705f7c",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T21:51:07Z",
+      "side": 1,
+      "message": "Could we apply these only to specific windows files rather than to all targets when built on windows?",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d40ee153_1c4c7564",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T21:51:07Z",
+      "side": 1,
+      "message": "We should enable warnings for generated code if we can, though it may be trickier because I\u0027m sure there are warnings that we want for regular code that we don\u0027t want for generated code. If we can\u0027t enable this now, put a TODO.",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d95d0f84_d57e8d8c",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T21:51:07Z",
+      "side": 1,
+      "message": "Let\u0027s add an extra layer here like this:\n\n```\ndeclare_args() {\n  # Enable building with a warning allowlist (-Weverything -Wno-...).\n  # Default to enabled if we are using pinned clang.\n  dawn_weverything \u003d using_pinned_clang\n}\n```",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69aba6fd_23ff2806",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T21:51:07Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need this because it\u0027s enabled by utils:internal_config. (Double check though.)",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
