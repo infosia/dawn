@@ -164,6 +164,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "411d64f1_0cbbc069",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T00:27:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6a83faee_f009bb0c",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 12
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67215c57_617ad9fb",
@@ -260,6 +284,24 @@
       "side": 1,
       "message": "If possible, I\u0027d rather use the `DAWN_CHECK` where possible as it makes the configuration consistent in Dawn instead of having some things checked by the libc++ hardening and some by DAWN_CHECK.\n\nHowever the hardenend iterators seem pretty important. I ran into an issue with them that required adding a `\u0026*` in a test so I should have thought about it. The hack to use span\u0027s hardened iterator seems... not terrible? If possible I\u0027d like to create them directly but there might not be a portable way to do it.",
       "parentUuid": "c4846bd5_0d81a887",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2e213b3_8c54f166",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T00:27:01Z",
+      "side": 1,
+      "message": "I think there\u0027s enough mixing mixing of libc++ checks and dawn checks already that it doesn\u0027t really matter. I think it\u0027s more valuable to reduce our code complexity.\n\nFor https://crbug.com/504697276 I\u0027m planning to have a single option that controls all of the checks (both dawn and libc++) so that will help unify them.",
+      "parentUuid": "6c4e43ec_3b81321d",
       "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -395,6 +437,30 @@
       "side": 1,
       "message": "I have a slight preference for avoiding the include of `\u003citerator\u003e` or `\u003crange\u003e` unless necessary. Leaving open as it\u0027s something that we might need to do anyway for the safe iterators.",
       "parentUuid": "b3be1ce6_2d6fef9b",
+      "range": {
+        "startLine": 140,
+        "startChar": 16,
+        "endLine": 140,
+        "endChar": 28
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "becf5c03_368ab6e0",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T00:27:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8690ee7f_09398d9f",
       "range": {
         "startLine": 140,
         "startChar": 16,
@@ -1056,6 +1122,24 @@
       "side": 1,
       "message": "I added a commented out test. The problem is that `TypedInteger` prevents using `operator -` which is used in various `DAWN_CHECK` and computations for `subspan`. I think we should finally make `typed_integer.h` always wrap in a struct and use `clang:trivial_abi` to avoid the performance loss.",
       "parentUuid": "d3af0492_fa3657f1",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77ad4ec5_4819c4f0",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T00:27:01Z",
+      "side": 1,
+      "message": "If you can add a test that\u0027s only enabled in DAWN_ENABLE_ASSERTS then I\u0027d say do that, and try to add a `#else` section that will fail when we switch to TypedInteger in release (https://crbug.com/503420432) so we remember to update the test.\n\nDo we need to update ityp::Sub to allow plain integers and use that in Span?",
+      "parentUuid": "0ae6d525_42180230",
       "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

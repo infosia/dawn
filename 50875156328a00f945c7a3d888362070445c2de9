@@ -34,6 +34,24 @@
       "parentUuid": "8ad997f4_337cdf2a",
       "revId": "50875156328a00f945c7a3d888362070445c2de9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2659dd1b_5964ed7c",
+        "filename": "src/utils/span.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T00:27:01Z",
+      "side": 1,
+      "message": "I don\u0027t like `TSpan` either, it looks like a template parameter.\n\nThis is basically just `ityp::span` right? Can we just not define this at all, and redefine `ityp::span` this way? (Perhaps there\u0027s also a question here of why this isn\u0027t in `ityp`.)",
+      "parentUuid": "39ac422e_95be095b",
+      "revId": "50875156328a00f945c7a3d888362070445c2de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
