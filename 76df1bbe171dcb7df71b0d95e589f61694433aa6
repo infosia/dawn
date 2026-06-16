@@ -33,6 +33,69 @@
       "message": "The change seems fine, I\u0027m wondering if it would make sense to make a ++/-- operator that doesn\u0027t actually modify the original value (or maybe it\u0027s fine even if it does?) Or something along those lines? It seems a bit annoying to have to know the underlying type, and then still do two explicit constructors for some of these.",
       "revId": "76df1bbe171dcb7df71b0d95e589f61694433aa6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c89d348d_a6d35f61",
+        "filename": "src/utils/typed_integer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T23:14:59Z",
+      "side": 1,
+      "message": "I tested this locally and it seems to be `int` not `uint16_t`",
+      "range": {
+        "startLine": 139,
+        "startChar": 73,
+        "endLine": 139,
+        "endChar": 81
+      },
+      "revId": "76df1bbe171dcb7df71b0d95e589f61694433aa6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01c29961_7bf8795c",
+        "filename": "src/utils/typed_integer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T23:14:59Z",
+      "side": 1,
+      "message": "like*",
+      "range": {
+        "startLine": 139,
+        "startChar": 41,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "76df1bbe171dcb7df71b0d95e589f61694433aa6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe42fbdb_eaa42851",
+        "filename": "src/utils/typed_integer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T23:14:59Z",
+      "side": 1,
+      "message": "I don\u0027t think these need to be public anymore? Also maybe could just be folded into the operator implementations, I think that\u0027s the only place they\u0027re used and those are trivial wrappers.",
+      "revId": "76df1bbe171dcb7df71b0d95e589f61694433aa6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
