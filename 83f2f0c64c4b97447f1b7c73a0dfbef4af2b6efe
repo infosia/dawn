@@ -52,6 +52,24 @@
       "parentUuid": "02a04759_0c2bd15f",
       "revId": "83f2f0c64c4b97447f1b7c73a0dfbef4af2b6efe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cd35146_e2c36ecd",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-16T20:38:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60366185_0d453dcf",
+      "revId": "83f2f0c64c4b97447f1b7c73a0dfbef4af2b6efe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
