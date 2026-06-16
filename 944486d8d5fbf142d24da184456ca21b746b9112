@@ -1,0 +1,148 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "553aa4ee_b2339490",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:04Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: You can move this config fetching outside of the loop to avoid repeated dictionary lookups for every member of the structure.",
+      "range": {
+        "startLine": 1008,
+        "startChar": 0,
+        "endLine": 1008,
+        "endChar": 0
+      },
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecb7a78a_30e4087f",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:04Z",
+      "side": 1,
+      "message": "This logic has a side effect: if an item is tagged ONLY with \u0027art_experimental\u0027, it will now be included in non-Art targets (like C++ or Emscripten) because `tags` becomes empty and it returns `True`. \n\nIf an item has only experimental tags for a specific platform, it should probably be excluded from others unless it also has a general tag like \u0027dawn\u0027. Consider returning `False` if `tags` is empty after filtering but was not empty before.",
+      "range": {
+        "startLine": 1387,
+        "startChar": 0,
+        "endLine": 1387,
+        "endChar": 0
+      },
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "598856b1_f7a9cfd5",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:04Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: Critical bug: `{{ input }}[idx]` is a single `char` if the type name is \u0027char\u0027. `env-\u003eNewStringUTF` expects a null-terminated `const char*`. This will cause a crash or read-out-of-bounds as JNI tries to find a null terminator starting from a single character value.\n\nIf the intention is to support an array of strings (e.g., `const char**`), then `input` needs to be treated as a pointer to pointers, and the type check should reflect that.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87ca896e_49a2eec2",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:04Z",
+      "side": 1,
+      "message": "I noticed we are using GetFloatArrayRegion here with a fixed constant_length. What do you think about adding a quick bounds check before doing the copy?\n\nMy worry is that if a user accidentally passes an array from Kotlin that is smaller than {{ member.constant_length }}, JNI will throw an ArrayIndexOutOfBoundsException on the JVM, but C++ will continue executing. That would result in us passing an uninitialized array buffer directly into Dawn.\n\nWould it be safer to check env-\u003eGetArrayLength(in) and early-return if it doesn\u0027t match?",
+      "fixSuggestions": [
+        {
+          "fixId": "494dc8eb_3c8fdf2e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/kotlin_record_conversion.cpp",
+              "range": {
+                "startLine": 245,
+                "startChar": 0,
+                "endLine": 248,
+                "endChar": 0
+              },
+              "replacement": "                            jsize arrayLength \u003d env-\u003eGetArrayLength(in);\n                            if (arrayLength \u003d\u003d {{ member.constant_length }}) {\n                                auto array \u003d c-\u003eAllocArray\u003cfloat\u003e({{ member.constant_length }});\n                                env-\u003eGetFloatArrayRegion(static_cast\u003cjfloatArray\u003e(in), 0, {{ member.constant_length }}, array);\n                                out \u003d array;\n                            } else {\n                                // If the array length doesn\u0027t match the expected constant length,\n                                // do not proceed to avoid potential crashes or uninitialized data.\n                                // The out variable remains in its default-initialized state (e.g., nullptr).\n                                return;\n                            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c583d50_ade2d9ad",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 22
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:04Z",
+      "side": 1,
+      "message": "Typo: extra space before the comma.",
+      "range": {
+        "startLine": 1828,
+        "startChar": 0,
+        "endLine": 1828,
+        "endChar": 0
+      },
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0729b46c_6b8800e3",
+        "filename": "src/dawn/dawn_kotlin.json",
+        "patchSetId": 22
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:04Z",
+      "side": 1,
+      "message": "Just double-checking, does WebGPU use bare int anywhere else that might be unintentionally affected by this, or is it isolated?",
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
