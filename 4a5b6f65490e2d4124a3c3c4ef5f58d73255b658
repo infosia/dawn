@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2eb5c6d_3e28e2fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T20:15:59Z",
+      "side": 1,
+      "message": "also `Fixes: 503420432`",
+      "revId": "4a5b6f65490e2d4124a3c3c4ef5f58d73255b658",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "761d003e_85137c54",
