@@ -90,6 +90,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ce51bb1_20d4467f",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 2337,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-16T20:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "621627ae_7aafb4f8",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45e33459_65625409",
