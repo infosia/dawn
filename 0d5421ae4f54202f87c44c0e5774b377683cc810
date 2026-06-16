@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e75d402_5fa5f3ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:43Z",
+      "side": 1,
+      "message": "Are we planning to check in these Kotlin bindings (the experimental classes)? Or were they just added for visibility during the review process and left out of the final merge?",
+      "revId": "0d5421ae4f54202f87c44c0e5774b377683cc810",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
