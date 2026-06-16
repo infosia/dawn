@@ -16,6 +16,40 @@
       "message": "PTAL!",
       "revId": "d7d827077e1fc21c67bada7e9d35f9f163ef5c83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84739dad_ece4e61f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004016
+      },
+      "writtenOn": "2026-06-16T17:17:44Z",
+      "side": 1,
+      "message": "lgtm with a suggestion for a follow-on",
+      "revId": "d7d827077e1fc21c67bada7e9d35f9f163ef5c83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03efeba2_43b4febe",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1004016
+      },
+      "writtenOn": "2026-06-16T17:17:44Z",
+      "side": 1,
+      "message": "I\u0027d suggest adding a test with the sRGB primaries too, to make sure the Y vector is computed correctly.",
+      "revId": "d7d827077e1fc21c67bada7e9d35f9f163ef5c83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
