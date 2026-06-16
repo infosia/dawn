@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34541b89_98cac067",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T18:09:56Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "29e656de_f1cdebca",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "5498b269745868b63b1ae17ec0724465a0b8e458",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81e0e371_60fd6913",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-06-16T08:28:56Z",
       "side": 1,
       "message": "Just one edge case for future-proofing: since we made the CMake targets dynamic, we should probably wrap the webgpu_c_bundled prefab block in a similar if check like below.\n\nRight now, if someone ever passes a -PnativeTargets argument that omits webgpu_c_bundled (and doesn\u0027t happen to trigger it as a CMake dependency), Prefab will still try to package it and AGP will crash because the file won\u0027t exist. Wrapping it in an if makes the packaging step perfectly mirror the build step!",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 9
+      },
+      "revId": "5498b269745868b63b1ae17ec0724465a0b8e458",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01c623fe_e77b0375",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T18:09:56Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "81e0e371_60fd6913",
       "range": {
         "startLine": 76,
         "startChar": 0,
