@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f13411a9_c78edd62",
+        "filename": "generator/templates/art/api_kotlin_enum.kt",
+        "patchSetId": 28
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:23Z",
+      "side": 1,
+      "message": "In api_kotlin_enum.kt, we successfully apply the experimental annotation if the entire Enum is experimental. However, it is very common in WebGPU to add an experimental value to a stable enum (like a new experimental TextureFormat or FeatureName). Because we are not applying kotlin_member_optin to the individual public const val generations inside the companion object, developers could pass an experimental enum constant to a function without the Kotlin compiler ever issuing an opt-in warning. We should wrap the const val generation with the member opt-in check",
+      "fixSuggestions": [
+        {
+          "fixId": "c38e3aca_398da2bc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_enum.kt",
+              "range": {
+                "startLine": 48,
+                "startChar": 0,
+                "endLine": 49,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "generator/templates/art/api_kotlin_enum.kt",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "          {% endif %}\n          {% if item_requires_optin(value) %}\n          {{ kotlin_member_optin(value, indent_prefix\u003d\"      \") }}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "24bc41d0e254857cbe1c1bada7a14acfe389d9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8671fe49_5d509507",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 28
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:23Z",
+      "side": 1,
+      "message": "In api_kotlin_object.kt, we successfully insert the {{ experimental }} annotation block right before the public external fun. However, if the method starts with get, the generator creates a syntactic Kotlin property (public val {{ name }}) just below it. Because we didn\u0027t add {{ experimental }} to this property block as well, developers will be able to access the property syntax (e.g. obj.experimentalField) without triggering the Kotlin compiler\u0027s opt-in warning. We should make sure to copy the {{ experimental }} macro call to the getter property generation as well. Or is this an intentional design?",
+      "fixSuggestions": [
+        {
+          "fixId": "f7e61766_2b521cf1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_object.kt",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "            {% if experimental %}\n                {{ experimental }}\n            {% endif %}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "24bc41d0e254857cbe1c1bada7a14acfe389d9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "000f0d3c_da43509d",
+        "filename": "generator/templates/art/api_kotlin_structure.kt",
+        "patchSetId": 28
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:23Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: The manual check for `\u0027True\u0027` works because Jinja2 renders booleans as strings when output. However, for consistency with other parts of the generator (if any use truthiness), you might consider using the rendered result directly in an `if` block, but the current approach is safe and explicit.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "24bc41d0e254857cbe1c1bada7a14acfe389d9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5b77aa8_64dd99db",
+        "filename": "generator/templates/art/api_kotlin_structure.kt",
+        "patchSetId": 28
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:23Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: The indentation of this TODO comment might look a bit off in the generated file depending on the surrounding Jinja2 tags. You might want to ensure it aligns with the `public constructor` below it.",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 0
+      },
+      "revId": "24bc41d0e254857cbe1c1bada7a14acfe389d9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20f273c0_92a9fa04",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 28
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:23Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: The `chain_children` parameter in this macro doesn\u0027t seem to be passed from the primary call sites in `api_kotlin_structure.kt` (lines 45, 55, 186, 194). While it doesn\u0027t break anything, the recursive check for experimental chained children is currently only effective at the top-level structure check (line 86). If you intended for individual properties to also check their potential chained children, you might need to pass this map through.",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "24bc41d0e254857cbe1c1bada7a14acfe389d9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
