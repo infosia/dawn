@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8d0e251_b880c55a",
+        "filename": "src/dawn/tests/PartitionAllocSupport.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-16T11:16:11Z",
+      "side": 1,
+      "message": "I tried locally to run a \"leak\" detector:\n  •  dawn_unittests : 0 leaks (after fixing the  WireInjectInstanceTests.ReclaimInstanceReservation  leak).\n  •  dawn_end2end_tests : 0 leaks.\n  •  dawn_perf_tests : 0 leaks.\n\nSo, I believe the number of leaks should be close to zero.\n\nI will:\n- Land this patch.\n- Fix the WireInjectInstanceTests.ReclaimInstanceReservation leak.\n- (maybe) Add the leak detector to catch regressions in the future.",
+      "parentUuid": "89363299_cc9c6681",
+      "revId": "596ee652c195eed70df6023969ad39cee79997a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc3077c4_ef3400e6",
@@ -93,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d484c03a_92ad3d2f",
+        "filename": "src/dawn/tests/PartitionAllocSupport.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-16T11:16:11Z",
+      "side": 1,
+      "message": "Dawn specific coding style?",
+      "parentUuid": "fc3077c4_ef3400e6",
+      "range": {
+        "startLine": 105,
+        "startChar": 13,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "596ee652c195eed70df6023969ad39cee79997a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85294396_cd7b3074",
@@ -106,6 +148,24 @@
       "writtenOn": "2026-06-15T13:13:12Z",
       "side": 1,
       "message": "nit: std::array since we are spanifying.",
+      "revId": "596ee652c195eed70df6023969ad39cee79997a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "050d8385_39ee4e31",
+        "filename": "src/dawn/tests/PartitionAllocSupport.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-16T11:16:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85294396_cd7b3074",
       "revId": "596ee652c195eed70df6023969ad39cee79997a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
