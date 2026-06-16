@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed9177b1_330228bb",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 2337,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-16T18:49:22Z",
+      "side": 1,
+      "message": "Can\u0027t we test this in the WGSL version of `table_test.cc` for now, by passing the wrong enum to `subgroupMatrixStore()` ?",
+      "parentUuid": "5a7f608f_0f95bca3",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "45e33459_65625409",
         "filename": "src/tint/lang/core/intrinsic/table.cc",
         "patchSetId": 3
@@ -596,6 +614,24 @@
       "side": 1,
       "message": "Proposal uses col_major (and SPIR-V). I could go either way. Some enums use short forms (e.g. `frag_depth`).",
       "parentUuid": "2d480890_0e6db3ec",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad5acfcd_5235472d",
+        "filename": "src/tint/lang/core/majorness.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-16T18:49:22Z",
+      "side": 1,
+      "message": "HLSL also uses `ColMajor` FWIW.\n\nI personally prefer `col_major` just because it has the same number of characters as `row_major`, which is not a great reason but it is a reason.",
+      "parentUuid": "a81db47d_7617be91",
       "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

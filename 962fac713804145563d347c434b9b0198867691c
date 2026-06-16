@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "015fbbe4_9ea83071",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-16T18:49:22Z",
+      "side": 1,
+      "message": "Nit: unused for store",
+      "revId": "962fac713804145563d347c434b9b0198867691c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
