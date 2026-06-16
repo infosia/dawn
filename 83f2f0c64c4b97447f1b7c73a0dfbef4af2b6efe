@@ -16,6 +16,24 @@
       "message": "you should also reserve the name `explicit_template_params`",
       "revId": "83f2f0c64c4b97447f1b7c73a0dfbef4af2b6efe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02a04759_0c2bd15f",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-16T20:29:01Z",
+      "side": 1,
+      "message": "Is that just adding a reserved string literal?",
+      "parentUuid": "28f8fce4_eb237527",
+      "revId": "83f2f0c64c4b97447f1b7c73a0dfbef4af2b6efe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
