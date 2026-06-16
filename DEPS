@@ -813,6 +813,8 @@ hooks = [
     ],
   },
 
+  # DNS(rharrison@): Pull llvm-dev binaries from CIPD for Mesa builds on Linux.
+
   # Update build/util/LASTCHANGE.
   {
     'name': 'lastchange',
