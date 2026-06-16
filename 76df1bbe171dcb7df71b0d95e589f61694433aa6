@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "76df1bbe171dcb7df71b0d95e589f61694433aa6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a25d6cc_ea80b77c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-16T18:31:08Z",
+      "side": 1,
+      "message": "The change seems fine, I\u0027m wondering if it would make sense to make a ++/-- operator that doesn\u0027t actually modify the original value (or maybe it\u0027s fine even if it does?) Or something along those lines? It seems a bit annoying to have to know the underlying type, and then still do two explicit constructors for some of these.",
+      "revId": "76df1bbe171dcb7df71b0d95e589f61694433aa6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
