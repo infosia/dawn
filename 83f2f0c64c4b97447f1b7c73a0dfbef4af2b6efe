@@ -34,6 +34,24 @@
       "parentUuid": "28f8fce4_eb237527",
       "revId": "83f2f0c64c4b97447f1b7c73a0dfbef4af2b6efe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60366185_0d453dcf",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-16T20:30:37Z",
+      "side": 1,
+      "message": "Yea, just need to \n```suggestion\n    reserved 2;\n    reserved \"explicit_template_params\";\n```",
+      "parentUuid": "02a04759_0c2bd15f",
+      "revId": "83f2f0c64c4b97447f1b7c73a0dfbef4af2b6efe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
