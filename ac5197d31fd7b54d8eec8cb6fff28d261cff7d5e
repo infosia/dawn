@@ -16,6 +16,23 @@
       "message": "PTAL. Thank you.",
       "revId": "ac5197d31fd7b54d8eec8cb6fff28d261cff7d5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "916c12cb_5b3ab2d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-06-16T17:31:58Z",
+      "side": 1,
+      "message": "LGTM, thank you! I appreciate how straightforward the implementation is.\n\nTo be honest I\u0027m mildly surprised we haven\u0027t needed to implement a workaround like this already.",
+      "revId": "ac5197d31fd7b54d8eec8cb6fff28d261cff7d5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
