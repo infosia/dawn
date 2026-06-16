@@ -690,6 +690,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbf6ade6_9bd93819",
+        "filename": "src/tint/lang/core/majorness.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-16T20:12:52Z",
+      "side": 1,
+      "message": "Let\u0027s leave it at `col` for now, we can always fix it later if the committee goes in a different direction.",
+      "parentUuid": "ad5acfcd_5235472d",
+      "revId": "27bea062db37fe968f438f8b527d21321e49da0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ec8d6e6_56a1a3ad",
