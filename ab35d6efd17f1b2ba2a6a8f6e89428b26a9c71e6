@@ -16,6 +16,24 @@
       "message": "This broke the Bazel build of Tint:\n\n```\nERROR: /usr/local/google/home/kjlubick/.cache/bazel/_bazel_kjlubick/7b9efcb5f2258e5118333486e2399139/external/+cpp_modules+dawn/tools/src/BUILD.bazel:54:10: GoCompilePkg external/+cpp_modules+dawn/tools/src/gen-bazel.a [for tool] failed: missing input file \u0027@@+cpp_modules+dawn//tools/src:cmd/gen/bazel-wrapper/main.go\u0027\nERROR: /usr/local/google/home/kjlubick/.cache/bazel/_bazel_kjlubick/7b9efcb5f2258e5118333486e2399139/external/+cpp_modules+dawn/tools/src/BUILD.bazel:54:10: GoCompilePkg external/+cpp_modules+dawn/tools/src/gen-bazel.a [for tool] failed: 1 input file(s) do not exist\n```",
       "revId": "ab35d6efd17f1b2ba2a6a8f6e89428b26a9c71e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f827f761_01bbf376",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-16T17:31:46Z",
+      "side": 1,
+      "message": "Apologies, I did test the Bazel build locally but perhaps I did the rename afterwards.\n\nShould be fixed now via\nhttps://dawn-review.git.corp.google.com/c/dawn/+/317175",
+      "parentUuid": "8e6c0194_725aecff",
+      "revId": "ab35d6efd17f1b2ba2a6a8f6e89428b26a9c71e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
