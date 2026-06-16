@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c53fee3b_00e40025",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T19:12:47Z",
+      "side": 1,
+      "message": "The generated webgpu_cpp.h, and wgpu::Device automatically increments the reference count internally when it\u0027s constructed from a raw handle. Because of this, adding an extra manual reference would cause a memory leak. Also, the .Reference() method doesn\u0027t exist in webgpu_cpp.h.",
+      "parentUuid": "5e53b569_b7cc24eb",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "df708551_77d075d0",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 7
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "18721c52_2ec02118",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T19:12:47Z",
+      "side": 1,
+      "message": "The .Reference() method isn\u0027t available on wgpu::Texture or wgpu::ExternalTexture in the generated webgpu_cpp binding. The only way to manually add a reference for the Java side to own is by using the C API function wgpuTextureAddRef(), which is why it\u0027s written this way.",
+      "parentUuid": "df708551_77d075d0",
+      "range": {
+        "startLine": 191,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ccc221a4_3710b551",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 7
@@ -60,6 +108,30 @@
       "writtenOn": "2026-06-16T08:28:35Z",
       "side": 1,
       "message": "Please fix this WARNING reported by autoreview issue finding: For consistency with the C++ API migration, use the Reference() method.\n`externalTexture.Reference();`",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6069ee4_5599cfda",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T19:12:47Z",
+      "side": 1,
+      "message": "Same as - https://dawn-review.git.corp.google.com/c/dawn/+/315235/comment/df708551_77d075d0/",
+      "parentUuid": "ccc221a4_3710b551",
       "range": {
         "startLine": 351,
         "startChar": 0,
@@ -150,6 +222,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4a760e8c_67afa102",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T19:12:47Z",
+      "side": 1,
+      "message": "Assigning endState.fences[i] to a local wgpu::SharedFence variable is actually safe here. The C++ wrapper automatically increments the reference count when the variable is created, and decrements it when the variable goes out of scope. This means it cleans up after itself without causing a double-release.",
+      "parentUuid": "012a7318_29a8cee0",
+      "range": {
+        "startLine": 440,
+        "startChar": 0,
+        "endLine": 440,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98e8e4e9_a5c226ac",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 7
@@ -161,6 +257,30 @@
       "writtenOn": "2026-06-16T08:28:35Z",
       "side": 1,
       "message": "Please fix this WARNING reported by autoreview issue finding: The `wgpuSharedTextureMemoryEndAccessStateFreeMembers(endState)` call was removed, which causes a memory leak. The `endState.fences` array is allocated by the implementation and must be freed by the caller. Please restore the call.",
+      "range": {
+        "startLine": 458,
+        "startChar": 0,
+        "endLine": 458,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e67e8b4a_37389dc0",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T19:12:47Z",
+      "side": 1,
+      "message": "The FreeMembers() function is actually a private method in the C++ struct. The struct\u0027s destructor automatically calls FreeMembers() when it goes out of scope. If we call it manually, it wouldn\u0027t compile and would lead to a double-free, so the wrapper is safely handling this cleanup behind the scenes.",
+      "parentUuid": "98e8e4e9_a5c226ac",
       "range": {
         "startLine": 458,
         "startChar": 0,
