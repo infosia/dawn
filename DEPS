@@ -802,6 +802,25 @@ hooks = [
     ],
   },
 
+  # Pull llvm-dev binaries using checked-in hashes for Mesa builds on Linux.
+  # Commented out initially for Proof of Concept (POC) testing:
+  # To manually simulate this download and extraction:
+  # 1. Run: `./scripts/package_llvm_dev.py` (builds llvm-dev.tar.gz locally)
+  # 2. Extract: `mkdir -p third_party/llvm-dev && tar -xzf llvm-dev.tar.gz -C third_party/llvm-dev/`
+  #
+  # {
+  #   'name': 'llvm-dev_linux',
+  #   'pattern': '.',
+  #   'condition': 'checkout_mesa and host_os == "linux"',
+  #   'action': [ 'vpython3',
+  #               'third_party/depot_tools/download_from_google_storage.py',
+  #               '--no_resume',
+  #               '--extract',
+  #               '--bucket', 'chromium-browser-clang/llvm-dev/linux',
+  #               '-s', 'third_party/llvm-dev/llvm-dev.tar.gz.sha1',
+  #   ],
+  # },
+
   # Update build/util/LASTCHANGE.
   {
     'name': 'lastchange',
