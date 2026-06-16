@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ff14256_47ef56b4",
+        "filename": "src/utils/span.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-16T14:46:35Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm....\n\ncheck: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-typename.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-typename` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "1dd0ea86a563732910e58514e7f783195f1ba26d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

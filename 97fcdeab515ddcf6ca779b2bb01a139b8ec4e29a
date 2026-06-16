@@ -308,6 +308,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a61cf1c3_a89339a7",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-16T14:46:35Z",
+      "side": 1,
+      "message": "Looking at Chromium\u0027s checked iterator, it doesn\u0027t do much magic, but checks that you always stay in bounds of `begin()` and `end()`. So far we\u0027re not using span iterators much so it would be nice to not add the complexity, and we can add it later if need be.",
+      "parentUuid": "c2e213b3_8c54f166",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73eebf58_b1bc911c",
         "filename": "src/utils/span.h",
         "patchSetId": 8
@@ -812,6 +830,30 @@
       "writtenOn": "2026-06-13T05:02:12Z",
       "side": 1,
       "message": "std::array::iterator should be an iterator type and not a `T*` (at least with hardening enabled).\n\nIf we get a safe iterator type then I think we could mark the constructor safe, though I don\u0027t think there\u0027s any reason to, so better to leave it unsafe.",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 141,
+        "endChar": 13
+      },
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cf8572c_6e25a218",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-16T14:46:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92e1cda2_573fd085",
       "range": {
         "startLine": 141,
         "startChar": 11,
