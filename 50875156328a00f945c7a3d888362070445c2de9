@@ -70,6 +70,24 @@
       "parentUuid": "2659dd1b_5964ed7c",
       "revId": "50875156328a00f945c7a3d888362070445c2de9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6714fb4a_df5f5994",
+        "filename": "src/utils/span.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-16T15:24:59Z",
+      "side": 1,
+      "message": "From my side, `ityp` never means anything to me, it always just seems like a weird namespace thing. So, `dawn::TypedSpan` is a lot clearer compared to `ityp::Span`",
+      "parentUuid": "e50874cd_9bc5b5f7",
+      "revId": "50875156328a00f945c7a3d888362070445c2de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
