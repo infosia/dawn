@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea5e22da_077a91dd",
+        "filename": "src/dawn/dawn_native.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-16T18:35:48Z",
+      "side": 1,
+      "message": "nit. Should we add some documentation in that file for this new json as well?",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 37
+      },
+      "revId": "41e47b6c0f5f41bdc43e16031573982160ae9665",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
