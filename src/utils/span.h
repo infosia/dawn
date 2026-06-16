@@ -114,6 +114,9 @@ class SpanBase {
 
     static inline constexpr Index extent = DynamicExtent<Index>;
 
+    static inline constexpr size_t kOffsetOfSize = offsetof(Self, mSize);
+    static inline constexpr size_t kOffsetOfData = offsetof(Self, mData);
+
     // Constructors
     // DIFF: The constructor from a C-style array is not present.
     // DIFF: Many constructors are UNSAFE_BUFFER_USAGE.
