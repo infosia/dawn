@@ -849,7 +849,7 @@ class VertexBufferTracker {
   public:
     void OnSetVertexBuffer(VertexBufferSlot slot, Buffer* buffer, uint64_t offset, uint64_t size) {
         mStartSlot = std::min(mStartSlot, slot);
-        mEndSlot = std::max(mEndSlot, ityp::PlusOne(slot));
+        mEndSlot = std::max(mEndSlot, slot + VertexBufferSlot(uint8_t(1)));
 
         auto* d3d12BufferView = &mD3D12BufferViews[slot];
         d3d12BufferView->BufferLocation = buffer->GetVA() + offset;
@@ -869,9 +869,9 @@ class VertexBufferTracker {
         if (mLastAppliedRenderPipeline != renderPipeline) {
             mLastAppliedRenderPipeline = renderPipeline;
 
-            for (VertexBufferSlot slot : renderPipeline->GetVertexBuffersUsed()) {
+            for (1VertexBufferSlot slot : renderPipeline->GetVertexBuffersUsed()) {
                 startSlot = std::min(startSlot, slot);
-                endSlot = std::max(endSlot, ityp::PlusOne(slot));
+                endSlot = std::max(endSlot, slot + VertexBufferSlot(uint8_t(1)));
                 mD3D12BufferViews[slot].StrideInBytes =
                     static_cast<uint32_t>(renderPipeline->GetVertexBuffer(slot).arrayStride);
             }
@@ -886,7 +886,7 @@ class VertexBufferTracker {
         // and end of the dirty range. When Apply is called,
         // we will at worst set non-dirty vertex buffers in duplicate.
         commandList->IASetVertexBuffers(static_cast<uint8_t>(startSlot),
-                                        static_cast<uint8_t>(ityp::Sub(endSlot, startSlot)),
+                                        static_cast<uint8_t>(endSlot - startSlot),
                                         &mD3D12BufferViews[startSlot]);
 
         mStartSlot = kMaxVertexBuffersTyped;
