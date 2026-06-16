@@ -85,6 +85,34 @@ VkIndexType VulkanIndexType(wgpu::IndexFormat format) {
     DAWN_UNREACHABLE();
 }
 
+std::vector<VkBufferImageCopy> ComputePerArrayLayerBufferImageCopyRegions(
+    const BufferCopy& bufferCopy,
+    const TextureCopy& textureCopy,
+    const TexelExtent3D& copySize,
+    const TypedTexelBlockInfo& blockInfo) {
+    const uint64_t bytesPerImage =
+        blockInfo.ToBytes(bufferCopy.blocksPerRow) * static_cast<uint64_t>(bufferCopy.rowsPerImage);
+    const uint32_t layerCount =
+        static_cast<uint32_t>(static_cast<uint64_t>(copySize.depthOrArrayLayers));
+
+    TexelExtent3D singleLayerSize = copySize;
+    singleLayerSize.depthOrArrayLayers = TexelCount{1u};
+
+    std::vector<VkBufferImageCopy> regions;
+    regions.reserve(layerCount);
+    for (uint32_t layer = 0; layer < layerCount; ++layer) {
+        BufferCopy layerBufferCopy = bufferCopy;
+        layerBufferCopy.offset = bufferCopy.offset + uint64_t{layer} * bytesPerImage;
+
+        TextureCopy layerTextureCopy = textureCopy;
+        layerTextureCopy.origin.z = textureCopy.origin.z + TexelCount{layer};
+
+        regions.push_back(ComputeBufferImageCopyRegion(layerBufferCopy, layerTextureCopy,
+                                                       blockInfo.ToBlock(singleLayerSize)));
+    }
+    return regions;
+}
+
 bool HasSameTextureCopyExtent(const TextureCopy& srcCopy,
                               const TextureCopy& dstCopy,
                               const TexelExtent3D& copySize) {
@@ -1167,15 +1195,22 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 ToBackend(src.buffer)->EnsureDataInitialized(recordingContext);
 
                 const TypedTexelBlockInfo& blockInfo = GetBlockInfo(dst);
-                VkBufferImageCopy region =
-                    ComputeBufferImageCopyRegion(src, dst, blockInfo.ToBlock(copy->copySize));
-                VkImageSubresourceLayers subresource = region.imageSubresource;
+                std::vector<VkBufferImageCopy> regions;
+                if (device->IsToggleEnabled(
+                        Toggle::VulkanSplitBufferTextureCopyForArrayLayers) &&
+                    static_cast<uint64_t>(copy->copySize.depthOrArrayLayers) > 1) {
+                    regions = ComputePerArrayLayerBufferImageCopyRegions(src, dst, copy->copySize,
+                                                                         blockInfo);
+                } else {
+                    regions.push_back(
+                        ComputeBufferImageCopyRegion(src, dst, blockInfo.ToBlock(copy->copySize)));
+                }
 
                 SubresourceRange range =
                     GetSubresourcesAffectedByCopy(copy->destination, copy->copySize);
 
                 if (IsCompleteSubresourceCopiedTo(dst.texture.Get(), copy->copySize,
-                                                  subresource.mipLevel, dst.aspect)) {
+                                                  dst.mipLevel, dst.aspect)) {
                     // Since texture has been overwritten, it has been "initialized"
                     dst.texture->SetIsSubresourceContentInitialized(true, range);
                 } else {
@@ -1195,7 +1230,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 // Dawn guarantees dstImage be in the TRANSFER_DST_OPTIMAL layout after the
                 // copy command.
                 device->fn.CmdCopyBufferToImage(commands, srcBuffer, dstImage,
-                                                VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &region);
+                                                VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+                                                static_cast<uint32_t>(regions.size()),
+                                                regions.data());
                 break;
             }
 
@@ -1211,8 +1248,16 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 ToBackend(dst.buffer)->EnsureDataInitializedAsDestination(recordingContext, copy);
 
                 const TypedTexelBlockInfo& blockInfo = GetBlockInfo(src);
-                VkBufferImageCopy region =
-                    ComputeBufferImageCopyRegion(dst, src, blockInfo.ToBlock(copy->copySize));
+                std::vector<VkBufferImageCopy> regions;
+                if (device->IsToggleEnabled(
+                        Toggle::VulkanSplitBufferTextureCopyForArrayLayers) &&
+                    static_cast<uint64_t>(copy->copySize.depthOrArrayLayers) > 1) {
+                    regions = ComputePerArrayLayerBufferImageCopyRegions(dst, src, copy->copySize,
+                                                                         blockInfo);
+                } else {
+                    regions.push_back(
+                        ComputeBufferImageCopyRegion(dst, src, blockInfo.ToBlock(copy->copySize)));
+                }
 
                 SubresourceRange range =
                     GetSubresourcesAffectedByCopy(copy->source, copy->copySize);
@@ -1230,7 +1275,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 VkBuffer dstBuffer = ToBackend(dst.buffer)->GetHandle();
                 // The Dawn CopySrc usage is always mapped to GENERAL
                 device->fn.CmdCopyImageToBuffer(commands, srcImage, VK_IMAGE_LAYOUT_GENERAL,
-                                                dstBuffer, 1, &region);
+                                                dstBuffer,
+                                                static_cast<uint32_t>(regions.size()),
+                                                regions.data());
                 break;
             }
 
