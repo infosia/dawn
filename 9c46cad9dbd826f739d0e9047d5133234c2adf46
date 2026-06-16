@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6438147e_6a51c809",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:30:26Z",
+      "side": 1,
+      "message": "I don\u0027t have in-depth knowledge of SyncFence work, so I suggest getting this part reviewed by someone with more expertise in that area",
+      "revId": "9c46cad9dbd826f739d0e9047d5133234c2adf46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4124296e_2557c762",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:30:26Z",
+      "side": 1,
+      "message": "Hardcoding VK_IMAGE_LAYOUT_GENERAL as the incoming layout makes sense for standard AHB producer/consumer preservation. However, hardcoding the target layout to VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL assumes the user will strictly sample this texture.\n\nAre there any consequences or expectations from Dawn\u0027s Vulkan backend regarding these hardcoded layouts? If a user imports an AHB with the intention to write to it (e.g. as a RenderAttachment), I assume Dawn will just issue a secondary layout transition internally, but I\u0027d love to check with someone with deeper Vulkan expertise (or the core Dawn team) to make sure this doesn\u0027t put Dawn into a suboptimal state.",
+      "range": {
+        "startLine": 435,
+        "startChar": 1,
+        "endLine": 438,
+        "endChar": 69
+      },
+      "revId": "9c46cad9dbd826f739d0e9047d5133234c2adf46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d62a1f27_269737ec",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:30:26Z",
+      "side": 1,
+      "message": "We need to be careful with unconditionally chaining Vulkan structs here. In nativeBeginAccess and nativeEndAccess, we are blindly appending WGPUSharedTextureMemoryVkImageLayoutBeginState and EndState to the chain.\n\nIf the Android device falls back to the OpenGLES backend (which happens frequently on older devices or emulators), Dawn\u0027s GLES backend will reject these Vulkan-specific sType chains. In nativeEndAccess, this returns WGPUStatus_Error and throws a fatal IllegalStateException, crashing the Android app.\n\nWe should dynamically check the active backend type on the WGPUDevice (e.g., via wgpuAdapterGetInfo) before chaining these Vulkan-specific layout structs. If the backend is OpenGLES, we should just pass the base descriptors without the Vulkan chains",
+      "revId": "9c46cad9dbd826f739d0e9047d5133234c2adf46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
