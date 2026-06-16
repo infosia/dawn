@@ -116,16 +116,19 @@ TEST_F(WireInjectInstanceTests, ReclaimInstanceReservation) {
     // Test that doing a reservation and full release is an error.
     {
         auto reserved = GetWireClient()->ReserveInstance();
-        wgpuInstanceRelease(reserved.instance);
+        wgpu::Instance inst = wgpu::Instance::Acquire(reserved.instance);
+        inst = nullptr;
         FlushClient(false);
     }
 
     // Test that doing a reservation and then reclaiming it recycles the ID.
     {
         auto reserved1 = GetWireClient()->ReserveInstance();
+        wgpu::Instance inst1 = wgpu::Instance::Acquire(reserved1.instance);
         GetWireClient()->ReclaimInstanceReservation(reserved1);
 
         auto reserved2 = GetWireClient()->ReserveInstance();
+        wgpu::Instance inst2 = wgpu::Instance::Acquire(reserved2.instance);
 
         // The ID is the same, but the generation is still different.
         ASSERT_EQ(reserved1.handle.id, reserved2.handle.id);
@@ -133,6 +136,9 @@ TEST_F(WireInjectInstanceTests, ReclaimInstanceReservation) {
 
         // No errors should occur.
         FlushClient();
+
+        // Cleanup reservations to avoid leaks and server errors.
+        GetWireClient()->ReclaimInstanceReservation(reserved2);
     }
 }
 
