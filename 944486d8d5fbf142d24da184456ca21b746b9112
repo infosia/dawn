@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e360987_ca8f1e58",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T17:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "553aa4ee_b2339490",
+      "range": {
+        "startLine": 1008,
+        "startChar": 0,
+        "endLine": 1008,
+        "endChar": 0
+      },
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ecb7a78a_30e4087f",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea16b5e8_7c0f7e33",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T17:37:53Z",
+      "side": 1,
+      "message": "Nice catch! Done",
+      "parentUuid": "ecb7a78a_30e4087f",
+      "range": {
+        "startLine": 1387,
+        "startChar": 0,
+        "endLine": 1387,
+        "endChar": 0
+      },
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "598856b1_f7a9cfd5",
@@ -60,6 +108,30 @@
       "writtenOn": "2026-06-16T08:28:04Z",
       "side": 1,
       "message": "Please fix this WARNING reported by autoreview issue finding: Critical bug: `{{ input }}[idx]` is a single `char` if the type name is \u0027char\u0027. `env-\u003eNewStringUTF` expects a null-terminated `const char*`. This will cause a crash or read-out-of-bounds as JNI tries to find a null terminator starting from a single character value.\n\nIf the intention is to support an array of strings (e.g., `const char**`), then `input` needs to be treated as a pointer to pointers, and the type check should reflect that.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0fb8a83_535ad4da",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T17:37:53Z",
+      "side": 1,
+      "message": "Thanks for pointing out",
+      "parentUuid": "598856b1_f7a9cfd5",
       "range": {
         "startLine": 109,
         "startChar": 0,
@@ -105,6 +177,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d108def1_7713bd43",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T17:37:53Z",
+      "side": 1,
+      "message": "Agreed. Added",
+      "parentUuid": "87ca896e_49a2eec2",
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c583d50_ade2d9ad",
@@ -128,6 +218,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17a2e51f_363b5725",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 22
+      },
+      "lineNbr": 1828,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T17:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c583d50_ade2d9ad",
+      "range": {
+        "startLine": 1828,
+        "startChar": 0,
+        "endLine": 1828,
+        "endChar": 0
+      },
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0729b46c_6b8800e3",
@@ -141,6 +255,24 @@
       "writtenOn": "2026-06-16T08:28:04Z",
       "side": 1,
       "message": "Just double-checking, does WebGPU use bare int anywhere else that might be unintentionally affected by this, or is it isolated?",
+      "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c137906a_0c7c084d",
+        "filename": "src/dawn/dawn_kotlin.json",
+        "patchSetId": 22
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-16T17:37:53Z",
+      "side": 1,
+      "message": "Checked. And `int` is primarily used for file descriptors (fd) and POSIX handles. Mapping them to jint is correct and isolated, so there should be no unintended side effects.",
+      "parentUuid": "0729b46c_6b8800e3",
       "revId": "944486d8d5fbf142d24da184456ca21b746b9112",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
