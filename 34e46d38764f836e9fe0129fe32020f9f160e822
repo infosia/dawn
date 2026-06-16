@@ -63,6 +63,30 @@
       },
       "revId": "34e46d38764f836e9fe0129fe32020f9f160e822",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74780115_75b01601",
+        "filename": "src/utils/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-16T00:30:32Z",
+      "side": 1,
+      "message": "Both `crash_handler` and `test_utils` sound fine to me.",
+      "parentUuid": "3517cbbb_9dda60b3",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 23
+      },
+      "revId": "34e46d38764f836e9fe0129fe32020f9f160e822",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
