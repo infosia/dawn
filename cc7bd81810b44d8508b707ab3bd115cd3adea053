@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e53b569_b7cc24eb",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:35Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: When wrapping a borrowed WGPUDevice handle from JNI into a wgpu::Device RAII object, you must increment the reference count. Without this, the local RAII object\u0027s destructor will eventually decrement the reference count that the Java object expects to own, leading to a potential use-after-free.\n\nAdd `outDevice-\u003eReference();` after the assignment.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df708551_77d075d0",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:35Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: For consistency with the C++ API migration, use the Reference() method.\n`texture.Reference();`",
+      "range": {
+        "startLine": 191,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccc221a4_3710b551",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:35Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: For consistency with the C++ API migration, use the Reference() method.\n`externalTexture.Reference();`",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cf5b1c5_dfd588bc",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:35Z",
+      "side": 1,
+      "message": "I noticed we are unconditionally attaching wgpu::SharedTextureMemoryVkImageLayoutBeginState (and EndState) to the access descriptors.\n\nThis tightly couples the Android HardwareBuffer wrapper exclusively to the vulkan backend. If WebGPU on this Android device falls back to OpenGLES (which is highly common on slightly older or lower-end Android devices), Dawn will see a vulkan-specific chained struct on a GLES backend. Do we know what the behavior would be in that case?\n\nWe should dynamically check the backend type and only attach the VkImageLayout chains if the active backend is actually Vulkan.",
+      "fixSuggestions": [
+        {
+          "fixId": "110cca13_222af5bd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+              "range": {
+                "startLine": 407,
+                "startChar": 0,
+                "endLine": 410,
+                "endChar": 0
+              },
+              "replacement": "    wgpu::Adapter adapter \u003d wrapper-\u003edevice.GetAdapter();\n    wgpu::AdapterInfo info \u003d {};\n    adapter.GetInfo(\u0026info);\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+              "range": {
+                "startLine": 411,
+                "startChar": 0,
+                "endLine": 412,
+                "endChar": 0
+              },
+              "replacement": "    wgpu::SharedTextureMemoryVkImageLayoutBeginState beginLayout;\n    if (info.backendType \u003d\u003d wgpu::BackendType::Vulkan) {\n        beginLayout \u003d {};\n        beginLayout.oldLayout \u003d VK_IMAGE_LAYOUT_GENERAL;\n        beginLayout.newLayout \u003d VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;\n        beginDesc.nextInChain \u003d \u0026beginLayout;\n    }\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+              "range": {
+                "startLine": 424,
+                "startChar": 0,
+                "endLine": 428,
+                "endChar": 0
+              },
+              "replacement": "\n    wgpu::Adapter adapter \u003d wrapper-\u003edevice.GetAdapter();\n    wgpu::AdapterInfo info \u003d {};\n    adapter.GetInfo(\u0026info);\n\n    wgpu::SharedTextureMemoryVkImageLayoutEndState endLayout;\n    if (info.backendType \u003d\u003d wgpu::BackendType::Vulkan) {\n        endLayout \u003d {};\n        endLayout.oldLayout \u003d VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;\n        endLayout.newLayout \u003d VK_IMAGE_LAYOUT_GENERAL;\n        endState.nextInChain \u003d \u0026endLayout;\n    }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "012a7318_29a8cee0",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:35Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: This RAII wrapper will call Release() when the loop iteration ends. If you also call wgpuSharedTextureMemoryEndAccessStateFreeMembers() (which you should, to free the array), it will also call Release() on the same fences, leading to a double-release. \n\nUse a raw `WGPUSharedFence` handle here and rely on `FreeMembers` to handle the release.",
+      "range": {
+        "startLine": 440,
+        "startChar": 0,
+        "endLine": 440,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98e8e4e9_a5c226ac",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-16T08:28:35Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by autoreview issue finding: The `wgpuSharedTextureMemoryEndAccessStateFreeMembers(endState)` call was removed, which causes a memory leak. The `endState.fences` array is allocated by the implementation and must be freed by the caller. Please restore the call.",
+      "range": {
+        "startLine": 458,
+        "startChar": 0,
+        "endLine": 458,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
