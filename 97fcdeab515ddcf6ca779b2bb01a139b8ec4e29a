@@ -1142,6 +1142,24 @@
       "parentUuid": "0ae6d525_42180230",
       "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6631671d_58c1b654",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-16T12:12:10Z",
+      "side": 1,
+      "message": "Rebased on top of a stack that allows arithmetic operators on typed integers.",
+      "parentUuid": "77ad4ec5_4819c4f0",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
