@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e0bf31c_0bddc625",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-17T13:12:17Z",
+      "side": 1,
+      "message": "I suppose I could reverse the polyfill in program_to_ir if that\u0027s preferable for core and backends to only see the templated version. Presumably we will remove the non-templated version in the future.",
+      "revId": "e5873842880540f929e38112f2a66fee9efe1563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
