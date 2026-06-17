@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a4a46f6a_f805b435",
+        "filename": "src/dawn/native/CommandAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 4889860
+      },
+      "writtenOn": "2026-06-17T21:28:12Z",
+      "side": 1,
+      "message": "It is possible. The ideal long-term solution is to eliminate mEndPtr and the associated pointer arithmetic altogether. Since doing so requires deeper logic changes, I\u0027d prefer to keep it out of scope for this specific CL, which is focused purely on trivial C-style array to std::array conversions. I can create a follow-up CL to track that broader refactor—does that sound good?",
+      "parentUuid": "76dbcab3_a91ea3a3",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "335a8a19_6319dd54",
         "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
         "patchSetId": 2
@@ -71,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54473567_6935b243",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4889860
+      },
+      "writtenOn": "2026-06-17T21:28:12Z",
+      "side": 1,
+      "message": "thanks for suggesting that tool, I\u0027ve already done it manually, as it wasn\u0027t time consuming.",
+      "parentUuid": "32730c63_58af2c71",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e0b84b6_e142c96f",
@@ -84,6 +120,24 @@
       "writtenOn": "2026-06-15T07:41:21Z",
       "side": 1,
       "message": "ditto",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67105edb_ee7eb44c",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4889860
+      },
+      "writtenOn": "2026-06-17T21:28:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e0b84b6_e142c96f",
       "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +159,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d73929c_6defd9e1",
+        "filename": "src/dawn/tests/perf_tests/BufferUploadPerf.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4889860
+      },
+      "writtenOn": "2026-06-17T21:28:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5905f76_b78aef33",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dafcf363_e68a4cdb",
@@ -118,6 +190,24 @@
       "writtenOn": "2026-06-15T07:41:21Z",
       "side": 1,
       "message": "ditto",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "350b54eb_f2beeb8e",
+        "filename": "src/dawn/tests/perf_tests/DrawCallPerf.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4889860
+      },
+      "writtenOn": "2026-06-17T21:28:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dafcf363_e68a4cdb",
       "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -139,6 +229,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73557bd3_b754030b",
+        "filename": "src/dawn/tests/perf_tests/LoadStoreOpPerfTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4889860
+      },
+      "writtenOn": "2026-06-17T21:28:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca44983a_e1e0dad2",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51e05459_e5d2ad9e",
@@ -152,6 +260,24 @@
       "writtenOn": "2026-06-15T07:41:21Z",
       "side": 1,
       "message": "ditto",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bd62af9_7cb12fcd",
+        "filename": "src/dawn/tests/unittests/CommandAllocatorTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 4889860
+      },
+      "writtenOn": "2026-06-17T21:28:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51e05459_e5d2ad9e",
       "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -191,6 +317,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d62b434_c3a54709",
+        "filename": "src/dawn/tests/unittests/EnumMaskIteratorTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 4889860
+      },
+      "writtenOn": "2026-06-17T21:28:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0bb75301_ce7962cf",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd1d6cb5_40070ac8",
@@ -204,6 +348,24 @@
       "writtenOn": "2026-06-15T07:41:21Z",
       "side": 1,
       "message": "ditto",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb9ef8cf_13d7663d",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 4889860
+      },
+      "writtenOn": "2026-06-17T21:28:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd1d6cb5_40070ac8",
       "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
