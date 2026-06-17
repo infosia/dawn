@@ -326,6 +326,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "68a74f93_3469c343",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-17T00:15:55Z",
+      "side": 1,
+      "message": "We\u0027re already using span iterators for `std::ranges::copy` destinations, and that needs to be safe. (Side note, I would have expected unsafe-buffers would catch if you use that with a raw pointer, though apparently [it does not](https://crbug.com/352700365).)\n\nAnd besides, if we rely on `std::span::iterator` then it barely adds any complexity.",
+      "parentUuid": "a61cf1c3_a89339a7",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73eebf58_b1bc911c",
         "filename": "src/utils/span.h",
         "patchSetId": 8

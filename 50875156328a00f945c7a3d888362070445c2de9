@@ -88,6 +88,24 @@
       "parentUuid": "e50874cd_9bc5b5f7",
       "revId": "50875156328a00f945c7a3d888362070445c2de9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03e8892e_e8aa1d10",
+        "filename": "src/utils/span.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-17T00:15:55Z",
+      "side": 1,
+      "message": "I don\u0027t feel there\u0027s an important distinction between containers that derive from `std` and ones that don\u0027t. `ityp::heap_array` won\u0027t derive from `std` because there\u0027s no `std` equivalent, but it still has typed indices. Should it be `dawn::TypedHeapArray` instead just because of that? Would we want to move it back if C++ adds a `std::heap_array` and we rebase it?\n\nIMO `TypedSpan` explains less about what it is than `ityp::span`. Spans are always \"typed\", so the name only makes sense if you already know it\u0027s connected with `TypedInteger`. Whereas `ityp`, once you know what it is (`i`ndex `typ`ed), tells you about everything in that namespace.\n\nOTOH it probably doesn\u0027t matter that the name tells you it has typed indices, so we could just have `dawn::Span`, `dawn::HeapArray`, etc. But if we want to do that I think it would make sense to move _everything_ out of `ityp` eventually, and that seems unnecessary to me.",
+      "parentUuid": "6714fb4a_df5f5994",
+      "revId": "50875156328a00f945c7a3d888362070445c2de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
