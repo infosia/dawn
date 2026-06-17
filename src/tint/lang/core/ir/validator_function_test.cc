@@ -1409,6 +1409,38 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_WithLocation) {
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Function_Interpolate_NonEntryPoint_Allowed) {
+    auto* f = b.Function("my_func", ty.void_());
+
+    auto* p = b.FunctionParam("p", ty.f32());
+    p->SetInterpolation(Interpolation{.type = InterpolationType::kLinear,
+                                      .sampling = InterpolationSampling::kCenter});
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_EQ(res, Success) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Function_Interpolate_Struct_NonEntryPoint_Allowed) {
+    auto* f = b.Function("my_func", ty.void_());
+
+    IOAttributes attr;
+    attr.interpolation = {InterpolationType::kFlat, InterpolationSampling::kUndefined};
+    auto* str_ty = ty.Struct(mod.symbols.New("S"), {
+                                                       {mod.symbols.New("c"), ty.f32(), attr},
+                                                   });
+
+    auto* p = b.FunctionParam("p", str_ty);
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_EQ(res, Success) << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Function_Interpolate_WithoutLocation) {
     auto* f = FragmentEntryPoint("my_func");
 

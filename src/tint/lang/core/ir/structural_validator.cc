@@ -1437,14 +1437,12 @@ void Structural::ValidateIOAttributes(const Function* func) {
                               task.type, task.dir);
             }
         }
-    }
 
-    // Validate all the interpolation usages.
-    for (const auto& task : tasks) {
-        CheckInterpolation(task.anchor, task.type, task.attr, stage, task.dir);
-    }
+        // Validate all the interpolation usages.
+        for (const auto& task : tasks) {
+            CheckInterpolation(task.anchor, task.type, task.attr, stage, task.dir);
+        }
 
-    if (stage != Function::PipelineStage::kUndefined) {
         // Validate all the binding_point usages, and ensure things that require binding_point have
         // them.
         for (const auto& task : tasks) {
