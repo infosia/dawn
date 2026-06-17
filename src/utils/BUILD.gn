@@ -51,6 +51,20 @@ if (build_with_chromium) {
 config("internal_config") {
   include_dirs = [ "${dawn_root}" ]
 
+  cflags = []
+
+  if (is_clang) {
+    cflags += [
+      # We use __builtin_assume in DAWN_RELEASE_ASSUME, allow ignoring
+      # side-effects there.
+      "-Wno-assume",
+
+      # Flags normal usages of structs, especially in Vulkan.
+      # Pushes developers away from using designated initializers.
+      "-Wno-missing-designated-field-initializers",
+    ]
+  }
+
   defines = []
   configs = []
 
