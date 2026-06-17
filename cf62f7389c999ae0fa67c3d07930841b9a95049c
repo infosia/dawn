@@ -431,6 +431,30 @@
       },
       "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04db5cca_378c8ea6",
+        "filename": "third_party/cpu_features/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-17T18:31:21Z",
+      "side": 1,
+      "message": "In theory we could update the roller script to manually sync the BUILD.gn file with Chromium. There\u0027s already precedent for fetching file content from Chromium via gitiles.",
+      "parentUuid": "21261d49_5f8e3d6a",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
