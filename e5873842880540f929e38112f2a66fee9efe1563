@@ -173,6 +173,24 @@
       "message": "This almost feels like it could use a helper, although i guess it\u0027s scattered over a bunch of files, so maybe not useful?",
       "revId": "e5873842880540f929e38112f2a66fee9efe1563",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "584d17ed_cd55af5a",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-17T17:26:36Z",
+      "side": 1,
+      "message": "Probably not since it will also be gone in the future.",
+      "parentUuid": "6e502e81_104f5098",
+      "revId": "e5873842880540f929e38112f2a66fee9efe1563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
