@@ -153,7 +153,8 @@ class SpanBase {
     template <typename R>
         requires CompatibleRange<T, Index, R>
     // NOLINTNEXTLINE(runtime/explicit)
-    constexpr SpanBase(R& range) : mSize(checked_cast<size_t>(range.size())), mData(range.data()) {}
+    constexpr SpanBase(R&& range)
+        : mSize(checked_cast<size_t>(range.size())), mData(range.data()) {}
     template <typename R>
         requires CompatibleRange<T, Index, R> && std::is_const_v<T>
     // NOLINTNEXTLINE(runtime/explicit)
