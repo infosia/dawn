@@ -34,6 +34,24 @@
       "parentUuid": "c71ebe79_517dca15",
       "revId": "0c644ae62e83e78af554039ad110f069e20a2df6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc16fb67_81b72d30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-17T18:02:18Z",
+      "side": 1,
+      "message": "To be clear, I am not saying you are wrong in your interpretation, but just clarifying why I did it this way, and I am not sure which is the intended interpretation.",
+      "parentUuid": "901d8cea_96b830d4",
+      "revId": "0c644ae62e83e78af554039ad110f069e20a2df6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
