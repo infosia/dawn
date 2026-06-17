@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d39e4321_b7a138f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-17T19:49:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59b28b5_0ad31569",
+      "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85f19bd0_806a49ab",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-17T14:51:09Z",
       "side": 1,
       "message": "```suggestion\nThere are a number of flags provided to run partial work flows, so that\n```",
+      "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9137dc35_5466d4ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-17T19:49:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85f19bd0_806a49ab",
       "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -82,6 +118,24 @@
       "writtenOn": "2026-06-17T14:51:09Z",
       "side": 1,
       "message": "Should this be enabled? Not sure I understand the poc comment above.",
+      "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b214065a_0afa0763",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-17T19:49:03Z",
+      "side": 1,
+      "message": "It will need to be before I send it to the CQ/land it. Right now you can test this locally by simulating the process by generating the package and unzipping it to the correct place.\n\nI didn\u0027t want to upload test files to GCS until I confirmed I was targetting the right bucket. I have updated my description to mention that this block will be uncommented before I send to CQ.",
+      "parentUuid": "ab18c368_06ad6d4e",
       "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
