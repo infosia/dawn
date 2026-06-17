@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed84885f_31cb1770",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-17T14:51:25Z",
+      "side": 1,
+      "message": "Actually, can we have tests in `src/dawn/tests/unittests/RawPtrTests.cpp`?",
+      "revId": "3ac3f870e7a024f92caaffa9788ed1374176c44e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
