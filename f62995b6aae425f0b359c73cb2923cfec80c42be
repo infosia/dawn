@@ -107,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "755d7b25_a1d4cf0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-17T20:19:07Z",
+      "side": 1,
+      "message": "Marking as unresolved to increase visibility.\n\nFrom the associated bug, though:\n\n\u003e Turning on the Tint + Mesa fuzzers on in CF bounced, due to the specific bots not having a version of llvm-dev installed which supplies a number of artifacts needed by the Mesa/Meson build.\n...\nThis current PoR is to attempt re-packaging the needed parts of the official LLVM release into a tarbal and uploading that to the GCS bucket, and reworking the Tint + Mesa fuzzer build rules to fetch and use this everywhere that the build is enable instead of implicitly depending on the system installed version.",
+      "parentUuid": "761cef55_76fd9dad",
+      "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab18c368_06ad6d4e",
         "filename": "DEPS",
         "patchSetId": 1
