@@ -293,7 +293,7 @@ void BindGroupLayout::ReduceMemoryUsage() {
 }
 
 ityp::span<BindingIndex, const uint32_t> BindGroupLayout::GetDescriptorHeapOffsets() const {
-    return {mDescriptorHeapOffsets.data(), mDescriptorHeapOffsets.size()};
+    return mDescriptorHeapOffsets.data();
 }
 
 uint32_t BindGroupLayout::GetShaderRegister(BindingIndex bindingIndex) const {
