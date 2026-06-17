@@ -16,6 +16,24 @@
       "message": "Have we started committing generated Kotlin classes directly into Dawn? While I understand doing this for helper classes, what is the reasoning behind committing the generated non-helper Kotlin files like GPUSyncFence.kt, GPUHardwareBufferWrapper.kt, GPUHardwareBufferTexture.kt, GPUHardwareBufferExternalTexture.kt and others? What\u0027s special about them?",
       "revId": "b5d2fe7b88331abf47af42ed9f35f199d62ba613",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3131c071_9ddd69e1",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/GPUSyncFence.kt",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-17T06:15:13Z",
+      "side": 1,
+      "message": "Current all our Kotlin files are auto-generated from dawn.json using Jinja2 templates. However, classes like GPUSyncFence, GPUHardwareBufferWrapper, GPUHardwareBufferTexture, and GPUHardwareBufferExternalTexture aren\u0027t part of dawn.json. Since they can\u0027t be generated from a template, they are written and committed manually.",
+      "parentUuid": "0debd6a2_c5e984b0",
+      "revId": "b5d2fe7b88331abf47af42ed9f35f199d62ba613",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
