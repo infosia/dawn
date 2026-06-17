@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4759bb64_0a619238",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-17T14:42:03Z",
+      "side": 1,
+      "message": "This could be solved by having a `consteval` constructor as well. We could alternatively have a `.PlusOne()`. Resolving to be able to land as is but happy to consider one of these options as a follow-up (including cleanups for the other changes needed in this CL).",
+      "parentUuid": "9a25d6cc_ea80b77c",
+      "revId": "76df1bbe171dcb7df71b0d95e589f61694433aa6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c89d348d_a6d35f61",
