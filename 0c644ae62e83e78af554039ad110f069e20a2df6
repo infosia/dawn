@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c71ebe79_517dca15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T17:52:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is the right solution. We should be rejecting the interpolation as the spec says:\n\n```\nMust only be applied to a declaration that has a location attribute applied.\n```\n\nSo I think this should be failing because location isn\u0027t there, even though it\u0027s ignored.\n\nAlthough, this is probably also a correct change in that other validation related to interpolation maybe ignored.",
+      "revId": "0c644ae62e83e78af554039ad110f069e20a2df6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
