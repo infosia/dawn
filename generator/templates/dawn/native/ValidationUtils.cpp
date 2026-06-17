@@ -43,7 +43,7 @@ namespace {{native_namespace}} {
                         return {};
                 {% endfor %}
                 default:
-                    return DAWN_VALIDATION_ERROR("Value %i is invalid for {{as_cType(type.name)}}.", value);
+                    return DAWN_VALIDATION_ERROR("Value %i is invalid for {{as_cType(type.name)}}.", static_cast<uint32_t>(value));
             }
         }
 

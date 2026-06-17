@@ -97,7 +97,11 @@ namespace {{namespace}} {
                 break;
             }
         }
-        s->Append(absl::StrFormat("%u", static_cast<{{as_cType(type.name)}}>(value)));
+        {% if as_cppType(type.name) == "OptionalBool" %}
+            s->Append(absl::StrFormat("%u", static_cast<{{as_cType(type.name)}}>(value)));
+        {% else %}
+            s->Append(absl::StrFormat("%u", static_cast<typename std::underlying_type<{{as_cppType(type.name)}}>::type>(value)));
+        {% endif %}
         return {true};
     }
     {% endfor %}
