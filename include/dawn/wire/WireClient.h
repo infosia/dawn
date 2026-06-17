@@ -109,16 +109,24 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
     MemoryTransferService();
     virtual ~MemoryTransferService();
 
-    class ReadHandle;
-    class WriteHandle;
 
     // Create a handle for reading server data.
     // This may fail and return nullptr.
+    class ReadHandle;
     virtual ReadHandle* CreateReadHandle(size_t) = 0;
 
     // Create a handle for writing server data.
     // This may fail and return nullptr.
+    class WriteHandle;
     virtual WriteHandle* CreateWriteHandle(size_t) = 0;
+
+    // Create a handle for sharing memory with the server.
+    // This may fail and return nullptr.
+    class MemoryHandle;
+    virtual std::unique_ptr<MemoryHandle> CreateMemoryHandle(size_t size) {
+        // TODO(https://crbug.com/524776858): Make pure virtual once Chromium implements it.
+        return nullptr;
+    }
 
     class DAWN_WIRE_EXPORT ReadHandle {
       public:
@@ -183,6 +191,47 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
       private:
         WriteHandle(const WriteHandle&) = delete;
         WriteHandle& operator=(const WriteHandle&) = delete;
+    };
+
+    class DAWN_WIRE_EXPORT MemoryHandle {
+      public:
+        MemoryHandle();
+        virtual ~MemoryHandle();
+
+        // Get the required serialization size for SerializeCreate
+        virtual size_t GetSerializeCreateSize() const = 0;
+
+        // Serialize the handle into |serializeSpace| so it can be received by the server.
+        virtual void SerializeCreate(std::span<uint8_t> serializeSpace) const = 0;
+
+        // Returns a const view of the memory.
+        virtual std::span<const uint8_t> GetConstData() const { return GetData(); }
+
+        // Returns a mutable view of the memory.
+        virtual std::span<uint8_t> GetData() const = 0;
+
+        // Get the required serialization size for SerializeDataUpdate for the range [offset, offset
+        // + size)
+        virtual size_t GetSerializeDataUpdateSize(size_t offset, size_t size) const = 0;
+
+        // Serializes into |serializeData| the modification of the contents in the range [offset,
+        // offset + size).
+        virtual void SerializeDataUpdate(std::span<uint8_t> serializeData,
+                                         size_t offset,
+                                         size_t size) const = 0;
+
+        // Applies a data update for the range [offset, offset + size) that was produced by
+        // `server::MemoryTransferService::MemoryHandle::SerializeDataUpdate`.
+        //
+        // For hardening, the implementation must return false if offset + size overflows the size
+        // of the memory (or if offset + size overflows a size_t).
+        virtual bool DeserializeDataUpdate(std::span<const uint8_t> deserializeData,
+                                           size_t offset,
+                                           size_t size) = 0;
+
+      private:
+        MemoryHandle(const MemoryHandle&) = delete;
+        MemoryHandle& operator=(const MemoryHandle&) = delete;
     };
 
   private:
