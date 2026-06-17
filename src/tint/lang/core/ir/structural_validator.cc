@@ -2460,6 +2460,21 @@ bool Structural::CheckStructMemberAttributes(const core::type::StructMember* mem
             }
         }
     }
+
+    if (member->Attributes().interpolation.has_value()) {
+        bool has_location = member->Attributes().location.has_value() ||
+                            (capabilities_.Contains(Capability::kLoosenValidationForShaderIO) &&
+                             member->Attributes().builtin.has_value());
+        if (!has_location) {
+            if (!capabilities_.Contains(Capability::kLoosenValidationForShaderIO)) {
+                make_diag() << "interpolation attribute requires a location attribute";
+            } else {
+                make_diag() << "interpolation attribute requires a location attribute "
+                               "(or location-like shader I/O annotation)";
+            }
+            return false;
+        }
+    }
     return true;
 }
 void Structural::CheckLet(const Let* l) {
