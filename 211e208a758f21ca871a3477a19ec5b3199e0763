@@ -81,6 +81,24 @@
       "parentUuid": "47e9dddf_edf367c4",
       "revId": "211e208a758f21ca871a3477a19ec5b3199e0763",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f850408_0ab1a640",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T18:38:20Z",
+      "side": 1,
+      "message": "Ah, the initial creation was the issue, I see. Thanks.",
+      "parentUuid": "2e0c640f_e680721a",
+      "revId": "211e208a758f21ca871a3477a19ec5b3199e0763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
