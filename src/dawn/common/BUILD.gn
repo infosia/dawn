@@ -98,7 +98,7 @@ config("internal_config") {
   cflags = []
 
   if (is_clang) {
-    # We use __builtin_assume liberally in DAWN_ASSERT, allow ignoring
+    # We use __builtin_assume in DAWN_RELEASE_ASSUME, allow ignoring
     # side-effects there.
     cflags += [ "-Wno-assume" ]
 
