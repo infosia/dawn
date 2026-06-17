@@ -407,6 +407,30 @@
       },
       "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21261d49_5f8e3d6a",
+        "filename": "third_party/cpu_features/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-17T18:30:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1d02c824_bd163ff7",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
