@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f05c439_f9de7558",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 4821744
+      },
+      "writtenOn": "2026-06-17T08:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "290d0958_37a9f9a4",
+      "revId": "ac5197d31fd7b54d8eec8cb6fff28d261cff7d5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1673fca2_1974fb91",
@@ -65,6 +83,30 @@
       "writtenOn": "2026-06-17T00:33:00Z",
       "side": 1,
       "message": "```suggestion\n                    copy-\u003ecopySize.depthOrArrayLayers \u003e TexelCount{1u}) {\n```",
+      "range": {
+        "startLine": 1254,
+        "startChar": 20,
+        "endLine": 1254,
+        "endChar": 80
+      },
+      "revId": "ac5197d31fd7b54d8eec8cb6fff28d261cff7d5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7aad1d9f_42b1258b",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 4821744
+      },
+      "writtenOn": "2026-06-17T08:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1673fca2_1974fb91",
       "range": {
         "startLine": 1254,
         "startChar": 20,
