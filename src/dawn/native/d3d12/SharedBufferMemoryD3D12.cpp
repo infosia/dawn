@@ -102,7 +102,8 @@ ResultOrError<SharedBufferMemoryProperties> GetSharedBufferMemoryProperties(
     D3D12_HEAP_PROPERTIES heapProperties,
     D3D12_HEAP_FLAGS heapFlags,
     bool allowUAV,
-    uint64_t size) {
+    uint64_t size,
+    wgpu::BufferUsage blockedUsages = wgpu::BufferUsage::None) {
     HeapAccessType heapType;
     DAWN_TRY_ASSIGN(heapType, MapToHeapAccessType(heapProperties, heapFlags, device));
 
@@ -119,7 +120,8 @@ ResultOrError<SharedBufferMemoryProperties> GetSharedBufferMemoryProperties(
             // wgpu::BufferUsage::Uniform is not allowed in SharedBufferMemoryBase::CreateBuffer().
             usages |= wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst |
                       wgpu::BufferUsage::Vertex | wgpu::BufferUsage::Index |
-                      wgpu::BufferUsage::Indirect | wgpu::BufferUsage::QueryResolve;
+                      wgpu::BufferUsage::Indirect | wgpu::BufferUsage::QueryResolve |
+                      wgpu::BufferUsage::Uniform;
             if (allowUAV) {
                 usages |= wgpu::BufferUsage::Storage;
             }
@@ -139,12 +141,13 @@ ResultOrError<SharedBufferMemoryProperties> GetSharedBufferMemoryProperties(
                     usages |= wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite;
                 }
             }
+
             break;
     }
 
     SharedBufferMemoryProperties properties;
     properties.size = size;
-    properties.usage = usages;
+    properties.usage = usages & (~blockedUsages);
 
     return properties;
 }
@@ -194,10 +197,11 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
     d3d12Resource->GetHeapProperties(&heapProperties, &heapFlags);
 
     bool allowUAV = desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
-
+    constexpr wgpu::BufferUsage kBlockedUsages = wgpu::BufferUsage::Uniform;
     SharedBufferMemoryProperties properties;
-    DAWN_TRY_ASSIGN(properties, GetSharedBufferMemoryProperties(device, heapProperties, heapFlags,
-                                                                allowUAV, desc.Width));
+    DAWN_TRY_ASSIGN(properties,
+                    GetSharedBufferMemoryProperties(device, heapProperties, heapFlags, allowUAV,
+                                                    desc.Width, kBlockedUsages));
 
     auto result =
         AcquireRef(new SharedBufferMemory(device, label, properties, std::move(d3d12Resource)));
@@ -230,8 +234,9 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
     D3D12_HEAP_PROPERTIES heapProperties = heapDesc.Properties;
     D3D12_HEAP_FLAGS heapFlags = heapDesc.Flags;
     SharedBufferMemoryProperties properties;
+    constexpr bool kAllowUAV = true;
     DAWN_TRY_ASSIGN(properties, GetSharedBufferMemoryProperties(device, heapProperties, heapFlags,
-                                                                true, descriptor->size));
+                                                                kAllowUAV, descriptor->size));
 
     D3D12_RESOURCE_DESC resourceDescriptor;
     resourceDescriptor.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
