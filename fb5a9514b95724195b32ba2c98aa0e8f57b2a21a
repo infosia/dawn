@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "87a36b33_c1efa3f3",
+        "filename": "include/dawn/wire/WireClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-17T19:36:09Z",
+      "side": 1,
+      "message": "I think it\u0027s just casting correctly actually. I don\u0027t think `std::byte` is explicitly disallowed.",
+      "parentUuid": "8298cdc0_f85df554",
+      "range": {
+        "startLine": 205,
+        "startChar": 47,
+        "endLine": 205,
+        "endChar": 54
+      },
+      "revId": "fb5a9514b95724195b32ba2c98aa0e8f57b2a21a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85aa307b_fe6161f5",
         "filename": "include/dawn/wire/WireClient.h",
         "patchSetId": 4
