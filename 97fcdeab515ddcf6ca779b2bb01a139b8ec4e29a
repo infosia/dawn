@@ -344,6 +344,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "46e6b6a1_9941009a",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-17T15:06:47Z",
+      "side": 1,
+      "message": "Let\u0027s do that as a follow up if you don\u0027t mind as I\u0027m not sure I understand what concretely needs to happen to resolve this comment. I\u0027m confused at the part about `std::rangers::copy` because that takes a whole span and extracts iterators, so it should be safe even in the current code. What we seem to not have are direct manipulations of the iterators.",
+      "parentUuid": "68a74f93_3469c343",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73eebf58_b1bc911c",
         "filename": "src/utils/span.h",
         "patchSetId": 8
