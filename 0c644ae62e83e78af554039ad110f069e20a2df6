@@ -70,6 +70,24 @@
       "parentUuid": "fc16fb67_81b72d30",
       "revId": "0c644ae62e83e78af554039ad110f069e20a2df6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13719862_e6205a0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-17T18:25:46Z",
+      "side": 1,
+      "message": "Acknowledged, I will update the CL",
+      "parentUuid": "c256a9e6_48994257",
+      "revId": "0c644ae62e83e78af554039ad110f069e20a2df6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
