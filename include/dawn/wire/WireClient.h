@@ -113,12 +113,18 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
     // Create a handle for reading server data.
     // This may fail and return nullptr.
     class ReadHandle;
-    virtual ReadHandle* CreateReadHandle(size_t) = 0;
+    virtual ReadHandle* CreateReadHandle(size_t) {
+        // TODO(https://crbug.com/524776858): Remove once Chromium doesn't implement anymore.
+        return nullptr;
+    }
 
     // Create a handle for writing server data.
     // This may fail and return nullptr.
     class WriteHandle;
-    virtual WriteHandle* CreateWriteHandle(size_t) = 0;
+    virtual WriteHandle* CreateWriteHandle(size_t) {
+        // TODO(https://crbug.com/524776858): Remove once Chromium doesn't implement anymore.
+        return nullptr;
+    }
 
     // Create a handle for sharing memory with the server.
     // This may fail and return nullptr.
