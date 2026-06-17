@@ -653,10 +653,12 @@ MaybeError ValidateCompatibilityOfSingleBindingWithLayout(const DeviceBase* devi
                                                  unknownFloatSampleTypeInShader ||
                                                  shaderSampleTypeConvertsFromRequiredFloat;
             DAWN_INVALID_IF(!bglConvertsToShaderSampleType,
-                            "The shader's texture sample type (%s) isn't compatible with the "
-                            "layout's texture sample type (%s) (it is only compatible with %s for "
+                            "The shader's texture sample type (%u) isn't compatible with the "
+                            "layout's texture sample type (%u) (it is only compatible with %u for "
                             "the shader texture sample type).",
-                            shaderSampleType, bindingLayout.sampleType, bglSampleType);
+                            static_cast<uint32_t>(shaderSampleType),
+                            static_cast<uint32_t>(bindingLayout.sampleType),
+                            static_cast<uint32_t>(bglSampleType));
 
             DAWN_INVALID_IF(
                 bindingLayout.viewDimension != shaderBindingInfo.viewDimension,
@@ -756,9 +758,10 @@ MaybeError ValidateCompatibilityOfSingleBindingWithLayout(const DeviceBase* devi
                                                   unknownFilteringTypeInShader ||
                                                   shaderSamplerTypeConvertsFromFiltering;
             DAWN_INVALID_IF(!bglConvertsToShaderSamplerType,
-                            "The sampler type in the shader (%s) doesn't match the type in "
-                            "the layout (%s).",
-                            shaderSamplerType, bglSamplerType);
+                            "The sampler type in the shader (%u) doesn't match the type in "
+                            "the layout (%u).",
+                            static_cast<uint32_t>(shaderSamplerType),
+                            static_cast<uint32_t>(bglSamplerType));
 
             return {};
         },
