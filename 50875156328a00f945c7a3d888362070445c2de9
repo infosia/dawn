@@ -124,6 +124,24 @@
       "parentUuid": "03e8892e_e8aa1d10",
       "revId": "50875156328a00f945c7a3d888362070445c2de9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8970167_736d6219",
+        "filename": "src/utils/span.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-17T14:41:17Z",
+      "side": 1,
+      "message": "Alright, let\u0027s go back to `ityp::`, it\u0027s a reversible decision anyway.\n\n\u003crace with Dan\u0027s comment\u003e\nIn Tint you wouldn\u0027t be using TypedIntegers so in all the cases you\u0027d used `dawn::Span` which is the one that uses a size_t index.\n\u003c/race\u003e",
+      "parentUuid": "03e8892e_e8aa1d10",
+      "revId": "50875156328a00f945c7a3d888362070445c2de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

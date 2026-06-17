@@ -22,6 +22,30 @@
       },
       "revId": "1dd0ea86a563732910e58514e7f783195f1ba26d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5aaa40e_6e3bb45a",
+        "filename": "src/utils/span.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-17T14:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ff14256_47ef56b4",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "1dd0ea86a563732910e58514e7f783195f1ba26d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
