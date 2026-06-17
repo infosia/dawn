@@ -52,6 +52,24 @@
       "parentUuid": "901d8cea_96b830d4",
       "revId": "0c644ae62e83e78af554039ad110f069e20a2df6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c256a9e6_48994257",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T18:03:29Z",
+      "side": 1,
+      "message": "Yea, I had to ask James, heh. The separation he said was if the description specific specific constraints then those apply. Even if the interpolation is \"ignored\" the constraints still kick in.",
+      "parentUuid": "fc16fb67_81b72d30",
+      "revId": "0c644ae62e83e78af554039ad110f069e20a2df6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
