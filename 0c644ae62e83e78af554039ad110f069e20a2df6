@@ -16,6 +16,24 @@
       "message": "I\u0027m not sure if this is the right solution. We should be rejecting the interpolation as the spec says:\n\n```\nMust only be applied to a declaration that has a location attribute applied.\n```\n\nSo I think this should be failing because location isn\u0027t there, even though it\u0027s ignored.\n\nAlthough, this is probably also a correct change in that other validation related to interpolation maybe ignored.",
       "revId": "0c644ae62e83e78af554039ad110f069e20a2df6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "901d8cea_96b830d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-17T18:01:30Z",
+      "side": 1,
+      "message": "I wasn\u0027t clear/sure if that rule applies in this case, since right above there is:\n`The attribute is only significant on user-defined vertex outputs and fragment inputs.`\nand failing validation due to a missing location does seem \u0027signficant\u0027 to me.",
+      "parentUuid": "c71ebe79_517dca15",
+      "revId": "0c644ae62e83e78af554039ad110f069e20a2df6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
