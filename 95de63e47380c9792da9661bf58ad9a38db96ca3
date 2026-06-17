@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7a97dc8_2c0db847",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-17T17:07:25Z",
+      "side": 1,
+      "message": "PTAL, maybe there\u0027s a better way of doing this? The errors happen in google3 with a particular flavour of ASAN.",
+      "revId": "95de63e47380c9792da9661bf58ad9a38db96ca3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
