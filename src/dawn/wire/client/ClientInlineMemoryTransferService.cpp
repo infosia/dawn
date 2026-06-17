@@ -101,6 +101,63 @@ class InlineMemoryTransferService : public MemoryTransferService {
         size_t mSize;
     };
 
+    class MemoryHandleImpl : public MemoryHandle {
+      public:
+        explicit MemoryHandleImpl(std::unique_ptr<uint8_t[]> stagingData, size_t size)
+            : mStagingData(std::move(stagingData)), mSize(size) {
+            DAWN_ASSERT(mStagingData != nullptr);
+        }
+
+        ~MemoryHandleImpl() override = default;
+
+        size_t GetSerializeCreateSize() const override { return 0; }
+        void SerializeCreate(std::span<uint8_t> serializeSpace) const override {
+            DAWN_ASSERT(serializeSpace.size() == GetSerializeCreateSize());
+        }
+
+        std::span<uint8_t> GetData() const override {
+            // SAFETY: The creator of the object must make mSize be the size of the allocation of
+            // mStagingData.
+            return DAWN_UNSAFE_BUFFERS({mStagingData.get(), mSize});
+        }
+
+        size_t GetSerializeDataUpdateSize(size_t offset, size_t size) const override {
+            DAWN_ASSERT(offset <= mSize);
+            DAWN_ASSERT(size <= mSize - offset);
+            return size;
+        }
+
+        void SerializeDataUpdate(std::span<uint8_t> serializeData,
+                                 size_t offset,
+                                 size_t size) const override {
+            DAWN_ASSERT(serializeData.size() == GetSerializeDataUpdateSize(offset, size));
+            DAWN_ASSERT(offset <= mSize);
+            DAWN_ASSERT(size <= mSize - offset);
+
+            // TODO(https://crbug.com/524406299): Use span::copy_from
+            std::span<const uint8_t> source = GetConstData().subspan(offset, size);
+            DAWN_UNSAFE_TODO(memcpy(serializeData.data(), source.data(), size));
+        }
+
+        bool DeserializeDataUpdate(std::span<const uint8_t> deserializeData,
+                                   size_t offset,
+                                   size_t size) override {
+            if (offset > mSize || deserializeData.size() > mSize - offset) {
+                return false;
+            }
+
+            // TODO(https://crbug.com/524406299): Use span::copy_from
+            std::span<uint8_t> target = GetData().subspan(offset, size);
+            DAWN_UNSAFE_TODO(memcpy(target.data(), deserializeData.data(), size));
+            return true;
+        }
+
+      private:
+        // TODO(https://crbug.com/512465980): Use HeapArray instead.
+        std::unique_ptr<uint8_t[]> mStagingData;
+        size_t mSize;
+    };
+
   public:
     InlineMemoryTransferService() {}
     ~InlineMemoryTransferService() override = default;
@@ -120,6 +177,17 @@ class InlineMemoryTransferService : public MemoryTransferService {
             return new WriteHandleImpl(std::move(stagingData), size);
         }
         return nullptr;
+    }
+
+    std::unique_ptr<MemoryHandle> CreateMemoryHandle(size_t size) override {
+        // TODO(https://crbug.com/512465980): Use HeapArray and std::ranges::fill instead.
+        auto stagingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
+        if (!stagingData) {
+            return nullptr;
+        }
+        // SAFETY: We just successfully allocated the array with `size`.
+        DAWN_UNSAFE_BUFFERS(memset(stagingData.get(), 0, size));
+        return std::make_unique<MemoryHandleImpl>(std::move(stagingData), size);
     }
 };
 
