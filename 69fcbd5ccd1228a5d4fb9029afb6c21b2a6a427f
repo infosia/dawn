@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8722e2a5_c2f2c928",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-17T23:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409bde40_2d66db88",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d32bd93_56a6b303",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-16T21:51:07Z",
       "side": 1,
       "message": "Let\u0027s have a `nocompile` test that checks one or a few warnings that trigger with `-Weverything` but not with `-Wall -Wextra`, to verify they\u0027re getting enabled",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0ab1cbd_fa1f139f",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-17T23:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d32bd93_56a6b303",
       "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d37b580d_13a99618",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-17T23:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "929f51f9_5b08080c",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f98e5446_a0705f7c",
@@ -71,6 +131,24 @@
       "writtenOn": "2026-06-16T21:51:07Z",
       "side": 1,
       "message": "Could we apply these only to specific windows files rather than to all targets when built on windows?",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16aa185b_a1168ac9",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-17T23:13:56Z",
+      "side": 1,
+      "message": "Made an atempt to do file scope `#pragma clang diagnostic ignored \"-Wlanguage-extension-token\"` But turns out there are too many `IID_PPV_ARGS` appearances in dawn and tint.\nSo still add a \"language_extension_token_suppression\" config and use it although still very broad.",
+      "parentUuid": "f98e5446_a0705f7c",
       "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "998e82a1_779293fe",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-17T23:13:56Z",
+      "side": 1,
+      "message": "(Add a TODO)",
+      "parentUuid": "d40ee153_1c4c7564",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d95d0f84_d57e8d8c",
@@ -109,6 +205,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76fa9a9f_cc28e194",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-17T23:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d95d0f84_d57e8d8c",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69aba6fd_23ff2806",
@@ -122,6 +236,24 @@
       "writtenOn": "2026-06-16T21:51:07Z",
       "side": 1,
       "message": "Shouldn\u0027t need this because it\u0027s enabled by utils:internal_config. (Double check though.)",
+      "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d4ce09a_0432ac90",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-17T23:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69aba6fd_23ff2806",
       "revId": "69fcbd5ccd1228a5d4fb9029afb6c21b2a6a427f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
