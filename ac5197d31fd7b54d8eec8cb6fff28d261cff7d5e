@@ -33,6 +33,46 @@
       "message": "LGTM, thank you! I appreciate how straightforward the implementation is.\n\nTo be honest I\u0027m mildly surprised we haven\u0027t needed to implement a workaround like this already.",
       "revId": "ac5197d31fd7b54d8eec8cb6fff28d261cff7d5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "290d0958_37a9f9a4",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-17T00:33:00Z",
+      "side": 1,
+      "message": "```suggestion\n                    copy-\u003ecopySize.depthOrArrayLayers \u003e TexelCount{1u}) {\n```",
+      "revId": "ac5197d31fd7b54d8eec8cb6fff28d261cff7d5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1673fca2_1974fb91",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-17T00:33:00Z",
+      "side": 1,
+      "message": "```suggestion\n                    copy-\u003ecopySize.depthOrArrayLayers \u003e TexelCount{1u}) {\n```",
+      "range": {
+        "startLine": 1254,
+        "startChar": 20,
+        "endLine": 1254,
+        "endChar": 80
+      },
+      "revId": "ac5197d31fd7b54d8eec8cb6fff28d261cff7d5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
