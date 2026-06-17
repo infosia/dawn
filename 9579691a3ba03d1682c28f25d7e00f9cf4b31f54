@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e8aa3f7_2b7b8e61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-17T16:55:49Z",
+      "side": 1,
+      "message": "Loko PTAL at the new interfaces. I\u0027ll make the full stack that does the switch to validate it before I send for real review, but I\u0027d like feedback on the new interfaces early.",
+      "revId": "9579691a3ba03d1682c28f25d7e00f9cf4b31f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

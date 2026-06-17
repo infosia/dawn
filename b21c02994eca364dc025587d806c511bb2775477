@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc0d542e_6312ca5e",
+        "filename": "src/dawn/wire/client/ClientInlineMemoryTransferService.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-17T16:55:49Z",
+      "side": 1,
+      "message": "Split off to a later CL, same for server.",
+      "revId": "b21c02994eca364dc025587d806c511bb2775477",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
