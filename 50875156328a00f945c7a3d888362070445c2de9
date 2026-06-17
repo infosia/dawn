@@ -106,6 +106,24 @@
       "parentUuid": "6714fb4a_df5f5994",
       "revId": "50875156328a00f945c7a3d888362070445c2de9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2c36171_a145d97f",
+        "filename": "src/utils/span.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T14:24:08Z",
+      "side": 1,
+      "message": "Huh, I though it was `i`nteger `t`ype. The more you know.\n\nI think things that move into src/utils should move up into the `dawn` namespace similar to what this is doing. We could drop the `Type` if we\u0027re never going to have an equivalent untyped `dawn::Span`.\n\nPart of the reason for dropping the namespace is when we use these from tint I don\u0027t want to have to type `dawn::ityp::Span` instead of just `dawn::Span` all the time.",
+      "parentUuid": "03e8892e_e8aa1d10",
+      "revId": "50875156328a00f945c7a3d888362070445c2de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
