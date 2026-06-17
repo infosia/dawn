@@ -125,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d16786af_c901d13c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-17T20:46:00Z",
+      "side": 1,
+      "message": "Thanks for raising the visibility, I had missed this comment.\n\nThis package will be also need to be used by ClusterFuzz, in a Chromium checkout, so that it can build the Tint + Mesa fuzzers.\n\nThe bot image as-is do not include the llvm-dev package that I need to my understanding, which is why my original CL for enabling the Tint + Mesa fuzzers needed to be reverted, since the build was failing.\n\nA system package llvm-dev install I think would be acceptable here, since Mesa is pretty loose about what version of llvm it needs to link against (I believe it is \u003e\u003d 15 for the features we need).\n\nFrom the original thread, I was mostly concerned about how acceptable it would be to add installing the package into the base OS image for all the bots would be given that it is only really needed for this specific fuzz testing.",
+      "parentUuid": "755d7b25_a1d4cf0e",
+      "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab18c368_06ad6d4e",
         "filename": "DEPS",
         "patchSetId": 1

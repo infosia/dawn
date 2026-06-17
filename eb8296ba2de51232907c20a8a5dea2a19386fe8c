@@ -16,6 +16,24 @@
       "message": "Two thoughts about this so far:\n\n1. This feels better suited as a CIPD package? A [number of other LLVM-related things](https://source.chromium.org/chromium/chromium/src/+/main:DEPS;l\u003d882) are currently pulled down from GCS instead of CIPD, though, so maybe there\u0027s a particular reason for preferring GCS for LLVM.\n\n2. This seems like something that\u0027s not necessarily Dawn-specific, and so may be better suited to live in the [3pp](https://source.chromium.org/chromium/infra/infra_superproject/+/main:infra/3pp/) infra. You\u0027d get CIPD support for free with that, as well.",
       "revId": "eb8296ba2de51232907c20a8a5dea2a19386fe8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78d9a2c7_19cd3cff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-17T20:46:00Z",
+      "side": 1,
+      "message": "I don\u0027t honestly know the fine-grained differences between CIPD vs GCS, which is why I wanted someone that knew infra to comment. I went with GCS cause that is what the other llvm/clang packages did. If CIPD makes more sense, I would be fine with changing it.\n\nRight now this is the only thing that needs it (otherwise it would already exist I assume), but I am happy with moving this to a more sensible common location, especially if it lowers the burden of deployment. I mostly stuck in Dawn, since that is where I needed to test it first.",
+      "parentUuid": "a77f117a_1816529d",
+      "revId": "eb8296ba2de51232907c20a8a5dea2a19386fe8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
