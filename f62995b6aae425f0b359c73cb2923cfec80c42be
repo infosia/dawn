@@ -143,6 +143,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "24d340cb_b231565a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-17T20:51:30Z",
+      "side": 1,
+      "message": "Since I didn\u0027t fully answer it. The way the script works it that it assumes you have llvm-dev installed on your local machine, thus you have llvm-config, which it can use to get the a version of llvm to use, pulls that from the official llvm releases and repackages that. This was done, since I could confirm that specific version of llvm works well with the version mesa we are building. It had been commented in the original email thread that we probably don\u0027t want to track ToT llvm with this, since Mesa doesn\u0027t track it that finely. They only bump their supported versions when doing a feature release, so every 3 to 6 months.",
+      "parentUuid": "d16786af_c901d13c",
+      "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab18c368_06ad6d4e",
         "filename": "DEPS",
         "patchSetId": 1
