@@ -63,8 +63,27 @@ class MockMemoryTransferService : public MemoryTransferService {
                     (override));
     };
 
+    class MockMemoryHandle : public MemoryHandle {
+      public:
+        ~MockMemoryHandle() override;
+        MOCK_METHOD(void, Destroy, ());
+
+        MOCK_METHOD(std::span<uint8_t>, TryGetSource,(),(const, override));
+        MOCK_METHOD(size_t, GetSerializeDataUpdateSize,(size_t , size_t ), (const, override));
+        MOCK_METHOD(void, SerializeDataUpdate,(std::span<uint8_t> ,
+                                         size_t ,
+                                         size_t ,
+                                         std::span<const uint8_t> ), (const, override));
+        MOCK_METHOD(bool, DeserializeDataUpdate, (std::span<const uint8_t> ,
+                                           size_t ,
+                                           size_t ,
+                                           std::span<uint8_t> ), (override));
+    };
+
     MOCK_METHOD(bool, DeserializeReadHandle, (const void*, size_t, ReadHandle**), (override));
     MOCK_METHOD(bool, DeserializeWriteHandle, (const void*, size_t, WriteHandle**), (override));
+    MOCK_METHOD(std::unique_ptr<MemoryHandle>, DeserializeMemoryHandle,(
+        std::span<const uint8_t> ), (override));
 };
 
 }  // namespace dawn::wire::server

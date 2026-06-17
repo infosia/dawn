@@ -178,7 +178,7 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         virtual ~MemoryHandle();
 
         // Return a direct view of the memory if this MemoryHandle supports it.
-        std::span<uint8_t> TryGetSource() const { return {}; }
+        virtual std::span<uint8_t> TryGetSource() const { return {}; }
 
         // Get the required serialization size for SerializeDataUpdate for the range [offset, offset
         // + size)
