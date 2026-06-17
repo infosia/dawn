@@ -42,6 +42,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
+	"sort"
 	"strings"
 
 	"dawn.googlesource.com/dawn/tools/src/cmd/gen/common"
@@ -794,7 +795,14 @@ func emitBuildFiles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter)
 	if err := emitGeneratedSourceListForBazel(p, fsReaderWriter, generatedSources, depsForGeneratedSources); err != nil {
 		return err
 	}
-	if err := emitGeneratedSourceListForGN(p, fsReaderWriter, generatedSources, depsForGeneratedSources); err != nil {
+
+	goDeps, err := getGoDependencies(p, fsReaderWriter)
+	if err != nil {
+		return err
+	}
+	gnDeps := append(append([]string{}, depsForGeneratedSources...), goDeps...)
+
+	if err := emitGeneratedSourceListForGN(p, fsReaderWriter, generatedSources, gnDeps); err != nil {
 		return err
 	}
 
@@ -913,3 +921,27 @@ var (
 	reCondition     = regexp.MustCompile(`//\s*GEN_BUILD:CONDITION\((.*)\)\s*$`)
 	reDoNotGenerate = regexp.MustCompile(`#\s*GEN_BUILD:DO_NOT_GENERATE`)
 )
+
+func getGoDependencies(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter) ([]string, error) {
+	dawnRoot := path.Dir(path.Dir(p.Root))
+	files, err := glob.Scan(dawnRoot, glob.MustParseConfig(`{
+		"paths": [
+			{"include": ["tools/src/cmd/gen/**/*.go", "tools/src/tint/intrinsic/**/*.go"]},
+			{"exclude": ["tools/src/cmd/gen/build/**", "**/*_test.go"]}
+		]
+	}`), fsReaderWriter)
+	if err != nil {
+		return nil, err
+	}
+
+	var goFiles []string
+	for _, f := range files {
+		relToTint, err := filepath.Rel("src/tint", f)
+		if err != nil {
+			return nil, err
+		}
+		goFiles = append(goFiles, filepath.ToSlash(relToTint))
+	}
+	sort.Strings(goFiles)
+	return goFiles, nil
+}
