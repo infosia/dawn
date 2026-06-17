@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8b1e296_4315c505",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T18:35:01Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"Assignin\" is a possible misspelling of \"Assigning\" or \"Assign in\".\n\nTo bypass S...\n\n\"Assignin\" is a possible misspelling of \"Assigning\" or \"Assign in\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "211e208a758f21ca871a3477a19ec5b3199e0763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47e9dddf_edf367c4",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T18:35:01Z",
+      "side": 1,
+      "message": "Doesn\u0027t this have the same problem? Doesn\u0027t this just set a nullptr type as well into the variant? (Or does variant have a nullptr constructor override?)",
+      "revId": "211e208a758f21ca871a3477a19ec5b3199e0763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
