@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8298cdc0_f85df554",
+        "filename": "include/dawn/wire/WireClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-17T18:49:05Z",
+      "side": 1,
+      "message": "What was the extra integration that was needed? Is `std::byte` disallowed in Chromium?",
+      "parentUuid": "753d2c2a_ebce1a30",
+      "range": {
+        "startLine": 205,
+        "startChar": 47,
+        "endLine": 205,
+        "endChar": 54
+      },
+      "revId": "fb5a9514b95724195b32ba2c98aa0e8f57b2a21a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85aa307b_fe6161f5",
         "filename": "include/dawn/wire/WireClient.h",
         "patchSetId": 4
@@ -37,6 +61,30 @@
       "writtenOn": "2026-06-17T18:23:20Z",
       "side": 1,
       "message": "For this and `DeserializeDataUpdate` we could omit the `size` arg right? Since that is implied by the span. Unless you are planning to pass a span that might be larger than that and use the `size` arg to determine how much to write? Though I think it shouldn\u0027t be too hard to make sure that span is correctly sized with something like subspan?",
+      "range": {
+        "startLine": 221,
+        "startChar": 41,
+        "endLine": 221,
+        "endChar": 52
+      },
+      "revId": "fb5a9514b95724195b32ba2c98aa0e8f57b2a21a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02028260_bca930ea",
+        "filename": "include/dawn/wire/WireClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-17T18:49:05Z",
+      "side": 1,
+      "message": "Yeah it\u0027s redundant and I don\u0027t think it will be useful in the future. That said, every time I look at these interfaces, I get super confused about stuff so I thought adding the range explicitly in the argument would help. (I almost made a new struct type for the range but decided it would be overkill)",
+      "parentUuid": "85aa307b_fe6161f5",
       "range": {
         "startLine": 221,
         "startChar": 41,
