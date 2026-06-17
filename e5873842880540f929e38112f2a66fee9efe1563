@@ -16,6 +16,109 @@
       "message": "I suppose I could reverse the polyfill in program_to_ir if that\u0027s preferable for core and backends to only see the templated version. Presumably we will remove the non-templated version in the future.",
       "revId": "e5873842880540f929e38112f2a66fee9efe1563",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "394bb85e_6063f99f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T13:25:29Z",
+      "side": 1,
+      "message": "I\u0027d leave it for now. When we decide which we want to keep we can remove the other one then.",
+      "parentUuid": "9e0bf31c_0bddc625",
+      "revId": "e5873842880540f929e38112f2a66fee9efe1563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72bb515c_4d92441f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T13:25:29Z",
+      "side": 1,
+      "message": "lgtm w/ nits",
+      "revId": "e5873842880540f929e38112f2a66fee9efe1563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3348415a_69a4d33f",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T13:25:29Z",
+      "side": 1,
+      "message": "Should this and below have something similar to:\n\n```\n TINT_IR_ASSERT(ir, std::holds_alternative\u003ccore::Majorness\u003e(call-\u003eExplicitTemplateParams()[1]));\n```",
+      "revId": "e5873842880540f929e38112f2a66fee9efe1563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61bec354_8e3f66e7",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T13:25:29Z",
+      "side": 1,
+      "message": "ASSERT holds_alternative?",
+      "revId": "e5873842880540f929e38112f2a66fee9efe1563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b01d6b7_be18b4ef",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T13:25:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e5873842880540f929e38112f2a66fee9efe1563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e502e81_104f5098",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-17T13:25:29Z",
+      "side": 1,
+      "message": "This almost feels like it could use a helper, although i guess it\u0027s scattered over a bunch of files, so maybe not useful?",
+      "revId": "e5873842880540f929e38112f2a66fee9efe1563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
