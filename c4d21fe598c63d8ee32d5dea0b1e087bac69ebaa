@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "c4d21fe598c63d8ee32d5dea0b1e087bac69ebaa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20f0bdef_f61e0418",
+        "filename": "src/dawn/native/SharedBufferMemory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-17T09:42:44Z",
+      "side": 1,
+      "message": "nit: for consistency\n\n```suggestion\n                    \"The buffer size (%u) is larger than SharedBufferMemory size (%u).\",\n```",
+      "revId": "c4d21fe598c63d8ee32d5dea0b1e087bac69ebaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
