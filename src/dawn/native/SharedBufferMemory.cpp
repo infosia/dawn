@@ -87,6 +87,10 @@ ObjectType SharedBufferMemoryBase::GetType() const {
     return ObjectType::SharedBufferMemory;
 }
 
+bool SharedBufferMemoryBase::IsUniformUsageDisallowed() const {
+    return false;
+}
+
 wgpu::Status SharedBufferMemoryBase::APIGetProperties(
     SharedBufferMemoryProperties* properties) const {
     properties->usage = mProperties.usage;
@@ -131,7 +135,7 @@ ResultOrError<Ref<BufferBase>> SharedBufferMemoryBase::CreateBuffer(
     DAWN_TRY_ASSIGN(descriptor, ValidateBufferDescriptor(GetDevice(), rawDescriptor));
 
     // Emit a specific error message if the user attempts to create a buffer with Uniform usage.
-    DAWN_INVALID_IF(descriptor->usage & wgpu::BufferUsage::Uniform,
+    DAWN_INVALID_IF(IsUniformUsageDisallowed() && (descriptor->usage & wgpu::BufferUsage::Uniform),
                     "The buffer usage (%s) contains (%s), which is not allowed on buffers created "
                     "from SharedBufferMemory.",
                     descriptor->usage, wgpu::BufferUsage::Uniform);

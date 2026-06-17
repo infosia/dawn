@@ -102,6 +102,7 @@ ResultOrError<SharedBufferMemoryProperties> GetSharedBufferMemoryProperties(
     D3D12_HEAP_PROPERTIES heapProperties,
     D3D12_HEAP_FLAGS heapFlags,
     bool allowUAV,
+    bool allowUniform,
     uint64_t size) {
     HeapAccessType heapType;
     DAWN_TRY_ASSIGN(heapType, MapToHeapAccessType(heapProperties, heapFlags, device));
@@ -122,6 +123,9 @@ ResultOrError<SharedBufferMemoryProperties> GetSharedBufferMemoryProperties(
                       wgpu::BufferUsage::Indirect | wgpu::BufferUsage::QueryResolve;
             if (allowUAV) {
                 usages |= wgpu::BufferUsage::Storage;
+            }
+            if (allowUniform) {
+                usages |= wgpu::BufferUsage::Uniform;
             }
 
             if (device->GetDeviceInfo().isUMA) {
@@ -155,7 +159,9 @@ SharedBufferMemory::SharedBufferMemory(Device* device,
                                        StringView label,
                                        SharedBufferMemoryProperties properties,
                                        ComPtr<ID3D12Resource> resource)
-    : SharedBufferMemoryBase(device, label, properties), mResource(std::move(resource)) {}
+    : SharedBufferMemoryBase(device, label, properties),
+      mResource(std::move(resource)),
+      mIsCreatedFromD3D12Resource(true) {}
 
 SharedBufferMemory::SharedBufferMemory(Device* device,
                                        StringView label,
@@ -164,7 +170,8 @@ SharedBufferMemory::SharedBufferMemory(Device* device,
                                        ComPtr<ID3D12Resource> resource)
     : SharedBufferMemoryBase(device, label, properties),
       mHeap(std::move(heap)),
-      mResource(std::move(resource)) {}
+      mResource(std::move(resource)),
+      mIsCreatedFromD3D12Resource(false) {}
 
 void SharedBufferMemory::DestroyImpl(DestroyReason reason) {
     ToBackend(GetDevice())->ReferenceUntilUnused(std::move(mResource));
@@ -194,10 +201,12 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
     d3d12Resource->GetHeapProperties(&heapProperties, &heapFlags);
 
     bool allowUAV = desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
+    constexpr bool kAllowUniform = false;
 
     SharedBufferMemoryProperties properties;
-    DAWN_TRY_ASSIGN(properties, GetSharedBufferMemoryProperties(device, heapProperties, heapFlags,
-                                                                allowUAV, desc.Width));
+    DAWN_TRY_ASSIGN(properties,
+                    GetSharedBufferMemoryProperties(device, heapProperties, heapFlags, allowUAV,
+                                                    kAllowUniform, desc.Width));
 
     auto result =
         AcquireRef(new SharedBufferMemory(device, label, properties, std::move(d3d12Resource)));
@@ -230,8 +239,11 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
     D3D12_HEAP_PROPERTIES heapProperties = heapDesc.Properties;
     D3D12_HEAP_FLAGS heapFlags = heapDesc.Flags;
     SharedBufferMemoryProperties properties;
-    DAWN_TRY_ASSIGN(properties, GetSharedBufferMemoryProperties(device, heapProperties, heapFlags,
-                                                                true, descriptor->size));
+    constexpr bool kAllowUAV = true;
+    constexpr bool kAllowUniform = true;
+    DAWN_TRY_ASSIGN(properties,
+                    GetSharedBufferMemoryProperties(device, heapProperties, heapFlags, kAllowUAV,
+                                                    kAllowUniform, descriptor->size));
 
     D3D12_RESOURCE_DESC resourceDescriptor;
     resourceDescriptor.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -287,6 +299,16 @@ ResultOrError<Ref<BufferBase>> SharedBufferMemory::CreateBufferImpl(
 
 ID3D12Resource* SharedBufferMemory::GetD3DResource() const {
     return mResource.Get();
+}
+
+bool SharedBufferMemory::IsUniformUsageDisallowed() const {
+    // As D3D12 requires the alignment of the constant buffer must be 256, we cannot always
+    // guarantee the imported D3D12 resource always meets this requirement. So we disallow the
+    // uniform usage for the imported D3D12 resource.
+    // As the shared memory file mapping always consumes the whole system paging file aligned to
+    // 65536, we can guarantee the imported D3D12 resource always meets the alignment requirement
+    // for D3D12 constant buffer.
+    return mIsCreatedFromD3D12Resource;
 }
 
 MaybeError SharedBufferMemory::BeginAccessImpl(

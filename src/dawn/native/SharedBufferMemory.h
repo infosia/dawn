@@ -57,6 +57,8 @@ class SharedBufferMemoryBase : public SharedResourceMemory {
 
     ObjectType GetType() const override;
 
+    virtual bool IsUniformUsageDisallowed() const;
+
   protected:
     SharedBufferMemoryBase(DeviceBase* device,
                            StringView label,

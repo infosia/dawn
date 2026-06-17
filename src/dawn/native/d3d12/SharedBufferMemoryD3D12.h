@@ -53,6 +53,8 @@ class SharedBufferMemory final : public SharedBufferMemoryBase {
 
     ID3D12Resource* GetD3DResource() const;
 
+    bool IsUniformUsageDisallowed() const override;
+
   private:
     SharedBufferMemory(Device* device,
                        StringView label,
@@ -76,6 +78,7 @@ class SharedBufferMemory final : public SharedBufferMemoryBase {
 
     std::unique_ptr<Heap> mHeap;
     ComPtr<ID3D12Resource> mResource;
+    const bool mIsCreatedFromD3D12Resource;
 };
 
 }  // namespace dawn::native::d3d12
