@@ -320,11 +320,12 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DualSourceBlending);
     }
 
-    if (mDeviceInfo.HasExt(DeviceExt::RasterizationOrderAttachmentAccess) &&
-        mDeviceInfo.rasterizationOrderAttachmentAccessFeatures
-                .rasterizationOrderColorAttachmentAccess == VK_TRUE) {
-        // There are four possible ways FramebufferFetch can be supported. Currently only #1 is
-        // implemented.
+    if ((mDeviceInfo.HasExt(DeviceExt::RasterizationOrderAttachmentAccess) &&
+         mDeviceInfo.rasterizationOrderAttachmentAccessFeatures
+                 .rasterizationOrderColorAttachmentAccess == VK_TRUE) ||
+        gpu_info::IsARM(GetVendorId())) {
+        // There are four possible ways FramebufferFetch can be supported. Currently only #1 and #2
+        // are implemented.
         //
         // 1. Coherent with rasterization order extension.
         // 2. Coherent without rasterization order extension but when GPU architecture supports
