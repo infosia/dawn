@@ -3044,6 +3044,32 @@ bool Validator::Structure(const sem::Struct* str, ast::PipelineStage stage) cons
         return false;
     }
 
+    // From align attribute in WGSL spec:
+    // If align(n) is applied to a member of S with type T, and S can be the store type for a
+    // variable in address space AS, where AS is not uniform, then n must satisfy:
+    // n = k * RequiredAlignOf(T, AS), for some positive k
+    //
+    // Since it can only be put on a struct, we can limit the check to host-shareable and/or
+    // constructible types. Host-shareable catches anything instantiable in storage, constructible
+    // catches everything else (workgroup, function, private, immediate).
+    //
+    // RequiredAlignOf == AlignOf for applicable address spaces.
+    if (str->IsHostShareable() || str->IsConstructible()) {
+        for (auto* member : str->Members()) {
+            auto* align_attr = ast::GetAttribute<ast::StructMemberAlignAttribute>(
+                member->Declaration()->attributes);
+            if (align_attr != nullptr) {
+                auto align = sem_.GetVal(align_attr->expr)->ConstantValue()->ValueAs<uint32_t>();
+                if (align % member->Type()->Align() != 0) {
+                    AddError(align_attr->expr->source)
+                        << "alignment must be a multiple of "
+                        << style::Literal(member->Type()->Align()) << " bytes";
+                    return false;
+                }
+            }
+        }
+    }
+
     return true;
 }
 
