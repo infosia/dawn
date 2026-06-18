@@ -74,125 +74,119 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
 
     EventType GetType() override { return kType; }
 
-    bool IsPendingRequest(FutureID futureID) {
-        return mBuffer->mPendingMapRequest && mBuffer->mPendingMapRequest->futureID == futureID;
-    }
-
     WireResult ReadyHook(FutureID futureID,
                          WGPUMapAsyncStatus status,
                          WGPUStringView message,
                          size_t readDataUpdateInfoLength = 0,
                          const uint8_t* readDataUpdateInfo = nullptr) {
-        if (status != WGPUMapAsyncStatus_Success) {
-            mResponse.Use([&](auto response) {
-                response->status = status;
-                response->message = ToString(message);
-            });
-            return WireResult::Success;
-        }
-
-        // If the request was already aborted via the client side, we don't need to actually do
-        // anything, so just return success.
-        if (!IsPendingRequest(futureID)) {
-            return WireResult::Success;
-        }
-
         auto FailRequest = [this](const char* message) -> WireResult {
-            mResponse.Use([&](auto response) {
-                response->status = static_cast<WGPUMapAsyncStatus>(0);
-                response->message = message;
-            });
+            mStatus = static_cast<WGPUMapAsyncStatus>(0);
+            mMessage = message;
             return WireResult::FatalError;
         };
 
-        mResponse->status = status;
-        const auto& pending = mBuffer->mPendingMapRequest.value();
-        if (!pending.type) {
-            return FailRequest("Invalid map call without a specified mapping type.");
-        }
-        switch (*pending.type) {
-            case MapRequestType::Read: {
-                // Update user map data with server returned data
-                std::span<const uint8_t> readDataUpdateInfoSpan(readDataUpdateInfo,
-                                                                readDataUpdateInfoLength);
-                if (!mBuffer->mReadHandle->DeserializeDataUpdate(readDataUpdateInfoSpan,
-                                                                 pending.offset)) {
-                    return FailRequest("Failed to deserialize data returned from the server.");
-                }
-                mBuffer->mMappedData = const_cast<void*>(mBuffer->mReadHandle->GetData());
-                break;
+        return mBuffer->mState.Use([&](auto state) {
+            // If we got a failure status, we always override the last one. Note that this can lead
+            // to some indeterministic results since the server and the user could race different
+            // non-success results. That said, given that it's a non-success result, the race only
+            // determines what the user sees as the error message and status.
+            if (status != WGPUMapAsyncStatus_Success) {
+                mStatus = status;
+                mMessage = ToString(message);
+                return WireResult::Success;
             }
-            case MapRequestType::Write: {
-                mBuffer->mMappedData = mBuffer->mWriteHandle->GetData();
-                break;
-            }
-        }
-        mBuffer->mMappedOffset = pending.offset;
-        mBuffer->mMappedSize = pending.size;
 
-        return WireResult::Success;
+            // If the request was already aborted via the client side, we don't need to do anything,
+            // so just return success.
+            if (!state->PendingRequestIs(futureID)) {
+                return WireResult::Success;
+            }
+
+            const auto& pending = *state->pendingMapRequest;
+            if (!pending.type) {
+                return FailRequest("Invalid map call without a specified mapping type.");
+            }
+            switch (*pending.type) {
+                case MapRequestType::Read: {
+                    // Update user map data with server returned data
+                    std::span<const uint8_t> readDataUpdateInfoSpan(readDataUpdateInfo,
+                                                                    readDataUpdateInfoLength);
+                    if (!state->readHandle->DeserializeDataUpdate(readDataUpdateInfoSpan,
+                                                                  pending.offset)) {
+                        return FailRequest("Failed to deserialize data returned from the server.");
+                    }
+                    state->mappedReadData =
+                        std::span(reinterpret_cast<const std::byte*>(state->readHandle->GetData()),
+                                  mBuffer->mSize);
+                    break;
+                }
+                case MapRequestType::Write: {
+                    state->mappedWriteData =
+                        std::span(reinterpret_cast<std::byte*>(state->writeHandle->GetData()),
+                                  mBuffer->mSize);
+                    break;
+                }
+            }
+            state->mappedOffset = pending.offset;
+            state->mappedSize = pending.size;
+
+            return WireResult::Success;
+        });
     }
 
   private:
     void CompleteImpl(FutureID futureID, EventCompletionType completionType) override {
-        // Move the response while holding the lock so that we avoid racing against the callback
-        // firing and the server replying with a response.
-        Response response = {};
-        mResponse.Use([&](auto res) { response = std::move(*res); });
-
-        if (completionType == EventCompletionType::Shutdown) {
-            response.status = WGPUMapAsyncStatus_CallbackCancelled;
-            response.message = "A valid external Instance reference no longer exists.";
-        }
-
         auto Callback = [&]() {
             if (mCallback) {
-                mCallback(response.status, ToOutputStringView(response.message),
-                          mUserdata1.ExtractAsDangling(), mUserdata2.ExtractAsDangling());
+                mCallback(mStatus, ToOutputStringView(mMessage), mUserdata1.ExtractAsDangling(),
+                          mUserdata2.ExtractAsDangling());
             }
         };
 
-        // The request has been cancelled before completion, return that result.
-        if (!IsPendingRequest(futureID)) {
-            DAWN_ASSERT(response.status != WGPUMapAsyncStatus_Success);
-            return Callback();
-        }
-
-        // Device destruction/loss implicitly makes the map requests aborted.
-        if (!mBuffer->mDevice->IsAlive()) {
-            response.status = WGPUMapAsyncStatus_Aborted;
-            response.message = "The Device was lost before mapping was resolved.";
-        }
-
-        if (response.status == WGPUMapAsyncStatus_Success) {
-            DAWN_ASSERT(mBuffer->mPendingMapRequest && mBuffer->mPendingMapRequest->type);
-            switch (*mBuffer->mPendingMapRequest->type) {
-                case MapRequestType::Read:
-                    mBuffer->mMappedState = MapState::MappedForRead;
-                    break;
-                case MapRequestType::Write:
-                    mBuffer->mMappedState = MapState::MappedForWrite;
-                    break;
+        return mBuffer->mState.Use([&](auto state) {
+            if (completionType == EventCompletionType::Shutdown) {
+                mStatus = WGPUMapAsyncStatus_CallbackCancelled;
+                mMessage = "A valid external Instance reference no longer exists.";
             }
-        }
-        mBuffer->mPendingMapRequest = std::nullopt;
-        return Callback();
+
+            // The request has been cancelled before completion, return that result.
+            if (!state->PendingRequestIs(futureID)) {
+                DAWN_ASSERT(mStatus != WGPUMapAsyncStatus_Success);
+                return Callback();
+            }
+
+            // Device destruction/loss implicitly makes the map requests aborted.
+            if (!mBuffer->mDevice->IsAlive()) {
+                mStatus = WGPUMapAsyncStatus_Aborted;
+                mMessage = "The Device was lost before mapping was resolved.";
+            }
+
+            if (mStatus == WGPUMapAsyncStatus_Success) {
+                DAWN_ASSERT(state->pendingMapRequest && state->pendingMapRequest->type);
+                switch (*state->pendingMapRequest->type) {
+                    case MapRequestType::Read:
+                        state->mappedState = MapState::MappedForRead;
+                        break;
+                    case MapRequestType::Write:
+                        state->mappedState = MapState::MappedForWrite;
+                        break;
+                }
+            }
+            state->pendingMapRequest = std::nullopt;
+            return Callback();
+        });
     }
 
     WGPUBufferMapCallback mCallback;
     raw_ptr<void> mUserdata1;
     raw_ptr<void> mUserdata2;
 
-    // The response for the map async callback needs to be protected with a lock since the response
-    // can be updated from the server (via a response) or from the client (via an unmap/destroy
-    // call).
-    struct Response {
-        WGPUMapAsyncStatus status;
-        std::string message;
-    };
-    MutexProtected<Response> mResponse;
+    // The response for the map async callback are implicitly protected by the mutex protecting the
+    // map state in the Buffer.
+    WGPUMapAsyncStatus mStatus = WGPUMapAsyncStatus_Success;
+    std::string mMessage;
 
-    // Strong reference to the buffer so that when we call the callback we can pass the buffer.
+    // Strong reference to the buffer for synchronization purposes.
     Ref<Buffer> mBuffer;
 };
 
@@ -265,43 +259,49 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
     // as server expects allocating ids to be monotonically increasing
     Ref<Buffer> buffer =
         wireClient->Make<Buffer>(device->GetEventManagerHandle(), device, descriptor);
-    buffer->mReadHandle = std::move(readHandle);
-    buffer->mWriteHandle = std::move(writeHandle);
 
-    if (descriptor->mappedAtCreation) {
-        // If the buffer is mapped at creation, a write handle is created and will be
-        // destructed on unmap if the buffer doesn't have MapWrite usage
-        // The buffer is mapped right now.
-        buffer->mMappedState = MapState::MappedAtCreation;
-        buffer->mMappedOffset = 0;
-        buffer->mMappedSize = buffer->mSize;
-        DAWN_ASSERT(buffer->mWriteHandle != nullptr);
-        buffer->mMappedData = buffer->mWriteHandle->GetData();
-    }
+    buffer->mState.Use([&](auto state) {
+        state->readHandle = std::move(readHandle);
+        state->writeHandle = std::move(writeHandle);
 
-    cmd.result = buffer->GetWireHandle(wireClient);
+        if (descriptor->mappedAtCreation) {
+            // If the buffer is mapped at creation, a write handle is created and will be
+            // destructed on unmap if the buffer doesn't have MapWrite usage
+            // The buffer is mapped right now.
+            state->mappedState = MapState::MappedAtCreation;
+            state->mappedOffset = 0;
+            state->mappedSize = buffer->mSize;
+            DAWN_ASSERT(state->writeHandle != nullptr);
+            state->mappedWriteData = std::span(
+                reinterpret_cast<std::byte*>(state->writeHandle->GetData()), buffer->mSize);
+        }
 
-    // clang-format off
-    // Turning off clang format here because for some reason it does not format the
-    // CommandExtensions consistently, making it harder to read.
-    wireClient->SerializeCommand(
-        cmd,
-        // Extensions to replace fields skipped by skip_serialize.
-        CommandExtension{readHandleCreateInfoLength,
-                         [&](char* readHandleBuffer) {
-                             if (buffer->mReadHandle != nullptr) {
-                                 // Serialize the ReadHandle into the space after the command.
-                                 buffer->mReadHandle->SerializeCreate(readHandleBuffer);
-                             }
-                         }},
-        CommandExtension{writeHandleCreateInfoLength,
-                         [&](char* writeHandleBuffer) {
-                             if (buffer->mWriteHandle != nullptr) {
-                                 // Serialize the WriteHandle into the space after the command.
-                                 buffer->mWriteHandle->SerializeCreate(writeHandleBuffer);
-                             }
-                         }});
-    // clang-format on
+        cmd.result = buffer->GetWireHandle(wireClient);
+
+        // clang-format off
+        // Turning off clang format here because for some reason it does not format the
+        // CommandExtensions consistently, making it harder to read.
+        wireClient->SerializeCommand(
+            cmd,
+            // Extensions to replace fields skipped by skip_serialize.
+            CommandExtension{readHandleCreateInfoLength,
+                             [&](char* readHandleBuffer) {
+                                 if (state->readHandle != nullptr) {
+                                     // Serialize the ReadHandle into the space after the command.
+                                     state->readHandle->SerializeCreate(readHandleBuffer);
+                                 }
+                             }},
+            CommandExtension{writeHandleCreateInfoLength,
+                             [&](char* writeHandleBuffer) {
+                                 if (state->writeHandle != nullptr) {
+                                     // Serialize the WriteHandle into the space after the command.
+                                     state->writeHandle->SerializeCreate(writeHandleBuffer);
+                                 }
+                             }}
+        );
+        // clang-format on
+    });
+
     return ReturnToAPI(std::move(buffer));
 }
 
@@ -342,26 +342,30 @@ Buffer::Buffer(const ObjectBaseParams& params,
       mDevice(device) {}
 
 void Buffer::DeleteThis() {
-    FreeMappedData();
+    mState.Use([&](auto state) { FreeMappedData(state); });
     ObjectWithEventsBase::DeleteThis();
 }
 
 void Buffer::WillDropLastExternalRef() {
-    SetFutureStatus(WGPUMapAsyncStatus_Aborted,
-                    "Buffer was destroyed before mapping was resolved.");
+    mState.Use([this](auto state) {
+        SetFutureStatus(state, WGPUMapAsyncStatus_Aborted,
+                        "Buffer was destroyed before mapping was resolved.");
+    });
 }
 
 ObjectType Buffer::GetObjectType() const {
     return ObjectType::Buffer;
 }
 
-void Buffer::SetFutureStatus(WGPUMapAsyncStatus status, std::string_view message) {
-    if (!mPendingMapRequest) {
+void Buffer::SetFutureStatus(GuardedState& state,
+                             WGPUMapAsyncStatus status,
+                             std::string_view message) {
+    if (!state->pendingMapRequest) {
         return;
     }
 
-    FutureID futureID = mPendingMapRequest->futureID;
-    mPendingMapRequest = std::nullopt;
+    FutureID futureID = state->pendingMapRequest->futureID;
+    state->pendingMapRequest = std::nullopt;
 
     auto wireStatus = GetEventManager().SetFutureReady<MapAsyncEvent>(futureID, status,
                                                                       ToOutputStringView(message));
@@ -379,27 +383,37 @@ WGPUFuture Buffer::APIMapAsync(WGPUMapMode mode,
         return {futureIDInternal};
     }
 
-    if (mPendingMapRequest) {
-        [[maybe_unused]] auto id = GetEventManager().SetFutureReady<MapAsyncEvent>(
-            futureIDInternal, WGPUMapAsyncStatus_Error,
-            ToOutputStringView("Buffer already has an outstanding map pending."));
+    bool success = mState.Use([&](auto state) {
+        if (state->pendingMapRequest) {
+            [[maybe_unused]] auto id = GetEventManager().SetFutureReady<MapAsyncEvent>(
+                futureIDInternal, WGPUMapAsyncStatus_Error,
+                ToOutputStringView("Buffer already has an outstanding map pending."));
+            return false;
+        }
+
+        // Handle the defaulting of size required by WebGPU.
+        if (size == WGPU_WHOLE_MAP_SIZE) {
+            if (offset <= mSize) {
+                size = mSize - offset;
+            } else {
+                // Send any valid size to the server as the mapping will be rejected anyway.
+                size = 0;
+            }
+        }
+
+        // Set up the request structure that will hold information while this mapping is in flight.
+        std::optional<MapRequestType> mapMode;
+        if (mode & WGPUMapMode_Read) {
+            mapMode = MapRequestType::Read;
+        } else if (mode & WGPUMapMode_Write) {
+            mapMode = MapRequestType::Write;
+        }
+        state->pendingMapRequest = {futureIDInternal, offset, size, mapMode};
+        return true;
+    });
+    if (!success) {
         return {futureIDInternal};
     }
-
-    // Handle the defaulting of size required by WebGPU.
-    if ((size == WGPU_WHOLE_MAP_SIZE) && (offset <= mSize)) {
-        size = mSize - offset;
-    }
-
-    // Set up the request structure that will hold information while this mapping is in flight.
-    std::optional<MapRequestType> mapMode;
-    if (mode & WGPUMapMode_Read) {
-        mapMode = MapRequestType::Read;
-    } else if (mode & WGPUMapMode_Write) {
-        mapMode = MapRequestType::Write;
-    }
-
-    mPendingMapRequest = {futureIDInternal, offset, size, mapMode};
 
     // Serialize the command to send to the server.
     BufferMapAsyncCmd cmd;
@@ -425,47 +439,53 @@ WireResult Client::DoBufferMapAsyncCallback(ObjectHandle eventManager,
 }
 
 void* Buffer::APIGetMappedRange(size_t offset, size_t size) {
-    if (!IsMappedForWriting()) {
-        if (IsMappedForReading()) {
-            std::string error =
-                "GetMappedRange: Mapping is read-only. Use GetConstMappedRange instead.";
-            mDevice->HandleLogging(WGPULoggingType_Error,
-                                   WGPUStringView{error.data(), error.size()});
+    return mState.Use([&](auto state) -> void* {
+        if (!state->IsMappedForWriting()) {
+            if (state->IsMappedForReading()) {
+                std::string error =
+                    "GetMappedRange: Mapping is read-only. Use GetConstMappedRange instead.";
+                mDevice->HandleLogging(WGPULoggingType_Error,
+                                       WGPUStringView{error.data(), error.size()});
+            }
+            return nullptr;
         }
-        return nullptr;
-    }
-    if (!CheckGetMappedRangeOffsetSize(offset, size)) {
-        return nullptr;
-    }
-    return DAWN_UNSAFE_TODO(static_cast<uint8_t*>(mMappedData) + offset);
+        // SAFETY: The webgpu.h API requires returning a raw pointer, but we checked it here.
+        return DAWN_UNSAFE_BUFFERS(state->GetMappedRange(offset, size).data());
+    });
 }
 
 const void* Buffer::APIGetConstMappedRange(size_t offset, size_t size) {
-    if (!(IsMappedForWriting() || IsMappedForReading()) ||
-        !CheckGetMappedRangeOffsetSize(offset, size)) {
-        return nullptr;
-    }
-    return DAWN_UNSAFE_TODO(static_cast<uint8_t*>(mMappedData) + offset);
+    return mState.Use([&](auto state) -> const void* {
+        if (!(state->IsMappedForWriting() || state->IsMappedForReading())) {
+            return nullptr;
+        }
+        // SAFETY: The webgpu.h API requires returning a raw pointer, but we checked it here.
+        return DAWN_UNSAFE_BUFFERS(state->GetConstMappedRange(offset, size).data());
+    });
 }
 
 WGPUStatus Buffer::APIWriteMappedRange(size_t offset, void const* data, size_t size) {
-    void* range = APIGetMappedRange(offset, size);
-    if (range == nullptr) {
-        return WGPUStatus_Error;
-    }
-
-    DAWN_UNSAFE_TODO(memcpy(range, data, size));
-    return WGPUStatus_Success;
+    return mState.Use([&](auto state) {
+        auto dst = state->GetMappedRange(offset, size);
+        if (dst.empty()) {
+            return WGPUStatus_Error;
+        }
+        auto src = std::span<const std::byte>(reinterpret_cast<const std::byte*>(data), size);
+        std::ranges::copy(src, dst.begin());
+        return WGPUStatus_Success;
+    });
 }
 
 WGPUStatus Buffer::APIReadMappedRange(size_t offset, void* data, size_t size) {
-    const void* range = APIGetConstMappedRange(offset, size);
-    if (range == nullptr) {
-        return WGPUStatus_Error;
-    }
-
-    DAWN_UNSAFE_TODO(memcpy(data, range, size));
-    return WGPUStatus_Success;
+    return mState.Use([&](auto state) {
+        auto src = state->GetConstMappedRange(offset, size);
+        if (src.empty()) {
+            return WGPUStatus_Error;
+        }
+        auto dst = std::span<std::byte>(reinterpret_cast<std::byte*>(data), size);
+        std::ranges::copy(src, dst.begin());
+        return WGPUStatus_Success;
+    });
 }
 
 void Buffer::APIUnmap() {
@@ -479,75 +499,81 @@ void Buffer::APIUnmap() {
     //   - Server -> Client: Result of MapRequest2
     Client* client = GetClient();
 
-    if (IsMappedForWriting()) {
-        // Writes need to be flushed before Unmap is sent. Unmap calls all associated
-        // in-flight callbacks which may read the updated data.
-        DAWN_ASSERT(mWriteHandle != nullptr);
+    mState.Use([&](auto state) {
+        if (state->IsMappedForWriting()) {
+            // Writes need to be flushed before Unmap is sent. Unmap calls all associated
+            // in-flight callbacks which may read the updated data.
+            DAWN_ASSERT(state->writeHandle != nullptr);
 
-        // Get the serialization size of data update writes.
-        size_t writeDataUpdateInfoLength =
-            mWriteHandle->SizeOfSerializeDataUpdate(mMappedOffset, mMappedSize);
+            // Get the serialization size of data update writes.
+            size_t writeDataUpdateInfoLength = state->writeHandle->SizeOfSerializeDataUpdate(
+                state->mappedOffset, state->mappedSize);
 
-        BufferUpdateMappedDataCmd cmd{};
-        cmd.bufferId = GetWireHandle(client).id;
-        // Set the pointer length, but the pointed-to data itself won't be serialized as usual (due
-        // to skip_serialize). Instead, the custom CommandExtension below fills that memory.
-        cmd.writeDataUpdateInfoLength = writeDataUpdateInfoLength;
-        cmd.writeDataUpdateInfo = nullptr;  // Skipped by skip_serialize.
-        cmd.offset = mMappedOffset;
-        cmd.size = mMappedSize;
+            BufferUpdateMappedDataCmd cmd{};
+            cmd.bufferId = GetWireHandle(client).id;
+            // Set the pointer length, but the pointed-to data itself won't be serialized as usual
+            // (due to skip_serialize). Instead, the custom CommandExtension below fills that
+            // memory.
+            cmd.writeDataUpdateInfoLength = writeDataUpdateInfoLength;
+            cmd.writeDataUpdateInfo = nullptr;  // Skipped by skip_serialize.
+            cmd.offset = state->mappedOffset;
+            cmd.size = state->mappedSize;
 
-        client->SerializeCommand(
-            cmd,
-            // Extensions to replace fields skipped by skip_serialize.
-            CommandExtension{writeDataUpdateInfoLength, [&](char* writeHandleBuffer) {
-                                 // Serialize flush metadata into the space after the command.
-                                 // This closes the handle for writing.
-                                 std::span<char> writeHandleBufferSpan(writeHandleBuffer,
-                                                                       writeDataUpdateInfoLength);
-                                 mWriteHandle->SerializeDataUpdate(writeHandleBufferSpan,
-                                                                   cmd.offset);
-                             }});
+            client->SerializeCommand(
+                cmd,
+                // Extensions to replace fields skipped by skip_serialize.
+                CommandExtension{writeDataUpdateInfoLength, [&](char* writeHandleBuffer) {
+                                     // Serialize flush metadata into the space after the command.
+                                     // This closes the handle for writing.
+                                     std::span<char> writeHandleBufferSpan(
+                                         writeHandleBuffer, writeDataUpdateInfoLength);
+                                     state->writeHandle->SerializeDataUpdate(writeHandleBufferSpan,
+                                                                             cmd.offset);
+                                 }});
 
-        // If mDestructWriteHandleOnUnmap is true, that means the write handle is merely
-        // for mappedAtCreation usage. It is destroyed on unmap after flush to server
-        // instead of at buffer destruction.
-        if (mDestructWriteHandleOnUnmap) {
-            mMappedData = nullptr;
-            mWriteHandle = nullptr;
-            if (mReadHandle) {
-                // If it's both mappedAtCreation and MapRead we need to reset
-                // mData to readHandle's GetData(). This could be changed to
-                // merging read/write handle in future
-                mMappedData = const_cast<void*>(mReadHandle->GetData());
+            // If mDestructWriteHandleOnUnmap is true, that means the write handle is merely
+            // for mappedAtCreation usage. It is destroyed on unmap after flush to server
+            // instead of at buffer destruction.
+            if (mDestructWriteHandleOnUnmap) {
+                state->mappedWriteData = {};
+                state->writeHandle = nullptr;
+                if (state->readHandle) {
+                    // If it's both mappedAtCreation and MapRead we need to reset
+                    // mData to readHandle's GetData(). This could be changed to
+                    // merging read/write handle in future
+                    state->mappedReadData = std::span(
+                        reinterpret_cast<const std::byte*>(state->readHandle->GetData()), mSize);
+                }
             }
         }
-    }
 
-    // Free map access tokens
-    mMappedState = MapState::Unmapped;
-    mMappedOffset = 0;
-    mMappedSize = 0;
+        // Free map access tokens
+        state->mappedState = MapState::Unmapped;
+        state->mappedOffset = 0;
+        state->mappedSize = 0;
+
+        SetFutureStatus(state, WGPUMapAsyncStatus_Aborted,
+                        "Buffer was unmapped before mapping was resolved.");
+    });
 
     BufferUnmapCmd cmd{};
     cmd.self = ToAPI(this);
     client->SerializeCommand(cmd);
-
-    SetFutureStatus(WGPUMapAsyncStatus_Aborted, "Buffer was unmapped before mapping was resolved.");
 }
 
 void Buffer::APIDestroy() {
     Client* client = GetClient();
 
     // Remove the current mapping and destroy Read/WriteHandles.
-    FreeMappedData();
+    mState.Use([&](auto state) {
+        SetFutureStatus(state, WGPUMapAsyncStatus_Aborted,
+                        "Buffer was destroyed before mapping was resolved.");
+        FreeMappedData(state);
+    });
 
     BufferDestroyCmd cmd{};
     cmd.self = ToAPI(this);
     client->SerializeCommand(cmd);
-
-    SetFutureStatus(WGPUMapAsyncStatus_Aborted,
-                    "Buffer was destroyed before mapping was resolved.");
 }
 
 WGPUBufferUsage Buffer::APIGetUsage() const {
@@ -559,61 +585,87 @@ uint64_t Buffer::APIGetSize() const {
 }
 
 WGPUBufferMapState Buffer::APIGetMapState() const {
-    switch (mMappedState) {
-        case MapState::MappedForRead:
-        case MapState::MappedForWrite:
-        case MapState::MappedAtCreation:
-            return WGPUBufferMapState_Mapped;
-        case MapState::Unmapped:
-            if (mPendingMapRequest) {
-                return WGPUBufferMapState_Pending;
-            } else {
-                return WGPUBufferMapState_Unmapped;
-            }
-    }
-    DAWN_UNREACHABLE();
+    return mState.Use([](auto state) {
+        switch (state->mappedState) {
+            case MapState::MappedForRead:
+            case MapState::MappedForWrite:
+            case MapState::MappedAtCreation:
+                return WGPUBufferMapState_Mapped;
+            case MapState::Unmapped:
+                if (state->pendingMapRequest) {
+                    return WGPUBufferMapState_Pending;
+                } else {
+                    return WGPUBufferMapState_Unmapped;
+                }
+        }
+        DAWN_UNREACHABLE();
+    });
 }
 
-bool Buffer::IsMappedForReading() const {
-    return mMappedState == MapState::MappedForRead;
-}
-
-bool Buffer::IsMappedForWriting() const {
-    return mMappedState == MapState::MappedForWrite || mMappedState == MapState::MappedAtCreation;
-}
-
-bool Buffer::CheckGetMappedRangeOffsetSize(size_t offset, size_t size) const {
-    if (offset % 8 != 0 || offset < mMappedOffset || offset > mSize) {
-        return false;
-    }
-
-    size_t rangeSize = size == WGPU_WHOLE_MAP_SIZE ? mSize - offset : size;
-
-    if (rangeSize % 4 != 0 || rangeSize > mMappedSize) {
-        return false;
-    }
-
-    size_t offsetInMappedRange = offset - mMappedOffset;
-    return offsetInMappedRange <= mMappedSize - rangeSize;
-}
-
-void Buffer::FreeMappedData() {
-#if defined(DAWN_ENABLE_ASSERTS)
+void Buffer::FreeMappedData(GuardedState& state) {
+#ifdef DAWN_ENABLE_ASSERTS
     // When in "debug" mode, 0xCA-out the mapped data when we free it so that in we can detect
     // use-after-free of the mapped data. This is particularly useful for WebGPU test about the
     // interaction of mapping and GC.
-    if (mMappedData) {
-        DAWN_UNSAFE_TODO(
-            memset(static_cast<uint8_t*>(mMappedData) + mMappedOffset, 0xCA, mMappedSize));
+    if (!state->mappedWriteData.empty()) {
+        std::ranges::fill(state->mappedWriteData, std::byte(0xCA));
     }
-#endif  // defined(DAWN_ENABLE_ASSERTS)
+#endif  // DAWN_ENABLE_ASSERTS
 
-    mMappedOffset = 0;
-    mMappedSize = 0;
-    mMappedData = nullptr;
-    mReadHandle = nullptr;
-    mWriteHandle = nullptr;
-    mMappedState = MapState::Unmapped;
+    state->mappedOffset = 0;
+    state->mappedSize = 0;
+    state->mappedReadData = {};
+    state->mappedWriteData = {};
+    state->readHandle = nullptr;
+    state->writeHandle = nullptr;
+    state->mappedState = MapState::Unmapped;
+}
+
+bool Buffer::State::IsMappedForReading() const {
+    return mappedState == MapState::MappedForRead;
+}
+
+bool Buffer::State::IsMappedForWriting() const {
+    return mappedState == MapState::MappedForWrite || mappedState == MapState::MappedAtCreation;
+}
+
+bool Buffer::State::CanGetMappedRange(std::span<const std::byte> data,
+                                      size_t offset,
+                                      size_t size) const {
+    size_t bufferSize = data.size();
+    if (offset % 8 != 0 || offset < mappedOffset || offset > bufferSize) {
+        return false;
+    }
+
+    size_t rangeSize = size == WGPU_WHOLE_MAP_SIZE ? bufferSize - offset : size;
+
+    if (rangeSize % 4 != 0 || rangeSize > mappedSize) {
+        return false;
+    }
+
+    size_t offsetInMappedRange = offset - mappedOffset;
+    return offsetInMappedRange <= mappedSize - rangeSize;
+}
+
+std::span<std::byte> Buffer::State::GetMappedRange(size_t offset, size_t size) const {
+    if (IsMappedForWriting() && CanGetMappedRange(mappedWriteData, offset, size)) {
+        return mappedWriteData.subspan(offset, size);
+    }
+    return {};
+}
+
+std::span<const std::byte> Buffer::State::GetConstMappedRange(size_t offset, size_t size) const {
+    if (IsMappedForReading() && CanGetMappedRange(mappedReadData, offset, size)) {
+        return mappedReadData.subspan(offset, size);
+    }
+    if (IsMappedForWriting() && CanGetMappedRange(mappedWriteData, offset, size)) {
+        return mappedWriteData.subspan(offset, size);
+    }
+    return {};
+}
+
+bool Buffer::State::PendingRequestIs(FutureID futureID) const {
+    return pendingMapRequest && pendingMapRequest->futureID == futureID;
 }
 
 }  // namespace dawn::wire::client
