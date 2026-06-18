@@ -45,6 +45,71 @@
       },
       "revId": "6a1e4fd559e6725bb9e80b2c8fc97bc907f895ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e3b2746_8b9d85ae",
+        "filename": "docs/dawn/codegen.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-18T07:44:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d78b5ea1_a592cf8f",
+      "range": {
+        "startLine": 122,
+        "startChar": 158,
+        "endLine": 122,
+        "endChar": 164
+      },
+      "revId": "6a1e4fd559e6725bb9e80b2c8fc97bc907f895ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c19a9d2_f1f5229f",
+        "filename": "docs/dawn/codegen.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-18T07:44:26Z",
+      "side": 1,
+      "message": "```suggestion\n - `dawn_platform_autogen.h` and `wgpu_structs_autogen.cpp` that define the `dawn::native` equivalents of types in `webgpu.h` (for example with objects being actual pointers to objects and not just opaque handles) as well as conversion functions.\n```",
+      "revId": "6a1e4fd559e6725bb9e80b2c8fc97bc907f895ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a17ba55_bf842408",
+        "filename": "docs/dawn/codegen.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-18T07:44:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82c1eab7_a97826c8",
+      "range": {
+        "startLine": 122,
+        "startChar": 158,
+        "endLine": 122,
+        "endChar": 164
+      },
+      "revId": "6a1e4fd559e6725bb9e80b2c8fc97bc907f895ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
