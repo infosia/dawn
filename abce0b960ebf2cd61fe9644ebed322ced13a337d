@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f08a683_0ac275b2",
+        "filename": "src/dawn/native/CommandAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-18T06:45:13Z",
+      "side": 1,
+      "message": "This might be somewhat complex. IMHO the Dawn team could look at it later now that there\u0027s a `DAWN_UNSAFE_TODO`.",
+      "parentUuid": "a4a46f6a_f805b435",
+      "revId": "abce0b960ebf2cd61fe9644ebed322ced13a337d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "335a8a19_6319dd54",
