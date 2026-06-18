@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac1acf26_cdfd9985",
+        "filename": "include/dawn/wire/WireClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-18T08:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a36b33_c1efa3f3",
+      "range": {
+        "startLine": 205,
+        "startChar": 47,
+        "endLine": 205,
+        "endChar": 54
+      },
+      "revId": "fb5a9514b95724195b32ba2c98aa0e8f57b2a21a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85aa307b_fe6161f5",
