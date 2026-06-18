@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdec67a8_2d00ce52",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2953,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-18T17:37:08Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "549149171e97ce486cb2bc6a5f8afea4bf2d64de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d247a66_c34c5d58",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3061,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-18T17:37:08Z",
+      "side": 1,
+      "message": "Nit: Could we just do this inside the loop over attributes at [1] to avoid this extra loop?",
+      "range": {
+        "startLine": 3058,
+        "startChar": 0,
+        "endLine": 3061,
+        "endChar": 40
+      },
+      "revId": "549149171e97ce486cb2bc6a5f8afea4bf2d64de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
