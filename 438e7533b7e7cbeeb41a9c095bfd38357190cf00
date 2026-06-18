@@ -3,6 +3,86 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c2c8bb8_05066c44",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T17:58:02Z",
+      "side": 1,
+      "message": "I don\u0027t think `scripts` is the right place for this, it seems like it should just be part of `src/utils/BUILD.gn`.",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f17c1c82_07566ded",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T17:58:02Z",
+      "side": 1,
+      "message": "`assert(is_clang)`",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d6ccdb3_5cdb1264",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T17:58:02Z",
+      "side": 1,
+      "message": "Hmm it seems like this basically ends up being applied to all code, so I guess it\u0027s not worth separating.\n\nCan we just disable this warning always (instead of only on windows)? It doesn\u0027t seem that useful anyway, and that way it will be consistent rather than compiling the same code with different warnings on different OSes.",
+      "range": {
+        "startLine": 196,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 44
+      },
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39709303_5e3edada",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T17:58:02Z",
+      "side": 1,
+      "message": "IIUC this shouldn\u0027t be necessary. `dawn_weverything` is declared in a `declare_args` block which means the thing after the `\u003d` is its _default_ value but it can still be set by args.gn. So it can just be overridden with `dawn_weverything \u003d true` or `dawn_weverything \u003d false` in GN args.",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7e3ae4ee_48e62101",
         "filename": "scripts/dawn_features.gni",
         "patchSetId": 11
@@ -14,6 +94,104 @@
       "writtenOn": "2026-06-18T02:10:38Z",
       "side": 1,
       "message": "Why require pinned clang? Tint has been built this way from the start without requiring a specific clang. We got a handful of errors but we just added suppressions (or fixed them) and folks could still turn of everything manually.",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d8ec647_89a9b419",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T17:58:02Z",
+      "side": 1,
+      "message": "Maybe it\u0027s overly cautious but I don\u0027t want the build to break just because we\u0027re using a system clang that has slightly different behavior for an obscure warning. I think the `-Wall -Wextra` analyses can be considered stable but not everything else.\n\nAlso we don\u0027t want to get \"error: unknown warning option\" if we pass a `-Wno-*` that an older compiler doesn\u0027t understand.\n\nI guess if Tint has been doing it then it\u0027s fine, but seems like we may as well just do the theoretically safer thing.",
+      "parentUuid": "7e3ae4ee_48e62101",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "152f376a_4f253005",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T17:58:02Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need `-pedantic` anymore, I\u0027m pretty sure it just enables warnings and thus is a subset of `-Weverything`.\n\nWe should enable it in the non-weverything mode though: `-Wall -Wextra -pedantic`\n\nAlso I believe `-Wpedantic` is the same thing as `-pedantic`, then we might not need the `is_win` special case.",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 28
+      },
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fea3753_61d20f90",
+        "filename": "src/tint/cmd/bench/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T17:58:02Z",
+      "side": 1,
+      "message": "Could you explain in the commit message what this and the tint build changes below are doing? (Unclear how it relates to `-Weverything`)",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20a42493_beb41f06",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T17:58:02Z",
+      "side": 1,
+      "message": "We shouldn\u0027t have this, part of the reason I want `warning_nocompile.nc` is to make sure that `-Weverything` is being applied to code \"by default\" (as long as it depends on `utils`, which most code does).",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d78b8155_b9bc2726",
+        "filename": "src/utils/warning_nocompile.nc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T17:58:02Z",
+      "side": 1,
+      "message": "Does it do that? I would have thought this pragma enables the warning if it wasn\u0027t already enabled. Seems weird if it changes a warning to an error _only if_ the warning is enabled already?",
+      "range": {
+        "startLine": 42,
+        "startChar": 36,
+        "endLine": 42,
+        "endChar": 71
+      },
       "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
