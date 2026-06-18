@@ -16,6 +16,29 @@
       "message": "Hold on, my Windows SDK does define up to SM 6.9. Let me try to find more info on the versions in which these defines were introduced. The solution might be to require a more recent SDK.",
       "revId": "00ffbf2b12a324448156fb14ca28e34a9d85f510",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e9a0cc2_6360e3ef",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-06-18T17:24:13Z",
+      "side": 1,
+      "message": "The Windows SDK that Chromium builds with already has `D3D_SHADER_MODEL_6_9` and below.  The Agility SDK introduces `D3D_SHADER_MODEL_6_10`.\n\nUnless I am missing something, I think this CL is unnecessary.",
+      "range": {
+        "startLine": 141,
+        "startChar": 33,
+        "endLine": 142,
+        "endChar": 31
+      },
+      "revId": "00ffbf2b12a324448156fb14ca28e34a9d85f510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
