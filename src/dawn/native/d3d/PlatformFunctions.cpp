@@ -122,6 +122,9 @@ MaybeError PlatformFunctions::EnsureFXC(std::span<const std::string> searchPaths
 }
 
 void PlatformFunctions::InitWindowsVersion() {
+#if DAWN_PLATFORM_IS(WINUWP)
+    return;
+#else
     // Currently we only care about the build number of Windows 10 and Windows 11.
     if (!IsWindows10OrGreater()) {
         return;
@@ -140,6 +143,7 @@ void PlatformFunctions::InitWindowsVersion() {
     mCurrentBuildNumber = ReadFromSZRegistryKey(hKey, "CurrentBuildNumber");
 
     RegCloseKey(hKey);
+#endif  // DAWN_PLATFORM_IS(WINUWP)
 }
 
 uint64_t PlatformFunctions::GetWindowsBuildNumber() const {
