@@ -56,6 +56,30 @@
       },
       "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e589654b_a3215965",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-18T20:56:52Z",
+      "side": 1,
+      "message": "Could we just change the build so iOS doesn\u0027t build the tests? Tint doesn\u0027t have this guard, so I\u0027m guessing the iOS build just doesn\u0027t built tint_unittests?",
+      "parentUuid": "45e236da_809cf24e",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
