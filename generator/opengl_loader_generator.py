@@ -243,6 +243,7 @@ def compute_params(root, supported_extensions):
         'extension_desktop_gl_blocks': extension_desktop_gl_blocks,
         'extension_gles_blocks': extension_gles_blocks,
         'header_blocks': header_blocks,
+        'supported_extensions': supported_extensions,
     }
 
 

@@ -28,6 +28,7 @@
 #ifndef DAWNNATIVE_OPENGL_OPENGLFUNCTIONSBASE_H_
 #define DAWNNATIVE_OPENGL_OPENGLFUNCTIONSBASE_H_
 
+#include <array>
 #include <unordered_set>
 
 #include "src/dawn/native/Error.h"
@@ -37,6 +38,12 @@ namespace dawn::native::opengl {
 
     struct OpenGLFunctionsBase {
       public:
+        static constexpr std::array<const char*, {{ supported_extensions | length }}> kSupportedGLExtensions = {
+            {% for ext in supported_extensions %}
+                "{{ext}}",
+            {% endfor %}
+        };
+
         {% for block in header_blocks %}
             // {{block.description}}
             {% for proc in block.procs %}
