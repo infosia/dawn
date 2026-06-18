@@ -709,6 +709,11 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         featuresChain.Add(&usedKnobs.extendedDynamicStateFeatures);
     }
 
+    if (mDeviceInfo.HasExt(DeviceExt::FrameBoundary)) {
+        usedKnobs.frameBoundaryFeatures = mDeviceInfo.frameBoundaryFeatures;
+        featuresChain.Add(&usedKnobs.frameBoundaryFeatures);
+    }
+
     // Find a universal queue family
     {
         // Note that GRAPHICS and COMPUTE imply TRANSFER so we don't need to check for it.

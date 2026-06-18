@@ -322,6 +322,27 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     VkSubmitInfo submitInfo;
     submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
     submitInfo.pNext = nullptr;
+
+    VkFrameBoundaryEXT frameBoundary;
+    if (device->GetDeviceInfo().HasExt(DeviceExt::FrameBoundary)) {
+        frameBoundary.sType = VK_STRUCTURE_TYPE_FRAME_BOUNDARY_EXT;
+        frameBoundary.pNext = nullptr;
+        frameBoundary.flags = VK_FRAME_BOUNDARY_FRAME_END_BIT_EXT;
+        frameBoundary.frameID = mNextFrameID++;
+        frameBoundary.imageCount = mRecordingContext.images.size();
+
+        ::VkImage* images =
+            mRecordingContext.images.empty() ? nullptr : &mRecordingContext.images[0];
+        frameBoundary.pImages = images;
+        frameBoundary.bufferCount = 0;
+        frameBoundary.pBuffers = nullptr;
+        frameBoundary.tagName = 0;
+        frameBoundary.tagSize = 0;
+        frameBoundary.pTag = nullptr;
+
+        submitInfo.pNext = &frameBoundary;
+    }
+
     submitInfo.waitSemaphoreCount = static_cast<uint32_t>(mRecordingContext.waitSemaphores.size());
     submitInfo.pWaitSemaphores = AsVkArray(mRecordingContext.waitSemaphores.data());
     submitInfo.pWaitDstStageMask = dstStageMasks.data();

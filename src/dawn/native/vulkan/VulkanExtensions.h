@@ -105,6 +105,7 @@ enum class DeviceExt : uint32_t {
     Maintenance5,
 
     // Others
+    FrameBoundary,
     DepthClipEnable,
     ImageDrmFormatModifier,
     Swapchain,

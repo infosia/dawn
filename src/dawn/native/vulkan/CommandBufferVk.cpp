@@ -949,6 +949,8 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
                 continue;
             }
 
+            recordingContext->images.push_back(ToBackend(view->GetTexture())->GetHandle());
+
             VkClearValue clearValue = ToVkClearValue(
                 attachmentInfo.clearColor, view->GetFormat().GetAspectInfo(Aspect::Color).baseType);
             uint32_t depthSlice = view->GetDimension() == wgpu::TextureViewDimension::e3D

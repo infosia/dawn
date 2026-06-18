@@ -85,6 +85,8 @@ struct CommandRecordingContext {
     std::vector<VkCommandBuffer> commandBufferList;
     std::vector<VkCommandPool> commandPoolList;
 
+    std::vector<::VkImage> images;
+
     // Need to track if a render pass has already been recorded for the
     // VulkanSplitCommandBufferOnComputePassAfterRenderPass workaround.
     bool hasRecordedRenderPass = false;

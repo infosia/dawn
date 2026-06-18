@@ -146,6 +146,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     {DeviceExt::Maintenance5, "VK_KHR_maintenance5"},
 
     // Not promoted to core in any version
+    {DeviceExt::FrameBoundary, "VK_EXT_frame_boundary"},
     {DeviceExt::DepthClipEnable, "VK_EXT_depth_clip_enable"},
     {DeviceExt::ImageDrmFormatModifier, "VK_EXT_image_drm_format_modifier"},
     {DeviceExt::Swapchain, "VK_KHR_swapchain"},
@@ -234,6 +235,7 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
             case DeviceExt::QueueFamilyForeign:
             case DeviceExt::PhysicalDeviceDrm:
             case DeviceExt::ExtendedDynamicState:
+            case DeviceExt::FrameBoundary:
                 hasDependencies = true;
                 break;
 

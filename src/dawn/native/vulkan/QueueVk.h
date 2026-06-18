@@ -95,6 +95,7 @@ class Queue final : public QueueBase {
 
     uint32_t mQueueFamily = 0;
     VkQueue mQueue = VK_NULL_HANDLE;
+    uint64_t mNextFrameID = 1;
 };
 
 }  // namespace dawn::native::vulkan
