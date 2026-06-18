@@ -29,11 +29,8 @@
 package main
 
 import (
-	"bytes"
-	"context"
 	"flag"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -65,6 +62,8 @@ const (
 	TaskModeTriage
 	TaskModeBisect
 	TaskModeBisectStep
+	TaskModeExperiment
+	TaskModeReport
 )
 
 type FuzzMode int
@@ -95,6 +94,9 @@ type mainConfig struct {
 	build              string
 	out                string
 	numProcesses       int
+	experimentPath     string
+	reportPath         string
+	machineName        string
 	osWrapper          oswrapper.OSWrapper
 	execWrapper        execwrapper.ExecWrapper
 	progressBuilder    progressbar.Build
@@ -106,12 +108,14 @@ func showUsage() {
 	_, _ = fmt.Fprintln(out, `
 fuzz is a helper for running the tint fuzzer executables and other related tasks
 
-fuzz has 5, mutually exclusive, tasks that it can perform:
+fuzz has 7, mutually exclusive, tasks that it can perform:
 1. Run a fuzzer locally, requires no additional flag.
 2. Check that a fuzzer successfully handles contents of -inputs, requires -check flag
 3. Generate a fuzzer corpus based on contents of -inputs, requires -generate flag
 4. Triage a specific fuzzer crash, requires -triage flag
 5. Bisect a specific fuzzer crash test case, requires -bisect flag
+6. Run performance and benchmarking experiments, requires -experiment flag
+7. Generate reports and coverage from experiment runs, requires -report flag
 
 usage:
   fuzz [flags...]`)
@@ -144,10 +148,13 @@ func main() {
 	flag.StringVar(&c.knownPassing, "known-passing", "", "known passing git hash or time")
 	flag.StringVar(&c.build, "build", defaultBuildDir(c.osWrapper), "the build directory")
 	flag.StringVar(&c.out, "out", "<tmp>", "the directory to store outputs to")
-	flag.IntVar(&c.numProcesses, "j", runtime.NumCPU(), "number of concurrent fuzzers to run")
+	flag.IntVar(&c.numProcesses, "j", 0, "number of concurrent fuzzers to run (defaults to 1 for experiments, NumCPU for others)")
 	flag.BoolVar(&c.bisectStep, "bisect-step", false, "internal flag used by git bisect run")
 	flag.BoolVar(&c.isFix, "is-fix", false, "internal flag used by git bisect run to indicate if we are bisecting a fix")
 	flag.BoolVar(&c.skipInputTypeCheck, "skip-input-type-check", false, "bypass the heuristic text/binary input file type check")
+	flag.StringVar(&c.experimentPath, "experiment", "", "run an experiment using the configuration at <root>")
+	flag.StringVar(&c.reportPath, "report", "", "generate a report from the experiment at <root>")
+	flag.StringVar(&c.machineName, "machine", "", "machine name to identify results")
 	flag.Parse()
 
 	if c.mesaMode && c.filter != "" {
@@ -168,9 +175,15 @@ func main() {
 	if c.bisectFile != "" {
 		modeCount++
 	}
+	if c.experimentPath != "" {
+		modeCount++
+	}
+	if c.reportPath != "" {
+		modeCount++
+	}
 
 	if !c.bisectStep && modeCount > 1 {
-		fmt.Println("cannot set more than one of -check, -generate, -triage, and -bisect flags at the same time")
+		fmt.Println("cannot set more than one of -check, -generate, -triage, -bisect, -experiment, and -report flags at the same time")
 		os.Exit(1)
 	}
 
@@ -185,6 +198,10 @@ func main() {
 		c.cmdMode = TaskModeTriage
 	case c.bisectFile != "":
 		c.cmdMode = TaskModeBisect
+	case c.experimentPath != "":
+		c.cmdMode = TaskModeExperiment
+	case c.reportPath != "":
+		c.cmdMode = TaskModeReport
 	default:
 		c.cmdMode = TaskModeRun
 	}
@@ -193,6 +210,16 @@ func main() {
 		c.fuzzMode = FuzzModeIr
 	} else {
 		c.fuzzMode = FuzzModeWgsl
+	}
+
+	if c.numProcesses == 0 {
+		// If running experiment default to single thread to avoid overloading system, otherwise try to run as many
+		// threads as possible without swamping
+		if c.cmdMode == TaskModeExperiment {
+			c.numProcesses = 1
+		} else {
+			c.numProcesses = runtime.NumCPU()
+		}
 	}
 
 	if c.numProcesses < 1 {
@@ -242,12 +269,16 @@ func (t *taskConfig) runCmdUnbuffered(name string, args ...string) error {
 }
 
 func run(c *mainConfig) error {
-	if !fileutils.IsDir(c.build, c.osWrapper) {
-		return fmt.Errorf("build directory '%v' does not exist", c.build)
+	// Build directory is only needed for -experiment and -report if the binary hasn't been built/cached already, so
+	// check is deferred to when it is actually needed
+	if c.cmdMode != TaskModeExperiment && c.cmdMode != TaskModeReport {
+		if !fileutils.IsDir(c.build, c.osWrapper) {
+			return fmt.Errorf("build directory '%v' does not exist", c.build)
+		}
 	}
 
 	// Verify / create the output directory
-	if c.cmdMode != TaskModeTriage && c.cmdMode != TaskModeBisect && c.cmdMode != TaskModeBisectStep {
+	if c.cmdMode != TaskModeTriage && c.cmdMode != TaskModeBisect && c.cmdMode != TaskModeBisectStep && c.cmdMode != TaskModeExperiment && c.cmdMode != TaskModeReport {
 		if c.out == "" || c.out == "<tmp>" {
 			if tmp, err := c.osWrapper.MkdirTemp("", "tint_fuzz"); err == nil {
 				defer c.osWrapper.RemoveAll(tmp)
@@ -261,14 +292,14 @@ func run(c *mainConfig) error {
 				return err
 			}
 		}
-	} else if c.out != "" && c.out != "<tmp>" {
+	} else if c.cmdMode != TaskModeExperiment && c.cmdMode != TaskModeReport && c.out != "" && c.out != "<tmp>" {
 		err := c.osWrapper.MkdirAll(c.out, os.ModePerm)
 		if err != nil {
 			return err
 		}
 	}
 
-	if c.out != "" && c.out != "<tmp>" && !fileutils.IsDir(c.out, c.osWrapper) {
+	if c.cmdMode != TaskModeExperiment && c.cmdMode != TaskModeReport && c.out != "" && c.out != "<tmp>" && !fileutils.IsDir(c.out, c.osWrapper) {
 		return fmt.Errorf("output directory '%v' does not exist", c.out)
 	}
 
@@ -318,6 +349,10 @@ func run(c *mainConfig) error {
 			err = runBisect(t)
 		case TaskModeBisectStep:
 			err = runBisectStep(t)
+		case TaskModeExperiment:
+			err = runExperiment(t)
+		case TaskModeReport:
+			err = runReport(t)
 		default:
 			err = fmt.Errorf("unknown task mode %d", t.taskMode)
 		}
@@ -367,6 +402,8 @@ func generateTaskConfig(tm TaskMode, c *mainConfig) (*taskConfig, error) {
 		if c.fuzzMode == FuzzModeIr {
 			dependencies = append(dependencies, depConfig{"ir_fuzz_as", &t.assembler})
 		}
+	case TaskModeExperiment, TaskModeReport:
+		// No dependencies required to be pre-validated by this helper
 	}
 
 	// Verify all the required dependencies are present
@@ -436,175 +473,6 @@ func checkFuzzer(t *taskConfig) error {
 
 	if err := utils.RunConcurrent(t.numProcesses, routine); err != nil {
 		return err
-	}
-
-	fmt.Println("done")
-	return nil
-}
-
-// runFuzzer runs the fuzzer across t.numProcesses processes.
-// The fuzzer will use t.inputs as the seed directory.
-// New cases are written to t.out.
-// Blocks until a fuzzer errors, or the process is interrupted.
-func runFuzzer(t *taskConfig) error {
-	ctx := utils.CancelOnInterruptContext(context.Background())
-	ctx, cancel := context.WithCancel(ctx)
-	defer cancel()
-
-	args := generateFuzzerArgs(t)
-
-	if t.verbose {
-		fmt.Println("Using fuzzing cmd: " + t.fuzzer + " " + strings.Join(args, " "))
-	}
-	fmt.Println("running ", t.numProcesses, " fuzzer instances")
-
-	errs := make(chan error, t.numProcesses)
-	for i := 0; i < t.numProcesses; i++ {
-		go func() {
-			out := bytes.Buffer{}
-			var stdout, stderr io.Writer = &out, &out
-			if t.verbose || t.dump {
-				stdout = io.MultiWriter(&out, os.Stdout)
-				stderr = io.MultiWriter(&out, os.Stderr)
-			}
-
-			cmd := t.execWrapper.CommandContext(ctx, t.fuzzer, args...).WithStdout(stdout).WithStderr(stderr)
-
-			if err := cmd.Run(); err != nil {
-				if ctxErr := ctx.Err(); ctxErr != nil {
-					errs <- ctxErr
-				} else {
-					errs <- fmt.Errorf("fuzzer process '%s' failed with error: %w\nOutput:\n%s", t.fuzzer, err, out.String())
-				}
-			} else {
-				errs <- fmt.Errorf("fuzzer process '%s' unexpectedly terminated without error.\nOutput:\n%s", t.fuzzer, out.String())
-			}
-		}()
-	}
-	for err := range errs {
-		return err
-	}
-
-	fmt.Println("done")
-	return nil
-}
-
-// generateFuzzerArgs generates the arguments that need to be passed into the fuzzer binary call
-func generateFuzzerArgs(t *taskConfig) []string {
-	args := []string{t.out}
-
-	if t.inputs != "" {
-		args = append(args, t.inputs)
-	}
-	if t.dictionary != "" {
-		args = append(args, "-dict="+t.dictionary)
-	}
-	if t.verbose {
-		args = append(args, "--verbose")
-	}
-	if t.dump {
-		args = append(args, "--dump")
-	}
-	if t.filter != "" {
-		args = append(args, "--filter="+t.filter)
-	}
-	return args
-}
-
-// runCorpusGenerator converts a set of input test files into a fuzzer corpus
-// The generator will use t.inputs as the source directory.
-// The corpus will be written to t.out.
-func runCorpusGenerator(t *taskConfig) error {
-	switch t.fuzzMode {
-	case FuzzModeWgsl:
-		return runCorpusGeneratorWgsl(t)
-	case FuzzModeIr:
-		return runCorpusGeneratorIr(t)
-	default:
-		return fmt.Errorf("unknown fuzzer mode %d", t.fuzzMode)
-	}
-}
-
-// runCorpusGeneratorWgsl converts a set of input test .wgsl files into a WGSL fuzzer corpus.
-func runCorpusGeneratorWgsl(t *taskConfig) error {
-	return gatherWgslFiles(t.inputs, t.out, t.osWrapper)
-}
-
-// runCorpusGeneratorIr converts a set of input test .wgsl files into an IR fuzzer corpus.
-// It gathers the WGSL files, then forks out to an external binary (t.assembler) to perform the conversion.
-func runCorpusGeneratorIr(t *taskConfig) error {
-	tmp, err := t.osWrapper.MkdirTemp("", "wgsl_corpus_for_ir")
-	if err != nil {
-		return fmt.Errorf("failed to create temporary directory for WGSL files: %w", err)
-	}
-	defer t.osWrapper.RemoveAll(tmp)
-
-	if err := gatherWgslFiles(t.inputs, tmp, t.osWrapper); err != nil {
-		return fmt.Errorf("failed to gather WGSL files for IR corpus generation: %w", err)
-	}
-
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
-	args := []string{tmp, t.out}
-	if t.verbose {
-		args = append(args, "--verbose")
-	}
-
-	cmdStr := fmt.Sprintf("%s %s", t.assembler, strings.Join(args, " "))
-
-	if t.verbose {
-		fmt.Println("Using assembler cmd: " + cmdStr)
-	}
-	fmt.Println("running assembler")
-
-	out := &bytes.Buffer{}
-	var stdout, stderr io.Writer = out, out
-	if t.verbose {
-		stdout = io.MultiWriter(out, os.Stdout)
-		stderr = io.MultiWriter(out, os.Stderr)
-	}
-
-	cmd := t.execWrapper.CommandContext(ctx, t.assembler, args...).WithStdout(stdout).WithStderr(stderr)
-
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("failed to run IR corpus assembler.\n  command: %s\n  error: %w\n  output:\n%s", cmdStr, err, out.String())
-	}
-
-	fmt.Println("done")
-	return nil
-}
-
-// gatherWgslFiles copies all the .wgsl files in a directory structure over to a flat directory
-// structure, via replacing the path separators for the origins with underscores in the destination
-// file names. It also filters out any '*.expected.*' files
-func gatherWgslFiles(inputs string, out string, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
-	fmt.Println("gathering and filtering .wgsl files")
-	globPattern := filepath.Join(inputs, "**.wgsl")
-	files, err := glob.Glob(globPattern, fsReaderWriter)
-	if err != nil {
-		return fmt.Errorf("failed to find .wgsl files with pattern '%v': %w", globPattern, err)
-	}
-
-	// Remove '*.expected.*'
-	files = transform.Filter(files, func(s string) bool { return !strings.Contains(s, ".expected.") })
-
-	// Map src file paths to dst filenames where the path separators have been converted to underscores
-	mapping := make(map[string]string, len(files))
-	for _, f := range files {
-		// paths returned by glob.Glob are absolute, but only want to use the relative path in the dest name
-		relPath, err := filepath.Rel(inputs, f)
-		if err != nil {
-			return fmt.Errorf("failed to calculate relative path for '%v' from base '%v': %w", f, inputs, err)
-		}
-		mapping[f] = strings.ReplaceAll(filepath.ToSlash(relPath), "/", "_")
-	}
-
-	for src, dest := range mapping {
-		dstPath := filepath.Join(out, dest)
-		if err := fileutils.CopyFile(dstPath, src, fsReaderWriter); err != nil {
-			return fmt.Errorf("failed to copy '%v' to '%v': %w", src, dstPath, err)
-		}
 	}
 
 	fmt.Println("done")
