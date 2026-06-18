@@ -22,6 +22,29 @@
       },
       "revId": "6a1e4fd559e6725bb9e80b2c8fc97bc907f895ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d78b5ea1_a592cf8f",
+        "filename": "docs/dawn/codegen.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-18T07:04:30Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"actaul\" is a possible misspelling of \"actual\".\n\nTo bypass Spellchecker, add a f...\n\n\"actaul\" is a possible misspelling of \"actual\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 122,
+        "startChar": 158,
+        "endLine": 122,
+        "endChar": 164
+      },
+      "revId": "6a1e4fd559e6725bb9e80b2c8fc97bc907f895ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
