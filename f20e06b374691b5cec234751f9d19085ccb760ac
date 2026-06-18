@@ -50,6 +50,24 @@
       "message": "Please predeclare defines as an empty list somewhere at the top of this target.",
       "revId": "f20e06b374691b5cec234751f9d19085ccb760ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5e5ef46_84dab2cd",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-18T14:18:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5a043a1_18d93600",
+      "revId": "f20e06b374691b5cec234751f9d19085ccb760ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
