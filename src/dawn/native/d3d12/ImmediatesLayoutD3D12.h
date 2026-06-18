@@ -49,6 +49,8 @@ struct RenderImmediates {
 // Define compute pipeline immediates layout. Append members to expand the layout.
 struct ComputeImmediates {
     UserImmediates userImmediates;
+
+    NumWorkgroupsDimensions numWorkgroups;
 };
 DAWN_DISABLE_STRUCT_PADDING_WARNINGS
 
