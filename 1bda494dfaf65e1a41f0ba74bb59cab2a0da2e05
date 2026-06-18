@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39be24f1_c178ac34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-18T20:40:05Z",
+      "side": 1,
+      "message": "I can review this tomorrow, or you can land and I\u0027ll review post-merge.",
+      "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
