@@ -38,6 +38,20 @@
 // involving the pointer to become a security vulnerability. For additional guidance please see the
 // "When to use raw_ptr<T>" section of:
 // https://source.chromium.org/chromium/chromium/src/+/main:base/memory/raw_ptr.md
+#ifndef __has_attribute
+#define __has_attribute_helper
+#define __has_attribute(x) 0
+#endif
+
+#if defined(__clang__) && __has_attribute(annotate)
+#define RAW_PTR_EXCLUSION __attribute__((annotate("raw_ptr_exclusion")))
+#else
 #define RAW_PTR_EXCLUSION
+#endif
+
+#ifdef __has_attribute_helper
+#undef __has_attribute
+#undef __has_attribute_helper
+#endif
 
 #endif  // SRC_DAWN_PARTITION_ALLOC_PARTITION_ALLOC_POINTERS_RAW_PTR_EXCLUSION_H_
