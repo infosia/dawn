@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "18505f47cf4c48478a63b72aae559ec2b6c9329a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4112cbeb_c1fd3d9a",
+        "filename": "generator/templates/dawn/native/ProcTable.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-18T19:51:24Z",
+      "side": 1,
+      "message": "Since this is C++, would it make sense to `std::byte` here? I\u0027m assuming this is for stuff like `WriteBuffer` where we are taking opaque data?",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 52
+      },
+      "revId": "18505f47cf4c48478a63b72aae559ec2b6c9329a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
