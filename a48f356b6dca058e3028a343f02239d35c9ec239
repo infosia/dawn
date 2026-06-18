@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40a5afd8_25adb819",
+        "filename": "src/utils/typed_integer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-18T06:39:27Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"postive\" is a possible misspelling of \"positive\".\n\nTo bypass Spellchecker, add ...\n\n\"postive\" is a possible misspelling of \"positive\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 162,
+        "startChar": 22,
+        "endLine": 162,
+        "endChar": 29
+      },
+      "revId": "a48f356b6dca058e3028a343f02239d35c9ec239",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
