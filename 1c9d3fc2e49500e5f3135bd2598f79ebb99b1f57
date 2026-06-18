@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47a2c438_e9eb509c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-18T15:41:53Z",
+      "side": 1,
+      "message": "PTAL! I tested the interface with both the rest of the dawn changes in the WIP CL in the stack, and with the buffer part of the WebGPU CTS and https://chromium-review.git.corp.google.com/c/chromium/src/+/7957862",
+      "revId": "1c9d3fc2e49500e5f3135bd2598f79ebb99b1f57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
