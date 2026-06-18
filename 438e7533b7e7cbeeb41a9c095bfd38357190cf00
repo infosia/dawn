@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "838b116f_6d305d6f",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T18:56:33Z",
+      "side": 1,
+      "message": "I just discovered [`--warning-suppression-mappings`](https://clang.llvm.org/docs/WarningSuppressionMappings.html). This would be useful here as well as for `gen` because there are probably only a few warnings that we hit a lot in generated files.\n\nI\u0027ve taken a note of it on the bug summary.",
+      "parentUuid": "85fdd863_bd83fd0f",
+      "range": {
+        "startLine": 196,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 44
+      },
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39709303_5e3edada",
         "filename": "scripts/dawn_features.gni",
         "patchSetId": 11
@@ -195,6 +219,30 @@
       "side": 1,
       "message": "I could never tell if everything actually did everything so in Tint I just turned all of them on all the time. Didn\u0027t seem worth trying to pick and choose since it, at worst, didn\u0027t do anything and at best my add some extra warnings.\n\nTint at one point just did `-W -Wall -Wextra -Weverything -pedantic` to make sure everything got turned on.",
       "parentUuid": "152f376a_4f253005",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 28
+      },
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ab5e03f_299621b1",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T18:56:33Z",
+      "side": 1,
+      "message": "[`-W` is a synonym for `-Wextra`](https://clang.llvm.org/docs/DiagnosticsReference.html#w).\n\n`-pedantic` is AFAICT just a synonym for `-Wpedantic` that exists for backward compatibility.\n\n`-Weverything` sure seems like it should (and does) enable `everything`. But we don\u0027t need to assume that.\n\nSo I\u0027d say if clang, enable `-Wall -Wextra -Wpedantic -Wno-...`, and then if dawn_weverything, enable `-Weverything -Wno-.......`.",
+      "parentUuid": "e9b425b0_7994bab9",
       "range": {
         "startLine": 124,
         "startChar": 20,
