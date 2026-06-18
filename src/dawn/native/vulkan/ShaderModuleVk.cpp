@@ -411,18 +411,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                 Extent3D _;
                 DAWN_TRY_ASSIGN(
                     _, ValidateComputeStageWorkgroupSize(
-                           tintResult->workgroup_info, r.usesSubgroupMatrix, r.maxSubgroupSize,
-                           r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
-
-                if (tintResult->workgroup_info.subgroup_size.has_value()) {
-                    const uint32_t explicitSubgroupSize =
-                        tintResult->workgroup_info.subgroup_size.value();
-                    DAWN_INVALID_IF(explicitSubgroupSize < r.minSubgroupSize ||
-                                        explicitSubgroupSize > r.maxSubgroupSize,
-                                    "The subgroup_size attribute (%u) is not in the allowed range "
-                                    "([%u, %u]).",
-                                    explicitSubgroupSize, r.minSubgroupSize, r.maxSubgroupSize);
-                }
+                           tintResult->workgroup_info, r.usesSubgroupMatrix, r.minSubgroupSize,
+                           r.maxSubgroupSize, r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
 
                 if (tintResult->workgroup_info.subgroup_size.has_value()) {
                     uint32_t explicitSubgroupSize =

@@ -63,6 +63,7 @@ using OptionalVertexPullingTransformConfig = std::optional<tint::VertexPullingCo
     X(UnsafeUnserializedValue<ShaderModuleBase::ScopedUseTintProgram>, inputProgram) \
     X(LimitsForCompilationRequest, limits)                                           \
     X(UnsafeUnserializedValue<LimitsForCompilationRequest>, adapterSupportedLimits)  \
+    X(uint32_t, minSubgroupSize)                                                     \
     X(uint32_t, maxSubgroupSize)                                                     \
     X(bool, usesSubgroupMatrix)                                                      \
     X(bool, useStrictMath)                                                           \
@@ -371,6 +372,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.limits = LimitsForCompilationRequest::Create(device->GetLimits().v1);
     req.adapterSupportedLimits = UnsafeUnserializedValue(
         LimitsForCompilationRequest::Create(device->GetAdapter()->GetLimits().v1));
+    req.minSubgroupSize = device->GetAdapter()->GetPhysicalDevice()->GetSubgroupMinSize();
     req.maxSubgroupSize = device->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
 
     CacheResult<MslCompilation> mslCompilation;
@@ -416,10 +418,10 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
             Extent3D localSize{0, 0, 0};
             if (r.stage == SingleShaderStage::Compute) {
                 // Validate workgroup size and workgroup storage size.
-                DAWN_TRY_ASSIGN(localSize,
-                                ValidateComputeStageWorkgroupSize(
-                                    result->workgroup_info, r.usesSubgroupMatrix, r.maxSubgroupSize,
-                                    r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
+                DAWN_TRY_ASSIGN(localSize, ValidateComputeStageWorkgroupSize(
+                                               result->workgroup_info, r.usesSubgroupMatrix,
+                                               r.minSubgroupSize, r.maxSubgroupSize, r.limits,
+                                               r.adapterSupportedLimits.UnsafeGetValue()));
             }
 
             auto msl = std::move(result->msl);

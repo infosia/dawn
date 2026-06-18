@@ -516,13 +516,14 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
     auto limits = LimitsForCompilationRequest::Create(GetDevice()->GetLimits().v1);
     auto adapterSupportedLimits =
         LimitsForCompilationRequest::Create(GetDevice()->GetAdapter()->GetLimits().v1);
+    auto minSubgroupSize = GetDevice()->GetAdapter()->GetPhysicalDevice()->GetSubgroupMinSize();
     auto maxSubgroupSize = GetDevice()->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
 
     Extent3D wgSize;
-    DAWN_TRY_ASSIGN(
-        wgSize, ValidateComputeStageWorkgroupSize(tintResult->workgroup_info,
-                                                  computeStage.metadata->usesSubgroupMatrix,
-                                                  maxSubgroupSize, limits, adapterSupportedLimits));
+    DAWN_TRY_ASSIGN(wgSize,
+                    ValidateComputeStageWorkgroupSize(
+                        tintResult->workgroup_info, computeStage.metadata->usesSubgroupMatrix,
+                        minSubgroupSize, maxSubgroupSize, limits, adapterSupportedLimits));
 
     return wgSize;
 }

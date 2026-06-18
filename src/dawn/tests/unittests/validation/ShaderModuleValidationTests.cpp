@@ -1219,7 +1219,20 @@ TEST_F(SubgroupSizeControlValidationTest, ValidateTotalInvocationsPerWorkgroupAn
     TestTotalInvocationsPerWorkgroupAndSubgroupSize({32}, 32, true);
 }
 
+// Test it is a validation error to use a `@subgroup_size` that is greater than
+// `subgroupMaxSize` or less than `subgroupMinSize` on current
+// adapter.
+TEST_F(SubgroupSizeControlValidationTest, ValidateRangeOfSubgroupSizes) {
+    wgpu::AdapterInfo info;
+    adapter.GetInfo(&info);
 
+    for (uint32_t subgroupSize = info.subgroupMinSize / 2; subgroupSize <= info.subgroupMaxSize * 2;
+         subgroupSize *= 2) {
+        ASSERT_TRUE(IsPowerOfTwo(subgroupSize));
+        bool success = subgroupSize >= info.subgroupMinSize && subgroupSize <= info.subgroupMaxSize;
+        TestTotalInvocationsPerWorkgroupAndSubgroupSize({subgroupSize}, subgroupSize, success);
+    }
+}
 
 }  // anonymous namespace
 }  // namespace dawn

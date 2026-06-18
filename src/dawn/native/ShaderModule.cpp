@@ -1356,6 +1356,7 @@ void ReflectShaderUsingTint(const ShaderModuleParseDeviceInfo& deviceInfo,
 ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
     const tint::WorkgroupInfo& workgroupInfo,
     bool usesSubgroupMatrix,
+    uint32_t minSubgroupSize,
     uint32_t maxSubgroupSize,
     const LimitsForCompilationRequest& limits,
     const LimitsForCompilationRequest& adapterSupportedlimits) {
@@ -1425,6 +1426,11 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
     if (workgroupInfo.subgroup_size.has_value()) {
         const uint32_t explicitSubgroupSize = workgroupInfo.subgroup_size.value();
         DAWN_ASSERT(explicitSubgroupSize > 0);
+        DAWN_ASSERT(minSubgroupSize <= maxSubgroupSize);
+        DAWN_INVALID_IF(
+            explicitSubgroupSize < minSubgroupSize || explicitSubgroupSize > maxSubgroupSize,
+            "The subgroup_size attribute (%u) cannot be smaller than (%u) or larger than (%u). ",
+            explicitSubgroupSize, minSubgroupSize, maxSubgroupSize);
         DAWN_INVALID_IF((workgroupInfo.x % explicitSubgroupSize != 0),
                         "The x-dimension of workgroup invocations (%u) is not a multiple of the "
                         "subgroup_size attribute (%u)",

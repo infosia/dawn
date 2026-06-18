@@ -542,6 +542,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
                 DAWN_TRY_ASSIGN(workgroupSize, ValidateComputeStageWorkgroupSize(
                                                    result->workgroup_info,
                                                    /*usesSubgroupMatrix=*/false,
+                                                   /*minSubgroupSize=*/0,
                                                    /*maxSubgroupSize=*/0, r.limits,
                                                    r.adapterSupportedLimits.UnsafeGetValue()));
                 compResult.workgroupSize = workgroupSize;

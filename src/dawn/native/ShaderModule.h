@@ -173,6 +173,7 @@ MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
 ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
     const tint::WorkgroupInfo& workgroupInfo,
     bool usesSubgroupMatrix,
+    uint32_t minSubgroupSize,
     uint32_t maxSubgroupSize,
     const LimitsForCompilationRequest& limits,
     const LimitsForCompilationRequest& adaterSupportedlimits);
