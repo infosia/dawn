@@ -1097,6 +1097,87 @@ MaybeError CommandBuffer::RecordCopyImageWithTemporaryBuffer(
     return {};
 }
 
+static const char* CommandToString(Command command) {
+    switch (command) {
+        case Command::BeginComputePass:
+            return "BeginComputePass";
+        case Command::BeginOcclusionQuery:
+            return "BeginOcclusionQuery";
+        case Command::BeginRenderPass:
+            return "BeginRenderPass";
+        case Command::ClearBuffer:
+            return "ClearBuffer";
+        case Command::CopyBufferToBuffer:
+            return "CopyBufferToBuffer";
+        case Command::CopyBufferToTexture:
+            return "CopyBufferToTexture";
+        case Command::CopyTextureToBuffer:
+            return "CopyTextureToBuffer";
+        case Command::CopyTextureToTexture:
+            return "CopyTextureToTexture";
+        case Command::Dispatch:
+            return "Dispatch";
+        case Command::DispatchIndirect:
+            return "DispatchIndirect";
+        case Command::Draw:
+            return "Draw";
+        case Command::DrawIndexed:
+            return "DrawIndexed";
+        case Command::DrawIndirect:
+            return "DrawIndirect";
+        case Command::DrawIndexedIndirect:
+            return "DrawIndexedIndirect";
+        case Command::MultiDrawIndirect:
+            return "MultiDrawIndirect";
+        case Command::MultiDrawIndexedIndirect:
+            return "MultiDrawIndexedIndirect";
+        case Command::EndComputePass:
+            return "EndComputePass";
+        case Command::EndOcclusionQuery:
+            return "EndOcclusionQuery";
+        case Command::EndRenderPass:
+            return "EndRenderPass";
+        case Command::ExecuteBundles:
+            return "ExecuteBundles";
+        case Command::InsertDebugMarker:
+            return "InsertDebugMarker";
+        case Command::PixelLocalStorageBarrier:
+            return "PixelLocalStorageBarrier";
+        case Command::PopDebugGroup:
+            return "PopDebugGroup";
+        case Command::PushDebugGroup:
+            return "PushDebugGroup";
+        case Command::ResolveQuerySet:
+            return "ResolveQuerySet";
+        case Command::SetComputePipeline:
+            return "SetComputePipeline";
+        case Command::SetRenderPipeline:
+            return "SetRenderPipeline";
+        case Command::SetStencilReference:
+            return "SetStencilReference";
+        case Command::SetViewport:
+            return "SetViewport";
+        case Command::SetScissorRect:
+            return "SetScissorRect";
+        case Command::SetBlendConstant:
+            return "SetBlendConstant";
+        case Command::SetBindGroup:
+            return "SetBindGroup";
+        case Command::SetImmediates:
+            return "SetImmediates";
+        case Command::SetResourceTable:
+            return "SetResourceTable";
+        case Command::SetIndexBuffer:
+            return "SetIndexBuffer";
+        case Command::SetVertexBuffer:
+            return "SetVertexBuffer";
+        case Command::WriteBuffer:
+            return "WriteBuffer";
+        case Command::WriteTimestamp:
+            return "WriteTimestamp";
+    }
+}
+
 MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingContext) {
     Device* device = ToBackend(GetDevice());
     VkCommandBuffer commands = recordingContext->commandBuffer;
@@ -1126,6 +1207,8 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
     Command type;
     while (mCommands.NextCommandId(&type)) {
+        TRACE_EVENT0(GetDevice()->GetPlatform(), General, CommandToString(type));
+
         switch (type) {
             case Command::CopyBufferToBuffer: {
                 CopyBufferToBufferCmd* copy = mCommands.NextCommand<CopyBufferToBufferCmd>();
@@ -1748,6 +1831,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
     uint32_t workCommandCount = 0;
 
     auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) -> MaybeError {
+        TRACE_EVENT0(GetDevice()->GetPlatform(), General, CommandToString(type));
         switch (type) {
             case Command::Draw: {
                 workCommandCount++;
@@ -1932,6 +2016,16 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
             case Command::SetRenderPipeline: {
                 SetRenderPipelineCmd* cmd = iter->NextCommand<SetRenderPipelineCmd>();
+
+                RenderPipeline* pipeline = ToBackend(cmd->pipeline).Get();
+                TRACE_EVENT1(GetDevice()->GetPlatform(), General, "vkCmdBindPipeline", "label",
+                             pipeline->GetLabel());
+
+                TRACE_EVENT2(GetDevice()->GetPlatform(), General, "Shaders", "vertex",
+                             pipeline->GetStage(SingleShaderStage::Vertex).module->GetWGSL(),
+                             "fragment",
+                             pipeline->GetStage(SingleShaderStage::Fragment).module->GetWGSL());
+
                 state.OnSetPipeline(ToBackend(cmd->pipeline).Get());
                 break;
             }
