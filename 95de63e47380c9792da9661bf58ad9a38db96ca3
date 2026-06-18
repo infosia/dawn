@@ -16,6 +16,24 @@
       "message": "PTAL, maybe there\u0027s a better way of doing this? The errors happen in google3 with a particular flavour of ASAN.",
       "revId": "95de63e47380c9792da9661bf58ad9a38db96ca3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6f71738_a3d90066",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T07:32:17Z",
+      "side": 1,
+      "message": "This sounds like a UBSan check, maybe it\u0027s one that chrome doesn\u0027t enable.",
+      "parentUuid": "e7a97dc8_2c0db847",
+      "revId": "95de63e47380c9792da9661bf58ad9a38db96ca3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
