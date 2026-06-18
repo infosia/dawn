@@ -413,8 +413,12 @@ dawn_test("dawn_unittests") {
   # `dawn_unittests` are known to run for both Dawn standalone and Chrome. This
   # file is testing specifically the Dawn's standalone configuration of
   # partition_alloc.
+  sources += [ "unittests/RawPtrTests.cpp" ]
   if (dawn_enable_partition_alloc) {
-    sources += [ "unittests/RawPtrTests.cpp" ]
+    if (!defined(defines)) {
+      defines = []
+    }
+    defines += [ "DAWN_ENABLE_PARTITION_ALLOC" ]
   }
 
   if (is_win) {
