@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e3ae4ee_48e62101",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-18T02:10:38Z",
+      "side": 1,
+      "message": "Why require pinned clang? Tint has been built this way from the start without requiring a specific clang. We got a handful of errors but we just added suppressions (or fixed them) and folks could still turn of everything manually.",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
