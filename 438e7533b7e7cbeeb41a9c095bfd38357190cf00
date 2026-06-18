@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0588f0df_ba4fd851",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T21:49:11Z",
+      "side": 1,
+      "message": "nit: Probably just `dawn_warnings` since it\u0027s not always `-Weverything` depending on the config.",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f17c1c82_07566ded",
         "filename": "scripts/BUILD.gn",
         "patchSetId": 11
@@ -178,6 +201,24 @@
       "side": 1,
       "message": "We turned off the unknown warning option because it didn\u0027t seem useful.\n\nIt came up a couple of times, but folks could always turn everything off as it was a flag, or we just add the suppression. Seemed more useful to always turn it on in general.",
       "parentUuid": "5d8ec647_89a9b419",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "682978b4_36bf0ff4",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T21:49:11Z",
+      "side": 1,
+      "message": "Fair points and since this is GN, it\u0027s probably very rare to build with anything other than pinned clang.\n\nHow about `dawn_weverything` defaults to `is_clang`, and then before enabling `-Weverything` we do this:\n```\nassert(using_pinned_clang, \"dawn_weverything requires using the pinned clang binary. Disable it if you intend to build with another clang installation.\")\n```\nThat way it reduces the risk we accidentally disable `-Weverything` due to computing `using_pinned_clang` wrong, and if anyone does want to build with non-pinned clang (which should be rare) then they\u0027ll know what to do.",
+      "parentUuid": "3664b346_c68e4b9e",
       "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
