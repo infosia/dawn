@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd6db847_c00386f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-18T13:23:09Z",
+      "side": 1,
+      "message": "Hold on, my Windows SDK does define up to SM 6.9. Let me try to find more info on the versions in which these defines were introduced. The solution might be to require a more recent SDK.",
+      "revId": "00ffbf2b12a324448156fb14ca28e34a9d85f510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
