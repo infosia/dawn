@@ -360,6 +360,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4957019b_ede288e5",
+        "filename": "src/utils/span.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-18T12:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46e6b6a1_9941009a",
+      "revId": "97fcdeab515ddcf6ca779b2bb01a139b8ec4e29a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73eebf58_b1bc911c",
