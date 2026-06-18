@@ -16,6 +16,29 @@
       "message": "Loko: PTAL. Thanks!",
       "revId": "fa603b02b4a126880645df9f48dd2860d00d15bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2967a180_78593702",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-18T20:16:45Z",
+      "side": 1,
+      "message": "Should we instead consider moving this out to a separate function to be called in both places (here and in `ValidateSampledTextureBinding`)? It would be easier to ensure that the validation happens for the two places the same way in that case. The `HasFlexibleTextureViews` function also seems like it has a TODO which may cause it to change, so maybe it makes sense to unify the check to make that change easier later also?",
+      "range": {
+        "startLine": 312,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 5
+      },
+      "revId": "fa603b02b4a126880645df9f48dd2860d00d15bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
