@@ -80,6 +80,30 @@
       },
       "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c8ace5c_fd945359",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T22:10:35Z",
+      "side": 1,
+      "message": "oops typo, I meant `EXPECT_DEATH_IF_SUPPORTED`. Tint uses that everywhere (instead of `EXPECT_DEATH`):\nhttps://source.chromium.org/search?q\u003df:%5Ethird_party%2Fdawn%2Fsrc%2Ftint%20expect_death\u0026sq\u003d\u0026ss\u003dchromium\n\nI don\u0027t know why tint_unittests is building these files, because they\u0027re only depended on by dawn_unittests, but it happened somehow. I\u0027ll see if I can figure it out",
+      "parentUuid": "e589654b_a3215965",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
