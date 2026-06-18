@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d7af2c2_2a2312d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-18T23:19:01Z",
+      "side": 1,
+      "message": "I also included the change that Corentin made in https://dawn-review.git.corp.google.com/c/dawn/+/318115 and I\u0027ll rebase and land this after that one lands.",
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
