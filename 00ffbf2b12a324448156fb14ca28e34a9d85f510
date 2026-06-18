@@ -39,6 +39,30 @@
       },
       "revId": "00ffbf2b12a324448156fb14ca28e34a9d85f510",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99adb084_cfe2abf1",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-18T17:39:02Z",
+      "side": 1,
+      "message": "Is the issue that the third_party/directx-headers is out of date? As these don\u0027t seem to be in that file. Does that header folder get picked up on Windows, or is it only for DXC builds on non-windows platforms? (And, could it accidentally be getting picked up)",
+      "parentUuid": "0e9a0cc2_6360e3ef",
+      "range": {
+        "startLine": 141,
+        "startChar": 33,
+        "endLine": 142,
+        "endChar": 31
+      },
+      "revId": "00ffbf2b12a324448156fb14ca28e34a9d85f510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
