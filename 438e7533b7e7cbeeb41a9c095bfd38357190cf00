@@ -142,6 +142,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3664b346_c68e4b9e",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-18T18:04:38Z",
+      "side": 1,
+      "message": "We turned off the unknown warning option because it didn\u0027t seem useful.\n\nIt came up a couple of times, but folks could always turn everything off as it was a flag, or we just add the suppression. Seemed more useful to always turn it on in general.",
+      "parentUuid": "5d8ec647_89a9b419",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "152f376a_4f253005",
         "filename": "src/dawn/common/BUILD.gn",
         "patchSetId": 11
@@ -153,6 +171,30 @@
       "writtenOn": "2026-06-18T17:58:02Z",
       "side": 1,
       "message": "We shouldn\u0027t need `-pedantic` anymore, I\u0027m pretty sure it just enables warnings and thus is a subset of `-Weverything`.\n\nWe should enable it in the non-weverything mode though: `-Wall -Wextra -pedantic`\n\nAlso I believe `-Wpedantic` is the same thing as `-pedantic`, then we might not need the `is_win` special case.",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 28
+      },
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9b425b0_7994bab9",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-18T18:04:38Z",
+      "side": 1,
+      "message": "I could never tell if everything actually did everything so in Tint I just turned all of them on all the time. Didn\u0027t seem worth trying to pick and choose since it, at worst, didn\u0027t do anything and at best my add some extra warnings.\n\nTint at one point just did `-W -Wall -Wextra -Weverything -pedantic` to make sure everything got turned on.",
+      "parentUuid": "152f376a_4f253005",
       "range": {
         "startLine": 124,
         "startChar": 20,
