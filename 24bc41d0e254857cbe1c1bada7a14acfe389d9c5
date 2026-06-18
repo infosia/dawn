@@ -46,6 +46,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bba22caa_3068a681",
+        "filename": "generator/templates/art/api_kotlin_enum.kt",
+        "patchSetId": 28
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-18T07:10:58Z",
+      "side": 1,
+      "message": "Done. I\u0027ve updated api_kotlin_enum.kt to apply the experimental annotation to individual const val constants whenever the specific enum value is marked experimental in dawn.json",
+      "parentUuid": "f13411a9_c78edd62",
+      "revId": "24bc41d0e254857cbe1c1bada7a14acfe389d9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8671fe49_5d509507",
@@ -81,6 +99,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6e462d7_ee376b19",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 28
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-18T07:10:58Z",
+      "side": 1,
+      "message": "Done. Thanks for pointing out.",
+      "parentUuid": "8671fe49_5d509507",
+      "revId": "24bc41d0e254857cbe1c1bada7a14acfe389d9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "000f0d3c_da43509d",
@@ -94,6 +130,30 @@
       "writtenOn": "2026-06-16T08:28:23Z",
       "side": 1,
       "message": "Please fix this WARNING reported by autoreview issue finding: The manual check for `\u0027True\u0027` works because Jinja2 renders booleans as strings when output. However, for consistency with other parts of the generator (if any use truthiness), you might consider using the rendered result directly in an `if` block, but the current approach is safe and explicit.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "24bc41d0e254857cbe1c1bada7a14acfe389d9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81837c6b_11877668",
+        "filename": "generator/templates/art/api_kotlin_structure.kt",
+        "patchSetId": 28
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-18T07:10:58Z",
+      "side": 1,
+      "message": "The manual check for \u0027True\u0027 is required here. Jinja2 macros (like item_is_experimental) exclusively return strings, not booleans. If we just wrote {% if item_is_experimental(structure) %}, Jinja would evaluate both the string \u0027True\u0027 and \u0027False\u0027 as true.",
+      "parentUuid": "000f0d3c_da43509d",
       "range": {
         "startLine": 40,
         "startChar": 0,
@@ -127,6 +187,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c84198dd_47ac06ae",
+        "filename": "generator/templates/art/api_kotlin_structure.kt",
+        "patchSetId": 28
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-18T07:10:58Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "a5b77aa8_64dd99db",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 0
+      },
+      "revId": "24bc41d0e254857cbe1c1bada7a14acfe389d9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20f273c0_92a9fa04",
@@ -140,6 +224,30 @@
       "writtenOn": "2026-06-16T08:28:23Z",
       "side": 1,
       "message": "Please fix this WARNING reported by autoreview issue finding: The `chain_children` parameter in this macro doesn\u0027t seem to be passed from the primary call sites in `api_kotlin_structure.kt` (lines 45, 55, 186, 194). While it doesn\u0027t break anything, the recursive check for experimental chained children is currently only effective at the top-level structure check (line 86). If you intended for individual properties to also check their potential chained children, you might need to pass this map through.",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "24bc41d0e254857cbe1c1bada7a14acfe389d9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecffcad5_6a319621",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 28
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-18T07:10:58Z",
+      "side": 1,
+      "message": "Done. Currently it wasn\u0027t breaking anything as there aren\u0027t any \"Stable -\u003e Stable -\u003e Experimental\" chains right now.",
+      "parentUuid": "20f273c0_92a9fa04",
       "range": {
         "startLine": 114,
         "startChar": 0,
