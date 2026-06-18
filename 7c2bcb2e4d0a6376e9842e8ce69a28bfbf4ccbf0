@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74b88e75_6363c129",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-18T01:40:53Z",
+      "side": 1,
+      "message": "Using relative paths instead of absolute paths seemed to do the trick.\n\nAlso changed to generate the list of .go files automatically in case we ever add/remove them, and so that we can share the list with the CMake build which will also need these dependencies.",
+      "revId": "7c2bcb2e4d0a6376e9842e8ce69a28bfbf4ccbf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
