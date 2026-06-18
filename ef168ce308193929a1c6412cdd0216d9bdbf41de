@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4eb4ddd_32c0101e",
+        "filename": "src/dawn/partition_alloc/partition_alloc/pointers/raw_ptr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-18T09:57:59Z",
+      "side": 1,
+      "message": "Note: this wasn\u0027t flagged before, because we have no bots with:\n- The chrome clang plugin for -WUnsafe-buffer-usage enabled.\n- PartitionAlloc disabled (e.g. using the noop implementation)",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "ef168ce308193929a1c6412cdd0216d9bdbf41de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccf76389_1f6b5ec5",
+        "filename": "src/dawn/partition_alloc/partition_alloc/pointers/raw_ptr_exclusion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-18T09:57:59Z",
+      "side": 1,
+      "message": "Note: this wasn\u0027t flagged before, because we have no bots with:\n- The chrome clang plugin for raw_ptr enabled.\n- PartitionAlloc disabled (e.g. using the noop implementation)",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "ef168ce308193929a1c6412cdd0216d9bdbf41de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
