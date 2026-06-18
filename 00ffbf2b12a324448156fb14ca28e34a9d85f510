@@ -63,6 +63,30 @@
       },
       "revId": "00ffbf2b12a324448156fb14ca28e34a9d85f510",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46f053fb_e4c1fc01",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-18T17:46:59Z",
+      "side": 1,
+      "message": "Rafael is correct. This CL is not needed.\n\nThese are picked up from the installed Windows SDK. If the Agility SDK is enabled, we pick it up from there.\n\nThe external user who reported this issue needs to update their Windows SDK.",
+      "parentUuid": "99adb084_cfe2abf1",
+      "range": {
+        "startLine": 141,
+        "startChar": 33,
+        "endLine": 142,
+        "endChar": 31
+      },
+      "revId": "00ffbf2b12a324448156fb14ca28e34a9d85f510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
