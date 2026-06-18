@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "85fdd863_bd83fd0f",
+        "filename": "scripts/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T18:02:09Z",
+      "side": 1,
+      "message": "Hm actually this is a useful warning, I didn\u0027t realize this is the warning that applies to lots of compiler-specific C++ extensions.\n\nAnyway it can go in the bucket of untriaged warnings and we\u0027ll look further at it later.",
+      "parentUuid": "4d6ccdb3_5cdb1264",
+      "range": {
+        "startLine": 196,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 44
+      },
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39709303_5e3edada",
         "filename": "scripts/dawn_features.gni",
         "patchSetId": 11
