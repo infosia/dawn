@@ -80,7 +80,7 @@ class PipelineLayout final : public PipelineLayoutBase {
     uint32_t GetImmediatesShaderRegister() const;
 
     ResultOrError<Ref<PipelineLayoutHandle>> GetOrCreatePipelineLayoutHandle(
-        uint32_t immediateCounts);
+        const ImmediateMask& pipelineImmediateMask);
 
     struct BindGroupDynamicStorageBufferInfo {
         // First register offset for a bind group's dynamic storage buffer lengths or offsets.
@@ -110,7 +110,8 @@ class PipelineLayout final : public PipelineLayoutBase {
     void DestroyImpl(DestroyReason reason) override;
 
     MaybeError BuildBaseRootParameters();
-    ResultOrError<Ref<PipelineLayoutHandle>> CreatePipelineLayoutHandle(uint32_t immediateCounts);
+    ResultOrError<Ref<PipelineLayoutHandle>> CreatePipelineLayoutHandle(
+        const ImmediateMask& pipelineImmediateMask);
 
     PerBindGroup<uint32_t> mCbvUavSrvRootParameterIndices;
     PerBindGroup<uint32_t> mSamplerRootParameterIndices;
@@ -118,8 +119,6 @@ class PipelineLayout final : public PipelineLayoutBase {
     DynamicStorageBufferInfo mDynamicStorageBufferInfo;
     uint32_t mResourceTableCbvUavSrvRootParameterIndex;
     uint32_t mResourceTableSamplerRootParameterIndex;
-    uint32_t mFirstIndexOffsetParameterIndex;
-    uint32_t mNumWorkgroupsParameterIndex;
     uint32_t mDynamicStorageBufferLengthsParameterIndex;
     uint32_t mDynamicStorageBufferOffsetsParameterIndex;
 
@@ -147,7 +146,7 @@ class PipelineLayout final : public PipelineLayoutBase {
     // do). After that, pipelines sharing a layout can have different immediate counts, so one
     // PipelineLayout may map to multiple PipelineLayoutHandles. At that point this key must capture
     // every per-pipeline input that changes the root signature.
-    MutexProtected<absl::flat_hash_map<uint32_t, Ref<PipelineLayoutHandle>>> mPipelineLayoutHandles;
+    MutexProtected<absl::flat_hash_map<uint64_t, Ref<PipelineLayoutHandle>>> mPipelineLayoutHandles;
 };
 
 }  // namespace dawn::native::d3d12

@@ -37,6 +37,7 @@
 #include "src/dawn/native/d3d/BlobD3D.h"
 #include "src/dawn/native/d3d/D3DError.h"
 #include "src/dawn/native/d3d12/DeviceD3D12.h"
+#include "src/dawn/native/d3d12/ImmediatesLayoutD3D12.h"
 #include "src/dawn/native/d3d12/PipelineLayoutD3D12.h"
 #include "src/dawn/native/d3d12/PlatformFunctionsD3D12.h"
 #include "src/dawn/native/d3d12/ShaderModuleD3D12.h"
@@ -316,6 +317,17 @@ Ref<RenderPipeline> RenderPipeline::CreateUninitialized(
 }
 
 MaybeError RenderPipeline::InitializeImpl() {
+    if (UsesVertexIndex() || UsesInstanceIndex()) {
+        mImmediateMask |=
+            GetImmediateBlockBits(offsetof(RenderImmediates, firstVertex), sizeof(uint32_t));
+        mImmediateMask |=
+            GetImmediateBlockBits(offsetof(RenderImmediates, firstInstance), sizeof(uint32_t));
+    }
+
+    // Create PipelineLayoutHandle after setup internal immediates.
+    DAWN_TRY_ASSIGN(mPipelineLayoutHandle,
+                    ToBackend(GetLayout())->GetOrCreatePipelineLayoutHandle(GetImmediateMask()));
+
     Device* device = ToBackend(GetDevice());
     uint32_t compileFlags = 0;
 
@@ -349,7 +361,6 @@ MaybeError RenderPipeline::InitializeImpl() {
     shaders[SingleShaderStage::Fragment] = &descriptorD3D12.PS;
 
     PerStage<d3d::CompiledShader> compiledShader;
-
     std::optional<dawn::native::d3d::InterStageShaderVariablesMask> usedInterstageVariables;
     dawn::native::EntryPointMetadata fragmentEntryPoint;
     if (GetStageMask() & wgpu::ShaderStage::Fragment) {
@@ -359,11 +370,6 @@ MaybeError RenderPipeline::InitializeImpl() {
         usedInterstageVariables = dawn::native::d3d::ToInterStageShaderVariablesMask(
             fragmentEntryPoint.usedInterStageVariables);
     }
-
-    DAWN_TRY_ASSIGN(
-        mPipelineLayoutHandle,
-        ToBackend(GetLayout())
-            ->GetOrCreatePipelineLayoutHandle(static_cast<uint32_t>(GetImmediateMask().count())));
 
     for (auto stage : IterateStages(GetStageMask())) {
         const ProgrammableStage& programmableStage = GetStage(stage);
@@ -381,14 +387,11 @@ MaybeError RenderPipeline::InitializeImpl() {
         DAWN_TRY_ASSIGN(compiledShader[stage],
                         ToBackend(programmableStage.module)
                             ->Compile(programmableStage, stage, ToBackend(GetLayout()),
-                                      compileFlags | additionalCompileFlags,
+                                      compileFlags | additionalCompileFlags, GetImmediateMask(),
                                       applySampleMaskPolyfill, usedInterstageVariables));
         *shaders[stage] = {compiledShader[stage].shaderBlob.DataPtr(),
                            compiledShader[stage].shaderBlob.Size()};
     }
-
-    mUsesVertexOrInstanceIndex = compiledShader[SingleShaderStage::Vertex].usesVertexIndex ||
-                                 compiledShader[SingleShaderStage::Vertex].usesInstanceIndex;
 
     descriptorD3D12.pRootSignature = mPipelineLayoutHandle->GetRootSignature();
 
@@ -512,10 +515,6 @@ ID3D12PipelineState* RenderPipeline::GetPipelineState() const {
     return mPipelineState.Get();
 }
 
-bool RenderPipeline::UsesVertexOrInstanceIndex() const {
-    return mUsesVertexOrInstanceIndex;
-}
-
 PipelineLayoutHandle* RenderPipeline::GetPipelineLayoutHandle() const {
     return mPipelineLayoutHandle.Get();
 }
@@ -525,7 +524,7 @@ void RenderPipeline::SetLabelImpl() {
 }
 
 ComPtr<ID3D12CommandSignature> RenderPipeline::GetDrawIndirectCommandSignature() {
-    if (mUsesVertexOrInstanceIndex) {
+    if (UsesVertexIndex() || UsesInstanceIndex()) {
         return mPipelineLayoutHandle->GetDrawIndirectCommandSignatureWithInstanceVertexOffsets();
     }
 
@@ -533,7 +532,7 @@ ComPtr<ID3D12CommandSignature> RenderPipeline::GetDrawIndirectCommandSignature()
 }
 
 ComPtr<ID3D12CommandSignature> RenderPipeline::GetDrawIndexedIndirectCommandSignature() {
-    if (mUsesVertexOrInstanceIndex) {
+    if (UsesVertexIndex() || UsesInstanceIndex()) {
         return mPipelineLayoutHandle
             ->GetDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets();
     }

@@ -198,11 +198,12 @@ MaybeError PipelineLayout::Initialize() {
 }
 
 ResultOrError<Ref<PipelineLayoutHandle>> PipelineLayout::GetOrCreatePipelineLayoutHandle(
-    uint32_t immediateCounts) {
+    const ImmediateMask& pipelineImmediateMask) {
     // Check cache
     Ref<PipelineLayoutHandle> pipelineLayoutHandle;
     mPipelineLayoutHandles.Use([&](auto pipelineLayoutHandles) {
-        auto it = pipelineLayoutHandles->find(immediateCounts);
+        auto it =
+            pipelineLayoutHandles->find(static_cast<uint64_t>(pipelineImmediateMask.to_ullong()));
         if (it != pipelineLayoutHandles->end()) {
             pipelineLayoutHandle = it->second;
         }
@@ -212,10 +213,12 @@ ResultOrError<Ref<PipelineLayoutHandle>> PipelineLayout::GetOrCreatePipelineLayo
         return pipelineLayoutHandle;
     }
 
-    DAWN_TRY_ASSIGN(pipelineLayoutHandle, CreatePipelineLayoutHandle(immediateCounts));
+    DAWN_TRY_ASSIGN(pipelineLayoutHandle, CreatePipelineLayoutHandle(pipelineImmediateMask));
 
     return mPipelineLayoutHandles.Use([&](auto pipelineLayoutHandles) {
-        return pipelineLayoutHandles->insert({immediateCounts, std::move(pipelineLayoutHandle)})
+        return pipelineLayoutHandles
+            ->insert({static_cast<uint64_t>(pipelineImmediateMask.to_ullong()),
+                      std::move(pipelineLayoutHandle)})
             .first->second;
     });
 }
@@ -357,25 +360,6 @@ MaybeError PipelineLayout::BuildBaseRootParameters() {
     // |ranges| will have resized and the pointers in the |rootParameter|s will be invalid.
     DAWN_ASSERT(rangeIndex == rangesCount);
 
-    D3D12_ROOT_PARAMETER1 renderOrComputeInternalConstants{};
-    renderOrComputeInternalConstants.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-    renderOrComputeInternalConstants.ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
-    // Always allocate 3 constants for either:
-    //  - vertex_index and instance_index
-    //  - num_workgroups_x, num_workgroups_y and num_workgroups_z
-    // NOTE: We should consider delaying root signature creation until we know how many values
-    // we need
-    renderOrComputeInternalConstants.Constants.Num32BitValues = 3;
-    renderOrComputeInternalConstants.Constants.RegisterSpace =
-        kRenderOrComputeInternalRegisterSpace;
-    renderOrComputeInternalConstants.Constants.ShaderRegister =
-        kRenderOrComputeInternalBaseRegister;
-    mFirstIndexOffsetParameterIndex = static_cast<uint32_t>(rootParameters.size());
-    mNumWorkgroupsParameterIndex = static_cast<uint32_t>(rootParameters.size());
-    // NOTE: We should consider moving this entry to earlier in the root signature since offsets
-    // would need to be updated often
-    rootParameters.emplace_back(renderOrComputeInternalConstants);
-
     // For dynamic storage buffers, we store the length and offset of each binding as root
     // constants. Lengths and offsets are bound to separate groups, but share the same binding value
     // (aka register offset). Here we populate mDynamicStorageBufferInfo with this mapping of
@@ -444,7 +428,7 @@ MaybeError PipelineLayout::BuildBaseRootParameters() {
 }
 
 ResultOrError<Ref<PipelineLayoutHandle>> PipelineLayout::CreatePipelineLayoutHandle(
-    uint32_t immediateCounts) {
+    const ImmediateMask& pipelineImmediateMask) {
     Device* device = ToBackend(GetDevice());
     DAWN_ASSERT(mInvariantParams.has_value());
 
@@ -455,11 +439,11 @@ ResultOrError<Ref<PipelineLayoutHandle>> PipelineLayout::CreatePipelineLayoutHan
     // mInvariantParams->ranges, which is stable for the lifetime of the layout.
     std::vector<D3D12_ROOT_PARAMETER1> rootParameters = mInvariantParams->rootParameters;
     uint32_t immediatesParameterIndex = kInvalidImmediatesParameterIndex;
-    if (immediateCounts > 0) {
+    if (pipelineImmediateMask.count() > 0) {
         D3D12_ROOT_PARAMETER1 immediates{};
         immediates.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
         immediates.ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
-        immediates.Constants.Num32BitValues = immediateCounts;
+        immediates.Constants.Num32BitValues = pipelineImmediateMask.count();
         immediates.Constants.RegisterSpace = kImmediatesRegisterSpace;
         immediates.Constants.ShaderRegister = kImmediatesBaseRegister;
         immediatesParameterIndex = static_cast<uint32_t>(rootParameters.size());
@@ -516,9 +500,9 @@ ResultOrError<Ref<PipelineLayoutHandle>> PipelineLayout::CreatePipelineLayoutHan
                               rootSignatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature)),
                           "D3D12 create root signature"));
 
-    return PipelineLayoutHandle::Create(
-        ToBackend(GetDevice()), std::move(rootSignature), std::move(rootSignatureBlob),
-        mFirstIndexOffsetParameterIndex, mNumWorkgroupsParameterIndex, immediatesParameterIndex);
+    return PipelineLayoutHandle::Create(ToBackend(GetDevice()), std::move(rootSignature),
+                                        std::move(rootSignatureBlob), immediatesParameterIndex,
+                                        pipelineImmediateMask);
 }
 
 void PipelineLayout::DestroyImpl(DestroyReason reason) {
