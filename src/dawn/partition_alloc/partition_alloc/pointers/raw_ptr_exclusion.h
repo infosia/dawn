@@ -28,6 +28,8 @@
 #ifndef SRC_DAWN_PARTITION_ALLOC_PARTITION_ALLOC_POINTERS_RAW_PTR_EXCLUSION_H_
 #define SRC_DAWN_PARTITION_ALLOC_PARTITION_ALLOC_POINTERS_RAW_PTR_EXCLUSION_H_
 
+#include "src/dawn/common/Compiler.h"  // nogncheck
+
 // Marks a field as excluded from the `raw_ptr<T>` usage enforcement via
 // Chromium Clang plugin.
 //
@@ -38,6 +40,10 @@
 // involving the pointer to become a security vulnerability. For additional guidance please see the
 // "When to use raw_ptr<T>" section of:
 // https://source.chromium.org/chromium/chromium/src/+/main:base/memory/raw_ptr.md
+#if defined(__clang__) && DAWN_HAS_ATTRIBUTE(annotate)
+#define RAW_PTR_EXCLUSION __attribute__((annotate("raw_ptr_exclusion")))
+#else
 #define RAW_PTR_EXCLUSION
+#endif
 
 #endif  // SRC_DAWN_PARTITION_ALLOC_PARTITION_ALLOC_POINTERS_RAW_PTR_EXCLUSION_H_
