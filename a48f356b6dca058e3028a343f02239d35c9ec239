@@ -22,6 +22,47 @@
       },
       "revId": "a48f356b6dca058e3028a343f02239d35c9ec239",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8548f5c4_0b8e0a99",
+        "filename": "src/utils/typed_integer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-18T07:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40a5afd8_25adb819",
+      "range": {
+        "startLine": 162,
+        "startChar": 22,
+        "endLine": 162,
+        "endChar": 29
+      },
+      "revId": "a48f356b6dca058e3028a343f02239d35c9ec239",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a00590a5_abb14548",
+        "filename": "src/utils/typed_integer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-18T07:35:28Z",
+      "side": 1,
+      "message": "```suggestion\n            // rhs is positive: (negative + positive) won\u0027t underflow\n```",
+      "revId": "a48f356b6dca058e3028a343f02239d35c9ec239",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
