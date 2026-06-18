@@ -16,6 +16,46 @@
       "message": "I can review this tomorrow, or you can land and I\u0027ll review post-merge.",
       "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76197eef_451394d4",
+        "filename": "src/utils/span.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T20:50:20Z",
+      "side": 1,
+      "message": "Oh, we should have a death test for this. Just a basic test of `std::ranges::copy` would be fine, I don\u0027t think we need to test any iterator details.\n\n```\nstd::array\u003cint, 4\u003e src;\nstd::array\u003cint, 3\u003e dst;\nstd::ranges::copy(src, ityp::span\u003csize_t\u003e(dst).begin));\n```",
+      "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45e236da_809cf24e",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-18T20:50:20Z",
+      "side": 1,
+      "message": "I think these need to be guarded because utils is used by Tint which is built for iOS. (See https://dawn-review.googlesource.com/c/dawn/+/313595, I think both guards or EXPECT_DEATH_IS_SUPPORTED work)",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
