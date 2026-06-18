@@ -27,6 +27,7 @@
 
 #include "src/dawn/native/d3d12/ShaderModuleD3D12.h"
 
+#include <optional>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -41,6 +42,7 @@
 #include "src/dawn/native/d3d12/BackendD3D12.h"
 #include "src/dawn/native/d3d12/BindGroupLayoutD3D12.h"
 #include "src/dawn/native/d3d12/DeviceD3D12.h"
+#include "src/dawn/native/d3d12/ImmediatesLayoutD3D12.h"
 #include "src/dawn/native/d3d12/PhysicalDeviceD3D12.h"
 #include "src/dawn/native/d3d12/PipelineLayoutD3D12.h"
 #include "src/dawn/native/d3d12/PlatformFunctionsD3D12.h"
@@ -116,13 +118,12 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     SingleShaderStage stage,
     const PipelineLayout* layout,
     uint32_t compileFlags,
+    const ImmediateMask& pipelineImmediateMask,
     const std::optional<dawn::native::d3d::InterStageShaderVariablesMask>&
         usedInterstageVariables) {
     Device* device = ToBackend(GetDevice());
     TRACE_EVENT0(device->GetPlatform(), General, "ShaderModuleD3D12::Compile");
     DAWN_ASSERT(!IsError());
-
-    const EntryPointMetadata& entryPoint = GetEntryPoint(programmableStage.entryPoint);
 
     d3d::D3DCompilationRequest req = {};
     req.tracePlatform = UnsafeUnserializedValue(device->GetPlatform());
@@ -301,15 +302,23 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         req.hlsl.tintOptions.compiler = tint::hlsl::writer::Options::Compiler::kDXC_2021;
     }
 
-    if (entryPoint.usesNumWorkgroups) {
+    req.hlsl.tintOptions.immediate_binding_point = tint::BindingPoint{
+        layout->GetImmediatesRegisterSpace(), layout->GetImmediatesShaderRegister()};
+
+    if (stage == SingleShaderStage::Compute) {
         DAWN_ASSERT(stage == SingleShaderStage::Compute);
-        req.hlsl.tintOptions.root_constant_binding_point = tint::BindingPoint{
-            layout->GetNumWorkgroupsRegisterSpace(), layout->GetNumWorkgroupsShaderRegister()};
-    } else if (stage == SingleShaderStage::Vertex) {
-        // For vertex shaders, use root constant to add FirstIndexOffset, if needed
-        req.hlsl.tintOptions.root_constant_binding_point =
-            tint::BindingPoint{layout->GetFirstIndexOffsetRegisterSpace(),
-                               layout->GetFirstIndexOffsetShaderRegister()};
+        req.hlsl.tintOptions.num_workgroups_start_offset = GetImmediateByteOffsetInPipelineIfAny(
+            &ComputeImmediates::numWorkgroups, pipelineImmediateMask);
+    } else {
+        // firstVertex and firstInstance are set together, with firstInstance immediately after
+        // firstVertex in the packed immediate layout.
+        std::optional<uint32_t> firstVertexOffset = GetImmediateByteOffsetInPipelineIfAny(
+            &RenderImmediates::firstIndexOffset, pipelineImmediateMask);
+        req.hlsl.tintOptions.first_index_offset = firstVertexOffset;
+        req.hlsl.tintOptions.first_instance_offset =
+            firstVertexOffset.has_value()
+                ? std::optional<uint32_t>(*firstVertexOffset + kImmediateElementByteSize)
+                : std::nullopt;
     }
 
     // TODO(dawn:549): HLSL generation outputs the indices into the
@@ -319,9 +328,6 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     // read by the shader.
     req.hlsl.tintOptions.array_length_from_uniform = std::move(arrayLengthFromUniform);
     req.hlsl.tintOptions.array_offset_from_uniform = std::move(arrayOffsetFromUniform);
-
-    req.hlsl.tintOptions.immediate_binding_point = tint::BindingPoint{
-        layout->GetImmediatesRegisterSpace(), layout->GetImmediatesShaderRegister()};
 
     if (stage == SingleShaderStage::Vertex) {
         // Now that only vertex shader can have interstage outputs.
