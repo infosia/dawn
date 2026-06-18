@@ -16,6 +16,52 @@
       "message": "PTAL! I tested the interface with both the rest of the dawn changes in the WIP CL in the stack, and with the buffer part of the WebGPU CTS and https://chromium-review.git.corp.google.com/c/chromium/src/+/7957862",
       "revId": "1c9d3fc2e49500e5f3135bd2598f79ebb99b1f57",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b103532d_001f0cf7",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-18T20:28:32Z",
+      "side": 1,
+      "message": "I feel like \"Try\" implies like it might return an error or an optional? Maybe it\u0027s fine to just call this `GetSource` and then note in the comment that it may return an empty span if the `MemoryHandle` does not support getting a direct view of the memory?",
+      "range": {
+        "startLine": 181,
+        "startChar": 37,
+        "endLine": 181,
+        "endChar": 49
+      },
+      "revId": "1c9d3fc2e49500e5f3135bd2598f79ebb99b1f57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd0b67d6_cc2a7a81",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-18T20:28:32Z",
+      "side": 1,
+      "message": "Maybe we should include these parameter explanations in `WireClient.h` as well? Might also be good to add in the comment that `size` should equal `deserializeData.size()`.",
+      "range": {
+        "startLine": 206,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 72
+      },
+      "revId": "1c9d3fc2e49500e5f3135bd2598f79ebb99b1f57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
