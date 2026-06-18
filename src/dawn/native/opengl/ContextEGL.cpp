@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "src/dawn/native/opengl/DisplayEGL.h"
+#include "src/dawn/native/opengl/OpenGLFunctions.h"
 #include "src/dawn/native/opengl/UtilsEGL.h"
 
 #ifndef EGL_DISPLAY_TEXTURE_SHARE_GROUP_ANGLE
@@ -243,15 +244,9 @@ void ContextEGL::RequestRequiredExtensionsExplicitly() {
 
     auto glRequestExtension = reinterpret_cast<PFNGLREQUESTEXTENSIONANGLEPROC>(proc);
 
-    // src/dawn/native/opengl/supported_extensions.json
-    glRequestExtension("GL_OES_texture_stencil8");
-    glRequestExtension("GL_EXT_texture_compression_s3tc");
-    glRequestExtension("GL_EXT_texture_compression_s3tc_srgb");
-    glRequestExtension("GL_OES_EGL_image");
-    glRequestExtension("GL_EXT_texture_format_BGRA8888");
-    glRequestExtension("GL_APPLE_texture_format_BGRA8888");
-    glRequestExtension("GL_EXT_color_buffer_float");
-    glRequestExtension("GL_EXT_color_buffer_half_float");
+    for (const char* extension : OpenGLFunctions::kSupportedGLExtensions) {
+        glRequestExtension(extension);
+    }
 }
 
 bool ContextEGL::IsInScopedMakeCurrent() const {

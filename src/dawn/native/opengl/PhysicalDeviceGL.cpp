@@ -147,7 +147,8 @@ DisplayEGL* PhysicalDevice::GetDisplay() const {
 
 bool PhysicalDevice::SupportsExternalImages() const {
     // Via dawn::native::opengl::WrapExternalEGLImage
-    return GetBackendType() == wgpu::BackendType::OpenGLES;
+    return GetBackendType() == wgpu::BackendType::OpenGLES &&
+           mFunctions.IsGLExtensionSupported("GL_OES_EGL_image");
 }
 
 MaybeError PhysicalDevice::InitializeImpl() {
@@ -158,6 +159,27 @@ MaybeError PhysicalDevice::InitializeImpl() {
     switch (GetBackendType()) {
         case wgpu::BackendType::OpenGLES:
             DAWN_INVALID_IF(!mFunctions.IsAtLeastGLES(3, 1), "OpenGL ES 3.1 is required.");
+            if (!mFunctions.IsAtLeastGLES(3, 2)) {
+                // These extensions are strictly required for WebGPU compatibility mode on OpenGL
+                // ES 3.1.
+                // Note: GL_OES_EGL_image is omitted because it is only required for optional
+                // external image wrapping and is not supported by some GLES 3.1 drivers (e.g.
+                // native GLES on Linux NVIDIA).
+                static constexpr std::array<const char*, 3> kRequiredExtensions = {
+                    "GL_OES_texture_stencil8",
+                    "GL_EXT_color_buffer_float",
+                    "GL_EXT_color_buffer_half_float",
+                };
+                for (const char* extension : kRequiredExtensions) {
+                    DAWN_INVALID_IF(!mFunctions.IsGLExtensionSupported(extension),
+                                    "%s is required for OpenGL ES 3.1.", extension);
+                }
+                DAWN_INVALID_IF(
+                    !mFunctions.IsGLExtensionSupported("GL_EXT_texture_format_BGRA8888") &&
+                        !mFunctions.IsGLExtensionSupported("GL_APPLE_texture_format_BGRA8888"),
+                    "GL_EXT_texture_format_BGRA8888 or GL_APPLE_texture_format_BGRA8888 is "
+                    "required.");
+            }
             break;
         case wgpu::BackendType::OpenGL:
             DAWN_INVALID_IF(!mFunctions.IsAtLeastGL(4, 4), "Desktop OpenGL 4.4 is required.");
@@ -440,14 +462,18 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
                                    gl.IsGLExtensionSupported("GL_OES_sample_variables");
 
     // Decide whether glTexSubImage2D/3D accepts GL_STENCIL_INDEX or not.
-    bool supportsStencilWriteTexture =
-        gl.GetVersion().IsDesktop() || gl.IsGLExtensionSupported("GL_OES_texture_stencil8");
+    DAWN_ASSERT(gl.GetVersion().IsDesktop() ||
+                gl.IsGLExtensionSupported("GL_OES_texture_stencil8"));
+    bool supportsStencilWriteTexture = true;
 
-    bool isFloat32Renderable = gl.GetVersion().IsDesktop() || gl.IsAtLeastGLES(3, 2) ||
-                               gl.IsGLExtensionSupported("GL_EXT_color_buffer_float");
-    bool isFloat16Renderable =
-        isFloat32Renderable || gl.IsGLExtensionSupported("GL_EXT_color_buffer_half_float");
-    bool isRG11B10UfloatRenderable = isFloat32Renderable;
+    DAWN_ASSERT(gl.GetVersion().IsDesktop() || gl.IsAtLeastGLES(3, 2) ||
+                gl.IsGLExtensionSupported("GL_EXT_color_buffer_float"));
+    bool isFloat32Renderable = true;
+
+    DAWN_ASSERT(gl.GetVersion().IsDesktop() || gl.IsAtLeastGLES(3, 2) ||
+                gl.IsGLExtensionSupported("GL_EXT_color_buffer_half_float"));
+    bool isFloat16Renderable = true;
+    bool isRG11B10UfloatRenderable = true;
 
     // TODO(crbug.com/dawn/343): Investigate emulation.
     deviceToggles->Default(Toggle::DisableIndexedDrawBuffers, !supportsIndexedDrawBuffers);
