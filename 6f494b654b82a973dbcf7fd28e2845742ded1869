@@ -22,6 +22,30 @@
       },
       "revId": "6f494b654b82a973dbcf7fd28e2845742ded1869",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc247045_71fc79b6",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-06-18T20:36:00Z",
+      "side": 1,
+      "message": "TextureBindingViewDimension is only applicable (and only enforced) in Compat mode, so I think it\u0027s descriptive enough.",
+      "parentUuid": "19fa4c28_d66bb678",
+      "range": {
+        "startLine": 202,
+        "startChar": 11,
+        "endLine": 202,
+        "endChar": 46
+      },
+      "revId": "6f494b654b82a973dbcf7fd28e2845742ded1869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
