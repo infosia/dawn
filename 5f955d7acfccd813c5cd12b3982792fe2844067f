@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dbdf828_549fd110",
+        "filename": "src/dawn/tests/unittests/MathTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-06-19T13:09:14Z",
+      "side": 1,
+      "message": "Please let me know when you are able to automatically get rid of UNSAFE_TODO;",
+      "range": {
+        "startLine": 263,
+        "startChar": 27,
+        "endLine": 263,
+        "endChar": 43
+      },
+      "revId": "5f955d7acfccd813c5cd12b3982792fe2844067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
