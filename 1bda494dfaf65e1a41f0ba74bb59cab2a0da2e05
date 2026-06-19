@@ -152,6 +152,30 @@
       },
       "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b86454d6_a037fda6",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-19T12:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdfc6072_81c58b6b",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
