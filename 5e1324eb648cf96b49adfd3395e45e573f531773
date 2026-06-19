@@ -33,6 +33,24 @@
       "message": "I\u0027m curious if this infra is worth it. There are only a handful of tests which actually have a matcher, the majority all use `\"\"`. So, could we just drop the matches for the ones that do and use EXPECT_DEATH_IF_SUPPORTED directly, then we don\u0027t need this `src/gtest.h` file at all and can keep using `gtest/gtest.h` ?",
       "revId": "5e1324eb648cf96b49adfd3395e45e573f531773",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de0993a8_b8736735",
+        "filename": "src/utils/gtest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T02:24:07Z",
+      "side": 1,
+      "message": "that would be fine with me, but I\u0027d like to define a debug-death-if-supported anyway, and that doesn\u0027t exist in gtest for some reason.\n\n(Also it\u0027s technically more correct to use DAWN_ENABLE_ASSERTS instead of NDEBUG for most of our code but it probably doesn\u0027t matter.)",
+      "parentUuid": "c25f669f_b3f05aa2",
+      "revId": "5e1324eb648cf96b49adfd3395e45e573f531773",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
