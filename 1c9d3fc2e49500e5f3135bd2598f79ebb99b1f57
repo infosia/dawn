@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6048708_19193934",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-19T13:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b103532d_001f0cf7",
+      "range": {
+        "startLine": 181,
+        "startChar": 37,
+        "endLine": 181,
+        "endChar": 49
+      },
+      "revId": "1c9d3fc2e49500e5f3135bd2598f79ebb99b1f57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd0b67d6_cc2a7a81",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-06-18T20:28:32Z",
       "side": 1,
       "message": "Maybe we should include these parameter explanations in `WireClient.h` as well? Might also be good to add in the comment that `size` should equal `deserializeData.size()`.",
+      "range": {
+        "startLine": 206,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 72
+      },
+      "revId": "1c9d3fc2e49500e5f3135bd2598f79ebb99b1f57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c781b55a_91481b7c",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-19T13:09:25Z",
+      "side": 1,
+      "message": "Done, however `size` needn\u0027t be the same as `deserializeData.size()` because in Chromium we don\u0027t actually need to send data to deserialize ^^",
+      "parentUuid": "cd0b67d6_cc2a7a81",
       "range": {
         "startLine": 206,
         "startChar": 8,
