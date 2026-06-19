@@ -27,9 +27,9 @@
 
 #include <array>
 
-#include "gtest/gtest.h"
 #include "src/dawn/common/ityp_span.h"
 #include "src/utils/compiler.h"
+#include "src/utils/gtest.h"
 #include "src/utils/typed_integer.h"
 
 namespace dawn {
@@ -137,10 +137,10 @@ TEST_F(ITypSpanDeathTest, OutOfBounds) {
     std::array<Val, 10> arr;
 
     Span span(arr.data(), Key(arr.size()));
-    EXPECT_DEATH(span[Key(10u)], "");
+    DAWN_EXPECT_DEATH(span[Key(10u)], "");
 
     const Span& constSpan = span;
-    EXPECT_DEATH(constSpan[Key(10u)], "");
+    DAWN_EXPECT_DEATH(constSpan[Key(10u)], "");
 }
 
 // If the index/size is 64-bit, it needs to be narrowed to size_t. Verify that's checked correctly.
@@ -158,11 +158,11 @@ TEST_F(ITypSpanDeathTest, OversizedIndex) {
 
     span[Key64(9u)];
     // Regular out-of-bounds.
-    EXPECT_DEATH(span[Key64(10u)], "");
+    DAWN_EXPECT_DEATH(span[Key64(10u)], "");
 
     span[Key64(0u)];
     // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
-    EXPECT_DEATH(span[kHugeKey64], "");
+    DAWN_EXPECT_DEATH(span[kHugeKey64], "");
 }
 
 }  // anonymous namespace
