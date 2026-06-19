@@ -128,6 +128,30 @@
       },
       "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdfc6072_81c58b6b",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-19T02:10:22Z",
+      "side": 1,
+      "message": "Ah, ya `EXPECT_DEATH_IF_SUPPORTED` is the right thing to do. We should also followup with a CL to convert the few places in Dawn that do `EXPECT_DEATH` and change them to `EXPECT_DEATH_IF_SUPPORTED` as well.",
+      "parentUuid": "62d9280c_2b31086c",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
