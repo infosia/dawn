@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec341de1_9d550a6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-19T16:45:57Z",
+      "side": 1,
+      "message": "Related to your fix here: https://dawn-review.googlesource.com/c/dawn/+/317655",
+      "revId": "2d5e120699e7334346ed6a581c13228ee26f1449",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
