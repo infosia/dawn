@@ -266,7 +266,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     // Note: MutexProtected isn't used here due to Use() providing MapAsyncEvent* instead of
     // Ref<MapAsyncEvent> which doesn't allow resetting the Ref.
     RecursiveMutex mPendingMapMutex;
-    Ref<MapAsyncEvent> mPendingMapEvent;
+    Ref<MapAsyncEvent> mPendingMapEvent DAWN_GUARDED_BY(mPendingMapMutex);
 
     // Track texel buffer views created from this buffer so they can be destroyed when the buffer is
     // destroyed.
