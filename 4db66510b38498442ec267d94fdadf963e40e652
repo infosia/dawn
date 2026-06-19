@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfc00e3a_357e690d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-06-19T00:52:42Z",
+      "side": 1,
+      "message": "Loko, could you take another look? I\u0027ve suppressed some CTS tests that are now non-compat-friendly.",
+      "revId": "4db66510b38498442ec267d94fdadf963e40e652",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
