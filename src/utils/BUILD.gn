@@ -95,6 +95,7 @@ static_library("utils") {
     "numeric.h",
     "placeholder.cc",
     "platform.h",
+    "test.h",
     "typed_integer.h",
     "underlying_type.h",
   ]
