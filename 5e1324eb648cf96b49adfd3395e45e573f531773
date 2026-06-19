@@ -51,6 +51,24 @@
       "parentUuid": "c25f669f_b3f05aa2",
       "revId": "5e1324eb648cf96b49adfd3395e45e573f531773",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a962985_c65a3b72",
+        "filename": "src/utils/gtest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-19T02:27:17Z",
+      "side": 1,
+      "message": "That makes sense, so this would get cut back to to just the DAWN_EXPECT_DEBUG_DEATH macros, and we update the call sites to use DAWN_EXPECT_DEATH. \n\nMakes it clear which to use, basically aways use EXPECT_DEATH_IF_SUPPORTED unless it has to be skipped for debug purposes.",
+      "parentUuid": "de0993a8_b8736735",
+      "revId": "5e1324eb648cf96b49adfd3395e45e573f531773",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
