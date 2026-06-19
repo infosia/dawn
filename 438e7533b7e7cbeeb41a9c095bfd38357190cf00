@@ -423,6 +423,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3df002fa_44e28a8e",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T03:29:57Z",
+      "side": 1,
+      "message": "`dawn_standalone` is mostly the same thing as `!build_with_chromium`, and I think `dawn_standalone` makes more sense because any repo that depends on dawn could have the same issue (even if it\u0027s rarer that they\u0027d be rolling clang ahead of us).\n\nSo `is_clang \u0026\u0026 dawn_standalone` (and when enabling Weverything, `assert(is_clang)` instead of `assert(using_pinned_clang)`, we don\u0027t need `using_pinned_clang` anymore)",
+      "parentUuid": "c0dd0c52_d1999f96",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "152f376a_4f253005",
         "filename": "src/dawn/common/BUILD.gn",
         "patchSetId": 11

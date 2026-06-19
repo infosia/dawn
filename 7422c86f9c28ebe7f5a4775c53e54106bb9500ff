@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62e16e3f_39c09319",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T03:29:57Z",
+      "side": 1,
+      "message": "Let\u0027s skip the whole d3d, d3d11, d3d12 directories.",
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "796a6d81_ba9ea7de",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T03:29:57Z",
+      "side": 1,
+      "message": "Can we just check in this txt file? I don\u0027t see that GN is doing any dynamic generation but I\u0027m not quite sure.\n\nThat said I think we should probably just split this to a separate CL if we can. Just disable the warning globally for now and this will be part of re-enabling it for some files. (And there will be lots of other warnings that I think we can reenable this way.)",
+      "range": {
+        "startLine": 96,
+        "startChar": 23,
+        "endLine": 96,
+        "endChar": 64
+      },
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6a5fc7a_aea9dbed",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T03:29:57Z",
+      "side": 1,
+      "message": "Explain more why? What is different about a chromium checkout?\n\nAlso I thought `--system-header-prefix` would take care of stuff like this.",
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fef5e3f0_10c1bf25",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T03:29:57Z",
+      "side": 1,
+      "message": "`crbug.com/`",
+      "range": {
+        "startLine": 131,
+        "startChar": 11,
+        "endLine": 131,
+        "endChar": 13
+      },
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0747bf3b_b096f39a",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T03:29:57Z",
+      "side": 1,
+      "message": "`crbug.com/`",
+      "range": {
+        "startLine": 257,
+        "startChar": 13,
+        "endLine": 257,
+        "endChar": 15
+      },
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa7db28f_e9a5cb49",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T03:29:57Z",
+      "side": 1,
+      "message": "We should use the same suppressions on all platforms.\n\n```suggestion\n  if (is_clang) {\n```",
+      "range": {
+        "startLine": 278,
+        "startChar": 18,
+        "endLine": 278,
+        "endChar": 24
+      },
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
