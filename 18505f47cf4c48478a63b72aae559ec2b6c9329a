@@ -39,6 +39,30 @@
       },
       "revId": "18505f47cf4c48478a63b72aae559ec2b6c9329a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46d65aba_966e558e",
+        "filename": "generator/templates/dawn/native/ProcTable.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-19T12:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4112cbeb_c1fd3d9a",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 52
+      },
+      "revId": "18505f47cf4c48478a63b72aae559ec2b6c9329a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
