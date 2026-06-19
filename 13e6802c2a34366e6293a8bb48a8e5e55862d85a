@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38e27478_e2fc938d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-19T08:47:13Z",
+      "side": 1,
+      "message": "Your changes are currently on a WIP branch. Please move them to origin/main by going to the dawn root, checking out origin/main, adding your changes, and re-pushing the CL.\n\nAbandon this one",
+      "revId": "13e6802c2a34366e6293a8bb48a8e5e55862d85a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
