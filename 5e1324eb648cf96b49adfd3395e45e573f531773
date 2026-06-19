@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb4b4e0f_d4973daf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T02:13:36Z",
+      "side": 1,
+      "message": "PTAL, don\u0027t worry about the conflict, I will rebase",
+      "revId": "5e1324eb648cf96b49adfd3395e45e573f531773",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
