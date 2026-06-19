@@ -50,6 +50,7 @@ class JNIClasses {
         jclass gpuHardwareBufferTexture;
         jclass javaIllegalStateException;
         jclass javaUnsupportedOperationException;
+        jclass unknownException;
         jclass parcelFileDescriptor;
         jmethodID pfdGetFd;
         jmethodID pfdAdoptFd;

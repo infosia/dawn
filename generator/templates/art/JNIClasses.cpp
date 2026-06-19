@@ -48,6 +48,7 @@ JNIClasses::JNIClasses(JNIEnv* env) {
     gpuHardwareBufferTexture = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/GPUHardwareBufferTexture")));
     javaIllegalStateException = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("java/lang/IllegalStateException")));
     javaUnsupportedOperationException = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("java/lang/UnsupportedOperationException")));
+    unknownException = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/UnknownException")));
     parcelFileDescriptor = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("android/os/ParcelFileDescriptor")));
     pfdGetFd = env->GetMethodID(parcelFileDescriptor, "getFd", "()I");
     pfdAdoptFd = env->GetStaticMethodID(parcelFileDescriptor, "adoptFd", "(I)Landroid/os/ParcelFileDescriptor;");
