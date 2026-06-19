@@ -351,6 +351,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f36e0be1_8d956244",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-06-19T00:41:15Z",
+      "side": 1,
+      "message": "Doesn\u0027t that mean you can never build with Weverything with non-pinned clang? I don\u0027t think that\u0027s necessarily what we want. Or, does the `assert` not stop the build? If it\u0027s just a warning that\u0027s cool.",
+      "parentUuid": "c2cc9d3f_91442470",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "152f376a_4f253005",
         "filename": "src/dawn/common/BUILD.gn",
         "patchSetId": 11
