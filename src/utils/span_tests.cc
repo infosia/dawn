@@ -25,11 +25,10 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <gtest/gtest.h>
-
 #include <array>
 
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/gtest.h"
 #include "src/utils/span.h"
 #include "src/utils/typed_integer.h"
 
@@ -132,8 +131,8 @@ TEST(SpanDeathTest, Constructor_PointerAndSizeOversizedIndex) {
 
     constexpr Index64 kHugeSize{0x1'0000'0000LLU};
     // SAFETY: Test for the unsafe constructor.
-    DAWN_UNSAFE_BUFFERS(
-        EXPECT_DEATH((ityp::span<Index64, const int>(kSpanData.data(), kHugeSize)), ""));
+    DAWN_UNSAFE_BUFFERS(EXPECT_DEATH_IF_SUPPORTED(
+        (ityp::span<Index64, const int>(kSpanData.data(), kHugeSize)), ""));
 }
 
 TEST(SpanTest, Constructor_TwoIterators) {
@@ -188,7 +187,7 @@ TEST(SpanTest, Constructor_TwoIterators) {
 TEST(SpanDeathTest, Constructor_TwoIteratorsInverted) {
     std::array<int, 3> data = {1, 2, 3};
     // SAFETY: Test for the unsafe constructor.
-    DAWN_UNSAFE_BUFFERS(EXPECT_DEATH((Span<int>{data.end(), data.begin()}), ""));
+    DAWN_UNSAFE_BUFFERS(EXPECT_DEATH_IF_SUPPORTED((Span<int>{data.end(), data.begin()}), ""));
 }
 
 TEST(SpanDeathTest, Constructor_TwoIteratorsLargerThanIndexType) {
@@ -196,7 +195,8 @@ TEST(SpanDeathTest, Constructor_TwoIteratorsLargerThanIndexType) {
     data.resize(256);  // Larger than indices that can be store in a uint8_t.
 
     // SAFETY: Test for the unsafe constructor.
-    DAWN_UNSAFE_BUFFERS(EXPECT_DEATH((ityp::span<Index8, int>(data.begin(), data.end())), ""));
+    DAWN_UNSAFE_BUFFERS(
+        EXPECT_DEATH_IF_SUPPORTED((ityp::span<Index8, int>(data.begin(), data.end())), ""));
 
     // Fits exactly in uint8_t for indexing.
     data.resize(255);
@@ -392,8 +392,8 @@ TEST(SpanTest, FrontBack) {
 
 TEST(SpanDeathTest, FrontBackOfEmpty) {
     Span<const int> sp;
-    EXPECT_DEATH(sp.front(), "");
-    EXPECT_DEATH(sp.back(), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp.front(), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp.back(), "");
 }
 
 TEST(SpanTest, Indexing) {
@@ -416,12 +416,12 @@ TEST(SpanTest, Indexing) {
 
 TEST(SpanDeathTest, IndexingOOB) {
     Span<const int> sp(FakeRange{});
-    EXPECT_DEATH(sp.at(sp.size()), "");
-    EXPECT_DEATH(sp[sp.size()], "");
+    EXPECT_DEATH_IF_SUPPORTED(sp.at(sp.size()), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp[sp.size()], "");
 
     Span<const int> spEmpty;
-    EXPECT_DEATH(spEmpty.at(0u), "");
-    EXPECT_DEATH(spEmpty[0u], "");
+    EXPECT_DEATH_IF_SUPPORTED(spEmpty.at(0u), "");
+    EXPECT_DEATH_IF_SUPPORTED(spEmpty[0u], "");
 }
 
 TEST(SpanDeathTest, IndexingOversizedIndex) {
@@ -435,7 +435,7 @@ TEST(SpanDeathTest, IndexingOversizedIndex) {
     // The narrowing to size_t would give 0 which is in bounds, so this checks that the cast to
     // size_t itself causes a crash.
     constexpr Index64 kHugeIndex{0x1'0000'0000LLU};
-    EXPECT_DEATH(sp[kHugeIndex], "");
+    EXPECT_DEATH_IF_SUPPORTED(sp[kHugeIndex], "");
 }
 
 // .data() and .size() are tested in every test essentially.
@@ -512,10 +512,10 @@ TEST(SpanDeathTest, FirstLastOOB) {
     Span<const int> sp{FakeRange()};
 
     sp.first(sp.size());
-    EXPECT_DEATH(sp.first(sp.size() + 1), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp.first(sp.size() + 1), "");
 
     sp.last(sp.size());
-    EXPECT_DEATH(sp.last(sp.size() + 1), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp.last(sp.size() + 1), "");
 }
 
 TEST(SpanTest, Subspan1Arg) {
@@ -545,7 +545,7 @@ TEST(SpanDeathTest, Subspan1ArgOOB) {
     Span<const int> sp{FakeRange()};
 
     sp.subspan(sp.size());
-    EXPECT_DEATH(sp.subspan(sp.size() + 1), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp.subspan(sp.size() + 1), "");
 }
 
 TEST(SpanTest, Subspan2Args) {
@@ -575,11 +575,11 @@ TEST(SpanDeathTest, Subspan2ArgOOB) {
     Span<const int> sp{FakeRange()};
 
     sp.subspan(2, sp.size() - 2);
-    EXPECT_DEATH(sp.subspan(2, sp.size() - 1), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp.subspan(2, sp.size() - 1), "");
 
     // Check that overflows of offset + count is handled.
-    EXPECT_DEATH(sp.subspan(std::numeric_limits<size_t>::max(), 1), "");
-    EXPECT_DEATH(sp.subspan(1, std::numeric_limits<size_t>::max()), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp.subspan(std::numeric_limits<size_t>::max(), 1), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp.subspan(1, std::numeric_limits<size_t>::max()), "");
 
     // SAFETY: This is the same range as kSpanData, just viewed with a uint8_t index (which fits the
     // size of kSpanData since it is 5).
@@ -589,11 +589,11 @@ TEST(SpanDeathTest, Subspan2ArgOOB) {
     Index8 kOne = Index8{uint8_t{1}};
     Index8 kTwo = Index8{uint8_t{2}};
     sp8.subspan(kTwo, sp8.size() - kTwo);
-    EXPECT_DEATH(sp8.subspan(kTwo, sp8.size() - kOne), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp8.subspan(kTwo, sp8.size() - kOne), "");
 
     // Check that overflows of offset + count is handled.
-    EXPECT_DEATH(sp8.subspan(std::numeric_limits<Index8>::max(), kOne), "");
-    EXPECT_DEATH(sp8.subspan(kOne, std::numeric_limits<Index8>::max()), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp8.subspan(std::numeric_limits<Index8>::max(), kOne), "");
+    EXPECT_DEATH_IF_SUPPORTED(sp8.subspan(kOne, std::numeric_limits<Index8>::max()), "");
 }
 
 }  // anonymous namespace
