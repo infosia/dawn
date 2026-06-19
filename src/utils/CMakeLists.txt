@@ -35,6 +35,7 @@ set(private_headers
     "numeric.h"
     "platform.h"
     "span.h"
+    "test.h"
     "typed_integer.h"
     "underlying_type.h"
 )
