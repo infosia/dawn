@@ -45,6 +45,7 @@ class JNIClasses {
         jclass gpuCallbackRunnable;
         jclass gpuCallbackErrorTypeRunnable;
         jclass gpuCallbackVoidRunnable;
+        jclass unknownException;
     private:
         JNIClasses(JNIEnv *env);
 };
