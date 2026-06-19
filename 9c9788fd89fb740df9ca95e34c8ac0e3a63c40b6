@@ -1,5 +1,121 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aa6ec69_54616cc7",
+        "filename": "src/utils/span.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-19T15:41:53Z",
+      "side": 1,
+      "message": "`reference` ?",
+      "range": {
+        "startLine": 199,
+        "startChar": 14,
+        "endLine": 199,
+        "endChar": 16
+      },
+      "revId": "9c9788fd89fb740df9ca95e34c8ac0e3a63c40b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "355acf76_d2293ce0",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-19T15:41:53Z",
+      "side": 1,
+      "message": "This is the same as `data` above. Shouldn\u0027t this be `const int constData[]...`?",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "9c9788fd89fb740df9ca95e34c8ac0e3a63c40b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77190782_f4bf41cf",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-19T15:41:53Z",
+      "side": 1,
+      "message": "When death is not supported, what happens? Is it UB? If so, we can\u0027t be sure the code below even runs. Maybe move the code below this above, or in a separate test.",
+      "range": {
+        "startLine": 200,
+        "startChar": 8,
+        "endLine": 200,
+        "endChar": 33
+      },
+      "revId": "9c9788fd89fb740df9ca95e34c8ac0e3a63c40b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f51ee0ad_03fbfa47",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-19T15:41:53Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment.",
+      "range": {
+        "startLine": 251,
+        "startChar": 8,
+        "endLine": 252,
+        "endChar": 21
+      },
+      "revId": "9c9788fd89fb740df9ca95e34c8ac0e3a63c40b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c7749d6_6aba6f54",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-19T15:41:53Z",
+      "side": 1,
+      "message": "Suggest: \"Default move copies\"",
+      "range": {
+        "startLine": 303,
+        "startChar": 7,
+        "endLine": 303,
+        "endChar": 32
+      },
+      "revId": "9c9788fd89fb740df9ca95e34c8ac0e3a63c40b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {

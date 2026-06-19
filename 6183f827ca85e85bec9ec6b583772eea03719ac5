@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13dd34f2_8f7c0955",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-19T15:41:53Z",
+      "side": 1,
+      "message": "Excellent work! Some minor comments,but LGTM!",
+      "revId": "6183f827ca85e85bec9ec6b583772eea03719ac5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af071279_5ea2057e",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-19T15:41:53Z",
+      "side": 1,
+      "message": "Suggest: \"Default move copies\"",
+      "range": {
+        "startLine": 317,
+        "startChar": 4,
+        "endLine": 317,
+        "endChar": 32
+      },
+      "revId": "6183f827ca85e85bec9ec6b583772eea03719ac5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
