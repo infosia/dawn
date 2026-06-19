@@ -405,6 +405,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0dd0c52_d1999f96",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-19T02:08:29Z",
+      "side": 1,
+      "message": "I guess that should be `is_clang \u0026\u0026 !build_with_chromium` to make sure it\u0027s clang.",
+      "parentUuid": "cf12cc2a_24ecbbfa",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "152f376a_4f253005",
         "filename": "src/dawn/common/BUILD.gn",
         "patchSetId": 11
