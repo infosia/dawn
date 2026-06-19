@@ -369,6 +369,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1b0c8fe8_8cce8fdd",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T01:52:24Z",
+      "side": 1,
+      "message": "It\u0027s a hard error. For a warning we\u0027d need `print()` but a warning doesn\u0027t seem that useful.\n\nI\u0027ve managed to think of a more concrete scenario for the thing I\u0027m worrying about. It seems to me that if we always enable `-Weverything` in GN, then we will prevent any new version of Clang that adds a new warning from rolling into Chromium. It will have to be suppressed in Dawn, Dawn roll into Chromium, then Chromium can roll Clang.\n\nThough I\u0027m realizing now that `using_pinned_clang` probably is not the right check for that. I don\u0027t even know whether that would be true or false in a chromium build.\n\nOriginally I was thinking about people using system clang, but it seems the only way to do that is to [set a custom clang](https://chromium.googlesource.com/chromium/src/+/main/docs/clang.md#using-a-custom-clang-binary) and I don\u0027t think we need to worry about that.\n\nAnyway I\u0027m not sure the best solution. I don\u0027t want to disable `-Weverything` in `dawn_standalone` because that makes it hard to develop on Dawn in-place in Chromium. But maybe the best we can do is default it off, and people can explicitly enable `dawn_weverything` if they are doing that? I don\u0027t think we have any other good signal whether or not a Chromium build is for someone who is working on Dawn.",
+      "parentUuid": "f36e0be1_8d956244",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "152f376a_4f253005",
         "filename": "src/dawn/common/BUILD.gn",
         "patchSetId": 11
