@@ -104,6 +104,30 @@
       },
       "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62d9280c_2b31086c",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-19T02:01:58Z",
+      "side": 1,
+      "message": "OK, nothing is depending on it, it\u0027s just included in the default `all` target because it exists. https://gn.googlesource.com/gn/+/main/docs/reference.md#the-all-and-default-rules\n\nSurprised that even a `source_set` gets included in `all`, but I confirmed via ninja:\n```\n$ ninja -C out/Debug-iphonesimulator -t query phony/third_party/dawn/src/utils/unittests\nphony/third_party/dawn/src/utils/unittests:\n  input: phony\n    phony/third_party/dawn/src/utils/unittests.linkdeps\n  outputs:\n    third_party/dawn/src/utils:unittests\n    all\n```\n\nI don\u0027t see a neat way to prevent this. We could make the target conditional on `!is_ios` but that seems messy.\n\nI think we should just add a presubmit for this, I started [here](https://dawn-review.googlesource.com/c/dawn/+/318375) but I\u0027ll rebase it when this CL is done.\n\nThis CL will still need to switch to EXPECT_DEATH_IF_SUPPORTED, I think, to prevent it blocking dawn-\u003echromium roll.",
+      "parentUuid": "3c8ace5c_fd945359",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 20
+      },
+      "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
