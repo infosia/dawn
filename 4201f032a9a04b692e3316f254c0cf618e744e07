@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb356e1c_6e8b4689",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-19T13:15:18Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "4201f032a9a04b692e3316f254c0cf618e744e07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0ddd165_24fc99aa",
+        "filename": "src/dawn/tests/end2end/FramebufferFetchTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-19T13:15:18Z",
+      "side": 1,
+      "message": "nit: it would be good to go both from and to a pipeline that uses FBF. How about having two pipelines:\n\n 1. No FBF, BlendMode Add, returns 10.\n 2. FBF, returns 2x the contents of the framebuffer.\n \nRun 1, 2, and 1 again (the last part is what\u0027s missing in this test).",
+      "revId": "4201f032a9a04b692e3316f254c0cf618e744e07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
