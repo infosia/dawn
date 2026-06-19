@@ -137,6 +137,21 @@ _BANNED_CPP_PATTERNS: Sequence[BanRule] = (
         treat_as_error=False,
         surface_as_gerrit_lint=True,
     ),
+    BanRule(
+        pattern=r'/\b(EXPECT_DEATH|EXPECT_DEBUG_DEATH)\b',
+        explanation=(
+            'Use DAWN_EXPECT_DEATH|DAWN_EXPECT_DEBUG_DEATH ',
+            '(or EXPECT_DEATH_IF_SUPPORTED) instead.',
+        ),
+        treat_as_error=True,
+        surface_as_gerrit_lint=True,
+    ),
+    BanRule(
+        pattern=r'/\b(ASSERT_DEATH|ASSERT_DEBUG_DEATH)\b',
+        explanation=('Use ASSERT_DEATH_IF_SUPPORTED instead.', ),
+        treat_as_error=True,
+        surface_as_gerrit_lint=True,
+    ),
 )
 
 EXPECTED_LICENSE_TEXT = {
