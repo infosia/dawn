@@ -377,6 +377,23 @@ TEST(SpanTest, BeginEndForIteration) {
     }
 }
 
+TEST(SpanDeathTest, IteratorsAreHardened) {
+    // MSVC doesn't have asserts (without _MSVC_STL_HARDENING).
+    if constexpr (DAWN_COMPILER_IS(MSVC)) {
+        GTEST_SKIP();
+    }
+
+    std::array<int, 4> src4{};
+    std::array<int, 4> src3{};
+    std::array<int, 3> dst{};
+
+    // Control case, copying 3 elements to dst is valid.
+    std::ranges::copy(src3, Span<int>(dst).begin());
+
+    // Error case, the hardened iterator will fail when we try to write a non-existent 4th element.
+    EXPECT_DEATH_IF_SUPPORTED(std::ranges::copy(src4, Span<int>(dst).begin()), "");
+}
+
 TEST(SpanTest, FrontBack) {
     {
         Span<const int> sp(FakeRange{});
