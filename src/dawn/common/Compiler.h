@@ -204,4 +204,28 @@
 #define DAWN_NO_THREAD_SAFETY_ANALYSIS
 #endif
 
+// DAWN_GUARDED_BY
+//
+// Used to annotate a member field that can only be accessed while holding a
+// given mutex. Enforced by Clang thread safety analysis with -Wthread-safety.
+//
+// https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#guarded-by-pt-guarded-by
+#if DAWN_HAS_ATTRIBUTE(guarded_by)
+#define DAWN_GUARDED_BY(mutex) __attribute__((guarded_by(mutex)))
+#else
+#define DAWN_GUARDED_BY(mutex)
+#endif
+
+// DAWN_EXCLUSIVE_LOCKS_REQUIRED
+//
+// Used to annotate a function requiring the caller to hold one or more
+// exclusive locks. Enforced by Clang thread safety analysis with -Wthread-safety.
+//
+// https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#requires-requires-shared
+#if DAWN_HAS_ATTRIBUTE(exclusive_locks_required)
+#define DAWN_EXCLUSIVE_LOCKS_REQUIRED(...) __attribute__((exclusive_locks_required(__VA_ARGS__)))
+#else
+#define DAWN_EXCLUSIVE_LOCKS_REQUIRED(...)
+#endif
+
 #endif  // SRC_DAWN_COMMON_COMPILER_H_
