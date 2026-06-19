@@ -387,6 +387,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf12cc2a_24ecbbfa",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-19T02:00:44Z",
+      "side": 1,
+      "message": "How about, we set it to true if `!build_with_chromium`. That way, it\u0027s always on for the Dawn bots, it doesn\u0027t effect the Chromium roll at all. If folks try a newer clang and it triggers warnings they can manually set it to `false` or suppress the warning.\n\nIf folks are working on Dawn from inside a Chromium repo they can enable if they desire, but it\u0027s off by default.",
+      "parentUuid": "1b0c8fe8_8cce8fdd",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "152f376a_4f253005",
         "filename": "src/dawn/common/BUILD.gn",
         "patchSetId": 11
