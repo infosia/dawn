@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e24bff7c_0b1624e6",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-19T04:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0df52ecb_c42daeed",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "b79b4c3839b6fa61dc3788676f8ce66e4e66f2db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e66361ab_f5a4ed96",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-06-19T02:07:23Z",
       "side": 1,
       "message": "Please fix this WARNING reported by ClangTidy: check: misc-override-with-different-visibility\n\nvisibility of function \u0027SetUp\u0027 i...\n\ncheck: misc-override-with-different-visibility\n\nvisibility of function \u0027SetUp\u0027 is changed from protected in class \u0027Test\u0027 to private (https://clang.llvm.org/extra/clang-tidy/checks/misc/override-with-different-visibility.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-override-with-different-visibility` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "b79b4c3839b6fa61dc3788676f8ce66e4e66f2db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd78c200_9b07c403",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-19T04:40:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e66361ab_f5a4ed96",
       "range": {
         "startLine": 40,
         "startChar": 0,
