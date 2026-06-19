@@ -74,6 +74,8 @@ FramebufferFetchHelper::FramebufferFetchHelper(Device* device) : mDevice(device)
 
 FramebufferFetchHelper::~FramebufferFetchHelper() {
     for (uint32_t i = 0; i < kMaxColorAttachments; ++i) {
+        // Note it's safe to iterate through `mHolders` here as the device is being destroyed and
+        // all pipeline creation tasks have finished.
         auto& holder = mHolders[i];
         if (holder.layout != VK_NULL_HANDLE) {
             mDevice->fn.DestroyDescriptorSetLayout(mDevice->GetVkDevice(), holder.layout, nullptr);
@@ -84,30 +86,17 @@ FramebufferFetchHelper::~FramebufferFetchHelper() {
 }
 
 ResultOrError<VkDescriptorSetLayout> FramebufferFetchHelper::GetLayout(uint32_t attachmentCount) {
-    DAWN_CHECK(attachmentCount > 0 && attachmentCount <= kMaxColorAttachments);
-    auto& holder = mHolders[attachmentCount - 1];
-
-    if (holder.layout == VK_NULL_HANDLE) {
-        DAWN_TRY_ASSIGN(holder.layout, MakeFramebufferFetchLayout(mDevice, attachmentCount));
-
-        absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
-        descriptorCountPerType[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = attachmentCount;
-        holder.allocator =
-            DescriptorSetAllocator::Create(mDevice, std::move(descriptorCountPerType));
-    }
-
-    return holder.layout;
+    DAWN_TRY(InitializeForAttachmentCount(attachmentCount));
+    return mHolders[attachmentCount - 1].layout;
 }
 
 ResultOrError<VkDescriptorSet> FramebufferFetchHelper::GetDescriptorsForRenderPass(
     const BeginRenderPassCmd* cmd) {
     uint32_t attachmentCount = AttachmentCount(cmd->attachmentState->GetColorAttachmentsMask());
     DAWN_CHECK(attachmentCount > 0);
-    auto& holder = mHolders[attachmentCount - 1];
 
-    // The descriptor set allocator is created along with the layout the first time a pipeline that
-    // uses framebuffer fetch with N color attachments is created.
-    DAWN_CHECK(holder.allocator);
+    DAWN_TRY(InitializeForAttachmentCount(attachmentCount));
+    auto& holder = mHolders[attachmentCount - 1];
 
     // Needed to work around some quirks introduced by vulkan_platform.h which causes some platforms
     // to hit compiler errors if Vulkan struct members are assigned to VK_NULL_HANDLE directly.
@@ -162,6 +151,24 @@ ResultOrError<VkDescriptorSet> FramebufferFetchHelper::GetDescriptorsForRenderPa
     holder.allocator->Deallocate(&allocation);
 
     return set;
+}
+
+MaybeError FramebufferFetchHelper::InitializeForAttachmentCount(uint32_t attachmentCount) {
+    DAWN_CHECK(attachmentCount > 0 && attachmentCount <= kMaxColorAttachments);
+    Mutex::AutoLock lock(&mInitializationMutex);
+
+    auto& holder = mHolders[attachmentCount - 1];
+
+    if (holder.layout == VK_NULL_HANDLE) {
+        DAWN_TRY_ASSIGN(holder.layout, MakeFramebufferFetchLayout(mDevice, attachmentCount));
+
+        absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
+        descriptorCountPerType[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = attachmentCount;
+        holder.allocator =
+            DescriptorSetAllocator::Create(mDevice, std::move(descriptorCountPerType));
+    }
+
+    return {};
 }
 
 }  // namespace dawn::native::vulkan
