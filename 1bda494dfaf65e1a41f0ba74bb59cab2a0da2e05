@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd9266e8_de6e908e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-19T12:53:42Z",
+      "side": 1,
+      "message": "I\u0027d like to unblock some of the other CLs, but happy to take follow-ups.",
+      "parentUuid": "39be24f1_c178ac34",
+      "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76197eef_451394d4",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-18T20:50:20Z",
       "side": 1,
       "message": "Oh, we should have a death test for this. Just a basic test of `std::ranges::copy` would be fine, I don\u0027t think we need to test any iterator details.\n\n```\nstd::array\u003cint, 4\u003e src;\nstd::array\u003cint, 3\u003e dst;\nstd::ranges::copy(src, ityp::span\u003csize_t\u003e(dst).begin));\n```",
+      "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6255d72_e452f148",
+        "filename": "src/utils/span.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-19T12:53:42Z",
+      "side": 1,
+      "message": "Doing this as a follow-up because I\u0027m not sure how long it will take me to find the correct macro to use to know that libc++ is hardened.",
+      "parentUuid": "76197eef_451394d4",
       "revId": "1bda494dfaf65e1a41f0ba74bb59cab2a0da2e05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
