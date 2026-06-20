@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5aedadcd_5a9209d4",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-20T20:35:40Z",
+      "side": 1,
+      "message": "Passing in \u00270\u0027 did not work. I don\u0027t know where I had read that it might mean \"any\", but I can\u0027t find it in any docs.",
+      "parentUuid": "39c21fa1_b6253154",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1f41e73_f824c26a",
         "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
         "patchSetId": 12
@@ -31,6 +49,30 @@
       "writtenOn": "2026-06-19T21:50:30Z",
       "side": 1,
       "message": "Is it safe to call this unconditionally like this? The docs say:\n\n\u003e This is enforced by requiring Developer Mode to be active before any experimental features can be enabled.\n\nDoes that mean we will fail here on end-user machines?",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 82
+      },
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfa60800_be99033d",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-20T20:35:40Z",
+      "side": 1,
+      "message": "The call may fail, which is why it\u0027s handled gracefully here with a log message. Note that this code is only run when DAWN_USE_AGILITY_SDK is defined as well, so not in shipping code yet.",
+      "parentUuid": "d1f41e73_f824c26a",
       "range": {
         "startLine": 165,
         "startChar": 0,
