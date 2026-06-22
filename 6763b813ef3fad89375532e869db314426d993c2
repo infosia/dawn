@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a883931_1c9a6c9c",
+        "filename": "src/dawn/tests/unittests/wire/WireShaderModuleTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T22:05:50Z",
+      "side": 1,
+      "message": "Should we just link the bug and note that this test is a regression test and point to the bug directly for posterity?",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 22
+      },
+      "revId": "6763b813ef3fad89375532e869db314426d993c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

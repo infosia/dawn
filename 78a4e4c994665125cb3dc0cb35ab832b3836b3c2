@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c21ade27_3d46eea1",
+        "filename": "src/dawn/tests/unittests/wire/WireShaderModuleTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T22:05:50Z",
+      "side": 1,
+      "message": "I think we should simplify this test a bit so that we are only testing the `nextInChain` stuff to make it a bit less bulky and more clear, i.e.:\n```\nwgpu::DawnCompilationMessageUtf16 utf16 \u003d {{nullptr, 30, 32, 34}};\nwgpu::CompilationMessage message0 \u003d { .nextInChain \u003d nullptr };\nwgpu::CompilationMessage message1 \u003d { .nextInChain \u003d \u0026utf16 };\nstd::array\u003cwgpu::CompilationMessage, 2\u003e messages \u003d {message0, message1};\nwgpu::CompilationInfo compilationInfo \u003d {nullptr, 2, messages.data()};\n```\n\nThen in the expectations below, strip out all the expectations on the actual messages, and integer equalities that are not specifically related to the `utf16` struct.",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 12
+      },
+      "revId": "78a4e4c994665125cb3dc0cb35ab832b3836b3c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39d4a59b_33606654",
+        "filename": "src/dawn/tests/unittests/wire/WireShaderModuleTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T22:05:50Z",
+      "side": 1,
+      "message": "nit. Same here, we can remove all the fields except for the `nextInChain` and then update the expectations to only check for that to make the test more deliberate in what it\u0027s testing.",
+      "range": {
+        "startLine": 219,
+        "startChar": 40,
+        "endLine": 224,
+        "endChar": 44
+      },
+      "revId": "78a4e4c994665125cb3dc0cb35ab832b3836b3c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
