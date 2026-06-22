@@ -144,10 +144,6 @@ config("dawn_warnings") {
       "-Wno-gcc-compat",
       "-Wno-deprecated-copy-with-dtor",
       "-Wno-gnu-zero-variadic-macro-arguments",
-
-      # TODO(crbug.com/526690258): limit suppressions to file scope using
-      # --warning-suppression-mappings
-      "-Wno-language-extension-token",
     ]
   } else {
     cflags = []
@@ -207,6 +203,7 @@ config("dawn_warnings") {
       "gen/",
       rebase_path(root_gen_dir, root_build_dir) + "/",
     ]
+
     foreach(_prefix, _prefixes) {
       if (is_win) {
         # When building with clang-cl on Windows, the driver only accepts
@@ -219,6 +216,14 @@ config("dawn_warnings") {
       } else {
         cflags += [ "--system-header-prefix=${_prefix}" ]
       }
+    }
+
+    _suppression_files = [
+      "clang-suppression-mappings/language_extension_token_suppressions.txt",
+    ]
+    foreach(file, _suppression_files) {
+      cflags += [ "--warning-suppression-mappings=" +
+                  rebase_path(file, root_build_dir) ]
     }
   }
 }
