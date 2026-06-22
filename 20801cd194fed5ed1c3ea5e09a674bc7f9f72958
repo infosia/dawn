@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3baf79d_39fd412b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-06-22T20:11:39Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "c58204ef_58b864ee",
+      "revId": "20801cd194fed5ed1c3ea5e09a674bc7f9f72958",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c42cf1b8_9581f1bd",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-22T15:46:44Z",
       "side": 1,
       "message": "Can we use `MutexProtected` we don\u0027t need the mutex in other places but we might as well because this class likely won\u0027t have contention on it.",
+      "revId": "20801cd194fed5ed1c3ea5e09a674bc7f9f72958",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3bfadd1_8e167977",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-06-22T20:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c42cf1b8_9581f1bd",
       "revId": "20801cd194fed5ed1c3ea5e09a674bc7f9f72958",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
