@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22ad5304_0bd37dd1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-06-22T15:49:33Z",
+      "side": 1,
+      "message": "Corentin: PTAL. Thanks!\n\n(Avoid auto-cherry-pick because the original fix depended on an ANGLE change which is not required in M149.)",
+      "revId": "c290a50f4c6d7bc9232d3f3e12f059bb78a90cb4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
