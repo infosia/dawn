@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a34739a0_485946c2",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-22T22:41:35Z",
+      "side": 1,
+      "message": "3",
+      "range": {
+        "startLine": 388,
+        "startChar": 20,
+        "endLine": 388,
+        "endChar": 21
+      },
+      "revId": "1d0524fb131125da146245b92525b16d76aa18f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
