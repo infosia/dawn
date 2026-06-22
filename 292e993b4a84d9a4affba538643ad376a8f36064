@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d76e0b0f_eba658c2",
+        "filename": "src/dawn/wire/client/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-06-22T20:47:18Z",
+      "side": 0,
+      "message": "This is out of sync with the .push_back on the previous line.\n\nIt only works if *all* messages have a UTF-16 message, or none of them do (and we don\u0027t get to this code).\n\nI don\u0027t think this has any real world impact because of where Dawn is embedded.",
+      "range": {
+        "startLine": 88,
+        "startChar": 50,
+        "endLine": 88,
+        "endChar": 52
+      },
+      "revId": "292e993b4a84d9a4affba538643ad376a8f36064",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
