@@ -49,6 +49,65 @@ if (build_with_chromium) {
   use_fuzzing_engine = false
 }
 
+if (dawn_weverything) {
+  # Only allow language extensions for the files that need them.
+  # MSVC-specific extensions: __FUNCSIG__, __uuidof, IID_PPV_ARGS.
+  _extension_files = [
+    "src/dawn/native/Surface.cpp",
+    "src/dawn/native/d3d/BackendD3D.cpp",
+    "src/dawn/native/d3d/PhysicalDeviceD3D.cpp",
+    "src/dawn/native/d3d/ShaderUtils.cpp",
+    "src/dawn/native/d3d/SwapChainD3D.cpp",
+    "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+    "src/dawn/native/d3d11/QueueD3D11.cpp",
+    "src/dawn/native/d3d11/SharedFenceD3D11.cpp",
+    "src/dawn/native/d3d11/SharedTextureMemoryD3D11.cpp",
+    "src/dawn/native/d3d11/SwapChainD3D11.cpp",
+    "src/dawn/native/d3d12/BackendD3D12.cpp",
+    "src/dawn/native/d3d12/BufferD3D12.cpp",
+    "src/dawn/native/d3d12/ComputePipelineD3D12.cpp",
+    "src/dawn/native/d3d12/DeviceD3D12.cpp",
+    "src/dawn/native/d3d12/HeapAllocatorD3D12.cpp",
+    "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+    "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+    "src/dawn/native/d3d12/PipelineLayoutHandle.cpp",
+    "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+    "src/dawn/native/d3d12/QuerySetD3D12.cpp",
+    "src/dawn/native/d3d12/QueueD3D12.cpp",
+    "src/dawn/native/d3d12/RenderPipelineD3D12.cpp",
+    "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.cpp",
+    "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+    "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+    "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+    "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+    "src/dawn/native/d3d12/SharedFenceD3D12.cpp",
+    "src/dawn/native/d3d12/StagingDescriptorAllocatorD3D12.cpp",
+    "src/dawn/native/d3d12/SwapChainD3D12.cpp",
+    "src/dawn/tests/end2end/AdapterEnumerationTests.cpp",
+    "src/dawn/tests/end2end/VideoViewsTests_win.cpp",
+    "src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp",
+    "src/dawn/tests/white_box/SharedTextureMemoryTests_win.cpp",
+    "src/dawn/tests/white_box/SharedTextureMemoryTests_win_d3d12.cpp",
+    "src/tint/lang/hlsl/validate/validate.cc",
+    "src/tint/utils/rtti/castable.h",
+  ]
+
+  _suppression_file =
+      "$target_gen_dir/language_extension_token_suppressions.txt"
+  _suppression_lines = [
+    "[language-extension-token]",
+
+    # Need to suppress third_party/ here to build in chromium checkout.
+    "src:*third_party/*",
+  ]
+
+  foreach(file, _extension_files) {
+    # Use src: prefix with * as a wildcard for the absolute path prefix.
+    _suppression_lines += [ "src:*" + file ]
+  }
+  write_file(_suppression_file, _suppression_lines)
+}
+
 # Centralized config for -Weverything and its suppressions.
 config("dawn_warnings") {
   if (dawn_weverything) {
@@ -144,10 +203,6 @@ config("dawn_warnings") {
       "-Wno-gcc-compat",
       "-Wno-deprecated-copy-with-dtor",
       "-Wno-gnu-zero-variadic-macro-arguments",
-
-      # TODO(crbug.com/526690258): limit suppressions to file scope using
-      # --warning-suppression-mappings
-      "-Wno-language-extension-token",
     ]
   } else {
     cflags = []
@@ -216,6 +271,11 @@ config("dawn_warnings") {
         cflags += [ "--system-header-prefix=${_prefix}" ]
       }
     }
+  }
+
+  if (is_clang) {
+    cflags += [ "--warning-suppression-mappings=" +
+                rebase_path(_suppression_file, root_build_dir) ]
   }
 }
 
