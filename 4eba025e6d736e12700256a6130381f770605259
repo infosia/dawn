@@ -16,6 +16,23 @@
       "message": "David or Brandon, PTAL!",
       "revId": "4eba025e6d736e12700256a6130381f770605259",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae31c33e_55081eb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-06-22T15:46:38Z",
+      "side": 1,
+      "message": "I\u0027ve learned a lot about device lost handling both in Vulkan and Dawn.\nLGTM",
+      "revId": "4eba025e6d736e12700256a6130381f770605259",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
