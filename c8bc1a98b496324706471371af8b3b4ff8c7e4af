@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc487dbc_663eb789",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "I tested this by adding logs and running the Media3 composition app with the WebGPU pipeline. I found that for the default 40-second videos, the FD count loops normally when clicking export/prepare. When there is a bit of jank in the preview, the number of FDs goes up temporarily, but it comes back down shortly after.\n\nAlso ran the GPUSyncFence and GPUHardwareBuffer test cases on multiple devices (multiple times).",
+      "parentUuid": "0a4ec64a_24f0cb9b",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fb5748e9_bb4810b7",
         "filename": "tools/android/webgpu/build.gradle",
         "patchSetId": 26
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-22T09:33:34Z",
       "side": 1,
       "message": "is the increase in minSdkVersion OK for any existing users?",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dc882ff_0cdf401f",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 26
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "Yes. This minSDK bump is required for AHB APIs else the code fails to compile.",
+      "parentUuid": "fb5748e9_bb4810b7",
       "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -48,6 +84,30 @@
       "writtenOn": "2026-06-22T09:33:34Z",
       "side": 1,
       "message": "Please fix this WARNING reported by autoreview issue finding: This line change appears redundant as the content is identical to the original. Consider reverting to keep the diff clean.",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "365d4df8_526dc086",
+        "filename": "tools/android/webgpu/src/main/cpp/CMakeLists.txt",
+        "patchSetId": 26
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "Fixed. Removed the redundant line to keep the diff clean.",
+      "parentUuid": "4bd85dd8_f8bc72df",
       "range": {
         "startLine": 92,
         "startChar": 0,
@@ -125,6 +185,30 @@
           ]
         }
       ],
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a55ea261_c481da36",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "Thanks for pointing out. I have completely deleted all of the __builtin_available wrapper functions and replaced them with direct, inline calls to the raw NDK APIs.",
+      "parentUuid": "232dd2ce_8d5d4c45",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 43
+      },
       "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -260,6 +344,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20c375a1_d5ea0d20",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "Done! Thanks for the suggestion. I have completely removed all ParcelFileDescriptor objects from the JNI boundaries and moved that logic entirely to Kotlin. Both nativeBeginAccess and nativeEndAccess now deal purely in int[] arrays and primitive jints.\n\nAlso, I have added comments explaining the lifecyle and ownership.",
+      "parentUuid": "675eb92b_bbfcf473",
+      "range": {
+        "startLine": 393,
+        "startChar": 19,
+        "endLine": 399,
+        "endChar": 26
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08f197a6_f323560d",
@@ -273,6 +381,30 @@
       "writtenOn": "2026-06-22T09:33:34Z",
       "side": 1,
       "message": "who is responsible for closing `int fd \u003d syncFdExportInfo.handle`?",
+      "range": {
+        "startLine": 486,
+        "startChar": 12,
+        "endLine": 486,
+        "endChar": 44
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47c6257c_cea12c5d",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "There are two FDs in play here:\n\nDawn is responsible for closing the original FD (the one you highlighted). When we call ExportInfo, Dawn allows us to borrow the handle integer via .Get(), and closes it when wgpu::SharedFence is destroyed.\n\nFor the new FD, Java is responsible for closing it. Because Dawn will eventually close the original fd, we must call dup(fd) to generate a new handle (dupedFd) pointing to the same sync object.",
+      "parentUuid": "08f197a6_f323560d",
       "range": {
         "startLine": 486,
         "startChar": 12,
@@ -320,6 +452,30 @@
           ]
         }
       ],
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "375c2b37_47dcf882",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "I\u0027ve switched to emplace_back, but I kept the move constructor. Because we store these in a std::vector\u003cUniqueFd\u003e, the vector inherently requires elements to be MoveConstructible (or CopyConstructible) so it can safely reallocate its internal buffer when growing. If we delete the move constructor, the vector will fail to compile.",
+      "parentUuid": "1a1fd823_1562de3c",
+      "range": {
+        "startLine": 490,
+        "startChar": 24,
+        "endLine": 490,
+        "endChar": 42
+      },
       "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -387,6 +543,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f25fab1f_c56c7670",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep them separate to maintain a clear separation of concerns. UniqueFd was added purely as a generic RAII wrapper to safely handle fd lifecycle and cleanup. Moving sync_merge into it would tightly couple this generic wrapper to the Android-specific sync_merge API.",
+      "parentUuid": "e158acad_f81e348b",
+      "range": {
+        "startLine": 506,
+        "startChar": 24,
+        "endLine": 506,
+        "endChar": 33
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "66f1abef_e048ff2e",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 26
@@ -398,6 +578,30 @@
       "writtenOn": "2026-06-22T09:33:34Z",
       "side": 1,
       "message": "can we move the calls to pfdAdoptFd to Kotlin?",
+      "range": {
+        "startLine": 522,
+        "startChar": 30,
+        "endLine": 522,
+        "endChar": 52
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1132a3bc_8c9b6f81",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "Done! I have updated the JNI nativeEndAccess signature to return a jint, and moved the ParcelFileDescriptor.adoptFd(fd) call out to the Kotlin layer to simplify the C++ code.",
+      "parentUuid": "66f1abef_e048ff2e",
       "range": {
         "startLine": 522,
         "startChar": 30,
@@ -421,6 +625,30 @@
       "writtenOn": "2026-06-22T09:33:34Z",
       "side": 1,
       "message": "does this need to be native? Can we poll file descriptors in Java / Kotlin?",
+      "range": {
+        "startLine": 557,
+        "startChar": 0,
+        "endLine": 557,
+        "endChar": 65
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbdc036a_c994ad60",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "android.system.Os.poll exists in Java, but I would prefer keeping this in native. Using `Os.poll()` from Java/Kotlin would require allocating a `StructPollfd[]`, and the call ultimately goes through JNI to the same native `poll()` implementation anyway. (maybe keeping it in Java will increase GC calls as well?)",
+      "parentUuid": "db3e9ab8_4d732f93",
       "range": {
         "startLine": 557,
         "startChar": 0,
@@ -472,6 +700,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45da4c69_46ead44f",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "Done. I have added an explicit check to ensure (pfd_struct.revents \u0026 POLLIN) is true before returning success.",
+      "parentUuid": "831b6f8f_01698498",
+      "range": {
+        "startLine": 580,
+        "startChar": 11,
+        "endLine": 580,
+        "endChar": 21
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "999ad251_ee493383",
@@ -485,6 +737,24 @@
       "writtenOn": "2026-06-22T09:33:34Z",
       "side": 1,
       "message": "what does thread-safe mean in this context?\n\nIf two threads call `createSyncFenceFromFd` and they try to make `this.eglContext` current, will everything work as expected?",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d9e400a_74134dfe",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "Yes! The entire createSyncFenceFromFd function body is wrapped in synchronized(lock) { ... }. If two threads call this simultaneously, they are serialized. Thread A will enter the block, swap its EGL context, perform the duplication, safely restore its original EGL context, and release the lock before Thread B is allowed to enter.",
+      "parentUuid": "999ad251_ee493383",
       "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -526,6 +796,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a1ddb7b0_662ef11e",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "It is intentionally not cleaned up. It is persistent to avoid destroying and recreating the EGL context on every sync fence conversion (which happens many times per frame). It is attached to the lifecycle of the app.",
+      "parentUuid": "24424956_858b2693",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eba7be65_d5d52454",
         "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
         "patchSetId": 26
@@ -537,6 +825,30 @@
       "writtenOn": "2026-06-22T09:33:34Z",
       "side": 1,
       "message": "should it also wait on the fd on an early exit?",
+      "range": {
+        "startLine": 122,
+        "startChar": 73,
+        "endLine": 122,
+        "endChar": 88
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a9ed888_ab8b33eb",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "No. In my opinion If we fail early, there is no valid EGLSync object to wait on. The safest fallback to prevent FD resource exhaustion is to immediately close the file descriptor.",
+      "parentUuid": "eba7be65_d5d52454",
       "range": {
         "startLine": 122,
         "startChar": 73,
@@ -566,6 +878,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "909deb03_54d20989",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "No. Closing a file descriptor of a sync fence simply drops our process\u0027s reference to the kernel sync object. It does not block anything.",
+      "parentUuid": "f13e77b5_2fe9347d",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "94e607e7_8cb6a6dc",
         "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
         "patchSetId": 26
@@ -577,6 +907,30 @@
       "writtenOn": "2026-06-22T09:33:34Z",
       "side": 1,
       "message": "the only call site had a ParcelFileDescriptor. We detach and adopt a few times.\n\nConsider passing in `ParcelFileDescriptor` to `createSyncFenceFromFd`",
+      "range": {
+        "startLine": 137,
+        "startChar": 16,
+        "endLine": 137,
+        "endChar": 52
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddf91fba_fd9d3ff3",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "Done! I\u0027ve updated createSyncFenceFromFd to take a ParcelFileDescriptor directly.",
+      "parentUuid": "94e607e7_8cb6a6dc",
       "range": {
         "startLine": 137,
         "startChar": 16,
@@ -600,6 +954,24 @@
       "writtenOn": "2026-06-22T09:33:34Z",
       "side": 1,
       "message": "you may need to flush and call dup twice, like is done in Android CTS\n\n- https://registry.khronos.org/EGL/extensions/ANDROID/EGL_ANDROID_native_fence_sync.txt\n- https://source.corp.google.com/h/googleplex-android/platform/cts/+/876a069e5b75d54274184659f326c5e69e49427e:libs/hardware/src/com/android/cts/hardware/SyncFenceUtil.java;l\u003d125-134;drc\u003d0ce485d339f425b3d253b09a1a095a2b51993a1f;bpv\u003d0;bpt\u003d0\n- https://b.corp.google.com/issues/18052459",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "263e23bf_9b8ef511",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "Done! I\u0027ve added the workaround logic to GPUSyncFenceHelper.kt. If eglDupNativeFenceFDANDROID returns null or an invalid fence, we now explicitly call android.opengl.GLES20.glFlush() and try the duplication again, exactly matching the Android CTS behavior for driver bug b/18052459.",
+      "parentUuid": "aa830e05_d25ff04e",
       "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

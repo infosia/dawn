@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab4a14ca_c2715b2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "Added Yordan to take a look at SyncFence work as he has the necessary context.",
+      "parentUuid": "6438147e_6a51c809",
+      "revId": "9c46cad9dbd826f739d0e9047d5133234c2adf46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4124296e_2557c762",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-06-16T08:30:26Z",
       "side": 1,
       "message": "Hardcoding VK_IMAGE_LAYOUT_GENERAL as the incoming layout makes sense for standard AHB producer/consumer preservation. However, hardcoding the target layout to VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL assumes the user will strictly sample this texture.\n\nAre there any consequences or expectations from Dawn\u0027s Vulkan backend regarding these hardcoded layouts? If a user imports an AHB with the intention to write to it (e.g. as a RenderAttachment), I assume Dawn will just issue a secondary layout transition internally, but I\u0027d love to check with someone with deeper Vulkan expertise (or the core Dawn team) to make sure this doesn\u0027t put Dawn into a suboptimal state.",
+      "range": {
+        "startLine": 435,
+        "startChar": 1,
+        "endLine": 438,
+        "endChar": 69
+      },
+      "revId": "9c46cad9dbd826f739d0e9047d5133234c2adf46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14f01c66_a2f3fa86",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T19:38:20Z",
+      "side": 1,
+      "message": "I checked with the Dawn team, that Dawn safely handles the secondary transition internally, but with a slight performance cost.\n\nTo avoid this, we can pass the intended layout from the Kotlin API. Given the size of this CL/topic, are you okay with me tracking this API update in a follow-up bug? (As this is not a breaking change and EAP partners are already using it)",
+      "parentUuid": "4124296e_2557c762",
       "range": {
         "startLine": 435,
         "startChar": 1,
