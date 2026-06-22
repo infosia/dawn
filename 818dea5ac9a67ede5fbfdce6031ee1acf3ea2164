@@ -26,6 +26,53 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c6914244_799393f2",
+        "filename": "generator/templates/dawn/native/ProcTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-22T22:57:50Z",
+      "side": 1,
+      "message": "We talked about it some on the Span CL but didn\u0027t come to a full conclusion, just keeping it as ityp::span for now since that\u0027s what we already have. I think the direction of the conversation was that no one really feels the `ityp::` noise is necessary but didn\u0027t decide on what we should call it.",
+      "parentUuid": "66a9f4ff_9606b210",
+      "range": {
+        "startLine": 68,
+        "startChar": 52,
+        "endLine": 68,
+        "endChar": 62
+      },
+      "revId": "818dea5ac9a67ede5fbfdce6031ee1acf3ea2164",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9c12761_43742a5c",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-22T22:57:50Z",
+      "side": 1,
+      "message": "```suggestion\n    mDynamicOffsets[index].assign(dynamicOffsets.begin(), dynamicOffsets.end());\n```\n\n---\n\nthough with C++23 this is a bit nicer:\n```\n    mDynamicOffsets[index].assign_range(dynamicOffsets);\n```",
+      "range": {
+        "startLine": 795,
+        "startChar": 0,
+        "endLine": 799,
+        "endChar": 5
+      },
+      "revId": "818dea5ac9a67ede5fbfdce6031ee1acf3ea2164",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73ca554f_849f8ff5",
         "filename": "src/dawn/native/CommandBufferStateTracker.h",
         "patchSetId": 11
