@@ -1,0 +1,17 @@
+[language-extension-token]
+# Treat third_party as system headers. This is still needed here even if
+# --system-header-prefix is used because --system-header-prefix doesn't
+# apply to --warning-suppression-mappings.
+src:*third_party/*
+
+src:*src/dawn/native/Surface.cpp
+src:*src/dawn/native/d3d/*
+src:*src/dawn/native/d3d11/*
+src:*src/dawn/native/d3d12/*
+src:*src/dawn/tests/end2end/AdapterEnumerationTests.cpp
+src:*src/dawn/tests/end2end/VideoViewsTests_win.cpp
+src:*src/dawn/tests/white_box/SharedBufferMemoryTests_win.cpp
+src:*src/dawn/tests/white_box/SharedTextureMemoryTests_win.cpp
+src:*src/dawn/tests/white_box/SharedTextureMemoryTests_win_d3d12.cpp
+src:*src/tint/lang/hlsl/validate/validate.cc
+src:*src/tint/utils/rtti/castable.h
