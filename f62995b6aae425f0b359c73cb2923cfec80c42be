@@ -161,6 +161,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3534c381_2acc3c60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-22T17:28:43Z",
+      "side": 1,
+      "message": "@fancl@google.com, ping to re-raise attention\n\ntl;dr The issue currently is that the package llvm-dev is not part of the base bot image, so the specific binaries/libs needed to build Mesa are not present. If it is feasible/reasonable to add that package to the bot image, that should be acceptable for what I am doing, and thus supersede needing this CL.",
+      "parentUuid": "24d340cb_b231565a",
+      "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab18c368_06ad6d4e",
         "filename": "DEPS",
         "patchSetId": 1
