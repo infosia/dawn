@@ -16,6 +16,178 @@
       "message": "PTAL! There are expected failure on Chromium bots because the CL that implements MemoryHandle in Chromium hasn\u0027t landed yet.",
       "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f406e329_327fa200",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T21:42:54Z",
+      "side": 1,
+      "message": "Took a first pass over the changes. I haven\u0027t taken a closer look at the unit test yet, but wanted to send at least a first pass of comments first. I especially want to coordinate the merge conflicts that we are gonna run into with my other change that I sent to you.",
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a52e7d26_924e9f83",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4770,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T21:42:54Z",
+      "side": 1,
+      "message": "Nice! I wasn\u0027t sure if this was possible or if it would be problematic because historically `dawn.json` was only dealing with C types and `std::byte` was a C++ type.",
+      "range": {
+        "startLine": 4768,
+        "startChar": 4,
+        "endLine": 4770,
+        "endChar": 6
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c6b81f0_5c09d62e",
+        "filename": "src/dawn/tests/unittests/wire/WireMemoryTransferServiceTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T21:42:54Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"destryed\" is a possible misspelling of \"destroyed\".\n\nTo bypass Spellchecker, ad...\n\n\"destryed\" is a possible misspelling of \"destroyed\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 715,
+        "startChar": 52,
+        "endLine": 715,
+        "endChar": 60
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9f480b0_5a256449",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T21:42:54Z",
+      "side": 1,
+      "message": "Ah.. these changes (and the ones in the header) are going to heavily conflict with the recent changes I sent out to you as well in: https://dawn-review.git.corp.google.com/c/dawn/+/317816. 😞",
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dd37de3_cc720bab",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T21:42:54Z",
+      "side": 1,
+      "message": "[1] nit. I guess to keep it consistent: `memoryDataUpdateInfoLength`? Or alternatively, maybe we don\u0027t rename that field in the `cmd` struct and keep it as `write` to make is clear?",
+      "range": {
+        "startLine": 210,
+        "startChar": 11,
+        "endLine": 210,
+        "endChar": 36
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87cc5fca_51408bd3",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T21:42:54Z",
+      "side": 1,
+      "message": "[2] nit. Removable now I think?",
+      "range": {
+        "startLine": 231,
+        "startChar": 8,
+        "endLine": 231,
+        "endChar": 97
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24f15850_86aaf89f",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T21:42:54Z",
+      "side": 1,
+      "message": "nit. same as [1]",
+      "range": {
+        "startLine": 279,
+        "startChar": 11,
+        "endLine": 279,
+        "endChar": 36
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a4f9191_e8fde889",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T21:42:54Z",
+      "side": 1,
+      "message": "nit. same as [2]",
+      "range": {
+        "startLine": 301,
+        "startChar": 8,
+        "endLine": 301,
+        "endChar": 97
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
