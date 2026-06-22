@@ -50,9 +50,6 @@ class FramebufferFetchHelper {
     // Returns a descriptor set that binds all render pass color attachments as input attachments.
     // The returned descriptor set is only valid to use for the current render pass.
     // It will be destroyed after the render pass is submitted to the GPU.
-    //
-    // Note there is a dependency that GetLayout() was called for appropriate number of input
-    // attachments already. This happens as part of creating the VkPipelineLayout.
     ResultOrError<VkDescriptorSet> GetDescriptorsForRenderPass(const BeginRenderPassCmd* cmd);
 
   private:
@@ -61,7 +58,13 @@ class FramebufferFetchHelper {
         Ref<DescriptorSetAllocator> allocator;
     };
 
+    // Initializes descriptor set layout and allocator for `attachmentCount`. This is safe to call
+    // from any thread and `mHolders[attachmentCount - 1]` will contain valid objects after it
+    // returns success.
+    MaybeError InitializeForAttachmentCount(uint32_t attachmentCount);
+
     raw_ptr<Device> mDevice;
+    Mutex mInitializationMutex;
     std::array<DescriptorSetHolder, kMaxColorAttachments> mHolders;
 };
 
