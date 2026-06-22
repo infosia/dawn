@@ -3,6 +3,131 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a07ab23_165fda5e",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:41:00Z",
+      "side": 1,
+      "message": "```suggestion\n    // TODO(crbug.com/525818824): Move these queries to GatherDeviceInfo and store the results on\n```",
+      "range": {
+        "startLine": 1032,
+        "startChar": 77,
+        "endLine": 1032,
+        "endChar": 84
+      },
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec6c0efe_a372d2d3",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:41:00Z",
+      "side": 1,
+      "message": "nit: I believe that because you have a comma after the last entry, clang-format will automatically format with one item per line so the `//` are not needed.",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e54cf440_0afe40b2",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:41:00Z",
+      "side": 1,
+      "message": "```suggestion\n    auto ToWgpuType \u003d\n```",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e898925_22ff5e66",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:41:00Z",
+      "side": 1,
+      "message": "```suggestion\n    auto IsFloat \u003d [](D3D12_LINEAR_ALGEBRA_DATATYPE dataType) {\n```",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05ed90fb_a144953a",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:41:00Z",
+      "side": 1,
+      "message": "```suggestion\n    auto ByteSize \u003d [](D3D12_LINEAR_ALGEBRA_DATATYPE dataType) {\n```",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b081737b_b30fc5b0",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:41:00Z",
+      "side": 1,
+      "message": "This comment is confusing unless you know which Jesse this is and of the conversations you had with him.\n\nWhy do we need to remove the `SINT8` and `UINT8` formats instead of letting the `CheckFeatureSupport` tell us that it isn\u0027t supported?",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b1be9c3_78bbad1a",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:41:00Z",
+      "side": 1,
+      "message": "nit: make a TODO and an issue, of explain that this combination is not supported in WGSL.",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39c21fa1_b6253154",
         "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
         "patchSetId": 12
@@ -79,6 +204,23 @@
         "endLine": 166,
         "endChar": 82
       },
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad984e61_f76599d3",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:41:00Z",
+      "side": 1,
+      "message": "nit: maybe we could have a FilterWorkingConfigs helper function to factor the code and logic between tests.",
       "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
