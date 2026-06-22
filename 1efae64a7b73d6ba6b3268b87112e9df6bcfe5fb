@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a6b8fa3_21ab2a30",
+        "filename": "generator/templates/dawn/native/api_structs.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T21:14:15Z",
+      "side": 1,
+      "message": "IIUC, this will only check that the spans are pointer equivalent. I\u0027m not saying that\u0027s wrong, but from what I understand, `std::span` omitted the equality operator specifically because it\u0027s unclear if equality of spans should be based on pointer equality of member equality. Given that the rest of the operator seems to be member equality, I\u0027m wondering if it would actually make more sense to make this check that the span\u0027s members are equal instead of just the pointer/size. If we decided to do member equality, we should theoretically be able to use `std::ranges::equal` here.\n\nThat said, I think that what you have here is actually correct w.r.t what we had before, so I\u0027m also happy to just leave this as is and address whether it should be pointer/member equality in a follow up.",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 141,
+        "endChar": 119
+      },
+      "revId": "1efae64a7b73d6ba6b3268b87112e9df6bcfe5fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
