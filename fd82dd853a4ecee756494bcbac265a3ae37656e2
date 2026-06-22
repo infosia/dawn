@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de6a3e10_b6f2de9c",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T08:53:29Z",
+      "side": 1,
+      "message": "This can be made part of `blockedUsages` instead.",
+      "revId": "fd82dd853a4ecee756494bcbac265a3ae37656e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d145f723_3a6b784c",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T08:53:29Z",
+      "side": 1,
+      "message": "Can we have the comment about why this is blocked moved here? (or a new short one made)",
+      "revId": "fd82dd853a4ecee756494bcbac265a3ae37656e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
