@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c58204ef_58b864ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T15:46:44Z",
+      "side": 1,
+      "message": "```suggestion\nFramebufferFetchHelper: Add mutex to ensure safe initialization\n```",
+      "revId": "20801cd194fed5ed1c3ea5e09a674bc7f9f72958",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c42cf1b8_9581f1bd",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T15:46:44Z",
+      "side": 1,
+      "message": "Can we use `MutexProtected` we don\u0027t need the mutex in other places but we might as well because this class likely won\u0027t have contention on it.",
+      "revId": "20801cd194fed5ed1c3ea5e09a674bc7f9f72958",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
