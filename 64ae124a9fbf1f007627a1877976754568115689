@@ -16,6 +16,24 @@
       "message": "Corentin: PTAL. Thanks!\n\nI\u0027ve cherry-picked and landed the required ANGLE change to M150 here: https://chromium.googlesource.com/angle/angle.git/+/67fd0214016558d6c7cc9ab45cf1ccc8f14bdfe4\n\nAnd it rolled in to Chromium\u0027s M150 branch here: https://chromium-review.googlesource.com/c/chromium/src/+/7980297\n\nHowever, Dawn\u0027s depth/stencil tests are failing because that ANGLE rev isn\u0027t included in *Dawn\u0027s* DEPS. How should I proceed? Should I roll ANGLE in Dawn\u0027s DEPS in this change to point at that rev? Or just force-land it?",
       "revId": "64ae124a9fbf1f007627a1877976754568115689",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "989106cc_549661c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-06-22T23:15:58Z",
+      "side": 1,
+      "message": "For now, I\u0027ve disabled the failing dawn_end2end_tests on the M150 branch. LMK if this is kosher.",
+      "parentUuid": "a4014ae4_47e7bfbf",
+      "revId": "64ae124a9fbf1f007627a1877976754568115689",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
