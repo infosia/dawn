@@ -16,6 +16,23 @@
       "message": "Hey Loko and Brandon, this patch adds DAWN_GUARDED_BY and DAWN_EXCLUSIVE_LOCKS_REQUIRED \nmacros to Compiler.h, following the existing DAWN_MUTEX_CAPABILITY \npattern, and applies DAWN_GUARDED_BY to mPendingMapEvent in Buffer.h \nto enforce the mutex requirement currently documented only in comments. \nAll dawn_unittests pass. Please let me know if you have any feedback.",
       "revId": "46a968c91a2bd0d8d0fea07971e54ddc3dcff89c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d0c5727_dde7bd47",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T21:49:13Z",
+      "side": 1,
+      "message": "Ah, I was eventually planning on fixing that `mPendingMapMutex` to be use a `MutexProtected` eventually. I was also thinking that for the mutex guard annotations, we would probably want to put those up in src/utils, and have Tint folks sign off on it as well.",
+      "revId": "46a968c91a2bd0d8d0fea07971e54ddc3dcff89c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
