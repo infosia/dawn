@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61bff05d_6de36f4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4934043
+      },
+      "writtenOn": "2026-06-22T20:10:00Z",
+      "side": 1,
+      "message": "Hey Loko and Brandon, this patch adds DAWN_GUARDED_BY and DAWN_EXCLUSIVE_LOCKS_REQUIRED \nmacros to Compiler.h, following the existing DAWN_MUTEX_CAPABILITY \npattern, and applies DAWN_GUARDED_BY to mPendingMapEvent in Buffer.h \nto enforce the mutex requirement currently documented only in comments. \nAll dawn_unittests pass. Please let me know if you have any feedback.",
+      "revId": "46a968c91a2bd0d8d0fea07971e54ddc3dcff89c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
