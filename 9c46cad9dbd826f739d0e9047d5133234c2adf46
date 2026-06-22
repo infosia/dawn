@@ -56,6 +56,24 @@
       "message": "We need to be careful with unconditionally chaining Vulkan structs here. In nativeBeginAccess and nativeEndAccess, we are blindly appending WGPUSharedTextureMemoryVkImageLayoutBeginState and EndState to the chain.\n\nIf the Android device falls back to the OpenGLES backend (which happens frequently on older devices or emulators), Dawn\u0027s GLES backend will reject these Vulkan-specific sType chains. In nativeEndAccess, this returns WGPUStatus_Error and throws a fatal IllegalStateException, crashing the Android app.\n\nWe should dynamically check the active backend type on the WGPUDevice (e.g., via wgpuAdapterGetInfo) before chaining these Vulkan-specific layout structs. If the backend is OpenGLES, we should just pass the base descriptors without the Vulkan chains",
       "revId": "9c46cad9dbd826f739d0e9047d5133234c2adf46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1559f19_bc5cd680",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-22T05:36:43Z",
+      "side": 1,
+      "message": "Done added to - https://dawn-review.git.corp.google.com/c/dawn/+/315235/11/tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp#430",
+      "parentUuid": "d62a1f27_269737ec",
+      "revId": "9c46cad9dbd826f739d0e9047d5133234c2adf46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
