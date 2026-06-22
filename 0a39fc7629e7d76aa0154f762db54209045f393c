@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2bf3089_8cc02894",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T08:56:42Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "0a39fc7629e7d76aa0154f762db54209045f393c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1d3392d_493bb8ba",
@@ -14,6 +31,24 @@
       "writtenOn": "2026-06-22T08:13:15Z",
       "side": 1,
       "message": "Note: I checked and there are currently zero violations.\n\nJust in case this is blocking someone for good reasons (you last Thursday?), let\u0027s downgrade this into a warning that the author have to acknowledge and a gerrit comment for the reviewers to see.",
+      "revId": "0a39fc7629e7d76aa0154f762db54209045f393c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fcc8404_edf31384",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T08:56:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e1d3392d_493bb8ba",
       "revId": "0a39fc7629e7d76aa0154f762db54209045f393c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
