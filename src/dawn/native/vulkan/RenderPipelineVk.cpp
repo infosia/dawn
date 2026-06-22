@@ -655,6 +655,17 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
             colorBlendAttachments[i] = ComputeColorDesc(target, fragmentOutputMask[i]);
         }
 
+        // crbug.com/525294804: Force the alpha write bit on for that attachment
+        // so the driver keeps computing per-sample coverage.
+        if (IsAlphaToCoverageEnabled() &&
+            device->IsToggleEnabled(Toggle::VulkanForceColorWriteMaskWithAlphaToCoverage)) {
+            constexpr ColorAttachmentIndex kAlphaToCoverageAttachment{static_cast<uint8_t>(0)};
+            if (GetColorAttachmentsMask()[kAlphaToCoverageAttachment]) {
+                colorBlendAttachments[kAlphaToCoverageAttachment].colorWriteMask |=
+                    VK_COLOR_COMPONENT_A_BIT;
+            }
+        }
+
         colorBlend.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
         colorBlend.pNext = nullptr;
         colorBlend.flags = 0;
