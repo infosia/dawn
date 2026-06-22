@@ -54,6 +54,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "410fc09c_25f761d1",
+        "filename": "src/dawn/native/SharedBufferMemory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-06-22T06:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdd4a57a_aae5c47c",
+      "revId": "db194b91eac5556f3e5082bebd066282c1988542",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "e0d2fdae_73f9bed0",
         "filename": "src/dawn/native/SharedBufferMemory.cpp",
         "patchSetId": 1
@@ -99,6 +117,30 @@
       "writtenOn": "2026-06-17T17:56:57Z",
       "side": 1,
       "message": "WDYT of making `GetSharedBufferMemoryProperties` take a `wgpu::BufferUsage blockedUsages` that\u0027s used to do `properties.usage \u003d usages \u0026 ~blockedUsages;`? We could even make it the last argument and default to `None`.\n\nThe comment from `IsUniformUsageDisallowed` could be move here, and `mIsCreatedFromD3D12Resource` will no longer be needed.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 0
+      },
+      "revId": "db194b91eac5556f3e5082bebd066282c1988542",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "495a163b_94a2ea98",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-06-22T06:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d68b703d_d275b090",
       "range": {
         "startLine": 203,
         "startChar": 0,
