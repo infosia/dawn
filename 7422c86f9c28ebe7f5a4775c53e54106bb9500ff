@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95372f28_89baa9ef",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-22T23:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e16e3f_39c09319",
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "796a6d81_ba9ea7de",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-06-19T03:29:57Z",
       "side": 1,
       "message": "Can we just check in this txt file? I don\u0027t see that GN is doing any dynamic generation but I\u0027m not quite sure.\n\nThat said I think we should probably just split this to a separate CL if we can. Just disable the warning globally for now and this will be part of re-enabling it for some files. (And there will be lots of other warnings that I think we can reenable this way.)",
+      "range": {
+        "startLine": 96,
+        "startChar": 23,
+        "endLine": 96,
+        "endChar": 64
+      },
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "996fd3a5_ea5af5f7",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-22T23:42:26Z",
+      "side": 1,
+      "message": "CL splitted (Made a `src/utils/clang-suppression-mappings/` folder for these txt files)",
+      "parentUuid": "796a6d81_ba9ea7de",
       "range": {
         "startLine": 96,
         "startChar": 23,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f5e9881_c7887b67",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-22T23:42:26Z",
+      "side": 1,
+      "message": "CL splitted (it seems `--system-header-prefix` doesn\u0027t apply to `--warning-suppression-mappings`, but I need more experiment to see if adding some wildcard third_party path could make it work. If not I will add more comment)",
+      "parentUuid": "b6a5fc7a_aea9dbed",
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fef5e3f0_10c1bf25",
@@ -71,6 +131,30 @@
       "writtenOn": "2026-06-19T03:29:57Z",
       "side": 1,
       "message": "`crbug.com/`",
+      "range": {
+        "startLine": 131,
+        "startChar": 11,
+        "endLine": 131,
+        "endChar": 13
+      },
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "217345b8_2d38acaf",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-22T23:42:26Z",
+      "side": 1,
+      "message": "Done (I read somewhere maybe Tech on the Toilet or memegen for new TODO style. go/todo-style ? But for chromium facing external devs make sense to not use internal shortcut path)",
+      "parentUuid": "fef5e3f0_10c1bf25",
       "range": {
         "startLine": 131,
         "startChar": 11,
@@ -104,6 +188,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10453661_ff17c53d",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-22T23:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0747bf3b_b096f39a",
+      "range": {
+        "startLine": 257,
+        "startChar": 13,
+        "endLine": 257,
+        "endChar": 15
+      },
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa7db28f_e9a5cb49",
@@ -117,6 +225,30 @@
       "writtenOn": "2026-06-19T03:29:57Z",
       "side": 1,
       "message": "We should use the same suppressions on all platforms.\n\n```suggestion\n  if (is_clang) {\n```",
+      "range": {
+        "startLine": 278,
+        "startChar": 18,
+        "endLine": 278,
+        "endChar": 24
+      },
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1cca636_3224386c",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-22T23:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa7db28f_e9a5cb49",
       "range": {
         "startLine": 278,
         "startChar": 18,

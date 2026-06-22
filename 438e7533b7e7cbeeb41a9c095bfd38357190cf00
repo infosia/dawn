@@ -457,6 +457,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d88ec06_4fc550bc",
+        "filename": "scripts/dawn_features.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-22T23:42:26Z",
+      "side": 1,
+      "message": "Thanks for the discussion. Done.\nThe current status:\n- `dawn_weverything` is true for dawn bots.\n- If user set `dawn_weverything \u003d false`, it is the old `-Wall -Wextra -Wpedantic` with selective warnings flag `if (dawn_standalone \u0026\u0026 is_clang)`\n- For chromium bots it is the same as before this CL (no warnings enabled).",
+      "parentUuid": "c096b766_046b4d2c",
+      "revId": "438e7533b7e7cbeeb41a9c095bfd38357190cf00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "152f376a_4f253005",
