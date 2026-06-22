@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf005942_41dc535f",
+        "filename": "src/utils/span.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa6ec69_54616cc7",
+      "range": {
+        "startLine": 199,
+        "startChar": 14,
+        "endLine": 199,
+        "endChar": 16
+      },
+      "revId": "9c9788fd89fb740df9ca95e34c8ac0e3a63c40b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "355acf76_d2293ce0",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-06-19T15:41:53Z",
       "side": 1,
       "message": "This is the same as `data` above. Shouldn\u0027t this be `const int constData[]...`?",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "9c9788fd89fb740df9ca95e34c8ac0e3a63c40b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "396a53e6_edc4b1aa",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "355acf76_d2293ce0",
       "range": {
         "startLine": 79,
         "startChar": 4,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6d35c9e_07cec71e",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:51:03Z",
+      "side": 1,
+      "message": "These macros turn into noops on systems where death tests are not supported. See the implementation: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:gen/amd64-generic/chroot/usr/include/gtest/gtest-death-test.h;drc\u003d42b86cec4588606fdc00a3e20efd236d8d3a1345;l\u003d338",
+      "parentUuid": "77190782_f4bf41cf",
+      "range": {
+        "startLine": 200,
+        "startChar": 8,
+        "endLine": 200,
+        "endChar": 33
+      },
+      "revId": "9c9788fd89fb740df9ca95e34c8ac0e3a63c40b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f51ee0ad_03fbfa47",
@@ -93,6 +165,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48576c00_c4e993b7",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f51ee0ad_03fbfa47",
+      "range": {
+        "startLine": 251,
+        "startChar": 8,
+        "endLine": 252,
+        "endChar": 21
+      },
+      "revId": "9c9788fd89fb740df9ca95e34c8ac0e3a63c40b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c7749d6_6aba6f54",
@@ -106,6 +202,30 @@
       "writtenOn": "2026-06-19T15:41:53Z",
       "side": 1,
       "message": "Suggest: \"Default move copies\"",
+      "range": {
+        "startLine": 303,
+        "startChar": 7,
+        "endLine": 303,
+        "endChar": 32
+      },
+      "revId": "9c9788fd89fb740df9ca95e34c8ac0e3a63c40b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2602a57_ae85b6cf",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T09:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c7749d6_6aba6f54",
       "range": {
         "startLine": 303,
         "startChar": 7,
