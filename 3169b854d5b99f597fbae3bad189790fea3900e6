@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d10baf4f_89c42e54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-22T13:41:53Z",
+      "side": 1,
+      "message": "PTAL! There are expected failure on Chromium bots because the CL that implements MemoryHandle in Chromium hasn\u0027t landed yet.",
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
