@@ -1095,6 +1095,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // the correct buffer offset when a copy region has layerCount > 1.
         // Split such copies into one region per layer.
         deviceToggles->Default(Toggle::VulkanSplitBufferTextureCopyForArrayLayers, true);
+
+        // crbug.com/525294804: Force the alpha write bit on so the driver keeps the coverage math.
+        deviceToggles->Default(Toggle::VulkanForceColorWriteMaskWithAlphaToCoverage, true);
     }
 
     // Collapse redundant subgroup min and max operations to workaround a driver crash on some AMD

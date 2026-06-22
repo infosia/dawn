@@ -504,6 +504,14 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "drivers mis-stride the buffer between layers when bufferImageHeight is padded, corrupting "
       "every layer after the first.",
       "https://issues.chromium.org/issues/520126486", ToggleStage::Device}},
+    {Toggle::VulkanForceColorWriteMaskWithAlphaToCoverage,
+     {"vulkan_force_color_write_mask_with_alpha_to_coverage",
+      "When alpha-to-coverage is enabled, force the alpha channel of the color write mask on for "
+      "the alpha-to-coverage attachment (location 0) even if the pipeline requested an empty write "
+      "mask. Workaround for Huawei Maleoon GPUs, whose drivers skip the alpha-to-coverage coverage "
+      "computation when the attachment's color write mask is empty, counting every sample as "
+      "covered.",
+      "https://issues.chromium.org/issues/525294804", ToggleStage::Device}},
     {Toggle::GLUseArrayLengthFromUniform,
      {"gl_use_array_length_from_uniform",
       "Use arrayLengthFromUniform transform to replace arrayLength() function calls of dynamic "
