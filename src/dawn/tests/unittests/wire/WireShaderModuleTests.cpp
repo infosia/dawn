@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <array>
 #include <memory>
 
 #include "dawn/wire/WireClient.h"
@@ -123,6 +124,152 @@ TEST_P(WireShaderModuleTests, GetCompilationInfo) {
                                             utf16->linePos == mUtf18.linePos &&
                                             utf16->offset == mUtf18.offset &&
                                             utf16->length == mUtf18.length;
+                                 })))
+            .Times(1);
+
+        FlushCallbacks();
+    });
+}
+
+TEST_P(WireShaderModuleTests, GetCompilationInfoMixedUseOfDawnCompilationMessages) {
+    // Verify bookkeeping for the DawnCompilationMessageUtf16 instances.
+    // There was a bug where the utf16 vector was being indexed incorrectly.
+    // It assumed the utf16 chained message for the i'th message would appear
+    // in the i'th slot on the utf16 vector. Construct a case where that is not true.
+    wgpu::DawnCompilationMessageUtf16 utf16 = {{nullptr, 30, 32, 34}};
+    wgpu::CompilationMessage message0 = {
+        nullptr, ToOutputStringView("message 0"), wgpu::CompilationMessageType::Info, 10, 12, 14,
+        16};
+    wgpu::CompilationMessage message1 = {
+        &utf16, ToOutputStringView("message 1"), wgpu::CompilationMessageType::Info, 20, 22, 24,
+        26};
+    std::array<wgpu::CompilationMessage, 2> messages = {message0, message1};
+    wgpu::CompilationInfo compilationInfo = {nullptr, 2, messages.data()};
+
+    GetCompilationInfo();
+
+    EXPECT_CALL(api, OnShaderModuleGetCompilationInfo(apiShaderModule, _))
+        .WillOnce(InvokeWithoutArgs([&] {
+            api.CallShaderModuleGetCompilationInfoCallback(
+                apiShaderModule, WGPUCompilationInfoRequestStatus_Success,
+                reinterpret_cast<const WGPUCompilationInfo*>(&compilationInfo));
+        }));
+    FlushClient();
+    FlushFutures();
+
+    ExpectWireCallbacksWhen([&](auto& mockCb) {
+        EXPECT_CALL(
+            mockCb,
+            Call(wgpu::CompilationInfoRequestStatus::Success,
+                 MatchesLambda([&](const wgpu::CompilationInfo* info) -> bool {
+                     if (info->messageCount != compilationInfo.messageCount) {
+                         return false;
+                     }
+                     const wgpu::CompilationMessage* msg0 = &info->messages[0];
+                     EXPECT_NE(msg0->message.length, WGPU_STRLEN);
+                     EXPECT_STREQ(msg0->message.data, "message 0");
+                     EXPECT_EQ(msg0->nextInChain, nullptr);
+
+                     const wgpu::CompilationMessage* msg1 = DAWN_UNSAFE_BUFFERS(&info->messages[1]);
+                     EXPECT_NE(msg1->message.length, WGPU_STRLEN);
+                     EXPECT_STREQ(msg1->message.data, "message 1");
+                     EXPECT_NE(msg1->nextInChain, nullptr);
+                     EXPECT_EQ(msg1->nextInChain->sType, wgpu::SType::DawnCompilationMessageUtf16);
+                     const auto* utf16_1 =
+                         reinterpret_cast<const wgpu::DawnCompilationMessageUtf16*>(
+                             msg1->nextInChain);
+
+                     // The client should always be copying the data returned from
+                     // the server so the memory addresses should never be equal.
+                     EXPECT_NE(info, &compilationInfo);
+                     EXPECT_NE(msg0, &messages[0]);
+                     EXPECT_NE(msg0, &messages[1]);
+                     EXPECT_NE(msg1, &messages[0]);
+                     EXPECT_NE(msg1, &messages[1]);
+                     EXPECT_NE(utf16_1, &utf16);
+                     return true;
+
+                     return msg0->message == messages[0].message &&
+                            msg0->type == messages[0].type &&
+                            msg0->lineNum == messages[0].lineNum &&
+                            msg0->linePos == messages[0].linePos &&
+                            msg0->offset == messages[0].offset &&
+                            msg0->length == messages[0].length &&
+                            msg1->message == messages[1].message &&
+                            msg1->type == messages[1].type &&
+                            msg1->lineNum == messages[1].lineNum &&
+                            msg1->linePos == messages[1].linePos &&
+                            msg1->offset == messages[1].offset &&
+                            msg1->length == messages[1].length &&
+                            utf16_1->linePos == utf16.linePos && utf16_1->offset == utf16.offset &&
+                            utf16_1->length == utf16.length;
+                 })))
+            .Times(1);
+
+        FlushCallbacks();
+    });
+}
+
+TEST_P(WireShaderModuleTests, GetCompilationInfoDuplicateDawnMessageStructIsDropped) {
+    // Setup a message that has two DawnCompilationMessageUtf16 structs chained to it
+    // This is invalid. The implementation drops the second one.
+    wgpu::DawnCompilationMessageUtf16 secondUtf16 = {{nullptr, 30, 32, 34}};
+    wgpu::DawnCompilationMessageUtf16 firstUtf16 = {{&secondUtf16, 20, 22, 24}};
+    wgpu::CompilationMessage message = {&firstUtf16,
+                                        ToOutputStringView("Test Message"),
+                                        wgpu::CompilationMessageType::Info,
+                                        10,
+                                        12,
+                                        14,
+                                        16};
+    wgpu::CompilationInfo compilationInfo = {nullptr, 1, &message};
+
+    GetCompilationInfo();
+
+    EXPECT_CALL(api, OnShaderModuleGetCompilationInfo(apiShaderModule, _))
+        .WillOnce(InvokeWithoutArgs([&] {
+            api.CallShaderModuleGetCompilationInfoCallback(
+                apiShaderModule, WGPUCompilationInfoRequestStatus_Success,
+                reinterpret_cast<const WGPUCompilationInfo*>(&compilationInfo));
+        }));
+    FlushClient();
+    FlushFutures();
+
+    ExpectWireCallbacksWhen([&](auto& mockCb) {
+        EXPECT_CALL(mockCb, Call(wgpu::CompilationInfoRequestStatus::Success,
+                                 MatchesLambda([&](const wgpu::CompilationInfo* info) -> bool {
+                                     if (info->messageCount != compilationInfo.messageCount) {
+                                         return false;
+                                     }
+                                     const wgpu::CompilationMessage* infoMessage =
+                                         &info->messages[0];
+                                     EXPECT_NE(infoMessage->message.length, WGPU_STRLEN);
+                                     EXPECT_NE(infoMessage->nextInChain, nullptr);
+                                     EXPECT_EQ(infoMessage->nextInChain->sType,
+                                               wgpu::SType::DawnCompilationMessageUtf16);
+                                     const auto* utf16 =
+                                         reinterpret_cast<const wgpu::DawnCompilationMessageUtf16*>(
+                                             infoMessage->nextInChain);
+
+                                     // The client should always be copying the data returned from
+                                     // the server so the memory addresses should never be equal.
+                                     EXPECT_NE(info, &compilationInfo);
+                                     EXPECT_NE(infoMessage, &message);
+                                     EXPECT_NE(utf16, &firstUtf16);
+                                     EXPECT_NE(utf16, &secondUtf16);
+                                     // The chain ends after the first struct.
+                                     EXPECT_EQ(utf16->nextInChain, nullptr)
+                                         << " " << &firstUtf16 << " " << &secondUtf16;
+
+                                     return infoMessage->message == message.message &&
+                                            infoMessage->type == message.type &&
+                                            infoMessage->lineNum == message.lineNum &&
+                                            infoMessage->linePos == message.linePos &&
+                                            infoMessage->offset == message.offset &&
+                                            infoMessage->length == message.length &&
+                                            utf16->linePos == firstUtf16.linePos &&
+                                            utf16->offset == firstUtf16.offset &&
+                                            utf16->length == firstUtf16.length;
                                  })))
             .Times(1);
 
