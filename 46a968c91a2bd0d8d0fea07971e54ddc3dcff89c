@@ -33,6 +33,24 @@
       "message": "Ah, I was eventually planning on fixing that `mPendingMapMutex` to be use a `MutexProtected` eventually. I was also thinking that for the mutex guard annotations, we would probably want to put those up in src/utils, and have Tint folks sign off on it as well.",
       "revId": "46a968c91a2bd0d8d0fea07971e54ddc3dcff89c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0102ab32_1dd26c44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4934043
+      },
+      "writtenOn": "2026-06-22T23:55:18Z",
+      "side": 1,
+      "message": "Thanks for the solid feedback @lokokung@google.com! \n\nHappy to move the macros to src/utils/ instead — that makes sense \nas a more broadly useful location. Could you point me to the right \nfile in src/utils/ where these would fit best alongside existing \ncompiler annotations?\n\nOn the MutexProtected refactor — should I wait for that to land \nfirst, or would it still be useful to add the GUARDED_BY annotation \nnow and update it as part of the refactor?",
+      "parentUuid": "1d0c5727_dde7bd47",
+      "revId": "46a968c91a2bd0d8d0fea07971e54ddc3dcff89c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
