@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66a9f4ff_9606b210",
+        "filename": "generator/templates/dawn/native/ProcTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T20:53:29Z",
+      "side": 1,
+      "message": "Just for my understanding, is the plan to leave this as itype::span going forwards? Assuming we don\u0027t want to use `dawn::detail::SpanBase` accessible, maybe we could have something like `dawn::ispan`/`dawn::typed_span`/`dawn::typed_integer_span`? (We could maybe do that for the entire `ityp` namespace eventually?)",
+      "range": {
+        "startLine": 68,
+        "startChar": 52,
+        "endLine": 68,
+        "endChar": 62
+      },
+      "revId": "818dea5ac9a67ede5fbfdce6031ee1acf3ea2164",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73ca554f_849f8ff5",
+        "filename": "src/dawn/native/CommandBufferStateTracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T20:53:29Z",
+      "side": 1,
+      "message": "Should we make this actually return an `ityp::span\u003cBindingIndex, const uint32_t\u003e` instead of a const reference to a vector?",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 47
+      },
+      "revId": "818dea5ac9a67ede5fbfdce6031ee1acf3ea2164",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf9dd2dd_7a702319",
+        "filename": "src/dawn/tests/unittests/native/CommandBufferEncodingTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-22T20:53:29Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m not entirely sure if it will work out of the box depending on our `ispan` implementation, but I think ideally, what we should be able to do here is basically something like:\n\n```\nityp::vector\u003cBindGroupIndex, uint32_t\u003e emptyDynamicOffsets \u003d {};\nityp::vector\u003cBindGroupIndex, uint32_t\u003e singleDynamicOffset \u003d {dynamicOffset};\n\nEXPECT_TRUE(std::ranges::equal(stateTracker-\u003eGetDynamicOffsets(BindGroupIndex(0u)), emptyDynamicOffsets));\nEXPECT_TRUE(std::ranges::equal(stateTracker-\u003eGetDynamicOffsets(BindGroupIndex(1u)), singleDynamicOffset));\n```\n\nAnd then something similar below. That should theoretically be sufficient even without checking the size because I think `std::ranges::equal` enforces that already also.",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 99
+      },
+      "revId": "818dea5ac9a67ede5fbfdce6031ee1acf3ea2164",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
