@@ -179,6 +179,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f2086fe_1e12217d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4242289
+      },
+      "writtenOn": "2026-06-23T00:10:34Z",
+      "side": 1,
+      "message": "I assume the only platform you care about is Linux? As Brian said maybe try infra/3pp and in worst case we can do a repackaging of the upstream package. Though you won\u0027t have a version matching the host. I\u0027m not sure how important is that?",
+      "parentUuid": "3534c381_2acc3c60",
+      "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab18c368_06ad6d4e",
         "filename": "DEPS",
         "patchSetId": 1
