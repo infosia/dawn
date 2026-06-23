@@ -33,6 +33,24 @@
       "message": "nit: it would be good to go both from and to a pipeline that uses FBF. How about having two pipelines:\n\n 1. No FBF, BlendMode Add, returns 10.\n 2. FBF, returns 2x the contents of the framebuffer.\n \nRun 1, 2, and 1 again (the last part is what\u0027s missing in this test).",
       "revId": "4201f032a9a04b692e3316f254c0cf618e744e07",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72fcf8cc_3eb139c7",
+        "filename": "src/dawn/tests/end2end/FramebufferFetchTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-06-23T20:24:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ddd165_24fc99aa",
+      "revId": "4201f032a9a04b692e3316f254c0cf618e744e07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
