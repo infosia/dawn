@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "589f4403_363e2873",
+        "filename": "src/dawn/tests/unittests/wire/WireMemoryTransferServiceTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-23T20:04:05Z",
+      "side": 1,
+      "message": "nit. For these, I think that if we don\u0027t care about the input, you can just do `EXPECT_CALL(mServerMTS, DeserializeMemoryHandle).WillOnce(Return(nullptr));`. Same below for any of the expectations on mock functions where all the arguments are `_`.",
+      "range": {
+        "startLine": 194,
+        "startChar": 36,
+        "endLine": 194,
+        "endChar": 72
+      },
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53bf1b23_01a1e1ec",
+        "filename": "src/dawn/tests/unittests/wire/WireMemoryTransferServiceTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-23T20:04:05Z",
+      "side": 1,
+      "message": "nit. I think it would be helpful to specify (in a comment) when we would expect the handles to be null here (if ever?). I briefly tried to track when they are null, and I wasn\u0027t trivially able to figure it out at all. I guess if they are never null, it would also be nice to have them as references instead.",
+      "range": {
+        "startLine": 281,
+        "startChar": 34,
+        "endLine": 282,
+        "endChar": 70
+      },
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "459834f1_a1160311",
+        "filename": "src/dawn/tests/unittests/wire/WireMemoryTransferServiceTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-23T20:04:05Z",
+      "side": 1,
+      "message": "nit. Shouldn\u0027t the `ASSERT_THAT(clientHandle, NotNull())` check still be needed here?",
+      "range": {
+        "startLine": 296,
+        "startChar": 16,
+        "endLine": 297,
+        "endChar": 70
+      },
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87ba3a04_9456cad1",
+        "filename": "src/dawn/tests/unittests/wire/WireMemoryTransferServiceTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-23T20:04:05Z",
+      "side": 1,
+      "message": "nit. Maybe we should pull this out to a descriptive bool? Maybe `isMappedAtCreationOnly`?",
+      "range": {
+        "startLine": 381,
+        "startChar": 12,
+        "endLine": 381,
+        "endChar": 81
+      },
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "022a4aaa_61adf569",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-23T20:04:05Z",
+      "side": 1,
+      "message": "nit. destroyed",
+      "range": {
+        "startLine": 250,
+        "startChar": 11,
+        "endLine": 250,
+        "endChar": 21
+      },
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
