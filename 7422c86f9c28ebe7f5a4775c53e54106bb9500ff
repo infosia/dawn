@@ -183,6 +183,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14074518_fc1a92eb",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T01:30:24Z",
+      "side": 1,
+      "message": "We\u0027re following [chromium style](https://chromium.googlesource.com/chromium/src/+/main/styleguide/c++/c++-dos-and-donts.md#comment-style) which uses `crbug.com` in place of `b` and doesn\u0027t yet allow the new `// TODO: url - comment` style",
+      "parentUuid": "217345b8_2d38acaf",
+      "range": {
+        "startLine": 131,
+        "startChar": 11,
+        "endLine": 131,
+        "endChar": 13
+      },
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0747bf3b_b096f39a",

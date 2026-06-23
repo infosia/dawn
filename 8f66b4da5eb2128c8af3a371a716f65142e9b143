@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00059ac3_cae5045d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T01:30:24Z",
+      "side": 1,
+      "message": "LGTM w/ nits, go ahead and land when ready.",
+      "revId": "8f66b4da5eb2128c8af3a371a716f65142e9b143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edc693db_4a5d9a03",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T01:30:24Z",
+      "side": 1,
+      "message": "If `args.gn` sets `dawn_weverything \u003d false`, this test will fail, right?\n\nSo need to add this file conditionally.",
+      "revId": "8f66b4da5eb2128c8af3a371a716f65142e9b143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd074f8d_b052f25d",
+        "filename": "src/utils/warning_nocompile.nc",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T01:30:24Z",
+      "side": 1,
+      "message": "And update this comment, for example:\n```suggestion\n// -Wall -Wextra are enabled. This test runs only when `dawn_weverything \u003d true`.\n```",
+      "range": {
+        "startLine": 33,
+        "startChar": 29,
+        "endLine": 33,
+        "endChar": 56
+      },
+      "revId": "8f66b4da5eb2128c8af3a371a716f65142e9b143",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
