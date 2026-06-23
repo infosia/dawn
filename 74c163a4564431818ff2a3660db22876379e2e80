@@ -16,6 +16,24 @@
       "message": "LGTM\n\nAs a followup, we could remove the blit workarounds and anything conditional on !isFloat16, !isFloat32, or !isRG11B10UfloatRenderable.",
       "revId": "74c163a4564431818ff2a3660db22876379e2e80",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adef43af_6d6fbbe1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-23T16:45:55Z",
+      "side": 1,
+      "message": "Yep. Turns out toggles like `Toggle::UseBlitForFloat32TextureCopy` becomes always false and we should remove those branches. Still seems fine to keep these toggles and blit path though",
+      "parentUuid": "90b4684e_85d1e45f",
+      "revId": "74c163a4564431818ff2a3660db22876379e2e80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
