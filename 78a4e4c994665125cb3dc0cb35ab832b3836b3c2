@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dba6e51_145a2a92",
+        "filename": "src/dawn/tests/unittests/wire/WireShaderModuleTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-06-23T20:09:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c21ade27_3d46eea1",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 12
+      },
+      "revId": "78a4e4c994665125cb3dc0cb35ab832b3836b3c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39d4a59b_33606654",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-06-22T22:05:50Z",
       "side": 1,
       "message": "nit. Same here, we can remove all the fields except for the `nextInChain` and then update the expectations to only check for that to make the test more deliberate in what it\u0027s testing.",
+      "range": {
+        "startLine": 219,
+        "startChar": 40,
+        "endLine": 224,
+        "endChar": 44
+      },
+      "revId": "78a4e4c994665125cb3dc0cb35ab832b3836b3c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f5af501_288ba82b",
+        "filename": "src/dawn/tests/unittests/wire/WireShaderModuleTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-06-23T20:09:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39d4a59b_33606654",
       "range": {
         "startLine": 219,
         "startChar": 40,

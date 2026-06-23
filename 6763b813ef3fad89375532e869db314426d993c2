@@ -22,6 +22,30 @@
       },
       "revId": "6763b813ef3fad89375532e869db314426d993c2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18b2d991_8ad9d005",
+        "filename": "src/dawn/tests/unittests/wire/WireShaderModuleTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-06-23T20:09:06Z",
+      "side": 1,
+      "message": "Funny thing is this isn\u0027t what the original bug was about. I noticed it when reading the code.  A second funny thing is that the suggested patch for the original bug also fixed the same issue.  :-)\n\nI\u0027ll reword to say the previous version of the feature code had the problem.",
+      "parentUuid": "9a883931_1c9a6c9c",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 22
+      },
+      "revId": "6763b813ef3fad89375532e869db314426d993c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
