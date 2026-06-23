@@ -85,7 +85,7 @@ class CommandBufferStateTracker {
 
     BindGroupBase* GetBindGroup(BindGroupIndex index) const;
     ResourceTableBase* GetResourceTable() const;
-    ityp::span<BindingIndex, const uint32_t> GetDynamicOffsets(BindGroupIndex index) const;
+    const ityp::vector<BindingIndex, uint32_t>& GetDynamicOffsets(BindGroupIndex index) const;
     bool HasPipeline() const;
     bool IndexBufferSet() const;
     RenderPipelineBase* GetRenderPipeline() const;
