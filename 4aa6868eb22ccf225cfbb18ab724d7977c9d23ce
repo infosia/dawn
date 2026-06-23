@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f14e4bf3_6f5fc212",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T20:35:12Z",
+      "side": 1,
+      "message": "Jiawei, PTAL (assuming Loko\u0027s comment are resolved). It\u0027s blocking Loko\u0027s change that will have merge conflicts with it.",
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "589f4403_363e2873",
