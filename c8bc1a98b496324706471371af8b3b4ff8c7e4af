@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "926a850a_41296fd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-23T15:41:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cc487dbc_663eb789",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb5748e9_bb4810b7",
@@ -415,6 +433,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "401ef028_cc512253",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-23T15:41:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "47c6257c_cea12c5d",
+      "range": {
+        "startLine": 486,
+        "startChar": 12,
+        "endLine": 486,
+        "endChar": 44
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a1fd823_1562de3c",
@@ -470,6 +512,30 @@
       "side": 1,
       "message": "I\u0027ve switched to emplace_back, but I kept the move constructor. Because we store these in a std::vector\u003cUniqueFd\u003e, the vector inherently requires elements to be MoveConstructible (or CopyConstructible) so it can safely reallocate its internal buffer when growing. If we delete the move constructor, the vector will fail to compile.",
       "parentUuid": "1a1fd823_1562de3c",
+      "range": {
+        "startLine": 490,
+        "startChar": 24,
+        "endLine": 490,
+        "endChar": 42
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c9cfd74_e717c6dc",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-23T15:41:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "375c2b37_47dcf882",
       "range": {
         "startLine": 490,
         "startChar": 24,
@@ -565,6 +631,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc5e12d6_d6d0e3de",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-23T15:41:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f25fab1f_c56c7670",
+      "range": {
+        "startLine": 506,
+        "startChar": 24,
+        "endLine": 506,
+        "endChar": 33
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66f1abef_e048ff2e",
@@ -649,6 +739,30 @@
       "side": 1,
       "message": "android.system.Os.poll exists in Java, but I would prefer keeping this in native. Using `Os.poll()` from Java/Kotlin would require allocating a `StructPollfd[]`, and the call ultimately goes through JNI to the same native `poll()` implementation anyway. (maybe keeping it in Java will increase GC calls as well?)",
       "parentUuid": "db3e9ab8_4d732f93",
+      "range": {
+        "startLine": 557,
+        "startChar": 0,
+        "endLine": 557,
+        "endChar": 65
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2167ce35_75d1d095",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-23T15:41:14Z",
+      "side": 1,
+      "message": "we currently pass the ParcelFileDescriptor jobject and access it in native code -- also not great.\n\nUp to you",
+      "parentUuid": "bbdc036a_c994ad60",
       "range": {
         "startLine": 557,
         "startChar": 0,
@@ -759,6 +873,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b43e867_22fcf294",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-23T15:41:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0d9e400a_74134dfe",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24424956_858b2693",
@@ -812,6 +944,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eed1e9ba_d6e3ec34",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-23T15:41:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a1ddb7b0_662ef11e",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eba7be65_d5d52454",
@@ -861,6 +1011,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1688dd21_c5d7c22c",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-23T15:41:14Z",
+      "side": 1,
+      "message": "risk visual artifacts",
+      "parentUuid": "3a9ed888_ab8b33eb",
+      "range": {
+        "startLine": 122,
+        "startChar": 73,
+        "endLine": 122,
+        "endChar": 88
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f13e77b5_2fe9347d",
         "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
         "patchSetId": 26
@@ -890,6 +1064,24 @@
       "side": 1,
       "message": "No. Closing a file descriptor of a sync fence simply drops our process\u0027s reference to the kernel sync object. It does not block anything.",
       "parentUuid": "f13e77b5_2fe9347d",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20cc0dc9_ff0207ac",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-23T15:41:14Z",
+      "side": 1,
+      "message": "would this cause visual artifacts on devices that lack EGL_ANDROID_native_fence_sync?",
+      "parentUuid": "909deb03_54d20989",
       "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
