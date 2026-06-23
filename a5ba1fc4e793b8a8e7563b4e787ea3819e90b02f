@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ba60637_488842b2",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-23T17:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a07ab23_165fda5e",
+      "range": {
+        "startLine": 1032,
+        "startChar": 77,
+        "endLine": 1032,
+        "endChar": 84
+      },
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec6c0efe_a372d2d3",
@@ -37,6 +61,24 @@
       "writtenOn": "2026-06-22T09:41:00Z",
       "side": 1,
       "message": "nit: I believe that because you have a comma after the last entry, clang-format will automatically format with one item per line so the `//` are not needed.",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ed36be9_2e45af63",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-23T17:56:33Z",
+      "side": 1,
+      "message": "Unfortunately not, it ends up like this:\n\n```\n    auto typesToQuery \u003d std::set{\n        D3D12_LINEAR_ALGEBRA_DATATYPE_SINT32,  D3D12_LINEAR_ALGEBRA_DATATYPE_UINT32,\n        D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT16, D3D12_LINEAR_ALGEBRA_DATATYPE_FLOAT32,\n        D3D12_LINEAR_ALGEBRA_DATATYPE_SINT8,   D3D12_LINEAR_ALGEBRA_DATATYPE_UINT8,\n    };\n```",
+      "parentUuid": "ec6c0efe_a372d2d3",
       "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41d4bf72_326eef20",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-23T17:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e54cf440_0afe40b2",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e898925_22ff5e66",
@@ -71,6 +131,24 @@
       "writtenOn": "2026-06-22T09:41:00Z",
       "side": 1,
       "message": "```suggestion\n    auto IsFloat \u003d [](D3D12_LINEAR_ALGEBRA_DATATYPE dataType) {\n```",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6308d498_39869b89",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-23T17:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e898925_22ff5e66",
       "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a5fbbff_ef8a6cdb",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-23T17:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05ed90fb_a144953a",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b081737b_b30fc5b0",
@@ -109,6 +205,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "428a8439_10864000",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-23T17:56:33Z",
+      "side": 1,
+      "message": "Yes, sorry, I had planned to replace this comment. I created a bug and updated the comment, along with a TODO.",
+      "parentUuid": "b081737b_b30fc5b0",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b1be9c3_78bbad1a",
@@ -122,6 +236,24 @@
       "writtenOn": "2026-06-22T09:41:00Z",
       "side": 1,
       "message": "nit: make a TODO and an issue, of explain that this combination is not supported in WGSL.",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3e52fda_5009c8f9",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-23T17:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1be9c3_78bbad1a",
       "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -175,6 +307,24 @@
       "side": 1,
       "message": "The docs here do say that `0` should mean \"any\":\nhttps://microsoft.github.io/DirectX-Specs/d3d/D3D12LinearAlgebraRuntimeFeatureSupport.html",
       "parentUuid": "5aedadcd_5a9209d4",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6558adac_36c656b6",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-23T17:56:33Z",
+      "side": 1,
+      "message": "Ah, that\u0027s where I read it lol. Okay, I\u0027ll create a TODO with a bug to say that we need to do this on AMD right now, and I\u0027ll add that to my list of stuff to report to AMD.",
+      "parentUuid": "265f32aa_05bce312",
       "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -263,6 +413,24 @@
       "writtenOn": "2026-06-22T09:41:00Z",
       "side": 1,
       "message": "nit: maybe we could have a FilterWorkingConfigs helper function to factor the code and logic between tests.",
+      "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93ce70c9_5bc25e8f",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-23T17:56:33Z",
+      "side": 1,
+      "message": "I tried, but it\u0027s a bit annoying for a couple of reasons, but mainly because I need to pass down the \u0027include8BitTypes\u0027 to `CrashesOnRX9060XT`, which is less obvious when calling a generic function like `FilterWorkingConfigs`. I am hoping that this is not long-lived. If it is, I\u0027ll do this in a future CL.",
+      "parentUuid": "ad984e61_f76599d3",
       "revId": "a5ba1fc4e793b8a8e7563b4e787ea3819e90b02f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
