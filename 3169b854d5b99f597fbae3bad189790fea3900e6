@@ -81,6 +81,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd244757_baaede85",
+        "filename": "src/dawn/tests/unittests/wire/WireMemoryTransferServiceTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T11:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c6b81f0_5c09d62e",
+      "range": {
+        "startLine": 715,
+        "startChar": 52,
+        "endLine": 715,
+        "endChar": 60
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9f480b0_5a256449",
@@ -98,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "412e1096_0bdf4f41",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T11:50:40Z",
+      "side": 1,
+      "message": "Yeaaaah we\u0027ll see which one will land first. Updating shouldn\u0027t be too painful hopefully.",
+      "parentUuid": "b9f480b0_5a256449",
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4dd37de3_cc720bab",
@@ -111,6 +153,30 @@
       "writtenOn": "2026-06-22T21:42:54Z",
       "side": 1,
       "message": "[1] nit. I guess to keep it consistent: `memoryDataUpdateInfoLength`? Or alternatively, maybe we don\u0027t rename that field in the `cmd` struct and keep it as `write` to make is clear?",
+      "range": {
+        "startLine": 210,
+        "startChar": 11,
+        "endLine": 210,
+        "endChar": 36
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f8d9d92_18d2753c",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T11:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dd37de3_cc720bab",
       "range": {
         "startLine": 210,
         "startChar": 11,
@@ -144,6 +210,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bffb6a8_2a0f175d",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T11:50:40Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "87cc5fca_51408bd3",
+      "range": {
+        "startLine": 231,
+        "startChar": 8,
+        "endLine": 231,
+        "endChar": 97
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24f15850_86aaf89f",
@@ -167,6 +257,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "496bb600_2a1b6f01",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T11:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24f15850_86aaf89f",
+      "range": {
+        "startLine": 279,
+        "startChar": 11,
+        "endLine": 279,
+        "endChar": 36
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a4f9191_e8fde889",
@@ -180,6 +294,30 @@
       "writtenOn": "2026-06-22T21:42:54Z",
       "side": 1,
       "message": "nit. same as [2]",
+      "range": {
+        "startLine": 301,
+        "startChar": 8,
+        "endLine": 301,
+        "endChar": 97
+      },
+      "revId": "3169b854d5b99f597fbae3bad189790fea3900e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a54e438f_6589772f",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T11:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4f9191_e8fde889",
       "range": {
         "startLine": 301,
         "startChar": 8,
