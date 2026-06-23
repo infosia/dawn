@@ -197,6 +197,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62de841b_252a18ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-23T19:17:59Z",
+      "side": 1,
+      "message": "I don\u0027t think matching any specific version is that important, I mostly just need a version of llvm-dev available that meets the minimum (15) so that I can build the Mesa targets instrumented for fuzzing (I guess until we invetiably find an issue that is related to how Mesa interfaces/uses with llvm)\n\nThe technical side of adding to infra/3pp seems reasonably tractable, but reading through the documentation it feels like the process/bueacracy side is pretty heavy weight, with a lot of discussion of taking ownership of the dependency, etc, that I honestly really don\u0027t want to do (i.e. be responsible for rolling some aspect of llvm), or I guess more correctly feels incorrectly scoped to what I am trying to do here, which is enable using our existing infrastructure (CF) for fuzzing this experiment.\n\nSince we already build/package large parts of clang/llvm already I am going to reach out to the people that are OWNERS of that directly and see what advice/direction that they can give, since I feel like I might be going to the wrong way about this.",
+      "parentUuid": "6f2086fe_1e12217d",
+      "revId": "f62995b6aae425f0b359c73cb2923cfec80c42be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab18c368_06ad6d4e",
         "filename": "DEPS",
         "patchSetId": 1
