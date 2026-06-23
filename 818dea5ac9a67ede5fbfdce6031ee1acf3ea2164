@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98af3fcd_ceae761e",
+        "filename": "generator/templates/dawn/native/ProcTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T11:46:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c6914244_799393f2",
+      "range": {
+        "startLine": 68,
+        "startChar": 52,
+        "endLine": 68,
+        "endChar": 62
+      },
+      "revId": "818dea5ac9a67ede5fbfdce6031ee1acf3ea2164",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9c12761_43742a5c",
@@ -61,6 +85,30 @@
       "writtenOn": "2026-06-22T22:57:50Z",
       "side": 1,
       "message": "```suggestion\n    mDynamicOffsets[index].assign(dynamicOffsets.begin(), dynamicOffsets.end());\n```\n\n---\n\nthough with C++23 this is a bit nicer:\n```\n    mDynamicOffsets[index].assign_range(dynamicOffsets);\n```",
+      "range": {
+        "startLine": 795,
+        "startChar": 0,
+        "endLine": 799,
+        "endChar": 5
+      },
+      "revId": "818dea5ac9a67ede5fbfdce6031ee1acf3ea2164",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f3af8a0_0ff24753",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T11:46:13Z",
+      "side": 1,
+      "message": "I had to add assign to `ityp::vector`, I\u0027ll put up another CL that does that.",
+      "parentUuid": "a9c12761_43742a5c",
       "range": {
         "startLine": 795,
         "startChar": 0,
@@ -94,6 +142,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5f725c2_5cb9edd3",
+        "filename": "src/dawn/native/CommandBufferStateTracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T11:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73ca554f_849f8ff5",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 47
+      },
+      "revId": "818dea5ac9a67ede5fbfdce6031ee1acf3ea2164",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf9dd2dd_7a702319",
@@ -107,6 +179,30 @@
       "writtenOn": "2026-06-22T20:53:29Z",
       "side": 1,
       "message": "Hmm, I\u0027m not entirely sure if it will work out of the box depending on our `ispan` implementation, but I think ideally, what we should be able to do here is basically something like:\n\n```\nityp::vector\u003cBindGroupIndex, uint32_t\u003e emptyDynamicOffsets \u003d {};\nityp::vector\u003cBindGroupIndex, uint32_t\u003e singleDynamicOffset \u003d {dynamicOffset};\n\nEXPECT_TRUE(std::ranges::equal(stateTracker-\u003eGetDynamicOffsets(BindGroupIndex(0u)), emptyDynamicOffsets));\nEXPECT_TRUE(std::ranges::equal(stateTracker-\u003eGetDynamicOffsets(BindGroupIndex(1u)), singleDynamicOffset));\n```\n\nAnd then something similar below. That should theoretically be sufficient even without checking the size because I think `std::ranges::equal` enforces that already also.",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 99
+      },
+      "revId": "818dea5ac9a67ede5fbfdce6031ee1acf3ea2164",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "276f96f3_8360d717",
+        "filename": "src/dawn/tests/unittests/native/CommandBufferEncodingTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T11:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf9dd2dd_7a702319",
       "range": {
         "startLine": 126,
         "startChar": 4,
