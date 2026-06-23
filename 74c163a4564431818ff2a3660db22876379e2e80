@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90b4684e_85d1e45f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-06-23T15:13:51Z",
+      "side": 1,
+      "message": "LGTM\n\nAs a followup, we could remove the blit workarounds and anything conditional on !isFloat16, !isFloat32, or !isRG11B10UfloatRenderable.",
+      "revId": "74c163a4564431818ff2a3660db22876379e2e80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
