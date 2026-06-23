@@ -118,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6de961d_84111a63",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-23T00:20:38Z",
+      "side": 1,
+      "message": "(We don\u0027t apply dawn_weverything to chromium bot anymore so this won\u0027t be needed anyway)",
+      "parentUuid": "4f5e9881_c7887b67",
+      "revId": "7422c86f9c28ebe7f5a4775c53e54106bb9500ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fef5e3f0_10c1bf25",
