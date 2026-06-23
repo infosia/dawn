@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8081ee0e_563b0ad9",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T09:35:10Z",
+      "side": 1,
+      "message": "```suggestion\n    if (!(desc.Flags \u0026 D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS)) {\n```",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 20
+      },
+      "revId": "69bfea7cf868aa5db19afb6a65177ad2893881fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
