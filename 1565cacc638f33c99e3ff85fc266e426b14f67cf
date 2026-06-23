@@ -16,6 +16,23 @@
       "message": "PTAL. Thank you.",
       "revId": "1565cacc638f33c99e3ff85fc266e426b14f67cf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a638bbe_4ad95c27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4821744
+      },
+      "writtenOn": "2026-06-23T07:24:38Z",
+      "side": 1,
+      "message": "@bajones@chromium.org\nI have a question about mask and gpu driver ids in gpu_info for Huawei.\nhttps://dawn-review.googlesource.com/c/dawn/+/278236/5/src/dawn/gpu_info.json\n\n\"mask\": \"0xF0000000\",\n        \"architecture\": {\n          \"Maleoon\": [\"0x10000000\", \"0x20000000\"]\n        }\n\nMate60 reports deviceID\u003d0x10001000 and Mate80 reports deviceID\u003d0x20021000.\n\nHow would we set the mask and GPU ids in the gpu_info  file? Is there some rules?\nThank you.",
+      "revId": "1565cacc638f33c99e3ff85fc266e426b14f67cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
