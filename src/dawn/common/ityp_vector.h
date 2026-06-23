@@ -44,6 +44,7 @@ class vector : private std::vector<Value> {
     using Base = std::vector<Value>;
 
     static_assert(HasUnsignedUnderlyingType<Index>, "Index type must be unsigned");
+    size_t kMaxPossibleSize = UnderlyingType<Index>{std::numeric_limits<Index>::max()};
 
   public:
     constexpr vector() : Base() {}
@@ -107,6 +108,21 @@ class vector : private std::vector<Value> {
     }
 
     constexpr void reserve(Index size) { Base::reserve(checked_cast<size_t>(size)); }
+
+    constexpr void assign(Index count, const Value& value) {
+        Base::assign(checked_cast<size_t>(count), value);
+    }
+
+    template <class InputIt>
+    constexpr void assign(InputIt first, InputIt last) {
+        Base::assign(first, last);
+        DAWN_CHECK(Base::size() <= kMaxPossibleSize);
+    }
+
+    void assign(std::initializer_list<Value> ilist) {
+        Base::assign(ilist);
+        DAWN_CHECK(Base::size() <= kMaxPossibleSize);
+    }
 };
 
 }  // namespace dawn::ityp
