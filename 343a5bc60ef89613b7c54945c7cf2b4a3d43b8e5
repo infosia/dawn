@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96e78ac4_834e66b0",
+        "filename": "src/dawn/wire/client/Buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T06:12:43Z",
+      "side": 0,
+      "message": "We\u0027re losing this raw_ptr. `dawn::detail::SpanBase` can do it (equivalent of `base::raw_span`), but it hasn\u0027t been used yet. IDK if we should go ahead and add/use that (it seems pretty trivial), or leave as it was.",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 11
+      },
+      "revId": "343a5bc60ef89613b7c54945c7cf2b4a3d43b8e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

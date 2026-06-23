@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f89821ad_aea7b786",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T06:12:43Z",
+      "side": 1,
+      "message": "these are the same bug?",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9d7af2c2_2a2312d4",
@@ -14,6 +37,132 @@
       "writtenOn": "2026-06-18T23:19:01Z",
       "side": 1,
       "message": "I also included the change that Corentin made in https://dawn-review.git.corp.google.com/c/dawn/+/318115 and I\u0027ll rebase and land this after that one lands.",
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aab9da9_d4b05130",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T06:12:43Z",
+      "side": 1,
+      "message": "This seems unrelated, also unclear why it\u0027s necessary? I mean it makes sense, but does passing through WGPU_WHOLE_MAP_SIZE cause an issue?",
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "add21ab6_3568fab2",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T06:12:43Z",
+      "side": 1,
+      "message": "nit: Is std::span::data() really considered an unsafe buffer usage? It doesn\u0027t appear to be marked unsafe in the `base` equivalent, but for `std` I don\u0027t understand how unsafe annotations work. Anyway they seem totally wrong because `std::span(ptr, size)` should be unsafe but `std::span::data()` shouldn\u0027t be, which we\u0027ll fix when we switch everything to our own span.\n\n(I think I\u0027ve seen this too, but I don\u0027t really know why because the definition of std::span doesn\u0027t seem to say anything about it. Must be built into the plugin somewhere - or maybe this is something that triggers only in clangd? I\u0027ve seen that it catches some stuff that the actual build doesn\u0027t.)",
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a884a413_9dcbfff6",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T06:12:43Z",
+      "side": 1,
+      "message": "A zero-sized map is not necessarily invalid. I think you need `dst.data() \u003d\u003d nullptr` even though that is kind of a weird distinction to make. (I also make that distinction in heap_array when using a nothrow allocation.)",
+      "range": {
+        "startLine": 470,
+        "startChar": 16,
+        "endLine": 470,
+        "endChar": 21
+      },
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f99b57bc_aae7d73d",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T06:12:43Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 482,
+        "startChar": 16,
+        "endLine": 482,
+        "endChar": 21
+      },
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf66e0ed_0400b903",
+        "filename": "src/dawn/wire/client/Buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T06:12:43Z",
+      "side": 1,
+      "message": "Seems unnecessary to store both of these, can we just store the mutable one (equivalent to what we had before) and cast it to the const one where needed?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 45
+      },
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "561a6003_6594bcca",
+        "filename": "src/dawn/wire/client/Buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-23T06:12:43Z",
+      "side": 1,
+      "message": "Comment that the mappedReadData/mappedWriteData spans are for the whole buffer (not the mapped region), otherwise these look redundant.",
+      "range": {
+        "startLine": 113,
+        "startChar": 15,
+        "endLine": 113,
+        "endChar": 25
+      },
       "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
