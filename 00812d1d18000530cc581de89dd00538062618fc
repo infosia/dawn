@@ -16,6 +16,103 @@
       "message": "PTAL, thanks!",
       "revId": "00812d1d18000530cc581de89dd00538062618fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "731e92a9_ecd8d44b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T10:15:07Z",
+      "side": 1,
+      "message": "LGTM, the logic in CommandBufferD3D12 is not trivial but I think it is correct.",
+      "revId": "00812d1d18000530cc581de89dd00538062618fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df938f18_fd78e704",
+        "filename": "src/dawn/native/d3d12/ImmediatesLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T10:15:07Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "00812d1d18000530cc581de89dd00538062618fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5112bba5_0915b69b",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T10:15:07Z",
+      "side": 1,
+      "message": "Can we use an ImmediateMask directly as a key?",
+      "range": {
+        "startLine": 149,
+        "startChar": 39,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "00812d1d18000530cc581de89dd00538062618fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70d62f89_b7b102ce",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutHandle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T10:15:07Z",
+      "side": 1,
+      "message": "At [1] we could make a small struct that contains firstVertex and firstInstance together, so that there is less chance that we set one or the other. Then here we\u0027d just reference the member that contains both the first values.\n\n```suggestion\n    // First vertex and first instance are set in immediate mask together and first vertex is\n    // always just before instance index in the immediate mask.\n    D3D12_INDIRECT_ARGUMENT_DESC argumentDescs[2] \u003d {};\n```",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 1
+      },
+      "revId": "00812d1d18000530cc581de89dd00538062618fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7ef7c85_c925bdb2",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutHandle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T10:15:07Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "00812d1d18000530cc581de89dd00538062618fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
