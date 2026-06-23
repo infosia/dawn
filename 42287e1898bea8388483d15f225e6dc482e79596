@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88e1fbb7_5a02597e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-23T16:55:52Z",
+      "side": 1,
+      "message": "FYI we typically use `Fixed: #####` and `Bug: ####` instead of `FIX\u003d` and `BUG\u003d`, but maybe both styles work.",
+      "revId": "42287e1898bea8388483d15f225e6dc482e79596",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
