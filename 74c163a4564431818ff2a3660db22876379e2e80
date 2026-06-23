@@ -34,6 +34,24 @@
       "parentUuid": "90b4684e_85d1e45f",
       "revId": "74c163a4564431818ff2a3660db22876379e2e80",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac7b89e9_6f439123",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-06-23T17:51:55Z",
+      "side": 1,
+      "message": "Well I just realized if the toggle is kept (for forced set), these branches should also be preserved.",
+      "parentUuid": "adef43af_6d6fbbe1",
+      "revId": "74c163a4564431818ff2a3660db22876379e2e80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
