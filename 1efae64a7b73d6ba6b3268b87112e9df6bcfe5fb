@@ -22,6 +22,30 @@
       },
       "revId": "1efae64a7b73d6ba6b3268b87112e9df6bcfe5fb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10a96a37_851af520",
+        "filename": "generator/templates/dawn/native/api_structs.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-23T13:36:30Z",
+      "side": 1,
+      "message": "Yeah `std::ranges::equal` would work but I didn\u0027t want to change the semantic.",
+      "parentUuid": "5a6b8fa3_21ab2a30",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 141,
+        "endChar": 119
+      },
+      "revId": "1efae64a7b73d6ba6b3268b87112e9df6bcfe5fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
