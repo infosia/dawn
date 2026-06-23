@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18818c6c_975eaa9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-23T19:31:13Z",
+      "side": 1,
+      "message": "@Yuly I\u0027m not sure how to go about testing a change like this, is it possible? I was hoping the new builders would appear on this CL under Choose Tryjobs but they don\u0027t and trying to manually trigger them with `git cl try` results in `ERROR: Failed to schedule builds for some bots: builder not found: ...`",
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
