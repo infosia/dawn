@@ -55,6 +55,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7163aceb_4a1d64ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-24T17:36:21Z",
+      "side": 1,
+      "message": "My main questions are what the long-term plan is for this and how this relates to the benchmarks you\u0027re looking to get running (which also require bazel).\n\nIf this is unrelated to the benchmarks and you just want compile coverage of bazel to make sure the build continues to work (similar to what we do for CMake), then no issues from me.\n\nIf you\u0027re going to eventually want to run tests using the binaries produced by bazel, then I would still advise trying to get bazel working from within a GN build. I have a strong preference for not duplicating the Chromium recipe code that we use for triggering/collecting Swarming tasks.",
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cdc62794_2760dc57",
         "filename": "infra/config/global/bazel_ci.star",
         "patchSetId": 1
