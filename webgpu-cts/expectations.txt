@@ -168,14 +168,6 @@ crbug.com/42251024 [ android-t ] webgpu:shader,execution,expression,call,builtin
 crbug.com/42251024 [ android-t ] webgpu:shader,execution,expression,call,builtin,atomics,atomicSub:sub_workgroup:workgroupSize=2;dispatchSize=*;scalarType="*" [ Skip ]
 crbug.com/42251024 [ android-t ] webgpu:shader,execution,expression,call,builtin,atomics,atomicXor:xor_workgroup:workgroupSize=2;dispatchSize=*;mapId="remap";scalarType="*" [ Skip ]
 
-# setImmediates error-case tests expect RangeError but the spec requires
-# OperationError. Only the cases that expect a thrown error fail; control cases
-# still pass. The CTS fix is in flight; suppress until it rolls into Chromium.
-crbug.com/526671415 webgpu:api,validation,encoding,cmds,setImmediates:alignment:*;contentByteSize=10 [ Skip ]
-crbug.com/526671415 webgpu:api,validation,encoding,cmds,setImmediates:out_of_bounds:*;dataLengthDelta=-1 [ Skip ]
-crbug.com/526671415 webgpu:api,validation,encoding,cmds,setImmediates:overflow:*;dataOffset=2147483647;elementCount=4 [ Skip ]
-crbug.com/526671415 webgpu:api,validation,encoding,cmds,setImmediates:overflow:*;dataOffset=4294967295;elementCount=4 [ Skip ]
-
 # Mac AMD does not correctly respect lodMinClamp/lodMaxClamp
 crbug.com/409266267 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords,lodClamp:* [ Skip ] # CAT:Accuracy
 
@@ -1904,6 +1896,10 @@ crbug.com/0000 [ apple dawn-backend-validation mac ] webgpu:api,validation,creat
 crbug.com/0000 [ apple dawn-backend-validation mac ] webgpu:api,validation,createView:texture_view_usage_with_view_format:textureFormat="etc2-rgb8a1unorm-srgb";usage=4 [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:api,validation,encoding,cmds,copyTextureToTexture:copy_aspects:format="depth32float-stencil8" [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:api,validation,encoding,cmds,copyTextureToTexture:copy_ranges:dimension="1d";copyBoxOffsets={"x":0,"y":0,"z":0,"width":0,"height":0,"depthOrArrayLayers":0};srcCopyLevel=0;dstCopyLevel=0 [ Failure ]
+crbug.com/526671415 webgpu:api,validation,encoding,cmds,setImmediates:alignment:*;contentByteSize=10 [ Failure ]
+crbug.com/526671415 webgpu:api,validation,encoding,cmds,setImmediates:out_of_bounds:*;dataLengthDelta=-1 [ Failure ]
+crbug.com/526671415 webgpu:api,validation,encoding,cmds,setImmediates:overflow:*;dataOffset=2147483647;elementCount=4 [ Failure ]
+crbug.com/526671415 webgpu:api,validation,encoding,cmds,setImmediates:overflow:*;dataOffset=4294967295;elementCount=4 [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:shader,execution,expression,binary,af_matrix_subtraction:matrix:inputSource="const";cols=2;rows=4 [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:shader,execution,expression,binary,i32_arithmetic:remainder_vector_scalar:inputSource="storage_r";vectorize_lhs=3 [ Failure ]
 crbug.com/0000 [ intel sonoma ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="2d";sampleCount=4 [ Failure ]
