@@ -1544,6 +1544,8 @@ Result<SuccessType> DecomposeAccess(core::ir::Module& ir, const DecomposeAccessO
         return Failure{res.Failure().reason.Str()};
     }
 
+    ir.properties.Remove(core::ir::Property::kAllowBufferTypes);
+
     return Success;
 }
 

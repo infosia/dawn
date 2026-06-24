@@ -692,6 +692,10 @@ void Structural::CheckType(const core::type::Type* root,
                         diag() << "struct member " << member->Index() << " cannot have void type";
                         return false;
                     }
+                    if (member->Type()->Is<core::type::Buffer>()) {
+                        diag() << "struct member " << member->Index() << " cannot have buffer type";
+                        return false;
+                    }
 
                     if (!CheckStructMemberAttributes(member, diag)) {
                         return false;
