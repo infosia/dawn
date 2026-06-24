@@ -33,6 +33,29 @@
       "message": "@bajones@chromium.org\nI have a question about mask and gpu driver ids in gpu_info for Huawei.\nhttps://dawn-review.googlesource.com/c/dawn/+/278236/5/src/dawn/gpu_info.json\n\n\"mask\": \"0xF0000000\",\n        \"architecture\": {\n          \"Maleoon\": [\"0x10000000\", \"0x20000000\"]\n        }\n\nMate60 reports deviceID\u003d0x10001000 and Mate80 reports deviceID\u003d0x20021000.\n\nHow would we set the mask and GPU ids in the gpu_info  file? Is there some rules?\nThank you.",
       "revId": "1565cacc638f33c99e3ff85fc266e426b14f67cf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7bb6bc8_5bfbb975",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-24T04:51:48Z",
+      "side": 1,
+      "message": "Nice small fix, but won\u0027t this cause the alpha channel in the output texture to be overwritten when it shouldn\u0027t be? The test may not test that, but any behavior change observable to the application would be wrong.",
+      "range": {
+        "startLine": 663,
+        "startChar": 20,
+        "endLine": 663,
+        "endChar": 44
+      },
+      "revId": "1565cacc638f33c99e3ff85fc266e426b14f67cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
