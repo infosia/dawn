@@ -16,6 +16,110 @@
       "message": "@Yuly I\u0027m not sure how to go about testing a change like this, is it possible? I was hoping the new builders would appear on this CL under Choose Tryjobs but they don\u0027t and trying to manually trigger them with `git cl try` results in `ERROR: Failed to schedule builds for some bots: builder not found: ...`",
       "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68342f5d_87021c78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-06-24T15:46:41Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s possible to test a builder before submitting a CL which adds it.\nSo I suggest we start with 100% experiment and make them non-experimental after confirming they work.\n\nI\u0027ll also need to allocate some machines for the new builders to run on. I\u0027ll cc you on the CL.",
+      "parentUuid": "18818c6c_975eaa9d",
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "affc9607_c5b671f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-06-24T15:46:41Z",
+      "side": 1,
+      "message": "Brian, FYI if you have an opinion.",
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdc62794_2760dc57",
+        "filename": "infra/config/global/bazel_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-06-24T15:46:41Z",
+      "side": 1,
+      "message": "Also need\ncores \u003d 8\n\nAnd please move these configs to something like https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/cmake_shared.star so that we don\u0027t repeat them all the time.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2db03814_c6de2a1e",
+        "filename": "infra/config/global/bazel_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-06-24T15:46:41Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like this applied to infra/config/global/generated/luci/commit-queue.cfg",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 6
+      },
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2734caa_87f00472",
+        "filename": "infra/config/global/bazel_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-06-24T15:46:41Z",
+      "side": 1,
+      "message": "Let\u0027s start with 100, so the new builders don\u0027t block the CQ before it\u0027s confirmed they work.",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
