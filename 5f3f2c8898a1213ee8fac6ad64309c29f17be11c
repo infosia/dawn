@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e51ecc4c_e5b1728b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-24T20:16:26Z",
+      "side": 1,
+      "message": "Oops, the numbers were too similar for the two bugs... they both ended in 15 and I didn\u0027t pay attention that I didn\u0027t get the copy. Fixed!",
+      "parentUuid": "f89821ad_aea7b786",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "9d7af2c2_2a2312d4",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -93,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd15c2d2_c0d3618a",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-24T20:16:26Z",
+      "side": 1,
+      "message": "N/A after rebase.",
+      "parentUuid": "add21ab6_3568fab2",
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a884a413_9dcbfff6",
@@ -106,6 +148,30 @@
       "writtenOn": "2026-06-23T06:12:43Z",
       "side": 1,
       "message": "A zero-sized map is not necessarily invalid. I think you need `dst.data() \u003d\u003d nullptr` even though that is kind of a weird distinction to make. (I also make that distinction in heap_array when using a nothrow allocation.)",
+      "range": {
+        "startLine": 470,
+        "startChar": 16,
+        "endLine": 470,
+        "endChar": 21
+      },
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51147614_7517b0b7",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-24T20:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a884a413_9dcbfff6",
       "range": {
         "startLine": 470,
         "startChar": 16,
@@ -139,6 +205,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "189afad7_bcb566a0",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-24T20:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f99b57bc_aae7d73d",
+      "range": {
+        "startLine": 482,
+        "startChar": 16,
+        "endLine": 482,
+        "endChar": 21
+      },
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf66e0ed_0400b903",
@@ -162,6 +252,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac86ac20_c663a365",
+        "filename": "src/dawn/wire/client/Buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-24T20:16:26Z",
+      "side": 1,
+      "message": "N/A after rebase.",
+      "parentUuid": "cf66e0ed_0400b903",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 45
+      },
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "561a6003_6594bcca",
@@ -175,6 +289,30 @@
       "writtenOn": "2026-06-23T06:12:43Z",
       "side": 1,
       "message": "Comment that the mappedReadData/mappedWriteData spans are for the whole buffer (not the mapped region), otherwise these look redundant.",
+      "range": {
+        "startLine": 113,
+        "startChar": 15,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "5f3f2c8898a1213ee8fac6ad64309c29f17be11c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ccc2b58_45021440",
+        "filename": "src/dawn/wire/client/Buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-24T20:16:26Z",
+      "side": 1,
+      "message": "N/A after rebase.",
+      "parentUuid": "561a6003_6594bcca",
       "range": {
         "startLine": 113,
         "startChar": 15,

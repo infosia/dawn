@@ -46,6 +46,30 @@
       },
       "revId": "343a5bc60ef89613b7c54945c7cf2b4a3d43b8e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a45fdb6_53d3082a",
+        "filename": "src/dawn/wire/client/Buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-24T20:16:26Z",
+      "side": 0,
+      "message": "N/A after rebase.",
+      "parentUuid": "94a98850_3d9e9ff9",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 11
+      },
+      "revId": "343a5bc60ef89613b7c54945c7cf2b4a3d43b8e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
