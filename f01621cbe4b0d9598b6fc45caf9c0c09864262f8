@@ -16,6 +16,24 @@
       "message": "[1]: I didn\u0027t check `dawn_weverything \u003d false` before and test building it fail without these additional -Wno- flags.\n\nThese cflags are moved from `src/dawn/common/BUILD.gn` from the `config(\"internal_config\")` (which include \"src/utils:internal_config\" -\u003e \"dawn_warnings\")\n\nSo I don\u0027t get whey they used to build but now they require explicit -Wno- flags here to suppress, instead of suppressing in their own config (e.g. cflags +\u003d [ \"-Wno-c2y-extensions\" ] is in src/dawn/common/BUILD.gn)\n\nDoes the order of these clang flags potentially impacting ending result? (order -Wpandetic and -Wno-) \n\nOn the other hand we have many to triage later, so I wonder if it\u0027s okay to land it like this now and work further on new CLs.",
       "revId": "f01621cbe4b0d9598b6fc45caf9c0c09864262f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57a4979c_ad5a9f37",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-24T01:15:52Z",
+      "side": 1,
+      "message": "Ahh yes the flag ordering is probably the issue. Testing in godbolt, `-Wall` overrides earlier `-Wno-*`, it probably expands to a list of `-W*` flags which undo any past `-Wno-*` for the same warning. (In contrast, `-Weverything` doesn\u0027t reset previous flags. They\u0027re just handled a bit differently.)\n\nThe GN rules for flag ordering are here:\nhttps://gn.googlesource.com/gn/+/main/docs/reference.md#variables-you-set-in-targets-cflags_flags-passed-to-the-c-compiler_back-to-top-ordering-of-flags-and-values-1\n\nThe only way to fix this in GN would be to move any suppressions into a `config` so it gets added later. Hopefully we can avoid that entirely by using `--warning-suppression-mappings` instead and avoiding suppressing any warnings anywhere other than `dawn_warnings`. I just [tested it](https://godbolt.org/z/5hbfzso6x) and it seems to be fine (not sensitive to flag order).\n\nAnyway yes I think this is fine.",
+      "parentUuid": "df7dd442_f62ac17f",
+      "revId": "f01621cbe4b0d9598b6fc45caf9c0c09864262f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
