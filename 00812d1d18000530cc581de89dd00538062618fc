@@ -101,6 +101,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d303cd4_4e8f1c44",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-24T07:46:47Z",
+      "side": 1,
+      "message": "Is the helper needed just the absl::Hash implementation? Then yes please do.",
+      "parentUuid": "52c1db85_9824e90b",
+      "range": {
+        "startLine": 149,
+        "startChar": 39,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "00812d1d18000530cc581de89dd00538062618fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "70d62f89_b7b102ce",
         "filename": "src/dawn/native/d3d12/PipelineLayoutHandle.cpp",
         "patchSetId": 1
