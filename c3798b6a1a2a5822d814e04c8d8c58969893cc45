@@ -16,6 +16,24 @@
       "message": "This was failing a presubmit until I regenerated this file. I don\u0027t know what is happening with this. Let me know if I should remove this.",
       "revId": "c3798b6a1a2a5822d814e04c8d8c58969893cc45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c33b679a_ccd487af",
+        "filename": "src/tint/generated_sources.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-24T20:38:35Z",
+      "side": 0,
+      "message": "Yeah, this is concerning, and presubmit will fail here on Gerrit now instead (see the failed check above).\n\nIt was a relatively recent change to start adding these (https://dawn-review.git.corp.google.com/c/dawn/+/317715), but nobody else has yet reported this issue.\n\nFor now maybe just revert the change to this file and try re-uploading by skipping presubmits (I think `--bypass-hooks`)?\n\nIt\u0027s also weird that this didn\u0027t happen when you uploaded the other CL yesterday. Has anything changed in your environment since then?\n\nIf you see it again could you maybe try some printf debugging in the `getGoDependencies()` method to see where it\u0027s going wrong?",
+      "parentUuid": "577f6c91_f83fdb29",
+      "revId": "c3798b6a1a2a5822d814e04c8d8c58969893cc45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

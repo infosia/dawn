@@ -16,6 +16,23 @@
       "message": "My choice of the max size for the symbol it arbitrary, but I believe we should have something.",
       "revId": "59a537e0d36bfc8341a3a89a2a447910041d2fca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08aa20b6_ca9cf789",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-24T20:38:35Z",
+      "side": 1,
+      "message": "Change itself looks good but the .gni change is weird.",
+      "revId": "59a537e0d36bfc8341a3a89a2a447910041d2fca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
