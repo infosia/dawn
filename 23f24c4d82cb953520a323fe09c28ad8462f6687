@@ -46,6 +46,30 @@
       },
       "revId": "23f24c4d82cb953520a323fe09c28ad8462f6687",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7d11eca_bc560388",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-24T01:08:10Z",
+      "side": 1,
+      "message": "Good point. I\u0027ll use another CL to do the position movement and skip-failure change. And since this CL is roll into chromium, I think that chromium CL won\u0027t be blocked.",
+      "parentUuid": "01145a56_d5215962",
+      "range": {
+        "startLine": 174,
+        "startChar": 103,
+        "endLine": 174,
+        "endChar": 107
+      },
+      "revId": "23f24c4d82cb953520a323fe09c28ad8462f6687",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
