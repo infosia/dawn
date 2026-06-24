@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-06-22 07:19:33AM
+# Last rolled: 2026-06-25 01:50:02AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -3299,6 +3299,7 @@ crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,t
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureDimensions:storage:format="rgba8snorm";aspect="all" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureDimensions:storage:format="rgba8uint";aspect="all" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureDimensions:storage:format="rgba8unorm";aspect="all" [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,decl,override:initializer:case="init_mismatch_type" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,extension,readonly_and_readwrite_storage_textures:var_decl: [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,validation,extension,readonly_and_readwrite_storage_textures:var_decl: [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,validation,extension,readonly_and_readwrite_storage_textures:var_decl: [ Failure ]
