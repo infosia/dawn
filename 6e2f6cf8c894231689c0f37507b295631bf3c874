@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1588048f_cbf83196",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-24T15:05:45Z",
+      "side": 1,
+      "message": "Loko PTAL again, I\u0027m missing +2",
+      "revId": "6e2f6cf8c894231689c0f37507b295631bf3c874",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
