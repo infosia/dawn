@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8f0f5bb_78bc895e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-24T21:06:28Z",
+      "side": 1,
+      "message": "LGTM, although I admittedly didn\u0027t look super closely since this appears to just be shuffling existing code without changing any actual logic.",
+      "revId": "deb31e88e1fc05e3978574622050ba0fd8948028",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32c8d140_45d804ac",
+        "filename": "tools/src/cmd/fuzz/bisect.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-24T21:06:28Z",
+      "side": 1,
+      "message": "Not something you need to handle in this CL, but it seems like this might be doable now (or the comment should be updated if there are other blockers)? You added a wrapper for this a while back https://dawn-review.googlesource.com/257654",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 28
+      },
+      "revId": "deb31e88e1fc05e3978574622050ba0fd8948028",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
