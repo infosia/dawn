@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bb6b378_2be5a726",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-24T01:34:20Z",
+      "side": 1,
+      "message": "I think we only need one suppression file for the whole project.",
+      "revId": "5565a2563b3e3960ae81845547b1b3e569739e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "300e9a9f_c139a150",
+        "filename": "src/utils/clang-suppression-mappings/language_extension_token_suppressions.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-24T01:34:20Z",
+      "side": 1,
+      "message": "It seems to work for me: https://godbolt.org/z/dcWzef5aa\n\nSee the commented notes, in particular for how the exact path matching works. IDK if there\u0027s a path issue you\u0027re running into somehow (I don\u0027t know what it could be).",
+      "range": {
+        "startLine": 3,
+        "startChar": 41,
+        "endLine": 4,
+        "endChar": 41
+      },
+      "revId": "5565a2563b3e3960ae81845547b1b3e569739e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
