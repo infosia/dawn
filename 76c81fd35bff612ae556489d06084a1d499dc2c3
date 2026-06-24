@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a13a0eca_1081fafd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-06-24T18:55:42Z",
+      "side": 1,
+      "message": "I have updated this CL to just be the Tint side changes required to use llvm-dev pulled from CIPD (minus the actual DEPS change)\n\nI have created a CL, https://chromium-review.googlesource.com/c/infra/infra/+/7989525, for infra/3pp to add llvm-dev support. I have build that locally and copied the output to my Dawn repo to confirm that things work as expected.",
+      "revId": "76c81fd35bff612ae556489d06084a1d499dc2c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
