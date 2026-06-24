@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "090f02b0_ad916169",
+        "filename": "src/dawn/tests/unittests/wire/WireMemoryTransferServiceTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-24T08:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "589f4403_363e2873",
+      "range": {
+        "startLine": 194,
+        "startChar": 36,
+        "endLine": 194,
+        "endChar": 72
+      },
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "53bf1b23_01a1e1ec",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-06-23T20:04:05Z",
       "side": 1,
       "message": "nit. I think it would be helpful to specify (in a comment) when we would expect the handles to be null here (if ever?). I briefly tried to track when they are null, and I wasn\u0027t trivially able to figure it out at all. I guess if they are never null, it would also be nice to have them as references instead.",
+      "range": {
+        "startLine": 281,
+        "startChar": 34,
+        "endLine": 282,
+        "endChar": 70
+      },
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c529ab8c_23001e15",
+        "filename": "src/dawn/tests/unittests/wire/WireMemoryTransferServiceTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-24T08:16:08Z",
+      "side": 1,
+      "message": "Added a comment that explains in `ExpectSuccessfulUnmapAtCreation` what happens. With the new logic we can instead assume that all Expect* function take in non-null handles so I added ASSERTs for that.",
+      "parentUuid": "53bf1b23_01a1e1ec",
       "range": {
         "startLine": 281,
         "startChar": 34,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "beee1b14_c2a32dd8",
+        "filename": "src/dawn/tests/unittests/wire/WireMemoryTransferServiceTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-24T08:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "459834f1_a1160311",
+      "range": {
+        "startLine": 296,
+        "startChar": 16,
+        "endLine": 297,
+        "endChar": 70
+      },
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87ba3a04_9456cad1",
@@ -110,6 +182,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dedff3c_dc351f08",
+        "filename": "src/dawn/tests/unittests/wire/WireMemoryTransferServiceTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-24T08:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ba3a04_9456cad1",
+      "range": {
+        "startLine": 381,
+        "startChar": 12,
+        "endLine": 381,
+        "endChar": 81
+      },
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "022a4aaa_61adf569",
@@ -123,6 +219,30 @@
       "writtenOn": "2026-06-23T20:04:05Z",
       "side": 1,
       "message": "nit. destroyed",
+      "range": {
+        "startLine": 250,
+        "startChar": 11,
+        "endLine": 250,
+        "endChar": 21
+      },
+      "revId": "4aa6868eb22ccf225cfbb18ab724d7977c9d23ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe0a2f5a_b05c2c8d",
+        "filename": "src/dawn/wire/client/Buffer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-24T08:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "022a4aaa_61adf569",
       "range": {
         "startLine": 250,
         "startChar": 11,
