@@ -110,26 +110,6 @@ func runBisect(t *taskConfig) error {
 	fmt.Printf("Resolved known-failing to commit: %s\n", bc.failingHash)
 	fmt.Printf("Resolved known-passing to commit: %s\n", bc.passingHash)
 
-	origRefBytes, err := bc.runCmd("git", "rev-parse", "--abbrev-ref", "HEAD")
-	if err != nil {
-		return fmt.Errorf("failed to get original HEAD reference: %w", err)
-	}
-	origRef := strings.TrimSpace(string(origRefBytes))
-	if origRef == "HEAD" {
-		origHeadBytes, err := bc.runCmd("git", "rev-parse", "HEAD")
-		if err != nil {
-			return fmt.Errorf("failed to get original HEAD commit: %w", err)
-		}
-		origRef = strings.TrimSpace(string(origHeadBytes))
-	}
-
-	// Ensure repository state restore upon completion
-	defer func() {
-		fmt.Printf("Restoring repository to original state (%s)...\n", origRef)
-		_, _ = bc.runCmd("git", "checkout", origRef)
-		_, _ = bc.runCmd("gclient", "sync")
-	}()
-
 	// Determine lineage
 	mergeBaseBytes, err := bc.runCmd("git", "merge-base", bc.failingHash, bc.passingHash)
 	if err != nil {
@@ -178,20 +158,11 @@ const (
 	SyncBuildRunError // sync or build failed
 )
 
-// syncBuildRun runs gclient sync, builds the fuzzer, and runs the test case, returning the outcome.
-// Note: is intentionally a receiver on taskConfig instead of bisectConfig, because bisectStep use/need the whole
-//
-//	bisectConfig state
-func (t *taskConfig) syncBuildRun() (syncBuildRunResult, error) {
-	fmt.Println("--> Running gclient sync...")
-	if _, err := t.runCmd("gclient", "sync"); err != nil {
-		return SyncBuildRunError, fmt.Errorf("gclient sync failed: %w", err)
-	}
-
+// syncBuildAndRun runs gclient sync, builds the fuzzer, and runs the test case, returning the outcome.
+func (t *taskConfig) syncBuildAndRun() (syncBuildRunResult, error) {
 	fuzzerName := filepath.Base(t.fuzzer)
-	fmt.Printf("--> Building fuzzer %s...\n", fuzzerName)
-	if _, err := t.runCmd("autoninja", "-C", t.build, fuzzerName); err != nil {
-		return SyncBuildRunError, fmt.Errorf("build failed: %w", err)
+	if err := SyncAndBuildTargets(t, []string{fuzzerName}); err != nil {
+		return SyncBuildRunError, err
 	}
 
 	fmt.Printf("--> Running fuzzer %s against test case...\n", fuzzerName)
@@ -202,18 +173,22 @@ func (t *taskConfig) syncBuildRun() (syncBuildRunResult, error) {
 	return SyncBuildRunPassed, nil
 }
 
-// verifyCommit checks out a commit, calls syncBuildRun, and asserts that it matches the expected outcome.
+// verifyCommit checks out a commit, calls syncBuildAndRun, and asserts that it matches the expected outcome.
 func (bc *bisectConfig) verifyCommit(hash string, expectPass bool) error {
-	if _, err := bc.runCmd("git", "checkout", hash); err != nil {
-		return fmt.Errorf("failed to checkout %s: %w", hash, err)
-	}
+	var passed bool
+	err := WithCheckout(bc.taskConfig, hash, func() error {
+		result, err := bc.syncBuildAndRun()
+		if err != nil {
+			return err
+		}
+		passed = result == SyncBuildRunPassed
+		return nil
+	})
 
-	result, err := bc.syncBuildRun()
-	if result == SyncBuildRunError {
+	if err != nil {
 		return fmt.Errorf("execution at %s failed: %w", hash, err)
 	}
 
-	passed := result == SyncBuildRunPassed
 	if passed != expectPass {
 		return fmt.Errorf("fuzzer execution returned pass=%v, but expected pass=%v", passed, expectPass)
 	}
@@ -297,7 +272,7 @@ func (bc *bisectConfig) performBisect() error {
 }
 
 // runBisectStep implements a single git bisect step invoked by git bisect run.
-// It calls syncBuildRun and returns an appropriate exit codes (0 for good, 1 for bad, 125 for skipped/unbuildable).
+// It calls syncBuildAndRun and returns an appropriate exit codes (0 for good, 1 for bad, 125 for skipped/unbuildable).
 func runBisectStep(t *taskConfig) error {
 	fmt.Print("Running bisect step for commit: ")
 	if out, err := t.runCmd("git", "rev-parse", "HEAD"); err == nil {
@@ -306,8 +281,8 @@ func runBisectStep(t *taskConfig) error {
 		fmt.Println("unknown")
 	}
 
-	result, err := t.syncBuildRun()
-	if result == SyncBuildRunError {
+	result, err := t.syncBuildAndRun()
+	if err != nil {
 		fmt.Printf("Step execution failed: %v. Skipping commit.\n", err)
 		t.exitFn(125)
 		return nil
