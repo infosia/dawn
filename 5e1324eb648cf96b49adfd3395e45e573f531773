@@ -69,6 +69,24 @@
       "parentUuid": "de0993a8_b8736735",
       "revId": "5e1324eb648cf96b49adfd3395e45e573f531773",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd94343c_78f2cade",
+        "filename": "src/utils/gtest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-24T00:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a962985_c65a3b72",
+      "revId": "5e1324eb648cf96b49adfd3395e45e573f531773",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
