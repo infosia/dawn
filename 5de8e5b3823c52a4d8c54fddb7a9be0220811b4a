@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34d0c576_f0d91f10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-24T18:02:40Z",
+      "side": 1,
+      "message": "That\u0027s correct, this is just going to be extra compile coverage, and a breakage bringing it to our attention again happened to come up while I was already working in the area.\n\nThe relation to the benchmarks is just that both were a reason to add the bazel DEP (https://dawn-review.googlesource.com/c/dawn/+/318135), but for the benchmarks my plan now is to trigger a bazel build of LiteRT-LM from within GN actions, which will be dynamically linked against a pure GN build of dawn. Hope that makes sense but I\u0027ll continue that thread on the other CL when I have some more progress on it.",
+      "parentUuid": "7163aceb_4a1d64ee",
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cdc62794_2760dc57",
@@ -83,6 +101,30 @@
       "writtenOn": "2026-06-24T15:46:41Z",
       "side": 1,
       "message": "Also need\ncores \u003d 8\n\nAnd please move these configs to something like https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/cmake_shared.star so that we don\u0027t repeat them all the time.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df7b4c26_1b4772d8",
+        "filename": "infra/config/global/bazel_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-24T18:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdc62794_2760dc57",
       "range": {
         "startLine": 60,
         "startChar": 0,
@@ -116,6 +158,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97b7a598_62d47c3d",
+        "filename": "infra/config/global/bazel_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-24T18:02:40Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "2db03814_c6de2a1e",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 6
+      },
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2734caa_87f00472",
@@ -129,6 +195,30 @@
       "writtenOn": "2026-06-24T15:46:41Z",
       "side": 1,
       "message": "Let\u0027s start with 100, so the new builders don\u0027t block the CQ before it\u0027s confirmed they work.",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "5de8e5b3823c52a4d8c54fddb7a9be0220811b4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9688b58_cfbeb6aa",
+        "filename": "infra/config/global/bazel_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-24T18:02:40Z",
+      "side": 1,
+      "message": "Ah, I had assumed it was the opposite and 0 meant 0% enabled, fixed.",
+      "parentUuid": "a2734caa_87f00472",
       "range": {
         "startLine": 66,
         "startChar": 32,
