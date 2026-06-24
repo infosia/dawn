@@ -16,6 +16,24 @@
       "message": "PTAL\n\nWaiting on confirmation that this seems to resolve the issue locally before submitting (I wasn\u0027t able to reproduce the issue even without the change applied)",
       "revId": "76b6fb4e28b6fb6e4b51fd2e0ea6f8b343abda97",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6949ed7_85e2404f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-24T23:52:18Z",
+      "side": 1,
+      "message": "Confirmed to work, enabling autosubmit.",
+      "parentUuid": "94509540_b7e26389",
+      "revId": "76b6fb4e28b6fb6e4b51fd2e0ea6f8b343abda97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
