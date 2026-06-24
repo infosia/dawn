@@ -77,6 +77,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "52c1db85_9824e90b",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-24T01:04:03Z",
+      "side": 1,
+      "message": "Good Point. I try to do that but it is impossible if we don\u0027t add helper for `ityp::bitset`. If no objections, I\u0027ll do that.",
+      "parentUuid": "5112bba5_0915b69b",
+      "range": {
+        "startLine": 149,
+        "startChar": 39,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "00812d1d18000530cc581de89dd00538062618fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "70d62f89_b7b102ce",
         "filename": "src/dawn/native/d3d12/PipelineLayoutHandle.cpp",
         "patchSetId": 1
