@@ -1083,6 +1083,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6d4c8d42_dea94c5d",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-25T11:59:46Z",
+      "side": 1,
+      "message": "Is it an error for the GPU to not support EGL_ANDROID_native_fence_sync? Or is it an optional capability support?",
+      "parentUuid": "1eb4b208_5dd5d939",
+      "range": {
+        "startLine": 122,
+        "startChar": 73,
+        "endLine": 122,
+        "endChar": 88
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f13e77b5_2fe9347d",
         "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
         "patchSetId": 26
@@ -1148,6 +1172,24 @@
       "side": 1,
       "message": "Yes, it could. However, since this method is only used on devices running API 33+ (where android.hardware.SyncFence was introduced), the EGL_ANDROID_native_fence_sync extension will almost certainly be present (considering this extension was added in 2012). For any rare exceptions, developers can still handle synchronization themselves using native polling method in GPUSyncFence class.",
       "parentUuid": "20cc0dc9_ff0207ac",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d85a941d_5c570e1e",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-06-25T11:59:46Z",
+      "side": 1,
+      "message": "\u003e  For any rare exceptions, developers can still handle synchronization themselves \n\n\nWe build androidx support libraries (such as androidx.webgpu) so that developers don\u0027t need to handle rare exceptions themselves 😊",
+      "parentUuid": "35120702_a56604a4",
       "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
