@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "76c3d3a0ece94b0e8434a00dab8bef5161f6c450",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cb91218_da659522",
+        "filename": "src/dawn/native/CommandBufferStateTracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-25T19:17:33Z",
+      "side": 1,
+      "message": "nit. Was this change intended? (Wondering if maybe it got reverted by accident?)",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 47
+      },
+      "revId": "76c3d3a0ece94b0e8434a00dab8bef5161f6c450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
