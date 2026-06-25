@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "594ad43d_43be7500",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-25T08:46:06Z",
+      "side": 1,
+      "message": "Note, I think you\u0027ll need to add this feature to the list at https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/webgpu_decoder_impl.cc;drc\u003dd503f89588de845f4903558934b7513747b1be95;l\u003d1336, please check that it is exposed if you run Chromium with no flags.",
+      "revId": "bb04b1b232aba93f40b1cad2bad88f25368a22ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c6378ab_89cf2946",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
