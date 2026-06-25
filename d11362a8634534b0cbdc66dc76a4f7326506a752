@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60f07c24_16f1806d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-25T13:38:10Z",
+      "side": 1,
+      "message": "These changes will be enforced in the future per email from GHSS-team.",
+      "revId": "d11362a8634534b0cbdc66dc76a4f7326506a752",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
