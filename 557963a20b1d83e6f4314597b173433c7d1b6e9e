@@ -33,6 +33,75 @@
       "message": "Hi Shaobo, sorry I\u0027ve been out for a bit. I\u0027ll try to review this today.",
       "revId": "557963a20b1d83e6f4314597b173433c7d1b6e9e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ba4f64d_718e95a4",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-25T14:39:15Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this call here. Before `UpdateRootSignatureIfNecessary` is called in `Apply`, we first call `BeforeApply`, which for D3D12 should set the bind groups as dirty when `!AreLayoutsCompatible()`.",
+      "range": {
+        "startLine": 672,
+        "startChar": 12,
+        "endLine": 674,
+        "endChar": 34
+      },
+      "revId": "557963a20b1d83e6f4314597b173433c7d1b6e9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acee378b_6ba1ae39",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-25T14:39:15Z",
+      "side": 1,
+      "message": "Instead of adding this member, I think we should be able to modify `BindGroupTrackerBase` so that `BindGroupTrackerBase::OnSetPipeline` stores the current pipeline, rather than the pipeline layout, so `mPipelineLayout` becomes `mPipeline`, and `mLastAppliedPipelineLayout` becomes `mLastAppliedPipeline`.\n\nThis would remove the member added here, and setting it in `UpdateRootSignatureIfNecessary`, as I think setting it in `AfterApply` would be equivalent.",
+      "range": {
+        "startLine": 675,
+        "startChar": 12,
+        "endLine": 675,
+        "endChar": 33
+      },
+      "revId": "557963a20b1d83e6f4314597b173433c7d1b6e9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e97eb135_543794fd",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-25T14:39:15Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 309,
+        "startChar": 8,
+        "endLine": 309,
+        "endChar": 57
+      },
+      "revId": "557963a20b1d83e6f4314597b173433c7d1b6e9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
