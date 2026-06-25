@@ -22,6 +22,30 @@
       },
       "revId": "1d0524fb131125da146245b92525b16d76aa18f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6d8e957_f00d5b95",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-25T14:58:19Z",
+      "side": 1,
+      "message": "It\u0027s still not crashing locally, are the libc++ iterators hardened in dawn standalone?",
+      "parentUuid": "a34739a0_485946c2",
+      "range": {
+        "startLine": 388,
+        "startChar": 20,
+        "endLine": 388,
+        "endChar": 21
+      },
+      "revId": "1d0524fb131125da146245b92525b16d76aa18f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
