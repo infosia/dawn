@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35a4a6d4_d9b524b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-25T08:46:42Z",
+      "side": 1,
+      "message": "This should be possible to merge, do you want me to submit the commit for you?",
+      "revId": "8af86c5da848f196aeb3d37abf66da71b65298f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
