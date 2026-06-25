@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "73e3a28e_99bd7e75",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-25T20:29:24Z",
+      "side": 1,
+      "message": "I believe most or all of these can actually be omitted. If a dependency is synced but the revision to sync to is defined in a variable instead of being hard-coded into the dependency, `gclient setdep` automatically updates the appropriate variable.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "18a7f2ba68eef237223036eaf4def6aa6d7c5b4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a650fb1b_925553ba",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-25T20:29:24Z",
+      "side": 1,
+      "message": "I think you will need to make the autoroller an owner of these files like we do for the infra files https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/OWNERS;l\u003d9. Otherwise, the rolls won\u0027t submit without a human stamping as well.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 17
+      },
+      "revId": "18a7f2ba68eef237223036eaf4def6aa6d7c5b4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b39f7550_62f8fc2d",
         "filename": "third_party/cpu_features/OWNERS",
         "patchSetId": 16
@@ -20,6 +66,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "51778974_dac6b4ae",
+        "filename": "third_party/cpu_features/OWNERS",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-25T20:29:24Z",
+      "side": 1,
+      "message": "Omitting SGTM.",
+      "parentUuid": "b39f7550_62f8fc2d",
+      "revId": "18a7f2ba68eef237223036eaf4def6aa6d7c5b4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2c9de83b_0422eb21",
         "filename": "third_party/cpu_features/README.chromium",
         "patchSetId": 16
@@ -31,6 +95,30 @@
       "writtenOn": "2026-06-25T20:09:08Z",
       "side": 1,
       "message": "Should I make these `no` because we don\u0027t use this dep when shipping chromium?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "18a7f2ba68eef237223036eaf4def6aa6d7c5b4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "242812ed_850a25d9",
+        "filename": "third_party/cpu_features/README.chromium",
+        "patchSetId": 16
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-25T20:29:24Z",
+      "side": 1,
+      "message": "That or completely omit the README.chromium file? We won\u0027t be making any changes to Dawn\u0027s copy, so we can implicitly rely on Chromium\u0027s version having correct information.",
+      "parentUuid": "2c9de83b_0422eb21",
       "range": {
         "startLine": 10,
         "startChar": 0,
