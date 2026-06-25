@@ -99,10 +99,17 @@
     } while (DAWN_ASSERT_LOOP_CONDITION)
 
 #if DAWN_COMPILER_IS(MSVC)
-#define DAWN_RELEASE_ASSUME_CALLSITE_HELPER(file, func, line, condition) __assume(condition)
+#define DAWN_RELEASE_ASSUME_CALLSITE_HELPER(file, func, line, condition) \
+    do {                                                                 \
+        bool condition_value = condition;                                \
+        __assume(condition_value);                                       \
+    } while (DAWN_ASSERT_LOOP_CONDITION)
 #elif DAWN_COMPILER_IS(CLANG) && __has_builtin(__builtin_assume)
 #define DAWN_RELEASE_ASSUME_CALLSITE_HELPER(file, func, line, condition) \
-    __builtin_assume(!!(condition))
+    do {                                                                 \
+        bool condition_value = condition;                                \
+        __builtin_assume(condition_value);                               \
+    } while (DAWN_ASSERT_LOOP_CONDITION)
 #else  // DAWN_COMPILER_IS(*)
 #define DAWN_RELEASE_ASSUME_CALLSITE_HELPER(file, func, line, condition) \
     DAWN_ASSERT_CALLSITE_HELPER(file, func, line, condition)
@@ -118,6 +125,7 @@
 #define DAWN_ASSERT(condition) DAWN_ASSERT_CALLSITE_HELPER(__FILE__, __func__, __LINE__, condition)
 // In release, this provides powerful optimization hints to the compiler.
 // In debug, this is a DAWN_ASSERT.
+// Unlike DAWN_ASSERT, its argument *is* evaluated in release (but may still be optimized away).
 #define DAWN_RELEASE_ASSUME(condition) \
     DAWN_RELEASE_ASSUME_CALLSITE_HELPER(__FILE__, __func__, __LINE__, condition)
 
