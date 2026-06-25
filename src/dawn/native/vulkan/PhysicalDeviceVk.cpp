@@ -733,7 +733,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
                                        " must be at " msgSegment " " +               \
                                        std::to_string(baseLimits.v1.webgpuName));    \
         }                                                                            \
-        limits->v1.webgpuName = vkLimits.vulkanName;                                 \
+        limits->v1.webgpuName = static_cast<uint32_t>(vkLimits.vulkanName);          \
     } while (false)
 
 #define CHECK_AND_SET_V1_MAX_LIMIT(vulkanName, webgpuName) \

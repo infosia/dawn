@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <bit>
 #include <utility>
 #include <vector>
 
@@ -352,7 +353,8 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
                     UpdateInputDepth(commandEncoder, inputTexture, format, textureValues[i]);
                     break;
                 case TestAspectAndSamplerType::StencilAsUint:
-                    UpdateInputStencil(commandEncoder, inputTexture, format, textureValues[i]);
+                    UpdateInputStencil(commandEncoder, inputTexture, format,
+                                       static_cast<uint8_t>(textureValues[i]));
                     break;
             }
 
@@ -409,7 +411,8 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
                     UpdateInputDepth(commandEncoder, inputTexture, format, textureValues[i]);
                     break;
                 case TestAspectAndSamplerType::StencilAsUint:
-                    UpdateInputStencil(commandEncoder, inputTexture, format, textureValues[i]);
+                    UpdateInputStencil(commandEncoder, inputTexture, format,
+                                       static_cast<uint8_t>(textureValues[i]));
                     break;
             }
 
@@ -626,12 +629,9 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
             wgpu::CommandBuffer commands = commandEncoder.Finish();
             queue.Submit(1, &commands);
 
-            float float0 = 0.f;
-            float float1 = 1.f;
-            float* expected =
-                CompareFunctionPasses(compareRef, compare, textureValue) ? &float1 : &float0;
+            float expected = CompareFunctionPasses(compareRef, compare, textureValue) ? 1.f : 0.f;
 
-            EXPECT_BUFFER_U32_EQ(*reinterpret_cast<uint32_t*>(expected), outputBuffer, 0)
+            EXPECT_BUFFER_U32_EQ(std::bit_cast<uint32_t>(expected), outputBuffer, 0)
                 << "compareRef=" << compareRef << " " << compare
                 << " textureValue=" << textureValue;
         }
