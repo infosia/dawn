@@ -129,12 +129,6 @@ class WireMemoryTransferServiceTestBase : public WireTest,
         return std::make_pair(apiBuffer, buffer);
     }
 
-    std::span<std::byte> GetSpanToClientBufferContent() {
-        // TODO(https://crbug.com/526549345) Use byte_span_from_ref.
-        return DAWN_UNSAFE_TODO(
-            {reinterpret_cast<std::byte*>(&mClientBufferContent), sizeof(mClientBufferContent)});
-    }
-
     std::tuple<WGPUBuffer, wgpu::Buffer, MockClientMemoryHandle*, MockServerMemoryHandle*>
     CreateValidBuffer() {
         WGPUBuffer apiBuffer;
@@ -165,13 +159,13 @@ class WireMemoryTransferServiceTestBase : public WireTest,
 
         if (GetParam().mMappedAtCreation || GetParam().mMapMode == wgpu::MapMode::Write) {
             EXPECT_CALL(*memoryHandle, GetData)
-                .WillOnce(Return(GetSpanToClientBufferContent()))
+                .WillOnce(Return(SpanFromRef(mClientBufferContent)))
                 .RetiresOnSaturation();
         }
 
         if (GetParam().mMappedAtCreation) {
             EXPECT_CALL(*memoryHandle, GetData)
-                .WillOnce(Return(GetSpanToClientBufferContent()))
+                .WillOnce(Return(SpanFromRef(mClientBufferContent)))
                 .RetiresOnSaturation();
         }
 
@@ -245,9 +239,7 @@ class WireMemoryTransferServiceTestBase : public WireTest,
     void ExpectServerDeserializeData(bool success, MockServerMemoryHandle* serverHandle) {
         DAWN_ASSERT(serverHandle != nullptr);
 
-        // TODO(https://crbug.com/526549345) use byte_span_from_ref
-        std::span<std::byte> DAWN_UNSAFE_TODO(target(
-            reinterpret_cast<std::byte*>(&mServerBufferContent), sizeof(mServerBufferContent)));
+        std::span<std::byte> target = SpanFromRef(mServerBufferContent);
         EXPECT_CALL(
             *serverHandle,
             DeserializeDataUpdate(
@@ -291,7 +283,7 @@ class WireMemoryTransferServiceTestBase : public WireTest,
         switch (mode) {
             case wgpu::MapMode::Read: {
                 EXPECT_CALL(*clientHandle, GetData)
-                    .WillOnce(Return(GetSpanToClientBufferContent()));
+                    .WillOnce(Return(SpanFromRef(mClientBufferContent)));
                 EXPECT_CALL(api, BufferGetConstMappedRange(apiBuffer, 0, kBufferSize))
                     .WillOnce(Return(&mServerBufferContent));
 
@@ -312,7 +304,7 @@ class WireMemoryTransferServiceTestBase : public WireTest,
             }
             case wgpu::MapMode::Write: {
                 EXPECT_CALL(*clientHandle, GetData)
-                    .WillOnce(Return(GetSpanToClientBufferContent()));
+                    .WillOnce(Return(SpanFromRef(mClientBufferContent)));
 
                 buffer.MapAsync(mode, 0, kBufferSize, wgpu::CallbackMode::AllowSpontaneous,
                                 mMapAsyncCb.Callback());
@@ -386,7 +378,7 @@ class WireMemoryTransferServiceTestBase : public WireTest,
             !(GetParam().mMapMode & (wgpu::MapMode::Read | wgpu::MapMode::Write));
 
         if (isMappedAtCreationOnly) {
-            EXPECT_CALL(*clientHandle, GetData).WillOnce(Return(GetSpanToClientBufferContent()));
+            EXPECT_CALL(*clientHandle, GetData).WillOnce(Return(SpanFromRef(mClientBufferContent)));
             EXPECT_CALL(*clientHandle, Destroy).Times(1);
             EXPECT_CALL(*serverHandle, Destroy).Times(1);
         }
@@ -623,7 +615,7 @@ TEST_P(WireMemoryTransferServiceBufferMapAsyncTests, DeserializeDataUpdateFailur
             EXPECT_CALL(mMapAsyncCb, Call(wgpu::MapAsyncStatus::Success, _)).Times(1);
 
             ASSERT_THAT(clientHandle, NotNull());
-            EXPECT_CALL(*clientHandle, GetData).WillOnce(Return(GetSpanToClientBufferContent()));
+            EXPECT_CALL(*clientHandle, GetData).WillOnce(Return(SpanFromRef(mClientBufferContent)));
 
             buffer.MapAsync(mode, 0, kBufferSize, wgpu::CallbackMode::AllowSpontaneous,
                             mMapAsyncCb.Callback());
