@@ -775,6 +775,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b53c387a_669b6ded",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-25T05:45:42Z",
+      "side": 1,
+      "message": "Thank you for the suggestion! I would prefer to keep the poll() execution and JNI extraction as it is.",
+      "parentUuid": "2167ce35_75d1d095",
+      "range": {
+        "startLine": 557,
+        "startChar": 0,
+        "endLine": 557,
+        "endChar": 65
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "831b6f8f_01698498",
         "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
         "patchSetId": 26
@@ -1035,6 +1059,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1eb4b208_5dd5d939",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-25T05:45:42Z",
+      "side": 1,
+      "message": "Good point regarding visual artifacts. However, this fallback path only triggers in cases—like if the device doesn\u0027t support the EGL_ANDROID_native_fence_sync extension, or if the driver ran into some problem (maybe OOM?).\n\nMy main concern is that in those failure states, the GPU might already be frozen. If we block the thread to wait on the FD, we might run into app freeze? I feel that brief visual problem in this fallback path might be a safer tradeoff than risking a frozen app. What do you think?",
+      "parentUuid": "1688dd21_c5d7c22c",
+      "range": {
+        "startLine": 122,
+        "startChar": 73,
+        "endLine": 122,
+        "endChar": 88
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f13e77b5_2fe9347d",
         "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
         "patchSetId": 26
@@ -1082,6 +1130,24 @@
       "side": 1,
       "message": "would this cause visual artifacts on devices that lack EGL_ANDROID_native_fence_sync?",
       "parentUuid": "909deb03_54d20989",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35120702_a56604a4",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-25T05:45:42Z",
+      "side": 1,
+      "message": "Yes, it could. However, since this method is only used on devices running API 33+ (where android.hardware.SyncFence was introduced), the EGL_ANDROID_native_fence_sync extension will almost certainly be present (considering this extension was added in 2012). For any rare exceptions, developers can still handle synchronization themselves using native polling method in GPUSyncFence class.",
+      "parentUuid": "20cc0dc9_ff0207ac",
       "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
