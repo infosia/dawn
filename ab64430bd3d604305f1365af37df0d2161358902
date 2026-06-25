@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "176809a1_d5202d61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T03:28:32Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "ab64430bd3d604305f1365af37df0d2161358902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2ae739e_c788aea1",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T03:28:32Z",
+      "side": 1,
+      "message": "It would probably be nice to move the flags for these prefixes to the places where the relevant include paths are added, rather than having a centralized place for it. We might be able to avoid the `is_win` complexity by just always using `-Xclang\u003d--system-header-prefix\u003dabsl/` etc., which should still work on non-windows.\n\nAnyway, that can be future work.",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 15
+      },
+      "revId": "ab64430bd3d604305f1365af37df0d2161358902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
