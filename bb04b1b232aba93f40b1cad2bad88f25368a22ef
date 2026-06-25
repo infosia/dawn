@@ -16,6 +16,24 @@
       "message": "Note that technically you need 3 LGTMs to and not just one for an intent to ship, but I think it\u0027s safe to land this now and see if we need to revert or what if we get pushback (unlikely)",
       "revId": "bb04b1b232aba93f40b1cad2bad88f25368a22ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59d5bac2_5f652efe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-06-25T08:45:58Z",
+      "side": 1,
+      "message": "\"subgroup-size-control\" won\u0027t be enabled by default without the CL in Chromium:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/7999970\n\nSo I suggest we land all these CLs in Dawn and pause the above Chromium CL before getting 3 LGTMs",
+      "parentUuid": "5c6378ab_89cf2946",
+      "revId": "bb04b1b232aba93f40b1cad2bad88f25368a22ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
