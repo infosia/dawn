@@ -280,6 +280,19 @@ class SpanBase {
     //  - get_at
     //  - to_fixed_extent
 
+    template <typename T2, typename PtrType2>
+    void CopyFrom(const SpanBase<T2, Index, PtrType2>& other)
+        requires(!std::is_const_v<T> && std::is_convertible_v<T2*, T*>)
+    {
+      DAWN_CHECK(other.size() == size());
+      if (reinterpret_cast<uintptr_t>(to_address(begin())) <=
+          reinterpret_cast<uintptr_t>(to_address(other.begin()))) {
+        std::ranges::copy(other, begin());
+      } else {
+        std::ranges::copy_backward(other, end());
+      }
+    }
+
   private:
     // Helper function used to avoid doing the DAWN_CHECK inside at() redundantly when the
     // precondition is already checked by some other mean.
