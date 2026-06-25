@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c6378ab_89cf2946",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-25T08:42:28Z",
+      "side": 1,
+      "message": "Note that technically you need 3 LGTMs to and not just one for an intent to ship, but I think it\u0027s safe to land this now and see if we need to revert or what if we get pushback (unlikely)",
+      "revId": "bb04b1b232aba93f40b1cad2bad88f25368a22ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
