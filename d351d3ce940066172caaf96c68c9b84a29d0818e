@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26965eed_d1757644",
+        "filename": "src/dawn/native/opengl/DisplayEGL.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "Curious about what this warning was because we\u0027ve been moving toward `inline constexpr` instead of `static constexpr` as it usually saves binary size. https://dawn-review.googlesource.com/c/dawn/+/292135\n\nJust wondering why it triggered on this one file and not any of the other `inline constexpr`s.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 6
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbc5e327_699c9b2f",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "Probably should use dchecked_cast here, or better, change something so this isn\u0027t needed at all. Do you know which limit hit this?",
+      "range": {
+        "startLine": 736,
+        "startChar": 32,
+        "endLine": 736,
+        "endChar": 43
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8689f61a_377d8e7c",
+        "filename": "src/dawn/tests/end2end/DepthBiasTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "I believe this is the same as the existing `kPointTwoFiveBiasForPointTwoFiveZOnFloat`.",
+      "range": {
+        "startLine": 315,
+        "startChar": 21,
+        "endLine": 315,
+        "endChar": 32
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49cd03a7_bc617dca",
+        "filename": "src/dawn/tests/end2end/DepthBiasTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 335,
+        "startChar": 21,
+        "endLine": 335,
+        "endChar": 32
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "306b783f_44848894",
+        "filename": "src/dawn/tests/end2end/DepthStencilSamplingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "I think this could be avoided by changing the type of `kStencilValues` to `vector\u003cuint8_t\u003e`. It seems most callers of this function already use `vector\u003cuint8_t\u003e`.",
+      "range": {
+        "startLine": 357,
+        "startChar": 39,
+        "endLine": 357,
+        "endChar": 50
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6680872_7a15f70e",
+        "filename": "src/dawn/tests/end2end/DepthStencilSamplingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "Same or similar",
+      "range": {
+        "startLine": 415,
+        "startChar": 39,
+        "endLine": 415,
+        "endChar": 50
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72d041bd_bb984011",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "I think cast just `alsoAdd`, rather than the whole expression",
+      "range": {
+        "startLine": 78,
+        "startChar": 63,
+        "endLine": 78,
+        "endChar": 70
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87af6eb7_ce46ead5",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "similarly `static_cast\u003cint32_t\u003e(pixelValue) + static_cast\u003cint32_t\u003e(alsoAdd)`",
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bbefed4_24dfb010",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "This seems to have been intended to be `Float32ToFloat16(static_cast\u003cfloat_t\u003e(pixelValue) + alsoAdd)` based on the other similar cases. It would change the meaning of the test though so hopefully it doesn\u0027t make something fail.",
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f669a616_39f31831",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "similarly `pixelValue + static_cast\u003cuint8_t\u003e(alsoAdd)` or something like that.\n\n... and so on for following changes. In general `alsoAdd` seems intended to be treated as a float for float types, and cast to an int for sint/uint/snorm/unorm types.",
+      "range": {
+        "startLine": 179,
+        "startChar": 33,
+        "endLine": 179,
+        "endChar": 95
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c31d4faf_d7e44b9c",
+        "filename": "src/dawn/tests/white_box/D3D12ResidencyTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T22:39:40Z",
+      "side": 1,
+      "message": "nit: make this a `kExternalReservationSize`",
+      "range": {
+        "startLine": 335,
+        "startChar": 22,
+        "endLine": 335,
+        "endChar": 72
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
