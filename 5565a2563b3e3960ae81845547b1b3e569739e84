@@ -81,6 +81,23 @@
       },
       "revId": "5565a2563b3e3960ae81845547b1b3e569739e84",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e996956b_d80c5b7f",
+        "filename": "src/utils/clang-suppression-mappings/language_extension_token_suppressions.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T03:30:58Z",
+      "side": 1,
+      "message": "oops forgot to post this yesterday. Pretty sure it\u0027s irrelevant, but fyi:\n\n---\n\nI just found that Chromium is using `--warning-suppression-mappings` too.\nhttps://source.chromium.org/chromium/chromium/src/+/main:build/config/warning_suppression.txt\n\nNote it uses `{/,\\\\}` to make it work on Windows. I\u0027m not sure if this is necessary - it seems if this is passing then it must not be necessary. But something to be aware of if you run into issues.",
+      "revId": "5565a2563b3e3960ae81845547b1b3e569739e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
