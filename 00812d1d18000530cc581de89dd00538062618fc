@@ -123,6 +123,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1731925_2ccc1de3",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-25T06:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d303cd4_4e8f1c44",
+      "range": {
+        "startLine": 149,
+        "startChar": 39,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "00812d1d18000530cc581de89dd00538062618fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "70d62f89_b7b102ce",
@@ -146,6 +170,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16044b6e_e1486a90",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutHandle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-25T06:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70d62f89_b7b102ce",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 1
+      },
+      "revId": "00812d1d18000530cc581de89dd00538062618fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7ef7c85_c925bdb2",
@@ -159,6 +207,24 @@
       "writtenOn": "2026-06-23T10:15:07Z",
       "side": 1,
       "message": "ditto",
+      "revId": "00812d1d18000530cc581de89dd00538062618fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1caec52a_ea13fdda",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutHandle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-25T06:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7ef7c85_c925bdb2",
       "revId": "00812d1d18000530cc581de89dd00538062618fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
