@@ -34,6 +34,24 @@
       "parentUuid": "577f6c91_f83fdb29",
       "revId": "c3798b6a1a2a5822d814e04c8d8c58969893cc45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fcb20c7_d6e0f480",
+        "filename": "src/tint/generated_sources.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 4937707
+      },
+      "writtenOn": "2026-06-25T13:03:08Z",
+      "side": 0,
+      "message": "Thanks. I have reverted that change.",
+      "parentUuid": "c33b679a_ccd487af",
+      "revId": "c3798b6a1a2a5822d814e04c8d8c58969893cc45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
