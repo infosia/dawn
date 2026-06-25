@@ -1107,6 +1107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca244a43_422cdb82",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-25T16:07:19Z",
+      "side": 1,
+      "message": "It is an optional extension. Since this code only runs on Android 13+, almost every device should have it. But as discussed we have added fallback for cases where the device is missing this extension.",
+      "parentUuid": "6d4c8d42_dea94c5d",
+      "range": {
+        "startLine": 122,
+        "startChar": 73,
+        "endLine": 122,
+        "endChar": 88
+      },
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f13e77b5_2fe9347d",
         "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
         "patchSetId": 26
@@ -1190,6 +1214,24 @@
       "side": 1,
       "message": "\u003e  For any rare exceptions, developers can still handle synchronization themselves \n\n\nWe build androidx support libraries (such as androidx.webgpu) so that developers don\u0027t need to handle rare exceptions themselves 😊",
       "parentUuid": "35120702_a56604a4",
+      "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eb13f6a_53d43159",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-06-25T16:07:19Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I\u0027ve updated the code! Now, if the device doesn\u0027t have the EGL_ANDROID_native_fence_sync extension, we wait on it (using the GPUSyncFence await method) to prevent any visual corruption.",
+      "parentUuid": "d85a941d_5c570e1e",
       "revId": "c8bc1a98b496324706471371af8b3b4ff8c7e4af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
