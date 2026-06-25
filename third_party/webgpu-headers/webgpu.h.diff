@@ -1,0 +1,4 @@
+--- webgpu_header
++++ dawn_header
+@@
++    WGPUFeatureName_SubgroupSizeControl = 0x00000017,
