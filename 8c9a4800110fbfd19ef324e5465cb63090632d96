@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be90be82_a7d23efd",
+        "filename": "src/tint/lang/core/ir/structural_validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-25T00:01:05Z",
+      "side": 1,
+      "message": "We should also add a `Buffer` case to this switch and check that the `AllowBufferTypes` property is present if buffers are used.",
+      "revId": "8c9a4800110fbfd19ef324e5465cb63090632d96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
