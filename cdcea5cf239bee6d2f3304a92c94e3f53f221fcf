@@ -16,6 +16,52 @@
       "message": "PTAL!",
       "revId": "cdcea5cf239bee6d2f3304a92c94e3f53f221fcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "927c74c9_738c81e8",
+        "filename": "src/dawn/tests/unittests/ITypArrayTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-25T19:10:55Z",
+      "side": 1,
+      "message": "For these, idk if it would work, but I think it might work if you put this `static_assert` call inside the constructors of the `ityp::*` classes? That would probably be better than doing it here since this only checks that specific template for the type.\n\nIf it doesn\u0027t work, feel free to just resolve this comment.",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "cdcea5cf239bee6d2f3304a92c94e3f53f221fcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fe6cff8_ec7d37dc",
+        "filename": "src/utils/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-25T19:10:55Z",
+      "side": 1,
+      "message": "nit. range",
+      "range": {
+        "startLine": 163,
+        "startChar": 27,
+        "endLine": 163,
+        "endChar": 31
+      },
+      "revId": "cdcea5cf239bee6d2f3304a92c94e3f53f221fcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
