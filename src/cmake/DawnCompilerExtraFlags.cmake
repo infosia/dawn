@@ -45,7 +45,6 @@ function(common_compile_options target)
     if (COMPILER_IS_CLANG)
       target_compile_options(${target}
         PRIVATE
-          "-Wno-assume"
           "-Wno-deprecated-builtins"
           "-Wno-unknown-warning-option"
       )
