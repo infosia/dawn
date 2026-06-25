@@ -16,6 +16,24 @@
       "message": "We should also add a `Buffer` case to this switch and check that the `AllowBufferTypes` property is present if buffers are used.",
       "revId": "8c9a4800110fbfd19ef324e5465cb63090632d96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c2dc9c6_3fd27560",
+        "filename": "src/tint/lang/core/ir/structural_validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-25T13:55:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be90be82_a7d23efd",
+      "revId": "8c9a4800110fbfd19ef324e5465cb63090632d96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
