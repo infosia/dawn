@@ -16,6 +16,24 @@
       "message": "Of course I forgot to build all platforms. Will fix.",
       "revId": "de73419e373a67e3c4f0dfc1080edc1e27f6bdd9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a57b811_fe4dd590",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T19:22:17Z",
+      "side": 1,
+      "message": "Ohh it\u0027s because I didn\u0027t do a release build. And we only emit this in release. Whoops.\n\nUnfortunately though it can\u0027t figure out that simple stuff like `DAWN_RELEASE_ASSUME(m \u003c\u003d std::numeric_limits\u003cuint64_t\u003e::max() - n)` has no side effects.\n\nI\u0027ll just undo that change and clean it up in another CL.",
+      "parentUuid": "532664f4_0df74a5b",
+      "revId": "de73419e373a67e3c4f0dfc1080edc1e27f6bdd9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7968bece_9025214e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T19:22:17Z",
+      "side": 1,
+      "message": "@shrekshao@google.com PTAL, I had to undo part of this change and split it out.",
+      "revId": "0f7a334fa90f84aa6f58438d36ce2799d6baeca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
