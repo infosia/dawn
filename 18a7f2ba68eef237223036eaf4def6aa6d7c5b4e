@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b39f7550_62f8fc2d",
+        "filename": "third_party/cpu_features/OWNERS",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T20:09:08Z",
+      "side": 1,
+      "message": "Should I skip copying this?",
+      "revId": "18a7f2ba68eef237223036eaf4def6aa6d7c5b4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c9de83b_0422eb21",
+        "filename": "third_party/cpu_features/README.chromium",
+        "patchSetId": 16
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T20:09:08Z",
+      "side": 1,
+      "message": "Should I make these `no` because we don\u0027t use this dep when shipping chromium?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "18a7f2ba68eef237223036eaf4def6aa6d7c5b4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

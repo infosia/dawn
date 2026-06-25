@@ -140,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15d2b9de_61a2882e",
+        "filename": "DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T20:09:08Z",
+      "side": 1,
+      "message": "Thank you, done!",
+      "parentUuid": "1e5788c2_4848822f",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97dda5c4_1ec46cab",
@@ -153,6 +171,24 @@
       "writtenOn": "2026-06-17T17:20:32Z",
       "side": 1,
       "message": "TODO: Check and add the rough delta sizes of the Win, Mac, and Android toolchains",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07bc8669_7259c26a",
+        "filename": "docs/building.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T20:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97dda5c4_1ec46cab",
       "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -205,6 +241,24 @@
       "writtenOn": "2026-06-17T17:20:32Z",
       "side": 1,
       "message": "TODO: Point to space requirement docs here (also note wasm, node, clangd, clang-tidy if they\u0027re nontrivial)",
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "287ab868_b02d3b68",
+        "filename": "docs/development-tips.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T20:09:08Z",
+      "side": 1,
+      "message": "not needed",
+      "parentUuid": "48c63a45_05dcdd4f",
       "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -447,6 +501,30 @@
       "side": 1,
       "message": "In theory we could update the roller script to manually sync the BUILD.gn file with Chromium. There\u0027s already precedent for fetching file content from Chromium via gitiles.",
       "parentUuid": "21261d49_5f8e3d6a",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "cf62f7389c999ae0fa67c3d07930841b9a95049c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cfb77f6_33a54692",
+        "filename": "third_party/cpu_features/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T20:09:08Z",
+      "side": 1,
+      "message": "I thought about doing that, but didn\u0027t realize there was code for it!",
+      "parentUuid": "04db5cca_378c8ea6",
       "range": {
         "startLine": 5,
         "startChar": 2,

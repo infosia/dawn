@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3123067e_6d0ac475",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-25T20:09:08Z",
+      "side": 1,
+      "message": "I could do a manual roll_chromium_deps along with this CL if that would be preferred. I don\u0027t think it matters but it would avoid any possibility of this CL breaking the subsequent roll_chromium_deps run.",
+      "revId": "016b8c2690be79ff3b8fd88157b1814ce0ff5107",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
