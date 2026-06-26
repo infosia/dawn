@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99c1f3ea_4f5459d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-26T08:00:24Z",
+      "side": 1,
+      "message": "Geoff, could I have a stamp? CR+2 got reset because on less file contains changes.",
+      "revId": "71bb7e12692108bdf8c84c1a41004e347a12ce8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
