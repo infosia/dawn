@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60ed4cf2_84b32dbc",
+        "filename": "src/dawn/native/opengl/DisplayEGL.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T07:15:53Z",
+      "side": 1,
+      "message": "Ah I see. If it\u0027s a pointer I wonder why we have `kNoConfig` and don\u0027t just use `nullptr`. I guess it\u0027s slightly more self-explanatory. Anyway no change needed.",
+      "parentUuid": "e01146c1_4f5cd00a",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 6
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbc5e327_699c9b2f",
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "Looks like there are still float callers (`kNormalizedTextureValues`, [1])",
       "parentUuid": "306b783f_44848894",
+      "range": {
+        "startLine": 357,
+        "startChar": 39,
+        "endLine": 357,
+        "endChar": 50
+      },
+      "revId": "d351d3ce940066172caaf96c68c9b84a29d0818e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f41155da_357040b2",
+        "filename": "src/dawn/tests/end2end/DepthStencilSamplingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T07:15:53Z",
+      "side": 1,
+      "message": "Oh of course. It can\u0027t statically tell which `switch` case is going to be taken, I didn\u0027t think about that very hard.",
+      "parentUuid": "ea7978af_92568878",
       "range": {
         "startLine": 357,
         "startChar": 39,
