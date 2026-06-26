@@ -46,6 +46,30 @@
       },
       "revId": "4bc7e247ede53f1133791918966029a09b34566b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cd9e14d_c705af01",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-26T16:51:22Z",
+      "side": 1,
+      "message": "Huh, strange. ANGLE has the [same dependency](https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/DEPS;l\u003d710?q\u003d-file:%5Eout%20-file:%5Egen%20angle%2FDEPS) but is able to sync it as a [CIPD entry](https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/scripts/roll_chromium_deps_v2.py;l\u003d67).\n\nFine to leave as-is so we can get this in, but please add a comment.",
+      "parentUuid": "cd3b0bb2_aa0a2645",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "4bc7e247ede53f1133791918966029a09b34566b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
