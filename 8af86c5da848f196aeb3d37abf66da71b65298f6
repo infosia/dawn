@@ -16,6 +16,24 @@
       "message": "This should be possible to merge, do you want me to submit the commit for you?",
       "revId": "8af86c5da848f196aeb3d37abf66da71b65298f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63e6d3fe_418582b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004491
+      },
+      "writtenOn": "2026-06-26T00:41:13Z",
+      "side": 1,
+      "message": "Thanks Corentin, first I need to get the merge approval, then we can submit it. I will proceed with the request",
+      "parentUuid": "35a4a6d4_d9b524b7",
+      "revId": "8af86c5da848f196aeb3d37abf66da71b65298f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
