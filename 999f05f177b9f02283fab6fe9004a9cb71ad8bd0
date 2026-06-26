@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ca622f6_cf05a786",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T00:20:54Z",
+      "side": 1,
+      "message": "Maybe clang-tidy\u0027s `bugprone-assert-side-effect` can do a better job. Filed under https://crbug.com/501491694.",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "999f05f177b9f02283fab6fe9004a9cb71ad8bd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fcd076c_25664df0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T00:20:54Z",
+      "side": 1,
+      "message": "Hm, now that I\u0027ve finally figured out what `-Wassume` is doing, I think we probably want to leave it disabled. But this CL is what we would need to do to enable it. AFAICT there are no instances of `DAWN_RELEASE_ASSUME` that have side effects. So this would have no runtime effect.\n\nBasically, like `DAWN_ASSERT`, `__builtin_assume` doesn\u0027t always execute its expression. Except it _never_ executes its expression so it\u0027s even less bugprone.\n\nTentatively abandoning.",
+      "revId": "999f05f177b9f02283fab6fe9004a9cb71ad8bd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
