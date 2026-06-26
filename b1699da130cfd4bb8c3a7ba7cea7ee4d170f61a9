@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "561a1c4b_04b3711b",
+        "filename": "src/utils/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-26T07:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bf89b3f_e346fc59",
+      "range": {
+        "startLine": 330,
+        "startChar": 66,
+        "endLine": 330,
+        "endChar": 68
+      },
+      "revId": "b1699da130cfd4bb8c3a7ba7cea7ee4d170f61a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc959d5b_a676fb91",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-06-26T06:45:57Z",
       "side": 1,
       "message": "one",
+      "range": {
+        "startLine": 335,
+        "startChar": 66,
+        "endLine": 335,
+        "endChar": 68
+      },
+      "revId": "b1699da130cfd4bb8c3a7ba7cea7ee4d170f61a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c59c10b2_841c2bc8",
+        "filename": "src/utils/span.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-26T07:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc959d5b_a676fb91",
       "range": {
         "startLine": 335,
         "startChar": 66,
