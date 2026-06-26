@@ -46,6 +46,30 @@
       },
       "revId": "1d0524fb131125da146245b92525b16d76aa18f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25ac1078_3309d0a0",
+        "filename": "src/utils/span_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T07:07:16Z",
+      "side": 1,
+      "message": "Hmmmm, hardening is certainly enabled or `ITypArrayDeathTest.OutOfBounds` would be failing. But there are various options so maybe hardened iterators are not. I don\u0027t even know for sure if they\u0027re enabled in chromium, I guess I just assumed because `std::ranges::copy` is supposedly safe.\n\nYou should be able to check the values of the config macros to see what config you\u0027re getting in various build setups:\n\n- iterator hardening options: `_LIBCPP_ABI_BOUNDED_ITERATORS` etc. These change the ABI so the hardening level doesn\u0027t affect them. https://libcxx.llvm.org/Hardening.html#abi-options\n\nNot relevant here but fyi:\n\n- libc++ hardening level: `_LIBCPP_HARDENING_MODE` https://libcxx.llvm.org/Hardening.html#notes-for-users\n- absl hardening level: `ABSL_OPTION_HARDENED` https://github.com/abseil/abseil-cpp/blob/fc1384e6f098c9861b106e55526d6504fc5561e4/absl/base/options.h#L156",
+      "parentUuid": "c6d8e957_f00d5b95",
+      "range": {
+        "startLine": 388,
+        "startChar": 20,
+        "endLine": 388,
+        "endChar": 21
+      },
+      "revId": "1d0524fb131125da146245b92525b16d76aa18f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
