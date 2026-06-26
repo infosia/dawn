@@ -22,6 +22,30 @@
       },
       "revId": "a17a4db9ad71f9c0848cea045a58857c091caa43",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b12f03c8_c1fee907",
+        "filename": "third_party/litert-lm/build_litert_lm.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-26T19:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fce59fc_38705157",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "a17a4db9ad71f9c0848cea045a58857c091caa43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
