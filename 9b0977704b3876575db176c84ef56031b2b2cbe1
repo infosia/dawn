@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd101e26_97e9506e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-26T10:08:05Z",
+      "side": 1,
+      "message": "Do you know why these files are not built in Chromium? AFAIK the code should be compiled, just not used.",
+      "revId": "9b0977704b3876575db176c84ef56031b2b2cbe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
