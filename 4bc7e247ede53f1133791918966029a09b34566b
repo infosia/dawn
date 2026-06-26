@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97117ace_33b1dd46",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-26T00:17:12Z",
+      "side": 1,
+      "message": "Any reason why this is synced explicitly instead of adding `third_party/android_toolchain/ndk` to the synced CIPD DEPS list?",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "4bc7e247ede53f1133791918966029a09b34566b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
