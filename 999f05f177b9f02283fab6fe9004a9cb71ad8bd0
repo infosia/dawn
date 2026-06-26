@@ -41,6 +41,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "983cf5e4_462beecf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T06:20:40Z",
+      "side": 1,
+      "message": "Er actually, it\u0027s the _same_ as DAWN_ASSERT - it _does_ execute it in Debug.",
+      "parentUuid": "5fcd076c_25664df0",
+      "revId": "999f05f177b9f02283fab6fe9004a9cb71ad8bd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "deb745d5_36177b1b",
