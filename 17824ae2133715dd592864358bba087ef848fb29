@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "a2de2350_1306b6ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-06-26T18:57:38Z",
+      "side": 1,
+      "message": "Thanks! Follow up here: https://dawn-review.googlesource.com/c/dawn/+/320157",
+      "parentUuid": "b2ba89c2_f9226e77",
+      "revId": "17824ae2133715dd592864358bba087ef848fb29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "12abfc25_8ddc0dd0",
         "filename": "third_party/litert-lm/build_litert_lm.py",
         "patchSetId": 4
