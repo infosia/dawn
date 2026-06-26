@@ -34,6 +34,24 @@
       "parentUuid": "3123067e_6d0ac475",
       "revId": "016b8c2690be79ff3b8fd88157b1814ce0ff5107",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50d4dd38_0624d2cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T00:12:44Z",
+      "side": 1,
+      "message": "SG, done locally.",
+      "parentUuid": "e77055c9_a2cc0665",
+      "revId": "016b8c2690be79ff3b8fd88157b1814ce0ff5107",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

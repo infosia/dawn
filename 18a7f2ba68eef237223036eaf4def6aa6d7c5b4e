@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36d7d486_cbbf727c",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T00:12:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73e3a28e_99bd7e75",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "18a7f2ba68eef237223036eaf4def6aa6d7c5b4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a650fb1b_925553ba",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-06-25T20:29:24Z",
       "side": 1,
       "message": "I think you will need to make the autoroller an owner of these files like we do for the infra files https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/OWNERS;l\u003d9. Otherwise, the rolls won\u0027t submit without a human stamping as well.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 17
+      },
+      "revId": "18a7f2ba68eef237223036eaf4def6aa6d7c5b4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10e9c384_7b694dcd",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T00:12:44Z",
+      "side": 1,
+      "message": "Done and also realized I needed to update owners on the gitlinks too.",
+      "parentUuid": "a650fb1b_925553ba",
       "range": {
         "startLine": 105,
         "startChar": 0,
@@ -82,6 +130,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5735dc04_e4601475",
+        "filename": "third_party/cpu_features/OWNERS",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T00:12:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51778974_dac6b4ae",
+      "revId": "18a7f2ba68eef237223036eaf4def6aa6d7c5b4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c9de83b_0422eb21",
@@ -119,6 +185,30 @@
       "side": 1,
       "message": "That or completely omit the README.chromium file? We won\u0027t be making any changes to Dawn\u0027s copy, so we can implicitly rely on Chromium\u0027s version having correct information.",
       "parentUuid": "2c9de83b_0422eb21",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "18a7f2ba68eef237223036eaf4def6aa6d7c5b4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba2aa620_4183a99e",
+        "filename": "third_party/cpu_features/README.chromium",
+        "patchSetId": 16
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T00:12:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "242812ed_850a25d9",
       "range": {
         "startLine": 10,
         "startChar": 0,
