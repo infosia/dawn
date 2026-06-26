@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2ba89c2_f9226e77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-26T17:07:18Z",
+      "side": 1,
+      "message": "Resolving comments so they don\u0027t block submission. Feel free to address in a follow-up.",
+      "revId": "17824ae2133715dd592864358bba087ef848fb29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12abfc25_8ddc0dd0",
+        "filename": "third_party/litert-lm/build_litert_lm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-26T17:07:18Z",
+      "side": 1,
+      "message": "Nit: Wrap at 80 characters",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 110
+      },
+      "revId": "17824ae2133715dd592864358bba087ef848fb29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2849fdd_d6cef317",
+        "filename": "third_party/litert-lm/build_litert_lm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-06-26T17:07:18Z",
+      "side": 1,
+      "message": "Nit: In new Chromium code, we\u0027ve been preferring use of the `pathlib` module over the older strings + `os.path` functions. Dawn isn\u0027t necessarily required to do the same, but IMO it results in slightly cleaner code.",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "17824ae2133715dd592864358bba087ef848fb29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
