@@ -22,6 +22,30 @@
       },
       "revId": "4bc7e247ede53f1133791918966029a09b34566b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd3b0bb2_aa0a2645",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T05:54:34Z",
+      "side": 1,
+      "message": "`gclient setdep` can\u0027t do it, it says\n`ValueError: Unsupported dependency revision format. Please file a bug to the Infra\u003eSDK component in crbug.com`",
+      "parentUuid": "97117ace_33b1dd46",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "4bc7e247ede53f1133791918966029a09b34566b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
