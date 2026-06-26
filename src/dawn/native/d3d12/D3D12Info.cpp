@@ -93,20 +93,18 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
         info.supportsNative16BitShaderOps = featureOptions4.Native16BitShaderOpsSupported;
     }
 
-#if D3D12_SDK_VERSION >= 612
-    D3D12_FEATURE_DATA_D3D12_OPTIONS18 featureOptions18 = {};
-    if (SUCCEEDED(physicalDevice.GetDevice()->CheckFeatureSupport(
-            D3D12_FEATURE_D3D12_OPTIONS18, &featureOptions18, sizeof(featureOptions18)))) {
-        info.supportsRenderPass = featureOptions18.RenderPassesValid;
-    }
-#endif
-
     // D3D12_HEAP_FLAG_CREATE_NOT_ZEROED is available anytime that ID3D12Device8 is exposed, or a
     // check for D3D12_FEATURE_D3D12_OPTIONS7 succeeds.
     D3D12_FEATURE_DATA_D3D12_OPTIONS7 featureOptions7 = {};
     if (SUCCEEDED(physicalDevice.GetDevice()->CheckFeatureSupport(
             D3D12_FEATURE_D3D12_OPTIONS7, &featureOptions7, sizeof(featureOptions7)))) {
         info.supportsHeapFlagCreateNotZeroed = true;
+    }
+
+    D3D12_FEATURE_DATA_D3D12_OPTIONS8 featureOptions8 = {};
+    if (SUCCEEDED(physicalDevice.GetDevice()->CheckFeatureSupport(
+            D3D12_FEATURE_D3D12_OPTIONS8, &featureOptions8, sizeof(featureOptions8)))) {
+        info.supportsTextureCompressionUnaligned = featureOptions8.UnalignedBlockTexturesSupported;
     }
 
     D3D12_FEATURE_DATA_D3D12_OPTIONS13 featureOptions13 = {};
@@ -117,6 +115,14 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
         info.supportsUnrestrictedBufferTextureCopyPitch =
             featureOptions13.UnrestrictedBufferTextureCopyPitchSupported;
     }
+
+#if D3D12_SDK_VERSION >= 612
+    D3D12_FEATURE_DATA_D3D12_OPTIONS18 featureOptions18 = {};
+    if (SUCCEEDED(physicalDevice.GetDevice()->CheckFeatureSupport(
+            D3D12_FEATURE_D3D12_OPTIONS18, &featureOptions18, sizeof(featureOptions18)))) {
+        info.supportsRenderPass = featureOptions18.RenderPassesValid;
+    }
+#endif
 
     info.supportsRootSignatureVersion1_1 = false;
     D3D12_FEATURE_DATA_ROOT_SIGNATURE featureDataRootSignature = {};
