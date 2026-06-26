@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fbefc29_4cddb547",
+        "filename": ".github/workflows/release.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T21:43:08Z",
+      "side": 1,
+      "message": "The chat group itself is a chromium.org group chat containing just kainino@chromium.org and kainino@google.com right now. I can add people once it\u0027s working. If the group ever needs to change, the URL can just be updated in the GitHub secrets.",
+      "revId": "398a0a210f8650b9b42d16e8748be7df4f9c0f8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
