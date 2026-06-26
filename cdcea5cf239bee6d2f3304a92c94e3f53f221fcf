@@ -62,6 +62,29 @@
       },
       "revId": "cdcea5cf239bee6d2f3304a92c94e3f53f221fcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ae2637f_15151443",
+        "filename": "src/utils/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-26T00:23:13Z",
+      "side": 1,
+      "message": "Question, does this change make this helper obsolete also? Or is it still needed?",
+      "range": {
+        "startLine": 292,
+        "startChar": 4,
+        "endLine": 297,
+        "endChar": 5
+      },
+      "revId": "cdcea5cf239bee6d2f3304a92c94e3f53f221fcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
