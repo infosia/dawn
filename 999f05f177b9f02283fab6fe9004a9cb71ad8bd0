@@ -39,6 +39,23 @@
       "message": "Hm, now that I\u0027ve finally figured out what `-Wassume` is doing, I think we probably want to leave it disabled. But this CL is what we would need to do to enable it. AFAICT there are no instances of `DAWN_RELEASE_ASSUME` that have side effects. So this would have no runtime effect.\n\nBasically, like `DAWN_ASSERT`, `__builtin_assume` doesn\u0027t always execute its expression. Except it _never_ executes its expression so it\u0027s even less bugprone.\n\nTentatively abandoning.",
       "revId": "999f05f177b9f02283fab6fe9004a9cb71ad8bd0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "deb745d5_36177b1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T00:28:15Z",
+      "side": 1,
+      "message": "Superseded by https://dawn-review.googlesource.com/c/dawn/+/319996",
+      "revId": "999f05f177b9f02283fab6fe9004a9cb71ad8bd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
