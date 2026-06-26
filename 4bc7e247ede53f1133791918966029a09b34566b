@@ -70,6 +70,30 @@
       },
       "revId": "4bc7e247ede53f1133791918966029a09b34566b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17075b4c_eb2e588e",
+        "filename": "scripts/roll_chromium_deps.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T20:35:53Z",
+      "side": 1,
+      "message": "I figured it out. The issue is that ANGLE has never actually rolled `android_ndk_version`. It was added only recently, and it hasn\u0027t changed since then: https://crrev.com/c/7800061\n\nThe script doesn\u0027t attempt to setdep if the version number hasn\u0027t changed. When I tested it locally I manually set it to a lower number so I could look at the diff to make sure it would successfully update. Doing the same thing in ANGLE, the script fails in the same way.\n\nFiled https://crbug.com/528413044. It\u0027s P3 for Dawn, but ANGLE will eventually run into this if it\u0027s not fixed.",
+      "parentUuid": "2cd9e14d_c705af01",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "4bc7e247ede53f1133791918966029a09b34566b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
