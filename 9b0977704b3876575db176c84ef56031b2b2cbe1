@@ -16,6 +16,24 @@
       "message": "Do you know why these files are not built in Chromium? AFAIK the code should be compiled, just not used.",
       "revId": "9b0977704b3876575db176c84ef56031b2b2cbe1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f17a28b1_2d85a782",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-06-26T23:49:45Z",
+      "side": 1,
+      "message": "Oops, you\u0027re right, they are built in Chromium. Verified this locally. What seems to actually be happening is unsafe-buffers just isn\u0027t running against Dawn in a Chromium build. Probably due to https://source.chromium.org/chromium/chromium/src/+/main:build/config/unsafe_buffers_paths.txt;l\u003d27;drc\u003d28b09ac53bbaad2ddfbaa58cb39ce92f9e5dc36d\n\nWe could enable it, but it seems fine to just rely on Dawn CQ for that? Especially since we might have different unsafe-buffers configs from Chromium.",
+      "parentUuid": "cd101e26_97e9506e",
+      "revId": "9b0977704b3876575db176c84ef56031b2b2cbe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
