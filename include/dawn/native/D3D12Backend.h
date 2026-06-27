@@ -28,8 +28,10 @@
 #ifndef INCLUDE_DAWN_NATIVE_D3D12BACKEND_H_
 #define INCLUDE_DAWN_NATIVE_D3D12BACKEND_H_
 
-#include <d3d11on12.h>
+// d3d12.h must be included first, before other d3d headers that may include it, to ensure
+// we pick up the one from the Agility SDK when enabled.
 #include <d3d12.h>
+#include <d3d11on12.h>
 #include <dxgi1_4.h>
 #include <wrl/client.h>
 
