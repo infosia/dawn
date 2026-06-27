@@ -86,8 +86,8 @@ ShaderModuleParseRequest BuildShaderModuleParseRequest(
 
         ShaderModuleParseSpirvDescription spirv = {
             {// TODO(dawn:2033): Avoid unnecessary copies of the SPIR-V code.
-             .spirvCode = UnsafeUnserializedValue(std::vector<uint32_t>(
-                 spirvDesc->code, DAWN_UNSAFE_TODO(spirvDesc->code + spirvDesc->codeSize))),
+             .spirvCode = UnsafeUnserializedValue(
+                 std::vector<uint32_t>(spirvDesc->code.begin(), spirvDesc->code.end())),
              .allowNonUniformDerivatives =
                  spirvOptions ? static_cast<bool>(spirvOptions->allowNonUniformDerivatives)
                               : false}};

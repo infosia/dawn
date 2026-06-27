@@ -1478,7 +1478,7 @@ void DumpShaderFromDescriptor(LogEmitter* logEmitter,
     if ([[maybe_unused]] const auto* spirvDesc = shaderModuleDesc.Get<ShaderSourceSPIRV>()) {
         // Dump SPIR-V if enabled.
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
-        DumpSpirv(logEmitter, spirvDesc->code, spirvDesc->codeSize);
+        DumpSpirv(logEmitter, spirvDesc->code);
 #endif  // DAWN_ENABLE_SPIRV_VALIDATION
         return;
     }
@@ -1512,9 +1512,8 @@ ResultOrError<ShaderModuleParseResult> ParseShaderModule(ShaderModuleParseReques
         const std::vector<uint32_t>& spirvCode = spirvDesc.spirvCode.UnsafeGetValue();
 
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
-        MaybeError validationResult =
-            ValidateSpirv(req.logEmitter.UnsafeGetValue(), spirvCode.data(), spirvCode.size(),
-                          deviceInfo.toggles.Has(Toggle::UseSpirv14));
+        MaybeError validationResult = ValidateSpirv(req.logEmitter.UnsafeGetValue(), spirvCode,
+                                                    deviceInfo.toggles.Has(Toggle::UseSpirv14));
         // If SpirV validation error occurs, store it into outputParseResult and return.
         if (validationResult.IsError()) {
             outputParseResult.SetValidationError(validationResult.AcquireError());
@@ -1800,8 +1799,7 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
 
     if (auto* spirvDesc = descriptor.Get<ShaderSourceSPIRV>()) {
         mType = Type::Spirv;
-        mOriginalSpirv.assign(spirvDesc->code,
-                              DAWN_UNSAFE_TODO(spirvDesc->code + spirvDesc->codeSize));
+        mOriginalSpirv.assign(spirvDesc->code.begin(), spirvDesc->code.end());
         shaderCodeByteSize = mOriginalSpirv.size() * sizeof(decltype(mOriginalSpirv)::value_type);
         shaderCode = reinterpret_cast<uint8_t*>(mOriginalSpirv.data());
         if (auto* spirvOptions = descriptor.Get<DawnShaderModuleSPIRVOptionsDescriptor>()) {
@@ -2134,9 +2132,7 @@ ShaderModuleParseRequest ShaderModuleBase::GenerateShaderModuleParseRequest(
         case Type::Spirv:
             spirvOptionsDescriptor.allowNonUniformDerivatives = mAllowSpirvNonUniformDerivitives;
             spirvDescriptor.nextInChain = &spirvOptionsDescriptor;
-
-            spirvDescriptor.codeSize = uint32_t(mOriginalSpirv.size());
-            spirvDescriptor.code = mOriginalSpirv.data();
+            spirvDescriptor.code = mOriginalSpirv;
             descriptor.nextInChain = &spirvDescriptor;
             break;
         case Type::Wgsl:

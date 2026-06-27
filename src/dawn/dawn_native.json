@@ -59,7 +59,6 @@
             "RenderBundleEncoderDescriptor",
             "RenderPassDescriptor",
             "RenderPassPixelLocalStorage",
-            "ShaderSourceSPIRV",
             "SharedBufferMemoryBeginAccessDescriptor",
             "SharedBufferMemoryEndAccessState",
             "SharedTextureMemoryBeginAccessDescriptor",
