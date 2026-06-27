@@ -200,9 +200,7 @@ void ValidationTest::SetUp() {
     }
 
     dawn::native::DawnWGSLBlocklist blockList;
-    auto blocklistedFeatures = GetWGSLBlocklistedFeatures();
-    blockList.blocklistedFeatureCount = blocklistedFeatures.size();
-    blockList.blocklistedFeatures = blocklistedFeatures.data();
+    blockList.blocklistedFeatures = GetWGSLBlocklistedFeatures();
     blockList.nextInChain = &instanceToggles;
 
     wgpu::InstanceDescriptor instanceDesc = {};
