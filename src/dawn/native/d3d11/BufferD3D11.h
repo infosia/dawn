@@ -109,8 +109,7 @@ class Buffer : public BufferBase {
     // Write the buffer without checking if the buffer is initialized.
     virtual MaybeError WriteInternal(const ScopedCommandRecordingContext* commandContext,
                                      uint64_t bufferOffset,
-                                     const void* data,
-                                     size_t size,
+                                     Span<const std::byte> data,
                                      bool isInitialWrite) = 0;
     // Copy this buffer to the destination without checking if the buffer is initialized.
     virtual MaybeError CopyToInternal(const ScopedCommandRecordingContext* commandContext,
