@@ -46,6 +46,7 @@ if (tint_build_unittests || tint_build_benchmarks) {
 libtint_source_set("common") {
   sources = [
     "binding_point.h",
+    "binding_size.h",
     "bindings.h",
     "override_id.h",
     "resource_table_config.h",
