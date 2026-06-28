@@ -37,9 +37,7 @@
             "BufferReadMappedRange",
             "BufferWriteMappedRange",
             "CommandEncoderWriteBuffer",
-            "QueueSubmit",
-            "QueueWriteBuffer",
-            "QueueWriteTexture"
+            "QueueSubmit"
         ],
         "function_span_index_type_override": {
             "ComputePassEncoderSetBindGroup::dynamicOffsets": "BindingIndex",
