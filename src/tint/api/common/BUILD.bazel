@@ -47,6 +47,7 @@ cc_library(
   ],
   hdrs = [
     "binding_point.h",
+    "binding_size.h",
     "bindings.h",
     "override_id.h",
     "resource_table_config.h",
