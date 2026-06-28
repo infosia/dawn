@@ -269,11 +269,12 @@ class UploadBuffer final : public Buffer {
 
     MaybeError WriteInternal(const ScopedCommandRecordingContext* commandContext,
                              uint64_t offset,
-                             const void* data,
-                             size_t size,
+                             Span<const std::byte> data,
                              bool isInitialWrite) override {
-        const auto* src = static_cast<const uint8_t*>(data);
-        std::copy(src, DAWN_UNSAFE_TODO(src + size), DAWN_UNSAFE_TODO(mUploadData.get() + offset));
+        // TODO(https://crbug.com/524406299): Use Span::CopyFrom.
+        const auto* src = static_cast<const uint8_t*>(data.data());
+        std::copy(src, DAWN_UNSAFE_TODO(src + data.size()),
+                  DAWN_UNSAFE_TODO(mUploadData.get() + offset));
         return {};
     }
 
