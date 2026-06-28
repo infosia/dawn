@@ -1079,7 +1079,7 @@ MaybeError EncodeTimestampsToNanosecondsConversion(CommandEncoder* encoder,
     Ref<BufferBase> paramsBuffer;
     DAWN_TRY_ASSIGN(paramsBuffer, device->CreateBuffer(&parmsDesc));
 
-    DAWN_TRY(device->GetQueue()->WriteBuffer(paramsBuffer.Get(), 0, &params, sizeof(params)));
+    DAWN_TRY(device->GetQueue()->WriteBuffer(paramsBuffer.Get(), 0, ByteSpanFromRef(params)));
 
     return EncodeConvertTimestampsToNanoseconds(encoder, uint32_t{queryCount}, destination,
                                                 paramsBuffer.Get());
