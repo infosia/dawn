@@ -395,10 +395,11 @@ void Buffer::CopyFromStaging(BufferBase* staging,
     DAWN_UNSAFE_TODO(memcpy(mBackingData.get() + destinationOffset, ptr + sourceOffset, size));
 }
 
-void Buffer::DoWriteBuffer(uint64_t bufferOffset, const void* data, size_t size) {
-    DAWN_ASSERT(bufferOffset + size <= GetSize());
+void Buffer::DoWriteBuffer(uint64_t bufferOffset, Span<const std::byte> data) {
+    DAWN_ASSERT(bufferOffset + data.size() <= GetSize());
     DAWN_ASSERT(mBackingData);
-    DAWN_UNSAFE_TODO(memcpy(mBackingData.get() + bufferOffset, data, size));
+    // TODO(https://crbug.com/524406299): Use Span::CopyFrom.
+    DAWN_UNSAFE_TODO(memcpy(mBackingData.get() + bufferOffset, data.data(), data.size()));
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
@@ -455,9 +456,8 @@ MaybeError Queue::SubmitImpl(Span<CommandBufferBase* const>) {
 
 MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
-                                  const void* data,
-                                  size_t size) {
-    ToBackend(buffer)->DoWriteBuffer(bufferOffset, data, size);
+                                  Span<const std::byte> data) {
+    ToBackend(buffer)->DoWriteBuffer(bufferOffset, data);
     return {};
 }
 

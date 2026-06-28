@@ -418,20 +418,18 @@ void Queue::CancelScheduledBufferMapping(Buffer* buffer) {
 
 MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
-                                  const void* data,
-                                  size_t size) {
-    if (size == 0) {
+                                  Span<const std::byte> data) {
+    if (data.empty()) {
         // skip the empty write
         return {};
     }
 
     auto commandContext = GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
-    return ToBackend(buffer)->Write(&commandContext, bufferOffset, data, size);
+    return ToBackend(buffer)->Write(&commandContext, bufferOffset, data);
 }
 
 MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
-                                   const void* data,
-                                   size_t dataSize,
+                                   Span<const std::byte> data,
                                    const TexelCopyBufferLayout& dataLayout,
                                    const Extent3D& writeSizePixel) {
     if (writeSizePixel.width == 0 || writeSizePixel.height == 0 ||
