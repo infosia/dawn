@@ -82,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "629813ad_482bd797",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-29T18:02:38Z",
+      "side": 1,
+      "message": "Nice catch.",
+      "parentUuid": "323f504d_0cf1e041",
+      "revId": "91764f23e7cfe600f50e1b4ed47b5276193db809",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "30ee5c06_37fb568a",
@@ -99,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66661faf_73db08cf",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-29T18:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30ee5c06_37fb568a",
+      "revId": "91764f23e7cfe600f50e1b4ed47b5276193db809",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f978404a_b630500d",
@@ -112,6 +148,30 @@
       "writtenOn": "2026-06-29T16:59:51Z",
       "side": 1,
       "message": "This will be `DAWN_UNSAFE_BUFFERS` eventually. The API for WMMS is a bit unfortunate, but WDYT of parsing the information as the following in `D3D12Info.h`:\n\n```\n// Mirrors D3D12_LINEAR_ALGEBRA_WAVE_MATRIX_MULTIPLY_SUPPORT but with owned shapes information.\nstruct LinAlgWMMSupport {\n    D3D12_LINEAR_ALGEBRA_WAVE_MATRIX_MULTIPLY_INPUTS Inputs;\n    D3D12_LINEAR_ALGEBRA_MULTIPLICATION_SUPPORT_FLAGS SupportFlags;\n    std::vector\u003cD3D12_LINEAR_ALGEBRA_MATRIX_MULTIPLY_SHAPE\u003e Shapes;\n};\n\nstd::vector\u003cLinAlgWMMSupport\u003e linAlgWaveMatrixMultiplySupports;\n```",
+      "range": {
+        "startLine": 1113,
+        "startChar": 27,
+        "endLine": 1113,
+        "endChar": 65
+      },
+      "revId": "91764f23e7cfe600f50e1b4ed47b5276193db809",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d34f26a_7a109f4e",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-29T18:02:38Z",
+      "side": 1,
+      "message": "I like this better. Thanks!",
+      "parentUuid": "f978404a_b630500d",
       "range": {
         "startLine": 1113,
         "startChar": 27,
