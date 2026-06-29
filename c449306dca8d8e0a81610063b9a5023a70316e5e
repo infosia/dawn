@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "c449306dca8d8e0a81610063b9a5023a70316e5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7129207_8dfa899c",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-29T21:11:40Z",
+      "side": 1,
+      "message": "Wait.. Couldn\u0027t this just be a \u003e\u003d check instead?",
+      "range": {
+        "startLine": 105,
+        "startChar": 60,
+        "endLine": 105,
+        "endChar": 61
+      },
+      "revId": "c449306dca8d8e0a81610063b9a5023a70316e5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
