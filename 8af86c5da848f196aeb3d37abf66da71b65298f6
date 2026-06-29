@@ -34,6 +34,24 @@
       "parentUuid": "35a4a6d4_d9b524b7",
       "revId": "8af86c5da848f196aeb3d37abf66da71b65298f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcf96239_38f40a69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3711353
+      },
+      "writtenOn": "2026-06-29T22:15:57Z",
+      "side": 1,
+      "message": "The bug was approved for M144 LTS. So we can merge the patchset to M144 LTS.",
+      "parentUuid": "63e6d3fe_418582b7",
+      "revId": "8af86c5da848f196aeb3d37abf66da71b65298f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
