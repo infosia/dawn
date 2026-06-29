@@ -135,6 +135,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6185f294_7c71f669",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-29T18:19:32Z",
+      "side": 1,
+      "message": "A dynamic index implies a runtime array of sized arrays. So the sized array must be large enough to hold the matrix. So we\u0027d clamp the index to arrayLength - 1. That would round down extra space to fit a whole sub-array (I think). So it should work out.",
+      "parentUuid": "70f7fa93_eb9d5f76",
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "21cc7625_59d5d5d6",
         "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
         "patchSetId": 6
