@@ -16,6 +16,98 @@
       "message": "PTAL!",
       "revId": "56cb73cffaa2867cefffd5c6f12cfae6dc0b3f59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5213e915_3ada8ebf",
+        "filename": "src/dawn/native/CopyTextureForBrowserHelper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-29T20:39:20Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"frgament\" is a possible misspelling of \"fragment\".\n\nTo bypass Spellchecker, add...\n\n\"frgament\" is a possible misspelling of \"fragment\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 298,
+        "startChar": 15,
+        "endLine": 298,
+        "endChar": 23
+      },
+      "revId": "56cb73cffaa2867cefffd5c6f12cfae6dc0b3f59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ee82484_8cd3832d",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-29T20:39:20Z",
+      "side": 1,
+      "message": "I wonder if it would be feasible to make `CombinedLimits` strongly typed for some of the limits.",
+      "range": {
+        "startLine": 201,
+        "startChar": 66,
+        "endLine": 201,
+        "endChar": 92
+      },
+      "revId": "56cb73cffaa2867cefffd5c6f12cfae6dc0b3f59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3d02589_8547a980",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-29T20:39:20Z",
+      "side": 1,
+      "message": "nit. Can do in a follow up, but maybe for typed integer spans we can have a `underlying_size()` helper that does this cast for us?",
+      "range": {
+        "startLine": 207,
+        "startChar": 64,
+        "endLine": 207,
+        "endChar": 68
+      },
+      "revId": "56cb73cffaa2867cefffd5c6f12cfae6dc0b3f59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80024952_d19fd884",
+        "filename": "src/dawn/native/dawn_platform.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-29T20:39:20Z",
+      "side": 1,
+      "message": "Would this make more sense in `common/Constants.h` or here? (I\u0027m not actually sure). Or is there reason to believe it might be needed externally as well?",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 94
+      },
+      "revId": "56cb73cffaa2867cefffd5c6f12cfae6dc0b3f59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
