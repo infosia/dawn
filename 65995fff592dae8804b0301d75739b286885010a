@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7af4046_0ea91a6b",
+        "filename": "src/tint/lang/core/ir/analysis/minimum_binding_size.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T22:21:05Z",
+      "side": 1,
+      "message": "Nit: using a worklist seems unnecessary since this is an analysis pass not a transform.",
+      "revId": "65995fff592dae8804b0301d75739b286885010a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

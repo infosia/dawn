@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcc4effc_58a66325",
+        "filename": "src/tint/lang/core/ir/analysis/minimum_binding_size.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T22:21:05Z",
+      "side": 1,
+      "message": "I think using the constant index value here is a stronger requirement on `minBindingSize` then we currently have in the subgroup matrix proposal, which does not consider these outer index accessors in the minBindingSize calculations AFAICT.\n\ne.g.\n```\n@group(0) @binding(0)\nvar\u003cstorage, read_write\u003e a: array\u003carray\u003cf32, 64\u003e\u003e;\n\n// 256 bytes when using a stride of 8 elements.\nalias Matrix \u003d subgroup_matrix_result\u003cf32, 8, 8\u003e;\n\n@compute @workgroup_size(1)\nfn main() {\n  // Proposal requires 256 bytes (enough to hold one matrix / inner array).\n  // This CL requires 896 bytes (enough to hold one matrix at index 10 in the outer array).\n  let x \u003d subgroupMatrixLoad\u003cMatrix\u003e(\u0026(a[10]), 0, true, 8);\n}\n```\n\nI don\u0027t think we need this extra requirement since we can clamp the outer index and still know that the inner array is large enough for at least one matrix access. So maybe we can just drop this offset increment here?\n\nAlso would need to be reflected in that the earlier change to const_param_validator.",
+      "revId": "51cd6e6d82f85831a70255084e257cb86be2c0f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
