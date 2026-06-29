@@ -76,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0379280_3bedc795",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-29T03:07:45Z",
+      "side": 1,
+      "message": "Good catch! Thanks! Done.",
+      "parentUuid": "9ba4f64d_718e95a4",
+      "range": {
+        "startLine": 672,
+        "startChar": 12,
+        "endLine": 674,
+        "endChar": 34
+      },
+      "revId": "557963a20b1d83e6f4314597b173433c7d1b6e9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "acee378b_6ba1ae39",
@@ -99,6 +123,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87a389ba_85bf8df8",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-29T03:07:45Z",
+      "side": 1,
+      "message": "Agree on this direction. Previous worried about the refactor work but seems Ok. Done.",
+      "parentUuid": "acee378b_6ba1ae39",
+      "range": {
+        "startLine": 675,
+        "startChar": 12,
+        "endLine": 675,
+        "endChar": 33
+      },
+      "revId": "557963a20b1d83e6f4314597b173433c7d1b6e9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e97eb135_543794fd",
@@ -112,6 +160,30 @@
       "writtenOn": "2026-06-25T14:39:15Z",
       "side": 1,
       "message": "Remove",
+      "range": {
+        "startLine": 309,
+        "startChar": 8,
+        "endLine": 309,
+        "endChar": 57
+      },
+      "revId": "557963a20b1d83e6f4314597b173433c7d1b6e9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3800da92_782d121e",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-06-29T03:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e97eb135_543794fd",
       "range": {
         "startLine": 309,
         "startChar": 8,
