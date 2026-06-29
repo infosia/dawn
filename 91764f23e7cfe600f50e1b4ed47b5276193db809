@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c62eaa5_6b9625e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-06-29T16:30:32Z",
+      "side": 1,
+      "message": "This problem was exposed as part of this CL because of the types added to `D3D12Info.h`. If you would prefer I split this out into a separate parent CL, let me know.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 51
+      },
+      "revId": "91764f23e7cfe600f50e1b4ed47b5276193db809",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
