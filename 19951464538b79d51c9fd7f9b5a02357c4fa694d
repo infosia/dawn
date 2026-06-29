@@ -16,6 +16,24 @@
       "message": "Also what is this?",
       "revId": "19951464538b79d51c9fd7f9b5a02357c4fa694d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ad40c82_5e02a0c4",
+        "filename": ".gitmodules",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-06-29T19:15:01Z",
+      "side": 1,
+      "message": "oh, this is part of the mechanism they use to check that DEPS is sync\u0027d with git-submodules.  I will remove.",
+      "parentUuid": "00a559f0_b74ebd35",
+      "revId": "19951464538b79d51c9fd7f9b5a02357c4fa694d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -34,6 +34,24 @@
       "parentUuid": "2752ff6f_1f08375a",
       "revId": "c31b04f2fc309e279fd10afa1522ae8aec9ad6fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df3a5d06_e1d9560a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-06-29T19:15:01Z",
+      "side": 1,
+      "message": "Right, I made this because I saw that failing CL. \n\nI reasoned that it was sufficient to update just the one expectation and spirv-tools, and then the next vulkan-deps roll would work.\n\nI can subsume that entire vulkan-deps roll into this one, to be more clear about the whole thing.",
+      "parentUuid": "fd2ccd48_53cebdeb",
+      "revId": "c31b04f2fc309e279fd10afa1522ae8aec9ad6fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
