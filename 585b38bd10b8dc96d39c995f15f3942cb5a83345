@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ae990a31_08f0006e",
+        "filename": "src/tint/lang/wgsl/ir/atomic_vec2u_to_from_u64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T14:09:21Z",
+      "side": 1,
+      "message": "Yes, it would already been there when this transform is used for the core-\u003ewgsl direction. The property addition above is when we are doing the wgsl-\u003ecore direction.",
+      "parentUuid": "ea2f4db6_1a51c6db",
+      "revId": "585b38bd10b8dc96d39c995f15f3942cb5a83345",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27817676_bb953f23",
         "filename": "src/tint/lang/wgsl/ir/atomic_vec2u_to_from_u64_test.cc",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-29T13:54:23Z",
       "side": 1,
       "message": "Do we have any parser tests which take in a `u64`?",
+      "revId": "585b38bd10b8dc96d39c995f15f3942cb5a83345",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9641d99_82c974c0",
+        "filename": "src/tint/lang/wgsl/ir/atomic_vec2u_to_from_u64_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T14:09:21Z",
+      "side": 1,
+      "message": "The parser would just see it as an identifier. If we want to test that it is rejected then it\u0027d be a resolver test. It\u0027s unrelated to this CL but I can add a test in another CL if we don\u0027t already have one.",
+      "parentUuid": "27817676_bb953f23",
       "revId": "585b38bd10b8dc96d39c995f15f3942cb5a83345",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
