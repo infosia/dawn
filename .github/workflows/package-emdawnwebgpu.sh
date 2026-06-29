@@ -47,10 +47,11 @@ python3 tools/activate-emsdk
 
 # First build the link test in debug mode as a basic test.
 third_party/emsdk/upstream/emscripten/emcmake cmake -S=. -B=out/wasm \
+    -GNinja \
     -C=.github/workflows/dawn-ci.cmake \
     -DDAWN_ENABLE_INSTALL=0 \
     -DCMAKE_BUILD_TYPE=Debug
-make -j4 -C out/wasm emdawnwebgpu_link_test
+cmake --build out/wasm --target emdawnwebgpu_link_test -- -j4
 
 # Switch the build type (in-place to save time), rebuild the link test and a C++
 # sample (to verify webgpu_cpp.h builds and to run Closure, which verifies the
@@ -60,7 +61,7 @@ make -j4 -C out/wasm emdawnwebgpu_link_test
 # to do multiple build types more cleanly.
 # https://cmake.org/cmake/help/latest/generator/Ninja%20Multi-Config.html
 cmake -S=. -B=out/wasm -DCMAKE_BUILD_TYPE=Release
-make -j4 -C out/wasm emdawnwebgpu_pkg emdawnwebgpu_link_test HelloTriangle
+cmake --build out/wasm --target emdawnwebgpu_pkg emdawnwebgpu_link_test HelloTriangle -- -j4
 
 # Get variables for documentation.
 SHA=$(git rev-parse HEAD)
