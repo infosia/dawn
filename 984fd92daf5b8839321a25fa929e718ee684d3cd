@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c245f16_e9a1c2d9",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-29T14:26:33Z",
+      "side": 0,
+      "message": "In all these blocks, only `constantCount` disappears.",
+      "revId": "984fd92daf5b8839321a25fa929e718ee684d3cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3589ce2a_871c4a6d",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-06-29T14:26:33Z",
+      "side": 0,
+      "message": "This loops gets merged in the one below.",
+      "revId": "984fd92daf5b8839321a25fa929e718ee684d3cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
