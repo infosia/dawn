@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e12def5_c785c9ef",
+        "filename": "src/tint/lang/wgsl/ir/atomic_vec2u_to_from_u64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-29T14:10:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ae990a31_08f0006e",
+      "revId": "585b38bd10b8dc96d39c995f15f3942cb5a83345",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27817676_bb953f23",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "The parser would just see it as an identifier. If we want to test that it is rejected then it\u0027d be a resolver test. It\u0027s unrelated to this CL but I can add a test in another CL if we don\u0027t already have one.",
       "parentUuid": "27817676_bb953f23",
+      "revId": "585b38bd10b8dc96d39c995f15f3942cb5a83345",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f5f1f47_e5e689f0",
+        "filename": "src/tint/lang/wgsl/ir/atomic_vec2u_to_from_u64_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-29T14:10:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b9641d99_82c974c0",
       "revId": "585b38bd10b8dc96d39c995f15f3942cb5a83345",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
