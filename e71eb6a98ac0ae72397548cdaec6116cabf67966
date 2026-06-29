@@ -151,6 +151,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea10cf99_4f0412be",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T20:42:57Z",
+      "side": 1,
+      "message": "Makes sense, thanks.",
+      "parentUuid": "6185f294_7c71f669",
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21cc7625_59d5d5d6",
