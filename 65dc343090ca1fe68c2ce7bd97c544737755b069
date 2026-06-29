@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "65dc343090ca1fe68c2ce7bd97c544737755b069",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83b7b0d4_d576951c",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-29T18:23:13Z",
+      "side": 1,
+      "message": "What\u0027s the difference between the `CopyFrom` and a `std::ranges::copy`?",
+      "range": {
+        "startLine": 263,
+        "startChar": 4,
+        "endLine": 264,
+        "endChar": 71
+      },
+      "revId": "65dc343090ca1fe68c2ce7bd97c544737755b069",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
