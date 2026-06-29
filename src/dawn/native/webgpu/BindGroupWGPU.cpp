@@ -86,8 +86,8 @@ class ComboBindGroupDescriptor {
         mDesc.label = ToOutputStringView(desc->label);
         mDesc.layout = ToBackend(desc->layout->GetInternalBindGroupLayout())->GetInnerHandle();
         mDesc.entryCount = desc->entries.size();
-        for (const BindGroupEntry& entryPacked : desc->entries) {
-            UnpackedPtr<BindGroupEntry> entry = Unpack(&entryPacked);
+        for (const BindGroupEntry& entryChain : desc->entries) {
+            UnpackedPtr<BindGroupEntry> entry = Unpack(&entryChain);
             mEntries.push_back(ToWGPU(*entry));
 
             if (auto* externalTextureEntry = entry.Get<ExternalTextureBindingEntry>()) {
