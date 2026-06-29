@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "9a107e0f0ee02e3c9bc51aae18cc21372a008381",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "667ef1cf_e0860e71",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-29T20:26:27Z",
+      "side": 1,
+      "message": "Hmm... for this one, I know it would probably be a lot more work, but also I am hopeful that there shouldn\u0027t be TOO many places we would need to change, but WDYT about trying to modernize the `ShaderSourceSPIRV` struct to use a `codeSize` thats a `size_t` instead? It might require updating it upstream in the header also, but IMO that\u0027s probably the right thing to do instead of skipping it forever in our code :/",
+      "revId": "9a107e0f0ee02e3c9bc51aae18cc21372a008381",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
