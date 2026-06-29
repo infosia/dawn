@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2752ff6f_1f08375a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-06-29T18:51:19Z",
+      "side": 1,
+      "message": "cc\u0027ing Steven as FYI. Example of how spirv-tools rolls into Dawn, and how a tint end2end test was affected. (That\u0027s nice!)",
+      "revId": "c31b04f2fc309e279fd10afa1522ae8aec9ad6fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
