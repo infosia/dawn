@@ -16,6 +16,24 @@
       "message": "cc\u0027ing Steven as FYI. Example of how spirv-tools rolls into Dawn, and how a tint end2end test was affected. (That\u0027s nice!)",
       "revId": "c31b04f2fc309e279fd10afa1522ae8aec9ad6fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd2ccd48_53cebdeb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T18:56:37Z",
+      "side": 1,
+      "message": "Actually SPIR-V tools rolls into Dawn as part of `vulkan-deps`. I don\u0027t know if rolling an single package from vulkan-deps like this will break things?\n\nHere\u0027s the latest vulkan-deps roll that failed because of this:\nhttps://dawn-review.git.corp.google.com/c/dawn/+/320455",
+      "parentUuid": "2752ff6f_1f08375a",
+      "revId": "c31b04f2fc309e279fd10afa1522ae8aec9ad6fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
