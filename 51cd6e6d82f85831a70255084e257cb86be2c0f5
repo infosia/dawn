@@ -34,6 +34,24 @@
       "parentUuid": "dcc4effc_58a66325",
       "revId": "51cd6e6d82f85831a70255084e257cb86be2c0f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "762a3d6c_b0b58040",
+        "filename": "src/tint/lang/core/ir/analysis/minimum_binding_size.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-29T22:41:05Z",
+      "side": 1,
+      "message": "Sort feels like if we want skip some of the info, maybe it\u0027s better to just stick to const-expression consideration.",
+      "parentUuid": "c695315f_edce4588",
+      "revId": "51cd6e6d82f85831a70255084e257cb86be2c0f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
