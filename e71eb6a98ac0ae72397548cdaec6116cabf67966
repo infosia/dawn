@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8691d9b_216ace39",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T17:24:19Z",
+      "side": 1,
+      "message": "Nit: `UnwrapPtr()` is unnecessary, `subgroupMatrixLoad` always returns a value type.",
+      "fixSuggestions": [
+        {
+          "fixId": "6b2f8317_d7d79d8c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/const_param_validator.cc",
+              "range": {
+                "startLine": 462,
+                "startChar": 0,
+                "endLine": 463,
+                "endChar": 0
+              },
+              "replacement": "    auto* ty \u003d is_load ? call-\u003eResult()-\u003eType() : call-\u003eArgs()[2]-\u003eType();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba5fc902_627af6ed",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T17:24:19Z",
+      "side": 1,
+      "message": "Nit: duplicate \"is\"",
+      "fixSuggestions": [
+        {
+          "fixId": "5afb7420_d38cddeb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/const_param_validator.cc",
+              "range": {
+                "startLine": 481,
+                "startChar": 0,
+                "endLine": 482,
+                "endChar": 0
+              },
+              "replacement": "        // Offset is array elements of shader scalar type. Multiply by stride factor to get the\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1de4a8d6_c756ae40",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T17:24:19Z",
+      "side": 1,
+      "message": "Nit: `tint::RoundUp(stride_factor, mat_required_size)`",
+      "fixSuggestions": [
+        {
+          "fixId": "44127ca8_d590c1d8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/const_param_validator.cc",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "#include \"src/tint/utils/math/math.h\"\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/const_param_validator.cc",
+              "range": {
+                "startLine": 513,
+                "startChar": 0,
+                "endLine": 514,
+                "endChar": 0
+              },
+              "replacement": "    mat_required_size \u003d tint::RoundUp(stride_factor, mat_required_size);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70f7fa93_eb9d5f76",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T17:24:19Z",
+      "side": 1,
+      "message": "How does this work when the index is dynamic? If the dynamic offset is much larger can it create a situation where there is not enough space left to store at least one subgroup matrix?",
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21cc7625_59d5d5d6",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3117,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-06-29T17:24:19Z",
+      "side": 1,
+      "message": "Maybe good to have another test like this that uses a non-constant stride, to show that we validate against the default stride in that case?",
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
