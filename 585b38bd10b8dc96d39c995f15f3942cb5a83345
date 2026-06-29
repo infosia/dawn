@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea2f4db6_1a51c6db",
+        "filename": "src/tint/lang/wgsl/ir/atomic_vec2u_to_from_u64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-29T13:54:23Z",
+      "side": 1,
+      "message": "If the type here is already U64, doesn\u0027t that mean the property must have already been enabled?",
+      "revId": "585b38bd10b8dc96d39c995f15f3942cb5a83345",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27817676_bb953f23",
+        "filename": "src/tint/lang/wgsl/ir/atomic_vec2u_to_from_u64_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-29T13:54:23Z",
+      "side": 1,
+      "message": "Do we have any parser tests which take in a `u64`?",
+      "revId": "585b38bd10b8dc96d39c995f15f3942cb5a83345",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
