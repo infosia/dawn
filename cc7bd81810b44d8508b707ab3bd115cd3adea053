@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58eab2b4_99b6962b",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-29T09:29:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c53fee3b_00e40025",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df708551_77d075d0",
@@ -95,6 +119,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef5e8a6c_0164cc4d",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-29T09:29:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "18721c52_2ec02118",
+      "range": {
+        "startLine": 191,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ccc221a4_3710b551",
@@ -132,6 +180,30 @@
       "side": 1,
       "message": "Same as - https://dawn-review.git.corp.google.com/c/dawn/+/315235/comment/df708551_77d075d0/",
       "parentUuid": "ccc221a4_3710b551",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92be4497_2b3c5448",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-29T09:29:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a6069ee4_5599cfda",
       "range": {
         "startLine": 351,
         "startChar": 0,
@@ -262,6 +334,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0abd2c7_b02fac04",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-29T09:29:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4a760e8c_67afa102",
+      "range": {
+        "startLine": 440,
+        "startChar": 0,
+        "endLine": 440,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98e8e4e9_a5c226ac",
@@ -299,6 +395,30 @@
       "side": 1,
       "message": "The FreeMembers() function is actually a private method in the C++ struct. The struct\u0027s destructor automatically calls FreeMembers() when it goes out of scope. If we call it manually, it wouldn\u0027t compile and would lead to a double-free, so the wrapper is safely handling this cleanup behind the scenes.",
       "parentUuid": "98e8e4e9_a5c226ac",
+      "range": {
+        "startLine": 458,
+        "startChar": 0,
+        "endLine": 458,
+        "endChar": 0
+      },
+      "revId": "cc7bd81810b44d8508b707ab3bd115cd3adea053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6e8f389_7ce9ba86",
+        "filename": "tools/android/webgpu/src/main/cpp/GPUImportedAHB.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-06-29T09:29:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e67e8b4a_37389dc0",
       "range": {
         "startLine": 458,
         "startChar": 0,
