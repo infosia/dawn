@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84be59e6_b677b4b5",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-29T20:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8691d9b_216ace39",
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba5fc902_627af6ed",
@@ -67,6 +85,24 @@
           ]
         }
       ],
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ce4c35e_c05175a8",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-29T20:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba5fc902_627af6ed",
       "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -112,6 +148,24 @@
           ]
         }
       ],
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0585e14_e9835809",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-29T20:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1de4a8d6_c756ae40",
       "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -182,6 +236,24 @@
       "writtenOn": "2026-06-29T17:24:19Z",
       "side": 1,
       "message": "Maybe good to have another test like this that uses a non-constant stride, to show that we validate against the default stride in that case?",
+      "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a0cb3a4_43f80484",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3117,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-06-29T20:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21cc7625_59d5d5d6",
       "revId": "e71eb6a98ac0ae72397548cdaec6116cabf67966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
