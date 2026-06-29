@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78a59fd0_eb38a35f",
+        "filename": ".clang-tidy",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-29T13:44:36Z",
+      "side": 0,
+      "message": "Did the `-*` get lost?",
+      "revId": "04e53925a6868cc455e910544aa7f1f55add4aca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

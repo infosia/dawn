@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f92a7a66_7b11ca41",
+        "filename": "tools/run-tricium-clang-tidy.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-29T13:44:36Z",
+      "side": 1,
+      "message": "Do we want clang-tidy running on gen files?",
+      "revId": "f390ff130bdf163114f3511730755dc82a3b5cb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "826d7187_b1a5ba32",
+        "filename": "tools/run-tricium-clang-tidy.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-06-29T13:44:36Z",
+      "side": 1,
+      "message": "Can we gitignore these two things in the same cl?",
+      "revId": "f390ff130bdf163114f3511730755dc82a3b5cb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
