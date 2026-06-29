@@ -85,9 +85,9 @@ class ComboBindGroupDescriptor {
         mDesc.nextInChain = nullptr;
         mDesc.label = ToOutputStringView(desc->label);
         mDesc.layout = ToBackend(desc->layout->GetInternalBindGroupLayout())->GetInnerHandle();
-        mDesc.entryCount = desc->entryCount;
-        for (uint32_t i = 0; i < desc->entryCount; ++i) {
-            UnpackedPtr<BindGroupEntry> entry = Unpack(&DAWN_UNSAFE_TODO(desc->entries[i]));
+        mDesc.entryCount = desc->entries.size();
+        for (const BindGroupEntry& entryPacked : desc->entries) {
+            UnpackedPtr<BindGroupEntry> entry = Unpack(&entryPacked);
             mEntries.push_back(ToWGPU(*entry));
 
             if (auto* externalTextureEntry = entry.Get<ExternalTextureBindingEntry>()) {
