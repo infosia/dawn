@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "59e3031838f63ad2b8964dce30408d678972fb97",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c86ca630_679742cd",
+        "filename": "src/dawn/native/SharedResourceMemory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-06-29T18:38:29Z",
+      "side": 1,
+      "message": "nit. Are these really still unsafe todos? Or just unsafe usage which we can mark with a SAFETY comment?",
+      "range": {
+        "startLine": 329,
+        "startChar": 8,
+        "endLine": 330,
+        "endChar": 79
+      },
+      "revId": "59e3031838f63ad2b8964dce30408d678972fb97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
