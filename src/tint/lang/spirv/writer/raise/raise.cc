@@ -230,6 +230,9 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
             options.workarounds.cooperative_matrix_stride_is_matrix_elements,
         .replace_workgroup_atomic_store_with_exchange =
             options.workarounds.replace_workgroup_atomic_store_with_exchange,
+        // tint-tbdr: begin spirv-msaa-input-attachment-config
+        .multisampled_input_attachment = options.multisampled_input_attachment,
+        // tint-tbdr: end spirv-msaa-input-attachment-config
     };
     TINT_CHECK_RESULT(raise::BuiltinPolyfill(module, config));
     TINT_CHECK_RESULT(raise::ExpandImplicitSplats(module));

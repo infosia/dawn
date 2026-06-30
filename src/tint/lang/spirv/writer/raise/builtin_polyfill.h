@@ -47,6 +47,10 @@ struct PolyfillConfig {
     bool cooperative_matrix_stride_is_matrix_elements = false;
     bool replace_workgroup_atomic_store_with_exchange = false;
     bool rerun = false;
+    // tint-tbdr: begin spirv-msaa-input-attachment-config
+    /// Set to `true` if input attachments should be multisampled.
+    bool multisampled_input_attachment = false;
+    // tint-tbdr: end spirv-msaa-input-attachment-config
 };
 
 /// BuiltinPolyfill is a transform that replaces calls to builtins with polyfills and calls to

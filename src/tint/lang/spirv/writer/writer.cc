@@ -151,6 +151,22 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         if (call->Func() == core::BuiltinFn::kPrint) {
             return Failure("print is not supported by the SPIR-V backend");
         }
+
+        // tint-tbdr: begin spirv-msaa-input-attachment-can-generate
+        if (call->Func() == core::BuiltinFn::kInputAttachmentLoad) {
+            if (options.multisampled_input_attachment) {
+                if (call->Args().size() != 2) {
+                    return Failure(
+                        "inputAttachmentLoad on a multisampled input_attachment requires an "
+                        "explicit sample index");
+                }
+            } else if (call->Args().size() > 1) {
+                return Failure(
+                    "multisampled inputAttachmentLoad requires the multisampled_input_attachment "
+                    "option");
+            }
+        }
+        // tint-tbdr: end spirv-msaa-input-attachment-can-generate
     }
 
     TINT_CHECK_RESULT(ValidateBindingOptions(options));
