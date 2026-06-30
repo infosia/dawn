@@ -21,6 +21,6 @@ $B1: {  # root
     ret
   }
 }
-Failed to generate: input_attachment not supported by the MSL backend
+Failed to generate: input_attachment used without a corresponding entry in Options::input_attachment_to_color_index
 
 tint executable returned error: exit status 1
