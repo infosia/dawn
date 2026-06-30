@@ -1594,6 +1594,10 @@ match workgroup_uniform_storage
 
 @stage("fragment") implicit(T: fiu32)
   fn inputAttachmentLoad(input_attachment: input_attachment<T>) -> vec4<T>
+// tint-tbdr: begin spirv-msaa-input-attachment-overload
+@stage("fragment") implicit(T: fiu32)
+  fn inputAttachmentLoad(input_attachment: input_attachment<T>, sample_index: u32) -> vec4<T>
+// tint-tbdr: end spirv-msaa-input-attachment-overload
 
 //////////////////////////////////////////
 // atomics

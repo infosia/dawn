@@ -220,6 +220,9 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
             options.workarounds.texture_sample_compare_2d_polyfill,
         .cooperative_matrix_stride_is_matrix_elements =
             options.workarounds.cooperative_matrix_stride_is_matrix_elements,
+        // tint-tbdr: begin spirv-msaa-input-attachment-config
+        .multisampled_input_attachment = options.multisampled_input_attachment,
+        // tint-tbdr: end spirv-msaa-input-attachment-config
     };
     TINT_CHECK_RESULT(raise::BuiltinPolyfill(module, config));
     TINT_CHECK_RESULT(raise::ExpandImplicitSplats(module));

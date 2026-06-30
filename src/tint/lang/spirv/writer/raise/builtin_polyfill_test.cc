@@ -4124,6 +4124,45 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest, InputAttachmentLoad) {
     EXPECT_EQ(expect, str());
 }
 
+// tint-tbdr: begin spirv-msaa-input-attachment-test
+TEST_F(SpirvWriter_BuiltinPolyfillTest, InputAttachmentLoad_Multisampled) {
+    auto* t = b.FunctionParam("t", ty.input_attachment(ty.f32()));
+    auto* sample_idx = b.FunctionParam("sample_idx", ty.u32());
+    auto* func = b.Function("foo", ty.vec4f());
+    func->SetParams({t, sample_idx});
+
+    b.Append(func->Block(), [&] {
+        auto* result =
+            b.Call(ty.vec4f(), core::BuiltinFn::kInputAttachmentLoad, t, sample_idx);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%t:input_attachment<f32>, %sample_idx:u32):vec4<f32> {
+  $B1: {
+    %4:vec4<f32> = inputAttachmentLoad %t, %sample_idx
+    ret %4
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%t:spirv.image<f32, subpass_data, not_depth, non_arrayed, multi_sampled, rw_op_compatible, undefined, read_write>, %sample_idx:u32):vec4<f32> {
+  $B1: {
+    %4:vec4<f32> = spirv.image_read %t, vec2<i32>(0i), 64u, %sample_idx
+    ret %4
+  }
+}
+)";
+
+    PolyfillConfig config{.multisampled_input_attachment = true};
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+// tint-tbdr: end spirv-msaa-input-attachment-test
+
 TEST_F(SpirvWriter_BuiltinPolyfillTest, SubgroupShuffle) {
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
     b.Append(func->Block(), [&] {

@@ -256,6 +256,13 @@ struct Options {
     /// Set to `true` if framebuffer fetch should be multisampled
     bool multisampled_framebuffer_fetch = false;
 
+    // tint-tbdr: begin spirv-msaa-input-attachment-option
+    /// Set to `true` if input attachments should be multisampled.
+    /// This is a global flag for all input attachments in the module, so single-sampled and
+    /// multisampled input attachments cannot be mixed.
+    bool multisampled_input_attachment = false;
+    // tint-tbdr: end spirv-msaa-input-attachment-option
+
     /// Any workarounds to enable/disable.
     Workarounds workarounds{};
 
@@ -289,6 +296,9 @@ struct Options {
                  emit_vertex_point_size,
                  polyfill_pixel_center,
                  multisampled_framebuffer_fetch,
+                 // tint-tbdr: begin spirv-msaa-input-attachment-option-reflect
+                 multisampled_input_attachment,
+                 // tint-tbdr: end spirv-msaa-input-attachment-option-reflect
                  workarounds,
                  extensions,
                  depth_range_offsets,

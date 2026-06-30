@@ -65,8 +65,10 @@ namespace tint::spirv::writer::raise {
 
 namespace {
 
+// tint-tbdr: begin spirv-msaa-input-attachment-type-param
 const spirv::type::Image* ImageFromTexture(core::type::Manager& ty,
-                                           const core::type::Texture* tex_ty) {
+                                           const core::type::Texture* tex_ty,
+                                           bool multisampled_input_attachment = false) {
     auto dim = type::Dim::kD1;
     auto depth = type::Depth::kNotDepth;
     auto arrayed = type::Arrayed::kNonArrayed;
@@ -133,6 +135,8 @@ const spirv::type::Image* ImageFromTexture(core::type::Manager& ty,
         },
         [&](const core::type::InputAttachment* ia) {
             dim = type::Dim::kSubpassData;
+            ms = multisampled_input_attachment ? type::Multisampled::kMultisampled
+                                               : type::Multisampled::kSingleSampled;
             sampled = type::Sampled::kReadWriteOpCompatible;
             sample_ty = ia->Type();
         },
@@ -140,36 +144,46 @@ const spirv::type::Image* ImageFromTexture(core::type::Manager& ty,
 
     return ty.Get<type::Image>(sample_ty, dim, depth, arrayed, ms, sampled, fmt, access);
 }
+// tint-tbdr: end spirv-msaa-input-attachment-type-param
 
 /// Returns a replacement type if type replacement is necessary.
 /// @param ty the type manager
 /// @param type the type to replace
 /// @returns the replacement type if replacement needs to happen
-const core::type::Type* ReplacementType(core::type::Manager& ty, const core::type::Type* type) {
+// tint-tbdr: begin spirv-msaa-input-attachment-type-param
+const core::type::Type* ReplacementType(core::type::Manager& ty,
+                                        const core::type::Type* type,
+                                        bool multisampled_input_attachment = false) {
     return Switch(
         type,
         [&](const core::type::Pointer* ptr) -> const core::type::Type* {
-            if (auto* replacement = ReplacementType(ty, ptr->StoreType())) {
+            if (auto* replacement =
+                    ReplacementType(ty, ptr->StoreType(), multisampled_input_attachment)) {
                 return ty.ptr(ptr->AddressSpace(), replacement, ptr->Access());
             }
             return nullptr;
         },
         [&](const core::type::BindingArray* arr) -> const core::type::Type* {
-            if (auto* replacement = ReplacementType(ty, arr->ElemType())) {
+            if (auto* replacement =
+                    ReplacementType(ty, arr->ElemType(), multisampled_input_attachment)) {
                 return ty.binding_array(replacement,
                                         arr->Count()->As<core::type::ConstantArrayCount>()->value);
             }
             return nullptr;
         },
         [&](const core::type::ResourceTable* rb) -> const core::type::Type* {
-            if (auto* replacement = ReplacementType(ty, rb->GetBindingType())) {
+            if (auto* replacement =
+                    ReplacementType(ty, rb->GetBindingType(), multisampled_input_attachment)) {
                 return ty.Get<core::type::ResourceTable>(replacement);
             }
             return nullptr;
         },
-        [&](const core::type::Texture* tex) { return ImageFromTexture(ty, tex); },
+        [&](const core::type::Texture* tex) {
+            return ImageFromTexture(ty, tex, multisampled_input_attachment);
+        },
         [&](Default) { return nullptr; });
 }
+// tint-tbdr: end spirv-msaa-input-attachment-type-param
 
 /// PIMPL state for the transform.
 struct State {
@@ -195,9 +209,12 @@ struct State {
         // Replace types for function parameters if necessary
         for (auto fn : ir.functions) {
             for (auto* param : fn->Params()) {
-                if (auto* replacement = ReplacementType(ty, param->Type())) {
+                // tint-tbdr: begin spirv-msaa-input-attachment-replacement-callsite
+                if (auto* replacement =
+                        ReplacementType(ty, param->Type(), config.multisampled_input_attachment)) {
                     param->SetType(replacement);
                 }
+                // tint-tbdr: end spirv-msaa-input-attachment-replacement-callsite
             }
         }
 
@@ -207,9 +224,12 @@ struct State {
         for (auto* inst : ir.Instructions()) {
             // Replace types for instruction results if necessary
             for (auto* result : inst->Results()) {
-                if (auto* replacement = ReplacementType(ty, result->Type())) {
+                // tint-tbdr: begin spirv-msaa-input-attachment-replacement-callsite
+                if (auto* replacement =
+                        ReplacementType(ty, result->Type(), config.multisampled_input_attachment)) {
                     result->SetType(replacement);
                 }
+                // tint-tbdr: end spirv-msaa-input-attachment-replacement-callsite
             }
 
             if (auto* builtin = inst->As<core::ir::CoreBuiltinCall>()) {
@@ -1265,9 +1285,19 @@ struct State {
     /// Handle an inputAttachmentLoad() builtin.
     /// @param builtin the builtin call instruction
     void InputAttachmentLoad(core::ir::CoreBuiltinCall* builtin) {
-        TINT_IR_ASSERT(ir, builtin->Args().size() == 1);
-
+        // tint-tbdr: begin spirv-msaa-input-attachment-load
+        TINT_IR_ASSERT(ir, !builtin->Args().empty());
         auto* texture = builtin->Args()[0];
+        auto* image = texture->Type()->As<spirv::type::Image>();
+        bool multisampled =
+            image && image->GetMultisampled() == type::Multisampled::kMultisampled;
+        if (multisampled) {
+            TINT_IR_ASSERT(ir, builtin->Args().size() == 2);
+        } else {
+            TINT_IR_ASSERT(ir, builtin->Args().size() == 1);
+        }
+        // tint-tbdr: end spirv-msaa-input-attachment-load
+
         // coords for input_attachment are always (0, 0)
         auto* coords = b.Composite(ty.vec2i(), 0_i, 0_i);
 
@@ -1276,6 +1306,14 @@ struct State {
         Vector<core::ir::Value*, 8> builtin_args;
         builtin_args.Push(texture);
         builtin_args.Push(coords);
+
+        // tint-tbdr: begin spirv-msaa-input-attachment-sample-operand
+        if (multisampled) {
+            builtin_args.Push(b.Constant(b.ir.constant_values.Get<core::constant::Scalar<u32>>(
+                ty.Get<type::Literal>(), u32(SpvImageOperandsSampleMask))));
+            builtin_args.Push(builtin->Args()[1]);
+        }
+        // tint-tbdr: end spirv-msaa-input-attachment-sample-operand
 
         // Call the builtin.
         // The result is always a vec4 in SPIR-V.

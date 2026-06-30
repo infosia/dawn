@@ -26,6 +26,9 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gmock/gmock.h"
+// tint-tbdr: begin spirv-msaa-input-attachment-can-generate-test
+#include "src/tint/lang/core/type/input_attachment.h"
+// tint-tbdr: end spirv-msaa-input-attachment-can-generate-test
 #include "src/tint/lang/core/type/struct.h"
 #include "src/tint/lang/spirv/writer/common/helper_test.h"
 #include "src/tint/utils/internal_limits.h"
@@ -80,6 +83,63 @@ TEST_F(SpirvWriterTest, CanGenerate_SubgroupMatrixRequiresVulkanMemoryModel) {
     EXPECT_THAT(result.Failure().reason,
                 testing::HasSubstr("using subgroup matrices requires the Vulkan Memory Model"));
 }
+
+// tint-tbdr: begin spirv-msaa-input-attachment-can-generate-test
+TEST_F(SpirvWriterTest, CanGenerate_InputAttachmentLoadExplicitSampleRequiresOption) {
+    auto* dce = b.Var("dce", ty.ptr(core::AddressSpace::kStorage, ty.vec4f()));
+    dce->SetBindingPoint(0, 1);
+    mod.root_block->Append(dce);
+
+    auto* ia = b.Var("ia", ty.ptr(core::AddressSpace::kHandle,
+                                   ty.Get<core::type::InputAttachment>(ty.f32()),
+                                   core::Access::kRead));
+    ia->SetBindingPoint(1, 0);
+    ia->SetInputAttachmentIndex(0);
+    mod.root_block->Append(ia);
+
+    auto* ep = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(ep->Block(), [&] {
+        auto* color = b.Call(ty.vec4f(), core::BuiltinFn::kInputAttachmentLoad, b.Load(ia), 0_u);
+        b.Store(dce, color);
+        b.Return(ep);
+    });
+
+    Options options;
+    options.multisampled_input_attachment = false;
+    auto result = Generate(options);
+    ASSERT_NE(result, Success);
+    EXPECT_EQ(result.Failure().reason,
+              "multisampled inputAttachmentLoad requires the multisampled_input_attachment option");
+}
+
+TEST_F(SpirvWriterTest, CanGenerate_MultisampledInputAttachmentLoadRequiresExplicitSample) {
+    auto* dce = b.Var("dce", ty.ptr(core::AddressSpace::kStorage, ty.vec4f()));
+    dce->SetBindingPoint(0, 1);
+    mod.root_block->Append(dce);
+
+    auto* ia = b.Var("ia", ty.ptr(core::AddressSpace::kHandle,
+                                   ty.Get<core::type::InputAttachment>(ty.f32()),
+                                   core::Access::kRead));
+    ia->SetBindingPoint(1, 0);
+    ia->SetInputAttachmentIndex(0);
+    mod.root_block->Append(ia);
+
+    auto* ep = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(ep->Block(), [&] {
+        auto* color = b.Call(ty.vec4f(), core::BuiltinFn::kInputAttachmentLoad, b.Load(ia));
+        b.Store(dce, color);
+        b.Return(ep);
+    });
+
+    Options options;
+    options.multisampled_input_attachment = true;
+    auto result = Generate(options);
+    ASSERT_NE(result, Success);
+    EXPECT_EQ(result.Failure().reason,
+              "inputAttachmentLoad on a multisampled input_attachment requires an explicit sample "
+              "index");
+}
+// tint-tbdr: end spirv-msaa-input-attachment-can-generate-test
 
 TEST_F(SpirvWriterTest, EntryPoint_InputLocation_ExceedsMax) {
     auto* f = b.FragmentFunction("my_func", ty.void_());

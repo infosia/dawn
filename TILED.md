@@ -203,6 +203,15 @@ shared surface — so it lands after MSL and keeps its generated diff isolated.
 resolver (more divergence); the option approach mirrors
 `multisampled_framebuffer_fetch` and is cheapest.
 
+**Constraint (consequence of the option approach).** `multisampled_input_attachment`
+is a single module-wide flag, so single-sampled and multisampled input
+attachments cannot be mixed in one module — the same limitation as
+`multisampled_framebuffer_fetch`. Because the 2-arg overload is resolvable
+whenever the extension is enabled (independent of the option), the SPIR-V
+writer's `CanGenerate` rejects an arity/option mismatch with a clean `Failure`
+(2-arg call without the option, or the option set with a 1-arg call) so the
+backend never ICEs on otherwise-valid WGSL.
+
 ## Phase 4 — e2e fixtures + docs
 
 - Framebuffer-fetch fixtures: `test/tint/extensions/framebuffer_fetch/*/` (do NOT
