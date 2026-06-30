@@ -1,5 +1,9 @@
 *.pyc
 
+HANDOFF.md
+REPORT.md
+/.claude
+
 # Directories added by gclient sync and the GN build
 /.cipd
 /.gclient
