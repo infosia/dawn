@@ -55,9 +55,6 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             // TODO(crbug/382544164): Prototype texel buffer feature
             return Failure("texel buffers are not supported by the MSL backend");
         }
-        if (ty->Is<core::type::InputAttachment>()) {
-            return Failure("input_attachment not supported by the MSL backend");
-        }
         if (ty->Is<core::type::U16>()) {
             return Failure("16-bit unsigned integers are not supported by the MSL backend");
         }
@@ -126,6 +123,21 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         if (ptr->AddressSpace() == core::AddressSpace::kPixelLocal) {
             return Failure("pixel_local address space is not supported by the MSL backend");
         }
+
+        // tint-tbdr: begin input_attachment-msl
+        // Metal has no subpass-input texture type, so each referenced input_attachment must be
+        // mapped to a [[color(N)]] slot supplied by the Metal backend. The lowering is performed by
+        // raise::InputAttachment; reject here when the mapping is missing so generation fails
+        // cleanly rather than reaching the printer with an unsupported type.
+        if (ptr->StoreType()->Is<core::type::InputAttachment>()) {
+            auto bp = var->BindingPoint();
+            if (!bp || !options.input_attachment_to_color_index.count(*bp)) {
+                return Failure(
+                    "input_attachment used without a corresponding entry in "
+                    "Options::input_attachment_to_color_index");
+            }
+        }
+        // tint-tbdr: end input_attachment-msl
     }
 
     // Check the vertex pulling config, if provided.

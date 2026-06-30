@@ -31,6 +31,7 @@
 #include "src/tint/cmd/fuzz/common/ir_fuzzer.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/var.h"
+#include "src/tint/lang/core/type/input_attachment.h"
 #include "src/tint/lang/msl/writer/printer/printer.h"
 #include "src/tint/lang/msl/writer/writer.h"
 
@@ -174,6 +175,23 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     if (!options.array_length_from_constants.bindpoint_to_size_index.empty()) {
         options.array_length_from_constants.buffer_sizes_offset = 0x800;
     }
+
+    // tint-tbdr: begin input_attachment-msl
+    // Assign a Metal color slot to every input_attachment variable so that the input attachment
+    // lowering is exercised. Dawn derives these slots from the render-pass attachment layout.
+    uint32_t next_color_slot = 0;
+    for (auto* inst : *module.root_block) {
+        auto* var = inst->As<core::ir::Var>();
+        if (!var) {
+            continue;
+        }
+        if (var->Result()->Type()->UnwrapPtr()->Is<core::type::InputAttachment>()) {
+            if (auto bp = var->BindingPoint()) {
+                options.input_attachment_to_color_index.emplace(bp.value(), next_color_slot++);
+            }
+        }
+    }
+    // tint-tbdr: end input_attachment-msl
 
     TINT_CHECK_RESULT_UNWRAP(output, Generate(module, options));
     if (context.options.dump) {

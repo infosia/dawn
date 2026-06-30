@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gmock/gmock.h"
+#include "src/tint/lang/core/type/input_attachment.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/struct.h"
 #include "src/tint/lang/msl/validate/validate.h"
@@ -37,6 +38,70 @@ namespace {
 
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
+
+// tint-tbdr: begin input_attachment-msl
+TEST_F(MslWriterTest, InputAttachmentGeneratesColorArgument) {
+    auto* dce = b.Var("dce", ty.ptr(core::AddressSpace::kStorage, ty.vec4f()));
+    dce->SetBindingPoint(0, 1);
+    mod.root_block->Append(dce);
+
+    auto* ia = b.Var("ia", ty.ptr(core::AddressSpace::kHandle,
+                                   ty.Get<core::type::InputAttachment>(ty.f32()),
+                                   core::Access::kRead));
+    ia->SetBindingPoint(1, 0);
+    ia->SetInputAttachmentIndex(3);
+    mod.root_block->Append(ia);
+
+    auto* ep = b.Function("entry", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(ep->Block(), [&] {
+        auto* color = b.Call(ty.vec4f(), core::BuiltinFn::kInputAttachmentLoad, b.Load(ia));
+        b.Store(dce, color);
+        b.Return(ep);
+    });
+
+    Options options;
+    options.entry_point_name = "entry";
+    options.input_attachment_to_color_index.emplace(BindingPoint{1, 0}, 2);
+
+    auto result = writer::Generate(mod, options);
+    ASSERT_EQ(result, Success) << result.Failure();
+    auto output = result.Get();
+    EXPECT_THAT(output.msl, testing::HasSubstr("float4 tint_input_attachment_2 [[color(2)]]"));
+    EXPECT_THAT(output.msl, testing::HasSubstr(
+                               "(*tint_module_vars.dce) = "
+                               "(*tint_module_vars.tint_input_attachment_2)"));
+}
+
+TEST_F(MslWriterTest, InputAttachmentMissingColorIndexFails) {
+    auto* dce = b.Var("dce", ty.ptr(core::AddressSpace::kStorage, ty.vec4f()));
+    dce->SetBindingPoint(0, 1);
+    mod.root_block->Append(dce);
+
+    auto* ia = b.Var("ia", ty.ptr(core::AddressSpace::kHandle,
+                                   ty.Get<core::type::InputAttachment>(ty.f32()),
+                                   core::Access::kRead));
+    ia->SetBindingPoint(1, 0);
+    ia->SetInputAttachmentIndex(3);
+    mod.root_block->Append(ia);
+
+    auto* ep = b.Function("entry", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(ep->Block(), [&] {
+        auto* color = b.Call(ty.vec4f(), core::BuiltinFn::kInputAttachmentLoad, b.Load(ia));
+        b.Store(dce, color);
+        b.Return(ep);
+    });
+
+    Options options;
+    options.entry_point_name = "entry";
+
+    auto result = writer::Generate(mod, options);
+    ASSERT_NE(result, Success);
+    EXPECT_EQ(
+        result.Failure().reason,
+        "input_attachment used without a corresponding entry in "
+        "Options::input_attachment_to_color_index");
+}
+// tint-tbdr: end input_attachment-msl
 
 TEST_F(MslWriterTest, WorkgroupAllocations_NoAllocations) {
     auto* var_a = b.Var("a", ty.ptr<workgroup, i32>());

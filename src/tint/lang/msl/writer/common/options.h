@@ -241,6 +241,15 @@ struct Options {
     /// Index of pixel_local structure member index to attachment index
     std::unordered_map<uint32_t, uint32_t> pixel_local_attachments;
 
+    // tint-tbdr: begin input_attachment-msl
+    /// Map from the WGSL binding point of an `input_attachment` variable to the Metal `[[color(N)]]`
+    /// slot it should be lowered to. Metal has no dedicated subpass-input texture type, so input
+    /// attachments are surfaced as `[[color(N)]]` fragment inputs. This map must be populated by the
+    /// Metal backend from the render-pass attachment layout; MSL generation fails if an
+    /// `input_attachment` is used without a corresponding entry here.
+    std::unordered_map<BindingPoint, uint32_t> input_attachment_to_color_index{};
+    // tint-tbdr: end input_attachment-msl
+
     /// Options used to specify a mapping of binding points to indices into the immediate block
     /// from which to load buffer sizes.
     ArrayLengthOptions array_length_from_constants = {};
@@ -284,6 +293,7 @@ struct Options {
                  extensions,
                  fixed_sample_mask,
                  pixel_local_attachments,
+                 input_attachment_to_color_index,
                  array_length_from_constants,
                  vertex_pulling_config,
                  immediate_binding_point,
