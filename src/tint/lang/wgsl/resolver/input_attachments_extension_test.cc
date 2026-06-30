@@ -165,6 +165,66 @@ TEST_F(InputAttachmenExtensionTest, InputAttachmentIndexInvalidType) {
 note: '@input_attachment_index' must only be applied to declarations of 'input_attachment' type)");
 }
 
+// tint-tbdr: begin spirv-msaa-input-attachment-overload
+TEST_F(InputAttachmenExtensionTest, InputAttachmentLoadResolvesInFragmentStage) {
+    // enable chromium_internal_input_attachments;
+    // @group(0) @binding(0) @input_attachment_index(3)
+    // var input_tex : input_attachment<f32>;
+    // @fragment fn f() {
+    //    let value = inputAttachmentLoad(input_tex);
+    // }
+
+    Enable(Source{{12, 34}}, wgsl::Extension::kChromiumInternalInputAttachments);
+
+    GlobalVar("input_tex", ty.input_attachment(ty.Of<f32>()),
+              Vector{Binding(0_u), Group(0_u), InputAttachmentIndex(3_u)});
+
+    auto* call = Call("inputAttachmentLoad", "input_tex");
+    Func("f", Empty, ty.void_(),
+         Vector{
+             Decl(Let("value", call)),
+         },
+         Vector{Stage(ast::PipelineStage::kFragment)});
+
+    EXPECT_TRUE(r()->Resolve()) << r()->error();
+
+    auto* result_ty = TypeOf(call)->As<core::type::Vector>();
+    ASSERT_NE(result_ty, nullptr);
+    EXPECT_EQ(result_ty->Width(), 4u);
+    EXPECT_TRUE(result_ty->Type()->Is<core::type::F32>());
+}
+
+TEST_F(InputAttachmenExtensionTest, InputAttachmentLoadExplicitSampleResolvesInFragmentStage) {
+    // enable chromium_internal_input_attachments;
+    // @group(0) @binding(0) @input_attachment_index(3)
+    // var input_tex : input_attachment<f32>;
+    // @fragment fn f() {
+    //    let sample_index = 0u;
+    //    let value = inputAttachmentLoad(input_tex, sample_index);
+    // }
+
+    Enable(Source{{12, 34}}, wgsl::Extension::kChromiumInternalInputAttachments);
+
+    GlobalVar("input_tex", ty.input_attachment(ty.Of<f32>()),
+              Vector{Binding(0_u), Group(0_u), InputAttachmentIndex(3_u)});
+
+    auto* call = Call("inputAttachmentLoad", "input_tex", "sample_index");
+    Func("f", Empty, ty.void_(),
+         Vector{
+             Decl(Let("sample_index", Expr(0_u))),
+             Decl(Let("value", call)),
+         },
+         Vector{Stage(ast::PipelineStage::kFragment)});
+
+    EXPECT_TRUE(r()->Resolve()) << r()->error();
+
+    auto* result_ty = TypeOf(call)->As<core::type::Vector>();
+    ASSERT_NE(result_ty, nullptr);
+    EXPECT_EQ(result_ty->Width(), 4u);
+    EXPECT_TRUE(result_ty->Type()->Is<core::type::F32>());
+}
+// tint-tbdr: end spirv-msaa-input-attachment-overload
+
 // Test that inputAttachmentLoad cannot be used in vertex shader
 TEST_F(InputAttachmenExtensionTest, InputAttachmentLoadInVertexStageError) {
     // enable chromium_internal_input_attachments;
