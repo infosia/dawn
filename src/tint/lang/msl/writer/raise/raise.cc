@@ -68,6 +68,7 @@
 #include "src/tint/lang/msl/writer/raise/convert_print_to_log.h"
 #include "src/tint/lang/msl/writer/raise/decompose_buffer.h"
 #include "src/tint/lang/msl/writer/raise/fix_type_layout.h"
+#include "src/tint/lang/msl/writer/raise/input_attachment.h"
 #include "src/tint/lang/msl/writer/raise/module_constant.h"
 #include "src/tint/lang/msl/writer/raise/module_scope_vars.h"
 #include "src/tint/lang/msl/writer/raise/shader_io.h"
@@ -83,6 +84,13 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
         core::ir::transform::SubstituteOverrides(module, options.substitute_overrides_config));
 
     TINT_CHECK_RESULT(raise::ValidateSubgroupMatrix(module));
+
+    // tint-tbdr: begin input_attachment-msl
+    // Lower input_attachment variables to `[[color(N)]]` fragment inputs before BindingRemapper (so
+    // the configured WGSL binding points still match), ShaderIO, and ModuleScopeVars.
+    TINT_CHECK_RESULT(raise::InputAttachment(
+        module, raise::InputAttachmentConfig{options.input_attachment_to_color_index}));
+    // tint-tbdr: end input_attachment-msl
 
     if (options.workarounds.collapse_subgroup_min_max) {
         TINT_CHECK_RESULT(core::ir::transform::CollapseSubgroupMinMax(module));
