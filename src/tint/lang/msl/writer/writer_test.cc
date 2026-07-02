@@ -101,6 +101,37 @@ TEST_F(MslWriterTest, InputAttachmentMissingColorIndexFails) {
         "input_attachment used without a corresponding entry in "
         "Options::input_attachment_to_color_index");
 }
+
+TEST_F(MslWriterTest, InputAttachmentExplicitSampleIndexFails) {
+    auto* dce = b.Var("dce", ty.ptr(core::AddressSpace::kStorage, ty.vec4f()));
+    dce->SetBindingPoint(0, 1);
+    mod.root_block->Append(dce);
+
+    auto* ia = b.Var("ia", ty.ptr(core::AddressSpace::kHandle,
+                                   ty.Get<core::type::InputAttachment>(ty.f32()),
+                                   core::Access::kRead));
+    ia->SetBindingPoint(1, 0);
+    ia->SetInputAttachmentIndex(3);
+    mod.root_block->Append(ia);
+
+    auto* ep = b.Function("entry", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(ep->Block(), [&] {
+        auto* color =
+            b.Call(ty.vec4f(), core::BuiltinFn::kInputAttachmentLoad, b.Load(ia), 0_u);
+        b.Store(dce, color);
+        b.Return(ep);
+    });
+
+    Options options;
+    options.entry_point_name = "entry";
+    options.input_attachment_to_color_index.emplace(BindingPoint{1, 0}, 2);
+
+    auto result = writer::Generate(mod, options);
+    ASSERT_NE(result, Success);
+    EXPECT_EQ(result.Failure().reason,
+              "inputAttachmentLoad with an explicit sample_index is not supported by the MSL "
+              "backend");
+}
 // tint-tbdr: end input_attachment-msl
 
 TEST_F(MslWriterTest, WorkgroupAllocations_NoAllocations) {

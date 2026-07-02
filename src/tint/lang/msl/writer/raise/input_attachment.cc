@@ -92,6 +92,17 @@ struct State {
             }
         }
 
+        // Pre-seed the used slots with any existing `@color` entry-point parameters (framebuffer
+        // fetch), so an input attachment mapped to the same slot fails instead of emitting a
+        // duplicate `[[color(N)]]` parameter.
+        if (entry_point) {
+            for (auto* param : entry_point->Params()) {
+                if (auto color = param->Color()) {
+                    used_color_slots.Add(color.value());
+                }
+            }
+        }
+
         for (auto* var : input_attachments) {
             auto res = ProcessVar(var, entry_point);
             if (res != Success) {
@@ -150,7 +161,7 @@ struct State {
         uint32_t color_slot = iter->second;
         if (!used_color_slots.Add(color_slot)) {
             return Failure("input_attachment color index " + std::to_string(color_slot) +
-                           " is used by more than one binding point");
+                           " collides with another color input");
         }
 
         // Create a private variable to carry the resolved color value. ModuleScopeVars later threads
@@ -188,6 +199,14 @@ struct State {
             }
 
             for (auto* call : calls) {
+                // Metal resolves the current sample of a subpass input implicitly (via
+                // [[sample_id]] execution), so the MSAA overload taking an explicit sample index
+                // cannot be lowered here. Reject it cleanly.
+                if (call->Args().size() != 1) {
+                    return Failure(
+                        "inputAttachmentLoad with an explicit sample_index is not supported by "
+                        "the MSL backend");
+                }
                 b.InsertBefore(call, [&] { b.LoadWithResult(call->DetachResult(), color_var); });
                 call->Destroy();
             }
