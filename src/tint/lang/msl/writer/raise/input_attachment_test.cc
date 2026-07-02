@@ -234,7 +234,52 @@ TEST_F(MslWriter_InputAttachmentTest, DuplicateColorSlotFails) {
     auto result = InputAttachment(mod, InputAttachmentConfig{map});
     ASSERT_NE(result, Success);
     EXPECT_EQ(result.Failure().reason,
-              "input_attachment color index 0 is used by more than one binding point");
+              "input_attachment color index 0 collides with another color input");
+}
+
+TEST_F(MslWriter_InputAttachmentTest, CollidesWithFramebufferFetchColorFails) {
+    auto* dce = b.Var("dce", ty.ptr(core::AddressSpace::kStorage, ty.vec4f()));
+    dce->SetBindingPoint(0, 1);
+    b.ir.root_block->Append(dce);
+    auto* ia = MakeInputAttachment(b, ty.f32(), 1, 0, 0);
+
+    auto* ep = b.Function("f", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    auto* fbf = b.FunctionParam("fbf", ty.vec4f());
+    fbf->SetColor(0u);
+    ep->SetParams({fbf});
+    b.Append(ep->Block(), [&] {
+        auto* color = b.Call(ty.vec4f(), core::BuiltinFn::kInputAttachmentLoad, b.Load(ia));
+        b.Store(dce, b.Add(color, fbf));
+        b.Return(ep);
+    });
+
+    std::unordered_map<BindingPoint, uint32_t> map{{BindingPoint{1, 0}, 0}};
+    auto result = InputAttachment(mod, InputAttachmentConfig{map});
+    ASSERT_NE(result, Success);
+    EXPECT_EQ(result.Failure().reason,
+              "input_attachment color index 0 collides with another color input");
+}
+
+TEST_F(MslWriter_InputAttachmentTest, ExplicitSampleIndexFails) {
+    auto* dce = b.Var("dce", ty.ptr(core::AddressSpace::kStorage, ty.vec4f()));
+    dce->SetBindingPoint(0, 1);
+    b.ir.root_block->Append(dce);
+    auto* ia = MakeInputAttachment(b, ty.f32(), 1, 0, 0);
+
+    auto* ep = b.Function("f", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(ep->Block(), [&] {
+        auto* color =
+            b.Call(ty.vec4f(), core::BuiltinFn::kInputAttachmentLoad, b.Load(ia), 0_u);
+        b.Store(dce, color);
+        b.Return(ep);
+    });
+
+    std::unordered_map<BindingPoint, uint32_t> map{{BindingPoint{1, 0}, 0}};
+    auto result = InputAttachment(mod, InputAttachmentConfig{map});
+    ASSERT_NE(result, Success);
+    EXPECT_EQ(result.Failure().reason,
+              "inputAttachmentLoad with an explicit sample_index is not supported by the MSL "
+              "backend");
 }
 
 TEST_F(MslWriter_InputAttachmentTest, U32Attachment) {
