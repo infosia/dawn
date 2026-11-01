@@ -76,7 +76,7 @@ TEST_F(MslWriter_InputAttachmentTest, SingleAttachment) {
 
     auto* expect = R"(
 $B1: {  # root
-  %dce:ptr<storage, vec4<f32>, read_write> = var undef @binding_point(0, 1)
+  %dce:ptr<storage, vec4<f32>, read_write> = var @binding_point(0, 1)
   %tint_input_attachment_0:ptr<private, vec4<f32>, read_write> = var vec4<f32>(0.0f)
 }
 
@@ -110,7 +110,7 @@ TEST_F(MslWriter_InputAttachmentTest, UnusedAttachmentDropped) {
 
     auto* expect = R"(
 $B1: {  # root
-  %dce:ptr<storage, vec4<f32>, read_write> = var undef @binding_point(0, 1)
+  %dce:ptr<storage, vec4<f32>, read_write> = var @binding_point(0, 1)
 }
 
 %f = @fragment func():void {
@@ -148,7 +148,7 @@ TEST_F(MslWriter_InputAttachmentTest, LoadInHelper) {
 
     auto* expect = R"(
 $B1: {  # root
-  %dce:ptr<storage, vec4<f32>, read_write> = var undef @binding_point(0, 1)
+  %dce:ptr<storage, vec4<f32>, read_write> = var @binding_point(0, 1)
   %tint_input_attachment_0:ptr<private, vec4<f32>, read_write> = var vec4<f32>(0.0f)
 }
 
@@ -191,7 +191,7 @@ TEST_F(MslWriter_InputAttachmentTest, MultipleAttachments) {
 
     auto* expect = R"(
 $B1: {  # root
-  %dce:ptr<storage, vec4<f32>, read_write> = var undef @binding_point(0, 1)
+  %dce:ptr<storage, vec4<f32>, read_write> = var @binding_point(0, 1)
   %tint_input_attachment_0:ptr<private, vec4<f32>, read_write> = var vec4<f32>(0.0f)
   %tint_input_attachment_1:ptr<private, vec4<f32>, read_write> = var vec4<f32>(0.0f)
 }
@@ -296,7 +296,7 @@ TEST_F(MslWriter_InputAttachmentTest, U32Attachment) {
 
     auto* expect = R"(
 $B1: {  # root
-  %dce:ptr<storage, vec4<u32>, read_write> = var undef @binding_point(0, 1)
+  %dce:ptr<storage, vec4<u32>, read_write> = var @binding_point(0, 1)
   %tint_input_attachment_0:ptr<private, vec4<u32>, read_write> = var vec4<u32>(0u)
 }
 
@@ -330,7 +330,7 @@ TEST_F(MslWriter_InputAttachmentTest, I32Attachment) {
 
     auto* expect = R"(
 $B1: {  # root
-  %dce:ptr<storage, vec4<i32>, read_write> = var undef @binding_point(0, 1)
+  %dce:ptr<storage, vec4<i32>, read_write> = var @binding_point(0, 1)
   %tint_input_attachment_0:ptr<private, vec4<i32>, read_write> = var vec4<i32>(0i)
 }
 
