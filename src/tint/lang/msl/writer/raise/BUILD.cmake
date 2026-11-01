@@ -59,6 +59,8 @@ tint_add_target(tint_lang_msl_writer_raise lib
   lang/msl/writer/raise/fix_type_layout.h
   lang/msl/writer/raise/fix_u32_div_mod.cc
   lang/msl/writer/raise/fix_u32_div_mod.h
+  lang/msl/writer/raise/input_attachment.cc
+  lang/msl/writer/raise/input_attachment.h
   lang/msl/writer/raise/module_constant.cc
   lang/msl/writer/raise/module_constant.h
   lang/msl/writer/raise/module_scope_vars.cc
@@ -126,6 +128,7 @@ tint_add_target(tint_lang_msl_writer_raise_test test
   lang/msl/writer/raise/decompose_buffer_test.cc
   lang/msl/writer/raise/fix_type_layout_test.cc
   lang/msl/writer/raise/fix_u32_div_mod_test.cc
+  lang/msl/writer/raise/input_attachment_test.cc
   lang/msl/writer/raise/module_constant_test.cc
   lang/msl/writer/raise/module_scope_vars_test.cc
   lang/msl/writer/raise/shader_io_test.cc
