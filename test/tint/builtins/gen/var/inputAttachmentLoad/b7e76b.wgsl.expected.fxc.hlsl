@@ -1,0 +1,28 @@
+SKIP: FAILED
+
+$B1: {  # root
+  %prevent_dce:ptr<storage, vec4<i32>, read_write> = var @binding_point(0, 0)
+  %arg_0:ptr<handle, input_attachment<i32>, read> = var @binding_point(1, 0) @input_attachment_index(3)
+}
+
+%inputAttachmentLoad_b7e76b = func():vec4<i32> {
+  $B2: {
+    %arg_1:ptr<function, u32, read_write> = var 1u
+    %5:input_attachment<i32> = load %arg_0
+    %6:u32 = load %arg_1
+    %7:vec4<i32> = inputAttachmentLoad %5, %6
+    %res:ptr<function, vec4<i32>, read_write> = var %7
+    %9:vec4<i32> = load %res
+    ret %9
+  }
+}
+%fragment_main = @fragment func():void {
+  $B3: {
+    %11:vec4<i32> = call %inputAttachmentLoad_b7e76b
+    store %prevent_dce, %11
+    ret
+  }
+}
+Failed to generate: input attachments are not supported by the HLSL backend
+
+tint executable returned error: exit status 1
